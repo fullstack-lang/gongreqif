@@ -4,10 +4,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable, combineLatest, BehaviorSubject, of } from 'rxjs'
 
 // insertion point sub template for services imports
-import { TestAPI } from './test-api'
-import { Test, CopyTestAPIToTest } from './test'
-import { TestService } from './test.service'
-
 
 import { BackRepoData } from './back-repo-data'
 
@@ -15,9 +11,6 @@ export const StackType = "github.com/fullstack-lang/gongreqif/go/models"
 
 // FrontRepo stores all instances in a front repository (design pattern repository)
 export class FrontRepo { // insertion point sub template
-	array_Tests = new Array<Test>() // array of front instances
-	map_ID_Test = new Map<number, Test>() // map of front instances
-
 
 	// getFrontArray allows for a get function that is robust to refactoring of the named struct name
 	// for instance frontRepo.getArray<Astruct>( Astruct.GONGSTRUCT_NAME), is robust to a refactoring of Astruct identifier
@@ -25,8 +18,6 @@ export class FrontRepo { // insertion point sub template
 	getFrontArray<Type>(gongStructName: string): Array<Type> {
 		switch (gongStructName) {
 			// insertion point
-			case 'Test':
-				return this.array_Tests as unknown as Array<Type>
 			default:
 				throw new Error("Type not recognized");
 		}
@@ -35,8 +26,6 @@ export class FrontRepo { // insertion point sub template
 	getFrontMap<Type>(gongStructName: string): Map<number, Type> {
 		switch (gongStructName) {
 			// insertion point
-			case 'Test':
-				return this.map_ID_Test as unknown as Map<number, Type>
 			default:
 				throw new Error("Type not recognized");
 		}
@@ -104,7 +93,6 @@ export class FrontRepoService {
 
 	constructor(
 		private http: HttpClient, // insertion point sub template 
-		private testService: TestService,
 	) { }
 
 	// postService provides a post function for each struct name
@@ -137,7 +125,6 @@ export class FrontRepoService {
 	observableFrontRepo: [
 		Observable<null>, // see below for the of(null) observable
 		// insertion point sub template 
-		Observable<TestAPI[]>,
 	] = [
 			// Using "combineLatest" with a placeholder observable.
 			//
@@ -148,7 +135,6 @@ export class FrontRepoService {
 			// expectation for a non-empty array of observables.
 			of(null), // 
 			// insertion point sub template
-			this.testService.getTests(this.GONG__StackPath, this.frontRepo),
 		];
 
 	//
@@ -164,7 +150,6 @@ export class FrontRepoService {
 		this.observableFrontRepo = [
 			of(null), // see above for justification
 			// insertion point sub template
-			this.testService.getTests(this.GONG__StackPath, this.frontRepo),
 		]
 
 		return new Observable<FrontRepo>(
@@ -175,41 +160,18 @@ export class FrontRepoService {
 					([
 						___of_null, // see above for the explanation about of
 						// insertion point sub template for declarations 
-						tests_,
 					]) => {
 						let _this = this
 						// Typing can be messy with many items. Therefore, type casting is necessary here
 						// insertion point sub template for type casting 
-						var tests: TestAPI[]
-						tests = tests_ as TestAPI[]
 
 						// 
 						// First Step: init map of instances
 						// insertion point sub template for init 
-						// init the arrays
-						this.frontRepo.array_Tests = []
-						this.frontRepo.map_ID_Test.clear()
-
-						tests.forEach(
-							testAPI => {
-								let test = new Test
-								this.frontRepo.array_Tests.push(test)
-								this.frontRepo.map_ID_Test.set(testAPI.ID, test)
-							}
-						)
-
 
 						// 
 						// Second Step: reddeem front objects
 						// insertion point sub template for redeem 
-						// fill up front objects
-						tests.forEach(
-							testAPI => {
-								let test = this.frontRepo.map_ID_Test.get(testAPI.ID)
-								CopyTestAPIToTest(testAPI, test!, this.frontRepo)
-							}
-						)
-
 
 						// hand over control flow to observer
 						observer.next(this.frontRepo)
@@ -241,32 +203,12 @@ export class FrontRepoService {
 				// insertion point sub template for init 
 				// init the arrays
 				// insertion point sub template for init 
-				// init the arrays
-				this.frontRepo.array_Tests = []
-				this.frontRepo.map_ID_Test.clear()
-
-				backRepoData.TestAPIs.forEach(
-					testAPI => {
-						let test = new Test
-						this.frontRepo.array_Tests.push(test)
-						this.frontRepo.map_ID_Test.set(testAPI.ID, test)
-					}
-				)
-
 
 				// 
 				// Second Step: reddeem front objects
 				// insertion point sub template for redeem 
 				// fill up front objects
 				// insertion point sub template for redeem 
-				// fill up front objects
-				backRepoData.TestAPIs.forEach(
-					testAPI => {
-						let test = this.frontRepo.map_ID_Test.get(testAPI.ID)
-						CopyTestAPIToTest(testAPI, test!, this.frontRepo)
-					}
-				)
-
 
 
 				observer.next(this.frontRepo)
@@ -286,6 +228,3 @@ export class FrontRepoService {
 }
 
 // insertion point for get unique ID per struct 
-export function getTestUniqueID(id: number): number {
-	return 31 * id
-}
