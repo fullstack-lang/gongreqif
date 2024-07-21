@@ -395,12 +395,12 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) CheckoutPhaseTwoInstance(backRepo *B
 func (req_ifDB *REQ_IFDB) DecodePointers(backRepo *BackRepoStruct, req_if *models.REQ_IF) {
 
 	// insertion point for checkout of pointer encoding
-	// THE_HEADER.REQ_IF_HEADER field, hello here
+	// THE_HEADER.REQ_IF_HEADER field
 	req_if.THE_HEADER.REQ_IF_HEADER = nil
 	if req_ifDB.REQ_IFPointersEncoding.THE_HEADER.REQ_IF_HEADERID.Int64 != 0 {
 		req_if.THE_HEADER.REQ_IF_HEADER = backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr[uint(req_ifDB.REQ_IFPointersEncoding.THE_HEADER.REQ_IF_HEADERID.Int64)]
 	}
-	// CORE_CONTENT.REQ_IF_CONTENT field, hello here
+	// CORE_CONTENT.REQ_IF_CONTENT field
 	req_if.CORE_CONTENT.REQ_IF_CONTENT = nil
 	if req_ifDB.REQ_IFPointersEncoding.CORE_CONTENT.REQ_IF_CONTENTID.Int64 != 0 {
 		req_if.CORE_CONTENT.REQ_IF_CONTENT = backRepo.BackRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTPtr[uint(req_ifDB.REQ_IFPointersEncoding.CORE_CONTENT.REQ_IF_CONTENTID.Int64)]

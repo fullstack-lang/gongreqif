@@ -3,8 +3,8 @@ module github.com/fullstack-lang/gongreqif
 go 1.22.1
 
 require (
-	github.com/fullstack-lang/gong v0.0.0-20240721213437-4f70e999f48f
-	github.com/fullstack-lang/gongdoc v0.0.0-20240714153435-f5e11532cd78
+	github.com/fullstack-lang/gong v0.0.0-20240721214902-6db4653245d1
+	github.com/fullstack-lang/gongdoc v0.0.0-20240721215055-b071e8352e72
 	github.com/fullstack-lang/gongtable v0.0.0-20240714151129-84eee5cce152
 	github.com/fullstack-lang/gongtree v0.0.0-20240714150713-cdffb17883a5
 	github.com/fullstack-lang/maticons v0.0.0-20230823061653-70c364fbdd00
