@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -88,7 +89,7 @@ type ATTRIBUTE_DEFINITION_DATEDB struct {
 
 	// Declation for basic field attribute_definition_dateDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ATTRIBUTE_DEFINITION_DATEPointersEncoding
@@ -143,7 +144,7 @@ type BackRepoATTRIBUTE_DEFINITION_DATEStruct struct {
 	// stores ATTRIBUTE_DEFINITION_DATE according to their gorm ID
 	Map_ATTRIBUTE_DEFINITION_DATEDBID_ATTRIBUTE_DEFINITION_DATEPtr map[uint]*models.ATTRIBUTE_DEFINITION_DATE
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -153,7 +154,7 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 	return
 }
 
-func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct) GetDB() *gorm.DB {
+func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct) GetDB() db.DBInterface {
 	return backRepoATTRIBUTE_DEFINITION_DATE.db
 }
 
@@ -190,9 +191,10 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 
 	// attribute_definition_date is not staged anymore, remove attribute_definition_dateDB
 	attribute_definition_dateDB := backRepoATTRIBUTE_DEFINITION_DATE.Map_ATTRIBUTE_DEFINITION_DATEDBID_ATTRIBUTE_DEFINITION_DATEDB[id]
-	query := backRepoATTRIBUTE_DEFINITION_DATE.db.Unscoped().Delete(&attribute_definition_dateDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoATTRIBUTE_DEFINITION_DATE.db.Unscoped()
+	_, err := db.Delete(attribute_definition_dateDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -216,9 +218,9 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 	var attribute_definition_dateDB ATTRIBUTE_DEFINITION_DATEDB
 	attribute_definition_dateDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_DATE(attribute_definition_date)
 
-	query := backRepoATTRIBUTE_DEFINITION_DATE.db.Create(&attribute_definition_dateDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoATTRIBUTE_DEFINITION_DATE.db.Create(&attribute_definition_dateDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -286,9 +288,9 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 				append(attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE, int(attribute_value_dateAssocEnd_DB.ID))
 		}
 
-		query := backRepoATTRIBUTE_DEFINITION_DATE.db.Save(&attribute_definition_dateDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_DATE.db.Save(attribute_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -307,9 +309,9 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct) CheckoutPhaseOne() (Error error) {
 
 	attribute_definition_dateDBArray := make([]ATTRIBUTE_DEFINITION_DATEDB, 0)
-	query := backRepoATTRIBUTE_DEFINITION_DATE.db.Find(&attribute_definition_dateDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoATTRIBUTE_DEFINITION_DATE.db.Find(&attribute_definition_dateDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -438,7 +440,7 @@ func (backRepo *BackRepoStruct) CheckoutATTRIBUTE_DEFINITION_DATE(attribute_defi
 			var attribute_definition_dateDB ATTRIBUTE_DEFINITION_DATEDB
 			attribute_definition_dateDB.ID = id
 
-			if err := backRepo.BackRepoATTRIBUTE_DEFINITION_DATE.db.First(&attribute_definition_dateDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoATTRIBUTE_DEFINITION_DATE.db.First(&attribute_definition_dateDB, id); err != nil {
 				log.Fatalln("CheckoutATTRIBUTE_DEFINITION_DATE : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoATTRIBUTE_DEFINITION_DATE.CheckoutPhaseOneInstance(&attribute_definition_dateDB)
@@ -633,9 +635,9 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 
 		attribute_definition_dateDB_ID_atBackupTime := attribute_definition_dateDB.ID
 		attribute_definition_dateDB.ID = 0
-		query := backRepoATTRIBUTE_DEFINITION_DATE.db.Create(attribute_definition_dateDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_DATE.db.Create(attribute_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_DEFINITION_DATE.Map_ATTRIBUTE_DEFINITION_DATEDBID_ATTRIBUTE_DEFINITION_DATEDB[attribute_definition_dateDB.ID] = attribute_definition_dateDB
 		BackRepoATTRIBUTE_DEFINITION_DATEid_atBckpTime_newID[attribute_definition_dateDB_ID_atBackupTime] = attribute_definition_dateDB.ID
@@ -670,9 +672,9 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 
 		attribute_definition_dateDB_ID_atBackupTime := attribute_definition_dateDB.ID
 		attribute_definition_dateDB.ID = 0
-		query := backRepoATTRIBUTE_DEFINITION_DATE.db.Create(attribute_definition_dateDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_DATE.db.Create(attribute_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_DEFINITION_DATE.Map_ATTRIBUTE_DEFINITION_DATEDBID_ATTRIBUTE_DEFINITION_DATEDB[attribute_definition_dateDB.ID] = attribute_definition_dateDB
 		BackRepoATTRIBUTE_DEFINITION_DATEid_atBckpTime_newID[attribute_definition_dateDB_ID_atBackupTime] = attribute_definition_dateDB.ID
@@ -694,9 +696,10 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoATTRIBUTE_DEFINITION_DATE.db.Model(attribute_definition_dateDB).Updates(*attribute_definition_dateDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoATTRIBUTE_DEFINITION_DATE.db.Model(attribute_definition_dateDB)
+		_, err := db.Updates(*attribute_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

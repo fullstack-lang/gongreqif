@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -77,7 +78,7 @@ type DATATYPE_DEFINITION_DATEDB struct {
 
 	// Declation for basic field datatype_definition_dateDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	DATATYPE_DEFINITION_DATEPointersEncoding
@@ -129,7 +130,7 @@ type BackRepoDATATYPE_DEFINITION_DATEStruct struct {
 	// stores DATATYPE_DEFINITION_DATE according to their gorm ID
 	Map_DATATYPE_DEFINITION_DATEDBID_DATATYPE_DEFINITION_DATEPtr map[uint]*models.DATATYPE_DEFINITION_DATE
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -139,7 +140,7 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 	return
 }
 
-func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) GetDB() *gorm.DB {
+func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) GetDB() db.DBInterface {
 	return backRepoDATATYPE_DEFINITION_DATE.db
 }
 
@@ -176,9 +177,10 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 
 	// datatype_definition_date is not staged anymore, remove datatype_definition_dateDB
 	datatype_definition_dateDB := backRepoDATATYPE_DEFINITION_DATE.Map_DATATYPE_DEFINITION_DATEDBID_DATATYPE_DEFINITION_DATEDB[id]
-	query := backRepoDATATYPE_DEFINITION_DATE.db.Unscoped().Delete(&datatype_definition_dateDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoDATATYPE_DEFINITION_DATE.db.Unscoped()
+	_, err := db.Delete(datatype_definition_dateDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -202,9 +204,9 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 	var datatype_definition_dateDB DATATYPE_DEFINITION_DATEDB
 	datatype_definition_dateDB.CopyBasicFieldsFromDATATYPE_DEFINITION_DATE(datatype_definition_date)
 
-	query := backRepoDATATYPE_DEFINITION_DATE.db.Create(&datatype_definition_dateDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoDATATYPE_DEFINITION_DATE.db.Create(&datatype_definition_dateDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -254,9 +256,9 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 				append(datatype_definition_dateDB.DATATYPE_DEFINITION_DATEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
 		}
 
-		query := backRepoDATATYPE_DEFINITION_DATE.db.Save(&datatype_definition_dateDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_DATE.db.Save(datatype_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -275,9 +277,9 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) CheckoutPhaseOne() (Error error) {
 
 	datatype_definition_dateDBArray := make([]DATATYPE_DEFINITION_DATEDB, 0)
-	query := backRepoDATATYPE_DEFINITION_DATE.db.Find(&datatype_definition_dateDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoDATATYPE_DEFINITION_DATE.db.Find(&datatype_definition_dateDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -397,7 +399,7 @@ func (backRepo *BackRepoStruct) CheckoutDATATYPE_DEFINITION_DATE(datatype_defini
 			var datatype_definition_dateDB DATATYPE_DEFINITION_DATEDB
 			datatype_definition_dateDB.ID = id
 
-			if err := backRepo.BackRepoDATATYPE_DEFINITION_DATE.db.First(&datatype_definition_dateDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoDATATYPE_DEFINITION_DATE.db.First(&datatype_definition_dateDB, id); err != nil {
 				log.Fatalln("CheckoutDATATYPE_DEFINITION_DATE : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoDATATYPE_DEFINITION_DATE.CheckoutPhaseOneInstance(&datatype_definition_dateDB)
@@ -580,9 +582,9 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 
 		datatype_definition_dateDB_ID_atBackupTime := datatype_definition_dateDB.ID
 		datatype_definition_dateDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_DATE.db.Create(datatype_definition_dateDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_DATE.db.Create(datatype_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_DATE.Map_DATATYPE_DEFINITION_DATEDBID_DATATYPE_DEFINITION_DATEDB[datatype_definition_dateDB.ID] = datatype_definition_dateDB
 		BackRepoDATATYPE_DEFINITION_DATEid_atBckpTime_newID[datatype_definition_dateDB_ID_atBackupTime] = datatype_definition_dateDB.ID
@@ -617,9 +619,9 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 
 		datatype_definition_dateDB_ID_atBackupTime := datatype_definition_dateDB.ID
 		datatype_definition_dateDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_DATE.db.Create(datatype_definition_dateDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_DATE.db.Create(datatype_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_DATE.Map_DATATYPE_DEFINITION_DATEDBID_DATATYPE_DEFINITION_DATEDB[datatype_definition_dateDB.ID] = datatype_definition_dateDB
 		BackRepoDATATYPE_DEFINITION_DATEid_atBckpTime_newID[datatype_definition_dateDB_ID_atBackupTime] = datatype_definition_dateDB.ID
@@ -641,9 +643,10 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoDATATYPE_DEFINITION_DATE.db.Model(datatype_definition_dateDB).Updates(*datatype_definition_dateDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoDATATYPE_DEFINITION_DATE.db.Model(datatype_definition_dateDB)
+		_, err := db.Updates(*datatype_definition_dateDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -64,7 +65,7 @@ type AnyTypeDB struct {
 
 	// Declation for basic field anytypeDB.InnerXML
 	InnerXML_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	AnyTypePointersEncoding
@@ -110,7 +111,7 @@ type BackRepoAnyTypeStruct struct {
 	// stores AnyType according to their gorm ID
 	Map_AnyTypeDBID_AnyTypePtr map[uint]*models.AnyType
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -120,7 +121,7 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) GetStage() (stage *models.StageStr
 	return
 }
 
-func (backRepoAnyType *BackRepoAnyTypeStruct) GetDB() *gorm.DB {
+func (backRepoAnyType *BackRepoAnyTypeStruct) GetDB() db.DBInterface {
 	return backRepoAnyType.db
 }
 
@@ -157,9 +158,10 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) CommitDeleteInstance(id uint) (Err
 
 	// anytype is not staged anymore, remove anytypeDB
 	anytypeDB := backRepoAnyType.Map_AnyTypeDBID_AnyTypeDB[id]
-	query := backRepoAnyType.db.Unscoped().Delete(&anytypeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoAnyType.db.Unscoped()
+	_, err := db.Delete(anytypeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -183,9 +185,9 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) CommitPhaseOneInstance(anytype *mo
 	var anytypeDB AnyTypeDB
 	anytypeDB.CopyBasicFieldsFromAnyType(anytype)
 
-	query := backRepoAnyType.db.Create(&anytypeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoAnyType.db.Create(&anytypeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -217,9 +219,9 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) CommitPhaseTwoInstance(backRepo *B
 		anytypeDB.CopyBasicFieldsFromAnyType(anytype)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoAnyType.db.Save(&anytypeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoAnyType.db.Save(anytypeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -238,9 +240,9 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) CommitPhaseTwoInstance(backRepo *B
 func (backRepoAnyType *BackRepoAnyTypeStruct) CheckoutPhaseOne() (Error error) {
 
 	anytypeDBArray := make([]AnyTypeDB, 0)
-	query := backRepoAnyType.db.Find(&anytypeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoAnyType.db.Find(&anytypeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -351,7 +353,7 @@ func (backRepo *BackRepoStruct) CheckoutAnyType(anytype *models.AnyType) {
 			var anytypeDB AnyTypeDB
 			anytypeDB.ID = id
 
-			if err := backRepo.BackRepoAnyType.db.First(&anytypeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoAnyType.db.First(&anytypeDB, id); err != nil {
 				log.Fatalln("CheckoutAnyType : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoAnyType.CheckoutPhaseOneInstance(&anytypeDB)
@@ -510,9 +512,9 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) rowVisitorAnyType(row *xlsx.Row) e
 
 		anytypeDB_ID_atBackupTime := anytypeDB.ID
 		anytypeDB.ID = 0
-		query := backRepoAnyType.db.Create(anytypeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoAnyType.db.Create(anytypeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoAnyType.Map_AnyTypeDBID_AnyTypeDB[anytypeDB.ID] = anytypeDB
 		BackRepoAnyTypeid_atBckpTime_newID[anytypeDB_ID_atBackupTime] = anytypeDB.ID
@@ -547,9 +549,9 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) RestorePhaseOne(dirPath string) {
 
 		anytypeDB_ID_atBackupTime := anytypeDB.ID
 		anytypeDB.ID = 0
-		query := backRepoAnyType.db.Create(anytypeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoAnyType.db.Create(anytypeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoAnyType.Map_AnyTypeDBID_AnyTypeDB[anytypeDB.ID] = anytypeDB
 		BackRepoAnyTypeid_atBckpTime_newID[anytypeDB_ID_atBackupTime] = anytypeDB.ID
@@ -571,9 +573,10 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoAnyType.db.Model(anytypeDB).Updates(*anytypeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoAnyType.db.Model(anytypeDB)
+		_, err := db.Updates(*anytypeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -88,7 +89,7 @@ type ATTRIBUTE_DEFINITION_REALDB struct {
 
 	// Declation for basic field attribute_definition_realDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ATTRIBUTE_DEFINITION_REALPointersEncoding
@@ -143,7 +144,7 @@ type BackRepoATTRIBUTE_DEFINITION_REALStruct struct {
 	// stores ATTRIBUTE_DEFINITION_REAL according to their gorm ID
 	Map_ATTRIBUTE_DEFINITION_REALDBID_ATTRIBUTE_DEFINITION_REALPtr map[uint]*models.ATTRIBUTE_DEFINITION_REAL
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -153,7 +154,7 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 	return
 }
 
-func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) GetDB() *gorm.DB {
+func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) GetDB() db.DBInterface {
 	return backRepoATTRIBUTE_DEFINITION_REAL.db
 }
 
@@ -190,9 +191,10 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 
 	// attribute_definition_real is not staged anymore, remove attribute_definition_realDB
 	attribute_definition_realDB := backRepoATTRIBUTE_DEFINITION_REAL.Map_ATTRIBUTE_DEFINITION_REALDBID_ATTRIBUTE_DEFINITION_REALDB[id]
-	query := backRepoATTRIBUTE_DEFINITION_REAL.db.Unscoped().Delete(&attribute_definition_realDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoATTRIBUTE_DEFINITION_REAL.db.Unscoped()
+	_, err := db.Delete(attribute_definition_realDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -216,9 +218,9 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 	var attribute_definition_realDB ATTRIBUTE_DEFINITION_REALDB
 	attribute_definition_realDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_REAL(attribute_definition_real)
 
-	query := backRepoATTRIBUTE_DEFINITION_REAL.db.Create(&attribute_definition_realDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoATTRIBUTE_DEFINITION_REAL.db.Create(&attribute_definition_realDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -286,9 +288,9 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 				append(attribute_definition_realDB.ATTRIBUTE_DEFINITION_REALPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_REAL, int(attribute_value_realAssocEnd_DB.ID))
 		}
 
-		query := backRepoATTRIBUTE_DEFINITION_REAL.db.Save(&attribute_definition_realDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_REAL.db.Save(attribute_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -307,9 +309,9 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) CheckoutPhaseOne() (Error error) {
 
 	attribute_definition_realDBArray := make([]ATTRIBUTE_DEFINITION_REALDB, 0)
-	query := backRepoATTRIBUTE_DEFINITION_REAL.db.Find(&attribute_definition_realDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoATTRIBUTE_DEFINITION_REAL.db.Find(&attribute_definition_realDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -438,7 +440,7 @@ func (backRepo *BackRepoStruct) CheckoutATTRIBUTE_DEFINITION_REAL(attribute_defi
 			var attribute_definition_realDB ATTRIBUTE_DEFINITION_REALDB
 			attribute_definition_realDB.ID = id
 
-			if err := backRepo.BackRepoATTRIBUTE_DEFINITION_REAL.db.First(&attribute_definition_realDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoATTRIBUTE_DEFINITION_REAL.db.First(&attribute_definition_realDB, id); err != nil {
 				log.Fatalln("CheckoutATTRIBUTE_DEFINITION_REAL : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoATTRIBUTE_DEFINITION_REAL.CheckoutPhaseOneInstance(&attribute_definition_realDB)
@@ -633,9 +635,9 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 
 		attribute_definition_realDB_ID_atBackupTime := attribute_definition_realDB.ID
 		attribute_definition_realDB.ID = 0
-		query := backRepoATTRIBUTE_DEFINITION_REAL.db.Create(attribute_definition_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_REAL.db.Create(attribute_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_DEFINITION_REAL.Map_ATTRIBUTE_DEFINITION_REALDBID_ATTRIBUTE_DEFINITION_REALDB[attribute_definition_realDB.ID] = attribute_definition_realDB
 		BackRepoATTRIBUTE_DEFINITION_REALid_atBckpTime_newID[attribute_definition_realDB_ID_atBackupTime] = attribute_definition_realDB.ID
@@ -670,9 +672,9 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 
 		attribute_definition_realDB_ID_atBackupTime := attribute_definition_realDB.ID
 		attribute_definition_realDB.ID = 0
-		query := backRepoATTRIBUTE_DEFINITION_REAL.db.Create(attribute_definition_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_REAL.db.Create(attribute_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_DEFINITION_REAL.Map_ATTRIBUTE_DEFINITION_REALDBID_ATTRIBUTE_DEFINITION_REALDB[attribute_definition_realDB.ID] = attribute_definition_realDB
 		BackRepoATTRIBUTE_DEFINITION_REALid_atBckpTime_newID[attribute_definition_realDB_ID_atBackupTime] = attribute_definition_realDB.ID
@@ -694,9 +696,10 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoATTRIBUTE_DEFINITION_REAL.db.Model(attribute_definition_realDB).Updates(*attribute_definition_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoATTRIBUTE_DEFINITION_REAL.db.Model(attribute_definition_realDB)
+		_, err := db.Updates(*attribute_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -573,347 +573,519 @@ func UnmarshallGongstructStaging(stage *StageStruct, cmap *ast.CommentMap, assig
 									switch gongstructName {
 									// insertion point for identifiers
 									case "ALTERNATIVE_ID":
-										instanceALTERNATIVE_ID := (&ALTERNATIVE_ID{Name: instanceName}).Stage(stage)
+										instanceALTERNATIVE_ID := new(ALTERNATIVE_ID)
+										instanceALTERNATIVE_ID.Name = instanceName
+										instanceALTERNATIVE_ID.Stage(stage)
 										instance = any(instanceALTERNATIVE_ID)
 										__gong__map_ALTERNATIVE_ID[identifier] = instanceALTERNATIVE_ID
 									case "ATTRIBUTE_DEFINITION_BOOLEAN":
-										instanceATTRIBUTE_DEFINITION_BOOLEAN := (&ATTRIBUTE_DEFINITION_BOOLEAN{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_BOOLEAN := new(ATTRIBUTE_DEFINITION_BOOLEAN)
+										instanceATTRIBUTE_DEFINITION_BOOLEAN.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_BOOLEAN.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_BOOLEAN)
 										__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[identifier] = instanceATTRIBUTE_DEFINITION_BOOLEAN
 									case "ATTRIBUTE_DEFINITION_DATE":
-										instanceATTRIBUTE_DEFINITION_DATE := (&ATTRIBUTE_DEFINITION_DATE{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_DATE := new(ATTRIBUTE_DEFINITION_DATE)
+										instanceATTRIBUTE_DEFINITION_DATE.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_DATE.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_DATE)
 										__gong__map_ATTRIBUTE_DEFINITION_DATE[identifier] = instanceATTRIBUTE_DEFINITION_DATE
 									case "ATTRIBUTE_DEFINITION_ENUMERATION":
-										instanceATTRIBUTE_DEFINITION_ENUMERATION := (&ATTRIBUTE_DEFINITION_ENUMERATION{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_ENUMERATION := new(ATTRIBUTE_DEFINITION_ENUMERATION)
+										instanceATTRIBUTE_DEFINITION_ENUMERATION.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_ENUMERATION.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_ENUMERATION)
 										__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[identifier] = instanceATTRIBUTE_DEFINITION_ENUMERATION
 									case "ATTRIBUTE_DEFINITION_INTEGER":
-										instanceATTRIBUTE_DEFINITION_INTEGER := (&ATTRIBUTE_DEFINITION_INTEGER{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_INTEGER := new(ATTRIBUTE_DEFINITION_INTEGER)
+										instanceATTRIBUTE_DEFINITION_INTEGER.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_INTEGER.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_INTEGER)
 										__gong__map_ATTRIBUTE_DEFINITION_INTEGER[identifier] = instanceATTRIBUTE_DEFINITION_INTEGER
 									case "ATTRIBUTE_DEFINITION_REAL":
-										instanceATTRIBUTE_DEFINITION_REAL := (&ATTRIBUTE_DEFINITION_REAL{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_REAL := new(ATTRIBUTE_DEFINITION_REAL)
+										instanceATTRIBUTE_DEFINITION_REAL.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_REAL.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_REAL)
 										__gong__map_ATTRIBUTE_DEFINITION_REAL[identifier] = instanceATTRIBUTE_DEFINITION_REAL
 									case "ATTRIBUTE_DEFINITION_STRING":
-										instanceATTRIBUTE_DEFINITION_STRING := (&ATTRIBUTE_DEFINITION_STRING{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_STRING := new(ATTRIBUTE_DEFINITION_STRING)
+										instanceATTRIBUTE_DEFINITION_STRING.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_STRING.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_STRING)
 										__gong__map_ATTRIBUTE_DEFINITION_STRING[identifier] = instanceATTRIBUTE_DEFINITION_STRING
 									case "ATTRIBUTE_DEFINITION_XHTML":
-										instanceATTRIBUTE_DEFINITION_XHTML := (&ATTRIBUTE_DEFINITION_XHTML{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_DEFINITION_XHTML := new(ATTRIBUTE_DEFINITION_XHTML)
+										instanceATTRIBUTE_DEFINITION_XHTML.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_XHTML.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_XHTML)
 										__gong__map_ATTRIBUTE_DEFINITION_XHTML[identifier] = instanceATTRIBUTE_DEFINITION_XHTML
 									case "ATTRIBUTE_VALUE_BOOLEAN":
-										instanceATTRIBUTE_VALUE_BOOLEAN := (&ATTRIBUTE_VALUE_BOOLEAN{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_BOOLEAN := new(ATTRIBUTE_VALUE_BOOLEAN)
+										instanceATTRIBUTE_VALUE_BOOLEAN.Name = instanceName
+										instanceATTRIBUTE_VALUE_BOOLEAN.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_BOOLEAN)
 										__gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifier] = instanceATTRIBUTE_VALUE_BOOLEAN
 									case "ATTRIBUTE_VALUE_DATE":
-										instanceATTRIBUTE_VALUE_DATE := (&ATTRIBUTE_VALUE_DATE{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_DATE := new(ATTRIBUTE_VALUE_DATE)
+										instanceATTRIBUTE_VALUE_DATE.Name = instanceName
+										instanceATTRIBUTE_VALUE_DATE.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_DATE)
 										__gong__map_ATTRIBUTE_VALUE_DATE[identifier] = instanceATTRIBUTE_VALUE_DATE
 									case "ATTRIBUTE_VALUE_ENUMERATION":
-										instanceATTRIBUTE_VALUE_ENUMERATION := (&ATTRIBUTE_VALUE_ENUMERATION{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_ENUMERATION := new(ATTRIBUTE_VALUE_ENUMERATION)
+										instanceATTRIBUTE_VALUE_ENUMERATION.Name = instanceName
+										instanceATTRIBUTE_VALUE_ENUMERATION.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_ENUMERATION)
 										__gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifier] = instanceATTRIBUTE_VALUE_ENUMERATION
 									case "ATTRIBUTE_VALUE_INTEGER":
-										instanceATTRIBUTE_VALUE_INTEGER := (&ATTRIBUTE_VALUE_INTEGER{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_INTEGER := new(ATTRIBUTE_VALUE_INTEGER)
+										instanceATTRIBUTE_VALUE_INTEGER.Name = instanceName
+										instanceATTRIBUTE_VALUE_INTEGER.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_INTEGER)
 										__gong__map_ATTRIBUTE_VALUE_INTEGER[identifier] = instanceATTRIBUTE_VALUE_INTEGER
 									case "ATTRIBUTE_VALUE_REAL":
-										instanceATTRIBUTE_VALUE_REAL := (&ATTRIBUTE_VALUE_REAL{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_REAL := new(ATTRIBUTE_VALUE_REAL)
+										instanceATTRIBUTE_VALUE_REAL.Name = instanceName
+										instanceATTRIBUTE_VALUE_REAL.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_REAL)
 										__gong__map_ATTRIBUTE_VALUE_REAL[identifier] = instanceATTRIBUTE_VALUE_REAL
 									case "ATTRIBUTE_VALUE_STRING":
-										instanceATTRIBUTE_VALUE_STRING := (&ATTRIBUTE_VALUE_STRING{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_STRING := new(ATTRIBUTE_VALUE_STRING)
+										instanceATTRIBUTE_VALUE_STRING.Name = instanceName
+										instanceATTRIBUTE_VALUE_STRING.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_STRING)
 										__gong__map_ATTRIBUTE_VALUE_STRING[identifier] = instanceATTRIBUTE_VALUE_STRING
 									case "ATTRIBUTE_VALUE_XHTML":
-										instanceATTRIBUTE_VALUE_XHTML := (&ATTRIBUTE_VALUE_XHTML{Name: instanceName}).Stage(stage)
+										instanceATTRIBUTE_VALUE_XHTML := new(ATTRIBUTE_VALUE_XHTML)
+										instanceATTRIBUTE_VALUE_XHTML.Name = instanceName
+										instanceATTRIBUTE_VALUE_XHTML.Stage(stage)
 										instance = any(instanceATTRIBUTE_VALUE_XHTML)
 										__gong__map_ATTRIBUTE_VALUE_XHTML[identifier] = instanceATTRIBUTE_VALUE_XHTML
 									case "AnyType":
-										instanceAnyType := (&AnyType{Name: instanceName}).Stage(stage)
+										instanceAnyType := new(AnyType)
+										instanceAnyType.Name = instanceName
+										instanceAnyType.Stage(stage)
 										instance = any(instanceAnyType)
 										__gong__map_AnyType[identifier] = instanceAnyType
 									case "DATATYPE_DEFINITION_BOOLEAN":
-										instanceDATATYPE_DEFINITION_BOOLEAN := (&DATATYPE_DEFINITION_BOOLEAN{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_BOOLEAN := new(DATATYPE_DEFINITION_BOOLEAN)
+										instanceDATATYPE_DEFINITION_BOOLEAN.Name = instanceName
+										instanceDATATYPE_DEFINITION_BOOLEAN.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_BOOLEAN)
 										__gong__map_DATATYPE_DEFINITION_BOOLEAN[identifier] = instanceDATATYPE_DEFINITION_BOOLEAN
 									case "DATATYPE_DEFINITION_DATE":
-										instanceDATATYPE_DEFINITION_DATE := (&DATATYPE_DEFINITION_DATE{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_DATE := new(DATATYPE_DEFINITION_DATE)
+										instanceDATATYPE_DEFINITION_DATE.Name = instanceName
+										instanceDATATYPE_DEFINITION_DATE.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_DATE)
 										__gong__map_DATATYPE_DEFINITION_DATE[identifier] = instanceDATATYPE_DEFINITION_DATE
 									case "DATATYPE_DEFINITION_ENUMERATION":
-										instanceDATATYPE_DEFINITION_ENUMERATION := (&DATATYPE_DEFINITION_ENUMERATION{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_ENUMERATION := new(DATATYPE_DEFINITION_ENUMERATION)
+										instanceDATATYPE_DEFINITION_ENUMERATION.Name = instanceName
+										instanceDATATYPE_DEFINITION_ENUMERATION.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_ENUMERATION)
 										__gong__map_DATATYPE_DEFINITION_ENUMERATION[identifier] = instanceDATATYPE_DEFINITION_ENUMERATION
 									case "DATATYPE_DEFINITION_INTEGER":
-										instanceDATATYPE_DEFINITION_INTEGER := (&DATATYPE_DEFINITION_INTEGER{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_INTEGER := new(DATATYPE_DEFINITION_INTEGER)
+										instanceDATATYPE_DEFINITION_INTEGER.Name = instanceName
+										instanceDATATYPE_DEFINITION_INTEGER.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_INTEGER)
 										__gong__map_DATATYPE_DEFINITION_INTEGER[identifier] = instanceDATATYPE_DEFINITION_INTEGER
 									case "DATATYPE_DEFINITION_REAL":
-										instanceDATATYPE_DEFINITION_REAL := (&DATATYPE_DEFINITION_REAL{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_REAL := new(DATATYPE_DEFINITION_REAL)
+										instanceDATATYPE_DEFINITION_REAL.Name = instanceName
+										instanceDATATYPE_DEFINITION_REAL.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_REAL)
 										__gong__map_DATATYPE_DEFINITION_REAL[identifier] = instanceDATATYPE_DEFINITION_REAL
 									case "DATATYPE_DEFINITION_STRING":
-										instanceDATATYPE_DEFINITION_STRING := (&DATATYPE_DEFINITION_STRING{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_STRING := new(DATATYPE_DEFINITION_STRING)
+										instanceDATATYPE_DEFINITION_STRING.Name = instanceName
+										instanceDATATYPE_DEFINITION_STRING.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_STRING)
 										__gong__map_DATATYPE_DEFINITION_STRING[identifier] = instanceDATATYPE_DEFINITION_STRING
 									case "DATATYPE_DEFINITION_XHTML":
-										instanceDATATYPE_DEFINITION_XHTML := (&DATATYPE_DEFINITION_XHTML{Name: instanceName}).Stage(stage)
+										instanceDATATYPE_DEFINITION_XHTML := new(DATATYPE_DEFINITION_XHTML)
+										instanceDATATYPE_DEFINITION_XHTML.Name = instanceName
+										instanceDATATYPE_DEFINITION_XHTML.Stage(stage)
 										instance = any(instanceDATATYPE_DEFINITION_XHTML)
 										__gong__map_DATATYPE_DEFINITION_XHTML[identifier] = instanceDATATYPE_DEFINITION_XHTML
 									case "EMBEDDED_VALUE":
-										instanceEMBEDDED_VALUE := (&EMBEDDED_VALUE{Name: instanceName}).Stage(stage)
+										instanceEMBEDDED_VALUE := new(EMBEDDED_VALUE)
+										instanceEMBEDDED_VALUE.Name = instanceName
+										instanceEMBEDDED_VALUE.Stage(stage)
 										instance = any(instanceEMBEDDED_VALUE)
 										__gong__map_EMBEDDED_VALUE[identifier] = instanceEMBEDDED_VALUE
 									case "ENUM_VALUE":
-										instanceENUM_VALUE := (&ENUM_VALUE{Name: instanceName}).Stage(stage)
+										instanceENUM_VALUE := new(ENUM_VALUE)
+										instanceENUM_VALUE.Name = instanceName
+										instanceENUM_VALUE.Stage(stage)
 										instance = any(instanceENUM_VALUE)
 										__gong__map_ENUM_VALUE[identifier] = instanceENUM_VALUE
 									case "RELATION_GROUP":
-										instanceRELATION_GROUP := (&RELATION_GROUP{Name: instanceName}).Stage(stage)
+										instanceRELATION_GROUP := new(RELATION_GROUP)
+										instanceRELATION_GROUP.Name = instanceName
+										instanceRELATION_GROUP.Stage(stage)
 										instance = any(instanceRELATION_GROUP)
 										__gong__map_RELATION_GROUP[identifier] = instanceRELATION_GROUP
 									case "RELATION_GROUP_TYPE":
-										instanceRELATION_GROUP_TYPE := (&RELATION_GROUP_TYPE{Name: instanceName}).Stage(stage)
+										instanceRELATION_GROUP_TYPE := new(RELATION_GROUP_TYPE)
+										instanceRELATION_GROUP_TYPE.Name = instanceName
+										instanceRELATION_GROUP_TYPE.Stage(stage)
 										instance = any(instanceRELATION_GROUP_TYPE)
 										__gong__map_RELATION_GROUP_TYPE[identifier] = instanceRELATION_GROUP_TYPE
 									case "REQ_IF":
-										instanceREQ_IF := (&REQ_IF{Name: instanceName}).Stage(stage)
+										instanceREQ_IF := new(REQ_IF)
+										instanceREQ_IF.Name = instanceName
+										instanceREQ_IF.Stage(stage)
 										instance = any(instanceREQ_IF)
 										__gong__map_REQ_IF[identifier] = instanceREQ_IF
 									case "REQ_IF_CONTENT":
-										instanceREQ_IF_CONTENT := (&REQ_IF_CONTENT{Name: instanceName}).Stage(stage)
+										instanceREQ_IF_CONTENT := new(REQ_IF_CONTENT)
+										instanceREQ_IF_CONTENT.Name = instanceName
+										instanceREQ_IF_CONTENT.Stage(stage)
 										instance = any(instanceREQ_IF_CONTENT)
 										__gong__map_REQ_IF_CONTENT[identifier] = instanceREQ_IF_CONTENT
 									case "REQ_IF_HEADER":
-										instanceREQ_IF_HEADER := (&REQ_IF_HEADER{Name: instanceName}).Stage(stage)
+										instanceREQ_IF_HEADER := new(REQ_IF_HEADER)
+										instanceREQ_IF_HEADER.Name = instanceName
+										instanceREQ_IF_HEADER.Stage(stage)
 										instance = any(instanceREQ_IF_HEADER)
 										__gong__map_REQ_IF_HEADER[identifier] = instanceREQ_IF_HEADER
 									case "REQ_IF_TOOL_EXTENSION":
-										instanceREQ_IF_TOOL_EXTENSION := (&REQ_IF_TOOL_EXTENSION{Name: instanceName}).Stage(stage)
+										instanceREQ_IF_TOOL_EXTENSION := new(REQ_IF_TOOL_EXTENSION)
+										instanceREQ_IF_TOOL_EXTENSION.Name = instanceName
+										instanceREQ_IF_TOOL_EXTENSION.Stage(stage)
 										instance = any(instanceREQ_IF_TOOL_EXTENSION)
 										__gong__map_REQ_IF_TOOL_EXTENSION[identifier] = instanceREQ_IF_TOOL_EXTENSION
 									case "SPECIFICATION":
-										instanceSPECIFICATION := (&SPECIFICATION{Name: instanceName}).Stage(stage)
+										instanceSPECIFICATION := new(SPECIFICATION)
+										instanceSPECIFICATION.Name = instanceName
+										instanceSPECIFICATION.Stage(stage)
 										instance = any(instanceSPECIFICATION)
 										__gong__map_SPECIFICATION[identifier] = instanceSPECIFICATION
 									case "SPECIFICATION_TYPE":
-										instanceSPECIFICATION_TYPE := (&SPECIFICATION_TYPE{Name: instanceName}).Stage(stage)
+										instanceSPECIFICATION_TYPE := new(SPECIFICATION_TYPE)
+										instanceSPECIFICATION_TYPE.Name = instanceName
+										instanceSPECIFICATION_TYPE.Stage(stage)
 										instance = any(instanceSPECIFICATION_TYPE)
 										__gong__map_SPECIFICATION_TYPE[identifier] = instanceSPECIFICATION_TYPE
 									case "SPEC_HIERARCHY":
-										instanceSPEC_HIERARCHY := (&SPEC_HIERARCHY{Name: instanceName}).Stage(stage)
+										instanceSPEC_HIERARCHY := new(SPEC_HIERARCHY)
+										instanceSPEC_HIERARCHY.Name = instanceName
+										instanceSPEC_HIERARCHY.Stage(stage)
 										instance = any(instanceSPEC_HIERARCHY)
 										__gong__map_SPEC_HIERARCHY[identifier] = instanceSPEC_HIERARCHY
 									case "SPEC_OBJECT":
-										instanceSPEC_OBJECT := (&SPEC_OBJECT{Name: instanceName}).Stage(stage)
+										instanceSPEC_OBJECT := new(SPEC_OBJECT)
+										instanceSPEC_OBJECT.Name = instanceName
+										instanceSPEC_OBJECT.Stage(stage)
 										instance = any(instanceSPEC_OBJECT)
 										__gong__map_SPEC_OBJECT[identifier] = instanceSPEC_OBJECT
 									case "SPEC_OBJECT_TYPE":
-										instanceSPEC_OBJECT_TYPE := (&SPEC_OBJECT_TYPE{Name: instanceName}).Stage(stage)
+										instanceSPEC_OBJECT_TYPE := new(SPEC_OBJECT_TYPE)
+										instanceSPEC_OBJECT_TYPE.Name = instanceName
+										instanceSPEC_OBJECT_TYPE.Stage(stage)
 										instance = any(instanceSPEC_OBJECT_TYPE)
 										__gong__map_SPEC_OBJECT_TYPE[identifier] = instanceSPEC_OBJECT_TYPE
 									case "SPEC_RELATION":
-										instanceSPEC_RELATION := (&SPEC_RELATION{Name: instanceName}).Stage(stage)
+										instanceSPEC_RELATION := new(SPEC_RELATION)
+										instanceSPEC_RELATION.Name = instanceName
+										instanceSPEC_RELATION.Stage(stage)
 										instance = any(instanceSPEC_RELATION)
 										__gong__map_SPEC_RELATION[identifier] = instanceSPEC_RELATION
 									case "SPEC_RELATION_TYPE":
-										instanceSPEC_RELATION_TYPE := (&SPEC_RELATION_TYPE{Name: instanceName}).Stage(stage)
+										instanceSPEC_RELATION_TYPE := new(SPEC_RELATION_TYPE)
+										instanceSPEC_RELATION_TYPE.Name = instanceName
+										instanceSPEC_RELATION_TYPE.Stage(stage)
 										instance = any(instanceSPEC_RELATION_TYPE)
 										__gong__map_SPEC_RELATION_TYPE[identifier] = instanceSPEC_RELATION_TYPE
 									case "XHTML_CONTENT":
-										instanceXHTML_CONTENT := (&XHTML_CONTENT{Name: instanceName}).Stage(stage)
+										instanceXHTML_CONTENT := new(XHTML_CONTENT)
+										instanceXHTML_CONTENT.Name = instanceName
+										instanceXHTML_CONTENT.Stage(stage)
 										instance = any(instanceXHTML_CONTENT)
 										__gong__map_XHTML_CONTENT[identifier] = instanceXHTML_CONTENT
 									case "Xhtml_InlPres_type":
-										instanceXhtml_InlPres_type := (&Xhtml_InlPres_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_InlPres_type := new(Xhtml_InlPres_type)
+										instanceXhtml_InlPres_type.Name = instanceName
+										instanceXhtml_InlPres_type.Stage(stage)
 										instance = any(instanceXhtml_InlPres_type)
 										__gong__map_Xhtml_InlPres_type[identifier] = instanceXhtml_InlPres_type
 									case "Xhtml_a_type":
-										instanceXhtml_a_type := (&Xhtml_a_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_a_type := new(Xhtml_a_type)
+										instanceXhtml_a_type.Name = instanceName
+										instanceXhtml_a_type.Stage(stage)
 										instance = any(instanceXhtml_a_type)
 										__gong__map_Xhtml_a_type[identifier] = instanceXhtml_a_type
 									case "Xhtml_abbr_type":
-										instanceXhtml_abbr_type := (&Xhtml_abbr_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_abbr_type := new(Xhtml_abbr_type)
+										instanceXhtml_abbr_type.Name = instanceName
+										instanceXhtml_abbr_type.Stage(stage)
 										instance = any(instanceXhtml_abbr_type)
 										__gong__map_Xhtml_abbr_type[identifier] = instanceXhtml_abbr_type
 									case "Xhtml_acronym_type":
-										instanceXhtml_acronym_type := (&Xhtml_acronym_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_acronym_type := new(Xhtml_acronym_type)
+										instanceXhtml_acronym_type.Name = instanceName
+										instanceXhtml_acronym_type.Stage(stage)
 										instance = any(instanceXhtml_acronym_type)
 										__gong__map_Xhtml_acronym_type[identifier] = instanceXhtml_acronym_type
 									case "Xhtml_address_type":
-										instanceXhtml_address_type := (&Xhtml_address_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_address_type := new(Xhtml_address_type)
+										instanceXhtml_address_type.Name = instanceName
+										instanceXhtml_address_type.Stage(stage)
 										instance = any(instanceXhtml_address_type)
 										__gong__map_Xhtml_address_type[identifier] = instanceXhtml_address_type
 									case "Xhtml_blockquote_type":
-										instanceXhtml_blockquote_type := (&Xhtml_blockquote_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_blockquote_type := new(Xhtml_blockquote_type)
+										instanceXhtml_blockquote_type.Name = instanceName
+										instanceXhtml_blockquote_type.Stage(stage)
 										instance = any(instanceXhtml_blockquote_type)
 										__gong__map_Xhtml_blockquote_type[identifier] = instanceXhtml_blockquote_type
 									case "Xhtml_br_type":
-										instanceXhtml_br_type := (&Xhtml_br_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_br_type := new(Xhtml_br_type)
+										instanceXhtml_br_type.Name = instanceName
+										instanceXhtml_br_type.Stage(stage)
 										instance = any(instanceXhtml_br_type)
 										__gong__map_Xhtml_br_type[identifier] = instanceXhtml_br_type
 									case "Xhtml_caption_type":
-										instanceXhtml_caption_type := (&Xhtml_caption_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_caption_type := new(Xhtml_caption_type)
+										instanceXhtml_caption_type.Name = instanceName
+										instanceXhtml_caption_type.Stage(stage)
 										instance = any(instanceXhtml_caption_type)
 										__gong__map_Xhtml_caption_type[identifier] = instanceXhtml_caption_type
 									case "Xhtml_cite_type":
-										instanceXhtml_cite_type := (&Xhtml_cite_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_cite_type := new(Xhtml_cite_type)
+										instanceXhtml_cite_type.Name = instanceName
+										instanceXhtml_cite_type.Stage(stage)
 										instance = any(instanceXhtml_cite_type)
 										__gong__map_Xhtml_cite_type[identifier] = instanceXhtml_cite_type
 									case "Xhtml_code_type":
-										instanceXhtml_code_type := (&Xhtml_code_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_code_type := new(Xhtml_code_type)
+										instanceXhtml_code_type.Name = instanceName
+										instanceXhtml_code_type.Stage(stage)
 										instance = any(instanceXhtml_code_type)
 										__gong__map_Xhtml_code_type[identifier] = instanceXhtml_code_type
 									case "Xhtml_col_type":
-										instanceXhtml_col_type := (&Xhtml_col_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_col_type := new(Xhtml_col_type)
+										instanceXhtml_col_type.Name = instanceName
+										instanceXhtml_col_type.Stage(stage)
 										instance = any(instanceXhtml_col_type)
 										__gong__map_Xhtml_col_type[identifier] = instanceXhtml_col_type
 									case "Xhtml_colgroup_type":
-										instanceXhtml_colgroup_type := (&Xhtml_colgroup_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_colgroup_type := new(Xhtml_colgroup_type)
+										instanceXhtml_colgroup_type.Name = instanceName
+										instanceXhtml_colgroup_type.Stage(stage)
 										instance = any(instanceXhtml_colgroup_type)
 										__gong__map_Xhtml_colgroup_type[identifier] = instanceXhtml_colgroup_type
 									case "Xhtml_dd_type":
-										instanceXhtml_dd_type := (&Xhtml_dd_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_dd_type := new(Xhtml_dd_type)
+										instanceXhtml_dd_type.Name = instanceName
+										instanceXhtml_dd_type.Stage(stage)
 										instance = any(instanceXhtml_dd_type)
 										__gong__map_Xhtml_dd_type[identifier] = instanceXhtml_dd_type
 									case "Xhtml_dfn_type":
-										instanceXhtml_dfn_type := (&Xhtml_dfn_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_dfn_type := new(Xhtml_dfn_type)
+										instanceXhtml_dfn_type.Name = instanceName
+										instanceXhtml_dfn_type.Stage(stage)
 										instance = any(instanceXhtml_dfn_type)
 										__gong__map_Xhtml_dfn_type[identifier] = instanceXhtml_dfn_type
 									case "Xhtml_div_type":
-										instanceXhtml_div_type := (&Xhtml_div_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_div_type := new(Xhtml_div_type)
+										instanceXhtml_div_type.Name = instanceName
+										instanceXhtml_div_type.Stage(stage)
 										instance = any(instanceXhtml_div_type)
 										__gong__map_Xhtml_div_type[identifier] = instanceXhtml_div_type
 									case "Xhtml_dl_type":
-										instanceXhtml_dl_type := (&Xhtml_dl_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_dl_type := new(Xhtml_dl_type)
+										instanceXhtml_dl_type.Name = instanceName
+										instanceXhtml_dl_type.Stage(stage)
 										instance = any(instanceXhtml_dl_type)
 										__gong__map_Xhtml_dl_type[identifier] = instanceXhtml_dl_type
 									case "Xhtml_dt_type":
-										instanceXhtml_dt_type := (&Xhtml_dt_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_dt_type := new(Xhtml_dt_type)
+										instanceXhtml_dt_type.Name = instanceName
+										instanceXhtml_dt_type.Stage(stage)
 										instance = any(instanceXhtml_dt_type)
 										__gong__map_Xhtml_dt_type[identifier] = instanceXhtml_dt_type
 									case "Xhtml_edit_type":
-										instanceXhtml_edit_type := (&Xhtml_edit_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_edit_type := new(Xhtml_edit_type)
+										instanceXhtml_edit_type.Name = instanceName
+										instanceXhtml_edit_type.Stage(stage)
 										instance = any(instanceXhtml_edit_type)
 										__gong__map_Xhtml_edit_type[identifier] = instanceXhtml_edit_type
 									case "Xhtml_em_type":
-										instanceXhtml_em_type := (&Xhtml_em_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_em_type := new(Xhtml_em_type)
+										instanceXhtml_em_type.Name = instanceName
+										instanceXhtml_em_type.Stage(stage)
 										instance = any(instanceXhtml_em_type)
 										__gong__map_Xhtml_em_type[identifier] = instanceXhtml_em_type
 									case "Xhtml_h1_type":
-										instanceXhtml_h1_type := (&Xhtml_h1_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_h1_type := new(Xhtml_h1_type)
+										instanceXhtml_h1_type.Name = instanceName
+										instanceXhtml_h1_type.Stage(stage)
 										instance = any(instanceXhtml_h1_type)
 										__gong__map_Xhtml_h1_type[identifier] = instanceXhtml_h1_type
 									case "Xhtml_h2_type":
-										instanceXhtml_h2_type := (&Xhtml_h2_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_h2_type := new(Xhtml_h2_type)
+										instanceXhtml_h2_type.Name = instanceName
+										instanceXhtml_h2_type.Stage(stage)
 										instance = any(instanceXhtml_h2_type)
 										__gong__map_Xhtml_h2_type[identifier] = instanceXhtml_h2_type
 									case "Xhtml_h3_type":
-										instanceXhtml_h3_type := (&Xhtml_h3_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_h3_type := new(Xhtml_h3_type)
+										instanceXhtml_h3_type.Name = instanceName
+										instanceXhtml_h3_type.Stage(stage)
 										instance = any(instanceXhtml_h3_type)
 										__gong__map_Xhtml_h3_type[identifier] = instanceXhtml_h3_type
 									case "Xhtml_h4_type":
-										instanceXhtml_h4_type := (&Xhtml_h4_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_h4_type := new(Xhtml_h4_type)
+										instanceXhtml_h4_type.Name = instanceName
+										instanceXhtml_h4_type.Stage(stage)
 										instance = any(instanceXhtml_h4_type)
 										__gong__map_Xhtml_h4_type[identifier] = instanceXhtml_h4_type
 									case "Xhtml_h5_type":
-										instanceXhtml_h5_type := (&Xhtml_h5_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_h5_type := new(Xhtml_h5_type)
+										instanceXhtml_h5_type.Name = instanceName
+										instanceXhtml_h5_type.Stage(stage)
 										instance = any(instanceXhtml_h5_type)
 										__gong__map_Xhtml_h5_type[identifier] = instanceXhtml_h5_type
 									case "Xhtml_h6_type":
-										instanceXhtml_h6_type := (&Xhtml_h6_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_h6_type := new(Xhtml_h6_type)
+										instanceXhtml_h6_type.Name = instanceName
+										instanceXhtml_h6_type.Stage(stage)
 										instance = any(instanceXhtml_h6_type)
 										__gong__map_Xhtml_h6_type[identifier] = instanceXhtml_h6_type
 									case "Xhtml_heading_type":
-										instanceXhtml_heading_type := (&Xhtml_heading_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_heading_type := new(Xhtml_heading_type)
+										instanceXhtml_heading_type.Name = instanceName
+										instanceXhtml_heading_type.Stage(stage)
 										instance = any(instanceXhtml_heading_type)
 										__gong__map_Xhtml_heading_type[identifier] = instanceXhtml_heading_type
 									case "Xhtml_hr_type":
-										instanceXhtml_hr_type := (&Xhtml_hr_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_hr_type := new(Xhtml_hr_type)
+										instanceXhtml_hr_type.Name = instanceName
+										instanceXhtml_hr_type.Stage(stage)
 										instance = any(instanceXhtml_hr_type)
 										__gong__map_Xhtml_hr_type[identifier] = instanceXhtml_hr_type
 									case "Xhtml_kbd_type":
-										instanceXhtml_kbd_type := (&Xhtml_kbd_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_kbd_type := new(Xhtml_kbd_type)
+										instanceXhtml_kbd_type.Name = instanceName
+										instanceXhtml_kbd_type.Stage(stage)
 										instance = any(instanceXhtml_kbd_type)
 										__gong__map_Xhtml_kbd_type[identifier] = instanceXhtml_kbd_type
 									case "Xhtml_li_type":
-										instanceXhtml_li_type := (&Xhtml_li_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_li_type := new(Xhtml_li_type)
+										instanceXhtml_li_type.Name = instanceName
+										instanceXhtml_li_type.Stage(stage)
 										instance = any(instanceXhtml_li_type)
 										__gong__map_Xhtml_li_type[identifier] = instanceXhtml_li_type
 									case "Xhtml_object_type":
-										instanceXhtml_object_type := (&Xhtml_object_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_object_type := new(Xhtml_object_type)
+										instanceXhtml_object_type.Name = instanceName
+										instanceXhtml_object_type.Stage(stage)
 										instance = any(instanceXhtml_object_type)
 										__gong__map_Xhtml_object_type[identifier] = instanceXhtml_object_type
 									case "Xhtml_ol_type":
-										instanceXhtml_ol_type := (&Xhtml_ol_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_ol_type := new(Xhtml_ol_type)
+										instanceXhtml_ol_type.Name = instanceName
+										instanceXhtml_ol_type.Stage(stage)
 										instance = any(instanceXhtml_ol_type)
 										__gong__map_Xhtml_ol_type[identifier] = instanceXhtml_ol_type
 									case "Xhtml_p_type":
-										instanceXhtml_p_type := (&Xhtml_p_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_p_type := new(Xhtml_p_type)
+										instanceXhtml_p_type.Name = instanceName
+										instanceXhtml_p_type.Stage(stage)
 										instance = any(instanceXhtml_p_type)
 										__gong__map_Xhtml_p_type[identifier] = instanceXhtml_p_type
 									case "Xhtml_param_type":
-										instanceXhtml_param_type := (&Xhtml_param_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_param_type := new(Xhtml_param_type)
+										instanceXhtml_param_type.Name = instanceName
+										instanceXhtml_param_type.Stage(stage)
 										instance = any(instanceXhtml_param_type)
 										__gong__map_Xhtml_param_type[identifier] = instanceXhtml_param_type
 									case "Xhtml_pre_type":
-										instanceXhtml_pre_type := (&Xhtml_pre_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_pre_type := new(Xhtml_pre_type)
+										instanceXhtml_pre_type.Name = instanceName
+										instanceXhtml_pre_type.Stage(stage)
 										instance = any(instanceXhtml_pre_type)
 										__gong__map_Xhtml_pre_type[identifier] = instanceXhtml_pre_type
 									case "Xhtml_q_type":
-										instanceXhtml_q_type := (&Xhtml_q_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_q_type := new(Xhtml_q_type)
+										instanceXhtml_q_type.Name = instanceName
+										instanceXhtml_q_type.Stage(stage)
 										instance = any(instanceXhtml_q_type)
 										__gong__map_Xhtml_q_type[identifier] = instanceXhtml_q_type
 									case "Xhtml_samp_type":
-										instanceXhtml_samp_type := (&Xhtml_samp_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_samp_type := new(Xhtml_samp_type)
+										instanceXhtml_samp_type.Name = instanceName
+										instanceXhtml_samp_type.Stage(stage)
 										instance = any(instanceXhtml_samp_type)
 										__gong__map_Xhtml_samp_type[identifier] = instanceXhtml_samp_type
 									case "Xhtml_span_type":
-										instanceXhtml_span_type := (&Xhtml_span_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_span_type := new(Xhtml_span_type)
+										instanceXhtml_span_type.Name = instanceName
+										instanceXhtml_span_type.Stage(stage)
 										instance = any(instanceXhtml_span_type)
 										__gong__map_Xhtml_span_type[identifier] = instanceXhtml_span_type
 									case "Xhtml_strong_type":
-										instanceXhtml_strong_type := (&Xhtml_strong_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_strong_type := new(Xhtml_strong_type)
+										instanceXhtml_strong_type.Name = instanceName
+										instanceXhtml_strong_type.Stage(stage)
 										instance = any(instanceXhtml_strong_type)
 										__gong__map_Xhtml_strong_type[identifier] = instanceXhtml_strong_type
 									case "Xhtml_table_type":
-										instanceXhtml_table_type := (&Xhtml_table_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_table_type := new(Xhtml_table_type)
+										instanceXhtml_table_type.Name = instanceName
+										instanceXhtml_table_type.Stage(stage)
 										instance = any(instanceXhtml_table_type)
 										__gong__map_Xhtml_table_type[identifier] = instanceXhtml_table_type
 									case "Xhtml_tbody_type":
-										instanceXhtml_tbody_type := (&Xhtml_tbody_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_tbody_type := new(Xhtml_tbody_type)
+										instanceXhtml_tbody_type.Name = instanceName
+										instanceXhtml_tbody_type.Stage(stage)
 										instance = any(instanceXhtml_tbody_type)
 										__gong__map_Xhtml_tbody_type[identifier] = instanceXhtml_tbody_type
 									case "Xhtml_td_type":
-										instanceXhtml_td_type := (&Xhtml_td_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_td_type := new(Xhtml_td_type)
+										instanceXhtml_td_type.Name = instanceName
+										instanceXhtml_td_type.Stage(stage)
 										instance = any(instanceXhtml_td_type)
 										__gong__map_Xhtml_td_type[identifier] = instanceXhtml_td_type
 									case "Xhtml_tfoot_type":
-										instanceXhtml_tfoot_type := (&Xhtml_tfoot_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_tfoot_type := new(Xhtml_tfoot_type)
+										instanceXhtml_tfoot_type.Name = instanceName
+										instanceXhtml_tfoot_type.Stage(stage)
 										instance = any(instanceXhtml_tfoot_type)
 										__gong__map_Xhtml_tfoot_type[identifier] = instanceXhtml_tfoot_type
 									case "Xhtml_th_type":
-										instanceXhtml_th_type := (&Xhtml_th_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_th_type := new(Xhtml_th_type)
+										instanceXhtml_th_type.Name = instanceName
+										instanceXhtml_th_type.Stage(stage)
 										instance = any(instanceXhtml_th_type)
 										__gong__map_Xhtml_th_type[identifier] = instanceXhtml_th_type
 									case "Xhtml_thead_type":
-										instanceXhtml_thead_type := (&Xhtml_thead_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_thead_type := new(Xhtml_thead_type)
+										instanceXhtml_thead_type.Name = instanceName
+										instanceXhtml_thead_type.Stage(stage)
 										instance = any(instanceXhtml_thead_type)
 										__gong__map_Xhtml_thead_type[identifier] = instanceXhtml_thead_type
 									case "Xhtml_tr_type":
-										instanceXhtml_tr_type := (&Xhtml_tr_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_tr_type := new(Xhtml_tr_type)
+										instanceXhtml_tr_type.Name = instanceName
+										instanceXhtml_tr_type.Stage(stage)
 										instance = any(instanceXhtml_tr_type)
 										__gong__map_Xhtml_tr_type[identifier] = instanceXhtml_tr_type
 									case "Xhtml_ul_type":
-										instanceXhtml_ul_type := (&Xhtml_ul_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_ul_type := new(Xhtml_ul_type)
+										instanceXhtml_ul_type.Name = instanceName
+										instanceXhtml_ul_type.Stage(stage)
 										instance = any(instanceXhtml_ul_type)
 										__gong__map_Xhtml_ul_type[identifier] = instanceXhtml_ul_type
 									case "Xhtml_var_type":
-										instanceXhtml_var_type := (&Xhtml_var_type{Name: instanceName}).Stage(stage)
+										instanceXhtml_var_type := new(Xhtml_var_type)
+										instanceXhtml_var_type.Name = instanceName
+										instanceXhtml_var_type.Stage(stage)
 										instance = any(instanceXhtml_var_type)
 										__gong__map_Xhtml_var_type[identifier] = instanceXhtml_var_type
 									}

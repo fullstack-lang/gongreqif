@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_VALUE_XHTMLs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_VALUE_XHTML.GetDB()
 
-	query := db.Find(&attribute_value_xhtmlDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_value_xhtmlDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_VALUE_XHTML(c *gin.Context) {
 	attribute_value_xhtmlDB.ATTRIBUTE_VALUE_XHTMLPointersEncoding = input.ATTRIBUTE_VALUE_XHTMLPointersEncoding
 	attribute_value_xhtmlDB.CopyBasicFieldsFromATTRIBUTE_VALUE_XHTML_WOP(&input.ATTRIBUTE_VALUE_XHTML_WOP)
 
-	query := db.Create(&attribute_value_xhtmlDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_value_xhtmlDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_VALUE_XHTML(c *gin.Context) {
 
 	// Get attribute_value_xhtmlDB in DB
 	var attribute_value_xhtmlDB orm.ATTRIBUTE_VALUE_XHTMLDB
-	if err := db.First(&attribute_value_xhtmlDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_value_xhtmlDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_XHTML(c *gin.Context) {
 	var attribute_value_xhtmlDB orm.ATTRIBUTE_VALUE_XHTMLDB
 
 	// fetch the attribute_value_xhtml
-	query := db.First(&attribute_value_xhtmlDB, c.Param("id"))
+	_, err := db.First(&attribute_value_xhtmlDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_XHTML(c *gin.Context) {
 	attribute_value_xhtmlDB.CopyBasicFieldsFromATTRIBUTE_VALUE_XHTML_WOP(&input.ATTRIBUTE_VALUE_XHTML_WOP)
 	attribute_value_xhtmlDB.ATTRIBUTE_VALUE_XHTMLPointersEncoding = input.ATTRIBUTE_VALUE_XHTMLPointersEncoding
 
-	query = db.Model(&attribute_value_xhtmlDB).Updates(attribute_value_xhtmlDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_value_xhtmlDB)
+	_, err = db.Updates(&attribute_value_xhtmlDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_VALUE_XHTML(c *gin.Context) {
 
 	// Get model if exist
 	var attribute_value_xhtmlDB orm.ATTRIBUTE_VALUE_XHTMLDB
-	if err := db.First(&attribute_value_xhtmlDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_value_xhtmlDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_VALUE_XHTML(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_value_xhtmlDB)
+	db.Unscoped()
+	db.Delete(&attribute_value_xhtmlDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_value_xhtmlDeleted := new(models.ATTRIBUTE_VALUE_XHTML)

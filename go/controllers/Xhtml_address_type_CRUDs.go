@@ -70,12 +70,12 @@ func (controller *Controller) GetXhtml_address_types(c *gin.Context) {
 	}
 	db := backRepo.BackRepoXhtml_address_type.GetDB()
 
-	query := db.Find(&xhtml_address_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&xhtml_address_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostXhtml_address_type(c *gin.Context) {
 	xhtml_address_typeDB.Xhtml_address_typePointersEncoding = input.Xhtml_address_typePointersEncoding
 	xhtml_address_typeDB.CopyBasicFieldsFromXhtml_address_type_WOP(&input.Xhtml_address_type_WOP)
 
-	query := db.Create(&xhtml_address_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&xhtml_address_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetXhtml_address_type(c *gin.Context) {
 
 	// Get xhtml_address_typeDB in DB
 	var xhtml_address_typeDB orm.Xhtml_address_typeDB
-	if err := db.First(&xhtml_address_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_address_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateXhtml_address_type(c *gin.Context) {
 	var xhtml_address_typeDB orm.Xhtml_address_typeDB
 
 	// fetch the xhtml_address_type
-	query := db.First(&xhtml_address_typeDB, c.Param("id"))
+	_, err := db.First(&xhtml_address_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateXhtml_address_type(c *gin.Context) {
 	xhtml_address_typeDB.CopyBasicFieldsFromXhtml_address_type_WOP(&input.Xhtml_address_type_WOP)
 	xhtml_address_typeDB.Xhtml_address_typePointersEncoding = input.Xhtml_address_typePointersEncoding
 
-	query = db.Model(&xhtml_address_typeDB).Updates(xhtml_address_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&xhtml_address_typeDB)
+	_, err = db.Updates(&xhtml_address_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteXhtml_address_type(c *gin.Context) {
 
 	// Get model if exist
 	var xhtml_address_typeDB orm.Xhtml_address_typeDB
-	if err := db.First(&xhtml_address_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_address_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteXhtml_address_type(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&xhtml_address_typeDB)
+	db.Unscoped()
+	db.Delete(&xhtml_address_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	xhtml_address_typeDeleted := new(models.Xhtml_address_type)

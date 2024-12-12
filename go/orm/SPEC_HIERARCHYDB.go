@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -92,7 +93,7 @@ type SPEC_HIERARCHYDB struct {
 
 	// Declation for basic field spec_hierarchyDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	SPEC_HIERARCHYPointersEncoding
@@ -150,7 +151,7 @@ type BackRepoSPEC_HIERARCHYStruct struct {
 	// stores SPEC_HIERARCHY according to their gorm ID
 	Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYPtr map[uint]*models.SPEC_HIERARCHY
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -160,7 +161,7 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) GetStage() (stage *m
 	return
 }
 
-func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) GetDB() *gorm.DB {
+func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) GetDB() db.DBInterface {
 	return backRepoSPEC_HIERARCHY.db
 }
 
@@ -197,9 +198,10 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitDeleteInstance
 
 	// spec_hierarchy is not staged anymore, remove spec_hierarchyDB
 	spec_hierarchyDB := backRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYDB[id]
-	query := backRepoSPEC_HIERARCHY.db.Unscoped().Delete(&spec_hierarchyDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoSPEC_HIERARCHY.db.Unscoped()
+	_, err := db.Delete(spec_hierarchyDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -223,9 +225,9 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseOneInstan
 	var spec_hierarchyDB SPEC_HIERARCHYDB
 	spec_hierarchyDB.CopyBasicFieldsFromSPEC_HIERARCHY(spec_hierarchy)
 
-	query := backRepoSPEC_HIERARCHY.db.Create(&spec_hierarchyDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoSPEC_HIERARCHY.db.Create(&spec_hierarchyDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -293,9 +295,9 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseTwoInstan
 				append(spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.CHILDREN.SPEC_HIERARCHY, int(spec_hierarchyAssocEnd_DB.ID))
 		}
 
-		query := backRepoSPEC_HIERARCHY.db.Save(&spec_hierarchyDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoSPEC_HIERARCHY.db.Save(spec_hierarchyDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -314,9 +316,9 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseTwoInstan
 func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CheckoutPhaseOne() (Error error) {
 
 	spec_hierarchyDBArray := make([]SPEC_HIERARCHYDB, 0)
-	query := backRepoSPEC_HIERARCHY.db.Find(&spec_hierarchyDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoSPEC_HIERARCHY.db.Find(&spec_hierarchyDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -445,7 +447,7 @@ func (backRepo *BackRepoStruct) CheckoutSPEC_HIERARCHY(spec_hierarchy *models.SP
 			var spec_hierarchyDB SPEC_HIERARCHYDB
 			spec_hierarchyDB.ID = id
 
-			if err := backRepo.BackRepoSPEC_HIERARCHY.db.First(&spec_hierarchyDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoSPEC_HIERARCHY.db.First(&spec_hierarchyDB, id); err != nil {
 				log.Fatalln("CheckoutSPEC_HIERARCHY : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoSPEC_HIERARCHY.CheckoutPhaseOneInstance(&spec_hierarchyDB)
@@ -652,9 +654,9 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) rowVisitorSPEC_HIERA
 
 		spec_hierarchyDB_ID_atBackupTime := spec_hierarchyDB.ID
 		spec_hierarchyDB.ID = 0
-		query := backRepoSPEC_HIERARCHY.db.Create(spec_hierarchyDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoSPEC_HIERARCHY.db.Create(spec_hierarchyDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYDB[spec_hierarchyDB.ID] = spec_hierarchyDB
 		BackRepoSPEC_HIERARCHYid_atBckpTime_newID[spec_hierarchyDB_ID_atBackupTime] = spec_hierarchyDB.ID
@@ -689,9 +691,9 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) RestorePhaseOne(dirP
 
 		spec_hierarchyDB_ID_atBackupTime := spec_hierarchyDB.ID
 		spec_hierarchyDB.ID = 0
-		query := backRepoSPEC_HIERARCHY.db.Create(spec_hierarchyDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoSPEC_HIERARCHY.db.Create(spec_hierarchyDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYDB[spec_hierarchyDB.ID] = spec_hierarchyDB
 		BackRepoSPEC_HIERARCHYid_atBckpTime_newID[spec_hierarchyDB_ID_atBackupTime] = spec_hierarchyDB.ID
@@ -713,9 +715,10 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoSPEC_HIERARCHY.db.Model(spec_hierarchyDB).Updates(*spec_hierarchyDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoSPEC_HIERARCHY.db.Model(spec_hierarchyDB)
+		_, err := db.Updates(*spec_hierarchyDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

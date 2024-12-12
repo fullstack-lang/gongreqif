@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -83,7 +84,7 @@ type DATATYPE_DEFINITION_REALDB struct {
 
 	// Declation for basic field datatype_definition_realDB.MIN
 	MIN_Data sql.NullFloat64
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	DATATYPE_DEFINITION_REALPointersEncoding
@@ -141,7 +142,7 @@ type BackRepoDATATYPE_DEFINITION_REALStruct struct {
 	// stores DATATYPE_DEFINITION_REAL according to their gorm ID
 	Map_DATATYPE_DEFINITION_REALDBID_DATATYPE_DEFINITION_REALPtr map[uint]*models.DATATYPE_DEFINITION_REAL
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -151,7 +152,7 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 	return
 }
 
-func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) GetDB() *gorm.DB {
+func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) GetDB() db.DBInterface {
 	return backRepoDATATYPE_DEFINITION_REAL.db
 }
 
@@ -188,9 +189,10 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 
 	// datatype_definition_real is not staged anymore, remove datatype_definition_realDB
 	datatype_definition_realDB := backRepoDATATYPE_DEFINITION_REAL.Map_DATATYPE_DEFINITION_REALDBID_DATATYPE_DEFINITION_REALDB[id]
-	query := backRepoDATATYPE_DEFINITION_REAL.db.Unscoped().Delete(&datatype_definition_realDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoDATATYPE_DEFINITION_REAL.db.Unscoped()
+	_, err := db.Delete(datatype_definition_realDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -214,9 +216,9 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 	var datatype_definition_realDB DATATYPE_DEFINITION_REALDB
 	datatype_definition_realDB.CopyBasicFieldsFromDATATYPE_DEFINITION_REAL(datatype_definition_real)
 
-	query := backRepoDATATYPE_DEFINITION_REAL.db.Create(&datatype_definition_realDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoDATATYPE_DEFINITION_REAL.db.Create(&datatype_definition_realDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -266,9 +268,9 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 				append(datatype_definition_realDB.DATATYPE_DEFINITION_REALPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
 		}
 
-		query := backRepoDATATYPE_DEFINITION_REAL.db.Save(&datatype_definition_realDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_REAL.db.Save(datatype_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -287,9 +289,9 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) CheckoutPhaseOne() (Error error) {
 
 	datatype_definition_realDBArray := make([]DATATYPE_DEFINITION_REALDB, 0)
-	query := backRepoDATATYPE_DEFINITION_REAL.db.Find(&datatype_definition_realDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoDATATYPE_DEFINITION_REAL.db.Find(&datatype_definition_realDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -409,7 +411,7 @@ func (backRepo *BackRepoStruct) CheckoutDATATYPE_DEFINITION_REAL(datatype_defini
 			var datatype_definition_realDB DATATYPE_DEFINITION_REALDB
 			datatype_definition_realDB.ID = id
 
-			if err := backRepo.BackRepoDATATYPE_DEFINITION_REAL.db.First(&datatype_definition_realDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoDATATYPE_DEFINITION_REAL.db.First(&datatype_definition_realDB, id); err != nil {
 				log.Fatalln("CheckoutDATATYPE_DEFINITION_REAL : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoDATATYPE_DEFINITION_REAL.CheckoutPhaseOneInstance(&datatype_definition_realDB)
@@ -616,9 +618,9 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 
 		datatype_definition_realDB_ID_atBackupTime := datatype_definition_realDB.ID
 		datatype_definition_realDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_REAL.db.Create(datatype_definition_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_REAL.db.Create(datatype_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_REAL.Map_DATATYPE_DEFINITION_REALDBID_DATATYPE_DEFINITION_REALDB[datatype_definition_realDB.ID] = datatype_definition_realDB
 		BackRepoDATATYPE_DEFINITION_REALid_atBckpTime_newID[datatype_definition_realDB_ID_atBackupTime] = datatype_definition_realDB.ID
@@ -653,9 +655,9 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 
 		datatype_definition_realDB_ID_atBackupTime := datatype_definition_realDB.ID
 		datatype_definition_realDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_REAL.db.Create(datatype_definition_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_REAL.db.Create(datatype_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_REAL.Map_DATATYPE_DEFINITION_REALDBID_DATATYPE_DEFINITION_REALDB[datatype_definition_realDB.ID] = datatype_definition_realDB
 		BackRepoDATATYPE_DEFINITION_REALid_atBckpTime_newID[datatype_definition_realDB_ID_atBackupTime] = datatype_definition_realDB.ID
@@ -677,9 +679,10 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoDATATYPE_DEFINITION_REAL.db.Model(datatype_definition_realDB).Updates(*datatype_definition_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoDATATYPE_DEFINITION_REAL.db.Model(datatype_definition_realDB)
+		_, err := db.Updates(*datatype_definition_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

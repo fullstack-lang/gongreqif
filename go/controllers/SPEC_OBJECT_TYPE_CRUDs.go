@@ -70,12 +70,12 @@ func (controller *Controller) GetSPEC_OBJECT_TYPEs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoSPEC_OBJECT_TYPE.GetDB()
 
-	query := db.Find(&spec_object_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&spec_object_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostSPEC_OBJECT_TYPE(c *gin.Context) {
 	spec_object_typeDB.SPEC_OBJECT_TYPEPointersEncoding = input.SPEC_OBJECT_TYPEPointersEncoding
 	spec_object_typeDB.CopyBasicFieldsFromSPEC_OBJECT_TYPE_WOP(&input.SPEC_OBJECT_TYPE_WOP)
 
-	query := db.Create(&spec_object_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&spec_object_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetSPEC_OBJECT_TYPE(c *gin.Context) {
 
 	// Get spec_object_typeDB in DB
 	var spec_object_typeDB orm.SPEC_OBJECT_TYPEDB
-	if err := db.First(&spec_object_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_object_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateSPEC_OBJECT_TYPE(c *gin.Context) {
 	var spec_object_typeDB orm.SPEC_OBJECT_TYPEDB
 
 	// fetch the spec_object_type
-	query := db.First(&spec_object_typeDB, c.Param("id"))
+	_, err := db.First(&spec_object_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateSPEC_OBJECT_TYPE(c *gin.Context) {
 	spec_object_typeDB.CopyBasicFieldsFromSPEC_OBJECT_TYPE_WOP(&input.SPEC_OBJECT_TYPE_WOP)
 	spec_object_typeDB.SPEC_OBJECT_TYPEPointersEncoding = input.SPEC_OBJECT_TYPEPointersEncoding
 
-	query = db.Model(&spec_object_typeDB).Updates(spec_object_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&spec_object_typeDB)
+	_, err = db.Updates(&spec_object_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteSPEC_OBJECT_TYPE(c *gin.Context) {
 
 	// Get model if exist
 	var spec_object_typeDB orm.SPEC_OBJECT_TYPEDB
-	if err := db.First(&spec_object_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_object_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteSPEC_OBJECT_TYPE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&spec_object_typeDB)
+	db.Unscoped()
+	db.Delete(&spec_object_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	spec_object_typeDeleted := new(models.SPEC_OBJECT_TYPE)

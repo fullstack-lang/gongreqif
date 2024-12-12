@@ -70,12 +70,12 @@ func (controller *Controller) GetREQ_IF_TOOL_EXTENSIONs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoREQ_IF_TOOL_EXTENSION.GetDB()
 
-	query := db.Find(&req_if_tool_extensionDBs)
-	if query.Error != nil {
+	_, err := db.Find(&req_if_tool_extensionDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostREQ_IF_TOOL_EXTENSION(c *gin.Context) {
 	req_if_tool_extensionDB.REQ_IF_TOOL_EXTENSIONPointersEncoding = input.REQ_IF_TOOL_EXTENSIONPointersEncoding
 	req_if_tool_extensionDB.CopyBasicFieldsFromREQ_IF_TOOL_EXTENSION_WOP(&input.REQ_IF_TOOL_EXTENSION_WOP)
 
-	query := db.Create(&req_if_tool_extensionDB)
-	if query.Error != nil {
+	_, err = db.Create(&req_if_tool_extensionDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetREQ_IF_TOOL_EXTENSION(c *gin.Context) {
 
 	// Get req_if_tool_extensionDB in DB
 	var req_if_tool_extensionDB orm.REQ_IF_TOOL_EXTENSIONDB
-	if err := db.First(&req_if_tool_extensionDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&req_if_tool_extensionDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateREQ_IF_TOOL_EXTENSION(c *gin.Context) {
 	var req_if_tool_extensionDB orm.REQ_IF_TOOL_EXTENSIONDB
 
 	// fetch the req_if_tool_extension
-	query := db.First(&req_if_tool_extensionDB, c.Param("id"))
+	_, err := db.First(&req_if_tool_extensionDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateREQ_IF_TOOL_EXTENSION(c *gin.Context) {
 	req_if_tool_extensionDB.CopyBasicFieldsFromREQ_IF_TOOL_EXTENSION_WOP(&input.REQ_IF_TOOL_EXTENSION_WOP)
 	req_if_tool_extensionDB.REQ_IF_TOOL_EXTENSIONPointersEncoding = input.REQ_IF_TOOL_EXTENSIONPointersEncoding
 
-	query = db.Model(&req_if_tool_extensionDB).Updates(req_if_tool_extensionDB)
-	if query.Error != nil {
+	db, _ = db.Model(&req_if_tool_extensionDB)
+	_, err = db.Updates(&req_if_tool_extensionDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteREQ_IF_TOOL_EXTENSION(c *gin.Context) {
 
 	// Get model if exist
 	var req_if_tool_extensionDB orm.REQ_IF_TOOL_EXTENSIONDB
-	if err := db.First(&req_if_tool_extensionDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&req_if_tool_extensionDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteREQ_IF_TOOL_EXTENSION(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&req_if_tool_extensionDB)
+	db.Unscoped()
+	db.Delete(&req_if_tool_extensionDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	req_if_tool_extensionDeleted := new(models.REQ_IF_TOOL_EXTENSION)

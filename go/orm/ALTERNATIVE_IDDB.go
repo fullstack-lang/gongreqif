@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -64,7 +65,7 @@ type ALTERNATIVE_IDDB struct {
 
 	// Declation for basic field alternative_idDB.IDENTIFIER
 	IDENTIFIER_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ALTERNATIVE_IDPointersEncoding
@@ -110,7 +111,7 @@ type BackRepoALTERNATIVE_IDStruct struct {
 	// stores ALTERNATIVE_ID according to their gorm ID
 	Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr map[uint]*models.ALTERNATIVE_ID
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -120,7 +121,7 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) GetStage() (stage *m
 	return
 }
 
-func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) GetDB() *gorm.DB {
+func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) GetDB() db.DBInterface {
 	return backRepoALTERNATIVE_ID.db
 }
 
@@ -157,9 +158,10 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CommitDeleteInstance
 
 	// alternative_id is not staged anymore, remove alternative_idDB
 	alternative_idDB := backRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDDB[id]
-	query := backRepoALTERNATIVE_ID.db.Unscoped().Delete(&alternative_idDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoALTERNATIVE_ID.db.Unscoped()
+	_, err := db.Delete(alternative_idDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -183,9 +185,9 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CommitPhaseOneInstan
 	var alternative_idDB ALTERNATIVE_IDDB
 	alternative_idDB.CopyBasicFieldsFromALTERNATIVE_ID(alternative_id)
 
-	query := backRepoALTERNATIVE_ID.db.Create(&alternative_idDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoALTERNATIVE_ID.db.Create(&alternative_idDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -217,9 +219,9 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CommitPhaseTwoInstan
 		alternative_idDB.CopyBasicFieldsFromALTERNATIVE_ID(alternative_id)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoALTERNATIVE_ID.db.Save(&alternative_idDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoALTERNATIVE_ID.db.Save(alternative_idDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -238,9 +240,9 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CommitPhaseTwoInstan
 func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CheckoutPhaseOne() (Error error) {
 
 	alternative_idDBArray := make([]ALTERNATIVE_IDDB, 0)
-	query := backRepoALTERNATIVE_ID.db.Find(&alternative_idDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoALTERNATIVE_ID.db.Find(&alternative_idDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -351,7 +353,7 @@ func (backRepo *BackRepoStruct) CheckoutALTERNATIVE_ID(alternative_id *models.AL
 			var alternative_idDB ALTERNATIVE_IDDB
 			alternative_idDB.ID = id
 
-			if err := backRepo.BackRepoALTERNATIVE_ID.db.First(&alternative_idDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoALTERNATIVE_ID.db.First(&alternative_idDB, id); err != nil {
 				log.Fatalln("CheckoutALTERNATIVE_ID : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoALTERNATIVE_ID.CheckoutPhaseOneInstance(&alternative_idDB)
@@ -510,9 +512,9 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) rowVisitorALTERNATIV
 
 		alternative_idDB_ID_atBackupTime := alternative_idDB.ID
 		alternative_idDB.ID = 0
-		query := backRepoALTERNATIVE_ID.db.Create(alternative_idDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoALTERNATIVE_ID.db.Create(alternative_idDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDDB[alternative_idDB.ID] = alternative_idDB
 		BackRepoALTERNATIVE_IDid_atBckpTime_newID[alternative_idDB_ID_atBackupTime] = alternative_idDB.ID
@@ -547,9 +549,9 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) RestorePhaseOne(dirP
 
 		alternative_idDB_ID_atBackupTime := alternative_idDB.ID
 		alternative_idDB.ID = 0
-		query := backRepoALTERNATIVE_ID.db.Create(alternative_idDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoALTERNATIVE_ID.db.Create(alternative_idDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDDB[alternative_idDB.ID] = alternative_idDB
 		BackRepoALTERNATIVE_IDid_atBckpTime_newID[alternative_idDB_ID_atBackupTime] = alternative_idDB.ID
@@ -571,9 +573,10 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoALTERNATIVE_ID.db.Model(alternative_idDB).Updates(*alternative_idDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoALTERNATIVE_ID.db.Model(alternative_idDB)
+		_, err := db.Updates(*alternative_idDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

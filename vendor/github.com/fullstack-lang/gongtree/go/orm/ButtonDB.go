@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongtree/go/db"
 	"github.com/fullstack-lang/gongtree/go/models"
 )
 
@@ -68,7 +69,7 @@ type ButtonDB struct {
 
 	// Declation for basic field buttonDB.Icon
 	Icon_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ButtonPointersEncoding
@@ -114,7 +115,7 @@ type BackRepoButtonStruct struct {
 	// stores Button according to their gorm ID
 	Map_ButtonDBID_ButtonPtr map[uint]*models.Button
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -124,7 +125,7 @@ func (backRepoButton *BackRepoButtonStruct) GetStage() (stage *models.StageStruc
 	return
 }
 
-func (backRepoButton *BackRepoButtonStruct) GetDB() *gorm.DB {
+func (backRepoButton *BackRepoButtonStruct) GetDB() db.DBInterface {
 	return backRepoButton.db
 }
 
@@ -161,9 +162,10 @@ func (backRepoButton *BackRepoButtonStruct) CommitDeleteInstance(id uint) (Error
 
 	// button is not staged anymore, remove buttonDB
 	buttonDB := backRepoButton.Map_ButtonDBID_ButtonDB[id]
-	query := backRepoButton.db.Unscoped().Delete(&buttonDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoButton.db.Unscoped()
+	_, err := db.Delete(buttonDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -187,9 +189,9 @@ func (backRepoButton *BackRepoButtonStruct) CommitPhaseOneInstance(button *model
 	var buttonDB ButtonDB
 	buttonDB.CopyBasicFieldsFromButton(button)
 
-	query := backRepoButton.db.Create(&buttonDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoButton.db.Create(&buttonDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -233,9 +235,9 @@ func (backRepoButton *BackRepoButtonStruct) CommitPhaseTwoInstance(backRepo *Bac
 			buttonDB.SVGIconID.Valid = true
 		}
 
-		query := backRepoButton.db.Save(&buttonDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoButton.db.Save(buttonDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -254,9 +256,9 @@ func (backRepoButton *BackRepoButtonStruct) CommitPhaseTwoInstance(backRepo *Bac
 func (backRepoButton *BackRepoButtonStruct) CheckoutPhaseOne() (Error error) {
 
 	buttonDBArray := make([]ButtonDB, 0)
-	query := backRepoButton.db.Find(&buttonDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoButton.db.Find(&buttonDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -346,11 +348,25 @@ func (backRepoButton *BackRepoButtonStruct) CheckoutPhaseTwoInstance(backRepo *B
 func (buttonDB *ButtonDB) DecodePointers(backRepo *BackRepoStruct, button *models.Button) {
 
 	// insertion point for checkout of pointer encoding
-	// SVGIcon field
-	button.SVGIcon = nil
-	if buttonDB.SVGIconID.Int64 != 0 {
-		button.SVGIcon = backRepo.BackRepoSVGIcon.Map_SVGIconDBID_SVGIconPtr[uint(buttonDB.SVGIconID.Int64)]
+	// SVGIcon field	
+	{
+		id := buttonDB.SVGIconID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoSVGIcon.Map_SVGIconDBID_SVGIconPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: button.SVGIcon, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if button.SVGIcon == nil || button.SVGIcon != tmp {
+				button.SVGIcon = tmp
+			}
+		} else {
+			button.SVGIcon = nil
+		}
 	}
+	
 	return
 }
 
@@ -372,7 +388,7 @@ func (backRepo *BackRepoStruct) CheckoutButton(button *models.Button) {
 			var buttonDB ButtonDB
 			buttonDB.ID = id
 
-			if err := backRepo.BackRepoButton.db.First(&buttonDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoButton.db.First(&buttonDB, id); err != nil {
 				log.Fatalln("CheckoutButton : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoButton.CheckoutPhaseOneInstance(&buttonDB)
@@ -531,9 +547,9 @@ func (backRepoButton *BackRepoButtonStruct) rowVisitorButton(row *xlsx.Row) erro
 
 		buttonDB_ID_atBackupTime := buttonDB.ID
 		buttonDB.ID = 0
-		query := backRepoButton.db.Create(buttonDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoButton.db.Create(buttonDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoButton.Map_ButtonDBID_ButtonDB[buttonDB.ID] = buttonDB
 		BackRepoButtonid_atBckpTime_newID[buttonDB_ID_atBackupTime] = buttonDB.ID
@@ -568,9 +584,9 @@ func (backRepoButton *BackRepoButtonStruct) RestorePhaseOne(dirPath string) {
 
 		buttonDB_ID_atBackupTime := buttonDB.ID
 		buttonDB.ID = 0
-		query := backRepoButton.db.Create(buttonDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoButton.db.Create(buttonDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoButton.Map_ButtonDBID_ButtonDB[buttonDB.ID] = buttonDB
 		BackRepoButtonid_atBckpTime_newID[buttonDB_ID_atBackupTime] = buttonDB.ID
@@ -598,9 +614,10 @@ func (backRepoButton *BackRepoButtonStruct) RestorePhaseTwo() {
 		}
 
 		// update databse with new index encoding
-		query := backRepoButton.db.Model(buttonDB).Updates(*buttonDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoButton.db.Model(buttonDB)
+		_, err := db.Updates(*buttonDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

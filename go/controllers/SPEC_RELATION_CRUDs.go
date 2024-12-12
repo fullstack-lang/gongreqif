@@ -70,12 +70,12 @@ func (controller *Controller) GetSPEC_RELATIONs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoSPEC_RELATION.GetDB()
 
-	query := db.Find(&spec_relationDBs)
-	if query.Error != nil {
+	_, err := db.Find(&spec_relationDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostSPEC_RELATION(c *gin.Context) {
 	spec_relationDB.SPEC_RELATIONPointersEncoding = input.SPEC_RELATIONPointersEncoding
 	spec_relationDB.CopyBasicFieldsFromSPEC_RELATION_WOP(&input.SPEC_RELATION_WOP)
 
-	query := db.Create(&spec_relationDB)
-	if query.Error != nil {
+	_, err = db.Create(&spec_relationDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetSPEC_RELATION(c *gin.Context) {
 
 	// Get spec_relationDB in DB
 	var spec_relationDB orm.SPEC_RELATIONDB
-	if err := db.First(&spec_relationDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_relationDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateSPEC_RELATION(c *gin.Context) {
 	var spec_relationDB orm.SPEC_RELATIONDB
 
 	// fetch the spec_relation
-	query := db.First(&spec_relationDB, c.Param("id"))
+	_, err := db.First(&spec_relationDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateSPEC_RELATION(c *gin.Context) {
 	spec_relationDB.CopyBasicFieldsFromSPEC_RELATION_WOP(&input.SPEC_RELATION_WOP)
 	spec_relationDB.SPEC_RELATIONPointersEncoding = input.SPEC_RELATIONPointersEncoding
 
-	query = db.Model(&spec_relationDB).Updates(spec_relationDB)
-	if query.Error != nil {
+	db, _ = db.Model(&spec_relationDB)
+	_, err = db.Updates(&spec_relationDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteSPEC_RELATION(c *gin.Context) {
 
 	// Get model if exist
 	var spec_relationDB orm.SPEC_RELATIONDB
-	if err := db.First(&spec_relationDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_relationDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteSPEC_RELATION(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&spec_relationDB)
+	db.Unscoped()
+	db.Delete(&spec_relationDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	spec_relationDeleted := new(models.SPEC_RELATION)

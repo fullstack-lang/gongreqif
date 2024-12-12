@@ -70,12 +70,12 @@ func (controller *Controller) GetDATATYPE_DEFINITION_XHTMLs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoDATATYPE_DEFINITION_XHTML.GetDB()
 
-	query := db.Find(&datatype_definition_xhtmlDBs)
-	if query.Error != nil {
+	_, err := db.Find(&datatype_definition_xhtmlDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 	datatype_definition_xhtmlDB.DATATYPE_DEFINITION_XHTMLPointersEncoding = input.DATATYPE_DEFINITION_XHTMLPointersEncoding
 	datatype_definition_xhtmlDB.CopyBasicFieldsFromDATATYPE_DEFINITION_XHTML_WOP(&input.DATATYPE_DEFINITION_XHTML_WOP)
 
-	query := db.Create(&datatype_definition_xhtmlDB)
-	if query.Error != nil {
+	_, err = db.Create(&datatype_definition_xhtmlDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 
 	// Get datatype_definition_xhtmlDB in DB
 	var datatype_definition_xhtmlDB orm.DATATYPE_DEFINITION_XHTMLDB
-	if err := db.First(&datatype_definition_xhtmlDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_xhtmlDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 	var datatype_definition_xhtmlDB orm.DATATYPE_DEFINITION_XHTMLDB
 
 	// fetch the datatype_definition_xhtml
-	query := db.First(&datatype_definition_xhtmlDB, c.Param("id"))
+	_, err := db.First(&datatype_definition_xhtmlDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 	datatype_definition_xhtmlDB.CopyBasicFieldsFromDATATYPE_DEFINITION_XHTML_WOP(&input.DATATYPE_DEFINITION_XHTML_WOP)
 	datatype_definition_xhtmlDB.DATATYPE_DEFINITION_XHTMLPointersEncoding = input.DATATYPE_DEFINITION_XHTMLPointersEncoding
 
-	query = db.Model(&datatype_definition_xhtmlDB).Updates(datatype_definition_xhtmlDB)
-	if query.Error != nil {
+	db, _ = db.Model(&datatype_definition_xhtmlDB)
+	_, err = db.Updates(&datatype_definition_xhtmlDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 
 	// Get model if exist
 	var datatype_definition_xhtmlDB orm.DATATYPE_DEFINITION_XHTMLDB
-	if err := db.First(&datatype_definition_xhtmlDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_xhtmlDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&datatype_definition_xhtmlDB)
+	db.Unscoped()
+	db.Delete(&datatype_definition_xhtmlDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	datatype_definition_xhtmlDeleted := new(models.DATATYPE_DEFINITION_XHTML)

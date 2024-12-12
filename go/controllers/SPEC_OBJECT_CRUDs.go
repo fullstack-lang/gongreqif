@@ -70,12 +70,12 @@ func (controller *Controller) GetSPEC_OBJECTs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoSPEC_OBJECT.GetDB()
 
-	query := db.Find(&spec_objectDBs)
-	if query.Error != nil {
+	_, err := db.Find(&spec_objectDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostSPEC_OBJECT(c *gin.Context) {
 	spec_objectDB.SPEC_OBJECTPointersEncoding = input.SPEC_OBJECTPointersEncoding
 	spec_objectDB.CopyBasicFieldsFromSPEC_OBJECT_WOP(&input.SPEC_OBJECT_WOP)
 
-	query := db.Create(&spec_objectDB)
-	if query.Error != nil {
+	_, err = db.Create(&spec_objectDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetSPEC_OBJECT(c *gin.Context) {
 
 	// Get spec_objectDB in DB
 	var spec_objectDB orm.SPEC_OBJECTDB
-	if err := db.First(&spec_objectDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_objectDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateSPEC_OBJECT(c *gin.Context) {
 	var spec_objectDB orm.SPEC_OBJECTDB
 
 	// fetch the spec_object
-	query := db.First(&spec_objectDB, c.Param("id"))
+	_, err := db.First(&spec_objectDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateSPEC_OBJECT(c *gin.Context) {
 	spec_objectDB.CopyBasicFieldsFromSPEC_OBJECT_WOP(&input.SPEC_OBJECT_WOP)
 	spec_objectDB.SPEC_OBJECTPointersEncoding = input.SPEC_OBJECTPointersEncoding
 
-	query = db.Model(&spec_objectDB).Updates(spec_objectDB)
-	if query.Error != nil {
+	db, _ = db.Model(&spec_objectDB)
+	_, err = db.Updates(&spec_objectDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteSPEC_OBJECT(c *gin.Context) {
 
 	// Get model if exist
 	var spec_objectDB orm.SPEC_OBJECTDB
-	if err := db.First(&spec_objectDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_objectDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteSPEC_OBJECT(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&spec_objectDB)
+	db.Unscoped()
+	db.Delete(&spec_objectDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	spec_objectDeleted := new(models.SPEC_OBJECT)

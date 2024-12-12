@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_VALUE_STRINGs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_VALUE_STRING.GetDB()
 
-	query := db.Find(&attribute_value_stringDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_value_stringDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_VALUE_STRING(c *gin.Context) {
 	attribute_value_stringDB.ATTRIBUTE_VALUE_STRINGPointersEncoding = input.ATTRIBUTE_VALUE_STRINGPointersEncoding
 	attribute_value_stringDB.CopyBasicFieldsFromATTRIBUTE_VALUE_STRING_WOP(&input.ATTRIBUTE_VALUE_STRING_WOP)
 
-	query := db.Create(&attribute_value_stringDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_value_stringDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_VALUE_STRING(c *gin.Context) {
 
 	// Get attribute_value_stringDB in DB
 	var attribute_value_stringDB orm.ATTRIBUTE_VALUE_STRINGDB
-	if err := db.First(&attribute_value_stringDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_value_stringDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_STRING(c *gin.Context) {
 	var attribute_value_stringDB orm.ATTRIBUTE_VALUE_STRINGDB
 
 	// fetch the attribute_value_string
-	query := db.First(&attribute_value_stringDB, c.Param("id"))
+	_, err := db.First(&attribute_value_stringDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_STRING(c *gin.Context) {
 	attribute_value_stringDB.CopyBasicFieldsFromATTRIBUTE_VALUE_STRING_WOP(&input.ATTRIBUTE_VALUE_STRING_WOP)
 	attribute_value_stringDB.ATTRIBUTE_VALUE_STRINGPointersEncoding = input.ATTRIBUTE_VALUE_STRINGPointersEncoding
 
-	query = db.Model(&attribute_value_stringDB).Updates(attribute_value_stringDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_value_stringDB)
+	_, err = db.Updates(&attribute_value_stringDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_VALUE_STRING(c *gin.Context) {
 
 	// Get model if exist
 	var attribute_value_stringDB orm.ATTRIBUTE_VALUE_STRINGDB
-	if err := db.First(&attribute_value_stringDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_value_stringDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_VALUE_STRING(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_value_stringDB)
+	db.Unscoped()
+	db.Delete(&attribute_value_stringDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_value_stringDeleted := new(models.ATTRIBUTE_VALUE_STRING)

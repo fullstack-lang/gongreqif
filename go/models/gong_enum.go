@@ -21,7 +21,6 @@ func (anyuri *AnyURI) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (anyuri *AnyURI) FromCodeString(input string) (err error) {
@@ -79,7 +78,6 @@ func (cdata *CDATA) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (cdata *CDATA) FromCodeString(input string) (err error) {
@@ -137,7 +135,6 @@ func (curie *CURIE) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (curie *CURIE) FromCodeString(input string) (err error) {
@@ -195,7 +192,6 @@ func (character *Character) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (character *Character) FromCodeString(input string) (err error) {
@@ -253,7 +249,6 @@ func (charset *Charset) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (charset *Charset) FromCodeString(input string) (err error) {
@@ -311,7 +306,6 @@ func (color *Color) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (color *Color) FromCodeString(input string) (err error) {
@@ -369,7 +363,6 @@ func (contenttype *ContentType) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (contenttype *ContentType) FromCodeString(input string) (err error) {
@@ -427,7 +420,6 @@ func (contenttypes *ContentTypes) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (contenttypes *ContentTypes) FromCodeString(input string) (err error) {
@@ -485,7 +477,6 @@ func (emptystring *EmptyString) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (emptystring *EmptyString) FromCodeString(input string) (err error) {
@@ -543,7 +534,6 @@ func (frametarget *FrameTarget) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (frametarget *FrameTarget) FromCodeString(input string) (err error) {
@@ -601,7 +591,6 @@ func (global_ref *GLOBAL_REF) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (global_ref *GLOBAL_REF) FromCodeString(input string) (err error) {
@@ -659,7 +648,6 @@ func (id *ID) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (id *ID) FromCodeString(input string) (err error) {
@@ -717,7 +705,6 @@ func (idref *IDREF) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (idref *IDREF) FromCodeString(input string) (err error) {
@@ -775,7 +762,6 @@ func (language *Language) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (language *Language) FromCodeString(input string) (err error) {
@@ -833,7 +819,6 @@ func (languagecodes *LanguageCodes) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (languagecodes *LanguageCodes) FromCodeString(input string) (err error) {
@@ -891,7 +876,6 @@ func (length *Length) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (length *Length) FromCodeString(input string) (err error) {
@@ -949,7 +933,6 @@ func (mediadesc *MediaDesc) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (mediadesc *MediaDesc) FromCodeString(input string) (err error) {
@@ -1007,7 +990,6 @@ func (multilength *MultiLength) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (multilength *MultiLength) FromCodeString(input string) (err error) {
@@ -1065,7 +1047,6 @@ func (multilengths *MultiLengths) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (multilengths *MultiLengths) FromCodeString(input string) (err error) {
@@ -1123,7 +1104,6 @@ func (ncname *NCName) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (ncname *NCName) FromCodeString(input string) (err error) {
@@ -1181,7 +1161,6 @@ func (nmtoken *NMTOKEN) FromInt(input int) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (nmtoken *NMTOKEN) FromCodeString(input string) (err error) {
@@ -1239,7 +1218,6 @@ func (normalizedstring *NormalizedString) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (normalizedstring *NormalizedString) FromCodeString(input string) (err error) {
@@ -1297,7 +1275,6 @@ func (safecurie *SafeCURIE) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (safecurie *SafeCURIE) FromCodeString(input string) (err error) {
@@ -1355,7 +1332,6 @@ func (script *Script) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (script *Script) FromCodeString(input string) (err error) {
@@ -1413,7 +1389,6 @@ func (text *Text) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (text *Text) FromCodeString(input string) (err error) {
@@ -1471,7 +1446,6 @@ func (uriref *URIREF) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (uriref *URIREF) FromCodeString(input string) (err error) {
@@ -1529,7 +1503,6 @@ func (uriorsafecurie *URIorSafeCURIE) FromString(input string) (err error) {
 	default:
 		return errUnkownEnum
 	}
-	return
 }
 
 func (uriorsafecurie *URIorSafeCURIE) FromCodeString(input string) (err error) {
@@ -1571,13 +1544,12 @@ func (uriorsafecurie URIorSafeCURIE) CodeValues() (res []string) {
 // end of insertion point for enum utility functions
 
 type GongstructEnumStringField interface {
-	string | AnyURI | CDATA | CURIE | Character | Charset | Color | ContentType | ContentTypes | EmptyString | FrameTarget | GLOBAL_REF | ID | IDREF | Language | LanguageCodes | Length | MediaDesc | MultiLength | MultiLengths | NCName | NormalizedString | SafeCURIE | Script | Text | URIREF | URIorSafeCURIE
 	Codes() []string
 	CodeValues() []string
+	ToString() string
 }
 
 type PointerToGongstructEnumStringField interface {
-	*AnyURI | *CDATA | *CURIE | *Character | *Charset | *Color | *ContentType | *ContentTypes | *EmptyString | *FrameTarget | *GLOBAL_REF | *ID | *IDREF | *Language | *LanguageCodes | *Length | *MediaDesc | *MultiLength | *MultiLengths | *NCName | *NormalizedString | *SafeCURIE | *Script | *Text | *URIREF | *URIorSafeCURIE
 	FromCodeString(input string) (err error)
 }
 

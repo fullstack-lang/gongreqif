@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -82,7 +83,7 @@ type REQ_IF_HEADERDB struct {
 
 	// Declation for basic field req_if_headerDB.TITLE
 	TITLE_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	REQ_IF_HEADERPointersEncoding
@@ -146,7 +147,7 @@ type BackRepoREQ_IF_HEADERStruct struct {
 	// stores REQ_IF_HEADER according to their gorm ID
 	Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr map[uint]*models.REQ_IF_HEADER
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -156,7 +157,7 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) GetStage() (stage *mod
 	return
 }
 
-func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) GetDB() *gorm.DB {
+func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) GetDB() db.DBInterface {
 	return backRepoREQ_IF_HEADER.db
 }
 
@@ -193,9 +194,10 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CommitDeleteInstance(i
 
 	// req_if_header is not staged anymore, remove req_if_headerDB
 	req_if_headerDB := backRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERDB[id]
-	query := backRepoREQ_IF_HEADER.db.Unscoped().Delete(&req_if_headerDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoREQ_IF_HEADER.db.Unscoped()
+	_, err := db.Delete(req_if_headerDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -219,9 +221,9 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CommitPhaseOneInstance
 	var req_if_headerDB REQ_IF_HEADERDB
 	req_if_headerDB.CopyBasicFieldsFromREQ_IF_HEADER(req_if_header)
 
-	query := backRepoREQ_IF_HEADER.db.Create(&req_if_headerDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoREQ_IF_HEADER.db.Create(&req_if_headerDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -253,9 +255,9 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CommitPhaseTwoInstance
 		req_if_headerDB.CopyBasicFieldsFromREQ_IF_HEADER(req_if_header)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoREQ_IF_HEADER.db.Save(&req_if_headerDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoREQ_IF_HEADER.db.Save(req_if_headerDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -274,9 +276,9 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CommitPhaseTwoInstance
 func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CheckoutPhaseOne() (Error error) {
 
 	req_if_headerDBArray := make([]REQ_IF_HEADERDB, 0)
-	query := backRepoREQ_IF_HEADER.db.Find(&req_if_headerDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoREQ_IF_HEADER.db.Find(&req_if_headerDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -387,7 +389,7 @@ func (backRepo *BackRepoStruct) CheckoutREQ_IF_HEADER(req_if_header *models.REQ_
 			var req_if_headerDB REQ_IF_HEADERDB
 			req_if_headerDB.ID = id
 
-			if err := backRepo.BackRepoREQ_IF_HEADER.db.First(&req_if_headerDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoREQ_IF_HEADER.db.First(&req_if_headerDB, id); err != nil {
 				log.Fatalln("CheckoutREQ_IF_HEADER : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseOneInstance(&req_if_headerDB)
@@ -618,9 +620,9 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) rowVisitorREQ_IF_HEADE
 
 		req_if_headerDB_ID_atBackupTime := req_if_headerDB.ID
 		req_if_headerDB.ID = 0
-		query := backRepoREQ_IF_HEADER.db.Create(req_if_headerDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF_HEADER.db.Create(req_if_headerDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERDB[req_if_headerDB.ID] = req_if_headerDB
 		BackRepoREQ_IF_HEADERid_atBckpTime_newID[req_if_headerDB_ID_atBackupTime] = req_if_headerDB.ID
@@ -655,9 +657,9 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) RestorePhaseOne(dirPat
 
 		req_if_headerDB_ID_atBackupTime := req_if_headerDB.ID
 		req_if_headerDB.ID = 0
-		query := backRepoREQ_IF_HEADER.db.Create(req_if_headerDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF_HEADER.db.Create(req_if_headerDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERDB[req_if_headerDB.ID] = req_if_headerDB
 		BackRepoREQ_IF_HEADERid_atBckpTime_newID[req_if_headerDB_ID_atBackupTime] = req_if_headerDB.ID
@@ -679,9 +681,10 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoREQ_IF_HEADER.db.Model(req_if_headerDB).Updates(*req_if_headerDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoREQ_IF_HEADER.db.Model(req_if_headerDB)
+		_, err := db.Updates(*req_if_headerDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

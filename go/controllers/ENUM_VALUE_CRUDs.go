@@ -70,12 +70,12 @@ func (controller *Controller) GetENUM_VALUEs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoENUM_VALUE.GetDB()
 
-	query := db.Find(&enum_valueDBs)
-	if query.Error != nil {
+	_, err := db.Find(&enum_valueDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostENUM_VALUE(c *gin.Context) {
 	enum_valueDB.ENUM_VALUEPointersEncoding = input.ENUM_VALUEPointersEncoding
 	enum_valueDB.CopyBasicFieldsFromENUM_VALUE_WOP(&input.ENUM_VALUE_WOP)
 
-	query := db.Create(&enum_valueDB)
-	if query.Error != nil {
+	_, err = db.Create(&enum_valueDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetENUM_VALUE(c *gin.Context) {
 
 	// Get enum_valueDB in DB
 	var enum_valueDB orm.ENUM_VALUEDB
-	if err := db.First(&enum_valueDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&enum_valueDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateENUM_VALUE(c *gin.Context) {
 	var enum_valueDB orm.ENUM_VALUEDB
 
 	// fetch the enum_value
-	query := db.First(&enum_valueDB, c.Param("id"))
+	_, err := db.First(&enum_valueDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateENUM_VALUE(c *gin.Context) {
 	enum_valueDB.CopyBasicFieldsFromENUM_VALUE_WOP(&input.ENUM_VALUE_WOP)
 	enum_valueDB.ENUM_VALUEPointersEncoding = input.ENUM_VALUEPointersEncoding
 
-	query = db.Model(&enum_valueDB).Updates(enum_valueDB)
-	if query.Error != nil {
+	db, _ = db.Model(&enum_valueDB)
+	_, err = db.Updates(&enum_valueDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteENUM_VALUE(c *gin.Context) {
 
 	// Get model if exist
 	var enum_valueDB orm.ENUM_VALUEDB
-	if err := db.First(&enum_valueDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&enum_valueDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteENUM_VALUE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&enum_valueDB)
+	db.Unscoped()
+	db.Delete(&enum_valueDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	enum_valueDeleted := new(models.ENUM_VALUE)

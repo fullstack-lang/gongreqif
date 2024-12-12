@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -77,7 +78,7 @@ type RELATION_GROUPDB struct {
 
 	// Declation for basic field relation_groupDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	RELATION_GROUPPointersEncoding
@@ -129,7 +130,7 @@ type BackRepoRELATION_GROUPStruct struct {
 	// stores RELATION_GROUP according to their gorm ID
 	Map_RELATION_GROUPDBID_RELATION_GROUPPtr map[uint]*models.RELATION_GROUP
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -139,7 +140,7 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) GetStage() (stage *m
 	return
 }
 
-func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) GetDB() *gorm.DB {
+func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) GetDB() db.DBInterface {
 	return backRepoRELATION_GROUP.db
 }
 
@@ -176,9 +177,10 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitDeleteInstance
 
 	// relation_group is not staged anymore, remove relation_groupDB
 	relation_groupDB := backRepoRELATION_GROUP.Map_RELATION_GROUPDBID_RELATION_GROUPDB[id]
-	query := backRepoRELATION_GROUP.db.Unscoped().Delete(&relation_groupDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoRELATION_GROUP.db.Unscoped()
+	_, err := db.Delete(relation_groupDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -202,9 +204,9 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitPhaseOneInstan
 	var relation_groupDB RELATION_GROUPDB
 	relation_groupDB.CopyBasicFieldsFromRELATION_GROUP(relation_group)
 
-	query := backRepoRELATION_GROUP.db.Create(&relation_groupDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoRELATION_GROUP.db.Create(&relation_groupDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -254,9 +256,9 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitPhaseTwoInstan
 				append(relation_groupDB.RELATION_GROUPPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
 		}
 
-		query := backRepoRELATION_GROUP.db.Save(&relation_groupDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoRELATION_GROUP.db.Save(relation_groupDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -275,9 +277,9 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitPhaseTwoInstan
 func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CheckoutPhaseOne() (Error error) {
 
 	relation_groupDBArray := make([]RELATION_GROUPDB, 0)
-	query := backRepoRELATION_GROUP.db.Find(&relation_groupDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoRELATION_GROUP.db.Find(&relation_groupDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -397,7 +399,7 @@ func (backRepo *BackRepoStruct) CheckoutRELATION_GROUP(relation_group *models.RE
 			var relation_groupDB RELATION_GROUPDB
 			relation_groupDB.ID = id
 
-			if err := backRepo.BackRepoRELATION_GROUP.db.First(&relation_groupDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoRELATION_GROUP.db.First(&relation_groupDB, id); err != nil {
 				log.Fatalln("CheckoutRELATION_GROUP : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoRELATION_GROUP.CheckoutPhaseOneInstance(&relation_groupDB)
@@ -580,9 +582,9 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) rowVisitorRELATION_G
 
 		relation_groupDB_ID_atBackupTime := relation_groupDB.ID
 		relation_groupDB.ID = 0
-		query := backRepoRELATION_GROUP.db.Create(relation_groupDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoRELATION_GROUP.db.Create(relation_groupDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoRELATION_GROUP.Map_RELATION_GROUPDBID_RELATION_GROUPDB[relation_groupDB.ID] = relation_groupDB
 		BackRepoRELATION_GROUPid_atBckpTime_newID[relation_groupDB_ID_atBackupTime] = relation_groupDB.ID
@@ -617,9 +619,9 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) RestorePhaseOne(dirP
 
 		relation_groupDB_ID_atBackupTime := relation_groupDB.ID
 		relation_groupDB.ID = 0
-		query := backRepoRELATION_GROUP.db.Create(relation_groupDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoRELATION_GROUP.db.Create(relation_groupDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoRELATION_GROUP.Map_RELATION_GROUPDBID_RELATION_GROUPDB[relation_groupDB.ID] = relation_groupDB
 		BackRepoRELATION_GROUPid_atBckpTime_newID[relation_groupDB_ID_atBackupTime] = relation_groupDB.ID
@@ -641,9 +643,10 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoRELATION_GROUP.db.Model(relation_groupDB).Updates(*relation_groupDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoRELATION_GROUP.db.Model(relation_groupDB)
+		_, err := db.Updates(*relation_groupDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

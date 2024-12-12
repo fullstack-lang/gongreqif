@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_STRINGs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_DEFINITION_STRING.GetDB()
 
-	query := db.Find(&attribute_definition_stringDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_definition_stringDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_DEFINITION_STRING(c *gin.Context) {
 	attribute_definition_stringDB.ATTRIBUTE_DEFINITION_STRINGPointersEncoding = input.ATTRIBUTE_DEFINITION_STRINGPointersEncoding
 	attribute_definition_stringDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_STRING_WOP(&input.ATTRIBUTE_DEFINITION_STRING_WOP)
 
-	query := db.Create(&attribute_definition_stringDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_definition_stringDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_STRING(c *gin.Context) {
 
 	// Get attribute_definition_stringDB in DB
 	var attribute_definition_stringDB orm.ATTRIBUTE_DEFINITION_STRINGDB
-	if err := db.First(&attribute_definition_stringDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_stringDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_STRING(c *gin.Context) 
 	var attribute_definition_stringDB orm.ATTRIBUTE_DEFINITION_STRINGDB
 
 	// fetch the attribute_definition_string
-	query := db.First(&attribute_definition_stringDB, c.Param("id"))
+	_, err := db.First(&attribute_definition_stringDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_STRING(c *gin.Context) 
 	attribute_definition_stringDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_STRING_WOP(&input.ATTRIBUTE_DEFINITION_STRING_WOP)
 	attribute_definition_stringDB.ATTRIBUTE_DEFINITION_STRINGPointersEncoding = input.ATTRIBUTE_DEFINITION_STRINGPointersEncoding
 
-	query = db.Model(&attribute_definition_stringDB).Updates(attribute_definition_stringDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_definition_stringDB)
+	_, err = db.Updates(&attribute_definition_stringDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_STRING(c *gin.Context) 
 
 	// Get model if exist
 	var attribute_definition_stringDB orm.ATTRIBUTE_DEFINITION_STRINGDB
-	if err := db.First(&attribute_definition_stringDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_stringDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_STRING(c *gin.Context) 
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_definition_stringDB)
+	db.Unscoped()
+	db.Delete(&attribute_definition_stringDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_definition_stringDeleted := new(models.ATTRIBUTE_DEFINITION_STRING)

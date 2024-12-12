@@ -70,12 +70,12 @@ func (controller *Controller) GetXhtml_kbd_types(c *gin.Context) {
 	}
 	db := backRepo.BackRepoXhtml_kbd_type.GetDB()
 
-	query := db.Find(&xhtml_kbd_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&xhtml_kbd_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostXhtml_kbd_type(c *gin.Context) {
 	xhtml_kbd_typeDB.Xhtml_kbd_typePointersEncoding = input.Xhtml_kbd_typePointersEncoding
 	xhtml_kbd_typeDB.CopyBasicFieldsFromXhtml_kbd_type_WOP(&input.Xhtml_kbd_type_WOP)
 
-	query := db.Create(&xhtml_kbd_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&xhtml_kbd_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetXhtml_kbd_type(c *gin.Context) {
 
 	// Get xhtml_kbd_typeDB in DB
 	var xhtml_kbd_typeDB orm.Xhtml_kbd_typeDB
-	if err := db.First(&xhtml_kbd_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_kbd_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateXhtml_kbd_type(c *gin.Context) {
 	var xhtml_kbd_typeDB orm.Xhtml_kbd_typeDB
 
 	// fetch the xhtml_kbd_type
-	query := db.First(&xhtml_kbd_typeDB, c.Param("id"))
+	_, err := db.First(&xhtml_kbd_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateXhtml_kbd_type(c *gin.Context) {
 	xhtml_kbd_typeDB.CopyBasicFieldsFromXhtml_kbd_type_WOP(&input.Xhtml_kbd_type_WOP)
 	xhtml_kbd_typeDB.Xhtml_kbd_typePointersEncoding = input.Xhtml_kbd_typePointersEncoding
 
-	query = db.Model(&xhtml_kbd_typeDB).Updates(xhtml_kbd_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&xhtml_kbd_typeDB)
+	_, err = db.Updates(&xhtml_kbd_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteXhtml_kbd_type(c *gin.Context) {
 
 	// Get model if exist
 	var xhtml_kbd_typeDB orm.Xhtml_kbd_typeDB
-	if err := db.First(&xhtml_kbd_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_kbd_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteXhtml_kbd_type(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&xhtml_kbd_typeDB)
+	db.Unscoped()
+	db.Delete(&xhtml_kbd_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	xhtml_kbd_typeDeleted := new(models.Xhtml_kbd_type)

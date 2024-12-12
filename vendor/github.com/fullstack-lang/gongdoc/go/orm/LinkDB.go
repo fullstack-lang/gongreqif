@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongdoc/go/db"
 	"github.com/fullstack-lang/gongdoc/go/models"
 )
 
@@ -110,7 +111,7 @@ type LinkDB struct {
 
 	// Declation for basic field linkDB.CornerOffsetRatio
 	CornerOffsetRatio_Data sql.NullFloat64
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	LinkPointersEncoding
@@ -198,7 +199,7 @@ type BackRepoLinkStruct struct {
 	// stores Link according to their gorm ID
 	Map_LinkDBID_LinkPtr map[uint]*models.Link
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -208,7 +209,7 @@ func (backRepoLink *BackRepoLinkStruct) GetStage() (stage *models.StageStruct) {
 	return
 }
 
-func (backRepoLink *BackRepoLinkStruct) GetDB() *gorm.DB {
+func (backRepoLink *BackRepoLinkStruct) GetDB() db.DBInterface {
 	return backRepoLink.db
 }
 
@@ -245,9 +246,10 @@ func (backRepoLink *BackRepoLinkStruct) CommitDeleteInstance(id uint) (Error err
 
 	// link is not staged anymore, remove linkDB
 	linkDB := backRepoLink.Map_LinkDBID_LinkDB[id]
-	query := backRepoLink.db.Unscoped().Delete(&linkDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoLink.db.Unscoped()
+	_, err := db.Delete(linkDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -271,9 +273,9 @@ func (backRepoLink *BackRepoLinkStruct) CommitPhaseOneInstance(link *models.Link
 	var linkDB LinkDB
 	linkDB.CopyBasicFieldsFromLink(link)
 
-	query := backRepoLink.db.Create(&linkDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoLink.db.Create(&linkDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -317,9 +319,9 @@ func (backRepoLink *BackRepoLinkStruct) CommitPhaseTwoInstance(backRepo *BackRep
 			linkDB.MiddleverticeID.Valid = true
 		}
 
-		query := backRepoLink.db.Save(&linkDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoLink.db.Save(linkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -338,9 +340,9 @@ func (backRepoLink *BackRepoLinkStruct) CommitPhaseTwoInstance(backRepo *BackRep
 func (backRepoLink *BackRepoLinkStruct) CheckoutPhaseOne() (Error error) {
 
 	linkDBArray := make([]LinkDB, 0)
-	query := backRepoLink.db.Find(&linkDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoLink.db.Find(&linkDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -430,11 +432,25 @@ func (backRepoLink *BackRepoLinkStruct) CheckoutPhaseTwoInstance(backRepo *BackR
 func (linkDB *LinkDB) DecodePointers(backRepo *BackRepoStruct, link *models.Link) {
 
 	// insertion point for checkout of pointer encoding
-	// Middlevertice field
-	link.Middlevertice = nil
-	if linkDB.MiddleverticeID.Int64 != 0 {
-		link.Middlevertice = backRepo.BackRepoVertice.Map_VerticeDBID_VerticePtr[uint(linkDB.MiddleverticeID.Int64)]
+	// Middlevertice field	
+	{
+		id := linkDB.MiddleverticeID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoVertice.Map_VerticeDBID_VerticePtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: link.Middlevertice, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if link.Middlevertice == nil || link.Middlevertice != tmp {
+				link.Middlevertice = tmp
+			}
+		} else {
+			link.Middlevertice = nil
+		}
 	}
+	
 	return
 }
 
@@ -456,7 +472,7 @@ func (backRepo *BackRepoStruct) CheckoutLink(link *models.Link) {
 			var linkDB LinkDB
 			linkDB.ID = id
 
-			if err := backRepo.BackRepoLink.db.First(&linkDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoLink.db.First(&linkDB, id); err != nil {
 				log.Fatalln("CheckoutLink : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoLink.CheckoutPhaseOneInstance(&linkDB)
@@ -783,9 +799,9 @@ func (backRepoLink *BackRepoLinkStruct) rowVisitorLink(row *xlsx.Row) error {
 
 		linkDB_ID_atBackupTime := linkDB.ID
 		linkDB.ID = 0
-		query := backRepoLink.db.Create(linkDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoLink.db.Create(linkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoLink.Map_LinkDBID_LinkDB[linkDB.ID] = linkDB
 		BackRepoLinkid_atBckpTime_newID[linkDB_ID_atBackupTime] = linkDB.ID
@@ -820,9 +836,9 @@ func (backRepoLink *BackRepoLinkStruct) RestorePhaseOne(dirPath string) {
 
 		linkDB_ID_atBackupTime := linkDB.ID
 		linkDB.ID = 0
-		query := backRepoLink.db.Create(linkDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoLink.db.Create(linkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoLink.Map_LinkDBID_LinkDB[linkDB.ID] = linkDB
 		BackRepoLinkid_atBckpTime_newID[linkDB_ID_atBackupTime] = linkDB.ID
@@ -850,9 +866,10 @@ func (backRepoLink *BackRepoLinkStruct) RestorePhaseTwo() {
 		}
 
 		// update databse with new index encoding
-		query := backRepoLink.db.Model(linkDB).Updates(*linkDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoLink.db.Model(linkDB)
+		_, err := db.Updates(*linkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

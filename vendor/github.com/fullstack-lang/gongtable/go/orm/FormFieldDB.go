@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongtable/go/db"
 	"github.com/fullstack-lang/gongtable/go/models"
 )
 
@@ -112,7 +113,7 @@ type FormFieldDB struct {
 
 	// Declation for basic field formfieldDB.BespokeHeightPx
 	BespokeHeightPx_Data sql.NullInt64
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	FormFieldPointersEncoding
@@ -176,7 +177,7 @@ type BackRepoFormFieldStruct struct {
 	// stores FormField according to their gorm ID
 	Map_FormFieldDBID_FormFieldPtr map[uint]*models.FormField
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -186,7 +187,7 @@ func (backRepoFormField *BackRepoFormFieldStruct) GetStage() (stage *models.Stag
 	return
 }
 
-func (backRepoFormField *BackRepoFormFieldStruct) GetDB() *gorm.DB {
+func (backRepoFormField *BackRepoFormFieldStruct) GetDB() db.DBInterface {
 	return backRepoFormField.db
 }
 
@@ -223,9 +224,10 @@ func (backRepoFormField *BackRepoFormFieldStruct) CommitDeleteInstance(id uint) 
 
 	// formfield is not staged anymore, remove formfieldDB
 	formfieldDB := backRepoFormField.Map_FormFieldDBID_FormFieldDB[id]
-	query := backRepoFormField.db.Unscoped().Delete(&formfieldDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoFormField.db.Unscoped()
+	_, err := db.Delete(formfieldDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -249,9 +251,9 @@ func (backRepoFormField *BackRepoFormFieldStruct) CommitPhaseOneInstance(formfie
 	var formfieldDB FormFieldDB
 	formfieldDB.CopyBasicFieldsFromFormField(formfield)
 
-	query := backRepoFormField.db.Create(&formfieldDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoFormField.db.Create(&formfieldDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -367,9 +369,9 @@ func (backRepoFormField *BackRepoFormFieldStruct) CommitPhaseTwoInstance(backRep
 			formfieldDB.FormFieldSelectID.Valid = true
 		}
 
-		query := backRepoFormField.db.Save(&formfieldDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoFormField.db.Save(formfieldDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -388,9 +390,9 @@ func (backRepoFormField *BackRepoFormFieldStruct) CommitPhaseTwoInstance(backRep
 func (backRepoFormField *BackRepoFormFieldStruct) CheckoutPhaseOne() (Error error) {
 
 	formfieldDBArray := make([]FormFieldDB, 0)
-	query := backRepoFormField.db.Find(&formfieldDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoFormField.db.Find(&formfieldDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -480,41 +482,139 @@ func (backRepoFormField *BackRepoFormFieldStruct) CheckoutPhaseTwoInstance(backR
 func (formfieldDB *FormFieldDB) DecodePointers(backRepo *BackRepoStruct, formfield *models.FormField) {
 
 	// insertion point for checkout of pointer encoding
-	// FormFieldString field
-	formfield.FormFieldString = nil
-	if formfieldDB.FormFieldStringID.Int64 != 0 {
-		formfield.FormFieldString = backRepo.BackRepoFormFieldString.Map_FormFieldStringDBID_FormFieldStringPtr[uint(formfieldDB.FormFieldStringID.Int64)]
+	// FormFieldString field	
+	{
+		id := formfieldDB.FormFieldStringID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldString.Map_FormFieldStringDBID_FormFieldStringPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldString, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldString == nil || formfield.FormFieldString != tmp {
+				formfield.FormFieldString = tmp
+			}
+		} else {
+			formfield.FormFieldString = nil
+		}
 	}
-	// FormFieldFloat64 field
-	formfield.FormFieldFloat64 = nil
-	if formfieldDB.FormFieldFloat64ID.Int64 != 0 {
-		formfield.FormFieldFloat64 = backRepo.BackRepoFormFieldFloat64.Map_FormFieldFloat64DBID_FormFieldFloat64Ptr[uint(formfieldDB.FormFieldFloat64ID.Int64)]
+	
+	// FormFieldFloat64 field	
+	{
+		id := formfieldDB.FormFieldFloat64ID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldFloat64.Map_FormFieldFloat64DBID_FormFieldFloat64Ptr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldFloat64, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldFloat64 == nil || formfield.FormFieldFloat64 != tmp {
+				formfield.FormFieldFloat64 = tmp
+			}
+		} else {
+			formfield.FormFieldFloat64 = nil
+		}
 	}
-	// FormFieldInt field
-	formfield.FormFieldInt = nil
-	if formfieldDB.FormFieldIntID.Int64 != 0 {
-		formfield.FormFieldInt = backRepo.BackRepoFormFieldInt.Map_FormFieldIntDBID_FormFieldIntPtr[uint(formfieldDB.FormFieldIntID.Int64)]
+	
+	// FormFieldInt field	
+	{
+		id := formfieldDB.FormFieldIntID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldInt.Map_FormFieldIntDBID_FormFieldIntPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldInt, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldInt == nil || formfield.FormFieldInt != tmp {
+				formfield.FormFieldInt = tmp
+			}
+		} else {
+			formfield.FormFieldInt = nil
+		}
 	}
-	// FormFieldDate field
-	formfield.FormFieldDate = nil
-	if formfieldDB.FormFieldDateID.Int64 != 0 {
-		formfield.FormFieldDate = backRepo.BackRepoFormFieldDate.Map_FormFieldDateDBID_FormFieldDatePtr[uint(formfieldDB.FormFieldDateID.Int64)]
+	
+	// FormFieldDate field	
+	{
+		id := formfieldDB.FormFieldDateID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldDate.Map_FormFieldDateDBID_FormFieldDatePtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldDate, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldDate == nil || formfield.FormFieldDate != tmp {
+				formfield.FormFieldDate = tmp
+			}
+		} else {
+			formfield.FormFieldDate = nil
+		}
 	}
-	// FormFieldTime field
-	formfield.FormFieldTime = nil
-	if formfieldDB.FormFieldTimeID.Int64 != 0 {
-		formfield.FormFieldTime = backRepo.BackRepoFormFieldTime.Map_FormFieldTimeDBID_FormFieldTimePtr[uint(formfieldDB.FormFieldTimeID.Int64)]
+	
+	// FormFieldTime field	
+	{
+		id := formfieldDB.FormFieldTimeID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldTime.Map_FormFieldTimeDBID_FormFieldTimePtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldTime, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldTime == nil || formfield.FormFieldTime != tmp {
+				formfield.FormFieldTime = tmp
+			}
+		} else {
+			formfield.FormFieldTime = nil
+		}
 	}
-	// FormFieldDateTime field
-	formfield.FormFieldDateTime = nil
-	if formfieldDB.FormFieldDateTimeID.Int64 != 0 {
-		formfield.FormFieldDateTime = backRepo.BackRepoFormFieldDateTime.Map_FormFieldDateTimeDBID_FormFieldDateTimePtr[uint(formfieldDB.FormFieldDateTimeID.Int64)]
+	
+	// FormFieldDateTime field	
+	{
+		id := formfieldDB.FormFieldDateTimeID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldDateTime.Map_FormFieldDateTimeDBID_FormFieldDateTimePtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldDateTime, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldDateTime == nil || formfield.FormFieldDateTime != tmp {
+				formfield.FormFieldDateTime = tmp
+			}
+		} else {
+			formfield.FormFieldDateTime = nil
+		}
 	}
-	// FormFieldSelect field
-	formfield.FormFieldSelect = nil
-	if formfieldDB.FormFieldSelectID.Int64 != 0 {
-		formfield.FormFieldSelect = backRepo.BackRepoFormFieldSelect.Map_FormFieldSelectDBID_FormFieldSelectPtr[uint(formfieldDB.FormFieldSelectID.Int64)]
+	
+	// FormFieldSelect field	
+	{
+		id := formfieldDB.FormFieldSelectID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoFormFieldSelect.Map_FormFieldSelectDBID_FormFieldSelectPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: formfield.FormFieldSelect, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if formfield.FormFieldSelect == nil || formfield.FormFieldSelect != tmp {
+				formfield.FormFieldSelect = tmp
+			}
+		} else {
+			formfield.FormFieldSelect = nil
+		}
 	}
+	
 	return
 }
 
@@ -536,7 +636,7 @@ func (backRepo *BackRepoStruct) CheckoutFormField(formfield *models.FormField) {
 			var formfieldDB FormFieldDB
 			formfieldDB.ID = id
 
-			if err := backRepo.BackRepoFormField.db.First(&formfieldDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoFormField.db.First(&formfieldDB, id); err != nil {
 				log.Fatalln("CheckoutFormField : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoFormField.CheckoutPhaseOneInstance(&formfieldDB)
@@ -767,9 +867,9 @@ func (backRepoFormField *BackRepoFormFieldStruct) rowVisitorFormField(row *xlsx.
 
 		formfieldDB_ID_atBackupTime := formfieldDB.ID
 		formfieldDB.ID = 0
-		query := backRepoFormField.db.Create(formfieldDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoFormField.db.Create(formfieldDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoFormField.Map_FormFieldDBID_FormFieldDB[formfieldDB.ID] = formfieldDB
 		BackRepoFormFieldid_atBckpTime_newID[formfieldDB_ID_atBackupTime] = formfieldDB.ID
@@ -804,9 +904,9 @@ func (backRepoFormField *BackRepoFormFieldStruct) RestorePhaseOne(dirPath string
 
 		formfieldDB_ID_atBackupTime := formfieldDB.ID
 		formfieldDB.ID = 0
-		query := backRepoFormField.db.Create(formfieldDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoFormField.db.Create(formfieldDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoFormField.Map_FormFieldDBID_FormFieldDB[formfieldDB.ID] = formfieldDB
 		BackRepoFormFieldid_atBckpTime_newID[formfieldDB_ID_atBackupTime] = formfieldDB.ID
@@ -870,9 +970,10 @@ func (backRepoFormField *BackRepoFormFieldStruct) RestorePhaseTwo() {
 		}
 
 		// update databse with new index encoding
-		query := backRepoFormField.db.Model(formfieldDB).Updates(*formfieldDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoFormField.db.Model(formfieldDB)
+		_, err := db.Updates(*formfieldDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

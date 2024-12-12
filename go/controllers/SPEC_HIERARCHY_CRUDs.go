@@ -70,12 +70,12 @@ func (controller *Controller) GetSPEC_HIERARCHYs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoSPEC_HIERARCHY.GetDB()
 
-	query := db.Find(&spec_hierarchyDBs)
-	if query.Error != nil {
+	_, err := db.Find(&spec_hierarchyDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostSPEC_HIERARCHY(c *gin.Context) {
 	spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding = input.SPEC_HIERARCHYPointersEncoding
 	spec_hierarchyDB.CopyBasicFieldsFromSPEC_HIERARCHY_WOP(&input.SPEC_HIERARCHY_WOP)
 
-	query := db.Create(&spec_hierarchyDB)
-	if query.Error != nil {
+	_, err = db.Create(&spec_hierarchyDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetSPEC_HIERARCHY(c *gin.Context) {
 
 	// Get spec_hierarchyDB in DB
 	var spec_hierarchyDB orm.SPEC_HIERARCHYDB
-	if err := db.First(&spec_hierarchyDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_hierarchyDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateSPEC_HIERARCHY(c *gin.Context) {
 	var spec_hierarchyDB orm.SPEC_HIERARCHYDB
 
 	// fetch the spec_hierarchy
-	query := db.First(&spec_hierarchyDB, c.Param("id"))
+	_, err := db.First(&spec_hierarchyDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateSPEC_HIERARCHY(c *gin.Context) {
 	spec_hierarchyDB.CopyBasicFieldsFromSPEC_HIERARCHY_WOP(&input.SPEC_HIERARCHY_WOP)
 	spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding = input.SPEC_HIERARCHYPointersEncoding
 
-	query = db.Model(&spec_hierarchyDB).Updates(spec_hierarchyDB)
-	if query.Error != nil {
+	db, _ = db.Model(&spec_hierarchyDB)
+	_, err = db.Updates(&spec_hierarchyDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteSPEC_HIERARCHY(c *gin.Context) {
 
 	// Get model if exist
 	var spec_hierarchyDB orm.SPEC_HIERARCHYDB
-	if err := db.First(&spec_hierarchyDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&spec_hierarchyDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteSPEC_HIERARCHY(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&spec_hierarchyDB)
+	db.Unscoped()
+	db.Delete(&spec_hierarchyDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	spec_hierarchyDeleted := new(models.SPEC_HIERARCHY)

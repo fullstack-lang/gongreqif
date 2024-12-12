@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -64,7 +65,7 @@ type EMBEDDED_VALUEDB struct {
 
 	// Declation for basic field embedded_valueDB.OTHER_CONTENT
 	OTHER_CONTENT_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	EMBEDDED_VALUEPointersEncoding
@@ -110,7 +111,7 @@ type BackRepoEMBEDDED_VALUEStruct struct {
 	// stores EMBEDDED_VALUE according to their gorm ID
 	Map_EMBEDDED_VALUEDBID_EMBEDDED_VALUEPtr map[uint]*models.EMBEDDED_VALUE
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -120,7 +121,7 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) GetStage() (stage *m
 	return
 }
 
-func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) GetDB() *gorm.DB {
+func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) GetDB() db.DBInterface {
 	return backRepoEMBEDDED_VALUE.db
 }
 
@@ -157,9 +158,10 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CommitDeleteInstance
 
 	// embedded_value is not staged anymore, remove embedded_valueDB
 	embedded_valueDB := backRepoEMBEDDED_VALUE.Map_EMBEDDED_VALUEDBID_EMBEDDED_VALUEDB[id]
-	query := backRepoEMBEDDED_VALUE.db.Unscoped().Delete(&embedded_valueDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoEMBEDDED_VALUE.db.Unscoped()
+	_, err := db.Delete(embedded_valueDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -183,9 +185,9 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CommitPhaseOneInstan
 	var embedded_valueDB EMBEDDED_VALUEDB
 	embedded_valueDB.CopyBasicFieldsFromEMBEDDED_VALUE(embedded_value)
 
-	query := backRepoEMBEDDED_VALUE.db.Create(&embedded_valueDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoEMBEDDED_VALUE.db.Create(&embedded_valueDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -217,9 +219,9 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CommitPhaseTwoInstan
 		embedded_valueDB.CopyBasicFieldsFromEMBEDDED_VALUE(embedded_value)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoEMBEDDED_VALUE.db.Save(&embedded_valueDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoEMBEDDED_VALUE.db.Save(embedded_valueDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -238,9 +240,9 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CommitPhaseTwoInstan
 func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CheckoutPhaseOne() (Error error) {
 
 	embedded_valueDBArray := make([]EMBEDDED_VALUEDB, 0)
-	query := backRepoEMBEDDED_VALUE.db.Find(&embedded_valueDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoEMBEDDED_VALUE.db.Find(&embedded_valueDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -351,7 +353,7 @@ func (backRepo *BackRepoStruct) CheckoutEMBEDDED_VALUE(embedded_value *models.EM
 			var embedded_valueDB EMBEDDED_VALUEDB
 			embedded_valueDB.ID = id
 
-			if err := backRepo.BackRepoEMBEDDED_VALUE.db.First(&embedded_valueDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoEMBEDDED_VALUE.db.First(&embedded_valueDB, id); err != nil {
 				log.Fatalln("CheckoutEMBEDDED_VALUE : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseOneInstance(&embedded_valueDB)
@@ -510,9 +512,9 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) rowVisitorEMBEDDED_V
 
 		embedded_valueDB_ID_atBackupTime := embedded_valueDB.ID
 		embedded_valueDB.ID = 0
-		query := backRepoEMBEDDED_VALUE.db.Create(embedded_valueDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoEMBEDDED_VALUE.db.Create(embedded_valueDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoEMBEDDED_VALUE.Map_EMBEDDED_VALUEDBID_EMBEDDED_VALUEDB[embedded_valueDB.ID] = embedded_valueDB
 		BackRepoEMBEDDED_VALUEid_atBckpTime_newID[embedded_valueDB_ID_atBackupTime] = embedded_valueDB.ID
@@ -547,9 +549,9 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) RestorePhaseOne(dirP
 
 		embedded_valueDB_ID_atBackupTime := embedded_valueDB.ID
 		embedded_valueDB.ID = 0
-		query := backRepoEMBEDDED_VALUE.db.Create(embedded_valueDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoEMBEDDED_VALUE.db.Create(embedded_valueDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoEMBEDDED_VALUE.Map_EMBEDDED_VALUEDBID_EMBEDDED_VALUEDB[embedded_valueDB.ID] = embedded_valueDB
 		BackRepoEMBEDDED_VALUEid_atBckpTime_newID[embedded_valueDB_ID_atBackupTime] = embedded_valueDB.ID
@@ -571,9 +573,10 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoEMBEDDED_VALUE.db.Model(embedded_valueDB).Updates(*embedded_valueDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoEMBEDDED_VALUE.db.Model(embedded_valueDB)
+		_, err := db.Updates(*embedded_valueDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

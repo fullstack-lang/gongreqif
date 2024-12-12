@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_q_typeDB struct {
 
 	// Declation for basic field xhtml_q_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_q_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_q_typeStruct struct {
 	// stores Xhtml_q_type according to their gorm ID
 	Map_Xhtml_q_typeDBID_Xhtml_q_typePtr map[uint]*models.Xhtml_q_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) GetStage() (stage *model
 	return
 }
 
-func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_q_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) CommitDeleteInstance(id 
 
 	// xhtml_q_type is not staged anymore, remove xhtml_q_typeDB
 	xhtml_q_typeDB := backRepoXhtml_q_type.Map_Xhtml_q_typeDBID_Xhtml_q_typeDB[id]
-	query := backRepoXhtml_q_type.db.Unscoped().Delete(&xhtml_q_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_q_type.db.Unscoped()
+	_, err := db.Delete(xhtml_q_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) CommitPhaseOneInstance(x
 	var xhtml_q_typeDB Xhtml_q_typeDB
 	xhtml_q_typeDB.CopyBasicFieldsFromXhtml_q_type(xhtml_q_type)
 
-	query := backRepoXhtml_q_type.db.Create(&xhtml_q_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_q_type.db.Create(&xhtml_q_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) CommitPhaseTwoInstance(b
 		xhtml_q_typeDB.CopyBasicFieldsFromXhtml_q_type(xhtml_q_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_q_type.db.Save(&xhtml_q_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_q_type.db.Save(xhtml_q_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) CommitPhaseTwoInstance(b
 func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_q_typeDBArray := make([]Xhtml_q_typeDB, 0)
-	query := backRepoXhtml_q_type.db.Find(&xhtml_q_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_q_type.db.Find(&xhtml_q_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_q_type(xhtml_q_type *models.Xhtml_
 			var xhtml_q_typeDB Xhtml_q_typeDB
 			xhtml_q_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_q_type.db.First(&xhtml_q_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_q_type.db.First(&xhtml_q_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_q_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_q_type.CheckoutPhaseOneInstance(&xhtml_q_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) rowVisitorXhtml_q_type(r
 
 		xhtml_q_typeDB_ID_atBackupTime := xhtml_q_typeDB.ID
 		xhtml_q_typeDB.ID = 0
-		query := backRepoXhtml_q_type.db.Create(xhtml_q_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_q_type.db.Create(xhtml_q_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_q_type.Map_Xhtml_q_typeDBID_Xhtml_q_typeDB[xhtml_q_typeDB.ID] = xhtml_q_typeDB
 		BackRepoXhtml_q_typeid_atBckpTime_newID[xhtml_q_typeDB_ID_atBackupTime] = xhtml_q_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) RestorePhaseOne(dirPath 
 
 		xhtml_q_typeDB_ID_atBackupTime := xhtml_q_typeDB.ID
 		xhtml_q_typeDB.ID = 0
-		query := backRepoXhtml_q_type.db.Create(xhtml_q_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_q_type.db.Create(xhtml_q_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_q_type.Map_Xhtml_q_typeDBID_Xhtml_q_typeDB[xhtml_q_typeDB.ID] = xhtml_q_typeDB
 		BackRepoXhtml_q_typeid_atBckpTime_newID[xhtml_q_typeDB_ID_atBackupTime] = xhtml_q_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_q_type *BackRepoXhtml_q_typeStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_q_type.db.Model(xhtml_q_typeDB).Updates(*xhtml_q_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_q_type.db.Model(xhtml_q_typeDB)
+		_, err := db.Updates(*xhtml_q_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

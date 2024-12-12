@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -84,7 +85,7 @@ type DATATYPE_DEFINITION_ENUMERATIONDB struct {
 
 	// Declation for basic field datatype_definition_enumerationDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	DATATYPE_DEFINITION_ENUMERATIONPointersEncoding
@@ -136,7 +137,7 @@ type BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct struct {
 	// stores DATATYPE_DEFINITION_ENUMERATION according to their gorm ID
 	Map_DATATYPE_DEFINITION_ENUMERATIONDBID_DATATYPE_DEFINITION_ENUMERATIONPtr map[uint]*models.DATATYPE_DEFINITION_ENUMERATION
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -146,7 +147,7 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 	return
 }
 
-func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) GetDB() *gorm.DB {
+func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) GetDB() db.DBInterface {
 	return backRepoDATATYPE_DEFINITION_ENUMERATION.db
 }
 
@@ -183,9 +184,10 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 
 	// datatype_definition_enumeration is not staged anymore, remove datatype_definition_enumerationDB
 	datatype_definition_enumerationDB := backRepoDATATYPE_DEFINITION_ENUMERATION.Map_DATATYPE_DEFINITION_ENUMERATIONDBID_DATATYPE_DEFINITION_ENUMERATIONDB[id]
-	query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Unscoped().Delete(&datatype_definition_enumerationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Unscoped()
+	_, err := db.Delete(datatype_definition_enumerationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -209,9 +211,9 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 	var datatype_definition_enumerationDB DATATYPE_DEFINITION_ENUMERATIONDB
 	datatype_definition_enumerationDB.CopyBasicFieldsFromDATATYPE_DEFINITION_ENUMERATION(datatype_definition_enumeration)
 
-	query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Create(&datatype_definition_enumerationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Create(&datatype_definition_enumerationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -279,9 +281,9 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 				append(datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.SPECIFIED_VALUES.ENUM_VALUE, int(enum_valueAssocEnd_DB.ID))
 		}
 
-		query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Save(&datatype_definition_enumerationDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Save(datatype_definition_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -300,9 +302,9 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) CheckoutPhaseOne() (Error error) {
 
 	datatype_definition_enumerationDBArray := make([]DATATYPE_DEFINITION_ENUMERATIONDB, 0)
-	query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Find(&datatype_definition_enumerationDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Find(&datatype_definition_enumerationDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -431,7 +433,7 @@ func (backRepo *BackRepoStruct) CheckoutDATATYPE_DEFINITION_ENUMERATION(datatype
 			var datatype_definition_enumerationDB DATATYPE_DEFINITION_ENUMERATIONDB
 			datatype_definition_enumerationDB.ID = id
 
-			if err := backRepo.BackRepoDATATYPE_DEFINITION_ENUMERATION.db.First(&datatype_definition_enumerationDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoDATATYPE_DEFINITION_ENUMERATION.db.First(&datatype_definition_enumerationDB, id); err != nil {
 				log.Fatalln("CheckoutDATATYPE_DEFINITION_ENUMERATION : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoDATATYPE_DEFINITION_ENUMERATION.CheckoutPhaseOneInstance(&datatype_definition_enumerationDB)
@@ -614,9 +616,9 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 
 		datatype_definition_enumerationDB_ID_atBackupTime := datatype_definition_enumerationDB.ID
 		datatype_definition_enumerationDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Create(datatype_definition_enumerationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Create(datatype_definition_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_ENUMERATION.Map_DATATYPE_DEFINITION_ENUMERATIONDBID_DATATYPE_DEFINITION_ENUMERATIONDB[datatype_definition_enumerationDB.ID] = datatype_definition_enumerationDB
 		BackRepoDATATYPE_DEFINITION_ENUMERATIONid_atBckpTime_newID[datatype_definition_enumerationDB_ID_atBackupTime] = datatype_definition_enumerationDB.ID
@@ -651,9 +653,9 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 
 		datatype_definition_enumerationDB_ID_atBackupTime := datatype_definition_enumerationDB.ID
 		datatype_definition_enumerationDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Create(datatype_definition_enumerationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Create(datatype_definition_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_ENUMERATION.Map_DATATYPE_DEFINITION_ENUMERATIONDBID_DATATYPE_DEFINITION_ENUMERATIONDB[datatype_definition_enumerationDB.ID] = datatype_definition_enumerationDB
 		BackRepoDATATYPE_DEFINITION_ENUMERATIONid_atBckpTime_newID[datatype_definition_enumerationDB_ID_atBackupTime] = datatype_definition_enumerationDB.ID
@@ -675,9 +677,10 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Model(datatype_definition_enumerationDB).Updates(*datatype_definition_enumerationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Model(datatype_definition_enumerationDB)
+		_, err := db.Updates(*datatype_definition_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

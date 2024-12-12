@@ -70,12 +70,12 @@ func (controller *Controller) GetDATATYPE_DEFINITION_ENUMERATIONs(c *gin.Context
 	}
 	db := backRepo.BackRepoDATATYPE_DEFINITION_ENUMERATION.GetDB()
 
-	query := db.Find(&datatype_definition_enumerationDBs)
-	if query.Error != nil {
+	_, err := db.Find(&datatype_definition_enumerationDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostDATATYPE_DEFINITION_ENUMERATION(c *gin.Context
 	datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding = input.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding
 	datatype_definition_enumerationDB.CopyBasicFieldsFromDATATYPE_DEFINITION_ENUMERATION_WOP(&input.DATATYPE_DEFINITION_ENUMERATION_WOP)
 
-	query := db.Create(&datatype_definition_enumerationDB)
-	if query.Error != nil {
+	_, err = db.Create(&datatype_definition_enumerationDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetDATATYPE_DEFINITION_ENUMERATION(c *gin.Context)
 
 	// Get datatype_definition_enumerationDB in DB
 	var datatype_definition_enumerationDB orm.DATATYPE_DEFINITION_ENUMERATIONDB
-	if err := db.First(&datatype_definition_enumerationDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_enumerationDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_ENUMERATION(c *gin.Conte
 	var datatype_definition_enumerationDB orm.DATATYPE_DEFINITION_ENUMERATIONDB
 
 	// fetch the datatype_definition_enumeration
-	query := db.First(&datatype_definition_enumerationDB, c.Param("id"))
+	_, err := db.First(&datatype_definition_enumerationDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_ENUMERATION(c *gin.Conte
 	datatype_definition_enumerationDB.CopyBasicFieldsFromDATATYPE_DEFINITION_ENUMERATION_WOP(&input.DATATYPE_DEFINITION_ENUMERATION_WOP)
 	datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding = input.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding
 
-	query = db.Model(&datatype_definition_enumerationDB).Updates(datatype_definition_enumerationDB)
-	if query.Error != nil {
+	db, _ = db.Model(&datatype_definition_enumerationDB)
+	_, err = db.Updates(&datatype_definition_enumerationDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_ENUMERATION(c *gin.Conte
 
 	// Get model if exist
 	var datatype_definition_enumerationDB orm.DATATYPE_DEFINITION_ENUMERATIONDB
-	if err := db.First(&datatype_definition_enumerationDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_enumerationDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_ENUMERATION(c *gin.Conte
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&datatype_definition_enumerationDB)
+	db.Unscoped()
+	db.Delete(&datatype_definition_enumerationDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	datatype_definition_enumerationDeleted := new(models.DATATYPE_DEFINITION_ENUMERATION)

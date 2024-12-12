@@ -8,8 +8,6 @@ import (
 	"math"
 	"slices"
 	"time"
-
-	"golang.org/x/exp/maps"
 )
 
 func __Gong__Abs(x int) int {
@@ -53,7 +51,6 @@ type StageStruct struct {
 	ALTERNATIVE_IDs_mapString map[string]*ALTERNATIVE_ID
 
 	// insertion point for slice of pointers maps
-
 	OnAfterALTERNATIVE_IDCreateCallback OnAfterCreateInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDUpdateCallback OnAfterUpdateInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[ALTERNATIVE_ID]
@@ -64,6 +61,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_BOOLEAN_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_BOOLEAN
+
 	ATTRIBUTE_DEFINITION_BOOLEAN_DEFAULT_VALUE_ATTRIBUTE_VALUE_BOOLEAN_reverseMap map[*ATTRIBUTE_VALUE_BOOLEAN]*ATTRIBUTE_DEFINITION_BOOLEAN
 
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
@@ -76,6 +74,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_DATE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_DATE
+
 	ATTRIBUTE_DEFINITION_DATE_DEFAULT_VALUE_ATTRIBUTE_VALUE_DATE_reverseMap map[*ATTRIBUTE_VALUE_DATE]*ATTRIBUTE_DEFINITION_DATE
 
 	OnAfterATTRIBUTE_DEFINITION_DATECreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_DATE]
@@ -88,6 +87,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_ENUMERATION_DEFAULT_VALUE_ATTRIBUTE_VALUE_ENUMERATION_reverseMap map[*ATTRIBUTE_VALUE_ENUMERATION]*ATTRIBUTE_DEFINITION_ENUMERATION
+
 	ATTRIBUTE_DEFINITION_ENUMERATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_ENUMERATION
 
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
@@ -100,6 +100,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_INTEGER_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_INTEGER
+
 	ATTRIBUTE_DEFINITION_INTEGER_DEFAULT_VALUE_ATTRIBUTE_VALUE_INTEGER_reverseMap map[*ATTRIBUTE_VALUE_INTEGER]*ATTRIBUTE_DEFINITION_INTEGER
 
 	OnAfterATTRIBUTE_DEFINITION_INTEGERCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_INTEGER]
@@ -112,6 +113,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_REAL_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_REAL
+
 	ATTRIBUTE_DEFINITION_REAL_DEFAULT_VALUE_ATTRIBUTE_VALUE_REAL_reverseMap map[*ATTRIBUTE_VALUE_REAL]*ATTRIBUTE_DEFINITION_REAL
 
 	OnAfterATTRIBUTE_DEFINITION_REALCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL]
@@ -124,6 +126,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_STRING_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_STRING
+
 	ATTRIBUTE_DEFINITION_STRING_DEFAULT_VALUE_ATTRIBUTE_VALUE_STRING_reverseMap map[*ATTRIBUTE_VALUE_STRING]*ATTRIBUTE_DEFINITION_STRING
 
 	OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING]
@@ -136,6 +139,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_DEFINITION_XHTML_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ATTRIBUTE_DEFINITION_XHTML
+
 	ATTRIBUTE_DEFINITION_XHTML_DEFAULT_VALUE_ATTRIBUTE_VALUE_XHTML_reverseMap map[*ATTRIBUTE_VALUE_XHTML]*ATTRIBUTE_DEFINITION_XHTML
 
 	OnAfterATTRIBUTE_DEFINITION_XHTMLCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_XHTML]
@@ -147,7 +151,6 @@ type StageStruct struct {
 	ATTRIBUTE_VALUE_BOOLEANs_mapString map[string]*ATTRIBUTE_VALUE_BOOLEAN
 
 	// insertion point for slice of pointers maps
-
 	OnAfterATTRIBUTE_VALUE_BOOLEANCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_BOOLEAN]
@@ -157,7 +160,6 @@ type StageStruct struct {
 	ATTRIBUTE_VALUE_DATEs_mapString map[string]*ATTRIBUTE_VALUE_DATE
 
 	// insertion point for slice of pointers maps
-
 	OnAfterATTRIBUTE_VALUE_DATECreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_DATE]
@@ -167,7 +169,6 @@ type StageStruct struct {
 	ATTRIBUTE_VALUE_ENUMERATIONs_mapString map[string]*ATTRIBUTE_VALUE_ENUMERATION
 
 	// insertion point for slice of pointers maps
-
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_ENUMERATION]
@@ -177,7 +178,6 @@ type StageStruct struct {
 	ATTRIBUTE_VALUE_INTEGERs_mapString map[string]*ATTRIBUTE_VALUE_INTEGER
 
 	// insertion point for slice of pointers maps
-
 	OnAfterATTRIBUTE_VALUE_INTEGERCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_INTEGER]
@@ -187,7 +187,6 @@ type StageStruct struct {
 	ATTRIBUTE_VALUE_REALs_mapString map[string]*ATTRIBUTE_VALUE_REAL
 
 	// insertion point for slice of pointers maps
-
 	OnAfterATTRIBUTE_VALUE_REALCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_REAL]
@@ -197,7 +196,6 @@ type StageStruct struct {
 	ATTRIBUTE_VALUE_STRINGs_mapString map[string]*ATTRIBUTE_VALUE_STRING
 
 	// insertion point for slice of pointers maps
-
 	OnAfterATTRIBUTE_VALUE_STRINGCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_STRING]
@@ -208,6 +206,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ATTRIBUTE_VALUE_XHTML_THE_VALUE_reverseMap map[*XHTML_CONTENT]*ATTRIBUTE_VALUE_XHTML
+
 	ATTRIBUTE_VALUE_XHTML_THE_ORIGINAL_VALUE_reverseMap map[*XHTML_CONTENT]*ATTRIBUTE_VALUE_XHTML
 
 	OnAfterATTRIBUTE_VALUE_XHTMLCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_XHTML]
@@ -219,7 +218,6 @@ type StageStruct struct {
 	AnyTypes_mapString map[string]*AnyType
 
 	// insertion point for slice of pointers maps
-
 	OnAfterAnyTypeCreateCallback OnAfterCreateInterface[AnyType]
 	OnAfterAnyTypeUpdateCallback OnAfterUpdateInterface[AnyType]
 	OnAfterAnyTypeDeleteCallback OnAfterDeleteInterface[AnyType]
@@ -252,6 +250,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	DATATYPE_DEFINITION_ENUMERATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*DATATYPE_DEFINITION_ENUMERATION
+
 	DATATYPE_DEFINITION_ENUMERATION_SPECIFIED_VALUES_ENUM_VALUE_reverseMap map[*ENUM_VALUE]*DATATYPE_DEFINITION_ENUMERATION
 
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_ENUMERATION]
@@ -307,7 +306,6 @@ type StageStruct struct {
 	EMBEDDED_VALUEs_mapString map[string]*EMBEDDED_VALUE
 
 	// insertion point for slice of pointers maps
-
 	OnAfterEMBEDDED_VALUECreateCallback OnAfterCreateInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEUpdateCallback OnAfterUpdateInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEDeleteCallback OnAfterDeleteInterface[EMBEDDED_VALUE]
@@ -318,6 +316,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	ENUM_VALUE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*ENUM_VALUE
+
 	ENUM_VALUE_PROPERTIES_EMBEDDED_VALUE_reverseMap map[*EMBEDDED_VALUE]*ENUM_VALUE
 
 	OnAfterENUM_VALUECreateCallback OnAfterCreateInterface[ENUM_VALUE]
@@ -341,12 +340,19 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	RELATION_GROUP_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap map[*ATTRIBUTE_DEFINITION_BOOLEAN]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap map[*ATTRIBUTE_DEFINITION_DATE]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap map[*ATTRIBUTE_DEFINITION_ENUMERATION]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap map[*ATTRIBUTE_DEFINITION_INTEGER]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap map[*ATTRIBUTE_DEFINITION_REAL]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap map[*ATTRIBUTE_DEFINITION_STRING]*RELATION_GROUP_TYPE
+
 	RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap map[*ATTRIBUTE_DEFINITION_XHTML]*RELATION_GROUP_TYPE
 
 	OnAfterRELATION_GROUP_TYPECreateCallback OnAfterCreateInterface[RELATION_GROUP_TYPE]
@@ -370,19 +376,33 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_BOOLEAN_reverseMap map[*DATATYPE_DEFINITION_BOOLEAN]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_DATE_reverseMap map[*DATATYPE_DEFINITION_DATE]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_ENUMERATION_reverseMap map[*DATATYPE_DEFINITION_ENUMERATION]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_INTEGER_reverseMap map[*DATATYPE_DEFINITION_INTEGER]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_REAL_reverseMap map[*DATATYPE_DEFINITION_REAL]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_STRING_reverseMap map[*DATATYPE_DEFINITION_STRING]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_XHTML_reverseMap map[*DATATYPE_DEFINITION_XHTML]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_TYPES_RELATION_GROUP_TYPE_reverseMap map[*RELATION_GROUP_TYPE]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_TYPES_SPEC_OBJECT_TYPE_reverseMap map[*SPEC_OBJECT_TYPE]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_TYPES_SPEC_RELATION_TYPE_reverseMap map[*SPEC_RELATION_TYPE]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_TYPES_SPECIFICATION_TYPE_reverseMap map[*SPECIFICATION_TYPE]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_OBJECTS_SPEC_OBJECT_reverseMap map[*SPEC_OBJECT]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_RELATIONS_SPEC_RELATION_reverseMap map[*SPEC_RELATION]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPECIFICATIONS_SPECIFICATION_reverseMap map[*SPECIFICATION]*REQ_IF_CONTENT
+
 	REQ_IF_CONTENT_SPEC_RELATION_GROUPS_RELATION_GROUP_reverseMap map[*RELATION_GROUP]*REQ_IF_CONTENT
 
 	OnAfterREQ_IF_CONTENTCreateCallback OnAfterCreateInterface[REQ_IF_CONTENT]
@@ -394,7 +414,6 @@ type StageStruct struct {
 	REQ_IF_HEADERs_mapString map[string]*REQ_IF_HEADER
 
 	// insertion point for slice of pointers maps
-
 	OnAfterREQ_IF_HEADERCreateCallback OnAfterCreateInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERUpdateCallback OnAfterUpdateInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERDeleteCallback OnAfterDeleteInterface[REQ_IF_HEADER]
@@ -404,7 +423,6 @@ type StageStruct struct {
 	REQ_IF_TOOL_EXTENSIONs_mapString map[string]*REQ_IF_TOOL_EXTENSION
 
 	// insertion point for slice of pointers maps
-
 	OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback OnAfterCreateInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback OnAfterUpdateInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION]
@@ -415,13 +433,21 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPECIFICATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap map[*ATTRIBUTE_VALUE_BOOLEAN]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap map[*ATTRIBUTE_VALUE_DATE]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap map[*ATTRIBUTE_VALUE_ENUMERATION]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap map[*ATTRIBUTE_VALUE_INTEGER]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap map[*ATTRIBUTE_VALUE_REAL]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap map[*ATTRIBUTE_VALUE_STRING]*SPECIFICATION
+
 	SPECIFICATION_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap map[*ATTRIBUTE_VALUE_XHTML]*SPECIFICATION
+
 	SPECIFICATION_CHILDREN_SPEC_HIERARCHY_reverseMap map[*SPEC_HIERARCHY]*SPECIFICATION
 
 	OnAfterSPECIFICATIONCreateCallback OnAfterCreateInterface[SPECIFICATION]
@@ -434,12 +460,19 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPECIFICATION_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap map[*ATTRIBUTE_DEFINITION_BOOLEAN]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap map[*ATTRIBUTE_DEFINITION_DATE]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap map[*ATTRIBUTE_DEFINITION_ENUMERATION]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap map[*ATTRIBUTE_DEFINITION_INTEGER]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap map[*ATTRIBUTE_DEFINITION_REAL]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap map[*ATTRIBUTE_DEFINITION_STRING]*SPECIFICATION_TYPE
+
 	SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap map[*ATTRIBUTE_DEFINITION_XHTML]*SPECIFICATION_TYPE
 
 	OnAfterSPECIFICATION_TYPECreateCallback OnAfterCreateInterface[SPECIFICATION_TYPE]
@@ -452,6 +485,7 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPEC_HIERARCHY_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPEC_HIERARCHY
+
 	SPEC_HIERARCHY_CHILDREN_SPEC_HIERARCHY_reverseMap map[*SPEC_HIERARCHY]*SPEC_HIERARCHY
 
 	OnAfterSPEC_HIERARCHYCreateCallback OnAfterCreateInterface[SPEC_HIERARCHY]
@@ -464,12 +498,19 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPEC_OBJECT_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap map[*ATTRIBUTE_VALUE_BOOLEAN]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap map[*ATTRIBUTE_VALUE_DATE]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap map[*ATTRIBUTE_VALUE_ENUMERATION]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap map[*ATTRIBUTE_VALUE_INTEGER]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap map[*ATTRIBUTE_VALUE_REAL]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap map[*ATTRIBUTE_VALUE_STRING]*SPEC_OBJECT
+
 	SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap map[*ATTRIBUTE_VALUE_XHTML]*SPEC_OBJECT
 
 	OnAfterSPEC_OBJECTCreateCallback OnAfterCreateInterface[SPEC_OBJECT]
@@ -482,12 +523,19 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPEC_OBJECT_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap map[*ATTRIBUTE_DEFINITION_BOOLEAN]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap map[*ATTRIBUTE_DEFINITION_DATE]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap map[*ATTRIBUTE_DEFINITION_ENUMERATION]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap map[*ATTRIBUTE_DEFINITION_INTEGER]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap map[*ATTRIBUTE_DEFINITION_REAL]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap map[*ATTRIBUTE_DEFINITION_STRING]*SPEC_OBJECT_TYPE
+
 	SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap map[*ATTRIBUTE_DEFINITION_XHTML]*SPEC_OBJECT_TYPE
 
 	OnAfterSPEC_OBJECT_TYPECreateCallback OnAfterCreateInterface[SPEC_OBJECT_TYPE]
@@ -500,12 +548,19 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPEC_RELATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap map[*ATTRIBUTE_VALUE_BOOLEAN]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap map[*ATTRIBUTE_VALUE_DATE]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap map[*ATTRIBUTE_VALUE_ENUMERATION]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap map[*ATTRIBUTE_VALUE_INTEGER]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap map[*ATTRIBUTE_VALUE_REAL]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap map[*ATTRIBUTE_VALUE_STRING]*SPEC_RELATION
+
 	SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap map[*ATTRIBUTE_VALUE_XHTML]*SPEC_RELATION
 
 	OnAfterSPEC_RELATIONCreateCallback OnAfterCreateInterface[SPEC_RELATION]
@@ -518,12 +573,19 @@ type StageStruct struct {
 
 	// insertion point for slice of pointers maps
 	SPEC_RELATION_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap map[*ALTERNATIVE_ID]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap map[*ATTRIBUTE_DEFINITION_BOOLEAN]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap map[*ATTRIBUTE_DEFINITION_DATE]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap map[*ATTRIBUTE_DEFINITION_ENUMERATION]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap map[*ATTRIBUTE_DEFINITION_INTEGER]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap map[*ATTRIBUTE_DEFINITION_REAL]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap map[*ATTRIBUTE_DEFINITION_STRING]*SPEC_RELATION_TYPE
+
 	SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap map[*ATTRIBUTE_DEFINITION_XHTML]*SPEC_RELATION_TYPE
 
 	OnAfterSPEC_RELATION_TYPECreateCallback OnAfterCreateInterface[SPEC_RELATION_TYPE]
@@ -535,7 +597,6 @@ type StageStruct struct {
 	XHTML_CONTENTs_mapString map[string]*XHTML_CONTENT
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXHTML_CONTENTCreateCallback OnAfterCreateInterface[XHTML_CONTENT]
 	OnAfterXHTML_CONTENTUpdateCallback OnAfterUpdateInterface[XHTML_CONTENT]
 	OnAfterXHTML_CONTENTDeleteCallback OnAfterDeleteInterface[XHTML_CONTENT]
@@ -545,7 +606,6 @@ type StageStruct struct {
 	Xhtml_InlPres_types_mapString map[string]*Xhtml_InlPres_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_InlPres_typeCreateCallback OnAfterCreateInterface[Xhtml_InlPres_type]
 	OnAfterXhtml_InlPres_typeUpdateCallback OnAfterUpdateInterface[Xhtml_InlPres_type]
 	OnAfterXhtml_InlPres_typeDeleteCallback OnAfterDeleteInterface[Xhtml_InlPres_type]
@@ -555,7 +615,6 @@ type StageStruct struct {
 	Xhtml_a_types_mapString map[string]*Xhtml_a_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_a_typeCreateCallback OnAfterCreateInterface[Xhtml_a_type]
 	OnAfterXhtml_a_typeUpdateCallback OnAfterUpdateInterface[Xhtml_a_type]
 	OnAfterXhtml_a_typeDeleteCallback OnAfterDeleteInterface[Xhtml_a_type]
@@ -565,7 +624,6 @@ type StageStruct struct {
 	Xhtml_abbr_types_mapString map[string]*Xhtml_abbr_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_abbr_typeCreateCallback OnAfterCreateInterface[Xhtml_abbr_type]
 	OnAfterXhtml_abbr_typeUpdateCallback OnAfterUpdateInterface[Xhtml_abbr_type]
 	OnAfterXhtml_abbr_typeDeleteCallback OnAfterDeleteInterface[Xhtml_abbr_type]
@@ -575,7 +633,6 @@ type StageStruct struct {
 	Xhtml_acronym_types_mapString map[string]*Xhtml_acronym_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_acronym_typeCreateCallback OnAfterCreateInterface[Xhtml_acronym_type]
 	OnAfterXhtml_acronym_typeUpdateCallback OnAfterUpdateInterface[Xhtml_acronym_type]
 	OnAfterXhtml_acronym_typeDeleteCallback OnAfterDeleteInterface[Xhtml_acronym_type]
@@ -585,7 +642,6 @@ type StageStruct struct {
 	Xhtml_address_types_mapString map[string]*Xhtml_address_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_address_typeCreateCallback OnAfterCreateInterface[Xhtml_address_type]
 	OnAfterXhtml_address_typeUpdateCallback OnAfterUpdateInterface[Xhtml_address_type]
 	OnAfterXhtml_address_typeDeleteCallback OnAfterDeleteInterface[Xhtml_address_type]
@@ -595,7 +651,6 @@ type StageStruct struct {
 	Xhtml_blockquote_types_mapString map[string]*Xhtml_blockquote_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_blockquote_typeCreateCallback OnAfterCreateInterface[Xhtml_blockquote_type]
 	OnAfterXhtml_blockquote_typeUpdateCallback OnAfterUpdateInterface[Xhtml_blockquote_type]
 	OnAfterXhtml_blockquote_typeDeleteCallback OnAfterDeleteInterface[Xhtml_blockquote_type]
@@ -605,7 +660,6 @@ type StageStruct struct {
 	Xhtml_br_types_mapString map[string]*Xhtml_br_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_br_typeCreateCallback OnAfterCreateInterface[Xhtml_br_type]
 	OnAfterXhtml_br_typeUpdateCallback OnAfterUpdateInterface[Xhtml_br_type]
 	OnAfterXhtml_br_typeDeleteCallback OnAfterDeleteInterface[Xhtml_br_type]
@@ -615,7 +669,6 @@ type StageStruct struct {
 	Xhtml_caption_types_mapString map[string]*Xhtml_caption_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_caption_typeCreateCallback OnAfterCreateInterface[Xhtml_caption_type]
 	OnAfterXhtml_caption_typeUpdateCallback OnAfterUpdateInterface[Xhtml_caption_type]
 	OnAfterXhtml_caption_typeDeleteCallback OnAfterDeleteInterface[Xhtml_caption_type]
@@ -625,7 +678,6 @@ type StageStruct struct {
 	Xhtml_cite_types_mapString map[string]*Xhtml_cite_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_cite_typeCreateCallback OnAfterCreateInterface[Xhtml_cite_type]
 	OnAfterXhtml_cite_typeUpdateCallback OnAfterUpdateInterface[Xhtml_cite_type]
 	OnAfterXhtml_cite_typeDeleteCallback OnAfterDeleteInterface[Xhtml_cite_type]
@@ -635,7 +687,6 @@ type StageStruct struct {
 	Xhtml_code_types_mapString map[string]*Xhtml_code_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_code_typeCreateCallback OnAfterCreateInterface[Xhtml_code_type]
 	OnAfterXhtml_code_typeUpdateCallback OnAfterUpdateInterface[Xhtml_code_type]
 	OnAfterXhtml_code_typeDeleteCallback OnAfterDeleteInterface[Xhtml_code_type]
@@ -645,7 +696,6 @@ type StageStruct struct {
 	Xhtml_col_types_mapString map[string]*Xhtml_col_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_col_typeCreateCallback OnAfterCreateInterface[Xhtml_col_type]
 	OnAfterXhtml_col_typeUpdateCallback OnAfterUpdateInterface[Xhtml_col_type]
 	OnAfterXhtml_col_typeDeleteCallback OnAfterDeleteInterface[Xhtml_col_type]
@@ -655,7 +705,6 @@ type StageStruct struct {
 	Xhtml_colgroup_types_mapString map[string]*Xhtml_colgroup_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_colgroup_typeCreateCallback OnAfterCreateInterface[Xhtml_colgroup_type]
 	OnAfterXhtml_colgroup_typeUpdateCallback OnAfterUpdateInterface[Xhtml_colgroup_type]
 	OnAfterXhtml_colgroup_typeDeleteCallback OnAfterDeleteInterface[Xhtml_colgroup_type]
@@ -665,7 +714,6 @@ type StageStruct struct {
 	Xhtml_dd_types_mapString map[string]*Xhtml_dd_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_dd_typeCreateCallback OnAfterCreateInterface[Xhtml_dd_type]
 	OnAfterXhtml_dd_typeUpdateCallback OnAfterUpdateInterface[Xhtml_dd_type]
 	OnAfterXhtml_dd_typeDeleteCallback OnAfterDeleteInterface[Xhtml_dd_type]
@@ -675,7 +723,6 @@ type StageStruct struct {
 	Xhtml_dfn_types_mapString map[string]*Xhtml_dfn_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_dfn_typeCreateCallback OnAfterCreateInterface[Xhtml_dfn_type]
 	OnAfterXhtml_dfn_typeUpdateCallback OnAfterUpdateInterface[Xhtml_dfn_type]
 	OnAfterXhtml_dfn_typeDeleteCallback OnAfterDeleteInterface[Xhtml_dfn_type]
@@ -685,7 +732,6 @@ type StageStruct struct {
 	Xhtml_div_types_mapString map[string]*Xhtml_div_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_div_typeCreateCallback OnAfterCreateInterface[Xhtml_div_type]
 	OnAfterXhtml_div_typeUpdateCallback OnAfterUpdateInterface[Xhtml_div_type]
 	OnAfterXhtml_div_typeDeleteCallback OnAfterDeleteInterface[Xhtml_div_type]
@@ -695,7 +741,6 @@ type StageStruct struct {
 	Xhtml_dl_types_mapString map[string]*Xhtml_dl_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_dl_typeCreateCallback OnAfterCreateInterface[Xhtml_dl_type]
 	OnAfterXhtml_dl_typeUpdateCallback OnAfterUpdateInterface[Xhtml_dl_type]
 	OnAfterXhtml_dl_typeDeleteCallback OnAfterDeleteInterface[Xhtml_dl_type]
@@ -705,7 +750,6 @@ type StageStruct struct {
 	Xhtml_dt_types_mapString map[string]*Xhtml_dt_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_dt_typeCreateCallback OnAfterCreateInterface[Xhtml_dt_type]
 	OnAfterXhtml_dt_typeUpdateCallback OnAfterUpdateInterface[Xhtml_dt_type]
 	OnAfterXhtml_dt_typeDeleteCallback OnAfterDeleteInterface[Xhtml_dt_type]
@@ -715,7 +759,6 @@ type StageStruct struct {
 	Xhtml_edit_types_mapString map[string]*Xhtml_edit_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_edit_typeCreateCallback OnAfterCreateInterface[Xhtml_edit_type]
 	OnAfterXhtml_edit_typeUpdateCallback OnAfterUpdateInterface[Xhtml_edit_type]
 	OnAfterXhtml_edit_typeDeleteCallback OnAfterDeleteInterface[Xhtml_edit_type]
@@ -725,7 +768,6 @@ type StageStruct struct {
 	Xhtml_em_types_mapString map[string]*Xhtml_em_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_em_typeCreateCallback OnAfterCreateInterface[Xhtml_em_type]
 	OnAfterXhtml_em_typeUpdateCallback OnAfterUpdateInterface[Xhtml_em_type]
 	OnAfterXhtml_em_typeDeleteCallback OnAfterDeleteInterface[Xhtml_em_type]
@@ -735,7 +777,6 @@ type StageStruct struct {
 	Xhtml_h1_types_mapString map[string]*Xhtml_h1_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_h1_typeCreateCallback OnAfterCreateInterface[Xhtml_h1_type]
 	OnAfterXhtml_h1_typeUpdateCallback OnAfterUpdateInterface[Xhtml_h1_type]
 	OnAfterXhtml_h1_typeDeleteCallback OnAfterDeleteInterface[Xhtml_h1_type]
@@ -745,7 +786,6 @@ type StageStruct struct {
 	Xhtml_h2_types_mapString map[string]*Xhtml_h2_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_h2_typeCreateCallback OnAfterCreateInterface[Xhtml_h2_type]
 	OnAfterXhtml_h2_typeUpdateCallback OnAfterUpdateInterface[Xhtml_h2_type]
 	OnAfterXhtml_h2_typeDeleteCallback OnAfterDeleteInterface[Xhtml_h2_type]
@@ -755,7 +795,6 @@ type StageStruct struct {
 	Xhtml_h3_types_mapString map[string]*Xhtml_h3_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_h3_typeCreateCallback OnAfterCreateInterface[Xhtml_h3_type]
 	OnAfterXhtml_h3_typeUpdateCallback OnAfterUpdateInterface[Xhtml_h3_type]
 	OnAfterXhtml_h3_typeDeleteCallback OnAfterDeleteInterface[Xhtml_h3_type]
@@ -765,7 +804,6 @@ type StageStruct struct {
 	Xhtml_h4_types_mapString map[string]*Xhtml_h4_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_h4_typeCreateCallback OnAfterCreateInterface[Xhtml_h4_type]
 	OnAfterXhtml_h4_typeUpdateCallback OnAfterUpdateInterface[Xhtml_h4_type]
 	OnAfterXhtml_h4_typeDeleteCallback OnAfterDeleteInterface[Xhtml_h4_type]
@@ -775,7 +813,6 @@ type StageStruct struct {
 	Xhtml_h5_types_mapString map[string]*Xhtml_h5_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_h5_typeCreateCallback OnAfterCreateInterface[Xhtml_h5_type]
 	OnAfterXhtml_h5_typeUpdateCallback OnAfterUpdateInterface[Xhtml_h5_type]
 	OnAfterXhtml_h5_typeDeleteCallback OnAfterDeleteInterface[Xhtml_h5_type]
@@ -785,7 +822,6 @@ type StageStruct struct {
 	Xhtml_h6_types_mapString map[string]*Xhtml_h6_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_h6_typeCreateCallback OnAfterCreateInterface[Xhtml_h6_type]
 	OnAfterXhtml_h6_typeUpdateCallback OnAfterUpdateInterface[Xhtml_h6_type]
 	OnAfterXhtml_h6_typeDeleteCallback OnAfterDeleteInterface[Xhtml_h6_type]
@@ -795,7 +831,6 @@ type StageStruct struct {
 	Xhtml_heading_types_mapString map[string]*Xhtml_heading_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_heading_typeCreateCallback OnAfterCreateInterface[Xhtml_heading_type]
 	OnAfterXhtml_heading_typeUpdateCallback OnAfterUpdateInterface[Xhtml_heading_type]
 	OnAfterXhtml_heading_typeDeleteCallback OnAfterDeleteInterface[Xhtml_heading_type]
@@ -805,7 +840,6 @@ type StageStruct struct {
 	Xhtml_hr_types_mapString map[string]*Xhtml_hr_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_hr_typeCreateCallback OnAfterCreateInterface[Xhtml_hr_type]
 	OnAfterXhtml_hr_typeUpdateCallback OnAfterUpdateInterface[Xhtml_hr_type]
 	OnAfterXhtml_hr_typeDeleteCallback OnAfterDeleteInterface[Xhtml_hr_type]
@@ -815,7 +849,6 @@ type StageStruct struct {
 	Xhtml_kbd_types_mapString map[string]*Xhtml_kbd_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_kbd_typeCreateCallback OnAfterCreateInterface[Xhtml_kbd_type]
 	OnAfterXhtml_kbd_typeUpdateCallback OnAfterUpdateInterface[Xhtml_kbd_type]
 	OnAfterXhtml_kbd_typeDeleteCallback OnAfterDeleteInterface[Xhtml_kbd_type]
@@ -825,7 +858,6 @@ type StageStruct struct {
 	Xhtml_li_types_mapString map[string]*Xhtml_li_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_li_typeCreateCallback OnAfterCreateInterface[Xhtml_li_type]
 	OnAfterXhtml_li_typeUpdateCallback OnAfterUpdateInterface[Xhtml_li_type]
 	OnAfterXhtml_li_typeDeleteCallback OnAfterDeleteInterface[Xhtml_li_type]
@@ -835,7 +867,6 @@ type StageStruct struct {
 	Xhtml_object_types_mapString map[string]*Xhtml_object_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_object_typeCreateCallback OnAfterCreateInterface[Xhtml_object_type]
 	OnAfterXhtml_object_typeUpdateCallback OnAfterUpdateInterface[Xhtml_object_type]
 	OnAfterXhtml_object_typeDeleteCallback OnAfterDeleteInterface[Xhtml_object_type]
@@ -845,7 +876,6 @@ type StageStruct struct {
 	Xhtml_ol_types_mapString map[string]*Xhtml_ol_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_ol_typeCreateCallback OnAfterCreateInterface[Xhtml_ol_type]
 	OnAfterXhtml_ol_typeUpdateCallback OnAfterUpdateInterface[Xhtml_ol_type]
 	OnAfterXhtml_ol_typeDeleteCallback OnAfterDeleteInterface[Xhtml_ol_type]
@@ -855,7 +885,6 @@ type StageStruct struct {
 	Xhtml_p_types_mapString map[string]*Xhtml_p_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_p_typeCreateCallback OnAfterCreateInterface[Xhtml_p_type]
 	OnAfterXhtml_p_typeUpdateCallback OnAfterUpdateInterface[Xhtml_p_type]
 	OnAfterXhtml_p_typeDeleteCallback OnAfterDeleteInterface[Xhtml_p_type]
@@ -865,7 +894,6 @@ type StageStruct struct {
 	Xhtml_param_types_mapString map[string]*Xhtml_param_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_param_typeCreateCallback OnAfterCreateInterface[Xhtml_param_type]
 	OnAfterXhtml_param_typeUpdateCallback OnAfterUpdateInterface[Xhtml_param_type]
 	OnAfterXhtml_param_typeDeleteCallback OnAfterDeleteInterface[Xhtml_param_type]
@@ -875,7 +903,6 @@ type StageStruct struct {
 	Xhtml_pre_types_mapString map[string]*Xhtml_pre_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_pre_typeCreateCallback OnAfterCreateInterface[Xhtml_pre_type]
 	OnAfterXhtml_pre_typeUpdateCallback OnAfterUpdateInterface[Xhtml_pre_type]
 	OnAfterXhtml_pre_typeDeleteCallback OnAfterDeleteInterface[Xhtml_pre_type]
@@ -885,7 +912,6 @@ type StageStruct struct {
 	Xhtml_q_types_mapString map[string]*Xhtml_q_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_q_typeCreateCallback OnAfterCreateInterface[Xhtml_q_type]
 	OnAfterXhtml_q_typeUpdateCallback OnAfterUpdateInterface[Xhtml_q_type]
 	OnAfterXhtml_q_typeDeleteCallback OnAfterDeleteInterface[Xhtml_q_type]
@@ -895,7 +921,6 @@ type StageStruct struct {
 	Xhtml_samp_types_mapString map[string]*Xhtml_samp_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_samp_typeCreateCallback OnAfterCreateInterface[Xhtml_samp_type]
 	OnAfterXhtml_samp_typeUpdateCallback OnAfterUpdateInterface[Xhtml_samp_type]
 	OnAfterXhtml_samp_typeDeleteCallback OnAfterDeleteInterface[Xhtml_samp_type]
@@ -905,7 +930,6 @@ type StageStruct struct {
 	Xhtml_span_types_mapString map[string]*Xhtml_span_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_span_typeCreateCallback OnAfterCreateInterface[Xhtml_span_type]
 	OnAfterXhtml_span_typeUpdateCallback OnAfterUpdateInterface[Xhtml_span_type]
 	OnAfterXhtml_span_typeDeleteCallback OnAfterDeleteInterface[Xhtml_span_type]
@@ -915,7 +939,6 @@ type StageStruct struct {
 	Xhtml_strong_types_mapString map[string]*Xhtml_strong_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_strong_typeCreateCallback OnAfterCreateInterface[Xhtml_strong_type]
 	OnAfterXhtml_strong_typeUpdateCallback OnAfterUpdateInterface[Xhtml_strong_type]
 	OnAfterXhtml_strong_typeDeleteCallback OnAfterDeleteInterface[Xhtml_strong_type]
@@ -925,7 +948,6 @@ type StageStruct struct {
 	Xhtml_table_types_mapString map[string]*Xhtml_table_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_table_typeCreateCallback OnAfterCreateInterface[Xhtml_table_type]
 	OnAfterXhtml_table_typeUpdateCallback OnAfterUpdateInterface[Xhtml_table_type]
 	OnAfterXhtml_table_typeDeleteCallback OnAfterDeleteInterface[Xhtml_table_type]
@@ -935,7 +957,6 @@ type StageStruct struct {
 	Xhtml_tbody_types_mapString map[string]*Xhtml_tbody_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_tbody_typeCreateCallback OnAfterCreateInterface[Xhtml_tbody_type]
 	OnAfterXhtml_tbody_typeUpdateCallback OnAfterUpdateInterface[Xhtml_tbody_type]
 	OnAfterXhtml_tbody_typeDeleteCallback OnAfterDeleteInterface[Xhtml_tbody_type]
@@ -945,7 +966,6 @@ type StageStruct struct {
 	Xhtml_td_types_mapString map[string]*Xhtml_td_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_td_typeCreateCallback OnAfterCreateInterface[Xhtml_td_type]
 	OnAfterXhtml_td_typeUpdateCallback OnAfterUpdateInterface[Xhtml_td_type]
 	OnAfterXhtml_td_typeDeleteCallback OnAfterDeleteInterface[Xhtml_td_type]
@@ -955,7 +975,6 @@ type StageStruct struct {
 	Xhtml_tfoot_types_mapString map[string]*Xhtml_tfoot_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_tfoot_typeCreateCallback OnAfterCreateInterface[Xhtml_tfoot_type]
 	OnAfterXhtml_tfoot_typeUpdateCallback OnAfterUpdateInterface[Xhtml_tfoot_type]
 	OnAfterXhtml_tfoot_typeDeleteCallback OnAfterDeleteInterface[Xhtml_tfoot_type]
@@ -965,7 +984,6 @@ type StageStruct struct {
 	Xhtml_th_types_mapString map[string]*Xhtml_th_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_th_typeCreateCallback OnAfterCreateInterface[Xhtml_th_type]
 	OnAfterXhtml_th_typeUpdateCallback OnAfterUpdateInterface[Xhtml_th_type]
 	OnAfterXhtml_th_typeDeleteCallback OnAfterDeleteInterface[Xhtml_th_type]
@@ -975,7 +993,6 @@ type StageStruct struct {
 	Xhtml_thead_types_mapString map[string]*Xhtml_thead_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_thead_typeCreateCallback OnAfterCreateInterface[Xhtml_thead_type]
 	OnAfterXhtml_thead_typeUpdateCallback OnAfterUpdateInterface[Xhtml_thead_type]
 	OnAfterXhtml_thead_typeDeleteCallback OnAfterDeleteInterface[Xhtml_thead_type]
@@ -985,7 +1002,6 @@ type StageStruct struct {
 	Xhtml_tr_types_mapString map[string]*Xhtml_tr_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_tr_typeCreateCallback OnAfterCreateInterface[Xhtml_tr_type]
 	OnAfterXhtml_tr_typeUpdateCallback OnAfterUpdateInterface[Xhtml_tr_type]
 	OnAfterXhtml_tr_typeDeleteCallback OnAfterDeleteInterface[Xhtml_tr_type]
@@ -995,7 +1011,6 @@ type StageStruct struct {
 	Xhtml_ul_types_mapString map[string]*Xhtml_ul_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_ul_typeCreateCallback OnAfterCreateInterface[Xhtml_ul_type]
 	OnAfterXhtml_ul_typeUpdateCallback OnAfterUpdateInterface[Xhtml_ul_type]
 	OnAfterXhtml_ul_typeDeleteCallback OnAfterDeleteInterface[Xhtml_ul_type]
@@ -1005,7 +1020,6 @@ type StageStruct struct {
 	Xhtml_var_types_mapString map[string]*Xhtml_var_type
 
 	// insertion point for slice of pointers maps
-
 	OnAfterXhtml_var_typeCreateCallback OnAfterCreateInterface[Xhtml_var_type]
 	OnAfterXhtml_var_typeUpdateCallback OnAfterUpdateInterface[Xhtml_var_type]
 	OnAfterXhtml_var_typeDeleteCallback OnAfterDeleteInterface[Xhtml_var_type]
@@ -7116,8 +7130,6 @@ func (stage *StageStruct) Unstage() { // insertion point for array nil
 // - navigation between staged instances by going backward association links between gongstruct
 // - full refactoring of Gongstruct identifiers / fields
 type Gongstruct interface {
-	// insertion point for generic types
-	ALTERNATIVE_ID | ATTRIBUTE_DEFINITION_BOOLEAN | ATTRIBUTE_DEFINITION_DATE | ATTRIBUTE_DEFINITION_ENUMERATION | ATTRIBUTE_DEFINITION_INTEGER | ATTRIBUTE_DEFINITION_REAL | ATTRIBUTE_DEFINITION_STRING | ATTRIBUTE_DEFINITION_XHTML | ATTRIBUTE_VALUE_BOOLEAN | ATTRIBUTE_VALUE_DATE | ATTRIBUTE_VALUE_ENUMERATION | ATTRIBUTE_VALUE_INTEGER | ATTRIBUTE_VALUE_REAL | ATTRIBUTE_VALUE_STRING | ATTRIBUTE_VALUE_XHTML | AnyType | DATATYPE_DEFINITION_BOOLEAN | DATATYPE_DEFINITION_DATE | DATATYPE_DEFINITION_ENUMERATION | DATATYPE_DEFINITION_INTEGER | DATATYPE_DEFINITION_REAL | DATATYPE_DEFINITION_STRING | DATATYPE_DEFINITION_XHTML | EMBEDDED_VALUE | ENUM_VALUE | RELATION_GROUP | RELATION_GROUP_TYPE | REQ_IF | REQ_IF_CONTENT | REQ_IF_HEADER | REQ_IF_TOOL_EXTENSION | SPECIFICATION | SPECIFICATION_TYPE | SPEC_HIERARCHY | SPEC_OBJECT | SPEC_OBJECT_TYPE | SPEC_RELATION | SPEC_RELATION_TYPE | XHTML_CONTENT | Xhtml_InlPres_type | Xhtml_a_type | Xhtml_abbr_type | Xhtml_acronym_type | Xhtml_address_type | Xhtml_blockquote_type | Xhtml_br_type | Xhtml_caption_type | Xhtml_cite_type | Xhtml_code_type | Xhtml_col_type | Xhtml_colgroup_type | Xhtml_dd_type | Xhtml_dfn_type | Xhtml_div_type | Xhtml_dl_type | Xhtml_dt_type | Xhtml_edit_type | Xhtml_em_type | Xhtml_h1_type | Xhtml_h2_type | Xhtml_h3_type | Xhtml_h4_type | Xhtml_h5_type | Xhtml_h6_type | Xhtml_heading_type | Xhtml_hr_type | Xhtml_kbd_type | Xhtml_li_type | Xhtml_object_type | Xhtml_ol_type | Xhtml_p_type | Xhtml_param_type | Xhtml_pre_type | Xhtml_q_type | Xhtml_samp_type | Xhtml_span_type | Xhtml_strong_type | Xhtml_table_type | Xhtml_tbody_type | Xhtml_td_type | Xhtml_tfoot_type | Xhtml_th_type | Xhtml_thead_type | Xhtml_tr_type | Xhtml_ul_type | Xhtml_var_type
 }
 
 type GongtructBasicField interface {
@@ -7129,11 +7141,10 @@ type GongtructBasicField interface {
 // - navigation between staged instances by going backward association links between gongstruct
 // - full refactoring of Gongstruct identifiers / fields
 type PointerToGongstruct interface {
-	// insertion point for generic types
-	*ALTERNATIVE_ID | *ATTRIBUTE_DEFINITION_BOOLEAN | *ATTRIBUTE_DEFINITION_DATE | *ATTRIBUTE_DEFINITION_ENUMERATION | *ATTRIBUTE_DEFINITION_INTEGER | *ATTRIBUTE_DEFINITION_REAL | *ATTRIBUTE_DEFINITION_STRING | *ATTRIBUTE_DEFINITION_XHTML | *ATTRIBUTE_VALUE_BOOLEAN | *ATTRIBUTE_VALUE_DATE | *ATTRIBUTE_VALUE_ENUMERATION | *ATTRIBUTE_VALUE_INTEGER | *ATTRIBUTE_VALUE_REAL | *ATTRIBUTE_VALUE_STRING | *ATTRIBUTE_VALUE_XHTML | *AnyType | *DATATYPE_DEFINITION_BOOLEAN | *DATATYPE_DEFINITION_DATE | *DATATYPE_DEFINITION_ENUMERATION | *DATATYPE_DEFINITION_INTEGER | *DATATYPE_DEFINITION_REAL | *DATATYPE_DEFINITION_STRING | *DATATYPE_DEFINITION_XHTML | *EMBEDDED_VALUE | *ENUM_VALUE | *RELATION_GROUP | *RELATION_GROUP_TYPE | *REQ_IF | *REQ_IF_CONTENT | *REQ_IF_HEADER | *REQ_IF_TOOL_EXTENSION | *SPECIFICATION | *SPECIFICATION_TYPE | *SPEC_HIERARCHY | *SPEC_OBJECT | *SPEC_OBJECT_TYPE | *SPEC_RELATION | *SPEC_RELATION_TYPE | *XHTML_CONTENT | *Xhtml_InlPres_type | *Xhtml_a_type | *Xhtml_abbr_type | *Xhtml_acronym_type | *Xhtml_address_type | *Xhtml_blockquote_type | *Xhtml_br_type | *Xhtml_caption_type | *Xhtml_cite_type | *Xhtml_code_type | *Xhtml_col_type | *Xhtml_colgroup_type | *Xhtml_dd_type | *Xhtml_dfn_type | *Xhtml_div_type | *Xhtml_dl_type | *Xhtml_dt_type | *Xhtml_edit_type | *Xhtml_em_type | *Xhtml_h1_type | *Xhtml_h2_type | *Xhtml_h3_type | *Xhtml_h4_type | *Xhtml_h5_type | *Xhtml_h6_type | *Xhtml_heading_type | *Xhtml_hr_type | *Xhtml_kbd_type | *Xhtml_li_type | *Xhtml_object_type | *Xhtml_ol_type | *Xhtml_p_type | *Xhtml_param_type | *Xhtml_pre_type | *Xhtml_q_type | *Xhtml_samp_type | *Xhtml_span_type | *Xhtml_strong_type | *Xhtml_table_type | *Xhtml_tbody_type | *Xhtml_td_type | *Xhtml_tfoot_type | *Xhtml_th_type | *Xhtml_thead_type | *Xhtml_tr_type | *Xhtml_ul_type | *Xhtml_var_type
 	GetName() string
 	CommitVoid(*StageStruct)
 	UnstageVoid(stage *StageStruct)
+	comparable
 }
 
 func CompareGongstructByName[T PointerToGongstruct](a, b T) int {
@@ -7142,7 +7153,9 @@ func CompareGongstructByName[T PointerToGongstruct](a, b T) int {
 
 func SortGongstructSetByName[T PointerToGongstruct](set map[T]any) (sortedSlice []T) {
 
-	sortedSlice = maps.Keys(set)
+	for key := range set {
+		sortedSlice = append(sortedSlice, key)
+	}
 	slices.SortFunc(sortedSlice, CompareGongstructByName)
 
 	return
@@ -7157,187 +7170,11 @@ func GetGongstrucsSorted[T PointerToGongstruct](stage *StageStruct) (sortedSlice
 }
 
 type GongstructSet interface {
-	map[any]any |
-		// insertion point for generic types
-		map[*ALTERNATIVE_ID]any |
-		map[*ATTRIBUTE_DEFINITION_BOOLEAN]any |
-		map[*ATTRIBUTE_DEFINITION_DATE]any |
-		map[*ATTRIBUTE_DEFINITION_ENUMERATION]any |
-		map[*ATTRIBUTE_DEFINITION_INTEGER]any |
-		map[*ATTRIBUTE_DEFINITION_REAL]any |
-		map[*ATTRIBUTE_DEFINITION_STRING]any |
-		map[*ATTRIBUTE_DEFINITION_XHTML]any |
-		map[*ATTRIBUTE_VALUE_BOOLEAN]any |
-		map[*ATTRIBUTE_VALUE_DATE]any |
-		map[*ATTRIBUTE_VALUE_ENUMERATION]any |
-		map[*ATTRIBUTE_VALUE_INTEGER]any |
-		map[*ATTRIBUTE_VALUE_REAL]any |
-		map[*ATTRIBUTE_VALUE_STRING]any |
-		map[*ATTRIBUTE_VALUE_XHTML]any |
-		map[*AnyType]any |
-		map[*DATATYPE_DEFINITION_BOOLEAN]any |
-		map[*DATATYPE_DEFINITION_DATE]any |
-		map[*DATATYPE_DEFINITION_ENUMERATION]any |
-		map[*DATATYPE_DEFINITION_INTEGER]any |
-		map[*DATATYPE_DEFINITION_REAL]any |
-		map[*DATATYPE_DEFINITION_STRING]any |
-		map[*DATATYPE_DEFINITION_XHTML]any |
-		map[*EMBEDDED_VALUE]any |
-		map[*ENUM_VALUE]any |
-		map[*RELATION_GROUP]any |
-		map[*RELATION_GROUP_TYPE]any |
-		map[*REQ_IF]any |
-		map[*REQ_IF_CONTENT]any |
-		map[*REQ_IF_HEADER]any |
-		map[*REQ_IF_TOOL_EXTENSION]any |
-		map[*SPECIFICATION]any |
-		map[*SPECIFICATION_TYPE]any |
-		map[*SPEC_HIERARCHY]any |
-		map[*SPEC_OBJECT]any |
-		map[*SPEC_OBJECT_TYPE]any |
-		map[*SPEC_RELATION]any |
-		map[*SPEC_RELATION_TYPE]any |
-		map[*XHTML_CONTENT]any |
-		map[*Xhtml_InlPres_type]any |
-		map[*Xhtml_a_type]any |
-		map[*Xhtml_abbr_type]any |
-		map[*Xhtml_acronym_type]any |
-		map[*Xhtml_address_type]any |
-		map[*Xhtml_blockquote_type]any |
-		map[*Xhtml_br_type]any |
-		map[*Xhtml_caption_type]any |
-		map[*Xhtml_cite_type]any |
-		map[*Xhtml_code_type]any |
-		map[*Xhtml_col_type]any |
-		map[*Xhtml_colgroup_type]any |
-		map[*Xhtml_dd_type]any |
-		map[*Xhtml_dfn_type]any |
-		map[*Xhtml_div_type]any |
-		map[*Xhtml_dl_type]any |
-		map[*Xhtml_dt_type]any |
-		map[*Xhtml_edit_type]any |
-		map[*Xhtml_em_type]any |
-		map[*Xhtml_h1_type]any |
-		map[*Xhtml_h2_type]any |
-		map[*Xhtml_h3_type]any |
-		map[*Xhtml_h4_type]any |
-		map[*Xhtml_h5_type]any |
-		map[*Xhtml_h6_type]any |
-		map[*Xhtml_heading_type]any |
-		map[*Xhtml_hr_type]any |
-		map[*Xhtml_kbd_type]any |
-		map[*Xhtml_li_type]any |
-		map[*Xhtml_object_type]any |
-		map[*Xhtml_ol_type]any |
-		map[*Xhtml_p_type]any |
-		map[*Xhtml_param_type]any |
-		map[*Xhtml_pre_type]any |
-		map[*Xhtml_q_type]any |
-		map[*Xhtml_samp_type]any |
-		map[*Xhtml_span_type]any |
-		map[*Xhtml_strong_type]any |
-		map[*Xhtml_table_type]any |
-		map[*Xhtml_tbody_type]any |
-		map[*Xhtml_td_type]any |
-		map[*Xhtml_tfoot_type]any |
-		map[*Xhtml_th_type]any |
-		map[*Xhtml_thead_type]any |
-		map[*Xhtml_tr_type]any |
-		map[*Xhtml_ul_type]any |
-		map[*Xhtml_var_type]any |
-		map[*any]any // because go does not support an extra "|" at the end of type specifications
+	map[any]any
 }
 
 type GongstructMapString interface {
-	map[any]any |
-		// insertion point for generic types
-		map[string]*ALTERNATIVE_ID |
-		map[string]*ATTRIBUTE_DEFINITION_BOOLEAN |
-		map[string]*ATTRIBUTE_DEFINITION_DATE |
-		map[string]*ATTRIBUTE_DEFINITION_ENUMERATION |
-		map[string]*ATTRIBUTE_DEFINITION_INTEGER |
-		map[string]*ATTRIBUTE_DEFINITION_REAL |
-		map[string]*ATTRIBUTE_DEFINITION_STRING |
-		map[string]*ATTRIBUTE_DEFINITION_XHTML |
-		map[string]*ATTRIBUTE_VALUE_BOOLEAN |
-		map[string]*ATTRIBUTE_VALUE_DATE |
-		map[string]*ATTRIBUTE_VALUE_ENUMERATION |
-		map[string]*ATTRIBUTE_VALUE_INTEGER |
-		map[string]*ATTRIBUTE_VALUE_REAL |
-		map[string]*ATTRIBUTE_VALUE_STRING |
-		map[string]*ATTRIBUTE_VALUE_XHTML |
-		map[string]*AnyType |
-		map[string]*DATATYPE_DEFINITION_BOOLEAN |
-		map[string]*DATATYPE_DEFINITION_DATE |
-		map[string]*DATATYPE_DEFINITION_ENUMERATION |
-		map[string]*DATATYPE_DEFINITION_INTEGER |
-		map[string]*DATATYPE_DEFINITION_REAL |
-		map[string]*DATATYPE_DEFINITION_STRING |
-		map[string]*DATATYPE_DEFINITION_XHTML |
-		map[string]*EMBEDDED_VALUE |
-		map[string]*ENUM_VALUE |
-		map[string]*RELATION_GROUP |
-		map[string]*RELATION_GROUP_TYPE |
-		map[string]*REQ_IF |
-		map[string]*REQ_IF_CONTENT |
-		map[string]*REQ_IF_HEADER |
-		map[string]*REQ_IF_TOOL_EXTENSION |
-		map[string]*SPECIFICATION |
-		map[string]*SPECIFICATION_TYPE |
-		map[string]*SPEC_HIERARCHY |
-		map[string]*SPEC_OBJECT |
-		map[string]*SPEC_OBJECT_TYPE |
-		map[string]*SPEC_RELATION |
-		map[string]*SPEC_RELATION_TYPE |
-		map[string]*XHTML_CONTENT |
-		map[string]*Xhtml_InlPres_type |
-		map[string]*Xhtml_a_type |
-		map[string]*Xhtml_abbr_type |
-		map[string]*Xhtml_acronym_type |
-		map[string]*Xhtml_address_type |
-		map[string]*Xhtml_blockquote_type |
-		map[string]*Xhtml_br_type |
-		map[string]*Xhtml_caption_type |
-		map[string]*Xhtml_cite_type |
-		map[string]*Xhtml_code_type |
-		map[string]*Xhtml_col_type |
-		map[string]*Xhtml_colgroup_type |
-		map[string]*Xhtml_dd_type |
-		map[string]*Xhtml_dfn_type |
-		map[string]*Xhtml_div_type |
-		map[string]*Xhtml_dl_type |
-		map[string]*Xhtml_dt_type |
-		map[string]*Xhtml_edit_type |
-		map[string]*Xhtml_em_type |
-		map[string]*Xhtml_h1_type |
-		map[string]*Xhtml_h2_type |
-		map[string]*Xhtml_h3_type |
-		map[string]*Xhtml_h4_type |
-		map[string]*Xhtml_h5_type |
-		map[string]*Xhtml_h6_type |
-		map[string]*Xhtml_heading_type |
-		map[string]*Xhtml_hr_type |
-		map[string]*Xhtml_kbd_type |
-		map[string]*Xhtml_li_type |
-		map[string]*Xhtml_object_type |
-		map[string]*Xhtml_ol_type |
-		map[string]*Xhtml_p_type |
-		map[string]*Xhtml_param_type |
-		map[string]*Xhtml_pre_type |
-		map[string]*Xhtml_q_type |
-		map[string]*Xhtml_samp_type |
-		map[string]*Xhtml_span_type |
-		map[string]*Xhtml_strong_type |
-		map[string]*Xhtml_table_type |
-		map[string]*Xhtml_tbody_type |
-		map[string]*Xhtml_td_type |
-		map[string]*Xhtml_tfoot_type |
-		map[string]*Xhtml_th_type |
-		map[string]*Xhtml_thead_type |
-		map[string]*Xhtml_tr_type |
-		map[string]*Xhtml_ul_type |
-		map[string]*Xhtml_var_type |
-		map[*any]any // because go does not support an extra "|" at the end of type specifications
+	map[any]any
 }
 
 // GongGetSet returns the set staged GongstructType instances

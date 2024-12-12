@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_address_typeDB struct {
 
 	// Declation for basic field xhtml_address_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_address_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_address_typeStruct struct {
 	// stores Xhtml_address_type according to their gorm ID
 	Map_Xhtml_address_typeDBID_Xhtml_address_typePtr map[uint]*models.Xhtml_address_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) GetStage() (
 	return
 }
 
-func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_address_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CommitDelete
 
 	// xhtml_address_type is not staged anymore, remove xhtml_address_typeDB
 	xhtml_address_typeDB := backRepoXhtml_address_type.Map_Xhtml_address_typeDBID_Xhtml_address_typeDB[id]
-	query := backRepoXhtml_address_type.db.Unscoped().Delete(&xhtml_address_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_address_type.db.Unscoped()
+	_, err := db.Delete(xhtml_address_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CommitPhaseO
 	var xhtml_address_typeDB Xhtml_address_typeDB
 	xhtml_address_typeDB.CopyBasicFieldsFromXhtml_address_type(xhtml_address_type)
 
-	query := backRepoXhtml_address_type.db.Create(&xhtml_address_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_address_type.db.Create(&xhtml_address_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CommitPhaseT
 		xhtml_address_typeDB.CopyBasicFieldsFromXhtml_address_type(xhtml_address_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_address_type.db.Save(&xhtml_address_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_address_type.db.Save(xhtml_address_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CommitPhaseT
 func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_address_typeDBArray := make([]Xhtml_address_typeDB, 0)
-	query := backRepoXhtml_address_type.db.Find(&xhtml_address_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_address_type.db.Find(&xhtml_address_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_address_type(xhtml_address_type *m
 			var xhtml_address_typeDB Xhtml_address_typeDB
 			xhtml_address_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_address_type.db.First(&xhtml_address_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_address_type.db.First(&xhtml_address_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_address_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_address_type.CheckoutPhaseOneInstance(&xhtml_address_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) rowVisitorXh
 
 		xhtml_address_typeDB_ID_atBackupTime := xhtml_address_typeDB.ID
 		xhtml_address_typeDB.ID = 0
-		query := backRepoXhtml_address_type.db.Create(xhtml_address_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_address_type.db.Create(xhtml_address_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_address_type.Map_Xhtml_address_typeDBID_Xhtml_address_typeDB[xhtml_address_typeDB.ID] = xhtml_address_typeDB
 		BackRepoXhtml_address_typeid_atBckpTime_newID[xhtml_address_typeDB_ID_atBackupTime] = xhtml_address_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) RestorePhase
 
 		xhtml_address_typeDB_ID_atBackupTime := xhtml_address_typeDB.ID
 		xhtml_address_typeDB.ID = 0
-		query := backRepoXhtml_address_type.db.Create(xhtml_address_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_address_type.db.Create(xhtml_address_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_address_type.Map_Xhtml_address_typeDBID_Xhtml_address_typeDB[xhtml_address_typeDB.ID] = xhtml_address_typeDB
 		BackRepoXhtml_address_typeid_atBckpTime_newID[xhtml_address_typeDB_ID_atBackupTime] = xhtml_address_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) RestorePhase
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_address_type.db.Model(xhtml_address_typeDB).Updates(*xhtml_address_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_address_type.db.Model(xhtml_address_typeDB)
+		_, err := db.Updates(*xhtml_address_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -77,7 +78,7 @@ type DATATYPE_DEFINITION_XHTMLDB struct {
 
 	// Declation for basic field datatype_definition_xhtmlDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	DATATYPE_DEFINITION_XHTMLPointersEncoding
@@ -129,7 +130,7 @@ type BackRepoDATATYPE_DEFINITION_XHTMLStruct struct {
 	// stores DATATYPE_DEFINITION_XHTML according to their gorm ID
 	Map_DATATYPE_DEFINITION_XHTMLDBID_DATATYPE_DEFINITION_XHTMLPtr map[uint]*models.DATATYPE_DEFINITION_XHTML
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -139,7 +140,7 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 	return
 }
 
-func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) GetDB() *gorm.DB {
+func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) GetDB() db.DBInterface {
 	return backRepoDATATYPE_DEFINITION_XHTML.db
 }
 
@@ -176,9 +177,10 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 
 	// datatype_definition_xhtml is not staged anymore, remove datatype_definition_xhtmlDB
 	datatype_definition_xhtmlDB := backRepoDATATYPE_DEFINITION_XHTML.Map_DATATYPE_DEFINITION_XHTMLDBID_DATATYPE_DEFINITION_XHTMLDB[id]
-	query := backRepoDATATYPE_DEFINITION_XHTML.db.Unscoped().Delete(&datatype_definition_xhtmlDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoDATATYPE_DEFINITION_XHTML.db.Unscoped()
+	_, err := db.Delete(datatype_definition_xhtmlDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -202,9 +204,9 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 	var datatype_definition_xhtmlDB DATATYPE_DEFINITION_XHTMLDB
 	datatype_definition_xhtmlDB.CopyBasicFieldsFromDATATYPE_DEFINITION_XHTML(datatype_definition_xhtml)
 
-	query := backRepoDATATYPE_DEFINITION_XHTML.db.Create(&datatype_definition_xhtmlDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoDATATYPE_DEFINITION_XHTML.db.Create(&datatype_definition_xhtmlDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -254,9 +256,9 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 				append(datatype_definition_xhtmlDB.DATATYPE_DEFINITION_XHTMLPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
 		}
 
-		query := backRepoDATATYPE_DEFINITION_XHTML.db.Save(&datatype_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_XHTML.db.Save(datatype_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -275,9 +277,9 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) CheckoutPhaseOne() (Error error) {
 
 	datatype_definition_xhtmlDBArray := make([]DATATYPE_DEFINITION_XHTMLDB, 0)
-	query := backRepoDATATYPE_DEFINITION_XHTML.db.Find(&datatype_definition_xhtmlDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoDATATYPE_DEFINITION_XHTML.db.Find(&datatype_definition_xhtmlDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -397,7 +399,7 @@ func (backRepo *BackRepoStruct) CheckoutDATATYPE_DEFINITION_XHTML(datatype_defin
 			var datatype_definition_xhtmlDB DATATYPE_DEFINITION_XHTMLDB
 			datatype_definition_xhtmlDB.ID = id
 
-			if err := backRepo.BackRepoDATATYPE_DEFINITION_XHTML.db.First(&datatype_definition_xhtmlDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoDATATYPE_DEFINITION_XHTML.db.First(&datatype_definition_xhtmlDB, id); err != nil {
 				log.Fatalln("CheckoutDATATYPE_DEFINITION_XHTML : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseOneInstance(&datatype_definition_xhtmlDB)
@@ -580,9 +582,9 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 
 		datatype_definition_xhtmlDB_ID_atBackupTime := datatype_definition_xhtmlDB.ID
 		datatype_definition_xhtmlDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_XHTML.db.Create(datatype_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_XHTML.db.Create(datatype_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_XHTML.Map_DATATYPE_DEFINITION_XHTMLDBID_DATATYPE_DEFINITION_XHTMLDB[datatype_definition_xhtmlDB.ID] = datatype_definition_xhtmlDB
 		BackRepoDATATYPE_DEFINITION_XHTMLid_atBckpTime_newID[datatype_definition_xhtmlDB_ID_atBackupTime] = datatype_definition_xhtmlDB.ID
@@ -617,9 +619,9 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 
 		datatype_definition_xhtmlDB_ID_atBackupTime := datatype_definition_xhtmlDB.ID
 		datatype_definition_xhtmlDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_XHTML.db.Create(datatype_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_XHTML.db.Create(datatype_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_XHTML.Map_DATATYPE_DEFINITION_XHTMLDBID_DATATYPE_DEFINITION_XHTMLDB[datatype_definition_xhtmlDB.ID] = datatype_definition_xhtmlDB
 		BackRepoDATATYPE_DEFINITION_XHTMLid_atBckpTime_newID[datatype_definition_xhtmlDB_ID_atBackupTime] = datatype_definition_xhtmlDB.ID
@@ -641,9 +643,10 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoDATATYPE_DEFINITION_XHTML.db.Model(datatype_definition_xhtmlDB).Updates(*datatype_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoDATATYPE_DEFINITION_XHTML.db.Model(datatype_definition_xhtmlDB)
+		_, err := db.Updates(*datatype_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type REQ_IF_TOOL_EXTENSIONDB struct {
 
 	// Declation for basic field req_if_tool_extensionDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	REQ_IF_TOOL_EXTENSIONPointersEncoding
@@ -104,7 +105,7 @@ type BackRepoREQ_IF_TOOL_EXTENSIONStruct struct {
 	// stores REQ_IF_TOOL_EXTENSION according to their gorm ID
 	Map_REQ_IF_TOOL_EXTENSIONDBID_REQ_IF_TOOL_EXTENSIONPtr map[uint]*models.REQ_IF_TOOL_EXTENSION
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) GetSta
 	return
 }
 
-func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) GetDB() *gorm.DB {
+func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) GetDB() db.DBInterface {
 	return backRepoREQ_IF_TOOL_EXTENSION.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) Commit
 
 	// req_if_tool_extension is not staged anymore, remove req_if_tool_extensionDB
 	req_if_tool_extensionDB := backRepoREQ_IF_TOOL_EXTENSION.Map_REQ_IF_TOOL_EXTENSIONDBID_REQ_IF_TOOL_EXTENSIONDB[id]
-	query := backRepoREQ_IF_TOOL_EXTENSION.db.Unscoped().Delete(&req_if_tool_extensionDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoREQ_IF_TOOL_EXTENSION.db.Unscoped()
+	_, err := db.Delete(req_if_tool_extensionDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) Commit
 	var req_if_tool_extensionDB REQ_IF_TOOL_EXTENSIONDB
 	req_if_tool_extensionDB.CopyBasicFieldsFromREQ_IF_TOOL_EXTENSION(req_if_tool_extension)
 
-	query := backRepoREQ_IF_TOOL_EXTENSION.db.Create(&req_if_tool_extensionDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoREQ_IF_TOOL_EXTENSION.db.Create(&req_if_tool_extensionDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) Commit
 		req_if_tool_extensionDB.CopyBasicFieldsFromREQ_IF_TOOL_EXTENSION(req_if_tool_extension)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoREQ_IF_TOOL_EXTENSION.db.Save(&req_if_tool_extensionDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoREQ_IF_TOOL_EXTENSION.db.Save(req_if_tool_extensionDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) Commit
 func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) CheckoutPhaseOne() (Error error) {
 
 	req_if_tool_extensionDBArray := make([]REQ_IF_TOOL_EXTENSIONDB, 0)
-	query := backRepoREQ_IF_TOOL_EXTENSION.db.Find(&req_if_tool_extensionDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoREQ_IF_TOOL_EXTENSION.db.Find(&req_if_tool_extensionDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutREQ_IF_TOOL_EXTENSION(req_if_tool_extens
 			var req_if_tool_extensionDB REQ_IF_TOOL_EXTENSIONDB
 			req_if_tool_extensionDB.ID = id
 
-			if err := backRepo.BackRepoREQ_IF_TOOL_EXTENSION.db.First(&req_if_tool_extensionDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoREQ_IF_TOOL_EXTENSION.db.First(&req_if_tool_extensionDB, id); err != nil {
 				log.Fatalln("CheckoutREQ_IF_TOOL_EXTENSION : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoREQ_IF_TOOL_EXTENSION.CheckoutPhaseOneInstance(&req_if_tool_extensionDB)
@@ -492,9 +494,9 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) rowVis
 
 		req_if_tool_extensionDB_ID_atBackupTime := req_if_tool_extensionDB.ID
 		req_if_tool_extensionDB.ID = 0
-		query := backRepoREQ_IF_TOOL_EXTENSION.db.Create(req_if_tool_extensionDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF_TOOL_EXTENSION.db.Create(req_if_tool_extensionDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF_TOOL_EXTENSION.Map_REQ_IF_TOOL_EXTENSIONDBID_REQ_IF_TOOL_EXTENSIONDB[req_if_tool_extensionDB.ID] = req_if_tool_extensionDB
 		BackRepoREQ_IF_TOOL_EXTENSIONid_atBckpTime_newID[req_if_tool_extensionDB_ID_atBackupTime] = req_if_tool_extensionDB.ID
@@ -529,9 +531,9 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) Restor
 
 		req_if_tool_extensionDB_ID_atBackupTime := req_if_tool_extensionDB.ID
 		req_if_tool_extensionDB.ID = 0
-		query := backRepoREQ_IF_TOOL_EXTENSION.db.Create(req_if_tool_extensionDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF_TOOL_EXTENSION.db.Create(req_if_tool_extensionDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF_TOOL_EXTENSION.Map_REQ_IF_TOOL_EXTENSIONDBID_REQ_IF_TOOL_EXTENSIONDB[req_if_tool_extensionDB.ID] = req_if_tool_extensionDB
 		BackRepoREQ_IF_TOOL_EXTENSIONid_atBckpTime_newID[req_if_tool_extensionDB_ID_atBackupTime] = req_if_tool_extensionDB.ID
@@ -553,9 +555,10 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) Restor
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoREQ_IF_TOOL_EXTENSION.db.Model(req_if_tool_extensionDB).Updates(*req_if_tool_extensionDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoREQ_IF_TOOL_EXTENSION.db.Model(req_if_tool_extensionDB)
+		_, err := db.Updates(*req_if_tool_extensionDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

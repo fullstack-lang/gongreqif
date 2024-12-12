@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_tfoot_typeDB struct {
 
 	// Declation for basic field xhtml_tfoot_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_tfoot_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_tfoot_typeStruct struct {
 	// stores Xhtml_tfoot_type according to their gorm ID
 	Map_Xhtml_tfoot_typeDBID_Xhtml_tfoot_typePtr map[uint]*models.Xhtml_tfoot_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) GetStage() (stag
 	return
 }
 
-func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_tfoot_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) CommitDeleteInst
 
 	// xhtml_tfoot_type is not staged anymore, remove xhtml_tfoot_typeDB
 	xhtml_tfoot_typeDB := backRepoXhtml_tfoot_type.Map_Xhtml_tfoot_typeDBID_Xhtml_tfoot_typeDB[id]
-	query := backRepoXhtml_tfoot_type.db.Unscoped().Delete(&xhtml_tfoot_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_tfoot_type.db.Unscoped()
+	_, err := db.Delete(xhtml_tfoot_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) CommitPhaseOneIn
 	var xhtml_tfoot_typeDB Xhtml_tfoot_typeDB
 	xhtml_tfoot_typeDB.CopyBasicFieldsFromXhtml_tfoot_type(xhtml_tfoot_type)
 
-	query := backRepoXhtml_tfoot_type.db.Create(&xhtml_tfoot_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_tfoot_type.db.Create(&xhtml_tfoot_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) CommitPhaseTwoIn
 		xhtml_tfoot_typeDB.CopyBasicFieldsFromXhtml_tfoot_type(xhtml_tfoot_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_tfoot_type.db.Save(&xhtml_tfoot_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_tfoot_type.db.Save(xhtml_tfoot_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) CommitPhaseTwoIn
 func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_tfoot_typeDBArray := make([]Xhtml_tfoot_typeDB, 0)
-	query := backRepoXhtml_tfoot_type.db.Find(&xhtml_tfoot_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_tfoot_type.db.Find(&xhtml_tfoot_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_tfoot_type(xhtml_tfoot_type *model
 			var xhtml_tfoot_typeDB Xhtml_tfoot_typeDB
 			xhtml_tfoot_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_tfoot_type.db.First(&xhtml_tfoot_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_tfoot_type.db.First(&xhtml_tfoot_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_tfoot_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_tfoot_type.CheckoutPhaseOneInstance(&xhtml_tfoot_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) rowVisitorXhtml_
 
 		xhtml_tfoot_typeDB_ID_atBackupTime := xhtml_tfoot_typeDB.ID
 		xhtml_tfoot_typeDB.ID = 0
-		query := backRepoXhtml_tfoot_type.db.Create(xhtml_tfoot_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_tfoot_type.db.Create(xhtml_tfoot_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_tfoot_type.Map_Xhtml_tfoot_typeDBID_Xhtml_tfoot_typeDB[xhtml_tfoot_typeDB.ID] = xhtml_tfoot_typeDB
 		BackRepoXhtml_tfoot_typeid_atBckpTime_newID[xhtml_tfoot_typeDB_ID_atBackupTime] = xhtml_tfoot_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) RestorePhaseOne(
 
 		xhtml_tfoot_typeDB_ID_atBackupTime := xhtml_tfoot_typeDB.ID
 		xhtml_tfoot_typeDB.ID = 0
-		query := backRepoXhtml_tfoot_type.db.Create(xhtml_tfoot_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_tfoot_type.db.Create(xhtml_tfoot_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_tfoot_type.Map_Xhtml_tfoot_typeDBID_Xhtml_tfoot_typeDB[xhtml_tfoot_typeDB.ID] = xhtml_tfoot_typeDB
 		BackRepoXhtml_tfoot_typeid_atBckpTime_newID[xhtml_tfoot_typeDB_ID_atBackupTime] = xhtml_tfoot_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_tfoot_type *BackRepoXhtml_tfoot_typeStruct) RestorePhaseTwo(
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_tfoot_type.db.Model(xhtml_tfoot_typeDB).Updates(*xhtml_tfoot_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_tfoot_type.db.Model(xhtml_tfoot_typeDB)
+		_, err := db.Updates(*xhtml_tfoot_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -102,7 +103,7 @@ type SPEC_RELATIONDB struct {
 
 	// Declation for basic field spec_relationDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	SPEC_RELATIONPointersEncoding
@@ -154,7 +155,7 @@ type BackRepoSPEC_RELATIONStruct struct {
 	// stores SPEC_RELATION according to their gorm ID
 	Map_SPEC_RELATIONDBID_SPEC_RELATIONPtr map[uint]*models.SPEC_RELATION
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -164,7 +165,7 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) GetStage() (stage *mod
 	return
 }
 
-func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) GetDB() *gorm.DB {
+func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) GetDB() db.DBInterface {
 	return backRepoSPEC_RELATION.db
 }
 
@@ -201,9 +202,10 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitDeleteInstance(i
 
 	// spec_relation is not staged anymore, remove spec_relationDB
 	spec_relationDB := backRepoSPEC_RELATION.Map_SPEC_RELATIONDBID_SPEC_RELATIONDB[id]
-	query := backRepoSPEC_RELATION.db.Unscoped().Delete(&spec_relationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoSPEC_RELATION.db.Unscoped()
+	_, err := db.Delete(spec_relationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -227,9 +229,9 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitPhaseOneInstance
 	var spec_relationDB SPEC_RELATIONDB
 	spec_relationDB.CopyBasicFieldsFromSPEC_RELATION(spec_relation)
 
-	query := backRepoSPEC_RELATION.db.Create(&spec_relationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoSPEC_RELATION.db.Create(&spec_relationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -405,9 +407,9 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitPhaseTwoInstance
 				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_XHTML, int(attribute_value_xhtmlAssocEnd_DB.ID))
 		}
 
-		query := backRepoSPEC_RELATION.db.Save(&spec_relationDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoSPEC_RELATION.db.Save(spec_relationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -426,9 +428,9 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitPhaseTwoInstance
 func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CheckoutPhaseOne() (Error error) {
 
 	spec_relationDBArray := make([]SPEC_RELATIONDB, 0)
-	query := backRepoSPEC_RELATION.db.Find(&spec_relationDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoSPEC_RELATION.db.Find(&spec_relationDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -611,7 +613,7 @@ func (backRepo *BackRepoStruct) CheckoutSPEC_RELATION(spec_relation *models.SPEC
 			var spec_relationDB SPEC_RELATIONDB
 			spec_relationDB.ID = id
 
-			if err := backRepo.BackRepoSPEC_RELATION.db.First(&spec_relationDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoSPEC_RELATION.db.First(&spec_relationDB, id); err != nil {
 				log.Fatalln("CheckoutSPEC_RELATION : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoSPEC_RELATION.CheckoutPhaseOneInstance(&spec_relationDB)
@@ -794,9 +796,9 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) rowVisitorSPEC_RELATIO
 
 		spec_relationDB_ID_atBackupTime := spec_relationDB.ID
 		spec_relationDB.ID = 0
-		query := backRepoSPEC_RELATION.db.Create(spec_relationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoSPEC_RELATION.db.Create(spec_relationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoSPEC_RELATION.Map_SPEC_RELATIONDBID_SPEC_RELATIONDB[spec_relationDB.ID] = spec_relationDB
 		BackRepoSPEC_RELATIONid_atBckpTime_newID[spec_relationDB_ID_atBackupTime] = spec_relationDB.ID
@@ -831,9 +833,9 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) RestorePhaseOne(dirPat
 
 		spec_relationDB_ID_atBackupTime := spec_relationDB.ID
 		spec_relationDB.ID = 0
-		query := backRepoSPEC_RELATION.db.Create(spec_relationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoSPEC_RELATION.db.Create(spec_relationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoSPEC_RELATION.Map_SPEC_RELATIONDBID_SPEC_RELATIONDB[spec_relationDB.ID] = spec_relationDB
 		BackRepoSPEC_RELATIONid_atBckpTime_newID[spec_relationDB_ID_atBackupTime] = spec_relationDB.ID
@@ -855,9 +857,10 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoSPEC_RELATION.db.Model(spec_relationDB).Updates(*spec_relationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoSPEC_RELATION.db.Model(spec_relationDB)
+		_, err := db.Updates(*spec_relationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

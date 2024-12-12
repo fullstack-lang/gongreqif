@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type ATTRIBUTE_VALUE_ENUMERATIONDB struct {
 
 	// Declation for basic field attribute_value_enumerationDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ATTRIBUTE_VALUE_ENUMERATIONPointersEncoding
@@ -104,7 +105,7 @@ type BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct struct {
 	// stores ATTRIBUTE_VALUE_ENUMERATION according to their gorm ID
 	Map_ATTRIBUTE_VALUE_ENUMERATIONDBID_ATTRIBUTE_VALUE_ENUMERATIONPtr map[uint]*models.ATTRIBUTE_VALUE_ENUMERATION
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 	return
 }
 
-func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) GetDB() *gorm.DB {
+func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) GetDB() db.DBInterface {
 	return backRepoATTRIBUTE_VALUE_ENUMERATION.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 
 	// attribute_value_enumeration is not staged anymore, remove attribute_value_enumerationDB
 	attribute_value_enumerationDB := backRepoATTRIBUTE_VALUE_ENUMERATION.Map_ATTRIBUTE_VALUE_ENUMERATIONDBID_ATTRIBUTE_VALUE_ENUMERATIONDB[id]
-	query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Unscoped().Delete(&attribute_value_enumerationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Unscoped()
+	_, err := db.Delete(attribute_value_enumerationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 	var attribute_value_enumerationDB ATTRIBUTE_VALUE_ENUMERATIONDB
 	attribute_value_enumerationDB.CopyBasicFieldsFromATTRIBUTE_VALUE_ENUMERATION(attribute_value_enumeration)
 
-	query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Create(&attribute_value_enumerationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Create(&attribute_value_enumerationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 		attribute_value_enumerationDB.CopyBasicFieldsFromATTRIBUTE_VALUE_ENUMERATION(attribute_value_enumeration)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Save(&attribute_value_enumerationDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Save(attribute_value_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) CheckoutPhaseOne() (Error error) {
 
 	attribute_value_enumerationDBArray := make([]ATTRIBUTE_VALUE_ENUMERATIONDB, 0)
-	query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Find(&attribute_value_enumerationDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Find(&attribute_value_enumerationDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutATTRIBUTE_VALUE_ENUMERATION(attribute_va
 			var attribute_value_enumerationDB ATTRIBUTE_VALUE_ENUMERATIONDB
 			attribute_value_enumerationDB.ID = id
 
-			if err := backRepo.BackRepoATTRIBUTE_VALUE_ENUMERATION.db.First(&attribute_value_enumerationDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoATTRIBUTE_VALUE_ENUMERATION.db.First(&attribute_value_enumerationDB, id); err != nil {
 				log.Fatalln("CheckoutATTRIBUTE_VALUE_ENUMERATION : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoATTRIBUTE_VALUE_ENUMERATION.CheckoutPhaseOneInstance(&attribute_value_enumerationDB)
@@ -492,9 +494,9 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 
 		attribute_value_enumerationDB_ID_atBackupTime := attribute_value_enumerationDB.ID
 		attribute_value_enumerationDB.ID = 0
-		query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Create(attribute_value_enumerationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Create(attribute_value_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_VALUE_ENUMERATION.Map_ATTRIBUTE_VALUE_ENUMERATIONDBID_ATTRIBUTE_VALUE_ENUMERATIONDB[attribute_value_enumerationDB.ID] = attribute_value_enumerationDB
 		BackRepoATTRIBUTE_VALUE_ENUMERATIONid_atBckpTime_newID[attribute_value_enumerationDB_ID_atBackupTime] = attribute_value_enumerationDB.ID
@@ -529,9 +531,9 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 
 		attribute_value_enumerationDB_ID_atBackupTime := attribute_value_enumerationDB.ID
 		attribute_value_enumerationDB.ID = 0
-		query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Create(attribute_value_enumerationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Create(attribute_value_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_VALUE_ENUMERATION.Map_ATTRIBUTE_VALUE_ENUMERATIONDBID_ATTRIBUTE_VALUE_ENUMERATIONDB[attribute_value_enumerationDB.ID] = attribute_value_enumerationDB
 		BackRepoATTRIBUTE_VALUE_ENUMERATIONid_atBckpTime_newID[attribute_value_enumerationDB_ID_atBackupTime] = attribute_value_enumerationDB.ID
@@ -553,9 +555,10 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Model(attribute_value_enumerationDB).Updates(*attribute_value_enumerationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Model(attribute_value_enumerationDB)
+		_, err := db.Updates(*attribute_value_enumerationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -70,12 +70,12 @@ func (controller *Controller) GetREQ_IFs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoREQ_IF.GetDB()
 
-	query := db.Find(&req_ifDBs)
-	if query.Error != nil {
+	_, err := db.Find(&req_ifDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostREQ_IF(c *gin.Context) {
 	req_ifDB.REQ_IFPointersEncoding = input.REQ_IFPointersEncoding
 	req_ifDB.CopyBasicFieldsFromREQ_IF_WOP(&input.REQ_IF_WOP)
 
-	query := db.Create(&req_ifDB)
-	if query.Error != nil {
+	_, err = db.Create(&req_ifDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetREQ_IF(c *gin.Context) {
 
 	// Get req_ifDB in DB
 	var req_ifDB orm.REQ_IFDB
-	if err := db.First(&req_ifDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&req_ifDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateREQ_IF(c *gin.Context) {
 	var req_ifDB orm.REQ_IFDB
 
 	// fetch the req_if
-	query := db.First(&req_ifDB, c.Param("id"))
+	_, err := db.First(&req_ifDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateREQ_IF(c *gin.Context) {
 	req_ifDB.CopyBasicFieldsFromREQ_IF_WOP(&input.REQ_IF_WOP)
 	req_ifDB.REQ_IFPointersEncoding = input.REQ_IFPointersEncoding
 
-	query = db.Model(&req_ifDB).Updates(req_ifDB)
-	if query.Error != nil {
+	db, _ = db.Model(&req_ifDB)
+	_, err = db.Updates(&req_ifDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteREQ_IF(c *gin.Context) {
 
 	// Get model if exist
 	var req_ifDB orm.REQ_IFDB
-	if err := db.First(&req_ifDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&req_ifDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteREQ_IF(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&req_ifDB)
+	db.Unscoped()
+	db.Delete(&req_ifDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	req_ifDeleted := new(models.REQ_IF)

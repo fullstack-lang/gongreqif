@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_kbd_typeDB struct {
 
 	// Declation for basic field xhtml_kbd_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_kbd_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_kbd_typeStruct struct {
 	// stores Xhtml_kbd_type according to their gorm ID
 	Map_Xhtml_kbd_typeDBID_Xhtml_kbd_typePtr map[uint]*models.Xhtml_kbd_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) GetStage() (stage *m
 	return
 }
 
-func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_kbd_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) CommitDeleteInstance
 
 	// xhtml_kbd_type is not staged anymore, remove xhtml_kbd_typeDB
 	xhtml_kbd_typeDB := backRepoXhtml_kbd_type.Map_Xhtml_kbd_typeDBID_Xhtml_kbd_typeDB[id]
-	query := backRepoXhtml_kbd_type.db.Unscoped().Delete(&xhtml_kbd_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_kbd_type.db.Unscoped()
+	_, err := db.Delete(xhtml_kbd_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) CommitPhaseOneInstan
 	var xhtml_kbd_typeDB Xhtml_kbd_typeDB
 	xhtml_kbd_typeDB.CopyBasicFieldsFromXhtml_kbd_type(xhtml_kbd_type)
 
-	query := backRepoXhtml_kbd_type.db.Create(&xhtml_kbd_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_kbd_type.db.Create(&xhtml_kbd_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) CommitPhaseTwoInstan
 		xhtml_kbd_typeDB.CopyBasicFieldsFromXhtml_kbd_type(xhtml_kbd_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_kbd_type.db.Save(&xhtml_kbd_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_kbd_type.db.Save(xhtml_kbd_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) CommitPhaseTwoInstan
 func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_kbd_typeDBArray := make([]Xhtml_kbd_typeDB, 0)
-	query := backRepoXhtml_kbd_type.db.Find(&xhtml_kbd_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_kbd_type.db.Find(&xhtml_kbd_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_kbd_type(xhtml_kbd_type *models.Xh
 			var xhtml_kbd_typeDB Xhtml_kbd_typeDB
 			xhtml_kbd_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_kbd_type.db.First(&xhtml_kbd_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_kbd_type.db.First(&xhtml_kbd_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_kbd_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_kbd_type.CheckoutPhaseOneInstance(&xhtml_kbd_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) rowVisitorXhtml_kbd_
 
 		xhtml_kbd_typeDB_ID_atBackupTime := xhtml_kbd_typeDB.ID
 		xhtml_kbd_typeDB.ID = 0
-		query := backRepoXhtml_kbd_type.db.Create(xhtml_kbd_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_kbd_type.db.Create(xhtml_kbd_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_kbd_type.Map_Xhtml_kbd_typeDBID_Xhtml_kbd_typeDB[xhtml_kbd_typeDB.ID] = xhtml_kbd_typeDB
 		BackRepoXhtml_kbd_typeid_atBckpTime_newID[xhtml_kbd_typeDB_ID_atBackupTime] = xhtml_kbd_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) RestorePhaseOne(dirP
 
 		xhtml_kbd_typeDB_ID_atBackupTime := xhtml_kbd_typeDB.ID
 		xhtml_kbd_typeDB.ID = 0
-		query := backRepoXhtml_kbd_type.db.Create(xhtml_kbd_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_kbd_type.db.Create(xhtml_kbd_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_kbd_type.Map_Xhtml_kbd_typeDBID_Xhtml_kbd_typeDB[xhtml_kbd_typeDB.ID] = xhtml_kbd_typeDB
 		BackRepoXhtml_kbd_typeid_atBckpTime_newID[xhtml_kbd_typeDB_ID_atBackupTime] = xhtml_kbd_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_kbd_type *BackRepoXhtml_kbd_typeStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_kbd_type.db.Model(xhtml_kbd_typeDB).Updates(*xhtml_kbd_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_kbd_type.db.Model(xhtml_kbd_typeDB)
+		_, err := db.Updates(*xhtml_kbd_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

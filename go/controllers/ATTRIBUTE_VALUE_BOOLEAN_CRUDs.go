@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_VALUE_BOOLEANs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_VALUE_BOOLEAN.GetDB()
 
-	query := db.Find(&attribute_value_booleanDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_value_booleanDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_VALUE_BOOLEAN(c *gin.Context) {
 	attribute_value_booleanDB.ATTRIBUTE_VALUE_BOOLEANPointersEncoding = input.ATTRIBUTE_VALUE_BOOLEANPointersEncoding
 	attribute_value_booleanDB.CopyBasicFieldsFromATTRIBUTE_VALUE_BOOLEAN_WOP(&input.ATTRIBUTE_VALUE_BOOLEAN_WOP)
 
-	query := db.Create(&attribute_value_booleanDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_value_booleanDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_VALUE_BOOLEAN(c *gin.Context) {
 
 	// Get attribute_value_booleanDB in DB
 	var attribute_value_booleanDB orm.ATTRIBUTE_VALUE_BOOLEANDB
-	if err := db.First(&attribute_value_booleanDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_value_booleanDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_BOOLEAN(c *gin.Context) {
 	var attribute_value_booleanDB orm.ATTRIBUTE_VALUE_BOOLEANDB
 
 	// fetch the attribute_value_boolean
-	query := db.First(&attribute_value_booleanDB, c.Param("id"))
+	_, err := db.First(&attribute_value_booleanDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_BOOLEAN(c *gin.Context) {
 	attribute_value_booleanDB.CopyBasicFieldsFromATTRIBUTE_VALUE_BOOLEAN_WOP(&input.ATTRIBUTE_VALUE_BOOLEAN_WOP)
 	attribute_value_booleanDB.ATTRIBUTE_VALUE_BOOLEANPointersEncoding = input.ATTRIBUTE_VALUE_BOOLEANPointersEncoding
 
-	query = db.Model(&attribute_value_booleanDB).Updates(attribute_value_booleanDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_value_booleanDB)
+	_, err = db.Updates(&attribute_value_booleanDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_VALUE_BOOLEAN(c *gin.Context) {
 
 	// Get model if exist
 	var attribute_value_booleanDB orm.ATTRIBUTE_VALUE_BOOLEANDB
-	if err := db.First(&attribute_value_booleanDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_value_booleanDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_VALUE_BOOLEAN(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_value_booleanDB)
+	db.Unscoped()
+	db.Delete(&attribute_value_booleanDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_value_booleanDeleted := new(models.ATTRIBUTE_VALUE_BOOLEAN)

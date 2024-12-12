@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -130,7 +131,7 @@ type REQ_IF_CONTENTDB struct {
 
 	// Declation for basic field req_if_contentDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	REQ_IF_CONTENTPointersEncoding
@@ -173,7 +174,7 @@ type BackRepoREQ_IF_CONTENTStruct struct {
 	// stores REQ_IF_CONTENT according to their gorm ID
 	Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTPtr map[uint]*models.REQ_IF_CONTENT
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -183,7 +184,7 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) GetStage() (stage *m
 	return
 }
 
-func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) GetDB() *gorm.DB {
+func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) GetDB() db.DBInterface {
 	return backRepoREQ_IF_CONTENT.db
 }
 
@@ -220,9 +221,10 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitDeleteInstance
 
 	// req_if_content is not staged anymore, remove req_if_contentDB
 	req_if_contentDB := backRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTDB[id]
-	query := backRepoREQ_IF_CONTENT.db.Unscoped().Delete(&req_if_contentDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoREQ_IF_CONTENT.db.Unscoped()
+	_, err := db.Delete(req_if_contentDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -246,9 +248,9 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseOneInstan
 	var req_if_contentDB REQ_IF_CONTENTDB
 	req_if_contentDB.CopyBasicFieldsFromREQ_IF_CONTENT(req_if_content)
 
-	query := backRepoREQ_IF_CONTENT.db.Create(&req_if_contentDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoREQ_IF_CONTENT.db.Create(&req_if_contentDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -550,9 +552,9 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseTwoInstan
 				append(req_if_contentDB.REQ_IF_CONTENTPointersEncoding.SPEC_RELATION_GROUPS.RELATION_GROUP, int(relation_groupAssocEnd_DB.ID))
 		}
 
-		query := backRepoREQ_IF_CONTENT.db.Save(&req_if_contentDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoREQ_IF_CONTENT.db.Save(req_if_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -571,9 +573,9 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseTwoInstan
 func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CheckoutPhaseOne() (Error error) {
 
 	req_if_contentDBArray := make([]REQ_IF_CONTENTDB, 0)
-	query := backRepoREQ_IF_CONTENT.db.Find(&req_if_contentDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoREQ_IF_CONTENT.db.Find(&req_if_contentDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -819,7 +821,7 @@ func (backRepo *BackRepoStruct) CheckoutREQ_IF_CONTENT(req_if_content *models.RE
 			var req_if_contentDB REQ_IF_CONTENTDB
 			req_if_contentDB.ID = id
 
-			if err := backRepo.BackRepoREQ_IF_CONTENT.db.First(&req_if_contentDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoREQ_IF_CONTENT.db.First(&req_if_contentDB, id); err != nil {
 				log.Fatalln("CheckoutREQ_IF_CONTENT : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseOneInstance(&req_if_contentDB)
@@ -966,9 +968,9 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) rowVisitorREQ_IF_CON
 
 		req_if_contentDB_ID_atBackupTime := req_if_contentDB.ID
 		req_if_contentDB.ID = 0
-		query := backRepoREQ_IF_CONTENT.db.Create(req_if_contentDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF_CONTENT.db.Create(req_if_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTDB[req_if_contentDB.ID] = req_if_contentDB
 		BackRepoREQ_IF_CONTENTid_atBckpTime_newID[req_if_contentDB_ID_atBackupTime] = req_if_contentDB.ID
@@ -1003,9 +1005,9 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) RestorePhaseOne(dirP
 
 		req_if_contentDB_ID_atBackupTime := req_if_contentDB.ID
 		req_if_contentDB.ID = 0
-		query := backRepoREQ_IF_CONTENT.db.Create(req_if_contentDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF_CONTENT.db.Create(req_if_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTDB[req_if_contentDB.ID] = req_if_contentDB
 		BackRepoREQ_IF_CONTENTid_atBckpTime_newID[req_if_contentDB_ID_atBackupTime] = req_if_contentDB.ID
@@ -1027,9 +1029,10 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoREQ_IF_CONTENT.db.Model(req_if_contentDB).Updates(*req_if_contentDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoREQ_IF_CONTENT.db.Model(req_if_contentDB)
+		_, err := db.Updates(*req_if_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

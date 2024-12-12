@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -64,7 +65,7 @@ type ATTRIBUTE_VALUE_REALDB struct {
 
 	// Declation for basic field attribute_value_realDB.THE_VALUE
 	THE_VALUE_Data sql.NullFloat64
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ATTRIBUTE_VALUE_REALPointersEncoding
@@ -110,7 +111,7 @@ type BackRepoATTRIBUTE_VALUE_REALStruct struct {
 	// stores ATTRIBUTE_VALUE_REAL according to their gorm ID
 	Map_ATTRIBUTE_VALUE_REALDBID_ATTRIBUTE_VALUE_REALPtr map[uint]*models.ATTRIBUTE_VALUE_REAL
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -120,7 +121,7 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) GetStage
 	return
 }
 
-func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) GetDB() *gorm.DB {
+func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) GetDB() db.DBInterface {
 	return backRepoATTRIBUTE_VALUE_REAL.db
 }
 
@@ -157,9 +158,10 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) CommitDe
 
 	// attribute_value_real is not staged anymore, remove attribute_value_realDB
 	attribute_value_realDB := backRepoATTRIBUTE_VALUE_REAL.Map_ATTRIBUTE_VALUE_REALDBID_ATTRIBUTE_VALUE_REALDB[id]
-	query := backRepoATTRIBUTE_VALUE_REAL.db.Unscoped().Delete(&attribute_value_realDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoATTRIBUTE_VALUE_REAL.db.Unscoped()
+	_, err := db.Delete(attribute_value_realDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -183,9 +185,9 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) CommitPh
 	var attribute_value_realDB ATTRIBUTE_VALUE_REALDB
 	attribute_value_realDB.CopyBasicFieldsFromATTRIBUTE_VALUE_REAL(attribute_value_real)
 
-	query := backRepoATTRIBUTE_VALUE_REAL.db.Create(&attribute_value_realDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoATTRIBUTE_VALUE_REAL.db.Create(&attribute_value_realDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -217,9 +219,9 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) CommitPh
 		attribute_value_realDB.CopyBasicFieldsFromATTRIBUTE_VALUE_REAL(attribute_value_real)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoATTRIBUTE_VALUE_REAL.db.Save(&attribute_value_realDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_REAL.db.Save(attribute_value_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -238,9 +240,9 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) CommitPh
 func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) CheckoutPhaseOne() (Error error) {
 
 	attribute_value_realDBArray := make([]ATTRIBUTE_VALUE_REALDB, 0)
-	query := backRepoATTRIBUTE_VALUE_REAL.db.Find(&attribute_value_realDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoATTRIBUTE_VALUE_REAL.db.Find(&attribute_value_realDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -351,7 +353,7 @@ func (backRepo *BackRepoStruct) CheckoutATTRIBUTE_VALUE_REAL(attribute_value_rea
 			var attribute_value_realDB ATTRIBUTE_VALUE_REALDB
 			attribute_value_realDB.ID = id
 
-			if err := backRepo.BackRepoATTRIBUTE_VALUE_REAL.db.First(&attribute_value_realDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoATTRIBUTE_VALUE_REAL.db.First(&attribute_value_realDB, id); err != nil {
 				log.Fatalln("CheckoutATTRIBUTE_VALUE_REAL : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoATTRIBUTE_VALUE_REAL.CheckoutPhaseOneInstance(&attribute_value_realDB)
@@ -510,9 +512,9 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) rowVisit
 
 		attribute_value_realDB_ID_atBackupTime := attribute_value_realDB.ID
 		attribute_value_realDB.ID = 0
-		query := backRepoATTRIBUTE_VALUE_REAL.db.Create(attribute_value_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_REAL.db.Create(attribute_value_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_VALUE_REAL.Map_ATTRIBUTE_VALUE_REALDBID_ATTRIBUTE_VALUE_REALDB[attribute_value_realDB.ID] = attribute_value_realDB
 		BackRepoATTRIBUTE_VALUE_REALid_atBckpTime_newID[attribute_value_realDB_ID_atBackupTime] = attribute_value_realDB.ID
@@ -547,9 +549,9 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) RestoreP
 
 		attribute_value_realDB_ID_atBackupTime := attribute_value_realDB.ID
 		attribute_value_realDB.ID = 0
-		query := backRepoATTRIBUTE_VALUE_REAL.db.Create(attribute_value_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_REAL.db.Create(attribute_value_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_VALUE_REAL.Map_ATTRIBUTE_VALUE_REALDBID_ATTRIBUTE_VALUE_REALDB[attribute_value_realDB.ID] = attribute_value_realDB
 		BackRepoATTRIBUTE_VALUE_REALid_atBckpTime_newID[attribute_value_realDB_ID_atBackupTime] = attribute_value_realDB.ID
@@ -571,9 +573,10 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) RestoreP
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoATTRIBUTE_VALUE_REAL.db.Model(attribute_value_realDB).Updates(*attribute_value_realDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoATTRIBUTE_VALUE_REAL.db.Model(attribute_value_realDB)
+		_, err := db.Updates(*attribute_value_realDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

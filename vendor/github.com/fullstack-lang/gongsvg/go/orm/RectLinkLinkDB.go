@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongsvg/go/db"
 	"github.com/fullstack-lang/gongsvg/go/models"
 )
 
@@ -96,7 +97,7 @@ type RectLinkLinkDB struct {
 
 	// Declation for basic field rectlinklinkDB.Transform
 	Transform_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	RectLinkLinkPointersEncoding
@@ -166,7 +167,7 @@ type BackRepoRectLinkLinkStruct struct {
 	// stores RectLinkLink according to their gorm ID
 	Map_RectLinkLinkDBID_RectLinkLinkPtr map[uint]*models.RectLinkLink
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -176,7 +177,7 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) GetStage() (stage *model
 	return
 }
 
-func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) GetDB() *gorm.DB {
+func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) GetDB() db.DBInterface {
 	return backRepoRectLinkLink.db
 }
 
@@ -213,9 +214,10 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) CommitDeleteInstance(id 
 
 	// rectlinklink is not staged anymore, remove rectlinklinkDB
 	rectlinklinkDB := backRepoRectLinkLink.Map_RectLinkLinkDBID_RectLinkLinkDB[id]
-	query := backRepoRectLinkLink.db.Unscoped().Delete(&rectlinklinkDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoRectLinkLink.db.Unscoped()
+	_, err := db.Delete(rectlinklinkDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -239,9 +241,9 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) CommitPhaseOneInstance(r
 	var rectlinklinkDB RectLinkLinkDB
 	rectlinklinkDB.CopyBasicFieldsFromRectLinkLink(rectlinklink)
 
-	query := backRepoRectLinkLink.db.Create(&rectlinklinkDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoRectLinkLink.db.Create(&rectlinklinkDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -297,9 +299,9 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) CommitPhaseTwoInstance(b
 			rectlinklinkDB.EndID.Valid = true
 		}
 
-		query := backRepoRectLinkLink.db.Save(&rectlinklinkDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoRectLinkLink.db.Save(rectlinklinkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -318,9 +320,9 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) CommitPhaseTwoInstance(b
 func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) CheckoutPhaseOne() (Error error) {
 
 	rectlinklinkDBArray := make([]RectLinkLinkDB, 0)
-	query := backRepoRectLinkLink.db.Find(&rectlinklinkDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoRectLinkLink.db.Find(&rectlinklinkDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -410,16 +412,44 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) CheckoutPhaseTwoInstance
 func (rectlinklinkDB *RectLinkLinkDB) DecodePointers(backRepo *BackRepoStruct, rectlinklink *models.RectLinkLink) {
 
 	// insertion point for checkout of pointer encoding
-	// Start field
-	rectlinklink.Start = nil
-	if rectlinklinkDB.StartID.Int64 != 0 {
-		rectlinklink.Start = backRepo.BackRepoRect.Map_RectDBID_RectPtr[uint(rectlinklinkDB.StartID.Int64)]
+	// Start field	
+	{
+		id := rectlinklinkDB.StartID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoRect.Map_RectDBID_RectPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: rectlinklink.Start, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if rectlinklink.Start == nil || rectlinklink.Start != tmp {
+				rectlinklink.Start = tmp
+			}
+		} else {
+			rectlinklink.Start = nil
+		}
 	}
-	// End field
-	rectlinklink.End = nil
-	if rectlinklinkDB.EndID.Int64 != 0 {
-		rectlinklink.End = backRepo.BackRepoLink.Map_LinkDBID_LinkPtr[uint(rectlinklinkDB.EndID.Int64)]
+	
+	// End field	
+	{
+		id := rectlinklinkDB.EndID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoLink.Map_LinkDBID_LinkPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: rectlinklink.End, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if rectlinklink.End == nil || rectlinklink.End != tmp {
+				rectlinklink.End = tmp
+			}
+		} else {
+			rectlinklink.End = nil
+		}
 	}
+	
 	return
 }
 
@@ -441,7 +471,7 @@ func (backRepo *BackRepoStruct) CheckoutRectLinkLink(rectlinklink *models.RectLi
 			var rectlinklinkDB RectLinkLinkDB
 			rectlinklinkDB.ID = id
 
-			if err := backRepo.BackRepoRectLinkLink.db.First(&rectlinklinkDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoRectLinkLink.db.First(&rectlinklinkDB, id); err != nil {
 				log.Fatalln("CheckoutRectLinkLink : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoRectLinkLink.CheckoutPhaseOneInstance(&rectlinklinkDB)
@@ -696,9 +726,9 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) rowVisitorRectLinkLink(r
 
 		rectlinklinkDB_ID_atBackupTime := rectlinklinkDB.ID
 		rectlinklinkDB.ID = 0
-		query := backRepoRectLinkLink.db.Create(rectlinklinkDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoRectLinkLink.db.Create(rectlinklinkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoRectLinkLink.Map_RectLinkLinkDBID_RectLinkLinkDB[rectlinklinkDB.ID] = rectlinklinkDB
 		BackRepoRectLinkLinkid_atBckpTime_newID[rectlinklinkDB_ID_atBackupTime] = rectlinklinkDB.ID
@@ -733,9 +763,9 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) RestorePhaseOne(dirPath 
 
 		rectlinklinkDB_ID_atBackupTime := rectlinklinkDB.ID
 		rectlinklinkDB.ID = 0
-		query := backRepoRectLinkLink.db.Create(rectlinklinkDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoRectLinkLink.db.Create(rectlinklinkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoRectLinkLink.Map_RectLinkLinkDBID_RectLinkLinkDB[rectlinklinkDB.ID] = rectlinklinkDB
 		BackRepoRectLinkLinkid_atBckpTime_newID[rectlinklinkDB_ID_atBackupTime] = rectlinklinkDB.ID
@@ -769,9 +799,10 @@ func (backRepoRectLinkLink *BackRepoRectLinkLinkStruct) RestorePhaseTwo() {
 		}
 
 		// update databse with new index encoding
-		query := backRepoRectLinkLink.db.Model(rectlinklinkDB).Updates(*rectlinklinkDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoRectLinkLink.db.Model(rectlinklinkDB)
+		_, err := db.Updates(*rectlinklinkDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

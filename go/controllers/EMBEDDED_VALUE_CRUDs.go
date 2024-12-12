@@ -70,12 +70,12 @@ func (controller *Controller) GetEMBEDDED_VALUEs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoEMBEDDED_VALUE.GetDB()
 
-	query := db.Find(&embedded_valueDBs)
-	if query.Error != nil {
+	_, err := db.Find(&embedded_valueDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostEMBEDDED_VALUE(c *gin.Context) {
 	embedded_valueDB.EMBEDDED_VALUEPointersEncoding = input.EMBEDDED_VALUEPointersEncoding
 	embedded_valueDB.CopyBasicFieldsFromEMBEDDED_VALUE_WOP(&input.EMBEDDED_VALUE_WOP)
 
-	query := db.Create(&embedded_valueDB)
-	if query.Error != nil {
+	_, err = db.Create(&embedded_valueDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetEMBEDDED_VALUE(c *gin.Context) {
 
 	// Get embedded_valueDB in DB
 	var embedded_valueDB orm.EMBEDDED_VALUEDB
-	if err := db.First(&embedded_valueDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&embedded_valueDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateEMBEDDED_VALUE(c *gin.Context) {
 	var embedded_valueDB orm.EMBEDDED_VALUEDB
 
 	// fetch the embedded_value
-	query := db.First(&embedded_valueDB, c.Param("id"))
+	_, err := db.First(&embedded_valueDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateEMBEDDED_VALUE(c *gin.Context) {
 	embedded_valueDB.CopyBasicFieldsFromEMBEDDED_VALUE_WOP(&input.EMBEDDED_VALUE_WOP)
 	embedded_valueDB.EMBEDDED_VALUEPointersEncoding = input.EMBEDDED_VALUEPointersEncoding
 
-	query = db.Model(&embedded_valueDB).Updates(embedded_valueDB)
-	if query.Error != nil {
+	db, _ = db.Model(&embedded_valueDB)
+	_, err = db.Updates(&embedded_valueDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteEMBEDDED_VALUE(c *gin.Context) {
 
 	// Get model if exist
 	var embedded_valueDB orm.EMBEDDED_VALUEDB
-	if err := db.First(&embedded_valueDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&embedded_valueDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteEMBEDDED_VALUE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&embedded_valueDB)
+	db.Unscoped()
+	db.Delete(&embedded_valueDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	embedded_valueDeleted := new(models.EMBEDDED_VALUE)

@@ -131,7 +131,7 @@ export class GongsvgDiagrammingComponent implements OnInit, OnDestroy, AfterView
   }
 
   resetAllLinksPreviousStartEndRects() {
-    console.log(getFunctionName())
+
     for (let link of this.gongsvgFrontRepo?.getFrontArray<gongsvg.Link>(gongsvg.Link.GONGSTRUCT_NAME)!) {
       // TODO : why do we need to store the previous thing
       // one remived the srture clone call
@@ -234,7 +234,7 @@ export class GongsvgDiagrammingComponent implements OnInit, OnDestroy, AfterView
 
   ngOnInit(): void {
 
-    console.log("Material component->ngOnInit : GONG__StackPath, " + this.GONG__StackPath)
+    // console.log("Material component->ngOnInit : GONG__StackPath, " + this.GONG__StackPath)
 
     // this component is a "push mode component"
     // because the template calls many functions whose state cannot be computed

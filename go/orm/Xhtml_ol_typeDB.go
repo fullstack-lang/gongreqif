@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_ol_typeDB struct {
 
 	// Declation for basic field xhtml_ol_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_ol_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_ol_typeStruct struct {
 	// stores Xhtml_ol_type according to their gorm ID
 	Map_Xhtml_ol_typeDBID_Xhtml_ol_typePtr map[uint]*models.Xhtml_ol_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) GetStage() (stage *mod
 	return
 }
 
-func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_ol_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) CommitDeleteInstance(i
 
 	// xhtml_ol_type is not staged anymore, remove xhtml_ol_typeDB
 	xhtml_ol_typeDB := backRepoXhtml_ol_type.Map_Xhtml_ol_typeDBID_Xhtml_ol_typeDB[id]
-	query := backRepoXhtml_ol_type.db.Unscoped().Delete(&xhtml_ol_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_ol_type.db.Unscoped()
+	_, err := db.Delete(xhtml_ol_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) CommitPhaseOneInstance
 	var xhtml_ol_typeDB Xhtml_ol_typeDB
 	xhtml_ol_typeDB.CopyBasicFieldsFromXhtml_ol_type(xhtml_ol_type)
 
-	query := backRepoXhtml_ol_type.db.Create(&xhtml_ol_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_ol_type.db.Create(&xhtml_ol_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) CommitPhaseTwoInstance
 		xhtml_ol_typeDB.CopyBasicFieldsFromXhtml_ol_type(xhtml_ol_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_ol_type.db.Save(&xhtml_ol_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_ol_type.db.Save(xhtml_ol_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) CommitPhaseTwoInstance
 func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_ol_typeDBArray := make([]Xhtml_ol_typeDB, 0)
-	query := backRepoXhtml_ol_type.db.Find(&xhtml_ol_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_ol_type.db.Find(&xhtml_ol_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_ol_type(xhtml_ol_type *models.Xhtm
 			var xhtml_ol_typeDB Xhtml_ol_typeDB
 			xhtml_ol_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_ol_type.db.First(&xhtml_ol_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_ol_type.db.First(&xhtml_ol_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_ol_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_ol_type.CheckoutPhaseOneInstance(&xhtml_ol_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) rowVisitorXhtml_ol_typ
 
 		xhtml_ol_typeDB_ID_atBackupTime := xhtml_ol_typeDB.ID
 		xhtml_ol_typeDB.ID = 0
-		query := backRepoXhtml_ol_type.db.Create(xhtml_ol_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_ol_type.db.Create(xhtml_ol_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_ol_type.Map_Xhtml_ol_typeDBID_Xhtml_ol_typeDB[xhtml_ol_typeDB.ID] = xhtml_ol_typeDB
 		BackRepoXhtml_ol_typeid_atBckpTime_newID[xhtml_ol_typeDB_ID_atBackupTime] = xhtml_ol_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) RestorePhaseOne(dirPat
 
 		xhtml_ol_typeDB_ID_atBackupTime := xhtml_ol_typeDB.ID
 		xhtml_ol_typeDB.ID = 0
-		query := backRepoXhtml_ol_type.db.Create(xhtml_ol_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_ol_type.db.Create(xhtml_ol_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_ol_type.Map_Xhtml_ol_typeDBID_Xhtml_ol_typeDB[xhtml_ol_typeDB.ID] = xhtml_ol_typeDB
 		BackRepoXhtml_ol_typeid_atBckpTime_newID[xhtml_ol_typeDB_ID_atBackupTime] = xhtml_ol_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_ol_type *BackRepoXhtml_ol_typeStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_ol_type.db.Model(xhtml_ol_typeDB).Updates(*xhtml_ol_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_ol_type.db.Model(xhtml_ol_typeDB)
+		_, err := db.Updates(*xhtml_ol_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_DATEs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_DEFINITION_DATE.GetDB()
 
-	query := db.Find(&attribute_definition_dateDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_definition_dateDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_DEFINITION_DATE(c *gin.Context) {
 	attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding = input.ATTRIBUTE_DEFINITION_DATEPointersEncoding
 	attribute_definition_dateDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_DATE_WOP(&input.ATTRIBUTE_DEFINITION_DATE_WOP)
 
-	query := db.Create(&attribute_definition_dateDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_definition_dateDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_DATE(c *gin.Context) {
 
 	// Get attribute_definition_dateDB in DB
 	var attribute_definition_dateDB orm.ATTRIBUTE_DEFINITION_DATEDB
-	if err := db.First(&attribute_definition_dateDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_dateDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_DATE(c *gin.Context) {
 	var attribute_definition_dateDB orm.ATTRIBUTE_DEFINITION_DATEDB
 
 	// fetch the attribute_definition_date
-	query := db.First(&attribute_definition_dateDB, c.Param("id"))
+	_, err := db.First(&attribute_definition_dateDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_DATE(c *gin.Context) {
 	attribute_definition_dateDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_DATE_WOP(&input.ATTRIBUTE_DEFINITION_DATE_WOP)
 	attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding = input.ATTRIBUTE_DEFINITION_DATEPointersEncoding
 
-	query = db.Model(&attribute_definition_dateDB).Updates(attribute_definition_dateDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_definition_dateDB)
+	_, err = db.Updates(&attribute_definition_dateDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_DATE(c *gin.Context) {
 
 	// Get model if exist
 	var attribute_definition_dateDB orm.ATTRIBUTE_DEFINITION_DATEDB
-	if err := db.First(&attribute_definition_dateDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_dateDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_DATE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_definition_dateDB)
+	db.Unscoped()
+	db.Delete(&attribute_definition_dateDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_definition_dateDeleted := new(models.ATTRIBUTE_DEFINITION_DATE)

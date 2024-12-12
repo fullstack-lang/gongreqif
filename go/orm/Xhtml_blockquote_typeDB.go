@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_blockquote_typeDB struct {
 
 	// Declation for basic field xhtml_blockquote_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_blockquote_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_blockquote_typeStruct struct {
 	// stores Xhtml_blockquote_type according to their gorm ID
 	Map_Xhtml_blockquote_typeDBID_Xhtml_blockquote_typePtr map[uint]*models.Xhtml_blockquote_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) GetSta
 	return
 }
 
-func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_blockquote_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) Commit
 
 	// xhtml_blockquote_type is not staged anymore, remove xhtml_blockquote_typeDB
 	xhtml_blockquote_typeDB := backRepoXhtml_blockquote_type.Map_Xhtml_blockquote_typeDBID_Xhtml_blockquote_typeDB[id]
-	query := backRepoXhtml_blockquote_type.db.Unscoped().Delete(&xhtml_blockquote_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_blockquote_type.db.Unscoped()
+	_, err := db.Delete(xhtml_blockquote_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) Commit
 	var xhtml_blockquote_typeDB Xhtml_blockquote_typeDB
 	xhtml_blockquote_typeDB.CopyBasicFieldsFromXhtml_blockquote_type(xhtml_blockquote_type)
 
-	query := backRepoXhtml_blockquote_type.db.Create(&xhtml_blockquote_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_blockquote_type.db.Create(&xhtml_blockquote_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) Commit
 		xhtml_blockquote_typeDB.CopyBasicFieldsFromXhtml_blockquote_type(xhtml_blockquote_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_blockquote_type.db.Save(&xhtml_blockquote_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_blockquote_type.db.Save(xhtml_blockquote_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) Commit
 func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_blockquote_typeDBArray := make([]Xhtml_blockquote_typeDB, 0)
-	query := backRepoXhtml_blockquote_type.db.Find(&xhtml_blockquote_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_blockquote_type.db.Find(&xhtml_blockquote_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_blockquote_type(xhtml_blockquote_t
 			var xhtml_blockquote_typeDB Xhtml_blockquote_typeDB
 			xhtml_blockquote_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_blockquote_type.db.First(&xhtml_blockquote_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_blockquote_type.db.First(&xhtml_blockquote_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_blockquote_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_blockquote_type.CheckoutPhaseOneInstance(&xhtml_blockquote_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) rowVis
 
 		xhtml_blockquote_typeDB_ID_atBackupTime := xhtml_blockquote_typeDB.ID
 		xhtml_blockquote_typeDB.ID = 0
-		query := backRepoXhtml_blockquote_type.db.Create(xhtml_blockquote_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_blockquote_type.db.Create(xhtml_blockquote_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_blockquote_type.Map_Xhtml_blockquote_typeDBID_Xhtml_blockquote_typeDB[xhtml_blockquote_typeDB.ID] = xhtml_blockquote_typeDB
 		BackRepoXhtml_blockquote_typeid_atBckpTime_newID[xhtml_blockquote_typeDB_ID_atBackupTime] = xhtml_blockquote_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) Restor
 
 		xhtml_blockquote_typeDB_ID_atBackupTime := xhtml_blockquote_typeDB.ID
 		xhtml_blockquote_typeDB.ID = 0
-		query := backRepoXhtml_blockquote_type.db.Create(xhtml_blockquote_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_blockquote_type.db.Create(xhtml_blockquote_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_blockquote_type.Map_Xhtml_blockquote_typeDBID_Xhtml_blockquote_typeDB[xhtml_blockquote_typeDB.ID] = xhtml_blockquote_typeDB
 		BackRepoXhtml_blockquote_typeid_atBckpTime_newID[xhtml_blockquote_typeDB_ID_atBackupTime] = xhtml_blockquote_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_blockquote_type *BackRepoXhtml_blockquote_typeStruct) Restor
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_blockquote_type.db.Model(xhtml_blockquote_typeDB).Updates(*xhtml_blockquote_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_blockquote_type.db.Model(xhtml_blockquote_typeDB)
+		_, err := db.Updates(*xhtml_blockquote_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

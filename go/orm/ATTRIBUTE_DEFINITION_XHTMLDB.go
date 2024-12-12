@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -88,7 +89,7 @@ type ATTRIBUTE_DEFINITION_XHTMLDB struct {
 
 	// Declation for basic field attribute_definition_xhtmlDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ATTRIBUTE_DEFINITION_XHTMLPointersEncoding
@@ -143,7 +144,7 @@ type BackRepoATTRIBUTE_DEFINITION_XHTMLStruct struct {
 	// stores ATTRIBUTE_DEFINITION_XHTML according to their gorm ID
 	Map_ATTRIBUTE_DEFINITION_XHTMLDBID_ATTRIBUTE_DEFINITION_XHTMLPtr map[uint]*models.ATTRIBUTE_DEFINITION_XHTML
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -153,7 +154,7 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 	return
 }
 
-func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStruct) GetDB() *gorm.DB {
+func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStruct) GetDB() db.DBInterface {
 	return backRepoATTRIBUTE_DEFINITION_XHTML.db
 }
 
@@ -190,9 +191,10 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 
 	// attribute_definition_xhtml is not staged anymore, remove attribute_definition_xhtmlDB
 	attribute_definition_xhtmlDB := backRepoATTRIBUTE_DEFINITION_XHTML.Map_ATTRIBUTE_DEFINITION_XHTMLDBID_ATTRIBUTE_DEFINITION_XHTMLDB[id]
-	query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Unscoped().Delete(&attribute_definition_xhtmlDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoATTRIBUTE_DEFINITION_XHTML.db.Unscoped()
+	_, err := db.Delete(attribute_definition_xhtmlDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -216,9 +218,9 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 	var attribute_definition_xhtmlDB ATTRIBUTE_DEFINITION_XHTMLDB
 	attribute_definition_xhtmlDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_XHTML(attribute_definition_xhtml)
 
-	query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Create(&attribute_definition_xhtmlDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoATTRIBUTE_DEFINITION_XHTML.db.Create(&attribute_definition_xhtmlDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -286,9 +288,9 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 				append(attribute_definition_xhtmlDB.ATTRIBUTE_DEFINITION_XHTMLPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_XHTML, int(attribute_value_xhtmlAssocEnd_DB.ID))
 		}
 
-		query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Save(&attribute_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_XHTML.db.Save(attribute_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -307,9 +309,9 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStruct) CheckoutPhaseOne() (Error error) {
 
 	attribute_definition_xhtmlDBArray := make([]ATTRIBUTE_DEFINITION_XHTMLDB, 0)
-	query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Find(&attribute_definition_xhtmlDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoATTRIBUTE_DEFINITION_XHTML.db.Find(&attribute_definition_xhtmlDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -438,7 +440,7 @@ func (backRepo *BackRepoStruct) CheckoutATTRIBUTE_DEFINITION_XHTML(attribute_def
 			var attribute_definition_xhtmlDB ATTRIBUTE_DEFINITION_XHTMLDB
 			attribute_definition_xhtmlDB.ID = id
 
-			if err := backRepo.BackRepoATTRIBUTE_DEFINITION_XHTML.db.First(&attribute_definition_xhtmlDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoATTRIBUTE_DEFINITION_XHTML.db.First(&attribute_definition_xhtmlDB, id); err != nil {
 				log.Fatalln("CheckoutATTRIBUTE_DEFINITION_XHTML : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoATTRIBUTE_DEFINITION_XHTML.CheckoutPhaseOneInstance(&attribute_definition_xhtmlDB)
@@ -633,9 +635,9 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 
 		attribute_definition_xhtmlDB_ID_atBackupTime := attribute_definition_xhtmlDB.ID
 		attribute_definition_xhtmlDB.ID = 0
-		query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Create(attribute_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_XHTML.db.Create(attribute_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_DEFINITION_XHTML.Map_ATTRIBUTE_DEFINITION_XHTMLDBID_ATTRIBUTE_DEFINITION_XHTMLDB[attribute_definition_xhtmlDB.ID] = attribute_definition_xhtmlDB
 		BackRepoATTRIBUTE_DEFINITION_XHTMLid_atBckpTime_newID[attribute_definition_xhtmlDB_ID_atBackupTime] = attribute_definition_xhtmlDB.ID
@@ -670,9 +672,9 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 
 		attribute_definition_xhtmlDB_ID_atBackupTime := attribute_definition_xhtmlDB.ID
 		attribute_definition_xhtmlDB.ID = 0
-		query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Create(attribute_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_DEFINITION_XHTML.db.Create(attribute_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_DEFINITION_XHTML.Map_ATTRIBUTE_DEFINITION_XHTMLDBID_ATTRIBUTE_DEFINITION_XHTMLDB[attribute_definition_xhtmlDB.ID] = attribute_definition_xhtmlDB
 		BackRepoATTRIBUTE_DEFINITION_XHTMLid_atBckpTime_newID[attribute_definition_xhtmlDB_ID_atBackupTime] = attribute_definition_xhtmlDB.ID
@@ -694,9 +696,10 @@ func (backRepoATTRIBUTE_DEFINITION_XHTML *BackRepoATTRIBUTE_DEFINITION_XHTMLStru
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoATTRIBUTE_DEFINITION_XHTML.db.Model(attribute_definition_xhtmlDB).Updates(*attribute_definition_xhtmlDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoATTRIBUTE_DEFINITION_XHTML.db.Model(attribute_definition_xhtmlDB)
+		_, err := db.Updates(*attribute_definition_xhtmlDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

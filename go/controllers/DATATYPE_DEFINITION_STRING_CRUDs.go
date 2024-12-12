@@ -70,12 +70,12 @@ func (controller *Controller) GetDATATYPE_DEFINITION_STRINGs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoDATATYPE_DEFINITION_STRING.GetDB()
 
-	query := db.Find(&datatype_definition_stringDBs)
-	if query.Error != nil {
+	_, err := db.Find(&datatype_definition_stringDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostDATATYPE_DEFINITION_STRING(c *gin.Context) {
 	datatype_definition_stringDB.DATATYPE_DEFINITION_STRINGPointersEncoding = input.DATATYPE_DEFINITION_STRINGPointersEncoding
 	datatype_definition_stringDB.CopyBasicFieldsFromDATATYPE_DEFINITION_STRING_WOP(&input.DATATYPE_DEFINITION_STRING_WOP)
 
-	query := db.Create(&datatype_definition_stringDB)
-	if query.Error != nil {
+	_, err = db.Create(&datatype_definition_stringDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetDATATYPE_DEFINITION_STRING(c *gin.Context) {
 
 	// Get datatype_definition_stringDB in DB
 	var datatype_definition_stringDB orm.DATATYPE_DEFINITION_STRINGDB
-	if err := db.First(&datatype_definition_stringDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_stringDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_STRING(c *gin.Context) {
 	var datatype_definition_stringDB orm.DATATYPE_DEFINITION_STRINGDB
 
 	// fetch the datatype_definition_string
-	query := db.First(&datatype_definition_stringDB, c.Param("id"))
+	_, err := db.First(&datatype_definition_stringDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_STRING(c *gin.Context) {
 	datatype_definition_stringDB.CopyBasicFieldsFromDATATYPE_DEFINITION_STRING_WOP(&input.DATATYPE_DEFINITION_STRING_WOP)
 	datatype_definition_stringDB.DATATYPE_DEFINITION_STRINGPointersEncoding = input.DATATYPE_DEFINITION_STRINGPointersEncoding
 
-	query = db.Model(&datatype_definition_stringDB).Updates(datatype_definition_stringDB)
-	if query.Error != nil {
+	db, _ = db.Model(&datatype_definition_stringDB)
+	_, err = db.Updates(&datatype_definition_stringDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_STRING(c *gin.Context) {
 
 	// Get model if exist
 	var datatype_definition_stringDB orm.DATATYPE_DEFINITION_STRINGDB
-	if err := db.First(&datatype_definition_stringDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_stringDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_STRING(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&datatype_definition_stringDB)
+	db.Unscoped()
+	db.Delete(&datatype_definition_stringDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	datatype_definition_stringDeleted := new(models.DATATYPE_DEFINITION_STRING)

@@ -70,12 +70,12 @@ func (controller *Controller) GetRELATION_GROUP_TYPEs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoRELATION_GROUP_TYPE.GetDB()
 
-	query := db.Find(&relation_group_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&relation_group_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostRELATION_GROUP_TYPE(c *gin.Context) {
 	relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding = input.RELATION_GROUP_TYPEPointersEncoding
 	relation_group_typeDB.CopyBasicFieldsFromRELATION_GROUP_TYPE_WOP(&input.RELATION_GROUP_TYPE_WOP)
 
-	query := db.Create(&relation_group_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&relation_group_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetRELATION_GROUP_TYPE(c *gin.Context) {
 
 	// Get relation_group_typeDB in DB
 	var relation_group_typeDB orm.RELATION_GROUP_TYPEDB
-	if err := db.First(&relation_group_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&relation_group_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateRELATION_GROUP_TYPE(c *gin.Context) {
 	var relation_group_typeDB orm.RELATION_GROUP_TYPEDB
 
 	// fetch the relation_group_type
-	query := db.First(&relation_group_typeDB, c.Param("id"))
+	_, err := db.First(&relation_group_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateRELATION_GROUP_TYPE(c *gin.Context) {
 	relation_group_typeDB.CopyBasicFieldsFromRELATION_GROUP_TYPE_WOP(&input.RELATION_GROUP_TYPE_WOP)
 	relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding = input.RELATION_GROUP_TYPEPointersEncoding
 
-	query = db.Model(&relation_group_typeDB).Updates(relation_group_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&relation_group_typeDB)
+	_, err = db.Updates(&relation_group_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteRELATION_GROUP_TYPE(c *gin.Context) {
 
 	// Get model if exist
 	var relation_group_typeDB orm.RELATION_GROUP_TYPEDB
-	if err := db.First(&relation_group_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&relation_group_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteRELATION_GROUP_TYPE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&relation_group_typeDB)
+	db.Unscoped()
+	db.Delete(&relation_group_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	relation_group_typeDeleted := new(models.RELATION_GROUP_TYPE)

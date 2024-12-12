@@ -70,12 +70,12 @@ func (controller *Controller) GetRELATION_GROUPs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoRELATION_GROUP.GetDB()
 
-	query := db.Find(&relation_groupDBs)
-	if query.Error != nil {
+	_, err := db.Find(&relation_groupDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostRELATION_GROUP(c *gin.Context) {
 	relation_groupDB.RELATION_GROUPPointersEncoding = input.RELATION_GROUPPointersEncoding
 	relation_groupDB.CopyBasicFieldsFromRELATION_GROUP_WOP(&input.RELATION_GROUP_WOP)
 
-	query := db.Create(&relation_groupDB)
-	if query.Error != nil {
+	_, err = db.Create(&relation_groupDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetRELATION_GROUP(c *gin.Context) {
 
 	// Get relation_groupDB in DB
 	var relation_groupDB orm.RELATION_GROUPDB
-	if err := db.First(&relation_groupDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&relation_groupDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateRELATION_GROUP(c *gin.Context) {
 	var relation_groupDB orm.RELATION_GROUPDB
 
 	// fetch the relation_group
-	query := db.First(&relation_groupDB, c.Param("id"))
+	_, err := db.First(&relation_groupDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateRELATION_GROUP(c *gin.Context) {
 	relation_groupDB.CopyBasicFieldsFromRELATION_GROUP_WOP(&input.RELATION_GROUP_WOP)
 	relation_groupDB.RELATION_GROUPPointersEncoding = input.RELATION_GROUPPointersEncoding
 
-	query = db.Model(&relation_groupDB).Updates(relation_groupDB)
-	if query.Error != nil {
+	db, _ = db.Model(&relation_groupDB)
+	_, err = db.Updates(&relation_groupDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteRELATION_GROUP(c *gin.Context) {
 
 	// Get model if exist
 	var relation_groupDB orm.RELATION_GROUPDB
-	if err := db.First(&relation_groupDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&relation_groupDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteRELATION_GROUP(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&relation_groupDB)
+	db.Unscoped()
+	db.Delete(&relation_groupDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	relation_groupDeleted := new(models.RELATION_GROUP)

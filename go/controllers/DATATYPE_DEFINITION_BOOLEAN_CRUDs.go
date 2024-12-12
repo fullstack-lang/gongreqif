@@ -70,12 +70,12 @@ func (controller *Controller) GetDATATYPE_DEFINITION_BOOLEANs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoDATATYPE_DEFINITION_BOOLEAN.GetDB()
 
-	query := db.Find(&datatype_definition_booleanDBs)
-	if query.Error != nil {
+	_, err := db.Find(&datatype_definition_booleanDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostDATATYPE_DEFINITION_BOOLEAN(c *gin.Context) {
 	datatype_definition_booleanDB.DATATYPE_DEFINITION_BOOLEANPointersEncoding = input.DATATYPE_DEFINITION_BOOLEANPointersEncoding
 	datatype_definition_booleanDB.CopyBasicFieldsFromDATATYPE_DEFINITION_BOOLEAN_WOP(&input.DATATYPE_DEFINITION_BOOLEAN_WOP)
 
-	query := db.Create(&datatype_definition_booleanDB)
-	if query.Error != nil {
+	_, err = db.Create(&datatype_definition_booleanDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetDATATYPE_DEFINITION_BOOLEAN(c *gin.Context) {
 
 	// Get datatype_definition_booleanDB in DB
 	var datatype_definition_booleanDB orm.DATATYPE_DEFINITION_BOOLEANDB
-	if err := db.First(&datatype_definition_booleanDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_booleanDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_BOOLEAN(c *gin.Context) 
 	var datatype_definition_booleanDB orm.DATATYPE_DEFINITION_BOOLEANDB
 
 	// fetch the datatype_definition_boolean
-	query := db.First(&datatype_definition_booleanDB, c.Param("id"))
+	_, err := db.First(&datatype_definition_booleanDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_BOOLEAN(c *gin.Context) 
 	datatype_definition_booleanDB.CopyBasicFieldsFromDATATYPE_DEFINITION_BOOLEAN_WOP(&input.DATATYPE_DEFINITION_BOOLEAN_WOP)
 	datatype_definition_booleanDB.DATATYPE_DEFINITION_BOOLEANPointersEncoding = input.DATATYPE_DEFINITION_BOOLEANPointersEncoding
 
-	query = db.Model(&datatype_definition_booleanDB).Updates(datatype_definition_booleanDB)
-	if query.Error != nil {
+	db, _ = db.Model(&datatype_definition_booleanDB)
+	_, err = db.Updates(&datatype_definition_booleanDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_BOOLEAN(c *gin.Context) 
 
 	// Get model if exist
 	var datatype_definition_booleanDB orm.DATATYPE_DEFINITION_BOOLEANDB
-	if err := db.First(&datatype_definition_booleanDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&datatype_definition_booleanDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteDATATYPE_DEFINITION_BOOLEAN(c *gin.Context) 
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&datatype_definition_booleanDB)
+	db.Unscoped()
+	db.Delete(&datatype_definition_booleanDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	datatype_definition_booleanDeleted := new(models.DATATYPE_DEFINITION_BOOLEAN)

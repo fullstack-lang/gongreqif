@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -87,7 +88,7 @@ type REQ_IFDB struct {
 
 	// Declation for basic field req_ifDB.Lang
 	Lang_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	REQ_IFPointersEncoding
@@ -133,7 +134,7 @@ type BackRepoREQ_IFStruct struct {
 	// stores REQ_IF according to their gorm ID
 	Map_REQ_IFDBID_REQ_IFPtr map[uint]*models.REQ_IF
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -143,7 +144,7 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) GetStage() (stage *models.StageStruc
 	return
 }
 
-func (backRepoREQ_IF *BackRepoREQ_IFStruct) GetDB() *gorm.DB {
+func (backRepoREQ_IF *BackRepoREQ_IFStruct) GetDB() db.DBInterface {
 	return backRepoREQ_IF.db
 }
 
@@ -180,9 +181,10 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) CommitDeleteInstance(id uint) (Error
 
 	// req_if is not staged anymore, remove req_ifDB
 	req_ifDB := backRepoREQ_IF.Map_REQ_IFDBID_REQ_IFDB[id]
-	query := backRepoREQ_IF.db.Unscoped().Delete(&req_ifDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoREQ_IF.db.Unscoped()
+	_, err := db.Delete(req_ifDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -206,9 +208,9 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) CommitPhaseOneInstance(req_if *model
 	var req_ifDB REQ_IFDB
 	req_ifDB.CopyBasicFieldsFromREQ_IF(req_if)
 
-	query := backRepoREQ_IF.db.Create(&req_ifDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoREQ_IF.db.Create(&req_ifDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -282,9 +284,9 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) CommitPhaseTwoInstance(backRepo *Bac
 				append(req_ifDB.REQ_IFPointersEncoding.TOOL_EXTENSIONS.REQ_IF_TOOL_EXTENSION, int(req_if_tool_extensionAssocEnd_DB.ID))
 		}
 
-		query := backRepoREQ_IF.db.Save(&req_ifDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoREQ_IF.db.Save(req_ifDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -303,9 +305,9 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) CommitPhaseTwoInstance(backRepo *Bac
 func (backRepoREQ_IF *BackRepoREQ_IFStruct) CheckoutPhaseOne() (Error error) {
 
 	req_ifDBArray := make([]REQ_IFDB, 0)
-	query := backRepoREQ_IF.db.Find(&req_ifDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoREQ_IF.db.Find(&req_ifDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -395,16 +397,44 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) CheckoutPhaseTwoInstance(backRepo *B
 func (req_ifDB *REQ_IFDB) DecodePointers(backRepo *BackRepoStruct, req_if *models.REQ_IF) {
 
 	// insertion point for checkout of pointer encoding
-	// THE_HEADER.REQ_IF_HEADER field
-	req_if.THE_HEADER.REQ_IF_HEADER = nil
-	if req_ifDB.REQ_IFPointersEncoding.THE_HEADER.REQ_IF_HEADERID.Int64 != 0 {
-		req_if.THE_HEADER.REQ_IF_HEADER = backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr[uint(req_ifDB.REQ_IFPointersEncoding.THE_HEADER.REQ_IF_HEADERID.Int64)]
+	// THE_HEADER.REQ_IF_HEADER field	
+	{
+		id := req_ifDB.REQ_IFPointersEncoding.THE_HEADER.REQ_IF_HEADERID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: req_if.THE_HEADER.REQ_IF_HEADER, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if req_if.THE_HEADER.REQ_IF_HEADER == nil || req_if.THE_HEADER.REQ_IF_HEADER != tmp {
+				req_if.THE_HEADER.REQ_IF_HEADER = tmp
+			}
+		} else {
+			req_if.THE_HEADER.REQ_IF_HEADER = nil
+		}
 	}
-	// CORE_CONTENT.REQ_IF_CONTENT field
-	req_if.CORE_CONTENT.REQ_IF_CONTENT = nil
-	if req_ifDB.REQ_IFPointersEncoding.CORE_CONTENT.REQ_IF_CONTENTID.Int64 != 0 {
-		req_if.CORE_CONTENT.REQ_IF_CONTENT = backRepo.BackRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTPtr[uint(req_ifDB.REQ_IFPointersEncoding.CORE_CONTENT.REQ_IF_CONTENTID.Int64)]
+	
+	// CORE_CONTENT.REQ_IF_CONTENT field	
+	{
+		id := req_ifDB.REQ_IFPointersEncoding.CORE_CONTENT.REQ_IF_CONTENTID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTPtr[uint(id)]
+
+			if !ok {
+				log.Fatalln("DecodePointers: req_if.CORE_CONTENT.REQ_IF_CONTENT, unknown pointer id", id)
+			}
+
+			// updates only if field has changed
+			if req_if.CORE_CONTENT.REQ_IF_CONTENT == nil || req_if.CORE_CONTENT.REQ_IF_CONTENT != tmp {
+				req_if.CORE_CONTENT.REQ_IF_CONTENT = tmp
+			}
+		} else {
+			req_if.CORE_CONTENT.REQ_IF_CONTENT = nil
+		}
 	}
+	
 	// This loop redeem req_if.TOOL_EXTENSIONS.REQ_IF_TOOL_EXTENSION in the stage from the encode in the back repo
 	// It parses all REQ_IF_TOOL_EXTENSIONDB in the back repo and if the reverse pointer encoding matches the back repo ID
 	// it appends the stage instance
@@ -435,7 +465,7 @@ func (backRepo *BackRepoStruct) CheckoutREQ_IF(req_if *models.REQ_IF) {
 			var req_ifDB REQ_IFDB
 			req_ifDB.ID = id
 
-			if err := backRepo.BackRepoREQ_IF.db.First(&req_ifDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoREQ_IF.db.First(&req_ifDB, id); err != nil {
 				log.Fatalln("CheckoutREQ_IF : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoREQ_IF.CheckoutPhaseOneInstance(&req_ifDB)
@@ -594,9 +624,9 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) rowVisitorREQ_IF(row *xlsx.Row) erro
 
 		req_ifDB_ID_atBackupTime := req_ifDB.ID
 		req_ifDB.ID = 0
-		query := backRepoREQ_IF.db.Create(req_ifDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF.db.Create(req_ifDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF.Map_REQ_IFDBID_REQ_IFDB[req_ifDB.ID] = req_ifDB
 		BackRepoREQ_IFid_atBckpTime_newID[req_ifDB_ID_atBackupTime] = req_ifDB.ID
@@ -631,9 +661,9 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) RestorePhaseOne(dirPath string) {
 
 		req_ifDB_ID_atBackupTime := req_ifDB.ID
 		req_ifDB.ID = 0
-		query := backRepoREQ_IF.db.Create(req_ifDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoREQ_IF.db.Create(req_ifDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoREQ_IF.Map_REQ_IFDBID_REQ_IFDB[req_ifDB.ID] = req_ifDB
 		BackRepoREQ_IFid_atBckpTime_newID[req_ifDB_ID_atBackupTime] = req_ifDB.ID
@@ -667,9 +697,10 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) RestorePhaseTwo() {
 		}
 
 		// update databse with new index encoding
-		query := backRepoREQ_IF.db.Model(req_ifDB).Updates(*req_ifDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoREQ_IF.db.Model(req_ifDB)
+		_, err := db.Updates(*req_ifDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

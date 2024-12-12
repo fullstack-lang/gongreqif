@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type XHTML_CONTENTDB struct {
 
 	// Declation for basic field xhtml_contentDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	XHTML_CONTENTPointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXHTML_CONTENTStruct struct {
 	// stores XHTML_CONTENT according to their gorm ID
 	Map_XHTML_CONTENTDBID_XHTML_CONTENTPtr map[uint]*models.XHTML_CONTENT
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) GetStage() (stage *mod
 	return
 }
 
-func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) GetDB() *gorm.DB {
+func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) GetDB() db.DBInterface {
 	return backRepoXHTML_CONTENT.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CommitDeleteInstance(i
 
 	// xhtml_content is not staged anymore, remove xhtml_contentDB
 	xhtml_contentDB := backRepoXHTML_CONTENT.Map_XHTML_CONTENTDBID_XHTML_CONTENTDB[id]
-	query := backRepoXHTML_CONTENT.db.Unscoped().Delete(&xhtml_contentDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXHTML_CONTENT.db.Unscoped()
+	_, err := db.Delete(xhtml_contentDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CommitPhaseOneInstance
 	var xhtml_contentDB XHTML_CONTENTDB
 	xhtml_contentDB.CopyBasicFieldsFromXHTML_CONTENT(xhtml_content)
 
-	query := backRepoXHTML_CONTENT.db.Create(&xhtml_contentDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXHTML_CONTENT.db.Create(&xhtml_contentDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CommitPhaseTwoInstance
 		xhtml_contentDB.CopyBasicFieldsFromXHTML_CONTENT(xhtml_content)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXHTML_CONTENT.db.Save(&xhtml_contentDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXHTML_CONTENT.db.Save(xhtml_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CommitPhaseTwoInstance
 func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_contentDBArray := make([]XHTML_CONTENTDB, 0)
-	query := backRepoXHTML_CONTENT.db.Find(&xhtml_contentDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXHTML_CONTENT.db.Find(&xhtml_contentDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXHTML_CONTENT(xhtml_content *models.XHTM
 			var xhtml_contentDB XHTML_CONTENTDB
 			xhtml_contentDB.ID = id
 
-			if err := backRepo.BackRepoXHTML_CONTENT.db.First(&xhtml_contentDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXHTML_CONTENT.db.First(&xhtml_contentDB, id); err != nil {
 				log.Fatalln("CheckoutXHTML_CONTENT : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXHTML_CONTENT.CheckoutPhaseOneInstance(&xhtml_contentDB)
@@ -492,9 +494,9 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) rowVisitorXHTML_CONTEN
 
 		xhtml_contentDB_ID_atBackupTime := xhtml_contentDB.ID
 		xhtml_contentDB.ID = 0
-		query := backRepoXHTML_CONTENT.db.Create(xhtml_contentDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXHTML_CONTENT.db.Create(xhtml_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXHTML_CONTENT.Map_XHTML_CONTENTDBID_XHTML_CONTENTDB[xhtml_contentDB.ID] = xhtml_contentDB
 		BackRepoXHTML_CONTENTid_atBckpTime_newID[xhtml_contentDB_ID_atBackupTime] = xhtml_contentDB.ID
@@ -529,9 +531,9 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) RestorePhaseOne(dirPat
 
 		xhtml_contentDB_ID_atBackupTime := xhtml_contentDB.ID
 		xhtml_contentDB.ID = 0
-		query := backRepoXHTML_CONTENT.db.Create(xhtml_contentDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXHTML_CONTENT.db.Create(xhtml_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXHTML_CONTENT.Map_XHTML_CONTENTDBID_XHTML_CONTENTDB[xhtml_contentDB.ID] = xhtml_contentDB
 		BackRepoXHTML_CONTENTid_atBckpTime_newID[xhtml_contentDB_ID_atBackupTime] = xhtml_contentDB.ID
@@ -553,9 +555,10 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXHTML_CONTENT.db.Model(xhtml_contentDB).Updates(*xhtml_contentDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXHTML_CONTENT.db.Model(xhtml_contentDB)
+		_, err := db.Updates(*xhtml_contentDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

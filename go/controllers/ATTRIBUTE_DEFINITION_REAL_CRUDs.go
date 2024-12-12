@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_REALs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_DEFINITION_REAL.GetDB()
 
-	query := db.Find(&attribute_definition_realDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_definition_realDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_DEFINITION_REAL(c *gin.Context) {
 	attribute_definition_realDB.ATTRIBUTE_DEFINITION_REALPointersEncoding = input.ATTRIBUTE_DEFINITION_REALPointersEncoding
 	attribute_definition_realDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_REAL_WOP(&input.ATTRIBUTE_DEFINITION_REAL_WOP)
 
-	query := db.Create(&attribute_definition_realDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_definition_realDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_REAL(c *gin.Context) {
 
 	// Get attribute_definition_realDB in DB
 	var attribute_definition_realDB orm.ATTRIBUTE_DEFINITION_REALDB
-	if err := db.First(&attribute_definition_realDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_realDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_REAL(c *gin.Context) {
 	var attribute_definition_realDB orm.ATTRIBUTE_DEFINITION_REALDB
 
 	// fetch the attribute_definition_real
-	query := db.First(&attribute_definition_realDB, c.Param("id"))
+	_, err := db.First(&attribute_definition_realDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_REAL(c *gin.Context) {
 	attribute_definition_realDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_REAL_WOP(&input.ATTRIBUTE_DEFINITION_REAL_WOP)
 	attribute_definition_realDB.ATTRIBUTE_DEFINITION_REALPointersEncoding = input.ATTRIBUTE_DEFINITION_REALPointersEncoding
 
-	query = db.Model(&attribute_definition_realDB).Updates(attribute_definition_realDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_definition_realDB)
+	_, err = db.Updates(&attribute_definition_realDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_REAL(c *gin.Context) {
 
 	// Get model if exist
 	var attribute_definition_realDB orm.ATTRIBUTE_DEFINITION_REALDB
-	if err := db.First(&attribute_definition_realDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_realDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_REAL(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_definition_realDB)
+	db.Unscoped()
+	db.Delete(&attribute_definition_realDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_definition_realDeleted := new(models.ATTRIBUTE_DEFINITION_REAL)

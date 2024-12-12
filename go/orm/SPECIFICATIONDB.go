@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -109,7 +110,7 @@ type SPECIFICATIONDB struct {
 
 	// Declation for basic field specificationDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	SPECIFICATIONPointersEncoding
@@ -161,7 +162,7 @@ type BackRepoSPECIFICATIONStruct struct {
 	// stores SPECIFICATION according to their gorm ID
 	Map_SPECIFICATIONDBID_SPECIFICATIONPtr map[uint]*models.SPECIFICATION
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -171,7 +172,7 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) GetStage() (stage *mod
 	return
 }
 
-func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) GetDB() *gorm.DB {
+func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) GetDB() db.DBInterface {
 	return backRepoSPECIFICATION.db
 }
 
@@ -208,9 +209,10 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitDeleteInstance(i
 
 	// specification is not staged anymore, remove specificationDB
 	specificationDB := backRepoSPECIFICATION.Map_SPECIFICATIONDBID_SPECIFICATIONDB[id]
-	query := backRepoSPECIFICATION.db.Unscoped().Delete(&specificationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoSPECIFICATION.db.Unscoped()
+	_, err := db.Delete(specificationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -234,9 +236,9 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseOneInstance
 	var specificationDB SPECIFICATIONDB
 	specificationDB.CopyBasicFieldsFromSPECIFICATION(specification)
 
-	query := backRepoSPECIFICATION.db.Create(&specificationDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoSPECIFICATION.db.Create(&specificationDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -430,9 +432,9 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 				append(specificationDB.SPECIFICATIONPointersEncoding.CHILDREN.SPEC_HIERARCHY, int(spec_hierarchyAssocEnd_DB.ID))
 		}
 
-		query := backRepoSPECIFICATION.db.Save(&specificationDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoSPECIFICATION.db.Save(specificationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -451,9 +453,9 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CheckoutPhaseOne() (Error error) {
 
 	specificationDBArray := make([]SPECIFICATIONDB, 0)
-	query := backRepoSPECIFICATION.db.Find(&specificationDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoSPECIFICATION.db.Find(&specificationDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -645,7 +647,7 @@ func (backRepo *BackRepoStruct) CheckoutSPECIFICATION(specification *models.SPEC
 			var specificationDB SPECIFICATIONDB
 			specificationDB.ID = id
 
-			if err := backRepo.BackRepoSPECIFICATION.db.First(&specificationDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoSPECIFICATION.db.First(&specificationDB, id); err != nil {
 				log.Fatalln("CheckoutSPECIFICATION : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoSPECIFICATION.CheckoutPhaseOneInstance(&specificationDB)
@@ -828,9 +830,9 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) rowVisitorSPECIFICATIO
 
 		specificationDB_ID_atBackupTime := specificationDB.ID
 		specificationDB.ID = 0
-		query := backRepoSPECIFICATION.db.Create(specificationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoSPECIFICATION.db.Create(specificationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoSPECIFICATION.Map_SPECIFICATIONDBID_SPECIFICATIONDB[specificationDB.ID] = specificationDB
 		BackRepoSPECIFICATIONid_atBckpTime_newID[specificationDB_ID_atBackupTime] = specificationDB.ID
@@ -865,9 +867,9 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseOne(dirPat
 
 		specificationDB_ID_atBackupTime := specificationDB.ID
 		specificationDB.ID = 0
-		query := backRepoSPECIFICATION.db.Create(specificationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoSPECIFICATION.db.Create(specificationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoSPECIFICATION.Map_SPECIFICATIONDBID_SPECIFICATIONDB[specificationDB.ID] = specificationDB
 		BackRepoSPECIFICATIONid_atBckpTime_newID[specificationDB_ID_atBackupTime] = specificationDB.ID
@@ -889,9 +891,10 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseTwo() {
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoSPECIFICATION.db.Model(specificationDB).Updates(*specificationDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoSPECIFICATION.db.Model(specificationDB)
+		_, err := db.Updates(*specificationDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

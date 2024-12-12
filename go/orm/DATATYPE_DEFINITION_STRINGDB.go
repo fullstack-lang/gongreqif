@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -77,7 +78,7 @@ type DATATYPE_DEFINITION_STRINGDB struct {
 
 	// Declation for basic field datatype_definition_stringDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	DATATYPE_DEFINITION_STRINGPointersEncoding
@@ -129,7 +130,7 @@ type BackRepoDATATYPE_DEFINITION_STRINGStruct struct {
 	// stores DATATYPE_DEFINITION_STRING according to their gorm ID
 	Map_DATATYPE_DEFINITION_STRINGDBID_DATATYPE_DEFINITION_STRINGPtr map[uint]*models.DATATYPE_DEFINITION_STRING
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -139,7 +140,7 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 	return
 }
 
-func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStruct) GetDB() *gorm.DB {
+func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStruct) GetDB() db.DBInterface {
 	return backRepoDATATYPE_DEFINITION_STRING.db
 }
 
@@ -176,9 +177,10 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 
 	// datatype_definition_string is not staged anymore, remove datatype_definition_stringDB
 	datatype_definition_stringDB := backRepoDATATYPE_DEFINITION_STRING.Map_DATATYPE_DEFINITION_STRINGDBID_DATATYPE_DEFINITION_STRINGDB[id]
-	query := backRepoDATATYPE_DEFINITION_STRING.db.Unscoped().Delete(&datatype_definition_stringDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoDATATYPE_DEFINITION_STRING.db.Unscoped()
+	_, err := db.Delete(datatype_definition_stringDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -202,9 +204,9 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 	var datatype_definition_stringDB DATATYPE_DEFINITION_STRINGDB
 	datatype_definition_stringDB.CopyBasicFieldsFromDATATYPE_DEFINITION_STRING(datatype_definition_string)
 
-	query := backRepoDATATYPE_DEFINITION_STRING.db.Create(&datatype_definition_stringDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoDATATYPE_DEFINITION_STRING.db.Create(&datatype_definition_stringDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -254,9 +256,9 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 				append(datatype_definition_stringDB.DATATYPE_DEFINITION_STRINGPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
 		}
 
-		query := backRepoDATATYPE_DEFINITION_STRING.db.Save(&datatype_definition_stringDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_STRING.db.Save(datatype_definition_stringDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -275,9 +277,9 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStruct) CheckoutPhaseOne() (Error error) {
 
 	datatype_definition_stringDBArray := make([]DATATYPE_DEFINITION_STRINGDB, 0)
-	query := backRepoDATATYPE_DEFINITION_STRING.db.Find(&datatype_definition_stringDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoDATATYPE_DEFINITION_STRING.db.Find(&datatype_definition_stringDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -397,7 +399,7 @@ func (backRepo *BackRepoStruct) CheckoutDATATYPE_DEFINITION_STRING(datatype_defi
 			var datatype_definition_stringDB DATATYPE_DEFINITION_STRINGDB
 			datatype_definition_stringDB.ID = id
 
-			if err := backRepo.BackRepoDATATYPE_DEFINITION_STRING.db.First(&datatype_definition_stringDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoDATATYPE_DEFINITION_STRING.db.First(&datatype_definition_stringDB, id); err != nil {
 				log.Fatalln("CheckoutDATATYPE_DEFINITION_STRING : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoDATATYPE_DEFINITION_STRING.CheckoutPhaseOneInstance(&datatype_definition_stringDB)
@@ -580,9 +582,9 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 
 		datatype_definition_stringDB_ID_atBackupTime := datatype_definition_stringDB.ID
 		datatype_definition_stringDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_STRING.db.Create(datatype_definition_stringDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_STRING.db.Create(datatype_definition_stringDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_STRING.Map_DATATYPE_DEFINITION_STRINGDBID_DATATYPE_DEFINITION_STRINGDB[datatype_definition_stringDB.ID] = datatype_definition_stringDB
 		BackRepoDATATYPE_DEFINITION_STRINGid_atBckpTime_newID[datatype_definition_stringDB_ID_atBackupTime] = datatype_definition_stringDB.ID
@@ -617,9 +619,9 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 
 		datatype_definition_stringDB_ID_atBackupTime := datatype_definition_stringDB.ID
 		datatype_definition_stringDB.ID = 0
-		query := backRepoDATATYPE_DEFINITION_STRING.db.Create(datatype_definition_stringDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoDATATYPE_DEFINITION_STRING.db.Create(datatype_definition_stringDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoDATATYPE_DEFINITION_STRING.Map_DATATYPE_DEFINITION_STRINGDBID_DATATYPE_DEFINITION_STRINGDB[datatype_definition_stringDB.ID] = datatype_definition_stringDB
 		BackRepoDATATYPE_DEFINITION_STRINGid_atBckpTime_newID[datatype_definition_stringDB_ID_atBackupTime] = datatype_definition_stringDB.ID
@@ -641,9 +643,10 @@ func (backRepoDATATYPE_DEFINITION_STRING *BackRepoDATATYPE_DEFINITION_STRINGStru
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoDATATYPE_DEFINITION_STRING.db.Model(datatype_definition_stringDB).Updates(*datatype_definition_stringDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoDATATYPE_DEFINITION_STRING.db.Model(datatype_definition_stringDB)
+		_, err := db.Updates(*datatype_definition_stringDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

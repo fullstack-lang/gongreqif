@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -65,7 +66,7 @@ type ATTRIBUTE_VALUE_BOOLEANDB struct {
 	// Declation for basic field attribute_value_booleanDB.THE_VALUE
 	// provide the sql storage for the boolan
 	THE_VALUE_Data sql.NullBool
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	ATTRIBUTE_VALUE_BOOLEANPointersEncoding
@@ -111,7 +112,7 @@ type BackRepoATTRIBUTE_VALUE_BOOLEANStruct struct {
 	// stores ATTRIBUTE_VALUE_BOOLEAN according to their gorm ID
 	Map_ATTRIBUTE_VALUE_BOOLEANDBID_ATTRIBUTE_VALUE_BOOLEANPtr map[uint]*models.ATTRIBUTE_VALUE_BOOLEAN
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -121,7 +122,7 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Ge
 	return
 }
 
-func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) GetDB() *gorm.DB {
+func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) GetDB() db.DBInterface {
 	return backRepoATTRIBUTE_VALUE_BOOLEAN.db
 }
 
@@ -158,9 +159,10 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Co
 
 	// attribute_value_boolean is not staged anymore, remove attribute_value_booleanDB
 	attribute_value_booleanDB := backRepoATTRIBUTE_VALUE_BOOLEAN.Map_ATTRIBUTE_VALUE_BOOLEANDBID_ATTRIBUTE_VALUE_BOOLEANDB[id]
-	query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Unscoped().Delete(&attribute_value_booleanDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Unscoped()
+	_, err := db.Delete(attribute_value_booleanDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -184,9 +186,9 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Co
 	var attribute_value_booleanDB ATTRIBUTE_VALUE_BOOLEANDB
 	attribute_value_booleanDB.CopyBasicFieldsFromATTRIBUTE_VALUE_BOOLEAN(attribute_value_boolean)
 
-	query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Create(&attribute_value_booleanDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Create(&attribute_value_booleanDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -218,9 +220,9 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Co
 		attribute_value_booleanDB.CopyBasicFieldsFromATTRIBUTE_VALUE_BOOLEAN(attribute_value_boolean)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Save(&attribute_value_booleanDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Save(attribute_value_booleanDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -239,9 +241,9 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Co
 func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) CheckoutPhaseOne() (Error error) {
 
 	attribute_value_booleanDBArray := make([]ATTRIBUTE_VALUE_BOOLEANDB, 0)
-	query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Find(&attribute_value_booleanDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Find(&attribute_value_booleanDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -352,7 +354,7 @@ func (backRepo *BackRepoStruct) CheckoutATTRIBUTE_VALUE_BOOLEAN(attribute_value_
 			var attribute_value_booleanDB ATTRIBUTE_VALUE_BOOLEANDB
 			attribute_value_booleanDB.ID = id
 
-			if err := backRepo.BackRepoATTRIBUTE_VALUE_BOOLEAN.db.First(&attribute_value_booleanDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoATTRIBUTE_VALUE_BOOLEAN.db.First(&attribute_value_booleanDB, id); err != nil {
 				log.Fatalln("CheckoutATTRIBUTE_VALUE_BOOLEAN : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoATTRIBUTE_VALUE_BOOLEAN.CheckoutPhaseOneInstance(&attribute_value_booleanDB)
@@ -511,9 +513,9 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) ro
 
 		attribute_value_booleanDB_ID_atBackupTime := attribute_value_booleanDB.ID
 		attribute_value_booleanDB.ID = 0
-		query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Create(attribute_value_booleanDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Create(attribute_value_booleanDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_VALUE_BOOLEAN.Map_ATTRIBUTE_VALUE_BOOLEANDBID_ATTRIBUTE_VALUE_BOOLEANDB[attribute_value_booleanDB.ID] = attribute_value_booleanDB
 		BackRepoATTRIBUTE_VALUE_BOOLEANid_atBckpTime_newID[attribute_value_booleanDB_ID_atBackupTime] = attribute_value_booleanDB.ID
@@ -548,9 +550,9 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Re
 
 		attribute_value_booleanDB_ID_atBackupTime := attribute_value_booleanDB.ID
 		attribute_value_booleanDB.ID = 0
-		query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Create(attribute_value_booleanDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Create(attribute_value_booleanDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoATTRIBUTE_VALUE_BOOLEAN.Map_ATTRIBUTE_VALUE_BOOLEANDBID_ATTRIBUTE_VALUE_BOOLEANDB[attribute_value_booleanDB.ID] = attribute_value_booleanDB
 		BackRepoATTRIBUTE_VALUE_BOOLEANid_atBckpTime_newID[attribute_value_booleanDB_ID_atBackupTime] = attribute_value_booleanDB.ID
@@ -572,9 +574,10 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Re
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Model(attribute_value_booleanDB).Updates(*attribute_value_booleanDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Model(attribute_value_booleanDB)
+		_, err := db.Updates(*attribute_value_booleanDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

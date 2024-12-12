@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_caption_typeDB struct {
 
 	// Declation for basic field xhtml_caption_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_caption_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_caption_typeStruct struct {
 	// stores Xhtml_caption_type according to their gorm ID
 	Map_Xhtml_caption_typeDBID_Xhtml_caption_typePtr map[uint]*models.Xhtml_caption_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) GetStage() (
 	return
 }
 
-func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_caption_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CommitDelete
 
 	// xhtml_caption_type is not staged anymore, remove xhtml_caption_typeDB
 	xhtml_caption_typeDB := backRepoXhtml_caption_type.Map_Xhtml_caption_typeDBID_Xhtml_caption_typeDB[id]
-	query := backRepoXhtml_caption_type.db.Unscoped().Delete(&xhtml_caption_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_caption_type.db.Unscoped()
+	_, err := db.Delete(xhtml_caption_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CommitPhaseO
 	var xhtml_caption_typeDB Xhtml_caption_typeDB
 	xhtml_caption_typeDB.CopyBasicFieldsFromXhtml_caption_type(xhtml_caption_type)
 
-	query := backRepoXhtml_caption_type.db.Create(&xhtml_caption_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_caption_type.db.Create(&xhtml_caption_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CommitPhaseT
 		xhtml_caption_typeDB.CopyBasicFieldsFromXhtml_caption_type(xhtml_caption_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_caption_type.db.Save(&xhtml_caption_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_caption_type.db.Save(xhtml_caption_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CommitPhaseT
 func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_caption_typeDBArray := make([]Xhtml_caption_typeDB, 0)
-	query := backRepoXhtml_caption_type.db.Find(&xhtml_caption_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_caption_type.db.Find(&xhtml_caption_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_caption_type(xhtml_caption_type *m
 			var xhtml_caption_typeDB Xhtml_caption_typeDB
 			xhtml_caption_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_caption_type.db.First(&xhtml_caption_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_caption_type.db.First(&xhtml_caption_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_caption_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_caption_type.CheckoutPhaseOneInstance(&xhtml_caption_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) rowVisitorXh
 
 		xhtml_caption_typeDB_ID_atBackupTime := xhtml_caption_typeDB.ID
 		xhtml_caption_typeDB.ID = 0
-		query := backRepoXhtml_caption_type.db.Create(xhtml_caption_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_caption_type.db.Create(xhtml_caption_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_caption_type.Map_Xhtml_caption_typeDBID_Xhtml_caption_typeDB[xhtml_caption_typeDB.ID] = xhtml_caption_typeDB
 		BackRepoXhtml_caption_typeid_atBckpTime_newID[xhtml_caption_typeDB_ID_atBackupTime] = xhtml_caption_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) RestorePhase
 
 		xhtml_caption_typeDB_ID_atBackupTime := xhtml_caption_typeDB.ID
 		xhtml_caption_typeDB.ID = 0
-		query := backRepoXhtml_caption_type.db.Create(xhtml_caption_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_caption_type.db.Create(xhtml_caption_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_caption_type.Map_Xhtml_caption_typeDBID_Xhtml_caption_typeDB[xhtml_caption_typeDB.ID] = xhtml_caption_typeDB
 		BackRepoXhtml_caption_typeid_atBckpTime_newID[xhtml_caption_typeDB_ID_atBackupTime] = xhtml_caption_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) RestorePhase
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_caption_type.db.Model(xhtml_caption_typeDB).Updates(*xhtml_caption_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_caption_type.db.Model(xhtml_caption_typeDB)
+		_, err := db.Updates(*xhtml_caption_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

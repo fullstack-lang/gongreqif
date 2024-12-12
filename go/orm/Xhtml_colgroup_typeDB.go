@@ -17,6 +17,7 @@ import (
 
 	"github.com/tealeg/xlsx/v3"
 
+	"github.com/fullstack-lang/gongreqif/go/db"
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -61,7 +62,7 @@ type Xhtml_colgroup_typeDB struct {
 
 	// Declation for basic field xhtml_colgroup_typeDB.Name
 	Name_Data sql.NullString
-	
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	Xhtml_colgroup_typePointersEncoding
@@ -104,7 +105,7 @@ type BackRepoXhtml_colgroup_typeStruct struct {
 	// stores Xhtml_colgroup_type according to their gorm ID
 	Map_Xhtml_colgroup_typeDBID_Xhtml_colgroup_typePtr map[uint]*models.Xhtml_colgroup_type
 
-	db *gorm.DB
+	db db.DBInterface
 
 	stage *models.StageStruct
 }
@@ -114,7 +115,7 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) GetStage()
 	return
 }
 
-func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) GetDB() *gorm.DB {
+func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) GetDB() db.DBInterface {
 	return backRepoXhtml_colgroup_type.db
 }
 
@@ -151,9 +152,10 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CommitDele
 
 	// xhtml_colgroup_type is not staged anymore, remove xhtml_colgroup_typeDB
 	xhtml_colgroup_typeDB := backRepoXhtml_colgroup_type.Map_Xhtml_colgroup_typeDBID_Xhtml_colgroup_typeDB[id]
-	query := backRepoXhtml_colgroup_type.db.Unscoped().Delete(&xhtml_colgroup_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	db, _ := backRepoXhtml_colgroup_type.db.Unscoped()
+	_, err := db.Delete(xhtml_colgroup_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -177,9 +179,9 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CommitPhas
 	var xhtml_colgroup_typeDB Xhtml_colgroup_typeDB
 	xhtml_colgroup_typeDB.CopyBasicFieldsFromXhtml_colgroup_type(xhtml_colgroup_type)
 
-	query := backRepoXhtml_colgroup_type.db.Create(&xhtml_colgroup_typeDB)
-	if query.Error != nil {
-		log.Fatal(query.Error)
+	_, err := backRepoXhtml_colgroup_type.db.Create(&xhtml_colgroup_typeDB)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// update stores
@@ -211,9 +213,9 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CommitPhas
 		xhtml_colgroup_typeDB.CopyBasicFieldsFromXhtml_colgroup_type(xhtml_colgroup_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		query := backRepoXhtml_colgroup_type.db.Save(&xhtml_colgroup_typeDB)
-		if query.Error != nil {
-			log.Fatalln(query.Error)
+		_, err := backRepoXhtml_colgroup_type.db.Save(xhtml_colgroup_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	} else {
@@ -232,9 +234,9 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CommitPhas
 func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CheckoutPhaseOne() (Error error) {
 
 	xhtml_colgroup_typeDBArray := make([]Xhtml_colgroup_typeDB, 0)
-	query := backRepoXhtml_colgroup_type.db.Find(&xhtml_colgroup_typeDBArray)
-	if query.Error != nil {
-		return query.Error
+	_, err := backRepoXhtml_colgroup_type.db.Find(&xhtml_colgroup_typeDBArray)
+	if err != nil {
+		return err
 	}
 
 	// list of instances to be removed
@@ -345,7 +347,7 @@ func (backRepo *BackRepoStruct) CheckoutXhtml_colgroup_type(xhtml_colgroup_type 
 			var xhtml_colgroup_typeDB Xhtml_colgroup_typeDB
 			xhtml_colgroup_typeDB.ID = id
 
-			if err := backRepo.BackRepoXhtml_colgroup_type.db.First(&xhtml_colgroup_typeDB, id).Error; err != nil {
+			if _, err := backRepo.BackRepoXhtml_colgroup_type.db.First(&xhtml_colgroup_typeDB, id); err != nil {
 				log.Fatalln("CheckoutXhtml_colgroup_type : Problem with getting object with id:", id)
 			}
 			backRepo.BackRepoXhtml_colgroup_type.CheckoutPhaseOneInstance(&xhtml_colgroup_typeDB)
@@ -492,9 +494,9 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) rowVisitor
 
 		xhtml_colgroup_typeDB_ID_atBackupTime := xhtml_colgroup_typeDB.ID
 		xhtml_colgroup_typeDB.ID = 0
-		query := backRepoXhtml_colgroup_type.db.Create(xhtml_colgroup_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_colgroup_type.db.Create(xhtml_colgroup_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_colgroup_type.Map_Xhtml_colgroup_typeDBID_Xhtml_colgroup_typeDB[xhtml_colgroup_typeDB.ID] = xhtml_colgroup_typeDB
 		BackRepoXhtml_colgroup_typeid_atBckpTime_newID[xhtml_colgroup_typeDB_ID_atBackupTime] = xhtml_colgroup_typeDB.ID
@@ -529,9 +531,9 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) RestorePha
 
 		xhtml_colgroup_typeDB_ID_atBackupTime := xhtml_colgroup_typeDB.ID
 		xhtml_colgroup_typeDB.ID = 0
-		query := backRepoXhtml_colgroup_type.db.Create(xhtml_colgroup_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		_, err := backRepoXhtml_colgroup_type.db.Create(xhtml_colgroup_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 		backRepoXhtml_colgroup_type.Map_Xhtml_colgroup_typeDBID_Xhtml_colgroup_typeDB[xhtml_colgroup_typeDB.ID] = xhtml_colgroup_typeDB
 		BackRepoXhtml_colgroup_typeid_atBckpTime_newID[xhtml_colgroup_typeDB_ID_atBackupTime] = xhtml_colgroup_typeDB.ID
@@ -553,9 +555,10 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) RestorePha
 
 		// insertion point for reindexing pointers encoding
 		// update databse with new index encoding
-		query := backRepoXhtml_colgroup_type.db.Model(xhtml_colgroup_typeDB).Updates(*xhtml_colgroup_typeDB)
-		if query.Error != nil {
-			log.Fatal(query.Error)
+		db, _ := backRepoXhtml_colgroup_type.db.Model(xhtml_colgroup_typeDB)
+		_, err := db.Updates(*xhtml_colgroup_typeDB)
+		if err != nil {
+			log.Fatal(err)
 		}
 	}
 

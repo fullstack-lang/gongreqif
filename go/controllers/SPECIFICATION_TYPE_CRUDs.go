@@ -70,12 +70,12 @@ func (controller *Controller) GetSPECIFICATION_TYPEs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoSPECIFICATION_TYPE.GetDB()
 
-	query := db.Find(&specification_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&specification_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostSPECIFICATION_TYPE(c *gin.Context) {
 	specification_typeDB.SPECIFICATION_TYPEPointersEncoding = input.SPECIFICATION_TYPEPointersEncoding
 	specification_typeDB.CopyBasicFieldsFromSPECIFICATION_TYPE_WOP(&input.SPECIFICATION_TYPE_WOP)
 
-	query := db.Create(&specification_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&specification_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetSPECIFICATION_TYPE(c *gin.Context) {
 
 	// Get specification_typeDB in DB
 	var specification_typeDB orm.SPECIFICATION_TYPEDB
-	if err := db.First(&specification_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&specification_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateSPECIFICATION_TYPE(c *gin.Context) {
 	var specification_typeDB orm.SPECIFICATION_TYPEDB
 
 	// fetch the specification_type
-	query := db.First(&specification_typeDB, c.Param("id"))
+	_, err := db.First(&specification_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateSPECIFICATION_TYPE(c *gin.Context) {
 	specification_typeDB.CopyBasicFieldsFromSPECIFICATION_TYPE_WOP(&input.SPECIFICATION_TYPE_WOP)
 	specification_typeDB.SPECIFICATION_TYPEPointersEncoding = input.SPECIFICATION_TYPEPointersEncoding
 
-	query = db.Model(&specification_typeDB).Updates(specification_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&specification_typeDB)
+	_, err = db.Updates(&specification_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteSPECIFICATION_TYPE(c *gin.Context) {
 
 	// Get model if exist
 	var specification_typeDB orm.SPECIFICATION_TYPEDB
-	if err := db.First(&specification_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&specification_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteSPECIFICATION_TYPE(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&specification_typeDB)
+	db.Unscoped()
+	db.Delete(&specification_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	specification_typeDeleted := new(models.SPECIFICATION_TYPE)

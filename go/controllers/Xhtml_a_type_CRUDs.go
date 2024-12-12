@@ -70,12 +70,12 @@ func (controller *Controller) GetXhtml_a_types(c *gin.Context) {
 	}
 	db := backRepo.BackRepoXhtml_a_type.GetDB()
 
-	query := db.Find(&xhtml_a_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&xhtml_a_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostXhtml_a_type(c *gin.Context) {
 	xhtml_a_typeDB.Xhtml_a_typePointersEncoding = input.Xhtml_a_typePointersEncoding
 	xhtml_a_typeDB.CopyBasicFieldsFromXhtml_a_type_WOP(&input.Xhtml_a_type_WOP)
 
-	query := db.Create(&xhtml_a_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&xhtml_a_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetXhtml_a_type(c *gin.Context) {
 
 	// Get xhtml_a_typeDB in DB
 	var xhtml_a_typeDB orm.Xhtml_a_typeDB
-	if err := db.First(&xhtml_a_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_a_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateXhtml_a_type(c *gin.Context) {
 	var xhtml_a_typeDB orm.Xhtml_a_typeDB
 
 	// fetch the xhtml_a_type
-	query := db.First(&xhtml_a_typeDB, c.Param("id"))
+	_, err := db.First(&xhtml_a_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateXhtml_a_type(c *gin.Context) {
 	xhtml_a_typeDB.CopyBasicFieldsFromXhtml_a_type_WOP(&input.Xhtml_a_type_WOP)
 	xhtml_a_typeDB.Xhtml_a_typePointersEncoding = input.Xhtml_a_typePointersEncoding
 
-	query = db.Model(&xhtml_a_typeDB).Updates(xhtml_a_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&xhtml_a_typeDB)
+	_, err = db.Updates(&xhtml_a_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteXhtml_a_type(c *gin.Context) {
 
 	// Get model if exist
 	var xhtml_a_typeDB orm.Xhtml_a_typeDB
-	if err := db.First(&xhtml_a_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_a_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteXhtml_a_type(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&xhtml_a_typeDB)
+	db.Unscoped()
+	db.Delete(&xhtml_a_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	xhtml_a_typeDeleted := new(models.Xhtml_a_type)

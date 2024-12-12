@@ -70,12 +70,12 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_XHTMLs(c *gin.Context) {
 	}
 	db := backRepo.BackRepoATTRIBUTE_DEFINITION_XHTML.GetDB()
 
-	query := db.Find(&attribute_definition_xhtmlDBs)
-	if query.Error != nil {
+	_, err := db.Find(&attribute_definition_xhtmlDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostATTRIBUTE_DEFINITION_XHTML(c *gin.Context) {
 	attribute_definition_xhtmlDB.ATTRIBUTE_DEFINITION_XHTMLPointersEncoding = input.ATTRIBUTE_DEFINITION_XHTMLPointersEncoding
 	attribute_definition_xhtmlDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_XHTML_WOP(&input.ATTRIBUTE_DEFINITION_XHTML_WOP)
 
-	query := db.Create(&attribute_definition_xhtmlDB)
-	if query.Error != nil {
+	_, err = db.Create(&attribute_definition_xhtmlDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetATTRIBUTE_DEFINITION_XHTML(c *gin.Context) {
 
 	// Get attribute_definition_xhtmlDB in DB
 	var attribute_definition_xhtmlDB orm.ATTRIBUTE_DEFINITION_XHTMLDB
-	if err := db.First(&attribute_definition_xhtmlDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_xhtmlDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_XHTML(c *gin.Context) {
 	var attribute_definition_xhtmlDB orm.ATTRIBUTE_DEFINITION_XHTMLDB
 
 	// fetch the attribute_definition_xhtml
-	query := db.First(&attribute_definition_xhtmlDB, c.Param("id"))
+	_, err := db.First(&attribute_definition_xhtmlDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateATTRIBUTE_DEFINITION_XHTML(c *gin.Context) {
 	attribute_definition_xhtmlDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_XHTML_WOP(&input.ATTRIBUTE_DEFINITION_XHTML_WOP)
 	attribute_definition_xhtmlDB.ATTRIBUTE_DEFINITION_XHTMLPointersEncoding = input.ATTRIBUTE_DEFINITION_XHTMLPointersEncoding
 
-	query = db.Model(&attribute_definition_xhtmlDB).Updates(attribute_definition_xhtmlDB)
-	if query.Error != nil {
+	db, _ = db.Model(&attribute_definition_xhtmlDB)
+	_, err = db.Updates(&attribute_definition_xhtmlDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_XHTML(c *gin.Context) {
 
 	// Get model if exist
 	var attribute_definition_xhtmlDB orm.ATTRIBUTE_DEFINITION_XHTMLDB
-	if err := db.First(&attribute_definition_xhtmlDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&attribute_definition_xhtmlDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteATTRIBUTE_DEFINITION_XHTML(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&attribute_definition_xhtmlDB)
+	db.Unscoped()
+	db.Delete(&attribute_definition_xhtmlDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	attribute_definition_xhtmlDeleted := new(models.ATTRIBUTE_DEFINITION_XHTML)

@@ -70,12 +70,12 @@ func (controller *Controller) GetXhtml_heading_types(c *gin.Context) {
 	}
 	db := backRepo.BackRepoXhtml_heading_type.GetDB()
 
-	query := db.Find(&xhtml_heading_typeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&xhtml_heading_typeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostXhtml_heading_type(c *gin.Context) {
 	xhtml_heading_typeDB.Xhtml_heading_typePointersEncoding = input.Xhtml_heading_typePointersEncoding
 	xhtml_heading_typeDB.CopyBasicFieldsFromXhtml_heading_type_WOP(&input.Xhtml_heading_type_WOP)
 
-	query := db.Create(&xhtml_heading_typeDB)
-	if query.Error != nil {
+	_, err = db.Create(&xhtml_heading_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetXhtml_heading_type(c *gin.Context) {
 
 	// Get xhtml_heading_typeDB in DB
 	var xhtml_heading_typeDB orm.Xhtml_heading_typeDB
-	if err := db.First(&xhtml_heading_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_heading_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateXhtml_heading_type(c *gin.Context) {
 	var xhtml_heading_typeDB orm.Xhtml_heading_typeDB
 
 	// fetch the xhtml_heading_type
-	query := db.First(&xhtml_heading_typeDB, c.Param("id"))
+	_, err := db.First(&xhtml_heading_typeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateXhtml_heading_type(c *gin.Context) {
 	xhtml_heading_typeDB.CopyBasicFieldsFromXhtml_heading_type_WOP(&input.Xhtml_heading_type_WOP)
 	xhtml_heading_typeDB.Xhtml_heading_typePointersEncoding = input.Xhtml_heading_typePointersEncoding
 
-	query = db.Model(&xhtml_heading_typeDB).Updates(xhtml_heading_typeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&xhtml_heading_typeDB)
+	_, err = db.Updates(&xhtml_heading_typeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteXhtml_heading_type(c *gin.Context) {
 
 	// Get model if exist
 	var xhtml_heading_typeDB orm.Xhtml_heading_typeDB
-	if err := db.First(&xhtml_heading_typeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&xhtml_heading_typeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteXhtml_heading_type(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&xhtml_heading_typeDB)
+	db.Unscoped()
+	db.Delete(&xhtml_heading_typeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	xhtml_heading_typeDeleted := new(models.Xhtml_heading_type)

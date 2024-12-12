@@ -70,12 +70,12 @@ func (controller *Controller) GetAnyTypes(c *gin.Context) {
 	}
 	db := backRepo.BackRepoAnyType.GetDB()
 
-	query := db.Find(&anytypeDBs)
-	if query.Error != nil {
+	_, err := db.Find(&anytypeDBs)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -151,12 +151,12 @@ func (controller *Controller) PostAnyType(c *gin.Context) {
 	anytypeDB.AnyTypePointersEncoding = input.AnyTypePointersEncoding
 	anytypeDB.CopyBasicFieldsFromAnyType_WOP(&input.AnyType_WOP)
 
-	query := db.Create(&anytypeDB)
-	if query.Error != nil {
+	_, err = db.Create(&anytypeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -205,7 +205,7 @@ func (controller *Controller) GetAnyType(c *gin.Context) {
 
 	// Get anytypeDB in DB
 	var anytypeDB orm.AnyTypeDB
-	if err := db.First(&anytypeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&anytypeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -264,13 +264,13 @@ func (controller *Controller) UpdateAnyType(c *gin.Context) {
 	var anytypeDB orm.AnyTypeDB
 
 	// fetch the anytype
-	query := db.First(&anytypeDB, c.Param("id"))
+	_, err := db.First(&anytypeDB, c.Param("id"))
 
-	if query.Error != nil {
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -279,12 +279,13 @@ func (controller *Controller) UpdateAnyType(c *gin.Context) {
 	anytypeDB.CopyBasicFieldsFromAnyType_WOP(&input.AnyType_WOP)
 	anytypeDB.AnyTypePointersEncoding = input.AnyTypePointersEncoding
 
-	query = db.Model(&anytypeDB).Updates(anytypeDB)
-	if query.Error != nil {
+	db, _ = db.Model(&anytypeDB)
+	_, err = db.Updates(&anytypeDB)
+	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
-		returnError.Body.Message = query.Error.Error()
-		log.Println(query.Error.Error())
+		returnError.Body.Message = err.Error()
+		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, returnError.Body)
 		return
 	}
@@ -343,7 +344,7 @@ func (controller *Controller) DeleteAnyType(c *gin.Context) {
 
 	// Get model if exist
 	var anytypeDB orm.AnyTypeDB
-	if err := db.First(&anytypeDB, c.Param("id")).Error; err != nil {
+	if _, err := db.First(&anytypeDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -353,7 +354,8 @@ func (controller *Controller) DeleteAnyType(c *gin.Context) {
 	}
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
-	db.Unscoped().Delete(&anytypeDB)
+	db.Unscoped()
+	db.Delete(&anytypeDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
 	anytypeDeleted := new(models.AnyType)
