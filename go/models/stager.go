@@ -30,6 +30,9 @@ type Stager struct {
 	dataTypeTreeStage *tree.Stage
 	dataTypeTreeName  string
 
+	specTypeTreeStage *tree.Stage
+	specTypeTreeName  string
+
 	rootReqif       *REQ_IF
 	pathToReqifFile string
 }
@@ -46,8 +49,11 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
 	stager.summaryTableName = "Summary Table Name"
 
-	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
-	stager.dataTypeTreeName = "Summary Meta Tree Name"
+	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"datatypes", "", "", "", false, true).Stage
+	stager.dataTypeTreeName = "Data Type Tree Name"
+
+	stager.specTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"spectypes", "", "", "", false, true).Stage
+	stager.specTypeTreeName = "Spec Type Tree Name"
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
@@ -75,18 +81,24 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 							},
 						},
 						{
-							Name:             "Summary table",
-							ShowNameInHeader: false,
-							Size:             25,
+							Size: 25,
 							Tree: &split.Tree{
 								StackName: stager.dataTypeTreeStage.GetName(),
 								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
+							Size: 25,
+							Tree: &split.Tree{
+								StackName: stager.specTypeTreeStage.GetName(),
+								TreeName:  stager.specTypeTreeName,
+							},
+						},
+
+						{
 							Name:             "To be completed",
 							ShowNameInHeader: false,
-							Size:             50,
+							Size:             25,
 						},
 					},
 				}),
@@ -101,11 +113,33 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "tree probe",
+		Name: "summary table probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
 					StackName: stager.summaryTableStage.GetProbeSplitStageName(),
+				}),
+			}),
+		},
+	})
+
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "data type tree probe",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			(&split.AsSplitArea{
+				Split: (&split.Split{
+					StackName: stager.dataTypeTreeStage.GetProbeSplitStageName(),
+				}),
+			}),
+		},
+	})
+
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "spec type tree probe",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			(&split.AsSplitArea{
+				Split: (&split.Split{
+					StackName: stager.specTypeTreeStage.GetProbeSplitStageName(),
 				}),
 			}),
 		},
@@ -152,6 +186,7 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()
 	stager.updateAndCommit_data_type_tree_stage()
+	stager.updateAndCommit_spec_type_tree_stage()
 
 	return
 }
