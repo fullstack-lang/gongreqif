@@ -132,10 +132,10 @@ type BackRepoDATATYPE_DEFINITION_BOOLEANStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoDATATYPE_DEFINITION_BOOLEAN *BackRepoDATATYPE_DEFINITION_BOOLEANStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoDATATYPE_DEFINITION_BOOLEAN *BackRepoDATATYPE_DEFINITION_BOOLEANStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoDATATYPE_DEFINITION_BOOLEAN.stage
 	return
 }
@@ -153,9 +153,19 @@ func (backRepoDATATYPE_DEFINITION_BOOLEAN *BackRepoDATATYPE_DEFINITION_BOOLEANSt
 
 // BackRepoDATATYPE_DEFINITION_BOOLEAN.CommitPhaseOne commits all staged instances of DATATYPE_DEFINITION_BOOLEAN to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoDATATYPE_DEFINITION_BOOLEAN *BackRepoDATATYPE_DEFINITION_BOOLEANStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoDATATYPE_DEFINITION_BOOLEAN *BackRepoDATATYPE_DEFINITION_BOOLEANStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var datatype_definition_booleans []*models.DATATYPE_DEFINITION_BOOLEAN
 	for datatype_definition_boolean := range stage.DATATYPE_DEFINITION_BOOLEANs {
+		datatype_definition_booleans = append(datatype_definition_booleans, datatype_definition_boolean)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(datatype_definition_booleans, func(i, j int) bool {
+		return stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_booleans[i]] < stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_booleans[j]]
+	})
+
+	for _, datatype_definition_boolean := range datatype_definition_booleans {
 		backRepoDATATYPE_DEFINITION_BOOLEAN.CommitPhaseOneInstance(datatype_definition_boolean)
 	}
 

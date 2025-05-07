@@ -107,10 +107,10 @@ type BackRepoXhtml_acronym_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_acronym_type *BackRepoXhtml_acronym_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_acronym_type *BackRepoXhtml_acronym_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_acronym_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_acronym_type *BackRepoXhtml_acronym_typeStruct) GetXhtml_acr
 
 // BackRepoXhtml_acronym_type.CommitPhaseOne commits all staged instances of Xhtml_acronym_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_acronym_type *BackRepoXhtml_acronym_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_acronym_type *BackRepoXhtml_acronym_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_acronym_types []*models.Xhtml_acronym_type
 	for xhtml_acronym_type := range stage.Xhtml_acronym_types {
+		xhtml_acronym_types = append(xhtml_acronym_types, xhtml_acronym_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_acronym_types, func(i, j int) bool {
+		return stage.Xhtml_acronym_typeMap_Staged_Order[xhtml_acronym_types[i]] < stage.Xhtml_acronym_typeMap_Staged_Order[xhtml_acronym_types[j]]
+	})
+
+	for _, xhtml_acronym_type := range xhtml_acronym_types {
 		backRepoXhtml_acronym_type.CommitPhaseOneInstance(xhtml_acronym_type)
 	}
 

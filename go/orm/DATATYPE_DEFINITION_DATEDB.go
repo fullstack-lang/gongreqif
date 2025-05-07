@@ -132,10 +132,10 @@ type BackRepoDATATYPE_DEFINITION_DATEStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoDATATYPE_DEFINITION_DATE.stage
 	return
 }
@@ -153,9 +153,19 @@ func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) 
 
 // BackRepoDATATYPE_DEFINITION_DATE.CommitPhaseOne commits all staged instances of DATATYPE_DEFINITION_DATE to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoDATATYPE_DEFINITION_DATE *BackRepoDATATYPE_DEFINITION_DATEStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var datatype_definition_dates []*models.DATATYPE_DEFINITION_DATE
 	for datatype_definition_date := range stage.DATATYPE_DEFINITION_DATEs {
+		datatype_definition_dates = append(datatype_definition_dates, datatype_definition_date)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(datatype_definition_dates, func(i, j int) bool {
+		return stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_dates[i]] < stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_dates[j]]
+	})
+
+	for _, datatype_definition_date := range datatype_definition_dates {
 		backRepoDATATYPE_DEFINITION_DATE.CommitPhaseOneInstance(datatype_definition_date)
 	}
 

@@ -132,10 +132,10 @@ type BackRepoRELATION_GROUPStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoRELATION_GROUP.stage
 	return
 }
@@ -153,9 +153,19 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) GetRELATION_GROUPDBF
 
 // BackRepoRELATION_GROUP.CommitPhaseOne commits all staged instances of RELATION_GROUP to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var relation_groups []*models.RELATION_GROUP
 	for relation_group := range stage.RELATION_GROUPs {
+		relation_groups = append(relation_groups, relation_group)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(relation_groups, func(i, j int) bool {
+		return stage.RELATION_GROUPMap_Staged_Order[relation_groups[i]] < stage.RELATION_GROUPMap_Staged_Order[relation_groups[j]]
+	})
+
+	for _, relation_group := range relation_groups {
 		backRepoRELATION_GROUP.CommitPhaseOneInstance(relation_group)
 	}
 

@@ -107,10 +107,10 @@ type BackRepoXhtml_address_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_address_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) GetXhtml_add
 
 // BackRepoXhtml_address_type.CommitPhaseOne commits all staged instances of Xhtml_address_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_address_type *BackRepoXhtml_address_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_address_types []*models.Xhtml_address_type
 	for xhtml_address_type := range stage.Xhtml_address_types {
+		xhtml_address_types = append(xhtml_address_types, xhtml_address_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_address_types, func(i, j int) bool {
+		return stage.Xhtml_address_typeMap_Staged_Order[xhtml_address_types[i]] < stage.Xhtml_address_typeMap_Staged_Order[xhtml_address_types[j]]
+	})
+
+	for _, xhtml_address_type := range xhtml_address_types {
 		backRepoXhtml_address_type.CommitPhaseOneInstance(xhtml_address_type)
 	}
 

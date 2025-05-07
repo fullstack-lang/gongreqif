@@ -157,10 +157,10 @@ type BackRepoSPECIFICATION_TYPEStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoSPECIFICATION_TYPE *BackRepoSPECIFICATION_TYPEStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoSPECIFICATION_TYPE *BackRepoSPECIFICATION_TYPEStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoSPECIFICATION_TYPE.stage
 	return
 }
@@ -178,9 +178,19 @@ func (backRepoSPECIFICATION_TYPE *BackRepoSPECIFICATION_TYPEStruct) GetSPECIFICA
 
 // BackRepoSPECIFICATION_TYPE.CommitPhaseOne commits all staged instances of SPECIFICATION_TYPE to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoSPECIFICATION_TYPE *BackRepoSPECIFICATION_TYPEStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoSPECIFICATION_TYPE *BackRepoSPECIFICATION_TYPEStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var specification_types []*models.SPECIFICATION_TYPE
 	for specification_type := range stage.SPECIFICATION_TYPEs {
+		specification_types = append(specification_types, specification_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(specification_types, func(i, j int) bool {
+		return stage.SPECIFICATION_TYPEMap_Staged_Order[specification_types[i]] < stage.SPECIFICATION_TYPEMap_Staged_Order[specification_types[j]]
+	})
+
+	for _, specification_type := range specification_types {
 		backRepoSPECIFICATION_TYPE.CommitPhaseOneInstance(specification_type)
 	}
 

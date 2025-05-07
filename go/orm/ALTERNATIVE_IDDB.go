@@ -113,10 +113,10 @@ type BackRepoALTERNATIVE_IDStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoALTERNATIVE_ID.stage
 	return
 }
@@ -134,9 +134,19 @@ func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) GetALTERNATIVE_IDDBF
 
 // BackRepoALTERNATIVE_ID.CommitPhaseOne commits all staged instances of ALTERNATIVE_ID to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoALTERNATIVE_ID *BackRepoALTERNATIVE_IDStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var alternative_ids []*models.ALTERNATIVE_ID
 	for alternative_id := range stage.ALTERNATIVE_IDs {
+		alternative_ids = append(alternative_ids, alternative_id)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(alternative_ids, func(i, j int) bool {
+		return stage.ALTERNATIVE_IDMap_Staged_Order[alternative_ids[i]] < stage.ALTERNATIVE_IDMap_Staged_Order[alternative_ids[j]]
+	})
+
+	for _, alternative_id := range alternative_ids {
 		backRepoALTERNATIVE_ID.CommitPhaseOneInstance(alternative_id)
 	}
 

@@ -3,12 +3,11 @@ package probe
 
 import (
 	"fmt"
-	"log"
 	"sort"
 
-	gongtable_fullstack "github.com/fullstack-lang/gongtable/go/fullstack"
-	form "github.com/fullstack-lang/gongtable/go/models"
-	gongtable_models "github.com/fullstack-lang/gongtable/go/models"
+	gongtable_fullstack "github.com/fullstack-lang/gong/lib/table/go/fullstack"
+	form "github.com/fullstack-lang/gong/lib/table/go/models"
+	gongtable_models "github.com/fullstack-lang/gong/lib/table/go/models"
 
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
@@ -46,11 +45,12 @@ func AssociationSliceToForm[InstanceType models.PointerToGongstruct, FieldType m
 	formSortAssocButton.OnSortEdition = onSortingEditon
 
 }
+
 type OnAssocEditon[InstanceType models.PointerToGongstruct, FieldType models.PointerToGongstruct] struct {
-	instance   InstanceType
-	field      *[]FieldType
-	fieldName  string
-	probe *Probe
+	instance  InstanceType
+	field     *[]FieldType
+	fieldName string
+	probe     *Probe
 }
 
 func NewOnAssocEditon[InstanceType models.PointerToGongstruct, FieldType models.PointerToGongstruct](
@@ -71,7 +71,7 @@ func NewOnAssocEditon[InstanceType models.PointerToGongstruct, FieldType models.
 
 func (onAssocEditon *OnAssocEditon[InstanceType, FieldType]) OnButtonPressed() {
 
-	tableStackName := onAssocEditon.probe.formStage.GetPath() + string(form.StackNamePostFixForTableForAssociation)
+	tableStackName := onAssocEditon.probe.formStage.GetName() + string(form.StackNamePostFixForTableForAssociation)
 
 	// tableStackName supposed to be "test-form-table"
 	tableStageForSelection, _ := gongtable_fullstack.NewStackInstance(onAssocEditon.probe.r, tableStackName)
@@ -118,7 +118,8 @@ func (onAssocEditon *OnAssocEditon[InstanceType, FieldType]) OnButtonPressed() {
 			cell.Name = fmt.Sprintf("Row %s - Column %s", instance.GetName(), fieldName)
 
 			cellString := new(gongtable_models.CellString).Stage(tableStageForSelection)
-			cellString.Name = models.GetFieldStringValueFromPointer(instance, fieldName)
+			value := models.GetFieldStringValueFromPointer(instance, fieldName)
+			cellString.Name = value.GetValueString()
 			cellString.Value = cellString.Name
 			cell.CellString = cellString
 
@@ -154,16 +155,16 @@ func NewTablePickSaver[InstanceType models.PointerToGongstruct, FieldType models
 }
 
 type TablePickSaver[InstanceType models.PointerToGongstruct, FieldType models.PointerToGongstruct] struct {
-	instance   InstanceType
-	field      *[]FieldType
-	fieldName  string
-	probe *Probe
+	instance  InstanceType
+	field     *[]FieldType
+	fieldName string
+	probe     *Probe
 }
 
 func (tablePickSaver *TablePickSaver[InstanceType, FieldType]) TableUpdated(
-	stage *form.StageStruct,
+	stage *form.Stage,
 	table, updatedTable *form.Table) {
-	log.Println("TablePickSaver: TableUpdated")
+	// log.Println("TablePickSaver: TableUpdated")
 
 	// checkout to the stage to get the rows that have been checked and not
 	stage.Checkout()
@@ -186,18 +187,11 @@ func (tablePickSaver *TablePickSaver[InstanceType, FieldType]) TableUpdated(
 		}
 	}
 
-	// first, force commit of instance for taking into account the slice
-	models.EvictInOtherSlices(
-		tablePickSaver.probe.stageOfInterest,
-		tablePickSaver.instance,
-		*tablePickSaver.field,
-		tablePickSaver.fieldName)
-
 	// commit the whole
 	tablePickSaver.probe.stageOfInterest.Commit()
 
 	// see the result
-	fillUpTablePointerToGongstruct[InstanceType](
+	updateAndCommitTablePointerToGongstruct[InstanceType](
 		tablePickSaver.probe,
 	)
 	tablePickSaver.probe.tableStage.Commit()

@@ -107,10 +107,10 @@ type BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_VALUE_ENUMERATION.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 
 // BackRepoATTRIBUTE_VALUE_ENUMERATION.CommitPhaseOne commits all staged instances of ATTRIBUTE_VALUE_ENUMERATION to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_value_enumerations []*models.ATTRIBUTE_VALUE_ENUMERATION
 	for attribute_value_enumeration := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
+		attribute_value_enumerations = append(attribute_value_enumerations, attribute_value_enumeration)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_value_enumerations, func(i, j int) bool {
+		return stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumerations[i]] < stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumerations[j]]
+	})
+
+	for _, attribute_value_enumeration := range attribute_value_enumerations {
 		backRepoATTRIBUTE_VALUE_ENUMERATION.CommitPhaseOneInstance(attribute_value_enumeration)
 	}
 

@@ -146,10 +146,10 @@ type BackRepoATTRIBUTE_DEFINITION_BOOLEANStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_DEFINITION_BOOLEAN *BackRepoATTRIBUTE_DEFINITION_BOOLEANStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_DEFINITION_BOOLEAN *BackRepoATTRIBUTE_DEFINITION_BOOLEANStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_DEFINITION_BOOLEAN.stage
 	return
 }
@@ -167,9 +167,19 @@ func (backRepoATTRIBUTE_DEFINITION_BOOLEAN *BackRepoATTRIBUTE_DEFINITION_BOOLEAN
 
 // BackRepoATTRIBUTE_DEFINITION_BOOLEAN.CommitPhaseOne commits all staged instances of ATTRIBUTE_DEFINITION_BOOLEAN to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_DEFINITION_BOOLEAN *BackRepoATTRIBUTE_DEFINITION_BOOLEANStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_DEFINITION_BOOLEAN *BackRepoATTRIBUTE_DEFINITION_BOOLEANStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_definition_booleans []*models.ATTRIBUTE_DEFINITION_BOOLEAN
 	for attribute_definition_boolean := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
+		attribute_definition_booleans = append(attribute_definition_booleans, attribute_definition_boolean)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_definition_booleans, func(i, j int) bool {
+		return stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_booleans[i]] < stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_booleans[j]]
+	})
+
+	for _, attribute_definition_boolean := range attribute_definition_booleans {
 		backRepoATTRIBUTE_DEFINITION_BOOLEAN.CommitPhaseOneInstance(attribute_definition_boolean)
 	}
 

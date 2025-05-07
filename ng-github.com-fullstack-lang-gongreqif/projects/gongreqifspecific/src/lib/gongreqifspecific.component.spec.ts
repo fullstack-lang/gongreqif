@@ -11,7 +11,7 @@ describe('GongreqifspecificComponent', () => {
       imports: [GongreqifspecificComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(GongreqifspecificComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

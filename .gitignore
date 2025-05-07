@@ -1,5 +1,7 @@
-go/cmd/gongreqif/gongreqif
-__debug_bin*
-*.exe
-.DS_Store
 node_modules
+
+go/cmd/gongreqif/gongreqif
+go/cmd/gongreqif/gongreqif.exe
+go/cmd/gongreqif/__debug_bin*
+
+.DS_Store

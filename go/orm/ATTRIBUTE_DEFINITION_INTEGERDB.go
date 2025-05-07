@@ -146,10 +146,10 @@ type BackRepoATTRIBUTE_DEFINITION_INTEGERStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_DEFINITION_INTEGER *BackRepoATTRIBUTE_DEFINITION_INTEGERStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_DEFINITION_INTEGER *BackRepoATTRIBUTE_DEFINITION_INTEGERStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_DEFINITION_INTEGER.stage
 	return
 }
@@ -167,9 +167,19 @@ func (backRepoATTRIBUTE_DEFINITION_INTEGER *BackRepoATTRIBUTE_DEFINITION_INTEGER
 
 // BackRepoATTRIBUTE_DEFINITION_INTEGER.CommitPhaseOne commits all staged instances of ATTRIBUTE_DEFINITION_INTEGER to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_DEFINITION_INTEGER *BackRepoATTRIBUTE_DEFINITION_INTEGERStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_DEFINITION_INTEGER *BackRepoATTRIBUTE_DEFINITION_INTEGERStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_definition_integers []*models.ATTRIBUTE_DEFINITION_INTEGER
 	for attribute_definition_integer := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
+		attribute_definition_integers = append(attribute_definition_integers, attribute_definition_integer)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_definition_integers, func(i, j int) bool {
+		return stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integers[i]] < stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integers[j]]
+	})
+
+	for _, attribute_definition_integer := range attribute_definition_integers {
 		backRepoATTRIBUTE_DEFINITION_INTEGER.CommitPhaseOneInstance(attribute_definition_integer)
 	}
 

@@ -120,10 +120,10 @@ type BackRepoATTRIBUTE_VALUE_XHTMLStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_VALUE_XHTML.stage
 	return
 }
@@ -141,9 +141,19 @@ func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) GetATT
 
 // BackRepoATTRIBUTE_VALUE_XHTML.CommitPhaseOne commits all staged instances of ATTRIBUTE_VALUE_XHTML to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_value_xhtmls []*models.ATTRIBUTE_VALUE_XHTML
 	for attribute_value_xhtml := range stage.ATTRIBUTE_VALUE_XHTMLs {
+		attribute_value_xhtmls = append(attribute_value_xhtmls, attribute_value_xhtml)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_value_xhtmls, func(i, j int) bool {
+		return stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtmls[i]] < stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtmls[j]]
+	})
+
+	for _, attribute_value_xhtml := range attribute_value_xhtmls {
 		backRepoATTRIBUTE_VALUE_XHTML.CommitPhaseOneInstance(attribute_value_xhtml)
 	}
 

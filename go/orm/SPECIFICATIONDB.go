@@ -164,10 +164,10 @@ type BackRepoSPECIFICATIONStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoSPECIFICATION.stage
 	return
 }
@@ -185,9 +185,19 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) GetSPECIFICATIONDBFrom
 
 // BackRepoSPECIFICATION.CommitPhaseOne commits all staged instances of SPECIFICATION to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var specifications []*models.SPECIFICATION
 	for specification := range stage.SPECIFICATIONs {
+		specifications = append(specifications, specification)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(specifications, func(i, j int) bool {
+		return stage.SPECIFICATIONMap_Staged_Order[specifications[i]] < stage.SPECIFICATIONMap_Staged_Order[specifications[j]]
+	})
+
+	for _, specification := range specifications {
 		backRepoSPECIFICATION.CommitPhaseOneInstance(specification)
 	}
 

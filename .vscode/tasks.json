@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 	  {
-		"label": "02 - run gongreqif -unmarshallFromCode=stage.go -marshallOnCommit=stage",
+		"label": "02 - run gongreqif -unmarshallFromCode=data/stage.go -marshallOnCommit=data/stage",
 		"type": "shell",
 		"options": {
 		  "cwd": "${workspaceFolder}/go/cmd/gongreqif"
@@ -12,8 +12,8 @@
 		  "run",
 		  "main.go",
 		  "-diagrams",
-		  "-unmarshallFromCode=stage.go",
-		  "-marshallOnCommit=stage"
+		  "-unmarshallFromCode=data/stage.go",
+		  "-marshallOnCommit=data/stage"
 		],
 		"group": "build"
 	  },
@@ -28,8 +28,8 @@
 		  "run",
 		  ".",
 		  "-diagrams=false",
-		  "--unmarshall=stage",
-		  "-marshallOnCommit=stage"
+		  "--unmarshall=data/stage",
+		  "-marshallOnCommit=data/stage"
 		],
 		"group": "build"
 	  },
@@ -42,14 +42,14 @@
 	  {
 		"label": "03 - ng build",
 		"type": "shell",
-		"command": "cd ng; ng build",
+		"command": "cd ng-github.com-fullstack-lang-gongreqif; ng build",
 		"group": "build",
 		"problemMatcher": []
 	  },
 	  {
 		"label": "04 - ng serve --host=127.0.0.1",
 		"type": "shell",
-		"command": "cd ng; ng serve --host=127.0.0.1",
+		"command": "cd ng-github.com-fullstack-lang-gongreqif; ng serve --host=127.0.0.1",
 		"group": "build",
 		"problemMatcher": []
 	  },
@@ -101,47 +101,16 @@
 		]
 	  },
 	  {
-		"label": "00 - go mod vendor",
-		"type": "shell",
-		"group": "build",
-		"command": "go mod vendor"
-	  },
-	  {
 		"label": "00 - update dependencies",
 		"type": "shell",
 		"command": "go",
 		"args": [
 		  "get",
-		  "-d",
 		  "github.com/fullstack-lang/gong@HEAD",
-		  "github.com/fullstack-lang/gongdoc@HEAD",
-		  "github.com/fullstack-lang/gongsvg@HEAD",
-		],
-		"group": "build"
-	  },
-	  {
-		"label": "00 - go get -d github.com/fullstack-lang/gong@HEAD",
-		"type": "shell",
-		"command": "go",
-		"args": [
-		  "get",
-		  "-d",
-		  "github.com/fullstack-lang/gong@HEAD",
-		  "github.com/fullstack-lang/gongdoc@HEAD",
-		  "github.com/fullstack-lang/gongrouter@HEAD",
-		  "github.com/fullstack-lang/gongsvg@HEAD",
+		  "github.com/fullstack-lang/gongtable@HEAD",
 		  "github.com/fullstack-lang/gongtree@HEAD",
-		],
-		"group": "build"
-	  },
-	  {
-		"label": "00 - go get -d github.com/fullstack-lang/gongdoc@HEAD",
-		"type": "shell",
-		"command": "go",
-		"args": [
-		  "get",
-		  "-d",
 		  "github.com/fullstack-lang/gongdoc@HEAD",
+		  "github.com/fullstack-lang/gongsvg@HEAD",
 		],
 		"group": "build"
 	  },
@@ -154,6 +123,16 @@
 		  "tidy"
 		],
 		"group": "build"
+	  },
+	  	  {
+		"label": "00 - go mod vendor",
+		"type": "shell",
+		"group": "build",
+		"command": "go",
+		"args": [
+		  "mod",
+		  "vendor"
+		],
 	  },
 	  {
 		"label": "00 - go build",

@@ -136,10 +136,10 @@ type BackRepoREQ_IFStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoREQ_IF *BackRepoREQ_IFStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoREQ_IF *BackRepoREQ_IFStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoREQ_IF.stage
 	return
 }
@@ -157,9 +157,19 @@ func (backRepoREQ_IF *BackRepoREQ_IFStruct) GetREQ_IFDBFromREQ_IFPtr(req_if *mod
 
 // BackRepoREQ_IF.CommitPhaseOne commits all staged instances of REQ_IF to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoREQ_IF *BackRepoREQ_IFStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoREQ_IF *BackRepoREQ_IFStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var req_ifs []*models.REQ_IF
 	for req_if := range stage.REQ_IFs {
+		req_ifs = append(req_ifs, req_if)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(req_ifs, func(i, j int) bool {
+		return stage.REQ_IFMap_Staged_Order[req_ifs[i]] < stage.REQ_IFMap_Staged_Order[req_ifs[j]]
+	})
+
+	for _, req_if := range req_ifs {
 		backRepoREQ_IF.CommitPhaseOneInstance(req_if)
 	}
 
@@ -403,13 +413,15 @@ func (req_ifDB *REQ_IFDB) DecodePointers(backRepo *BackRepoStruct, req_if *model
 		if id != 0 {
 			tmp, ok := backRepo.BackRepoREQ_IF_HEADER.Map_REQ_IF_HEADERDBID_REQ_IF_HEADERPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
 			if !ok {
-				log.Fatalln("DecodePointers: req_if.THE_HEADER.REQ_IF_HEADER, unknown pointer id", id)
-			}
-
-			// updates only if field has changed
-			if req_if.THE_HEADER.REQ_IF_HEADER == nil || req_if.THE_HEADER.REQ_IF_HEADER != tmp {
-				req_if.THE_HEADER.REQ_IF_HEADER = tmp
+				log.Println("DecodePointers: req_if.THE_HEADER.REQ_IF_HEADER, unknown pointer id", id)
+				req_if.THE_HEADER.REQ_IF_HEADER = nil
+			} else {
+				// updates only if field has changed
+				if req_if.THE_HEADER.REQ_IF_HEADER == nil || req_if.THE_HEADER.REQ_IF_HEADER != tmp {
+					req_if.THE_HEADER.REQ_IF_HEADER = tmp
+				}
 			}
 		} else {
 			req_if.THE_HEADER.REQ_IF_HEADER = nil
@@ -422,13 +434,15 @@ func (req_ifDB *REQ_IFDB) DecodePointers(backRepo *BackRepoStruct, req_if *model
 		if id != 0 {
 			tmp, ok := backRepo.BackRepoREQ_IF_CONTENT.Map_REQ_IF_CONTENTDBID_REQ_IF_CONTENTPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
 			if !ok {
-				log.Fatalln("DecodePointers: req_if.CORE_CONTENT.REQ_IF_CONTENT, unknown pointer id", id)
-			}
-
-			// updates only if field has changed
-			if req_if.CORE_CONTENT.REQ_IF_CONTENT == nil || req_if.CORE_CONTENT.REQ_IF_CONTENT != tmp {
-				req_if.CORE_CONTENT.REQ_IF_CONTENT = tmp
+				log.Println("DecodePointers: req_if.CORE_CONTENT.REQ_IF_CONTENT, unknown pointer id", id)
+				req_if.CORE_CONTENT.REQ_IF_CONTENT = nil
+			} else {
+				// updates only if field has changed
+				if req_if.CORE_CONTENT.REQ_IF_CONTENT == nil || req_if.CORE_CONTENT.REQ_IF_CONTENT != tmp {
+					req_if.CORE_CONTENT.REQ_IF_CONTENT = tmp
+				}
 			}
 		} else {
 			req_if.CORE_CONTENT.REQ_IF_CONTENT = nil

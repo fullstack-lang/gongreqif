@@ -107,10 +107,10 @@ type BackRepoXhtml_h3_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_h3_type *BackRepoXhtml_h3_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_h3_type *BackRepoXhtml_h3_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_h3_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_h3_type *BackRepoXhtml_h3_typeStruct) GetXhtml_h3_typeDBFrom
 
 // BackRepoXhtml_h3_type.CommitPhaseOne commits all staged instances of Xhtml_h3_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_h3_type *BackRepoXhtml_h3_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_h3_type *BackRepoXhtml_h3_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_h3_types []*models.Xhtml_h3_type
 	for xhtml_h3_type := range stage.Xhtml_h3_types {
+		xhtml_h3_types = append(xhtml_h3_types, xhtml_h3_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_h3_types, func(i, j int) bool {
+		return stage.Xhtml_h3_typeMap_Staged_Order[xhtml_h3_types[i]] < stage.Xhtml_h3_typeMap_Staged_Order[xhtml_h3_types[j]]
+	})
+
+	for _, xhtml_h3_type := range xhtml_h3_types {
 		backRepoXhtml_h3_type.CommitPhaseOneInstance(xhtml_h3_type)
 	}
 

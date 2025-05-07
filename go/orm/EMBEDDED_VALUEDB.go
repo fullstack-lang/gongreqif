@@ -113,10 +113,10 @@ type BackRepoEMBEDDED_VALUEStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoEMBEDDED_VALUE.stage
 	return
 }
@@ -134,9 +134,19 @@ func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) GetEMBEDDED_VALUEDBF
 
 // BackRepoEMBEDDED_VALUE.CommitPhaseOne commits all staged instances of EMBEDDED_VALUE to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoEMBEDDED_VALUE *BackRepoEMBEDDED_VALUEStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var embedded_values []*models.EMBEDDED_VALUE
 	for embedded_value := range stage.EMBEDDED_VALUEs {
+		embedded_values = append(embedded_values, embedded_value)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(embedded_values, func(i, j int) bool {
+		return stage.EMBEDDED_VALUEMap_Staged_Order[embedded_values[i]] < stage.EMBEDDED_VALUEMap_Staged_Order[embedded_values[j]]
+	})
+
+	for _, embedded_value := range embedded_values {
 		backRepoEMBEDDED_VALUE.CommitPhaseOneInstance(embedded_value)
 	}
 

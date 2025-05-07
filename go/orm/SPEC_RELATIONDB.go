@@ -157,10 +157,10 @@ type BackRepoSPEC_RELATIONStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoSPEC_RELATION.stage
 	return
 }
@@ -178,9 +178,19 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) GetSPEC_RELATIONDBFrom
 
 // BackRepoSPEC_RELATION.CommitPhaseOne commits all staged instances of SPEC_RELATION to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var spec_relations []*models.SPEC_RELATION
 	for spec_relation := range stage.SPEC_RELATIONs {
+		spec_relations = append(spec_relations, spec_relation)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(spec_relations, func(i, j int) bool {
+		return stage.SPEC_RELATIONMap_Staged_Order[spec_relations[i]] < stage.SPEC_RELATIONMap_Staged_Order[spec_relations[j]]
+	})
+
+	for _, spec_relation := range spec_relations {
 		backRepoSPEC_RELATION.CommitPhaseOneInstance(spec_relation)
 	}
 

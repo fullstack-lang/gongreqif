@@ -113,10 +113,10 @@ type BackRepoAnyTypeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoAnyType *BackRepoAnyTypeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoAnyType *BackRepoAnyTypeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoAnyType.stage
 	return
 }
@@ -134,9 +134,19 @@ func (backRepoAnyType *BackRepoAnyTypeStruct) GetAnyTypeDBFromAnyTypePtr(anytype
 
 // BackRepoAnyType.CommitPhaseOne commits all staged instances of AnyType to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoAnyType *BackRepoAnyTypeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoAnyType *BackRepoAnyTypeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var anytypes []*models.AnyType
 	for anytype := range stage.AnyTypes {
+		anytypes = append(anytypes, anytype)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(anytypes, func(i, j int) bool {
+		return stage.AnyTypeMap_Staged_Order[anytypes[i]] < stage.AnyTypeMap_Staged_Order[anytypes[j]]
+	})
+
+	for _, anytype := range anytypes {
 		backRepoAnyType.CommitPhaseOneInstance(anytype)
 	}
 

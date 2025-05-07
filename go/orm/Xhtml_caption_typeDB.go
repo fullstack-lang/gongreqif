@@ -107,10 +107,10 @@ type BackRepoXhtml_caption_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_caption_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) GetXhtml_cap
 
 // BackRepoXhtml_caption_type.CommitPhaseOne commits all staged instances of Xhtml_caption_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_caption_type *BackRepoXhtml_caption_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_caption_types []*models.Xhtml_caption_type
 	for xhtml_caption_type := range stage.Xhtml_caption_types {
+		xhtml_caption_types = append(xhtml_caption_types, xhtml_caption_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_caption_types, func(i, j int) bool {
+		return stage.Xhtml_caption_typeMap_Staged_Order[xhtml_caption_types[i]] < stage.Xhtml_caption_typeMap_Staged_Order[xhtml_caption_types[j]]
+	})
+
+	for _, xhtml_caption_type := range xhtml_caption_types {
 		backRepoXhtml_caption_type.CommitPhaseOneInstance(xhtml_caption_type)
 	}
 

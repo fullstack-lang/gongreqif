@@ -149,10 +149,10 @@ type BackRepoREQ_IF_HEADERStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoREQ_IF_HEADER.stage
 	return
 }
@@ -170,9 +170,19 @@ func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) GetREQ_IF_HEADERDBFrom
 
 // BackRepoREQ_IF_HEADER.CommitPhaseOne commits all staged instances of REQ_IF_HEADER to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoREQ_IF_HEADER *BackRepoREQ_IF_HEADERStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var req_if_headers []*models.REQ_IF_HEADER
 	for req_if_header := range stage.REQ_IF_HEADERs {
+		req_if_headers = append(req_if_headers, req_if_header)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(req_if_headers, func(i, j int) bool {
+		return stage.REQ_IF_HEADERMap_Staged_Order[req_if_headers[i]] < stage.REQ_IF_HEADERMap_Staged_Order[req_if_headers[j]]
+	})
+
+	for _, req_if_header := range req_if_headers {
 		backRepoREQ_IF_HEADER.CommitPhaseOneInstance(req_if_header)
 	}
 

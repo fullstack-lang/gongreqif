@@ -107,10 +107,10 @@ type BackRepoXhtml_colgroup_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_colgroup_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) GetXhtml_c
 
 // BackRepoXhtml_colgroup_type.CommitPhaseOne commits all staged instances of Xhtml_colgroup_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_colgroup_type *BackRepoXhtml_colgroup_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_colgroup_types []*models.Xhtml_colgroup_type
 	for xhtml_colgroup_type := range stage.Xhtml_colgroup_types {
+		xhtml_colgroup_types = append(xhtml_colgroup_types, xhtml_colgroup_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_colgroup_types, func(i, j int) bool {
+		return stage.Xhtml_colgroup_typeMap_Staged_Order[xhtml_colgroup_types[i]] < stage.Xhtml_colgroup_typeMap_Staged_Order[xhtml_colgroup_types[j]]
+	})
+
+	for _, xhtml_colgroup_type := range xhtml_colgroup_types {
 		backRepoXhtml_colgroup_type.CommitPhaseOneInstance(xhtml_colgroup_type)
 	}
 

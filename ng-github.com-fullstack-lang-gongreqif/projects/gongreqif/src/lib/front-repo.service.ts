@@ -12,6 +12,8 @@ export const StackType = "github.com/fullstack-lang/gongreqif/go/models"
 // FrontRepo stores all instances in a front repository (design pattern repository)
 export class FrontRepo { // insertion point sub template
 
+	public GONG__Index = -1
+
 	// getFrontArray allows for a get function that is robust to refactoring of the named struct name
 	// for instance frontRepo.getArray<Astruct>( Astruct.GONGSTRUCT_NAME), is robust to a refactoring of Astruct identifier
 	// contrary to frontRepo.Astructs_array which is not refactored when Astruct identifier is modified
@@ -63,7 +65,7 @@ export class DialogData {
 	IntermediateStructField: string = "" // the "Bclass" as field
 	NextAssociationStruct: string = "" // the "Bclass"
 
-	GONG__StackPath: string = ""
+	Name: string = ""
 }
 
 export enum SelectionMode {
@@ -79,7 +81,7 @@ export enum SelectionMode {
 })
 export class FrontRepoService {
 
-	GONG__StackPath: string = ""
+	Name: string = ""
 	private socket: WebSocket | undefined
 
 	httpOptions = {
@@ -122,20 +124,10 @@ export class FrontRepoService {
 	}
 
 	// typing of observable can be messy in typescript. Therefore, one force the type
-	observableFrontRepo: [
+	observableFrontRepo!: [
 		Observable<null>, // see below for the of(null) observable
 		// insertion point sub template 
-	] = [
-			// Using "combineLatest" with a placeholder observable.
-			//
-			// This allows the typescript compiler to pass when no GongStruct is present in the front API
-			//
-			// The "of(null)" is a "meaningless" observable that emits a single value (null) and completes.
-			// This is used as a workaround to satisfy TypeScript requirements and the "combineLatest" 
-			// expectation for a non-empty array of observables.
-			of(null), // 
-			// insertion point sub template
-		];
+	];
 
 	//
 	// pull performs a GET on all struct of the stack and redeem association pointers 
@@ -143,9 +135,9 @@ export class FrontRepoService {
 	// This is an observable. Therefore, the control flow forks with
 	// - pull() return immediatly the observable
 	// - the observable observer, if it subscribe, is called when all GET calls are performs
-	pull(GONG__StackPath: string = ""): Observable<FrontRepo> {
+	pull(Name: string = ""): Observable<FrontRepo> {
 
-		this.GONG__StackPath = GONG__StackPath
+		this.Name = Name
 
 		this.observableFrontRepo = [
 			of(null), // see above for justification
@@ -181,12 +173,12 @@ export class FrontRepoService {
 		)
 	}
 
-	public connectToWebSocket(GONG__StackPath: string): Observable<FrontRepo> {
+	public connectToWebSocket(Name: string): Observable<FrontRepo> {
 
-		this.GONG__StackPath = GONG__StackPath
+		this.Name = Name
 
 
-		let params = new HttpParams().set("GONG__StackPath", this.GONG__StackPath)
+		let params = new HttpParams().set("Name", this.Name)
 		let basePath = 'ws://localhost:8080/api/github.com/fullstack-lang/gongreqif/go/v1/ws/stage'
 		let paramString = params.toString()
 		let url = `${basePath}?${paramString}`
@@ -199,6 +191,7 @@ export class FrontRepoService {
 				const backRepoData = new BackRepoData(JSON.parse(event.data))
 
 				let frontRepo = new (FrontRepo)
+				frontRepo.GONG__Index = backRepoData.GONG__Index
 
 				// 
 				// First Step: init map of instances

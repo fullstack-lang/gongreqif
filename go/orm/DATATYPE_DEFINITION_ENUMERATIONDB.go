@@ -139,10 +139,10 @@ type BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoDATATYPE_DEFINITION_ENUMERATION.stage
 	return
 }
@@ -160,9 +160,19 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 
 // BackRepoDATATYPE_DEFINITION_ENUMERATION.CommitPhaseOne commits all staged instances of DATATYPE_DEFINITION_ENUMERATION to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUMERATIONStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var datatype_definition_enumerations []*models.DATATYPE_DEFINITION_ENUMERATION
 	for datatype_definition_enumeration := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
+		datatype_definition_enumerations = append(datatype_definition_enumerations, datatype_definition_enumeration)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(datatype_definition_enumerations, func(i, j int) bool {
+		return stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumerations[i]] < stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumerations[j]]
+	})
+
+	for _, datatype_definition_enumeration := range datatype_definition_enumerations {
 		backRepoDATATYPE_DEFINITION_ENUMERATION.CommitPhaseOneInstance(datatype_definition_enumeration)
 	}
 

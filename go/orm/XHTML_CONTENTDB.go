@@ -107,10 +107,10 @@ type BackRepoXHTML_CONTENTStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXHTML_CONTENT.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) GetXHTML_CONTENTDBFrom
 
 // BackRepoXHTML_CONTENT.CommitPhaseOne commits all staged instances of XHTML_CONTENT to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXHTML_CONTENT *BackRepoXHTML_CONTENTStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_contents []*models.XHTML_CONTENT
 	for xhtml_content := range stage.XHTML_CONTENTs {
+		xhtml_contents = append(xhtml_contents, xhtml_content)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_contents, func(i, j int) bool {
+		return stage.XHTML_CONTENTMap_Staged_Order[xhtml_contents[i]] < stage.XHTML_CONTENTMap_Staged_Order[xhtml_contents[j]]
+	})
+
+	for _, xhtml_content := range xhtml_contents {
 		backRepoXHTML_CONTENT.CommitPhaseOneInstance(xhtml_content)
 	}
 

@@ -175,6 +175,9 @@ type BackRepoData struct {
 	Xhtml_ul_typeAPIs []*Xhtml_ul_typeAPI
 
 	Xhtml_var_typeAPIs []*Xhtml_var_typeAPI
+
+	// index of the web socket for this stack type (unique among all stack instances)
+	GONG__Index int
 }
 
 func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepoData) {

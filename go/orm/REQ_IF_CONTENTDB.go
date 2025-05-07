@@ -176,10 +176,10 @@ type BackRepoREQ_IF_CONTENTStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoREQ_IF_CONTENT.stage
 	return
 }
@@ -197,9 +197,19 @@ func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) GetREQ_IF_CONTENTDBF
 
 // BackRepoREQ_IF_CONTENT.CommitPhaseOne commits all staged instances of REQ_IF_CONTENT to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoREQ_IF_CONTENT *BackRepoREQ_IF_CONTENTStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var req_if_contents []*models.REQ_IF_CONTENT
 	for req_if_content := range stage.REQ_IF_CONTENTs {
+		req_if_contents = append(req_if_contents, req_if_content)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(req_if_contents, func(i, j int) bool {
+		return stage.REQ_IF_CONTENTMap_Staged_Order[req_if_contents[i]] < stage.REQ_IF_CONTENTMap_Staged_Order[req_if_contents[j]]
+	})
+
+	for _, req_if_content := range req_if_contents {
 		backRepoREQ_IF_CONTENT.CommitPhaseOneInstance(req_if_content)
 	}
 

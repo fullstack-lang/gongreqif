@@ -107,10 +107,10 @@ type BackRepoXhtml_edit_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_edit_type *BackRepoXhtml_edit_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_edit_type *BackRepoXhtml_edit_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_edit_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_edit_type *BackRepoXhtml_edit_typeStruct) GetXhtml_edit_type
 
 // BackRepoXhtml_edit_type.CommitPhaseOne commits all staged instances of Xhtml_edit_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_edit_type *BackRepoXhtml_edit_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_edit_type *BackRepoXhtml_edit_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_edit_types []*models.Xhtml_edit_type
 	for xhtml_edit_type := range stage.Xhtml_edit_types {
+		xhtml_edit_types = append(xhtml_edit_types, xhtml_edit_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_edit_types, func(i, j int) bool {
+		return stage.Xhtml_edit_typeMap_Staged_Order[xhtml_edit_types[i]] < stage.Xhtml_edit_typeMap_Staged_Order[xhtml_edit_types[j]]
+	})
+
+	for _, xhtml_edit_type := range xhtml_edit_types {
 		backRepoXhtml_edit_type.CommitPhaseOneInstance(xhtml_edit_type)
 	}
 

@@ -107,10 +107,10 @@ type BackRepoREQ_IF_TOOL_EXTENSIONStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoREQ_IF_TOOL_EXTENSION.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) GetREQ
 
 // BackRepoREQ_IF_TOOL_EXTENSION.CommitPhaseOne commits all staged instances of REQ_IF_TOOL_EXTENSION to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoREQ_IF_TOOL_EXTENSION *BackRepoREQ_IF_TOOL_EXTENSIONStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var req_if_tool_extensions []*models.REQ_IF_TOOL_EXTENSION
 	for req_if_tool_extension := range stage.REQ_IF_TOOL_EXTENSIONs {
+		req_if_tool_extensions = append(req_if_tool_extensions, req_if_tool_extension)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(req_if_tool_extensions, func(i, j int) bool {
+		return stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extensions[i]] < stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extensions[j]]
+	})
+
+	for _, req_if_tool_extension := range req_if_tool_extensions {
 		backRepoREQ_IF_TOOL_EXTENSION.CommitPhaseOneInstance(req_if_tool_extension)
 	}
 

@@ -107,10 +107,10 @@ type BackRepoXhtml_tbody_typeStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoXhtml_tbody_type *BackRepoXhtml_tbody_typeStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoXhtml_tbody_type *BackRepoXhtml_tbody_typeStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoXhtml_tbody_type.stage
 	return
 }
@@ -128,9 +128,19 @@ func (backRepoXhtml_tbody_type *BackRepoXhtml_tbody_typeStruct) GetXhtml_tbody_t
 
 // BackRepoXhtml_tbody_type.CommitPhaseOne commits all staged instances of Xhtml_tbody_type to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoXhtml_tbody_type *BackRepoXhtml_tbody_typeStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoXhtml_tbody_type *BackRepoXhtml_tbody_typeStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var xhtml_tbody_types []*models.Xhtml_tbody_type
 	for xhtml_tbody_type := range stage.Xhtml_tbody_types {
+		xhtml_tbody_types = append(xhtml_tbody_types, xhtml_tbody_type)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(xhtml_tbody_types, func(i, j int) bool {
+		return stage.Xhtml_tbody_typeMap_Staged_Order[xhtml_tbody_types[i]] < stage.Xhtml_tbody_typeMap_Staged_Order[xhtml_tbody_types[j]]
+	})
+
+	for _, xhtml_tbody_type := range xhtml_tbody_types {
 		backRepoXhtml_tbody_type.CommitPhaseOneInstance(xhtml_tbody_type)
 	}
 

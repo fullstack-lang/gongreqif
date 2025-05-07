@@ -113,10 +113,10 @@ type BackRepoATTRIBUTE_VALUE_STRINGStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_VALUE_STRING *BackRepoATTRIBUTE_VALUE_STRINGStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_VALUE_STRING *BackRepoATTRIBUTE_VALUE_STRINGStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_VALUE_STRING.stage
 	return
 }
@@ -134,9 +134,19 @@ func (backRepoATTRIBUTE_VALUE_STRING *BackRepoATTRIBUTE_VALUE_STRINGStruct) GetA
 
 // BackRepoATTRIBUTE_VALUE_STRING.CommitPhaseOne commits all staged instances of ATTRIBUTE_VALUE_STRING to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_VALUE_STRING *BackRepoATTRIBUTE_VALUE_STRINGStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_VALUE_STRING *BackRepoATTRIBUTE_VALUE_STRINGStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_value_strings []*models.ATTRIBUTE_VALUE_STRING
 	for attribute_value_string := range stage.ATTRIBUTE_VALUE_STRINGs {
+		attribute_value_strings = append(attribute_value_strings, attribute_value_string)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_value_strings, func(i, j int) bool {
+		return stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_strings[i]] < stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_strings[j]]
+	})
+
+	for _, attribute_value_string := range attribute_value_strings {
 		backRepoATTRIBUTE_VALUE_STRING.CommitPhaseOneInstance(attribute_value_string)
 	}
 

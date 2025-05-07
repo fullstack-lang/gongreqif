@@ -132,10 +132,10 @@ type BackRepoDATATYPE_DEFINITION_XHTMLStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoDATATYPE_DEFINITION_XHTML.stage
 	return
 }
@@ -153,9 +153,19 @@ func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct
 
 // BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseOne commits all staged instances of DATATYPE_DEFINITION_XHTML to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoDATATYPE_DEFINITION_XHTML *BackRepoDATATYPE_DEFINITION_XHTMLStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var datatype_definition_xhtmls []*models.DATATYPE_DEFINITION_XHTML
 	for datatype_definition_xhtml := range stage.DATATYPE_DEFINITION_XHTMLs {
+		datatype_definition_xhtmls = append(datatype_definition_xhtmls, datatype_definition_xhtml)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(datatype_definition_xhtmls, func(i, j int) bool {
+		return stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtmls[i]] < stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtmls[j]]
+	})
+
+	for _, datatype_definition_xhtml := range datatype_definition_xhtmls {
 		backRepoDATATYPE_DEFINITION_XHTML.CommitPhaseOneInstance(datatype_definition_xhtml)
 	}
 

@@ -146,10 +146,10 @@ type BackRepoATTRIBUTE_DEFINITION_REALStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_DEFINITION_REAL.stage
 	return
 }
@@ -167,9 +167,19 @@ func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct
 
 // BackRepoATTRIBUTE_DEFINITION_REAL.CommitPhaseOne commits all staged instances of ATTRIBUTE_DEFINITION_REAL to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_DEFINITION_REAL *BackRepoATTRIBUTE_DEFINITION_REALStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_definition_reals []*models.ATTRIBUTE_DEFINITION_REAL
 	for attribute_definition_real := range stage.ATTRIBUTE_DEFINITION_REALs {
+		attribute_definition_reals = append(attribute_definition_reals, attribute_definition_real)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_definition_reals, func(i, j int) bool {
+		return stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_reals[i]] < stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_reals[j]]
+	})
+
+	for _, attribute_definition_real := range attribute_definition_reals {
 		backRepoATTRIBUTE_DEFINITION_REAL.CommitPhaseOneInstance(attribute_definition_real)
 	}
 

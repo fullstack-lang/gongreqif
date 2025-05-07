@@ -153,10 +153,10 @@ type BackRepoATTRIBUTE_DEFINITION_ENUMERATIONStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoATTRIBUTE_DEFINITION_ENUMERATION *BackRepoATTRIBUTE_DEFINITION_ENUMERATIONStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoATTRIBUTE_DEFINITION_ENUMERATION *BackRepoATTRIBUTE_DEFINITION_ENUMERATIONStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoATTRIBUTE_DEFINITION_ENUMERATION.stage
 	return
 }
@@ -174,9 +174,19 @@ func (backRepoATTRIBUTE_DEFINITION_ENUMERATION *BackRepoATTRIBUTE_DEFINITION_ENU
 
 // BackRepoATTRIBUTE_DEFINITION_ENUMERATION.CommitPhaseOne commits all staged instances of ATTRIBUTE_DEFINITION_ENUMERATION to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoATTRIBUTE_DEFINITION_ENUMERATION *BackRepoATTRIBUTE_DEFINITION_ENUMERATIONStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoATTRIBUTE_DEFINITION_ENUMERATION *BackRepoATTRIBUTE_DEFINITION_ENUMERATIONStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var attribute_definition_enumerations []*models.ATTRIBUTE_DEFINITION_ENUMERATION
 	for attribute_definition_enumeration := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
+		attribute_definition_enumerations = append(attribute_definition_enumerations, attribute_definition_enumeration)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(attribute_definition_enumerations, func(i, j int) bool {
+		return stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumerations[i]] < stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumerations[j]]
+	})
+
+	for _, attribute_definition_enumeration := range attribute_definition_enumerations {
 		backRepoATTRIBUTE_DEFINITION_ENUMERATION.CommitPhaseOneInstance(attribute_definition_enumeration)
 	}
 

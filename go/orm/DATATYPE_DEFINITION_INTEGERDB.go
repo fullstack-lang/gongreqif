@@ -132,10 +132,10 @@ type BackRepoDATATYPE_DEFINITION_INTEGERStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoDATATYPE_DEFINITION_INTEGER.stage
 	return
 }
@@ -153,9 +153,19 @@ func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERSt
 
 // BackRepoDATATYPE_DEFINITION_INTEGER.CommitPhaseOne commits all staged instances of DATATYPE_DEFINITION_INTEGER to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var datatype_definition_integers []*models.DATATYPE_DEFINITION_INTEGER
 	for datatype_definition_integer := range stage.DATATYPE_DEFINITION_INTEGERs {
+		datatype_definition_integers = append(datatype_definition_integers, datatype_definition_integer)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(datatype_definition_integers, func(i, j int) bool {
+		return stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integers[i]] < stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integers[j]]
+	})
+
+	for _, datatype_definition_integer := range datatype_definition_integers {
 		backRepoDATATYPE_DEFINITION_INTEGER.CommitPhaseOneInstance(datatype_definition_integer)
 	}
 

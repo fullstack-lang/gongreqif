@@ -153,10 +153,10 @@ type BackRepoSPEC_HIERARCHYStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoSPEC_HIERARCHY.stage
 	return
 }
@@ -174,9 +174,19 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) GetSPEC_HIERARCHYDBF
 
 // BackRepoSPEC_HIERARCHY.CommitPhaseOne commits all staged instances of SPEC_HIERARCHY to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var spec_hierarchys []*models.SPEC_HIERARCHY
 	for spec_hierarchy := range stage.SPEC_HIERARCHYs {
+		spec_hierarchys = append(spec_hierarchys, spec_hierarchy)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(spec_hierarchys, func(i, j int) bool {
+		return stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchys[i]] < stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchys[j]]
+	})
+
+	for _, spec_hierarchy := range spec_hierarchys {
 		backRepoSPEC_HIERARCHY.CommitPhaseOneInstance(spec_hierarchy)
 	}
 

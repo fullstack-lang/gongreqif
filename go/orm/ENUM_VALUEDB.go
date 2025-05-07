@@ -139,10 +139,10 @@ type BackRepoENUM_VALUEStruct struct {
 
 	db db.DBInterface
 
-	stage *models.StageStruct
+	stage *models.Stage
 }
 
-func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) GetStage() (stage *models.StageStruct) {
+func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) GetStage() (stage *models.Stage) {
 	stage = backRepoENUM_VALUE.stage
 	return
 }
@@ -160,9 +160,19 @@ func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) GetENUM_VALUEDBFromENUM_VALU
 
 // BackRepoENUM_VALUE.CommitPhaseOne commits all staged instances of ENUM_VALUE to the BackRepo
 // Phase One is the creation of instance in the database if it is not yet done to get the unique ID for each staged instance
-func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) CommitPhaseOne(stage *models.StageStruct) (Error error) {
+func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) CommitPhaseOne(stage *models.Stage) (Error error) {
 
+	var enum_values []*models.ENUM_VALUE
 	for enum_value := range stage.ENUM_VALUEs {
+		enum_values = append(enum_values, enum_value)
+	}
+
+	// Sort by the order stored in Map_Staged_Order.
+	sort.Slice(enum_values, func(i, j int) bool {
+		return stage.ENUM_VALUEMap_Staged_Order[enum_values[i]] < stage.ENUM_VALUEMap_Staged_Order[enum_values[j]]
+	})
+
+	for _, enum_value := range enum_values {
 		backRepoENUM_VALUE.CommitPhaseOneInstance(enum_value)
 	}
 
