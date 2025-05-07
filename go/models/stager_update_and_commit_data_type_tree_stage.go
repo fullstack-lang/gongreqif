@@ -13,12 +13,14 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 	rootNode := &tree.Node{
 		Name:       "Data types",
 		IsExpanded: true,
+		FontStyle:  tree.ITALIC,
 	}
 
 	{
 		datatypeCategory := &tree.Node{
 			Name:       "Data types XHTML",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_XHTML {
@@ -34,6 +36,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		datatypeCategory := &tree.Node{
 			Name:       "Data types String",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_STRING {
@@ -49,6 +52,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		datatypeCategory := &tree.Node{
 			Name:       "Data types Enumeration",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_ENUMERATION {
@@ -69,6 +73,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		datatypeCategory := &tree.Node{
 			Name:       "Data types Boolean",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_BOOLEAN {
@@ -83,6 +88,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		datatypeCategory := &tree.Node{
 			Name:       "Data types Integer",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_INTEGER {
@@ -97,6 +103,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		datatypeCategory := &tree.Node{
 			Name:       "Data types Date",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_DATE {
@@ -111,6 +118,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		datatypeCategory := &tree.Node{
 			Name:       "Data types Real",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, datatypeCategory)
 		for _, datatype := range datatypes.DATATYPE_DEFINITION_REAL {

@@ -25,12 +25,14 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 	rootNode := &tree.Node{
 		Name:       "Spec types",
 		IsExpanded: true,
+		FontStyle:  tree.ITALIC,
 	}
 
 	{
 		spectypeCategory := &tree.Node{
 			Name:       "Spec Object Types",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 		for _, spectype := range spectypes.SPEC_OBJECT_TYPE {
@@ -61,6 +63,7 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 		spectypeCategory := &tree.Node{
 			Name:       "Relation Types",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 		for _, spectype := range spectypes.SPEC_RELATION_TYPE {
@@ -91,6 +94,7 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 		spectypeCategory := &tree.Node{
 			Name:       "Specification Types",
 			IsExpanded: true,
+			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 		for _, spectype := range spectypes.SPECIFICATION_TYPE {
