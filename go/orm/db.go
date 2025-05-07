@@ -80,9 +80,189 @@ type DBLite struct {
 
 	nextIDATTRIBUTE_VALUE_XHTMLDB uint
 
-	anytypeDBs map[uint]*AnyTypeDB
+	a_alternative_idDBs map[uint]*A_ALTERNATIVE_IDDB
 
-	nextIDAnyTypeDB uint
+	nextIDA_ALTERNATIVE_IDDB uint
+
+	a_attribute_definition_boolean_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB uint
+
+	a_attribute_definition_date_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_DATE_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_DATE_REFDB uint
+
+	a_attribute_definition_enumeration_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB uint
+
+	a_attribute_definition_integer_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_INTEGER_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_INTEGER_REFDB uint
+
+	a_attribute_definition_real_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_REAL_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_REAL_REFDB uint
+
+	a_attribute_definition_string_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_STRING_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_STRING_REFDB uint
+
+	a_attribute_definition_xhtml_refDBs map[uint]*A_ATTRIBUTE_DEFINITION_XHTML_REFDB
+
+	nextIDA_ATTRIBUTE_DEFINITION_XHTML_REFDB uint
+
+	a_attribute_value_booleanDBs map[uint]*A_ATTRIBUTE_VALUE_BOOLEANDB
+
+	nextIDA_ATTRIBUTE_VALUE_BOOLEANDB uint
+
+	a_attribute_value_dateDBs map[uint]*A_ATTRIBUTE_VALUE_DATEDB
+
+	nextIDA_ATTRIBUTE_VALUE_DATEDB uint
+
+	a_attribute_value_enumerationDBs map[uint]*A_ATTRIBUTE_VALUE_ENUMERATIONDB
+
+	nextIDA_ATTRIBUTE_VALUE_ENUMERATIONDB uint
+
+	a_attribute_value_integerDBs map[uint]*A_ATTRIBUTE_VALUE_INTEGERDB
+
+	nextIDA_ATTRIBUTE_VALUE_INTEGERDB uint
+
+	a_attribute_value_realDBs map[uint]*A_ATTRIBUTE_VALUE_REALDB
+
+	nextIDA_ATTRIBUTE_VALUE_REALDB uint
+
+	a_attribute_value_stringDBs map[uint]*A_ATTRIBUTE_VALUE_STRINGDB
+
+	nextIDA_ATTRIBUTE_VALUE_STRINGDB uint
+
+	a_attribute_value_xhtmlDBs map[uint]*A_ATTRIBUTE_VALUE_XHTMLDB
+
+	nextIDA_ATTRIBUTE_VALUE_XHTMLDB uint
+
+	a_attribute_value_xhtml_1DBs map[uint]*A_ATTRIBUTE_VALUE_XHTML_1DB
+
+	nextIDA_ATTRIBUTE_VALUE_XHTML_1DB uint
+
+	a_childrenDBs map[uint]*A_CHILDRENDB
+
+	nextIDA_CHILDRENDB uint
+
+	a_core_contentDBs map[uint]*A_CORE_CONTENTDB
+
+	nextIDA_CORE_CONTENTDB uint
+
+	a_datatypesDBs map[uint]*A_DATATYPESDB
+
+	nextIDA_DATATYPESDB uint
+
+	a_datatype_definition_boolean_refDBs map[uint]*A_DATATYPE_DEFINITION_BOOLEAN_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_BOOLEAN_REFDB uint
+
+	a_datatype_definition_date_refDBs map[uint]*A_DATATYPE_DEFINITION_DATE_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_DATE_REFDB uint
+
+	a_datatype_definition_enumeration_refDBs map[uint]*A_DATATYPE_DEFINITION_ENUMERATION_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_ENUMERATION_REFDB uint
+
+	a_datatype_definition_integer_refDBs map[uint]*A_DATATYPE_DEFINITION_INTEGER_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_INTEGER_REFDB uint
+
+	a_datatype_definition_real_refDBs map[uint]*A_DATATYPE_DEFINITION_REAL_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_REAL_REFDB uint
+
+	a_datatype_definition_string_refDBs map[uint]*A_DATATYPE_DEFINITION_STRING_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_STRING_REFDB uint
+
+	a_datatype_definition_xhtml_refDBs map[uint]*A_DATATYPE_DEFINITION_XHTML_REFDB
+
+	nextIDA_DATATYPE_DEFINITION_XHTML_REFDB uint
+
+	a_editable_attsDBs map[uint]*A_EDITABLE_ATTSDB
+
+	nextIDA_EDITABLE_ATTSDB uint
+
+	a_enum_value_refDBs map[uint]*A_ENUM_VALUE_REFDB
+
+	nextIDA_ENUM_VALUE_REFDB uint
+
+	a_objectDBs map[uint]*A_OBJECTDB
+
+	nextIDA_OBJECTDB uint
+
+	a_propertiesDBs map[uint]*A_PROPERTIESDB
+
+	nextIDA_PROPERTIESDB uint
+
+	a_relation_group_type_refDBs map[uint]*A_RELATION_GROUP_TYPE_REFDB
+
+	nextIDA_RELATION_GROUP_TYPE_REFDB uint
+
+	a_source_1DBs map[uint]*A_SOURCE_1DB
+
+	nextIDA_SOURCE_1DB uint
+
+	a_source_specification_1DBs map[uint]*A_SOURCE_SPECIFICATION_1DB
+
+	nextIDA_SOURCE_SPECIFICATION_1DB uint
+
+	a_specificationsDBs map[uint]*A_SPECIFICATIONSDB
+
+	nextIDA_SPECIFICATIONSDB uint
+
+	a_specification_type_refDBs map[uint]*A_SPECIFICATION_TYPE_REFDB
+
+	nextIDA_SPECIFICATION_TYPE_REFDB uint
+
+	a_specified_valuesDBs map[uint]*A_SPECIFIED_VALUESDB
+
+	nextIDA_SPECIFIED_VALUESDB uint
+
+	a_spec_attributesDBs map[uint]*A_SPEC_ATTRIBUTESDB
+
+	nextIDA_SPEC_ATTRIBUTESDB uint
+
+	a_spec_objectsDBs map[uint]*A_SPEC_OBJECTSDB
+
+	nextIDA_SPEC_OBJECTSDB uint
+
+	a_spec_object_type_refDBs map[uint]*A_SPEC_OBJECT_TYPE_REFDB
+
+	nextIDA_SPEC_OBJECT_TYPE_REFDB uint
+
+	a_spec_relationsDBs map[uint]*A_SPEC_RELATIONSDB
+
+	nextIDA_SPEC_RELATIONSDB uint
+
+	a_spec_relation_groupsDBs map[uint]*A_SPEC_RELATION_GROUPSDB
+
+	nextIDA_SPEC_RELATION_GROUPSDB uint
+
+	a_spec_relation_refDBs map[uint]*A_SPEC_RELATION_REFDB
+
+	nextIDA_SPEC_RELATION_REFDB uint
+
+	a_spec_relation_type_refDBs map[uint]*A_SPEC_RELATION_TYPE_REFDB
+
+	nextIDA_SPEC_RELATION_TYPE_REFDB uint
+
+	a_spec_typesDBs map[uint]*A_SPEC_TYPESDB
+
+	nextIDA_SPEC_TYPESDB uint
+
+	a_the_headerDBs map[uint]*A_THE_HEADERDB
+
+	nextIDA_THE_HEADERDB uint
+
+	a_tool_extensionsDBs map[uint]*A_TOOL_EXTENSIONSDB
+
+	nextIDA_TOOL_EXTENSIONSDB uint
 
 	datatype_definition_booleanDBs map[uint]*DATATYPE_DEFINITION_BOOLEANDB
 
@@ -175,194 +355,6 @@ type DBLite struct {
 	xhtml_contentDBs map[uint]*XHTML_CONTENTDB
 
 	nextIDXHTML_CONTENTDB uint
-
-	xhtml_inlpres_typeDBs map[uint]*Xhtml_InlPres_typeDB
-
-	nextIDXhtml_InlPres_typeDB uint
-
-	xhtml_a_typeDBs map[uint]*Xhtml_a_typeDB
-
-	nextIDXhtml_a_typeDB uint
-
-	xhtml_abbr_typeDBs map[uint]*Xhtml_abbr_typeDB
-
-	nextIDXhtml_abbr_typeDB uint
-
-	xhtml_acronym_typeDBs map[uint]*Xhtml_acronym_typeDB
-
-	nextIDXhtml_acronym_typeDB uint
-
-	xhtml_address_typeDBs map[uint]*Xhtml_address_typeDB
-
-	nextIDXhtml_address_typeDB uint
-
-	xhtml_blockquote_typeDBs map[uint]*Xhtml_blockquote_typeDB
-
-	nextIDXhtml_blockquote_typeDB uint
-
-	xhtml_br_typeDBs map[uint]*Xhtml_br_typeDB
-
-	nextIDXhtml_br_typeDB uint
-
-	xhtml_caption_typeDBs map[uint]*Xhtml_caption_typeDB
-
-	nextIDXhtml_caption_typeDB uint
-
-	xhtml_cite_typeDBs map[uint]*Xhtml_cite_typeDB
-
-	nextIDXhtml_cite_typeDB uint
-
-	xhtml_code_typeDBs map[uint]*Xhtml_code_typeDB
-
-	nextIDXhtml_code_typeDB uint
-
-	xhtml_col_typeDBs map[uint]*Xhtml_col_typeDB
-
-	nextIDXhtml_col_typeDB uint
-
-	xhtml_colgroup_typeDBs map[uint]*Xhtml_colgroup_typeDB
-
-	nextIDXhtml_colgroup_typeDB uint
-
-	xhtml_dd_typeDBs map[uint]*Xhtml_dd_typeDB
-
-	nextIDXhtml_dd_typeDB uint
-
-	xhtml_dfn_typeDBs map[uint]*Xhtml_dfn_typeDB
-
-	nextIDXhtml_dfn_typeDB uint
-
-	xhtml_div_typeDBs map[uint]*Xhtml_div_typeDB
-
-	nextIDXhtml_div_typeDB uint
-
-	xhtml_dl_typeDBs map[uint]*Xhtml_dl_typeDB
-
-	nextIDXhtml_dl_typeDB uint
-
-	xhtml_dt_typeDBs map[uint]*Xhtml_dt_typeDB
-
-	nextIDXhtml_dt_typeDB uint
-
-	xhtml_edit_typeDBs map[uint]*Xhtml_edit_typeDB
-
-	nextIDXhtml_edit_typeDB uint
-
-	xhtml_em_typeDBs map[uint]*Xhtml_em_typeDB
-
-	nextIDXhtml_em_typeDB uint
-
-	xhtml_h1_typeDBs map[uint]*Xhtml_h1_typeDB
-
-	nextIDXhtml_h1_typeDB uint
-
-	xhtml_h2_typeDBs map[uint]*Xhtml_h2_typeDB
-
-	nextIDXhtml_h2_typeDB uint
-
-	xhtml_h3_typeDBs map[uint]*Xhtml_h3_typeDB
-
-	nextIDXhtml_h3_typeDB uint
-
-	xhtml_h4_typeDBs map[uint]*Xhtml_h4_typeDB
-
-	nextIDXhtml_h4_typeDB uint
-
-	xhtml_h5_typeDBs map[uint]*Xhtml_h5_typeDB
-
-	nextIDXhtml_h5_typeDB uint
-
-	xhtml_h6_typeDBs map[uint]*Xhtml_h6_typeDB
-
-	nextIDXhtml_h6_typeDB uint
-
-	xhtml_heading_typeDBs map[uint]*Xhtml_heading_typeDB
-
-	nextIDXhtml_heading_typeDB uint
-
-	xhtml_hr_typeDBs map[uint]*Xhtml_hr_typeDB
-
-	nextIDXhtml_hr_typeDB uint
-
-	xhtml_kbd_typeDBs map[uint]*Xhtml_kbd_typeDB
-
-	nextIDXhtml_kbd_typeDB uint
-
-	xhtml_li_typeDBs map[uint]*Xhtml_li_typeDB
-
-	nextIDXhtml_li_typeDB uint
-
-	xhtml_object_typeDBs map[uint]*Xhtml_object_typeDB
-
-	nextIDXhtml_object_typeDB uint
-
-	xhtml_ol_typeDBs map[uint]*Xhtml_ol_typeDB
-
-	nextIDXhtml_ol_typeDB uint
-
-	xhtml_p_typeDBs map[uint]*Xhtml_p_typeDB
-
-	nextIDXhtml_p_typeDB uint
-
-	xhtml_param_typeDBs map[uint]*Xhtml_param_typeDB
-
-	nextIDXhtml_param_typeDB uint
-
-	xhtml_pre_typeDBs map[uint]*Xhtml_pre_typeDB
-
-	nextIDXhtml_pre_typeDB uint
-
-	xhtml_q_typeDBs map[uint]*Xhtml_q_typeDB
-
-	nextIDXhtml_q_typeDB uint
-
-	xhtml_samp_typeDBs map[uint]*Xhtml_samp_typeDB
-
-	nextIDXhtml_samp_typeDB uint
-
-	xhtml_span_typeDBs map[uint]*Xhtml_span_typeDB
-
-	nextIDXhtml_span_typeDB uint
-
-	xhtml_strong_typeDBs map[uint]*Xhtml_strong_typeDB
-
-	nextIDXhtml_strong_typeDB uint
-
-	xhtml_table_typeDBs map[uint]*Xhtml_table_typeDB
-
-	nextIDXhtml_table_typeDB uint
-
-	xhtml_tbody_typeDBs map[uint]*Xhtml_tbody_typeDB
-
-	nextIDXhtml_tbody_typeDB uint
-
-	xhtml_td_typeDBs map[uint]*Xhtml_td_typeDB
-
-	nextIDXhtml_td_typeDB uint
-
-	xhtml_tfoot_typeDBs map[uint]*Xhtml_tfoot_typeDB
-
-	nextIDXhtml_tfoot_typeDB uint
-
-	xhtml_th_typeDBs map[uint]*Xhtml_th_typeDB
-
-	nextIDXhtml_th_typeDB uint
-
-	xhtml_thead_typeDBs map[uint]*Xhtml_thead_typeDB
-
-	nextIDXhtml_thead_typeDB uint
-
-	xhtml_tr_typeDBs map[uint]*Xhtml_tr_typeDB
-
-	nextIDXhtml_tr_typeDB uint
-
-	xhtml_ul_typeDBs map[uint]*Xhtml_ul_typeDB
-
-	nextIDXhtml_ul_typeDB uint
-
-	xhtml_var_typeDBs map[uint]*Xhtml_var_typeDB
-
-	nextIDXhtml_var_typeDB uint
 }
 
 // NewDBLite creates a new instance of DBLite
@@ -400,7 +392,97 @@ func NewDBLite() *DBLite {
 
 		attribute_value_xhtmlDBs: make(map[uint]*ATTRIBUTE_VALUE_XHTMLDB),
 
-		anytypeDBs: make(map[uint]*AnyTypeDB),
+		a_alternative_idDBs: make(map[uint]*A_ALTERNATIVE_IDDB),
+
+		a_attribute_definition_boolean_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB),
+
+		a_attribute_definition_date_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_DATE_REFDB),
+
+		a_attribute_definition_enumeration_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB),
+
+		a_attribute_definition_integer_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_INTEGER_REFDB),
+
+		a_attribute_definition_real_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_REAL_REFDB),
+
+		a_attribute_definition_string_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_STRING_REFDB),
+
+		a_attribute_definition_xhtml_refDBs: make(map[uint]*A_ATTRIBUTE_DEFINITION_XHTML_REFDB),
+
+		a_attribute_value_booleanDBs: make(map[uint]*A_ATTRIBUTE_VALUE_BOOLEANDB),
+
+		a_attribute_value_dateDBs: make(map[uint]*A_ATTRIBUTE_VALUE_DATEDB),
+
+		a_attribute_value_enumerationDBs: make(map[uint]*A_ATTRIBUTE_VALUE_ENUMERATIONDB),
+
+		a_attribute_value_integerDBs: make(map[uint]*A_ATTRIBUTE_VALUE_INTEGERDB),
+
+		a_attribute_value_realDBs: make(map[uint]*A_ATTRIBUTE_VALUE_REALDB),
+
+		a_attribute_value_stringDBs: make(map[uint]*A_ATTRIBUTE_VALUE_STRINGDB),
+
+		a_attribute_value_xhtmlDBs: make(map[uint]*A_ATTRIBUTE_VALUE_XHTMLDB),
+
+		a_attribute_value_xhtml_1DBs: make(map[uint]*A_ATTRIBUTE_VALUE_XHTML_1DB),
+
+		a_childrenDBs: make(map[uint]*A_CHILDRENDB),
+
+		a_core_contentDBs: make(map[uint]*A_CORE_CONTENTDB),
+
+		a_datatypesDBs: make(map[uint]*A_DATATYPESDB),
+
+		a_datatype_definition_boolean_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_BOOLEAN_REFDB),
+
+		a_datatype_definition_date_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_DATE_REFDB),
+
+		a_datatype_definition_enumeration_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_ENUMERATION_REFDB),
+
+		a_datatype_definition_integer_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_INTEGER_REFDB),
+
+		a_datatype_definition_real_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_REAL_REFDB),
+
+		a_datatype_definition_string_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_STRING_REFDB),
+
+		a_datatype_definition_xhtml_refDBs: make(map[uint]*A_DATATYPE_DEFINITION_XHTML_REFDB),
+
+		a_editable_attsDBs: make(map[uint]*A_EDITABLE_ATTSDB),
+
+		a_enum_value_refDBs: make(map[uint]*A_ENUM_VALUE_REFDB),
+
+		a_objectDBs: make(map[uint]*A_OBJECTDB),
+
+		a_propertiesDBs: make(map[uint]*A_PROPERTIESDB),
+
+		a_relation_group_type_refDBs: make(map[uint]*A_RELATION_GROUP_TYPE_REFDB),
+
+		a_source_1DBs: make(map[uint]*A_SOURCE_1DB),
+
+		a_source_specification_1DBs: make(map[uint]*A_SOURCE_SPECIFICATION_1DB),
+
+		a_specificationsDBs: make(map[uint]*A_SPECIFICATIONSDB),
+
+		a_specification_type_refDBs: make(map[uint]*A_SPECIFICATION_TYPE_REFDB),
+
+		a_specified_valuesDBs: make(map[uint]*A_SPECIFIED_VALUESDB),
+
+		a_spec_attributesDBs: make(map[uint]*A_SPEC_ATTRIBUTESDB),
+
+		a_spec_objectsDBs: make(map[uint]*A_SPEC_OBJECTSDB),
+
+		a_spec_object_type_refDBs: make(map[uint]*A_SPEC_OBJECT_TYPE_REFDB),
+
+		a_spec_relationsDBs: make(map[uint]*A_SPEC_RELATIONSDB),
+
+		a_spec_relation_groupsDBs: make(map[uint]*A_SPEC_RELATION_GROUPSDB),
+
+		a_spec_relation_refDBs: make(map[uint]*A_SPEC_RELATION_REFDB),
+
+		a_spec_relation_type_refDBs: make(map[uint]*A_SPEC_RELATION_TYPE_REFDB),
+
+		a_spec_typesDBs: make(map[uint]*A_SPEC_TYPESDB),
+
+		a_the_headerDBs: make(map[uint]*A_THE_HEADERDB),
+
+		a_tool_extensionsDBs: make(map[uint]*A_TOOL_EXTENSIONSDB),
 
 		datatype_definition_booleanDBs: make(map[uint]*DATATYPE_DEFINITION_BOOLEANDB),
 
@@ -447,100 +529,6 @@ func NewDBLite() *DBLite {
 		spec_relation_typeDBs: make(map[uint]*SPEC_RELATION_TYPEDB),
 
 		xhtml_contentDBs: make(map[uint]*XHTML_CONTENTDB),
-
-		xhtml_inlpres_typeDBs: make(map[uint]*Xhtml_InlPres_typeDB),
-
-		xhtml_a_typeDBs: make(map[uint]*Xhtml_a_typeDB),
-
-		xhtml_abbr_typeDBs: make(map[uint]*Xhtml_abbr_typeDB),
-
-		xhtml_acronym_typeDBs: make(map[uint]*Xhtml_acronym_typeDB),
-
-		xhtml_address_typeDBs: make(map[uint]*Xhtml_address_typeDB),
-
-		xhtml_blockquote_typeDBs: make(map[uint]*Xhtml_blockquote_typeDB),
-
-		xhtml_br_typeDBs: make(map[uint]*Xhtml_br_typeDB),
-
-		xhtml_caption_typeDBs: make(map[uint]*Xhtml_caption_typeDB),
-
-		xhtml_cite_typeDBs: make(map[uint]*Xhtml_cite_typeDB),
-
-		xhtml_code_typeDBs: make(map[uint]*Xhtml_code_typeDB),
-
-		xhtml_col_typeDBs: make(map[uint]*Xhtml_col_typeDB),
-
-		xhtml_colgroup_typeDBs: make(map[uint]*Xhtml_colgroup_typeDB),
-
-		xhtml_dd_typeDBs: make(map[uint]*Xhtml_dd_typeDB),
-
-		xhtml_dfn_typeDBs: make(map[uint]*Xhtml_dfn_typeDB),
-
-		xhtml_div_typeDBs: make(map[uint]*Xhtml_div_typeDB),
-
-		xhtml_dl_typeDBs: make(map[uint]*Xhtml_dl_typeDB),
-
-		xhtml_dt_typeDBs: make(map[uint]*Xhtml_dt_typeDB),
-
-		xhtml_edit_typeDBs: make(map[uint]*Xhtml_edit_typeDB),
-
-		xhtml_em_typeDBs: make(map[uint]*Xhtml_em_typeDB),
-
-		xhtml_h1_typeDBs: make(map[uint]*Xhtml_h1_typeDB),
-
-		xhtml_h2_typeDBs: make(map[uint]*Xhtml_h2_typeDB),
-
-		xhtml_h3_typeDBs: make(map[uint]*Xhtml_h3_typeDB),
-
-		xhtml_h4_typeDBs: make(map[uint]*Xhtml_h4_typeDB),
-
-		xhtml_h5_typeDBs: make(map[uint]*Xhtml_h5_typeDB),
-
-		xhtml_h6_typeDBs: make(map[uint]*Xhtml_h6_typeDB),
-
-		xhtml_heading_typeDBs: make(map[uint]*Xhtml_heading_typeDB),
-
-		xhtml_hr_typeDBs: make(map[uint]*Xhtml_hr_typeDB),
-
-		xhtml_kbd_typeDBs: make(map[uint]*Xhtml_kbd_typeDB),
-
-		xhtml_li_typeDBs: make(map[uint]*Xhtml_li_typeDB),
-
-		xhtml_object_typeDBs: make(map[uint]*Xhtml_object_typeDB),
-
-		xhtml_ol_typeDBs: make(map[uint]*Xhtml_ol_typeDB),
-
-		xhtml_p_typeDBs: make(map[uint]*Xhtml_p_typeDB),
-
-		xhtml_param_typeDBs: make(map[uint]*Xhtml_param_typeDB),
-
-		xhtml_pre_typeDBs: make(map[uint]*Xhtml_pre_typeDB),
-
-		xhtml_q_typeDBs: make(map[uint]*Xhtml_q_typeDB),
-
-		xhtml_samp_typeDBs: make(map[uint]*Xhtml_samp_typeDB),
-
-		xhtml_span_typeDBs: make(map[uint]*Xhtml_span_typeDB),
-
-		xhtml_strong_typeDBs: make(map[uint]*Xhtml_strong_typeDB),
-
-		xhtml_table_typeDBs: make(map[uint]*Xhtml_table_typeDB),
-
-		xhtml_tbody_typeDBs: make(map[uint]*Xhtml_tbody_typeDB),
-
-		xhtml_td_typeDBs: make(map[uint]*Xhtml_td_typeDB),
-
-		xhtml_tfoot_typeDBs: make(map[uint]*Xhtml_tfoot_typeDB),
-
-		xhtml_th_typeDBs: make(map[uint]*Xhtml_th_typeDB),
-
-		xhtml_thead_typeDBs: make(map[uint]*Xhtml_thead_typeDB),
-
-		xhtml_tr_typeDBs: make(map[uint]*Xhtml_tr_typeDB),
-
-		xhtml_ul_typeDBs: make(map[uint]*Xhtml_ul_typeDB),
-
-		xhtml_var_typeDBs: make(map[uint]*Xhtml_var_typeDB),
 	}
 }
 
@@ -615,10 +603,190 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDATTRIBUTE_VALUE_XHTMLDB++
 		v.ID = db.nextIDATTRIBUTE_VALUE_XHTMLDB
 		db.attribute_value_xhtmlDBs[v.ID] = v
-	case *AnyTypeDB:
-		db.nextIDAnyTypeDB++
-		v.ID = db.nextIDAnyTypeDB
-		db.anytypeDBs[v.ID] = v
+	case *A_ALTERNATIVE_IDDB:
+		db.nextIDA_ALTERNATIVE_IDDB++
+		v.ID = db.nextIDA_ALTERNATIVE_IDDB
+		db.a_alternative_idDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB
+		db.a_attribute_definition_boolean_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_DATE_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_DATE_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_DATE_REFDB
+		db.a_attribute_definition_date_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB
+		db.a_attribute_definition_enumeration_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_INTEGER_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_INTEGER_REFDB
+		db.a_attribute_definition_integer_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_REAL_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_REAL_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_REAL_REFDB
+		db.a_attribute_definition_real_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_STRING_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_STRING_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_STRING_REFDB
+		db.a_attribute_definition_string_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REFDB:
+		db.nextIDA_ATTRIBUTE_DEFINITION_XHTML_REFDB++
+		v.ID = db.nextIDA_ATTRIBUTE_DEFINITION_XHTML_REFDB
+		db.a_attribute_definition_xhtml_refDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_BOOLEANDB:
+		db.nextIDA_ATTRIBUTE_VALUE_BOOLEANDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_BOOLEANDB
+		db.a_attribute_value_booleanDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_DATEDB:
+		db.nextIDA_ATTRIBUTE_VALUE_DATEDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_DATEDB
+		db.a_attribute_value_dateDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_ENUMERATIONDB:
+		db.nextIDA_ATTRIBUTE_VALUE_ENUMERATIONDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_ENUMERATIONDB
+		db.a_attribute_value_enumerationDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_INTEGERDB:
+		db.nextIDA_ATTRIBUTE_VALUE_INTEGERDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_INTEGERDB
+		db.a_attribute_value_integerDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_REALDB:
+		db.nextIDA_ATTRIBUTE_VALUE_REALDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_REALDB
+		db.a_attribute_value_realDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_STRINGDB:
+		db.nextIDA_ATTRIBUTE_VALUE_STRINGDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_STRINGDB
+		db.a_attribute_value_stringDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_XHTMLDB:
+		db.nextIDA_ATTRIBUTE_VALUE_XHTMLDB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_XHTMLDB
+		db.a_attribute_value_xhtmlDBs[v.ID] = v
+	case *A_ATTRIBUTE_VALUE_XHTML_1DB:
+		db.nextIDA_ATTRIBUTE_VALUE_XHTML_1DB++
+		v.ID = db.nextIDA_ATTRIBUTE_VALUE_XHTML_1DB
+		db.a_attribute_value_xhtml_1DBs[v.ID] = v
+	case *A_CHILDRENDB:
+		db.nextIDA_CHILDRENDB++
+		v.ID = db.nextIDA_CHILDRENDB
+		db.a_childrenDBs[v.ID] = v
+	case *A_CORE_CONTENTDB:
+		db.nextIDA_CORE_CONTENTDB++
+		v.ID = db.nextIDA_CORE_CONTENTDB
+		db.a_core_contentDBs[v.ID] = v
+	case *A_DATATYPESDB:
+		db.nextIDA_DATATYPESDB++
+		v.ID = db.nextIDA_DATATYPESDB
+		db.a_datatypesDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_BOOLEAN_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_BOOLEAN_REFDB
+		db.a_datatype_definition_boolean_refDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_DATE_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_DATE_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_DATE_REFDB
+		db.a_datatype_definition_date_refDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_ENUMERATION_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_ENUMERATION_REFDB
+		db.a_datatype_definition_enumeration_refDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_INTEGER_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_INTEGER_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_INTEGER_REFDB
+		db.a_datatype_definition_integer_refDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_REAL_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_REAL_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_REAL_REFDB
+		db.a_datatype_definition_real_refDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_STRING_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_STRING_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_STRING_REFDB
+		db.a_datatype_definition_string_refDBs[v.ID] = v
+	case *A_DATATYPE_DEFINITION_XHTML_REFDB:
+		db.nextIDA_DATATYPE_DEFINITION_XHTML_REFDB++
+		v.ID = db.nextIDA_DATATYPE_DEFINITION_XHTML_REFDB
+		db.a_datatype_definition_xhtml_refDBs[v.ID] = v
+	case *A_EDITABLE_ATTSDB:
+		db.nextIDA_EDITABLE_ATTSDB++
+		v.ID = db.nextIDA_EDITABLE_ATTSDB
+		db.a_editable_attsDBs[v.ID] = v
+	case *A_ENUM_VALUE_REFDB:
+		db.nextIDA_ENUM_VALUE_REFDB++
+		v.ID = db.nextIDA_ENUM_VALUE_REFDB
+		db.a_enum_value_refDBs[v.ID] = v
+	case *A_OBJECTDB:
+		db.nextIDA_OBJECTDB++
+		v.ID = db.nextIDA_OBJECTDB
+		db.a_objectDBs[v.ID] = v
+	case *A_PROPERTIESDB:
+		db.nextIDA_PROPERTIESDB++
+		v.ID = db.nextIDA_PROPERTIESDB
+		db.a_propertiesDBs[v.ID] = v
+	case *A_RELATION_GROUP_TYPE_REFDB:
+		db.nextIDA_RELATION_GROUP_TYPE_REFDB++
+		v.ID = db.nextIDA_RELATION_GROUP_TYPE_REFDB
+		db.a_relation_group_type_refDBs[v.ID] = v
+	case *A_SOURCE_1DB:
+		db.nextIDA_SOURCE_1DB++
+		v.ID = db.nextIDA_SOURCE_1DB
+		db.a_source_1DBs[v.ID] = v
+	case *A_SOURCE_SPECIFICATION_1DB:
+		db.nextIDA_SOURCE_SPECIFICATION_1DB++
+		v.ID = db.nextIDA_SOURCE_SPECIFICATION_1DB
+		db.a_source_specification_1DBs[v.ID] = v
+	case *A_SPECIFICATIONSDB:
+		db.nextIDA_SPECIFICATIONSDB++
+		v.ID = db.nextIDA_SPECIFICATIONSDB
+		db.a_specificationsDBs[v.ID] = v
+	case *A_SPECIFICATION_TYPE_REFDB:
+		db.nextIDA_SPECIFICATION_TYPE_REFDB++
+		v.ID = db.nextIDA_SPECIFICATION_TYPE_REFDB
+		db.a_specification_type_refDBs[v.ID] = v
+	case *A_SPECIFIED_VALUESDB:
+		db.nextIDA_SPECIFIED_VALUESDB++
+		v.ID = db.nextIDA_SPECIFIED_VALUESDB
+		db.a_specified_valuesDBs[v.ID] = v
+	case *A_SPEC_ATTRIBUTESDB:
+		db.nextIDA_SPEC_ATTRIBUTESDB++
+		v.ID = db.nextIDA_SPEC_ATTRIBUTESDB
+		db.a_spec_attributesDBs[v.ID] = v
+	case *A_SPEC_OBJECTSDB:
+		db.nextIDA_SPEC_OBJECTSDB++
+		v.ID = db.nextIDA_SPEC_OBJECTSDB
+		db.a_spec_objectsDBs[v.ID] = v
+	case *A_SPEC_OBJECT_TYPE_REFDB:
+		db.nextIDA_SPEC_OBJECT_TYPE_REFDB++
+		v.ID = db.nextIDA_SPEC_OBJECT_TYPE_REFDB
+		db.a_spec_object_type_refDBs[v.ID] = v
+	case *A_SPEC_RELATIONSDB:
+		db.nextIDA_SPEC_RELATIONSDB++
+		v.ID = db.nextIDA_SPEC_RELATIONSDB
+		db.a_spec_relationsDBs[v.ID] = v
+	case *A_SPEC_RELATION_GROUPSDB:
+		db.nextIDA_SPEC_RELATION_GROUPSDB++
+		v.ID = db.nextIDA_SPEC_RELATION_GROUPSDB
+		db.a_spec_relation_groupsDBs[v.ID] = v
+	case *A_SPEC_RELATION_REFDB:
+		db.nextIDA_SPEC_RELATION_REFDB++
+		v.ID = db.nextIDA_SPEC_RELATION_REFDB
+		db.a_spec_relation_refDBs[v.ID] = v
+	case *A_SPEC_RELATION_TYPE_REFDB:
+		db.nextIDA_SPEC_RELATION_TYPE_REFDB++
+		v.ID = db.nextIDA_SPEC_RELATION_TYPE_REFDB
+		db.a_spec_relation_type_refDBs[v.ID] = v
+	case *A_SPEC_TYPESDB:
+		db.nextIDA_SPEC_TYPESDB++
+		v.ID = db.nextIDA_SPEC_TYPESDB
+		db.a_spec_typesDBs[v.ID] = v
+	case *A_THE_HEADERDB:
+		db.nextIDA_THE_HEADERDB++
+		v.ID = db.nextIDA_THE_HEADERDB
+		db.a_the_headerDBs[v.ID] = v
+	case *A_TOOL_EXTENSIONSDB:
+		db.nextIDA_TOOL_EXTENSIONSDB++
+		v.ID = db.nextIDA_TOOL_EXTENSIONSDB
+		db.a_tool_extensionsDBs[v.ID] = v
 	case *DATATYPE_DEFINITION_BOOLEANDB:
 		db.nextIDDATATYPE_DEFINITION_BOOLEANDB++
 		v.ID = db.nextIDDATATYPE_DEFINITION_BOOLEANDB
@@ -711,194 +879,6 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDXHTML_CONTENTDB++
 		v.ID = db.nextIDXHTML_CONTENTDB
 		db.xhtml_contentDBs[v.ID] = v
-	case *Xhtml_InlPres_typeDB:
-		db.nextIDXhtml_InlPres_typeDB++
-		v.ID = db.nextIDXhtml_InlPres_typeDB
-		db.xhtml_inlpres_typeDBs[v.ID] = v
-	case *Xhtml_a_typeDB:
-		db.nextIDXhtml_a_typeDB++
-		v.ID = db.nextIDXhtml_a_typeDB
-		db.xhtml_a_typeDBs[v.ID] = v
-	case *Xhtml_abbr_typeDB:
-		db.nextIDXhtml_abbr_typeDB++
-		v.ID = db.nextIDXhtml_abbr_typeDB
-		db.xhtml_abbr_typeDBs[v.ID] = v
-	case *Xhtml_acronym_typeDB:
-		db.nextIDXhtml_acronym_typeDB++
-		v.ID = db.nextIDXhtml_acronym_typeDB
-		db.xhtml_acronym_typeDBs[v.ID] = v
-	case *Xhtml_address_typeDB:
-		db.nextIDXhtml_address_typeDB++
-		v.ID = db.nextIDXhtml_address_typeDB
-		db.xhtml_address_typeDBs[v.ID] = v
-	case *Xhtml_blockquote_typeDB:
-		db.nextIDXhtml_blockquote_typeDB++
-		v.ID = db.nextIDXhtml_blockquote_typeDB
-		db.xhtml_blockquote_typeDBs[v.ID] = v
-	case *Xhtml_br_typeDB:
-		db.nextIDXhtml_br_typeDB++
-		v.ID = db.nextIDXhtml_br_typeDB
-		db.xhtml_br_typeDBs[v.ID] = v
-	case *Xhtml_caption_typeDB:
-		db.nextIDXhtml_caption_typeDB++
-		v.ID = db.nextIDXhtml_caption_typeDB
-		db.xhtml_caption_typeDBs[v.ID] = v
-	case *Xhtml_cite_typeDB:
-		db.nextIDXhtml_cite_typeDB++
-		v.ID = db.nextIDXhtml_cite_typeDB
-		db.xhtml_cite_typeDBs[v.ID] = v
-	case *Xhtml_code_typeDB:
-		db.nextIDXhtml_code_typeDB++
-		v.ID = db.nextIDXhtml_code_typeDB
-		db.xhtml_code_typeDBs[v.ID] = v
-	case *Xhtml_col_typeDB:
-		db.nextIDXhtml_col_typeDB++
-		v.ID = db.nextIDXhtml_col_typeDB
-		db.xhtml_col_typeDBs[v.ID] = v
-	case *Xhtml_colgroup_typeDB:
-		db.nextIDXhtml_colgroup_typeDB++
-		v.ID = db.nextIDXhtml_colgroup_typeDB
-		db.xhtml_colgroup_typeDBs[v.ID] = v
-	case *Xhtml_dd_typeDB:
-		db.nextIDXhtml_dd_typeDB++
-		v.ID = db.nextIDXhtml_dd_typeDB
-		db.xhtml_dd_typeDBs[v.ID] = v
-	case *Xhtml_dfn_typeDB:
-		db.nextIDXhtml_dfn_typeDB++
-		v.ID = db.nextIDXhtml_dfn_typeDB
-		db.xhtml_dfn_typeDBs[v.ID] = v
-	case *Xhtml_div_typeDB:
-		db.nextIDXhtml_div_typeDB++
-		v.ID = db.nextIDXhtml_div_typeDB
-		db.xhtml_div_typeDBs[v.ID] = v
-	case *Xhtml_dl_typeDB:
-		db.nextIDXhtml_dl_typeDB++
-		v.ID = db.nextIDXhtml_dl_typeDB
-		db.xhtml_dl_typeDBs[v.ID] = v
-	case *Xhtml_dt_typeDB:
-		db.nextIDXhtml_dt_typeDB++
-		v.ID = db.nextIDXhtml_dt_typeDB
-		db.xhtml_dt_typeDBs[v.ID] = v
-	case *Xhtml_edit_typeDB:
-		db.nextIDXhtml_edit_typeDB++
-		v.ID = db.nextIDXhtml_edit_typeDB
-		db.xhtml_edit_typeDBs[v.ID] = v
-	case *Xhtml_em_typeDB:
-		db.nextIDXhtml_em_typeDB++
-		v.ID = db.nextIDXhtml_em_typeDB
-		db.xhtml_em_typeDBs[v.ID] = v
-	case *Xhtml_h1_typeDB:
-		db.nextIDXhtml_h1_typeDB++
-		v.ID = db.nextIDXhtml_h1_typeDB
-		db.xhtml_h1_typeDBs[v.ID] = v
-	case *Xhtml_h2_typeDB:
-		db.nextIDXhtml_h2_typeDB++
-		v.ID = db.nextIDXhtml_h2_typeDB
-		db.xhtml_h2_typeDBs[v.ID] = v
-	case *Xhtml_h3_typeDB:
-		db.nextIDXhtml_h3_typeDB++
-		v.ID = db.nextIDXhtml_h3_typeDB
-		db.xhtml_h3_typeDBs[v.ID] = v
-	case *Xhtml_h4_typeDB:
-		db.nextIDXhtml_h4_typeDB++
-		v.ID = db.nextIDXhtml_h4_typeDB
-		db.xhtml_h4_typeDBs[v.ID] = v
-	case *Xhtml_h5_typeDB:
-		db.nextIDXhtml_h5_typeDB++
-		v.ID = db.nextIDXhtml_h5_typeDB
-		db.xhtml_h5_typeDBs[v.ID] = v
-	case *Xhtml_h6_typeDB:
-		db.nextIDXhtml_h6_typeDB++
-		v.ID = db.nextIDXhtml_h6_typeDB
-		db.xhtml_h6_typeDBs[v.ID] = v
-	case *Xhtml_heading_typeDB:
-		db.nextIDXhtml_heading_typeDB++
-		v.ID = db.nextIDXhtml_heading_typeDB
-		db.xhtml_heading_typeDBs[v.ID] = v
-	case *Xhtml_hr_typeDB:
-		db.nextIDXhtml_hr_typeDB++
-		v.ID = db.nextIDXhtml_hr_typeDB
-		db.xhtml_hr_typeDBs[v.ID] = v
-	case *Xhtml_kbd_typeDB:
-		db.nextIDXhtml_kbd_typeDB++
-		v.ID = db.nextIDXhtml_kbd_typeDB
-		db.xhtml_kbd_typeDBs[v.ID] = v
-	case *Xhtml_li_typeDB:
-		db.nextIDXhtml_li_typeDB++
-		v.ID = db.nextIDXhtml_li_typeDB
-		db.xhtml_li_typeDBs[v.ID] = v
-	case *Xhtml_object_typeDB:
-		db.nextIDXhtml_object_typeDB++
-		v.ID = db.nextIDXhtml_object_typeDB
-		db.xhtml_object_typeDBs[v.ID] = v
-	case *Xhtml_ol_typeDB:
-		db.nextIDXhtml_ol_typeDB++
-		v.ID = db.nextIDXhtml_ol_typeDB
-		db.xhtml_ol_typeDBs[v.ID] = v
-	case *Xhtml_p_typeDB:
-		db.nextIDXhtml_p_typeDB++
-		v.ID = db.nextIDXhtml_p_typeDB
-		db.xhtml_p_typeDBs[v.ID] = v
-	case *Xhtml_param_typeDB:
-		db.nextIDXhtml_param_typeDB++
-		v.ID = db.nextIDXhtml_param_typeDB
-		db.xhtml_param_typeDBs[v.ID] = v
-	case *Xhtml_pre_typeDB:
-		db.nextIDXhtml_pre_typeDB++
-		v.ID = db.nextIDXhtml_pre_typeDB
-		db.xhtml_pre_typeDBs[v.ID] = v
-	case *Xhtml_q_typeDB:
-		db.nextIDXhtml_q_typeDB++
-		v.ID = db.nextIDXhtml_q_typeDB
-		db.xhtml_q_typeDBs[v.ID] = v
-	case *Xhtml_samp_typeDB:
-		db.nextIDXhtml_samp_typeDB++
-		v.ID = db.nextIDXhtml_samp_typeDB
-		db.xhtml_samp_typeDBs[v.ID] = v
-	case *Xhtml_span_typeDB:
-		db.nextIDXhtml_span_typeDB++
-		v.ID = db.nextIDXhtml_span_typeDB
-		db.xhtml_span_typeDBs[v.ID] = v
-	case *Xhtml_strong_typeDB:
-		db.nextIDXhtml_strong_typeDB++
-		v.ID = db.nextIDXhtml_strong_typeDB
-		db.xhtml_strong_typeDBs[v.ID] = v
-	case *Xhtml_table_typeDB:
-		db.nextIDXhtml_table_typeDB++
-		v.ID = db.nextIDXhtml_table_typeDB
-		db.xhtml_table_typeDBs[v.ID] = v
-	case *Xhtml_tbody_typeDB:
-		db.nextIDXhtml_tbody_typeDB++
-		v.ID = db.nextIDXhtml_tbody_typeDB
-		db.xhtml_tbody_typeDBs[v.ID] = v
-	case *Xhtml_td_typeDB:
-		db.nextIDXhtml_td_typeDB++
-		v.ID = db.nextIDXhtml_td_typeDB
-		db.xhtml_td_typeDBs[v.ID] = v
-	case *Xhtml_tfoot_typeDB:
-		db.nextIDXhtml_tfoot_typeDB++
-		v.ID = db.nextIDXhtml_tfoot_typeDB
-		db.xhtml_tfoot_typeDBs[v.ID] = v
-	case *Xhtml_th_typeDB:
-		db.nextIDXhtml_th_typeDB++
-		v.ID = db.nextIDXhtml_th_typeDB
-		db.xhtml_th_typeDBs[v.ID] = v
-	case *Xhtml_thead_typeDB:
-		db.nextIDXhtml_thead_typeDB++
-		v.ID = db.nextIDXhtml_thead_typeDB
-		db.xhtml_thead_typeDBs[v.ID] = v
-	case *Xhtml_tr_typeDB:
-		db.nextIDXhtml_tr_typeDB++
-		v.ID = db.nextIDXhtml_tr_typeDB
-		db.xhtml_tr_typeDBs[v.ID] = v
-	case *Xhtml_ul_typeDB:
-		db.nextIDXhtml_ul_typeDB++
-		v.ID = db.nextIDXhtml_ul_typeDB
-		db.xhtml_ul_typeDBs[v.ID] = v
-	case *Xhtml_var_typeDB:
-		db.nextIDXhtml_var_typeDB++
-		v.ID = db.nextIDXhtml_var_typeDB
-		db.xhtml_var_typeDBs[v.ID] = v
 	default:
 		return nil, errors.New("github.com/fullstack-lang/gongreqif/go, unsupported type in Create")
 	}
@@ -957,8 +937,98 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.attribute_value_stringDBs, v.ID)
 	case *ATTRIBUTE_VALUE_XHTMLDB:
 		delete(db.attribute_value_xhtmlDBs, v.ID)
-	case *AnyTypeDB:
-		delete(db.anytypeDBs, v.ID)
+	case *A_ALTERNATIVE_IDDB:
+		delete(db.a_alternative_idDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB:
+		delete(db.a_attribute_definition_boolean_refDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_DATE_REFDB:
+		delete(db.a_attribute_definition_date_refDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB:
+		delete(db.a_attribute_definition_enumeration_refDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REFDB:
+		delete(db.a_attribute_definition_integer_refDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_REAL_REFDB:
+		delete(db.a_attribute_definition_real_refDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_STRING_REFDB:
+		delete(db.a_attribute_definition_string_refDBs, v.ID)
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REFDB:
+		delete(db.a_attribute_definition_xhtml_refDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_BOOLEANDB:
+		delete(db.a_attribute_value_booleanDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_DATEDB:
+		delete(db.a_attribute_value_dateDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_ENUMERATIONDB:
+		delete(db.a_attribute_value_enumerationDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_INTEGERDB:
+		delete(db.a_attribute_value_integerDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_REALDB:
+		delete(db.a_attribute_value_realDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_STRINGDB:
+		delete(db.a_attribute_value_stringDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_XHTMLDB:
+		delete(db.a_attribute_value_xhtmlDBs, v.ID)
+	case *A_ATTRIBUTE_VALUE_XHTML_1DB:
+		delete(db.a_attribute_value_xhtml_1DBs, v.ID)
+	case *A_CHILDRENDB:
+		delete(db.a_childrenDBs, v.ID)
+	case *A_CORE_CONTENTDB:
+		delete(db.a_core_contentDBs, v.ID)
+	case *A_DATATYPESDB:
+		delete(db.a_datatypesDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REFDB:
+		delete(db.a_datatype_definition_boolean_refDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_DATE_REFDB:
+		delete(db.a_datatype_definition_date_refDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REFDB:
+		delete(db.a_datatype_definition_enumeration_refDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_INTEGER_REFDB:
+		delete(db.a_datatype_definition_integer_refDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_REAL_REFDB:
+		delete(db.a_datatype_definition_real_refDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_STRING_REFDB:
+		delete(db.a_datatype_definition_string_refDBs, v.ID)
+	case *A_DATATYPE_DEFINITION_XHTML_REFDB:
+		delete(db.a_datatype_definition_xhtml_refDBs, v.ID)
+	case *A_EDITABLE_ATTSDB:
+		delete(db.a_editable_attsDBs, v.ID)
+	case *A_ENUM_VALUE_REFDB:
+		delete(db.a_enum_value_refDBs, v.ID)
+	case *A_OBJECTDB:
+		delete(db.a_objectDBs, v.ID)
+	case *A_PROPERTIESDB:
+		delete(db.a_propertiesDBs, v.ID)
+	case *A_RELATION_GROUP_TYPE_REFDB:
+		delete(db.a_relation_group_type_refDBs, v.ID)
+	case *A_SOURCE_1DB:
+		delete(db.a_source_1DBs, v.ID)
+	case *A_SOURCE_SPECIFICATION_1DB:
+		delete(db.a_source_specification_1DBs, v.ID)
+	case *A_SPECIFICATIONSDB:
+		delete(db.a_specificationsDBs, v.ID)
+	case *A_SPECIFICATION_TYPE_REFDB:
+		delete(db.a_specification_type_refDBs, v.ID)
+	case *A_SPECIFIED_VALUESDB:
+		delete(db.a_specified_valuesDBs, v.ID)
+	case *A_SPEC_ATTRIBUTESDB:
+		delete(db.a_spec_attributesDBs, v.ID)
+	case *A_SPEC_OBJECTSDB:
+		delete(db.a_spec_objectsDBs, v.ID)
+	case *A_SPEC_OBJECT_TYPE_REFDB:
+		delete(db.a_spec_object_type_refDBs, v.ID)
+	case *A_SPEC_RELATIONSDB:
+		delete(db.a_spec_relationsDBs, v.ID)
+	case *A_SPEC_RELATION_GROUPSDB:
+		delete(db.a_spec_relation_groupsDBs, v.ID)
+	case *A_SPEC_RELATION_REFDB:
+		delete(db.a_spec_relation_refDBs, v.ID)
+	case *A_SPEC_RELATION_TYPE_REFDB:
+		delete(db.a_spec_relation_type_refDBs, v.ID)
+	case *A_SPEC_TYPESDB:
+		delete(db.a_spec_typesDBs, v.ID)
+	case *A_THE_HEADERDB:
+		delete(db.a_the_headerDBs, v.ID)
+	case *A_TOOL_EXTENSIONSDB:
+		delete(db.a_tool_extensionsDBs, v.ID)
 	case *DATATYPE_DEFINITION_BOOLEANDB:
 		delete(db.datatype_definition_booleanDBs, v.ID)
 	case *DATATYPE_DEFINITION_DATEDB:
@@ -1005,100 +1075,6 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.spec_relation_typeDBs, v.ID)
 	case *XHTML_CONTENTDB:
 		delete(db.xhtml_contentDBs, v.ID)
-	case *Xhtml_InlPres_typeDB:
-		delete(db.xhtml_inlpres_typeDBs, v.ID)
-	case *Xhtml_a_typeDB:
-		delete(db.xhtml_a_typeDBs, v.ID)
-	case *Xhtml_abbr_typeDB:
-		delete(db.xhtml_abbr_typeDBs, v.ID)
-	case *Xhtml_acronym_typeDB:
-		delete(db.xhtml_acronym_typeDBs, v.ID)
-	case *Xhtml_address_typeDB:
-		delete(db.xhtml_address_typeDBs, v.ID)
-	case *Xhtml_blockquote_typeDB:
-		delete(db.xhtml_blockquote_typeDBs, v.ID)
-	case *Xhtml_br_typeDB:
-		delete(db.xhtml_br_typeDBs, v.ID)
-	case *Xhtml_caption_typeDB:
-		delete(db.xhtml_caption_typeDBs, v.ID)
-	case *Xhtml_cite_typeDB:
-		delete(db.xhtml_cite_typeDBs, v.ID)
-	case *Xhtml_code_typeDB:
-		delete(db.xhtml_code_typeDBs, v.ID)
-	case *Xhtml_col_typeDB:
-		delete(db.xhtml_col_typeDBs, v.ID)
-	case *Xhtml_colgroup_typeDB:
-		delete(db.xhtml_colgroup_typeDBs, v.ID)
-	case *Xhtml_dd_typeDB:
-		delete(db.xhtml_dd_typeDBs, v.ID)
-	case *Xhtml_dfn_typeDB:
-		delete(db.xhtml_dfn_typeDBs, v.ID)
-	case *Xhtml_div_typeDB:
-		delete(db.xhtml_div_typeDBs, v.ID)
-	case *Xhtml_dl_typeDB:
-		delete(db.xhtml_dl_typeDBs, v.ID)
-	case *Xhtml_dt_typeDB:
-		delete(db.xhtml_dt_typeDBs, v.ID)
-	case *Xhtml_edit_typeDB:
-		delete(db.xhtml_edit_typeDBs, v.ID)
-	case *Xhtml_em_typeDB:
-		delete(db.xhtml_em_typeDBs, v.ID)
-	case *Xhtml_h1_typeDB:
-		delete(db.xhtml_h1_typeDBs, v.ID)
-	case *Xhtml_h2_typeDB:
-		delete(db.xhtml_h2_typeDBs, v.ID)
-	case *Xhtml_h3_typeDB:
-		delete(db.xhtml_h3_typeDBs, v.ID)
-	case *Xhtml_h4_typeDB:
-		delete(db.xhtml_h4_typeDBs, v.ID)
-	case *Xhtml_h5_typeDB:
-		delete(db.xhtml_h5_typeDBs, v.ID)
-	case *Xhtml_h6_typeDB:
-		delete(db.xhtml_h6_typeDBs, v.ID)
-	case *Xhtml_heading_typeDB:
-		delete(db.xhtml_heading_typeDBs, v.ID)
-	case *Xhtml_hr_typeDB:
-		delete(db.xhtml_hr_typeDBs, v.ID)
-	case *Xhtml_kbd_typeDB:
-		delete(db.xhtml_kbd_typeDBs, v.ID)
-	case *Xhtml_li_typeDB:
-		delete(db.xhtml_li_typeDBs, v.ID)
-	case *Xhtml_object_typeDB:
-		delete(db.xhtml_object_typeDBs, v.ID)
-	case *Xhtml_ol_typeDB:
-		delete(db.xhtml_ol_typeDBs, v.ID)
-	case *Xhtml_p_typeDB:
-		delete(db.xhtml_p_typeDBs, v.ID)
-	case *Xhtml_param_typeDB:
-		delete(db.xhtml_param_typeDBs, v.ID)
-	case *Xhtml_pre_typeDB:
-		delete(db.xhtml_pre_typeDBs, v.ID)
-	case *Xhtml_q_typeDB:
-		delete(db.xhtml_q_typeDBs, v.ID)
-	case *Xhtml_samp_typeDB:
-		delete(db.xhtml_samp_typeDBs, v.ID)
-	case *Xhtml_span_typeDB:
-		delete(db.xhtml_span_typeDBs, v.ID)
-	case *Xhtml_strong_typeDB:
-		delete(db.xhtml_strong_typeDBs, v.ID)
-	case *Xhtml_table_typeDB:
-		delete(db.xhtml_table_typeDBs, v.ID)
-	case *Xhtml_tbody_typeDB:
-		delete(db.xhtml_tbody_typeDBs, v.ID)
-	case *Xhtml_td_typeDB:
-		delete(db.xhtml_td_typeDBs, v.ID)
-	case *Xhtml_tfoot_typeDB:
-		delete(db.xhtml_tfoot_typeDBs, v.ID)
-	case *Xhtml_th_typeDB:
-		delete(db.xhtml_th_typeDBs, v.ID)
-	case *Xhtml_thead_typeDB:
-		delete(db.xhtml_thead_typeDBs, v.ID)
-	case *Xhtml_tr_typeDB:
-		delete(db.xhtml_tr_typeDBs, v.ID)
-	case *Xhtml_ul_typeDB:
-		delete(db.xhtml_ul_typeDBs, v.ID)
-	case *Xhtml_var_typeDB:
-		delete(db.xhtml_var_typeDBs, v.ID)
 	default:
 		return nil, errors.New("github.com/fullstack-lang/gongreqif/go, unsupported type in Delete")
 	}
@@ -1162,8 +1138,143 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 	case *ATTRIBUTE_VALUE_XHTMLDB:
 		db.attribute_value_xhtmlDBs[v.ID] = v
 		return db, nil
-	case *AnyTypeDB:
-		db.anytypeDBs[v.ID] = v
+	case *A_ALTERNATIVE_IDDB:
+		db.a_alternative_idDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB:
+		db.a_attribute_definition_boolean_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_DATE_REFDB:
+		db.a_attribute_definition_date_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB:
+		db.a_attribute_definition_enumeration_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REFDB:
+		db.a_attribute_definition_integer_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_REAL_REFDB:
+		db.a_attribute_definition_real_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_STRING_REFDB:
+		db.a_attribute_definition_string_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REFDB:
+		db.a_attribute_definition_xhtml_refDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_BOOLEANDB:
+		db.a_attribute_value_booleanDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_DATEDB:
+		db.a_attribute_value_dateDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_ENUMERATIONDB:
+		db.a_attribute_value_enumerationDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_INTEGERDB:
+		db.a_attribute_value_integerDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_REALDB:
+		db.a_attribute_value_realDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_STRINGDB:
+		db.a_attribute_value_stringDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_XHTMLDB:
+		db.a_attribute_value_xhtmlDBs[v.ID] = v
+		return db, nil
+	case *A_ATTRIBUTE_VALUE_XHTML_1DB:
+		db.a_attribute_value_xhtml_1DBs[v.ID] = v
+		return db, nil
+	case *A_CHILDRENDB:
+		db.a_childrenDBs[v.ID] = v
+		return db, nil
+	case *A_CORE_CONTENTDB:
+		db.a_core_contentDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPESDB:
+		db.a_datatypesDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REFDB:
+		db.a_datatype_definition_boolean_refDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_DATE_REFDB:
+		db.a_datatype_definition_date_refDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REFDB:
+		db.a_datatype_definition_enumeration_refDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_INTEGER_REFDB:
+		db.a_datatype_definition_integer_refDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_REAL_REFDB:
+		db.a_datatype_definition_real_refDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_STRING_REFDB:
+		db.a_datatype_definition_string_refDBs[v.ID] = v
+		return db, nil
+	case *A_DATATYPE_DEFINITION_XHTML_REFDB:
+		db.a_datatype_definition_xhtml_refDBs[v.ID] = v
+		return db, nil
+	case *A_EDITABLE_ATTSDB:
+		db.a_editable_attsDBs[v.ID] = v
+		return db, nil
+	case *A_ENUM_VALUE_REFDB:
+		db.a_enum_value_refDBs[v.ID] = v
+		return db, nil
+	case *A_OBJECTDB:
+		db.a_objectDBs[v.ID] = v
+		return db, nil
+	case *A_PROPERTIESDB:
+		db.a_propertiesDBs[v.ID] = v
+		return db, nil
+	case *A_RELATION_GROUP_TYPE_REFDB:
+		db.a_relation_group_type_refDBs[v.ID] = v
+		return db, nil
+	case *A_SOURCE_1DB:
+		db.a_source_1DBs[v.ID] = v
+		return db, nil
+	case *A_SOURCE_SPECIFICATION_1DB:
+		db.a_source_specification_1DBs[v.ID] = v
+		return db, nil
+	case *A_SPECIFICATIONSDB:
+		db.a_specificationsDBs[v.ID] = v
+		return db, nil
+	case *A_SPECIFICATION_TYPE_REFDB:
+		db.a_specification_type_refDBs[v.ID] = v
+		return db, nil
+	case *A_SPECIFIED_VALUESDB:
+		db.a_specified_valuesDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_ATTRIBUTESDB:
+		db.a_spec_attributesDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_OBJECTSDB:
+		db.a_spec_objectsDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_OBJECT_TYPE_REFDB:
+		db.a_spec_object_type_refDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_RELATIONSDB:
+		db.a_spec_relationsDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_RELATION_GROUPSDB:
+		db.a_spec_relation_groupsDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_RELATION_REFDB:
+		db.a_spec_relation_refDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_RELATION_TYPE_REFDB:
+		db.a_spec_relation_type_refDBs[v.ID] = v
+		return db, nil
+	case *A_SPEC_TYPESDB:
+		db.a_spec_typesDBs[v.ID] = v
+		return db, nil
+	case *A_THE_HEADERDB:
+		db.a_the_headerDBs[v.ID] = v
+		return db, nil
+	case *A_TOOL_EXTENSIONSDB:
+		db.a_tool_extensionsDBs[v.ID] = v
 		return db, nil
 	case *DATATYPE_DEFINITION_BOOLEANDB:
 		db.datatype_definition_booleanDBs[v.ID] = v
@@ -1233,147 +1344,6 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 		return db, nil
 	case *XHTML_CONTENTDB:
 		db.xhtml_contentDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_InlPres_typeDB:
-		db.xhtml_inlpres_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_a_typeDB:
-		db.xhtml_a_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_abbr_typeDB:
-		db.xhtml_abbr_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_acronym_typeDB:
-		db.xhtml_acronym_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_address_typeDB:
-		db.xhtml_address_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_blockquote_typeDB:
-		db.xhtml_blockquote_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_br_typeDB:
-		db.xhtml_br_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_caption_typeDB:
-		db.xhtml_caption_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_cite_typeDB:
-		db.xhtml_cite_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_code_typeDB:
-		db.xhtml_code_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_col_typeDB:
-		db.xhtml_col_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_colgroup_typeDB:
-		db.xhtml_colgroup_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_dd_typeDB:
-		db.xhtml_dd_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_dfn_typeDB:
-		db.xhtml_dfn_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_div_typeDB:
-		db.xhtml_div_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_dl_typeDB:
-		db.xhtml_dl_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_dt_typeDB:
-		db.xhtml_dt_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_edit_typeDB:
-		db.xhtml_edit_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_em_typeDB:
-		db.xhtml_em_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_h1_typeDB:
-		db.xhtml_h1_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_h2_typeDB:
-		db.xhtml_h2_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_h3_typeDB:
-		db.xhtml_h3_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_h4_typeDB:
-		db.xhtml_h4_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_h5_typeDB:
-		db.xhtml_h5_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_h6_typeDB:
-		db.xhtml_h6_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_heading_typeDB:
-		db.xhtml_heading_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_hr_typeDB:
-		db.xhtml_hr_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_kbd_typeDB:
-		db.xhtml_kbd_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_li_typeDB:
-		db.xhtml_li_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_object_typeDB:
-		db.xhtml_object_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_ol_typeDB:
-		db.xhtml_ol_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_p_typeDB:
-		db.xhtml_p_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_param_typeDB:
-		db.xhtml_param_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_pre_typeDB:
-		db.xhtml_pre_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_q_typeDB:
-		db.xhtml_q_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_samp_typeDB:
-		db.xhtml_samp_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_span_typeDB:
-		db.xhtml_span_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_strong_typeDB:
-		db.xhtml_strong_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_table_typeDB:
-		db.xhtml_table_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_tbody_typeDB:
-		db.xhtml_tbody_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_td_typeDB:
-		db.xhtml_td_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_tfoot_typeDB:
-		db.xhtml_tfoot_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_th_typeDB:
-		db.xhtml_th_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_thead_typeDB:
-		db.xhtml_thead_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_tr_typeDB:
-		db.xhtml_tr_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_ul_typeDB:
-		db.xhtml_ul_typeDBs[v.ID] = v
-		return db, nil
-	case *Xhtml_var_typeDB:
-		db.xhtml_var_typeDBs[v.ID] = v
 		return db, nil
 	default:
 		return nil, errors.New("github.com/fullstack-lang/gongreqif/go, Save: unsupported type")
@@ -1481,11 +1451,281 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 		} else {
 			return nil, errors.New("db ATTRIBUTE_VALUE_XHTML github.com/fullstack-lang/gongreqif/go, record not found")
 		}
-	case *AnyTypeDB:
-		if existing, ok := db.anytypeDBs[v.ID]; ok {
+	case *A_ALTERNATIVE_IDDB:
+		if existing, ok := db.a_alternative_idDBs[v.ID]; ok {
 			*existing = *v
 		} else {
-			return nil, errors.New("db AnyType github.com/fullstack-lang/gongreqif/go, record not found")
+			return nil, errors.New("db A_ALTERNATIVE_ID github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB:
+		if existing, ok := db.a_attribute_definition_boolean_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_BOOLEAN_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_DATE_REFDB:
+		if existing, ok := db.a_attribute_definition_date_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_DATE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB:
+		if existing, ok := db.a_attribute_definition_enumeration_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_ENUMERATION_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REFDB:
+		if existing, ok := db.a_attribute_definition_integer_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_INTEGER_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_REAL_REFDB:
+		if existing, ok := db.a_attribute_definition_real_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_REAL_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_STRING_REFDB:
+		if existing, ok := db.a_attribute_definition_string_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_STRING_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REFDB:
+		if existing, ok := db.a_attribute_definition_xhtml_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_DEFINITION_XHTML_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_BOOLEANDB:
+		if existing, ok := db.a_attribute_value_booleanDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_BOOLEAN github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_DATEDB:
+		if existing, ok := db.a_attribute_value_dateDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_DATE github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_ENUMERATIONDB:
+		if existing, ok := db.a_attribute_value_enumerationDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_ENUMERATION github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_INTEGERDB:
+		if existing, ok := db.a_attribute_value_integerDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_INTEGER github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_REALDB:
+		if existing, ok := db.a_attribute_value_realDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_REAL github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_STRINGDB:
+		if existing, ok := db.a_attribute_value_stringDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_STRING github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_XHTMLDB:
+		if existing, ok := db.a_attribute_value_xhtmlDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_XHTML github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ATTRIBUTE_VALUE_XHTML_1DB:
+		if existing, ok := db.a_attribute_value_xhtml_1DBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ATTRIBUTE_VALUE_XHTML_1 github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_CHILDRENDB:
+		if existing, ok := db.a_childrenDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_CHILDREN github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_CORE_CONTENTDB:
+		if existing, ok := db.a_core_contentDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_CORE_CONTENT github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPESDB:
+		if existing, ok := db.a_datatypesDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPES github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REFDB:
+		if existing, ok := db.a_datatype_definition_boolean_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_BOOLEAN_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_DATE_REFDB:
+		if existing, ok := db.a_datatype_definition_date_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_DATE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REFDB:
+		if existing, ok := db.a_datatype_definition_enumeration_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_ENUMERATION_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_INTEGER_REFDB:
+		if existing, ok := db.a_datatype_definition_integer_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_INTEGER_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_REAL_REFDB:
+		if existing, ok := db.a_datatype_definition_real_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_REAL_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_STRING_REFDB:
+		if existing, ok := db.a_datatype_definition_string_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_STRING_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_DATATYPE_DEFINITION_XHTML_REFDB:
+		if existing, ok := db.a_datatype_definition_xhtml_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_DATATYPE_DEFINITION_XHTML_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_EDITABLE_ATTSDB:
+		if existing, ok := db.a_editable_attsDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_EDITABLE_ATTS github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_ENUM_VALUE_REFDB:
+		if existing, ok := db.a_enum_value_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_ENUM_VALUE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_OBJECTDB:
+		if existing, ok := db.a_objectDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_OBJECT github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_PROPERTIESDB:
+		if existing, ok := db.a_propertiesDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_PROPERTIES github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_RELATION_GROUP_TYPE_REFDB:
+		if existing, ok := db.a_relation_group_type_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_RELATION_GROUP_TYPE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SOURCE_1DB:
+		if existing, ok := db.a_source_1DBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SOURCE_1 github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SOURCE_SPECIFICATION_1DB:
+		if existing, ok := db.a_source_specification_1DBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SOURCE_SPECIFICATION_1 github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPECIFICATIONSDB:
+		if existing, ok := db.a_specificationsDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPECIFICATIONS github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPECIFICATION_TYPE_REFDB:
+		if existing, ok := db.a_specification_type_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPECIFICATION_TYPE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPECIFIED_VALUESDB:
+		if existing, ok := db.a_specified_valuesDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPECIFIED_VALUES github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_ATTRIBUTESDB:
+		if existing, ok := db.a_spec_attributesDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_ATTRIBUTES github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_OBJECTSDB:
+		if existing, ok := db.a_spec_objectsDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_OBJECTS github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_OBJECT_TYPE_REFDB:
+		if existing, ok := db.a_spec_object_type_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_OBJECT_TYPE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_RELATIONSDB:
+		if existing, ok := db.a_spec_relationsDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_RELATIONS github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_RELATION_GROUPSDB:
+		if existing, ok := db.a_spec_relation_groupsDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_RELATION_GROUPS github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_RELATION_REFDB:
+		if existing, ok := db.a_spec_relation_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_RELATION_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_RELATION_TYPE_REFDB:
+		if existing, ok := db.a_spec_relation_type_refDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_RELATION_TYPE_REF github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_SPEC_TYPESDB:
+		if existing, ok := db.a_spec_typesDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_SPEC_TYPES github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_THE_HEADERDB:
+		if existing, ok := db.a_the_headerDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_THE_HEADER github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *A_TOOL_EXTENSIONSDB:
+		if existing, ok := db.a_tool_extensionsDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db A_TOOL_EXTENSIONS github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *DATATYPE_DEFINITION_BOOLEANDB:
 		if existing, ok := db.datatype_definition_booleanDBs[v.ID]; ok {
@@ -1625,288 +1865,6 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 		} else {
 			return nil, errors.New("db XHTML_CONTENT github.com/fullstack-lang/gongreqif/go, record not found")
 		}
-	case *Xhtml_InlPres_typeDB:
-		if existing, ok := db.xhtml_inlpres_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_InlPres_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_a_typeDB:
-		if existing, ok := db.xhtml_a_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_a_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_abbr_typeDB:
-		if existing, ok := db.xhtml_abbr_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_abbr_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_acronym_typeDB:
-		if existing, ok := db.xhtml_acronym_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_acronym_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_address_typeDB:
-		if existing, ok := db.xhtml_address_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_address_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_blockquote_typeDB:
-		if existing, ok := db.xhtml_blockquote_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_blockquote_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_br_typeDB:
-		if existing, ok := db.xhtml_br_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_br_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_caption_typeDB:
-		if existing, ok := db.xhtml_caption_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_caption_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_cite_typeDB:
-		if existing, ok := db.xhtml_cite_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_cite_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_code_typeDB:
-		if existing, ok := db.xhtml_code_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_code_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_col_typeDB:
-		if existing, ok := db.xhtml_col_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_col_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_colgroup_typeDB:
-		if existing, ok := db.xhtml_colgroup_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_colgroup_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_dd_typeDB:
-		if existing, ok := db.xhtml_dd_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_dd_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_dfn_typeDB:
-		if existing, ok := db.xhtml_dfn_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_dfn_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_div_typeDB:
-		if existing, ok := db.xhtml_div_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_div_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_dl_typeDB:
-		if existing, ok := db.xhtml_dl_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_dl_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_dt_typeDB:
-		if existing, ok := db.xhtml_dt_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_dt_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_edit_typeDB:
-		if existing, ok := db.xhtml_edit_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_edit_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_em_typeDB:
-		if existing, ok := db.xhtml_em_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_em_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_h1_typeDB:
-		if existing, ok := db.xhtml_h1_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_h1_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_h2_typeDB:
-		if existing, ok := db.xhtml_h2_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_h2_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_h3_typeDB:
-		if existing, ok := db.xhtml_h3_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_h3_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_h4_typeDB:
-		if existing, ok := db.xhtml_h4_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_h4_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_h5_typeDB:
-		if existing, ok := db.xhtml_h5_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_h5_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_h6_typeDB:
-		if existing, ok := db.xhtml_h6_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_h6_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_heading_typeDB:
-		if existing, ok := db.xhtml_heading_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_heading_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_hr_typeDB:
-		if existing, ok := db.xhtml_hr_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_hr_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_kbd_typeDB:
-		if existing, ok := db.xhtml_kbd_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_kbd_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_li_typeDB:
-		if existing, ok := db.xhtml_li_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_li_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_object_typeDB:
-		if existing, ok := db.xhtml_object_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_object_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_ol_typeDB:
-		if existing, ok := db.xhtml_ol_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_ol_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_p_typeDB:
-		if existing, ok := db.xhtml_p_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_p_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_param_typeDB:
-		if existing, ok := db.xhtml_param_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_param_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_pre_typeDB:
-		if existing, ok := db.xhtml_pre_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_pre_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_q_typeDB:
-		if existing, ok := db.xhtml_q_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_q_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_samp_typeDB:
-		if existing, ok := db.xhtml_samp_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_samp_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_span_typeDB:
-		if existing, ok := db.xhtml_span_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_span_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_strong_typeDB:
-		if existing, ok := db.xhtml_strong_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_strong_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_table_typeDB:
-		if existing, ok := db.xhtml_table_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_table_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_tbody_typeDB:
-		if existing, ok := db.xhtml_tbody_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_tbody_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_td_typeDB:
-		if existing, ok := db.xhtml_td_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_td_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_tfoot_typeDB:
-		if existing, ok := db.xhtml_tfoot_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_tfoot_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_th_typeDB:
-		if existing, ok := db.xhtml_th_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_th_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_thead_typeDB:
-		if existing, ok := db.xhtml_thead_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_thead_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_tr_typeDB:
-		if existing, ok := db.xhtml_tr_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_tr_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_ul_typeDB:
-		if existing, ok := db.xhtml_ul_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_ul_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *Xhtml_var_typeDB:
-		if existing, ok := db.xhtml_var_typeDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db Xhtml_var_type github.com/fullstack-lang/gongreqif/go, record not found")
-		}
 	default:
 		return nil, errors.New("github.com/fullstack-lang/gongreqif/go, unsupported type in Updates")
 	}
@@ -2011,9 +1969,279 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
-	case *[]AnyTypeDB:
-		*ptr = make([]AnyTypeDB, 0, len(db.anytypeDBs))
-		for _, v := range db.anytypeDBs {
+	case *[]A_ALTERNATIVE_IDDB:
+		*ptr = make([]A_ALTERNATIVE_IDDB, 0, len(db.a_alternative_idDBs))
+		for _, v := range db.a_alternative_idDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB, 0, len(db.a_attribute_definition_boolean_refDBs))
+		for _, v := range db.a_attribute_definition_boolean_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_DATE_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_DATE_REFDB, 0, len(db.a_attribute_definition_date_refDBs))
+		for _, v := range db.a_attribute_definition_date_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB, 0, len(db.a_attribute_definition_enumeration_refDBs))
+		for _, v := range db.a_attribute_definition_enumeration_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_INTEGER_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_INTEGER_REFDB, 0, len(db.a_attribute_definition_integer_refDBs))
+		for _, v := range db.a_attribute_definition_integer_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_REAL_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_REAL_REFDB, 0, len(db.a_attribute_definition_real_refDBs))
+		for _, v := range db.a_attribute_definition_real_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_STRING_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_STRING_REFDB, 0, len(db.a_attribute_definition_string_refDBs))
+		for _, v := range db.a_attribute_definition_string_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_DEFINITION_XHTML_REFDB:
+		*ptr = make([]A_ATTRIBUTE_DEFINITION_XHTML_REFDB, 0, len(db.a_attribute_definition_xhtml_refDBs))
+		for _, v := range db.a_attribute_definition_xhtml_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_BOOLEANDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_BOOLEANDB, 0, len(db.a_attribute_value_booleanDBs))
+		for _, v := range db.a_attribute_value_booleanDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_DATEDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_DATEDB, 0, len(db.a_attribute_value_dateDBs))
+		for _, v := range db.a_attribute_value_dateDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_ENUMERATIONDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_ENUMERATIONDB, 0, len(db.a_attribute_value_enumerationDBs))
+		for _, v := range db.a_attribute_value_enumerationDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_INTEGERDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_INTEGERDB, 0, len(db.a_attribute_value_integerDBs))
+		for _, v := range db.a_attribute_value_integerDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_REALDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_REALDB, 0, len(db.a_attribute_value_realDBs))
+		for _, v := range db.a_attribute_value_realDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_STRINGDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_STRINGDB, 0, len(db.a_attribute_value_stringDBs))
+		for _, v := range db.a_attribute_value_stringDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_XHTMLDB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_XHTMLDB, 0, len(db.a_attribute_value_xhtmlDBs))
+		for _, v := range db.a_attribute_value_xhtmlDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ATTRIBUTE_VALUE_XHTML_1DB:
+		*ptr = make([]A_ATTRIBUTE_VALUE_XHTML_1DB, 0, len(db.a_attribute_value_xhtml_1DBs))
+		for _, v := range db.a_attribute_value_xhtml_1DBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_CHILDRENDB:
+		*ptr = make([]A_CHILDRENDB, 0, len(db.a_childrenDBs))
+		for _, v := range db.a_childrenDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_CORE_CONTENTDB:
+		*ptr = make([]A_CORE_CONTENTDB, 0, len(db.a_core_contentDBs))
+		for _, v := range db.a_core_contentDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPESDB:
+		*ptr = make([]A_DATATYPESDB, 0, len(db.a_datatypesDBs))
+		for _, v := range db.a_datatypesDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_BOOLEAN_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_BOOLEAN_REFDB, 0, len(db.a_datatype_definition_boolean_refDBs))
+		for _, v := range db.a_datatype_definition_boolean_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_DATE_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_DATE_REFDB, 0, len(db.a_datatype_definition_date_refDBs))
+		for _, v := range db.a_datatype_definition_date_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_ENUMERATION_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_ENUMERATION_REFDB, 0, len(db.a_datatype_definition_enumeration_refDBs))
+		for _, v := range db.a_datatype_definition_enumeration_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_INTEGER_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_INTEGER_REFDB, 0, len(db.a_datatype_definition_integer_refDBs))
+		for _, v := range db.a_datatype_definition_integer_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_REAL_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_REAL_REFDB, 0, len(db.a_datatype_definition_real_refDBs))
+		for _, v := range db.a_datatype_definition_real_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_STRING_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_STRING_REFDB, 0, len(db.a_datatype_definition_string_refDBs))
+		for _, v := range db.a_datatype_definition_string_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_DATATYPE_DEFINITION_XHTML_REFDB:
+		*ptr = make([]A_DATATYPE_DEFINITION_XHTML_REFDB, 0, len(db.a_datatype_definition_xhtml_refDBs))
+		for _, v := range db.a_datatype_definition_xhtml_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_EDITABLE_ATTSDB:
+		*ptr = make([]A_EDITABLE_ATTSDB, 0, len(db.a_editable_attsDBs))
+		for _, v := range db.a_editable_attsDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_ENUM_VALUE_REFDB:
+		*ptr = make([]A_ENUM_VALUE_REFDB, 0, len(db.a_enum_value_refDBs))
+		for _, v := range db.a_enum_value_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_OBJECTDB:
+		*ptr = make([]A_OBJECTDB, 0, len(db.a_objectDBs))
+		for _, v := range db.a_objectDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_PROPERTIESDB:
+		*ptr = make([]A_PROPERTIESDB, 0, len(db.a_propertiesDBs))
+		for _, v := range db.a_propertiesDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_RELATION_GROUP_TYPE_REFDB:
+		*ptr = make([]A_RELATION_GROUP_TYPE_REFDB, 0, len(db.a_relation_group_type_refDBs))
+		for _, v := range db.a_relation_group_type_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SOURCE_1DB:
+		*ptr = make([]A_SOURCE_1DB, 0, len(db.a_source_1DBs))
+		for _, v := range db.a_source_1DBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SOURCE_SPECIFICATION_1DB:
+		*ptr = make([]A_SOURCE_SPECIFICATION_1DB, 0, len(db.a_source_specification_1DBs))
+		for _, v := range db.a_source_specification_1DBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPECIFICATIONSDB:
+		*ptr = make([]A_SPECIFICATIONSDB, 0, len(db.a_specificationsDBs))
+		for _, v := range db.a_specificationsDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPECIFICATION_TYPE_REFDB:
+		*ptr = make([]A_SPECIFICATION_TYPE_REFDB, 0, len(db.a_specification_type_refDBs))
+		for _, v := range db.a_specification_type_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPECIFIED_VALUESDB:
+		*ptr = make([]A_SPECIFIED_VALUESDB, 0, len(db.a_specified_valuesDBs))
+		for _, v := range db.a_specified_valuesDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_ATTRIBUTESDB:
+		*ptr = make([]A_SPEC_ATTRIBUTESDB, 0, len(db.a_spec_attributesDBs))
+		for _, v := range db.a_spec_attributesDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_OBJECTSDB:
+		*ptr = make([]A_SPEC_OBJECTSDB, 0, len(db.a_spec_objectsDBs))
+		for _, v := range db.a_spec_objectsDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_OBJECT_TYPE_REFDB:
+		*ptr = make([]A_SPEC_OBJECT_TYPE_REFDB, 0, len(db.a_spec_object_type_refDBs))
+		for _, v := range db.a_spec_object_type_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_RELATIONSDB:
+		*ptr = make([]A_SPEC_RELATIONSDB, 0, len(db.a_spec_relationsDBs))
+		for _, v := range db.a_spec_relationsDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_RELATION_GROUPSDB:
+		*ptr = make([]A_SPEC_RELATION_GROUPSDB, 0, len(db.a_spec_relation_groupsDBs))
+		for _, v := range db.a_spec_relation_groupsDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_RELATION_REFDB:
+		*ptr = make([]A_SPEC_RELATION_REFDB, 0, len(db.a_spec_relation_refDBs))
+		for _, v := range db.a_spec_relation_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_RELATION_TYPE_REFDB:
+		*ptr = make([]A_SPEC_RELATION_TYPE_REFDB, 0, len(db.a_spec_relation_type_refDBs))
+		for _, v := range db.a_spec_relation_type_refDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_SPEC_TYPESDB:
+		*ptr = make([]A_SPEC_TYPESDB, 0, len(db.a_spec_typesDBs))
+		for _, v := range db.a_spec_typesDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_THE_HEADERDB:
+		*ptr = make([]A_THE_HEADERDB, 0, len(db.a_the_headerDBs))
+		for _, v := range db.a_the_headerDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]A_TOOL_EXTENSIONSDB:
+		*ptr = make([]A_TOOL_EXTENSIONSDB, 0, len(db.a_tool_extensionsDBs))
+		for _, v := range db.a_tool_extensionsDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -2152,288 +2380,6 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 	case *[]XHTML_CONTENTDB:
 		*ptr = make([]XHTML_CONTENTDB, 0, len(db.xhtml_contentDBs))
 		for _, v := range db.xhtml_contentDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_InlPres_typeDB:
-		*ptr = make([]Xhtml_InlPres_typeDB, 0, len(db.xhtml_inlpres_typeDBs))
-		for _, v := range db.xhtml_inlpres_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_a_typeDB:
-		*ptr = make([]Xhtml_a_typeDB, 0, len(db.xhtml_a_typeDBs))
-		for _, v := range db.xhtml_a_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_abbr_typeDB:
-		*ptr = make([]Xhtml_abbr_typeDB, 0, len(db.xhtml_abbr_typeDBs))
-		for _, v := range db.xhtml_abbr_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_acronym_typeDB:
-		*ptr = make([]Xhtml_acronym_typeDB, 0, len(db.xhtml_acronym_typeDBs))
-		for _, v := range db.xhtml_acronym_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_address_typeDB:
-		*ptr = make([]Xhtml_address_typeDB, 0, len(db.xhtml_address_typeDBs))
-		for _, v := range db.xhtml_address_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_blockquote_typeDB:
-		*ptr = make([]Xhtml_blockquote_typeDB, 0, len(db.xhtml_blockquote_typeDBs))
-		for _, v := range db.xhtml_blockquote_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_br_typeDB:
-		*ptr = make([]Xhtml_br_typeDB, 0, len(db.xhtml_br_typeDBs))
-		for _, v := range db.xhtml_br_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_caption_typeDB:
-		*ptr = make([]Xhtml_caption_typeDB, 0, len(db.xhtml_caption_typeDBs))
-		for _, v := range db.xhtml_caption_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_cite_typeDB:
-		*ptr = make([]Xhtml_cite_typeDB, 0, len(db.xhtml_cite_typeDBs))
-		for _, v := range db.xhtml_cite_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_code_typeDB:
-		*ptr = make([]Xhtml_code_typeDB, 0, len(db.xhtml_code_typeDBs))
-		for _, v := range db.xhtml_code_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_col_typeDB:
-		*ptr = make([]Xhtml_col_typeDB, 0, len(db.xhtml_col_typeDBs))
-		for _, v := range db.xhtml_col_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_colgroup_typeDB:
-		*ptr = make([]Xhtml_colgroup_typeDB, 0, len(db.xhtml_colgroup_typeDBs))
-		for _, v := range db.xhtml_colgroup_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_dd_typeDB:
-		*ptr = make([]Xhtml_dd_typeDB, 0, len(db.xhtml_dd_typeDBs))
-		for _, v := range db.xhtml_dd_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_dfn_typeDB:
-		*ptr = make([]Xhtml_dfn_typeDB, 0, len(db.xhtml_dfn_typeDBs))
-		for _, v := range db.xhtml_dfn_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_div_typeDB:
-		*ptr = make([]Xhtml_div_typeDB, 0, len(db.xhtml_div_typeDBs))
-		for _, v := range db.xhtml_div_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_dl_typeDB:
-		*ptr = make([]Xhtml_dl_typeDB, 0, len(db.xhtml_dl_typeDBs))
-		for _, v := range db.xhtml_dl_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_dt_typeDB:
-		*ptr = make([]Xhtml_dt_typeDB, 0, len(db.xhtml_dt_typeDBs))
-		for _, v := range db.xhtml_dt_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_edit_typeDB:
-		*ptr = make([]Xhtml_edit_typeDB, 0, len(db.xhtml_edit_typeDBs))
-		for _, v := range db.xhtml_edit_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_em_typeDB:
-		*ptr = make([]Xhtml_em_typeDB, 0, len(db.xhtml_em_typeDBs))
-		for _, v := range db.xhtml_em_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_h1_typeDB:
-		*ptr = make([]Xhtml_h1_typeDB, 0, len(db.xhtml_h1_typeDBs))
-		for _, v := range db.xhtml_h1_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_h2_typeDB:
-		*ptr = make([]Xhtml_h2_typeDB, 0, len(db.xhtml_h2_typeDBs))
-		for _, v := range db.xhtml_h2_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_h3_typeDB:
-		*ptr = make([]Xhtml_h3_typeDB, 0, len(db.xhtml_h3_typeDBs))
-		for _, v := range db.xhtml_h3_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_h4_typeDB:
-		*ptr = make([]Xhtml_h4_typeDB, 0, len(db.xhtml_h4_typeDBs))
-		for _, v := range db.xhtml_h4_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_h5_typeDB:
-		*ptr = make([]Xhtml_h5_typeDB, 0, len(db.xhtml_h5_typeDBs))
-		for _, v := range db.xhtml_h5_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_h6_typeDB:
-		*ptr = make([]Xhtml_h6_typeDB, 0, len(db.xhtml_h6_typeDBs))
-		for _, v := range db.xhtml_h6_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_heading_typeDB:
-		*ptr = make([]Xhtml_heading_typeDB, 0, len(db.xhtml_heading_typeDBs))
-		for _, v := range db.xhtml_heading_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_hr_typeDB:
-		*ptr = make([]Xhtml_hr_typeDB, 0, len(db.xhtml_hr_typeDBs))
-		for _, v := range db.xhtml_hr_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_kbd_typeDB:
-		*ptr = make([]Xhtml_kbd_typeDB, 0, len(db.xhtml_kbd_typeDBs))
-		for _, v := range db.xhtml_kbd_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_li_typeDB:
-		*ptr = make([]Xhtml_li_typeDB, 0, len(db.xhtml_li_typeDBs))
-		for _, v := range db.xhtml_li_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_object_typeDB:
-		*ptr = make([]Xhtml_object_typeDB, 0, len(db.xhtml_object_typeDBs))
-		for _, v := range db.xhtml_object_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_ol_typeDB:
-		*ptr = make([]Xhtml_ol_typeDB, 0, len(db.xhtml_ol_typeDBs))
-		for _, v := range db.xhtml_ol_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_p_typeDB:
-		*ptr = make([]Xhtml_p_typeDB, 0, len(db.xhtml_p_typeDBs))
-		for _, v := range db.xhtml_p_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_param_typeDB:
-		*ptr = make([]Xhtml_param_typeDB, 0, len(db.xhtml_param_typeDBs))
-		for _, v := range db.xhtml_param_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_pre_typeDB:
-		*ptr = make([]Xhtml_pre_typeDB, 0, len(db.xhtml_pre_typeDBs))
-		for _, v := range db.xhtml_pre_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_q_typeDB:
-		*ptr = make([]Xhtml_q_typeDB, 0, len(db.xhtml_q_typeDBs))
-		for _, v := range db.xhtml_q_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_samp_typeDB:
-		*ptr = make([]Xhtml_samp_typeDB, 0, len(db.xhtml_samp_typeDBs))
-		for _, v := range db.xhtml_samp_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_span_typeDB:
-		*ptr = make([]Xhtml_span_typeDB, 0, len(db.xhtml_span_typeDBs))
-		for _, v := range db.xhtml_span_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_strong_typeDB:
-		*ptr = make([]Xhtml_strong_typeDB, 0, len(db.xhtml_strong_typeDBs))
-		for _, v := range db.xhtml_strong_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_table_typeDB:
-		*ptr = make([]Xhtml_table_typeDB, 0, len(db.xhtml_table_typeDBs))
-		for _, v := range db.xhtml_table_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_tbody_typeDB:
-		*ptr = make([]Xhtml_tbody_typeDB, 0, len(db.xhtml_tbody_typeDBs))
-		for _, v := range db.xhtml_tbody_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_td_typeDB:
-		*ptr = make([]Xhtml_td_typeDB, 0, len(db.xhtml_td_typeDBs))
-		for _, v := range db.xhtml_td_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_tfoot_typeDB:
-		*ptr = make([]Xhtml_tfoot_typeDB, 0, len(db.xhtml_tfoot_typeDBs))
-		for _, v := range db.xhtml_tfoot_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_th_typeDB:
-		*ptr = make([]Xhtml_th_typeDB, 0, len(db.xhtml_th_typeDBs))
-		for _, v := range db.xhtml_th_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_thead_typeDB:
-		*ptr = make([]Xhtml_thead_typeDB, 0, len(db.xhtml_thead_typeDBs))
-		for _, v := range db.xhtml_thead_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_tr_typeDB:
-		*ptr = make([]Xhtml_tr_typeDB, 0, len(db.xhtml_tr_typeDBs))
-		for _, v := range db.xhtml_tr_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_ul_typeDB:
-		*ptr = make([]Xhtml_ul_typeDB, 0, len(db.xhtml_ul_typeDBs))
-		for _, v := range db.xhtml_ul_typeDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]Xhtml_var_typeDB:
-		*ptr = make([]Xhtml_var_typeDB, 0, len(db.xhtml_var_typeDBs))
-		for _, v := range db.xhtml_var_typeDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -2620,15 +2566,465 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 		attribute_value_xhtmlDB, _ := instanceDB.(*ATTRIBUTE_VALUE_XHTMLDB)
 		*attribute_value_xhtmlDB = *tmp
 		
-	case *AnyTypeDB:
-		tmp, ok := db.anytypeDBs[uint(i)]
+	case *A_ALTERNATIVE_IDDB:
+		tmp, ok := db.a_alternative_idDBs[uint(i)]
 
 		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First AnyType Unkown entry %d", i))
+			return nil, errors.New(fmt.Sprintf("db.First A_ALTERNATIVE_ID Unkown entry %d", i))
 		}
 
-		anytypeDB, _ := instanceDB.(*AnyTypeDB)
-		*anytypeDB = *tmp
+		a_alternative_idDB, _ := instanceDB.(*A_ALTERNATIVE_IDDB)
+		*a_alternative_idDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB:
+		tmp, ok := db.a_attribute_definition_boolean_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_BOOLEAN_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_boolean_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB)
+		*a_attribute_definition_boolean_refDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_DATE_REFDB:
+		tmp, ok := db.a_attribute_definition_date_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_DATE_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_date_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_DATE_REFDB)
+		*a_attribute_definition_date_refDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB:
+		tmp, ok := db.a_attribute_definition_enumeration_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_ENUMERATION_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_enumeration_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB)
+		*a_attribute_definition_enumeration_refDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REFDB:
+		tmp, ok := db.a_attribute_definition_integer_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_INTEGER_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_integer_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_INTEGER_REFDB)
+		*a_attribute_definition_integer_refDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_REAL_REFDB:
+		tmp, ok := db.a_attribute_definition_real_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_REAL_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_real_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_REAL_REFDB)
+		*a_attribute_definition_real_refDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_STRING_REFDB:
+		tmp, ok := db.a_attribute_definition_string_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_STRING_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_string_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_STRING_REFDB)
+		*a_attribute_definition_string_refDB = *tmp
+		
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REFDB:
+		tmp, ok := db.a_attribute_definition_xhtml_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_DEFINITION_XHTML_REF Unkown entry %d", i))
+		}
+
+		a_attribute_definition_xhtml_refDB, _ := instanceDB.(*A_ATTRIBUTE_DEFINITION_XHTML_REFDB)
+		*a_attribute_definition_xhtml_refDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_BOOLEANDB:
+		tmp, ok := db.a_attribute_value_booleanDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_BOOLEAN Unkown entry %d", i))
+		}
+
+		a_attribute_value_booleanDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_BOOLEANDB)
+		*a_attribute_value_booleanDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_DATEDB:
+		tmp, ok := db.a_attribute_value_dateDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_DATE Unkown entry %d", i))
+		}
+
+		a_attribute_value_dateDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_DATEDB)
+		*a_attribute_value_dateDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_ENUMERATIONDB:
+		tmp, ok := db.a_attribute_value_enumerationDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_ENUMERATION Unkown entry %d", i))
+		}
+
+		a_attribute_value_enumerationDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_ENUMERATIONDB)
+		*a_attribute_value_enumerationDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_INTEGERDB:
+		tmp, ok := db.a_attribute_value_integerDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_INTEGER Unkown entry %d", i))
+		}
+
+		a_attribute_value_integerDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_INTEGERDB)
+		*a_attribute_value_integerDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_REALDB:
+		tmp, ok := db.a_attribute_value_realDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_REAL Unkown entry %d", i))
+		}
+
+		a_attribute_value_realDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_REALDB)
+		*a_attribute_value_realDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_STRINGDB:
+		tmp, ok := db.a_attribute_value_stringDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_STRING Unkown entry %d", i))
+		}
+
+		a_attribute_value_stringDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_STRINGDB)
+		*a_attribute_value_stringDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_XHTMLDB:
+		tmp, ok := db.a_attribute_value_xhtmlDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_XHTML Unkown entry %d", i))
+		}
+
+		a_attribute_value_xhtmlDB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_XHTMLDB)
+		*a_attribute_value_xhtmlDB = *tmp
+		
+	case *A_ATTRIBUTE_VALUE_XHTML_1DB:
+		tmp, ok := db.a_attribute_value_xhtml_1DBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ATTRIBUTE_VALUE_XHTML_1 Unkown entry %d", i))
+		}
+
+		a_attribute_value_xhtml_1DB, _ := instanceDB.(*A_ATTRIBUTE_VALUE_XHTML_1DB)
+		*a_attribute_value_xhtml_1DB = *tmp
+		
+	case *A_CHILDRENDB:
+		tmp, ok := db.a_childrenDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_CHILDREN Unkown entry %d", i))
+		}
+
+		a_childrenDB, _ := instanceDB.(*A_CHILDRENDB)
+		*a_childrenDB = *tmp
+		
+	case *A_CORE_CONTENTDB:
+		tmp, ok := db.a_core_contentDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_CORE_CONTENT Unkown entry %d", i))
+		}
+
+		a_core_contentDB, _ := instanceDB.(*A_CORE_CONTENTDB)
+		*a_core_contentDB = *tmp
+		
+	case *A_DATATYPESDB:
+		tmp, ok := db.a_datatypesDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPES Unkown entry %d", i))
+		}
+
+		a_datatypesDB, _ := instanceDB.(*A_DATATYPESDB)
+		*a_datatypesDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REFDB:
+		tmp, ok := db.a_datatype_definition_boolean_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_BOOLEAN_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_boolean_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_BOOLEAN_REFDB)
+		*a_datatype_definition_boolean_refDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_DATE_REFDB:
+		tmp, ok := db.a_datatype_definition_date_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_DATE_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_date_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_DATE_REFDB)
+		*a_datatype_definition_date_refDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REFDB:
+		tmp, ok := db.a_datatype_definition_enumeration_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_ENUMERATION_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_enumeration_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_ENUMERATION_REFDB)
+		*a_datatype_definition_enumeration_refDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_INTEGER_REFDB:
+		tmp, ok := db.a_datatype_definition_integer_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_INTEGER_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_integer_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_INTEGER_REFDB)
+		*a_datatype_definition_integer_refDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_REAL_REFDB:
+		tmp, ok := db.a_datatype_definition_real_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_REAL_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_real_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_REAL_REFDB)
+		*a_datatype_definition_real_refDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_STRING_REFDB:
+		tmp, ok := db.a_datatype_definition_string_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_STRING_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_string_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_STRING_REFDB)
+		*a_datatype_definition_string_refDB = *tmp
+		
+	case *A_DATATYPE_DEFINITION_XHTML_REFDB:
+		tmp, ok := db.a_datatype_definition_xhtml_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_DATATYPE_DEFINITION_XHTML_REF Unkown entry %d", i))
+		}
+
+		a_datatype_definition_xhtml_refDB, _ := instanceDB.(*A_DATATYPE_DEFINITION_XHTML_REFDB)
+		*a_datatype_definition_xhtml_refDB = *tmp
+		
+	case *A_EDITABLE_ATTSDB:
+		tmp, ok := db.a_editable_attsDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_EDITABLE_ATTS Unkown entry %d", i))
+		}
+
+		a_editable_attsDB, _ := instanceDB.(*A_EDITABLE_ATTSDB)
+		*a_editable_attsDB = *tmp
+		
+	case *A_ENUM_VALUE_REFDB:
+		tmp, ok := db.a_enum_value_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_ENUM_VALUE_REF Unkown entry %d", i))
+		}
+
+		a_enum_value_refDB, _ := instanceDB.(*A_ENUM_VALUE_REFDB)
+		*a_enum_value_refDB = *tmp
+		
+	case *A_OBJECTDB:
+		tmp, ok := db.a_objectDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_OBJECT Unkown entry %d", i))
+		}
+
+		a_objectDB, _ := instanceDB.(*A_OBJECTDB)
+		*a_objectDB = *tmp
+		
+	case *A_PROPERTIESDB:
+		tmp, ok := db.a_propertiesDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_PROPERTIES Unkown entry %d", i))
+		}
+
+		a_propertiesDB, _ := instanceDB.(*A_PROPERTIESDB)
+		*a_propertiesDB = *tmp
+		
+	case *A_RELATION_GROUP_TYPE_REFDB:
+		tmp, ok := db.a_relation_group_type_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_RELATION_GROUP_TYPE_REF Unkown entry %d", i))
+		}
+
+		a_relation_group_type_refDB, _ := instanceDB.(*A_RELATION_GROUP_TYPE_REFDB)
+		*a_relation_group_type_refDB = *tmp
+		
+	case *A_SOURCE_1DB:
+		tmp, ok := db.a_source_1DBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SOURCE_1 Unkown entry %d", i))
+		}
+
+		a_source_1DB, _ := instanceDB.(*A_SOURCE_1DB)
+		*a_source_1DB = *tmp
+		
+	case *A_SOURCE_SPECIFICATION_1DB:
+		tmp, ok := db.a_source_specification_1DBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SOURCE_SPECIFICATION_1 Unkown entry %d", i))
+		}
+
+		a_source_specification_1DB, _ := instanceDB.(*A_SOURCE_SPECIFICATION_1DB)
+		*a_source_specification_1DB = *tmp
+		
+	case *A_SPECIFICATIONSDB:
+		tmp, ok := db.a_specificationsDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPECIFICATIONS Unkown entry %d", i))
+		}
+
+		a_specificationsDB, _ := instanceDB.(*A_SPECIFICATIONSDB)
+		*a_specificationsDB = *tmp
+		
+	case *A_SPECIFICATION_TYPE_REFDB:
+		tmp, ok := db.a_specification_type_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPECIFICATION_TYPE_REF Unkown entry %d", i))
+		}
+
+		a_specification_type_refDB, _ := instanceDB.(*A_SPECIFICATION_TYPE_REFDB)
+		*a_specification_type_refDB = *tmp
+		
+	case *A_SPECIFIED_VALUESDB:
+		tmp, ok := db.a_specified_valuesDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPECIFIED_VALUES Unkown entry %d", i))
+		}
+
+		a_specified_valuesDB, _ := instanceDB.(*A_SPECIFIED_VALUESDB)
+		*a_specified_valuesDB = *tmp
+		
+	case *A_SPEC_ATTRIBUTESDB:
+		tmp, ok := db.a_spec_attributesDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_ATTRIBUTES Unkown entry %d", i))
+		}
+
+		a_spec_attributesDB, _ := instanceDB.(*A_SPEC_ATTRIBUTESDB)
+		*a_spec_attributesDB = *tmp
+		
+	case *A_SPEC_OBJECTSDB:
+		tmp, ok := db.a_spec_objectsDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_OBJECTS Unkown entry %d", i))
+		}
+
+		a_spec_objectsDB, _ := instanceDB.(*A_SPEC_OBJECTSDB)
+		*a_spec_objectsDB = *tmp
+		
+	case *A_SPEC_OBJECT_TYPE_REFDB:
+		tmp, ok := db.a_spec_object_type_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_OBJECT_TYPE_REF Unkown entry %d", i))
+		}
+
+		a_spec_object_type_refDB, _ := instanceDB.(*A_SPEC_OBJECT_TYPE_REFDB)
+		*a_spec_object_type_refDB = *tmp
+		
+	case *A_SPEC_RELATIONSDB:
+		tmp, ok := db.a_spec_relationsDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_RELATIONS Unkown entry %d", i))
+		}
+
+		a_spec_relationsDB, _ := instanceDB.(*A_SPEC_RELATIONSDB)
+		*a_spec_relationsDB = *tmp
+		
+	case *A_SPEC_RELATION_GROUPSDB:
+		tmp, ok := db.a_spec_relation_groupsDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_RELATION_GROUPS Unkown entry %d", i))
+		}
+
+		a_spec_relation_groupsDB, _ := instanceDB.(*A_SPEC_RELATION_GROUPSDB)
+		*a_spec_relation_groupsDB = *tmp
+		
+	case *A_SPEC_RELATION_REFDB:
+		tmp, ok := db.a_spec_relation_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_RELATION_REF Unkown entry %d", i))
+		}
+
+		a_spec_relation_refDB, _ := instanceDB.(*A_SPEC_RELATION_REFDB)
+		*a_spec_relation_refDB = *tmp
+		
+	case *A_SPEC_RELATION_TYPE_REFDB:
+		tmp, ok := db.a_spec_relation_type_refDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_RELATION_TYPE_REF Unkown entry %d", i))
+		}
+
+		a_spec_relation_type_refDB, _ := instanceDB.(*A_SPEC_RELATION_TYPE_REFDB)
+		*a_spec_relation_type_refDB = *tmp
+		
+	case *A_SPEC_TYPESDB:
+		tmp, ok := db.a_spec_typesDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_SPEC_TYPES Unkown entry %d", i))
+		}
+
+		a_spec_typesDB, _ := instanceDB.(*A_SPEC_TYPESDB)
+		*a_spec_typesDB = *tmp
+		
+	case *A_THE_HEADERDB:
+		tmp, ok := db.a_the_headerDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_THE_HEADER Unkown entry %d", i))
+		}
+
+		a_the_headerDB, _ := instanceDB.(*A_THE_HEADERDB)
+		*a_the_headerDB = *tmp
+		
+	case *A_TOOL_EXTENSIONSDB:
+		tmp, ok := db.a_tool_extensionsDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First A_TOOL_EXTENSIONS Unkown entry %d", i))
+		}
+
+		a_tool_extensionsDB, _ := instanceDB.(*A_TOOL_EXTENSIONSDB)
+		*a_tool_extensionsDB = *tmp
 		
 	case *DATATYPE_DEFINITION_BOOLEANDB:
 		tmp, ok := db.datatype_definition_booleanDBs[uint(i)]
@@ -2859,476 +3255,6 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 
 		xhtml_contentDB, _ := instanceDB.(*XHTML_CONTENTDB)
 		*xhtml_contentDB = *tmp
-		
-	case *Xhtml_InlPres_typeDB:
-		tmp, ok := db.xhtml_inlpres_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_InlPres_type Unkown entry %d", i))
-		}
-
-		xhtml_inlpres_typeDB, _ := instanceDB.(*Xhtml_InlPres_typeDB)
-		*xhtml_inlpres_typeDB = *tmp
-		
-	case *Xhtml_a_typeDB:
-		tmp, ok := db.xhtml_a_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_a_type Unkown entry %d", i))
-		}
-
-		xhtml_a_typeDB, _ := instanceDB.(*Xhtml_a_typeDB)
-		*xhtml_a_typeDB = *tmp
-		
-	case *Xhtml_abbr_typeDB:
-		tmp, ok := db.xhtml_abbr_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_abbr_type Unkown entry %d", i))
-		}
-
-		xhtml_abbr_typeDB, _ := instanceDB.(*Xhtml_abbr_typeDB)
-		*xhtml_abbr_typeDB = *tmp
-		
-	case *Xhtml_acronym_typeDB:
-		tmp, ok := db.xhtml_acronym_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_acronym_type Unkown entry %d", i))
-		}
-
-		xhtml_acronym_typeDB, _ := instanceDB.(*Xhtml_acronym_typeDB)
-		*xhtml_acronym_typeDB = *tmp
-		
-	case *Xhtml_address_typeDB:
-		tmp, ok := db.xhtml_address_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_address_type Unkown entry %d", i))
-		}
-
-		xhtml_address_typeDB, _ := instanceDB.(*Xhtml_address_typeDB)
-		*xhtml_address_typeDB = *tmp
-		
-	case *Xhtml_blockquote_typeDB:
-		tmp, ok := db.xhtml_blockquote_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_blockquote_type Unkown entry %d", i))
-		}
-
-		xhtml_blockquote_typeDB, _ := instanceDB.(*Xhtml_blockquote_typeDB)
-		*xhtml_blockquote_typeDB = *tmp
-		
-	case *Xhtml_br_typeDB:
-		tmp, ok := db.xhtml_br_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_br_type Unkown entry %d", i))
-		}
-
-		xhtml_br_typeDB, _ := instanceDB.(*Xhtml_br_typeDB)
-		*xhtml_br_typeDB = *tmp
-		
-	case *Xhtml_caption_typeDB:
-		tmp, ok := db.xhtml_caption_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_caption_type Unkown entry %d", i))
-		}
-
-		xhtml_caption_typeDB, _ := instanceDB.(*Xhtml_caption_typeDB)
-		*xhtml_caption_typeDB = *tmp
-		
-	case *Xhtml_cite_typeDB:
-		tmp, ok := db.xhtml_cite_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_cite_type Unkown entry %d", i))
-		}
-
-		xhtml_cite_typeDB, _ := instanceDB.(*Xhtml_cite_typeDB)
-		*xhtml_cite_typeDB = *tmp
-		
-	case *Xhtml_code_typeDB:
-		tmp, ok := db.xhtml_code_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_code_type Unkown entry %d", i))
-		}
-
-		xhtml_code_typeDB, _ := instanceDB.(*Xhtml_code_typeDB)
-		*xhtml_code_typeDB = *tmp
-		
-	case *Xhtml_col_typeDB:
-		tmp, ok := db.xhtml_col_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_col_type Unkown entry %d", i))
-		}
-
-		xhtml_col_typeDB, _ := instanceDB.(*Xhtml_col_typeDB)
-		*xhtml_col_typeDB = *tmp
-		
-	case *Xhtml_colgroup_typeDB:
-		tmp, ok := db.xhtml_colgroup_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_colgroup_type Unkown entry %d", i))
-		}
-
-		xhtml_colgroup_typeDB, _ := instanceDB.(*Xhtml_colgroup_typeDB)
-		*xhtml_colgroup_typeDB = *tmp
-		
-	case *Xhtml_dd_typeDB:
-		tmp, ok := db.xhtml_dd_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_dd_type Unkown entry %d", i))
-		}
-
-		xhtml_dd_typeDB, _ := instanceDB.(*Xhtml_dd_typeDB)
-		*xhtml_dd_typeDB = *tmp
-		
-	case *Xhtml_dfn_typeDB:
-		tmp, ok := db.xhtml_dfn_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_dfn_type Unkown entry %d", i))
-		}
-
-		xhtml_dfn_typeDB, _ := instanceDB.(*Xhtml_dfn_typeDB)
-		*xhtml_dfn_typeDB = *tmp
-		
-	case *Xhtml_div_typeDB:
-		tmp, ok := db.xhtml_div_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_div_type Unkown entry %d", i))
-		}
-
-		xhtml_div_typeDB, _ := instanceDB.(*Xhtml_div_typeDB)
-		*xhtml_div_typeDB = *tmp
-		
-	case *Xhtml_dl_typeDB:
-		tmp, ok := db.xhtml_dl_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_dl_type Unkown entry %d", i))
-		}
-
-		xhtml_dl_typeDB, _ := instanceDB.(*Xhtml_dl_typeDB)
-		*xhtml_dl_typeDB = *tmp
-		
-	case *Xhtml_dt_typeDB:
-		tmp, ok := db.xhtml_dt_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_dt_type Unkown entry %d", i))
-		}
-
-		xhtml_dt_typeDB, _ := instanceDB.(*Xhtml_dt_typeDB)
-		*xhtml_dt_typeDB = *tmp
-		
-	case *Xhtml_edit_typeDB:
-		tmp, ok := db.xhtml_edit_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_edit_type Unkown entry %d", i))
-		}
-
-		xhtml_edit_typeDB, _ := instanceDB.(*Xhtml_edit_typeDB)
-		*xhtml_edit_typeDB = *tmp
-		
-	case *Xhtml_em_typeDB:
-		tmp, ok := db.xhtml_em_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_em_type Unkown entry %d", i))
-		}
-
-		xhtml_em_typeDB, _ := instanceDB.(*Xhtml_em_typeDB)
-		*xhtml_em_typeDB = *tmp
-		
-	case *Xhtml_h1_typeDB:
-		tmp, ok := db.xhtml_h1_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_h1_type Unkown entry %d", i))
-		}
-
-		xhtml_h1_typeDB, _ := instanceDB.(*Xhtml_h1_typeDB)
-		*xhtml_h1_typeDB = *tmp
-		
-	case *Xhtml_h2_typeDB:
-		tmp, ok := db.xhtml_h2_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_h2_type Unkown entry %d", i))
-		}
-
-		xhtml_h2_typeDB, _ := instanceDB.(*Xhtml_h2_typeDB)
-		*xhtml_h2_typeDB = *tmp
-		
-	case *Xhtml_h3_typeDB:
-		tmp, ok := db.xhtml_h3_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_h3_type Unkown entry %d", i))
-		}
-
-		xhtml_h3_typeDB, _ := instanceDB.(*Xhtml_h3_typeDB)
-		*xhtml_h3_typeDB = *tmp
-		
-	case *Xhtml_h4_typeDB:
-		tmp, ok := db.xhtml_h4_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_h4_type Unkown entry %d", i))
-		}
-
-		xhtml_h4_typeDB, _ := instanceDB.(*Xhtml_h4_typeDB)
-		*xhtml_h4_typeDB = *tmp
-		
-	case *Xhtml_h5_typeDB:
-		tmp, ok := db.xhtml_h5_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_h5_type Unkown entry %d", i))
-		}
-
-		xhtml_h5_typeDB, _ := instanceDB.(*Xhtml_h5_typeDB)
-		*xhtml_h5_typeDB = *tmp
-		
-	case *Xhtml_h6_typeDB:
-		tmp, ok := db.xhtml_h6_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_h6_type Unkown entry %d", i))
-		}
-
-		xhtml_h6_typeDB, _ := instanceDB.(*Xhtml_h6_typeDB)
-		*xhtml_h6_typeDB = *tmp
-		
-	case *Xhtml_heading_typeDB:
-		tmp, ok := db.xhtml_heading_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_heading_type Unkown entry %d", i))
-		}
-
-		xhtml_heading_typeDB, _ := instanceDB.(*Xhtml_heading_typeDB)
-		*xhtml_heading_typeDB = *tmp
-		
-	case *Xhtml_hr_typeDB:
-		tmp, ok := db.xhtml_hr_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_hr_type Unkown entry %d", i))
-		}
-
-		xhtml_hr_typeDB, _ := instanceDB.(*Xhtml_hr_typeDB)
-		*xhtml_hr_typeDB = *tmp
-		
-	case *Xhtml_kbd_typeDB:
-		tmp, ok := db.xhtml_kbd_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_kbd_type Unkown entry %d", i))
-		}
-
-		xhtml_kbd_typeDB, _ := instanceDB.(*Xhtml_kbd_typeDB)
-		*xhtml_kbd_typeDB = *tmp
-		
-	case *Xhtml_li_typeDB:
-		tmp, ok := db.xhtml_li_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_li_type Unkown entry %d", i))
-		}
-
-		xhtml_li_typeDB, _ := instanceDB.(*Xhtml_li_typeDB)
-		*xhtml_li_typeDB = *tmp
-		
-	case *Xhtml_object_typeDB:
-		tmp, ok := db.xhtml_object_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_object_type Unkown entry %d", i))
-		}
-
-		xhtml_object_typeDB, _ := instanceDB.(*Xhtml_object_typeDB)
-		*xhtml_object_typeDB = *tmp
-		
-	case *Xhtml_ol_typeDB:
-		tmp, ok := db.xhtml_ol_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_ol_type Unkown entry %d", i))
-		}
-
-		xhtml_ol_typeDB, _ := instanceDB.(*Xhtml_ol_typeDB)
-		*xhtml_ol_typeDB = *tmp
-		
-	case *Xhtml_p_typeDB:
-		tmp, ok := db.xhtml_p_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_p_type Unkown entry %d", i))
-		}
-
-		xhtml_p_typeDB, _ := instanceDB.(*Xhtml_p_typeDB)
-		*xhtml_p_typeDB = *tmp
-		
-	case *Xhtml_param_typeDB:
-		tmp, ok := db.xhtml_param_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_param_type Unkown entry %d", i))
-		}
-
-		xhtml_param_typeDB, _ := instanceDB.(*Xhtml_param_typeDB)
-		*xhtml_param_typeDB = *tmp
-		
-	case *Xhtml_pre_typeDB:
-		tmp, ok := db.xhtml_pre_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_pre_type Unkown entry %d", i))
-		}
-
-		xhtml_pre_typeDB, _ := instanceDB.(*Xhtml_pre_typeDB)
-		*xhtml_pre_typeDB = *tmp
-		
-	case *Xhtml_q_typeDB:
-		tmp, ok := db.xhtml_q_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_q_type Unkown entry %d", i))
-		}
-
-		xhtml_q_typeDB, _ := instanceDB.(*Xhtml_q_typeDB)
-		*xhtml_q_typeDB = *tmp
-		
-	case *Xhtml_samp_typeDB:
-		tmp, ok := db.xhtml_samp_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_samp_type Unkown entry %d", i))
-		}
-
-		xhtml_samp_typeDB, _ := instanceDB.(*Xhtml_samp_typeDB)
-		*xhtml_samp_typeDB = *tmp
-		
-	case *Xhtml_span_typeDB:
-		tmp, ok := db.xhtml_span_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_span_type Unkown entry %d", i))
-		}
-
-		xhtml_span_typeDB, _ := instanceDB.(*Xhtml_span_typeDB)
-		*xhtml_span_typeDB = *tmp
-		
-	case *Xhtml_strong_typeDB:
-		tmp, ok := db.xhtml_strong_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_strong_type Unkown entry %d", i))
-		}
-
-		xhtml_strong_typeDB, _ := instanceDB.(*Xhtml_strong_typeDB)
-		*xhtml_strong_typeDB = *tmp
-		
-	case *Xhtml_table_typeDB:
-		tmp, ok := db.xhtml_table_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_table_type Unkown entry %d", i))
-		}
-
-		xhtml_table_typeDB, _ := instanceDB.(*Xhtml_table_typeDB)
-		*xhtml_table_typeDB = *tmp
-		
-	case *Xhtml_tbody_typeDB:
-		tmp, ok := db.xhtml_tbody_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_tbody_type Unkown entry %d", i))
-		}
-
-		xhtml_tbody_typeDB, _ := instanceDB.(*Xhtml_tbody_typeDB)
-		*xhtml_tbody_typeDB = *tmp
-		
-	case *Xhtml_td_typeDB:
-		tmp, ok := db.xhtml_td_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_td_type Unkown entry %d", i))
-		}
-
-		xhtml_td_typeDB, _ := instanceDB.(*Xhtml_td_typeDB)
-		*xhtml_td_typeDB = *tmp
-		
-	case *Xhtml_tfoot_typeDB:
-		tmp, ok := db.xhtml_tfoot_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_tfoot_type Unkown entry %d", i))
-		}
-
-		xhtml_tfoot_typeDB, _ := instanceDB.(*Xhtml_tfoot_typeDB)
-		*xhtml_tfoot_typeDB = *tmp
-		
-	case *Xhtml_th_typeDB:
-		tmp, ok := db.xhtml_th_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_th_type Unkown entry %d", i))
-		}
-
-		xhtml_th_typeDB, _ := instanceDB.(*Xhtml_th_typeDB)
-		*xhtml_th_typeDB = *tmp
-		
-	case *Xhtml_thead_typeDB:
-		tmp, ok := db.xhtml_thead_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_thead_type Unkown entry %d", i))
-		}
-
-		xhtml_thead_typeDB, _ := instanceDB.(*Xhtml_thead_typeDB)
-		*xhtml_thead_typeDB = *tmp
-		
-	case *Xhtml_tr_typeDB:
-		tmp, ok := db.xhtml_tr_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_tr_type Unkown entry %d", i))
-		}
-
-		xhtml_tr_typeDB, _ := instanceDB.(*Xhtml_tr_typeDB)
-		*xhtml_tr_typeDB = *tmp
-		
-	case *Xhtml_ul_typeDB:
-		tmp, ok := db.xhtml_ul_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_ul_type Unkown entry %d", i))
-		}
-
-		xhtml_ul_typeDB, _ := instanceDB.(*Xhtml_ul_typeDB)
-		*xhtml_ul_typeDB = *tmp
-		
-	case *Xhtml_var_typeDB:
-		tmp, ok := db.xhtml_var_typeDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First Xhtml_var_type Unkown entry %d", i))
-		}
-
-		xhtml_var_typeDB, _ := instanceDB.(*Xhtml_var_typeDB)
-		*xhtml_var_typeDB = *tmp
 		
 	default:
 		return nil, errors.New("github.com/fullstack-lang/gongreqif/go, Unkown type")

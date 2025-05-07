@@ -49,8 +49,98 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.ATTRIBUTE_VALUE_STRING](probe)
 	case *models.ATTRIBUTE_VALUE_XHTML:
 		updateAndCommitTable[models.ATTRIBUTE_VALUE_XHTML](probe)
-	case *models.AnyType:
-		updateAndCommitTable[models.AnyType](probe)
+	case *models.A_ALTERNATIVE_ID:
+		updateAndCommitTable[models.A_ALTERNATIVE_ID](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_DATE_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_DATE_REF](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_REAL_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_REAL_REF](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_STRING_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_STRING_REF](probe)
+	case *models.A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_XHTML_REF](probe)
+	case *models.A_ATTRIBUTE_VALUE_BOOLEAN:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_BOOLEAN](probe)
+	case *models.A_ATTRIBUTE_VALUE_DATE:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_DATE](probe)
+	case *models.A_ATTRIBUTE_VALUE_ENUMERATION:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_ENUMERATION](probe)
+	case *models.A_ATTRIBUTE_VALUE_INTEGER:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_INTEGER](probe)
+	case *models.A_ATTRIBUTE_VALUE_REAL:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_REAL](probe)
+	case *models.A_ATTRIBUTE_VALUE_STRING:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_STRING](probe)
+	case *models.A_ATTRIBUTE_VALUE_XHTML:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML](probe)
+	case *models.A_ATTRIBUTE_VALUE_XHTML_1:
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML_1](probe)
+	case *models.A_CHILDREN:
+		updateAndCommitTable[models.A_CHILDREN](probe)
+	case *models.A_CORE_CONTENT:
+		updateAndCommitTable[models.A_CORE_CONTENT](probe)
+	case *models.A_DATATYPES:
+		updateAndCommitTable[models.A_DATATYPES](probe)
+	case *models.A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_BOOLEAN_REF](probe)
+	case *models.A_DATATYPE_DEFINITION_DATE_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_DATE_REF](probe)
+	case *models.A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_ENUMERATION_REF](probe)
+	case *models.A_DATATYPE_DEFINITION_INTEGER_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_INTEGER_REF](probe)
+	case *models.A_DATATYPE_DEFINITION_REAL_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_REAL_REF](probe)
+	case *models.A_DATATYPE_DEFINITION_STRING_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_STRING_REF](probe)
+	case *models.A_DATATYPE_DEFINITION_XHTML_REF:
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_XHTML_REF](probe)
+	case *models.A_EDITABLE_ATTS:
+		updateAndCommitTable[models.A_EDITABLE_ATTS](probe)
+	case *models.A_ENUM_VALUE_REF:
+		updateAndCommitTable[models.A_ENUM_VALUE_REF](probe)
+	case *models.A_OBJECT:
+		updateAndCommitTable[models.A_OBJECT](probe)
+	case *models.A_PROPERTIES:
+		updateAndCommitTable[models.A_PROPERTIES](probe)
+	case *models.A_RELATION_GROUP_TYPE_REF:
+		updateAndCommitTable[models.A_RELATION_GROUP_TYPE_REF](probe)
+	case *models.A_SOURCE_1:
+		updateAndCommitTable[models.A_SOURCE_1](probe)
+	case *models.A_SOURCE_SPECIFICATION_1:
+		updateAndCommitTable[models.A_SOURCE_SPECIFICATION_1](probe)
+	case *models.A_SPECIFICATIONS:
+		updateAndCommitTable[models.A_SPECIFICATIONS](probe)
+	case *models.A_SPECIFICATION_TYPE_REF:
+		updateAndCommitTable[models.A_SPECIFICATION_TYPE_REF](probe)
+	case *models.A_SPECIFIED_VALUES:
+		updateAndCommitTable[models.A_SPECIFIED_VALUES](probe)
+	case *models.A_SPEC_ATTRIBUTES:
+		updateAndCommitTable[models.A_SPEC_ATTRIBUTES](probe)
+	case *models.A_SPEC_OBJECTS:
+		updateAndCommitTable[models.A_SPEC_OBJECTS](probe)
+	case *models.A_SPEC_OBJECT_TYPE_REF:
+		updateAndCommitTable[models.A_SPEC_OBJECT_TYPE_REF](probe)
+	case *models.A_SPEC_RELATIONS:
+		updateAndCommitTable[models.A_SPEC_RELATIONS](probe)
+	case *models.A_SPEC_RELATION_GROUPS:
+		updateAndCommitTable[models.A_SPEC_RELATION_GROUPS](probe)
+	case *models.A_SPEC_RELATION_REF:
+		updateAndCommitTable[models.A_SPEC_RELATION_REF](probe)
+	case *models.A_SPEC_RELATION_TYPE_REF:
+		updateAndCommitTable[models.A_SPEC_RELATION_TYPE_REF](probe)
+	case *models.A_SPEC_TYPES:
+		updateAndCommitTable[models.A_SPEC_TYPES](probe)
+	case *models.A_THE_HEADER:
+		updateAndCommitTable[models.A_THE_HEADER](probe)
+	case *models.A_TOOL_EXTENSIONS:
+		updateAndCommitTable[models.A_TOOL_EXTENSIONS](probe)
 	case *models.DATATYPE_DEFINITION_BOOLEAN:
 		updateAndCommitTable[models.DATATYPE_DEFINITION_BOOLEAN](probe)
 	case *models.DATATYPE_DEFINITION_DATE:
@@ -97,100 +187,6 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.SPEC_RELATION_TYPE](probe)
 	case *models.XHTML_CONTENT:
 		updateAndCommitTable[models.XHTML_CONTENT](probe)
-	case *models.Xhtml_InlPres_type:
-		updateAndCommitTable[models.Xhtml_InlPres_type](probe)
-	case *models.Xhtml_a_type:
-		updateAndCommitTable[models.Xhtml_a_type](probe)
-	case *models.Xhtml_abbr_type:
-		updateAndCommitTable[models.Xhtml_abbr_type](probe)
-	case *models.Xhtml_acronym_type:
-		updateAndCommitTable[models.Xhtml_acronym_type](probe)
-	case *models.Xhtml_address_type:
-		updateAndCommitTable[models.Xhtml_address_type](probe)
-	case *models.Xhtml_blockquote_type:
-		updateAndCommitTable[models.Xhtml_blockquote_type](probe)
-	case *models.Xhtml_br_type:
-		updateAndCommitTable[models.Xhtml_br_type](probe)
-	case *models.Xhtml_caption_type:
-		updateAndCommitTable[models.Xhtml_caption_type](probe)
-	case *models.Xhtml_cite_type:
-		updateAndCommitTable[models.Xhtml_cite_type](probe)
-	case *models.Xhtml_code_type:
-		updateAndCommitTable[models.Xhtml_code_type](probe)
-	case *models.Xhtml_col_type:
-		updateAndCommitTable[models.Xhtml_col_type](probe)
-	case *models.Xhtml_colgroup_type:
-		updateAndCommitTable[models.Xhtml_colgroup_type](probe)
-	case *models.Xhtml_dd_type:
-		updateAndCommitTable[models.Xhtml_dd_type](probe)
-	case *models.Xhtml_dfn_type:
-		updateAndCommitTable[models.Xhtml_dfn_type](probe)
-	case *models.Xhtml_div_type:
-		updateAndCommitTable[models.Xhtml_div_type](probe)
-	case *models.Xhtml_dl_type:
-		updateAndCommitTable[models.Xhtml_dl_type](probe)
-	case *models.Xhtml_dt_type:
-		updateAndCommitTable[models.Xhtml_dt_type](probe)
-	case *models.Xhtml_edit_type:
-		updateAndCommitTable[models.Xhtml_edit_type](probe)
-	case *models.Xhtml_em_type:
-		updateAndCommitTable[models.Xhtml_em_type](probe)
-	case *models.Xhtml_h1_type:
-		updateAndCommitTable[models.Xhtml_h1_type](probe)
-	case *models.Xhtml_h2_type:
-		updateAndCommitTable[models.Xhtml_h2_type](probe)
-	case *models.Xhtml_h3_type:
-		updateAndCommitTable[models.Xhtml_h3_type](probe)
-	case *models.Xhtml_h4_type:
-		updateAndCommitTable[models.Xhtml_h4_type](probe)
-	case *models.Xhtml_h5_type:
-		updateAndCommitTable[models.Xhtml_h5_type](probe)
-	case *models.Xhtml_h6_type:
-		updateAndCommitTable[models.Xhtml_h6_type](probe)
-	case *models.Xhtml_heading_type:
-		updateAndCommitTable[models.Xhtml_heading_type](probe)
-	case *models.Xhtml_hr_type:
-		updateAndCommitTable[models.Xhtml_hr_type](probe)
-	case *models.Xhtml_kbd_type:
-		updateAndCommitTable[models.Xhtml_kbd_type](probe)
-	case *models.Xhtml_li_type:
-		updateAndCommitTable[models.Xhtml_li_type](probe)
-	case *models.Xhtml_object_type:
-		updateAndCommitTable[models.Xhtml_object_type](probe)
-	case *models.Xhtml_ol_type:
-		updateAndCommitTable[models.Xhtml_ol_type](probe)
-	case *models.Xhtml_p_type:
-		updateAndCommitTable[models.Xhtml_p_type](probe)
-	case *models.Xhtml_param_type:
-		updateAndCommitTable[models.Xhtml_param_type](probe)
-	case *models.Xhtml_pre_type:
-		updateAndCommitTable[models.Xhtml_pre_type](probe)
-	case *models.Xhtml_q_type:
-		updateAndCommitTable[models.Xhtml_q_type](probe)
-	case *models.Xhtml_samp_type:
-		updateAndCommitTable[models.Xhtml_samp_type](probe)
-	case *models.Xhtml_span_type:
-		updateAndCommitTable[models.Xhtml_span_type](probe)
-	case *models.Xhtml_strong_type:
-		updateAndCommitTable[models.Xhtml_strong_type](probe)
-	case *models.Xhtml_table_type:
-		updateAndCommitTable[models.Xhtml_table_type](probe)
-	case *models.Xhtml_tbody_type:
-		updateAndCommitTable[models.Xhtml_tbody_type](probe)
-	case *models.Xhtml_td_type:
-		updateAndCommitTable[models.Xhtml_td_type](probe)
-	case *models.Xhtml_tfoot_type:
-		updateAndCommitTable[models.Xhtml_tfoot_type](probe)
-	case *models.Xhtml_th_type:
-		updateAndCommitTable[models.Xhtml_th_type](probe)
-	case *models.Xhtml_thead_type:
-		updateAndCommitTable[models.Xhtml_thead_type](probe)
-	case *models.Xhtml_tr_type:
-		updateAndCommitTable[models.Xhtml_tr_type](probe)
-	case *models.Xhtml_ul_type:
-		updateAndCommitTable[models.Xhtml_ul_type](probe)
-	case *models.Xhtml_var_type:
-		updateAndCommitTable[models.Xhtml_var_type](probe)
 	default:
 		log.Println("unknow type")
 	}

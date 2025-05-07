@@ -34,7 +34,97 @@ type BackRepoData struct {
 
 	ATTRIBUTE_VALUE_XHTMLAPIs []*ATTRIBUTE_VALUE_XHTMLAPI
 
-	AnyTypeAPIs []*AnyTypeAPI
+	A_ALTERNATIVE_IDAPIs []*A_ALTERNATIVE_IDAPI
+
+	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFAPIs []*A_ATTRIBUTE_DEFINITION_BOOLEAN_REFAPI
+
+	A_ATTRIBUTE_DEFINITION_DATE_REFAPIs []*A_ATTRIBUTE_DEFINITION_DATE_REFAPI
+
+	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFAPIs []*A_ATTRIBUTE_DEFINITION_ENUMERATION_REFAPI
+
+	A_ATTRIBUTE_DEFINITION_INTEGER_REFAPIs []*A_ATTRIBUTE_DEFINITION_INTEGER_REFAPI
+
+	A_ATTRIBUTE_DEFINITION_REAL_REFAPIs []*A_ATTRIBUTE_DEFINITION_REAL_REFAPI
+
+	A_ATTRIBUTE_DEFINITION_STRING_REFAPIs []*A_ATTRIBUTE_DEFINITION_STRING_REFAPI
+
+	A_ATTRIBUTE_DEFINITION_XHTML_REFAPIs []*A_ATTRIBUTE_DEFINITION_XHTML_REFAPI
+
+	A_ATTRIBUTE_VALUE_BOOLEANAPIs []*A_ATTRIBUTE_VALUE_BOOLEANAPI
+
+	A_ATTRIBUTE_VALUE_DATEAPIs []*A_ATTRIBUTE_VALUE_DATEAPI
+
+	A_ATTRIBUTE_VALUE_ENUMERATIONAPIs []*A_ATTRIBUTE_VALUE_ENUMERATIONAPI
+
+	A_ATTRIBUTE_VALUE_INTEGERAPIs []*A_ATTRIBUTE_VALUE_INTEGERAPI
+
+	A_ATTRIBUTE_VALUE_REALAPIs []*A_ATTRIBUTE_VALUE_REALAPI
+
+	A_ATTRIBUTE_VALUE_STRINGAPIs []*A_ATTRIBUTE_VALUE_STRINGAPI
+
+	A_ATTRIBUTE_VALUE_XHTMLAPIs []*A_ATTRIBUTE_VALUE_XHTMLAPI
+
+	A_ATTRIBUTE_VALUE_XHTML_1APIs []*A_ATTRIBUTE_VALUE_XHTML_1API
+
+	A_CHILDRENAPIs []*A_CHILDRENAPI
+
+	A_CORE_CONTENTAPIs []*A_CORE_CONTENTAPI
+
+	A_DATATYPESAPIs []*A_DATATYPESAPI
+
+	A_DATATYPE_DEFINITION_BOOLEAN_REFAPIs []*A_DATATYPE_DEFINITION_BOOLEAN_REFAPI
+
+	A_DATATYPE_DEFINITION_DATE_REFAPIs []*A_DATATYPE_DEFINITION_DATE_REFAPI
+
+	A_DATATYPE_DEFINITION_ENUMERATION_REFAPIs []*A_DATATYPE_DEFINITION_ENUMERATION_REFAPI
+
+	A_DATATYPE_DEFINITION_INTEGER_REFAPIs []*A_DATATYPE_DEFINITION_INTEGER_REFAPI
+
+	A_DATATYPE_DEFINITION_REAL_REFAPIs []*A_DATATYPE_DEFINITION_REAL_REFAPI
+
+	A_DATATYPE_DEFINITION_STRING_REFAPIs []*A_DATATYPE_DEFINITION_STRING_REFAPI
+
+	A_DATATYPE_DEFINITION_XHTML_REFAPIs []*A_DATATYPE_DEFINITION_XHTML_REFAPI
+
+	A_EDITABLE_ATTSAPIs []*A_EDITABLE_ATTSAPI
+
+	A_ENUM_VALUE_REFAPIs []*A_ENUM_VALUE_REFAPI
+
+	A_OBJECTAPIs []*A_OBJECTAPI
+
+	A_PROPERTIESAPIs []*A_PROPERTIESAPI
+
+	A_RELATION_GROUP_TYPE_REFAPIs []*A_RELATION_GROUP_TYPE_REFAPI
+
+	A_SOURCE_1APIs []*A_SOURCE_1API
+
+	A_SOURCE_SPECIFICATION_1APIs []*A_SOURCE_SPECIFICATION_1API
+
+	A_SPECIFICATIONSAPIs []*A_SPECIFICATIONSAPI
+
+	A_SPECIFICATION_TYPE_REFAPIs []*A_SPECIFICATION_TYPE_REFAPI
+
+	A_SPECIFIED_VALUESAPIs []*A_SPECIFIED_VALUESAPI
+
+	A_SPEC_ATTRIBUTESAPIs []*A_SPEC_ATTRIBUTESAPI
+
+	A_SPEC_OBJECTSAPIs []*A_SPEC_OBJECTSAPI
+
+	A_SPEC_OBJECT_TYPE_REFAPIs []*A_SPEC_OBJECT_TYPE_REFAPI
+
+	A_SPEC_RELATIONSAPIs []*A_SPEC_RELATIONSAPI
+
+	A_SPEC_RELATION_GROUPSAPIs []*A_SPEC_RELATION_GROUPSAPI
+
+	A_SPEC_RELATION_REFAPIs []*A_SPEC_RELATION_REFAPI
+
+	A_SPEC_RELATION_TYPE_REFAPIs []*A_SPEC_RELATION_TYPE_REFAPI
+
+	A_SPEC_TYPESAPIs []*A_SPEC_TYPESAPI
+
+	A_THE_HEADERAPIs []*A_THE_HEADERAPI
+
+	A_TOOL_EXTENSIONSAPIs []*A_TOOL_EXTENSIONSAPI
 
 	DATATYPE_DEFINITION_BOOLEANAPIs []*DATATYPE_DEFINITION_BOOLEANAPI
 
@@ -81,100 +171,6 @@ type BackRepoData struct {
 	SPEC_RELATION_TYPEAPIs []*SPEC_RELATION_TYPEAPI
 
 	XHTML_CONTENTAPIs []*XHTML_CONTENTAPI
-
-	Xhtml_InlPres_typeAPIs []*Xhtml_InlPres_typeAPI
-
-	Xhtml_a_typeAPIs []*Xhtml_a_typeAPI
-
-	Xhtml_abbr_typeAPIs []*Xhtml_abbr_typeAPI
-
-	Xhtml_acronym_typeAPIs []*Xhtml_acronym_typeAPI
-
-	Xhtml_address_typeAPIs []*Xhtml_address_typeAPI
-
-	Xhtml_blockquote_typeAPIs []*Xhtml_blockquote_typeAPI
-
-	Xhtml_br_typeAPIs []*Xhtml_br_typeAPI
-
-	Xhtml_caption_typeAPIs []*Xhtml_caption_typeAPI
-
-	Xhtml_cite_typeAPIs []*Xhtml_cite_typeAPI
-
-	Xhtml_code_typeAPIs []*Xhtml_code_typeAPI
-
-	Xhtml_col_typeAPIs []*Xhtml_col_typeAPI
-
-	Xhtml_colgroup_typeAPIs []*Xhtml_colgroup_typeAPI
-
-	Xhtml_dd_typeAPIs []*Xhtml_dd_typeAPI
-
-	Xhtml_dfn_typeAPIs []*Xhtml_dfn_typeAPI
-
-	Xhtml_div_typeAPIs []*Xhtml_div_typeAPI
-
-	Xhtml_dl_typeAPIs []*Xhtml_dl_typeAPI
-
-	Xhtml_dt_typeAPIs []*Xhtml_dt_typeAPI
-
-	Xhtml_edit_typeAPIs []*Xhtml_edit_typeAPI
-
-	Xhtml_em_typeAPIs []*Xhtml_em_typeAPI
-
-	Xhtml_h1_typeAPIs []*Xhtml_h1_typeAPI
-
-	Xhtml_h2_typeAPIs []*Xhtml_h2_typeAPI
-
-	Xhtml_h3_typeAPIs []*Xhtml_h3_typeAPI
-
-	Xhtml_h4_typeAPIs []*Xhtml_h4_typeAPI
-
-	Xhtml_h5_typeAPIs []*Xhtml_h5_typeAPI
-
-	Xhtml_h6_typeAPIs []*Xhtml_h6_typeAPI
-
-	Xhtml_heading_typeAPIs []*Xhtml_heading_typeAPI
-
-	Xhtml_hr_typeAPIs []*Xhtml_hr_typeAPI
-
-	Xhtml_kbd_typeAPIs []*Xhtml_kbd_typeAPI
-
-	Xhtml_li_typeAPIs []*Xhtml_li_typeAPI
-
-	Xhtml_object_typeAPIs []*Xhtml_object_typeAPI
-
-	Xhtml_ol_typeAPIs []*Xhtml_ol_typeAPI
-
-	Xhtml_p_typeAPIs []*Xhtml_p_typeAPI
-
-	Xhtml_param_typeAPIs []*Xhtml_param_typeAPI
-
-	Xhtml_pre_typeAPIs []*Xhtml_pre_typeAPI
-
-	Xhtml_q_typeAPIs []*Xhtml_q_typeAPI
-
-	Xhtml_samp_typeAPIs []*Xhtml_samp_typeAPI
-
-	Xhtml_span_typeAPIs []*Xhtml_span_typeAPI
-
-	Xhtml_strong_typeAPIs []*Xhtml_strong_typeAPI
-
-	Xhtml_table_typeAPIs []*Xhtml_table_typeAPI
-
-	Xhtml_tbody_typeAPIs []*Xhtml_tbody_typeAPI
-
-	Xhtml_td_typeAPIs []*Xhtml_td_typeAPI
-
-	Xhtml_tfoot_typeAPIs []*Xhtml_tfoot_typeAPI
-
-	Xhtml_th_typeAPIs []*Xhtml_th_typeAPI
-
-	Xhtml_thead_typeAPIs []*Xhtml_thead_typeAPI
-
-	Xhtml_tr_typeAPIs []*Xhtml_tr_typeAPI
-
-	Xhtml_ul_typeAPIs []*Xhtml_ul_typeAPI
-
-	Xhtml_var_typeAPIs []*Xhtml_var_typeAPI
 
 	// index of the web socket for this stack type (unique among all stack instances)
 	GONG__Index int
@@ -337,14 +333,464 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		backRepoData.ATTRIBUTE_VALUE_XHTMLAPIs = append(backRepoData.ATTRIBUTE_VALUE_XHTMLAPIs, &attribute_value_xhtmlAPI)
 	}
 
-	for _, anytypeDB := range backRepo.BackRepoAnyType.Map_AnyTypeDBID_AnyTypeDB {
+	for _, a_alternative_idDB := range backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDDB {
 
-		var anytypeAPI AnyTypeAPI
-		anytypeAPI.ID = anytypeDB.ID
-		anytypeAPI.AnyTypePointersEncoding = anytypeDB.AnyTypePointersEncoding
-		anytypeDB.CopyBasicFieldsToAnyType_WOP(&anytypeAPI.AnyType_WOP)
+		var a_alternative_idAPI A_ALTERNATIVE_IDAPI
+		a_alternative_idAPI.ID = a_alternative_idDB.ID
+		a_alternative_idAPI.A_ALTERNATIVE_IDPointersEncoding = a_alternative_idDB.A_ALTERNATIVE_IDPointersEncoding
+		a_alternative_idDB.CopyBasicFieldsToA_ALTERNATIVE_ID_WOP(&a_alternative_idAPI.A_ALTERNATIVE_ID_WOP)
 
-		backRepoData.AnyTypeAPIs = append(backRepoData.AnyTypeAPIs, &anytypeAPI)
+		backRepoData.A_ALTERNATIVE_IDAPIs = append(backRepoData.A_ALTERNATIVE_IDAPIs, &a_alternative_idAPI)
+	}
+
+	for _, a_attribute_definition_boolean_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDBID_A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB {
+
+		var a_attribute_definition_boolean_refAPI A_ATTRIBUTE_DEFINITION_BOOLEAN_REFAPI
+		a_attribute_definition_boolean_refAPI.ID = a_attribute_definition_boolean_refDB.ID
+		a_attribute_definition_boolean_refAPI.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFPointersEncoding = a_attribute_definition_boolean_refDB.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFPointersEncoding
+		a_attribute_definition_boolean_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_BOOLEAN_REF_WOP(&a_attribute_definition_boolean_refAPI.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFAPIs, &a_attribute_definition_boolean_refAPI)
+	}
+
+	for _, a_attribute_definition_date_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_DATE_REF.Map_A_ATTRIBUTE_DEFINITION_DATE_REFDBID_A_ATTRIBUTE_DEFINITION_DATE_REFDB {
+
+		var a_attribute_definition_date_refAPI A_ATTRIBUTE_DEFINITION_DATE_REFAPI
+		a_attribute_definition_date_refAPI.ID = a_attribute_definition_date_refDB.ID
+		a_attribute_definition_date_refAPI.A_ATTRIBUTE_DEFINITION_DATE_REFPointersEncoding = a_attribute_definition_date_refDB.A_ATTRIBUTE_DEFINITION_DATE_REFPointersEncoding
+		a_attribute_definition_date_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_DATE_REF_WOP(&a_attribute_definition_date_refAPI.A_ATTRIBUTE_DEFINITION_DATE_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_DATE_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_DATE_REFAPIs, &a_attribute_definition_date_refAPI)
+	}
+
+	for _, a_attribute_definition_enumeration_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDBID_A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB {
+
+		var a_attribute_definition_enumeration_refAPI A_ATTRIBUTE_DEFINITION_ENUMERATION_REFAPI
+		a_attribute_definition_enumeration_refAPI.ID = a_attribute_definition_enumeration_refDB.ID
+		a_attribute_definition_enumeration_refAPI.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFPointersEncoding = a_attribute_definition_enumeration_refDB.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFPointersEncoding
+		a_attribute_definition_enumeration_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_ENUMERATION_REF_WOP(&a_attribute_definition_enumeration_refAPI.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFAPIs, &a_attribute_definition_enumeration_refAPI)
+	}
+
+	for _, a_attribute_definition_integer_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_INTEGER_REF.Map_A_ATTRIBUTE_DEFINITION_INTEGER_REFDBID_A_ATTRIBUTE_DEFINITION_INTEGER_REFDB {
+
+		var a_attribute_definition_integer_refAPI A_ATTRIBUTE_DEFINITION_INTEGER_REFAPI
+		a_attribute_definition_integer_refAPI.ID = a_attribute_definition_integer_refDB.ID
+		a_attribute_definition_integer_refAPI.A_ATTRIBUTE_DEFINITION_INTEGER_REFPointersEncoding = a_attribute_definition_integer_refDB.A_ATTRIBUTE_DEFINITION_INTEGER_REFPointersEncoding
+		a_attribute_definition_integer_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_INTEGER_REF_WOP(&a_attribute_definition_integer_refAPI.A_ATTRIBUTE_DEFINITION_INTEGER_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_INTEGER_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_INTEGER_REFAPIs, &a_attribute_definition_integer_refAPI)
+	}
+
+	for _, a_attribute_definition_real_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_REAL_REF.Map_A_ATTRIBUTE_DEFINITION_REAL_REFDBID_A_ATTRIBUTE_DEFINITION_REAL_REFDB {
+
+		var a_attribute_definition_real_refAPI A_ATTRIBUTE_DEFINITION_REAL_REFAPI
+		a_attribute_definition_real_refAPI.ID = a_attribute_definition_real_refDB.ID
+		a_attribute_definition_real_refAPI.A_ATTRIBUTE_DEFINITION_REAL_REFPointersEncoding = a_attribute_definition_real_refDB.A_ATTRIBUTE_DEFINITION_REAL_REFPointersEncoding
+		a_attribute_definition_real_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_REAL_REF_WOP(&a_attribute_definition_real_refAPI.A_ATTRIBUTE_DEFINITION_REAL_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_REAL_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_REAL_REFAPIs, &a_attribute_definition_real_refAPI)
+	}
+
+	for _, a_attribute_definition_string_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_STRING_REF.Map_A_ATTRIBUTE_DEFINITION_STRING_REFDBID_A_ATTRIBUTE_DEFINITION_STRING_REFDB {
+
+		var a_attribute_definition_string_refAPI A_ATTRIBUTE_DEFINITION_STRING_REFAPI
+		a_attribute_definition_string_refAPI.ID = a_attribute_definition_string_refDB.ID
+		a_attribute_definition_string_refAPI.A_ATTRIBUTE_DEFINITION_STRING_REFPointersEncoding = a_attribute_definition_string_refDB.A_ATTRIBUTE_DEFINITION_STRING_REFPointersEncoding
+		a_attribute_definition_string_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_STRING_REF_WOP(&a_attribute_definition_string_refAPI.A_ATTRIBUTE_DEFINITION_STRING_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_STRING_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_STRING_REFAPIs, &a_attribute_definition_string_refAPI)
+	}
+
+	for _, a_attribute_definition_xhtml_refDB := range backRepo.BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REF.Map_A_ATTRIBUTE_DEFINITION_XHTML_REFDBID_A_ATTRIBUTE_DEFINITION_XHTML_REFDB {
+
+		var a_attribute_definition_xhtml_refAPI A_ATTRIBUTE_DEFINITION_XHTML_REFAPI
+		a_attribute_definition_xhtml_refAPI.ID = a_attribute_definition_xhtml_refDB.ID
+		a_attribute_definition_xhtml_refAPI.A_ATTRIBUTE_DEFINITION_XHTML_REFPointersEncoding = a_attribute_definition_xhtml_refDB.A_ATTRIBUTE_DEFINITION_XHTML_REFPointersEncoding
+		a_attribute_definition_xhtml_refDB.CopyBasicFieldsToA_ATTRIBUTE_DEFINITION_XHTML_REF_WOP(&a_attribute_definition_xhtml_refAPI.A_ATTRIBUTE_DEFINITION_XHTML_REF_WOP)
+
+		backRepoData.A_ATTRIBUTE_DEFINITION_XHTML_REFAPIs = append(backRepoData.A_ATTRIBUTE_DEFINITION_XHTML_REFAPIs, &a_attribute_definition_xhtml_refAPI)
+	}
+
+	for _, a_attribute_value_booleanDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_BOOLEAN.Map_A_ATTRIBUTE_VALUE_BOOLEANDBID_A_ATTRIBUTE_VALUE_BOOLEANDB {
+
+		var a_attribute_value_booleanAPI A_ATTRIBUTE_VALUE_BOOLEANAPI
+		a_attribute_value_booleanAPI.ID = a_attribute_value_booleanDB.ID
+		a_attribute_value_booleanAPI.A_ATTRIBUTE_VALUE_BOOLEANPointersEncoding = a_attribute_value_booleanDB.A_ATTRIBUTE_VALUE_BOOLEANPointersEncoding
+		a_attribute_value_booleanDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_BOOLEAN_WOP(&a_attribute_value_booleanAPI.A_ATTRIBUTE_VALUE_BOOLEAN_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_BOOLEANAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_BOOLEANAPIs, &a_attribute_value_booleanAPI)
+	}
+
+	for _, a_attribute_value_dateDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_DATE.Map_A_ATTRIBUTE_VALUE_DATEDBID_A_ATTRIBUTE_VALUE_DATEDB {
+
+		var a_attribute_value_dateAPI A_ATTRIBUTE_VALUE_DATEAPI
+		a_attribute_value_dateAPI.ID = a_attribute_value_dateDB.ID
+		a_attribute_value_dateAPI.A_ATTRIBUTE_VALUE_DATEPointersEncoding = a_attribute_value_dateDB.A_ATTRIBUTE_VALUE_DATEPointersEncoding
+		a_attribute_value_dateDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_DATE_WOP(&a_attribute_value_dateAPI.A_ATTRIBUTE_VALUE_DATE_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_DATEAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_DATEAPIs, &a_attribute_value_dateAPI)
+	}
+
+	for _, a_attribute_value_enumerationDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_ENUMERATION.Map_A_ATTRIBUTE_VALUE_ENUMERATIONDBID_A_ATTRIBUTE_VALUE_ENUMERATIONDB {
+
+		var a_attribute_value_enumerationAPI A_ATTRIBUTE_VALUE_ENUMERATIONAPI
+		a_attribute_value_enumerationAPI.ID = a_attribute_value_enumerationDB.ID
+		a_attribute_value_enumerationAPI.A_ATTRIBUTE_VALUE_ENUMERATIONPointersEncoding = a_attribute_value_enumerationDB.A_ATTRIBUTE_VALUE_ENUMERATIONPointersEncoding
+		a_attribute_value_enumerationDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_ENUMERATION_WOP(&a_attribute_value_enumerationAPI.A_ATTRIBUTE_VALUE_ENUMERATION_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_ENUMERATIONAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_ENUMERATIONAPIs, &a_attribute_value_enumerationAPI)
+	}
+
+	for _, a_attribute_value_integerDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_INTEGER.Map_A_ATTRIBUTE_VALUE_INTEGERDBID_A_ATTRIBUTE_VALUE_INTEGERDB {
+
+		var a_attribute_value_integerAPI A_ATTRIBUTE_VALUE_INTEGERAPI
+		a_attribute_value_integerAPI.ID = a_attribute_value_integerDB.ID
+		a_attribute_value_integerAPI.A_ATTRIBUTE_VALUE_INTEGERPointersEncoding = a_attribute_value_integerDB.A_ATTRIBUTE_VALUE_INTEGERPointersEncoding
+		a_attribute_value_integerDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_INTEGER_WOP(&a_attribute_value_integerAPI.A_ATTRIBUTE_VALUE_INTEGER_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_INTEGERAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_INTEGERAPIs, &a_attribute_value_integerAPI)
+	}
+
+	for _, a_attribute_value_realDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_REAL.Map_A_ATTRIBUTE_VALUE_REALDBID_A_ATTRIBUTE_VALUE_REALDB {
+
+		var a_attribute_value_realAPI A_ATTRIBUTE_VALUE_REALAPI
+		a_attribute_value_realAPI.ID = a_attribute_value_realDB.ID
+		a_attribute_value_realAPI.A_ATTRIBUTE_VALUE_REALPointersEncoding = a_attribute_value_realDB.A_ATTRIBUTE_VALUE_REALPointersEncoding
+		a_attribute_value_realDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_REAL_WOP(&a_attribute_value_realAPI.A_ATTRIBUTE_VALUE_REAL_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_REALAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_REALAPIs, &a_attribute_value_realAPI)
+	}
+
+	for _, a_attribute_value_stringDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_STRING.Map_A_ATTRIBUTE_VALUE_STRINGDBID_A_ATTRIBUTE_VALUE_STRINGDB {
+
+		var a_attribute_value_stringAPI A_ATTRIBUTE_VALUE_STRINGAPI
+		a_attribute_value_stringAPI.ID = a_attribute_value_stringDB.ID
+		a_attribute_value_stringAPI.A_ATTRIBUTE_VALUE_STRINGPointersEncoding = a_attribute_value_stringDB.A_ATTRIBUTE_VALUE_STRINGPointersEncoding
+		a_attribute_value_stringDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_STRING_WOP(&a_attribute_value_stringAPI.A_ATTRIBUTE_VALUE_STRING_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_STRINGAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_STRINGAPIs, &a_attribute_value_stringAPI)
+	}
+
+	for _, a_attribute_value_xhtmlDB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_XHTML.Map_A_ATTRIBUTE_VALUE_XHTMLDBID_A_ATTRIBUTE_VALUE_XHTMLDB {
+
+		var a_attribute_value_xhtmlAPI A_ATTRIBUTE_VALUE_XHTMLAPI
+		a_attribute_value_xhtmlAPI.ID = a_attribute_value_xhtmlDB.ID
+		a_attribute_value_xhtmlAPI.A_ATTRIBUTE_VALUE_XHTMLPointersEncoding = a_attribute_value_xhtmlDB.A_ATTRIBUTE_VALUE_XHTMLPointersEncoding
+		a_attribute_value_xhtmlDB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_XHTML_WOP(&a_attribute_value_xhtmlAPI.A_ATTRIBUTE_VALUE_XHTML_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_XHTMLAPIs = append(backRepoData.A_ATTRIBUTE_VALUE_XHTMLAPIs, &a_attribute_value_xhtmlAPI)
+	}
+
+	for _, a_attribute_value_xhtml_1DB := range backRepo.BackRepoA_ATTRIBUTE_VALUE_XHTML_1.Map_A_ATTRIBUTE_VALUE_XHTML_1DBID_A_ATTRIBUTE_VALUE_XHTML_1DB {
+
+		var a_attribute_value_xhtml_1API A_ATTRIBUTE_VALUE_XHTML_1API
+		a_attribute_value_xhtml_1API.ID = a_attribute_value_xhtml_1DB.ID
+		a_attribute_value_xhtml_1API.A_ATTRIBUTE_VALUE_XHTML_1PointersEncoding = a_attribute_value_xhtml_1DB.A_ATTRIBUTE_VALUE_XHTML_1PointersEncoding
+		a_attribute_value_xhtml_1DB.CopyBasicFieldsToA_ATTRIBUTE_VALUE_XHTML_1_WOP(&a_attribute_value_xhtml_1API.A_ATTRIBUTE_VALUE_XHTML_1_WOP)
+
+		backRepoData.A_ATTRIBUTE_VALUE_XHTML_1APIs = append(backRepoData.A_ATTRIBUTE_VALUE_XHTML_1APIs, &a_attribute_value_xhtml_1API)
+	}
+
+	for _, a_childrenDB := range backRepo.BackRepoA_CHILDREN.Map_A_CHILDRENDBID_A_CHILDRENDB {
+
+		var a_childrenAPI A_CHILDRENAPI
+		a_childrenAPI.ID = a_childrenDB.ID
+		a_childrenAPI.A_CHILDRENPointersEncoding = a_childrenDB.A_CHILDRENPointersEncoding
+		a_childrenDB.CopyBasicFieldsToA_CHILDREN_WOP(&a_childrenAPI.A_CHILDREN_WOP)
+
+		backRepoData.A_CHILDRENAPIs = append(backRepoData.A_CHILDRENAPIs, &a_childrenAPI)
+	}
+
+	for _, a_core_contentDB := range backRepo.BackRepoA_CORE_CONTENT.Map_A_CORE_CONTENTDBID_A_CORE_CONTENTDB {
+
+		var a_core_contentAPI A_CORE_CONTENTAPI
+		a_core_contentAPI.ID = a_core_contentDB.ID
+		a_core_contentAPI.A_CORE_CONTENTPointersEncoding = a_core_contentDB.A_CORE_CONTENTPointersEncoding
+		a_core_contentDB.CopyBasicFieldsToA_CORE_CONTENT_WOP(&a_core_contentAPI.A_CORE_CONTENT_WOP)
+
+		backRepoData.A_CORE_CONTENTAPIs = append(backRepoData.A_CORE_CONTENTAPIs, &a_core_contentAPI)
+	}
+
+	for _, a_datatypesDB := range backRepo.BackRepoA_DATATYPES.Map_A_DATATYPESDBID_A_DATATYPESDB {
+
+		var a_datatypesAPI A_DATATYPESAPI
+		a_datatypesAPI.ID = a_datatypesDB.ID
+		a_datatypesAPI.A_DATATYPESPointersEncoding = a_datatypesDB.A_DATATYPESPointersEncoding
+		a_datatypesDB.CopyBasicFieldsToA_DATATYPES_WOP(&a_datatypesAPI.A_DATATYPES_WOP)
+
+		backRepoData.A_DATATYPESAPIs = append(backRepoData.A_DATATYPESAPIs, &a_datatypesAPI)
+	}
+
+	for _, a_datatype_definition_boolean_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_BOOLEAN_REF.Map_A_DATATYPE_DEFINITION_BOOLEAN_REFDBID_A_DATATYPE_DEFINITION_BOOLEAN_REFDB {
+
+		var a_datatype_definition_boolean_refAPI A_DATATYPE_DEFINITION_BOOLEAN_REFAPI
+		a_datatype_definition_boolean_refAPI.ID = a_datatype_definition_boolean_refDB.ID
+		a_datatype_definition_boolean_refAPI.A_DATATYPE_DEFINITION_BOOLEAN_REFPointersEncoding = a_datatype_definition_boolean_refDB.A_DATATYPE_DEFINITION_BOOLEAN_REFPointersEncoding
+		a_datatype_definition_boolean_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_BOOLEAN_REF_WOP(&a_datatype_definition_boolean_refAPI.A_DATATYPE_DEFINITION_BOOLEAN_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_BOOLEAN_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_BOOLEAN_REFAPIs, &a_datatype_definition_boolean_refAPI)
+	}
+
+	for _, a_datatype_definition_date_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_DATE_REF.Map_A_DATATYPE_DEFINITION_DATE_REFDBID_A_DATATYPE_DEFINITION_DATE_REFDB {
+
+		var a_datatype_definition_date_refAPI A_DATATYPE_DEFINITION_DATE_REFAPI
+		a_datatype_definition_date_refAPI.ID = a_datatype_definition_date_refDB.ID
+		a_datatype_definition_date_refAPI.A_DATATYPE_DEFINITION_DATE_REFPointersEncoding = a_datatype_definition_date_refDB.A_DATATYPE_DEFINITION_DATE_REFPointersEncoding
+		a_datatype_definition_date_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_DATE_REF_WOP(&a_datatype_definition_date_refAPI.A_DATATYPE_DEFINITION_DATE_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_DATE_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_DATE_REFAPIs, &a_datatype_definition_date_refAPI)
+	}
+
+	for _, a_datatype_definition_enumeration_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_ENUMERATION_REF.Map_A_DATATYPE_DEFINITION_ENUMERATION_REFDBID_A_DATATYPE_DEFINITION_ENUMERATION_REFDB {
+
+		var a_datatype_definition_enumeration_refAPI A_DATATYPE_DEFINITION_ENUMERATION_REFAPI
+		a_datatype_definition_enumeration_refAPI.ID = a_datatype_definition_enumeration_refDB.ID
+		a_datatype_definition_enumeration_refAPI.A_DATATYPE_DEFINITION_ENUMERATION_REFPointersEncoding = a_datatype_definition_enumeration_refDB.A_DATATYPE_DEFINITION_ENUMERATION_REFPointersEncoding
+		a_datatype_definition_enumeration_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_ENUMERATION_REF_WOP(&a_datatype_definition_enumeration_refAPI.A_DATATYPE_DEFINITION_ENUMERATION_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_ENUMERATION_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_ENUMERATION_REFAPIs, &a_datatype_definition_enumeration_refAPI)
+	}
+
+	for _, a_datatype_definition_integer_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_INTEGER_REF.Map_A_DATATYPE_DEFINITION_INTEGER_REFDBID_A_DATATYPE_DEFINITION_INTEGER_REFDB {
+
+		var a_datatype_definition_integer_refAPI A_DATATYPE_DEFINITION_INTEGER_REFAPI
+		a_datatype_definition_integer_refAPI.ID = a_datatype_definition_integer_refDB.ID
+		a_datatype_definition_integer_refAPI.A_DATATYPE_DEFINITION_INTEGER_REFPointersEncoding = a_datatype_definition_integer_refDB.A_DATATYPE_DEFINITION_INTEGER_REFPointersEncoding
+		a_datatype_definition_integer_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_INTEGER_REF_WOP(&a_datatype_definition_integer_refAPI.A_DATATYPE_DEFINITION_INTEGER_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_INTEGER_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_INTEGER_REFAPIs, &a_datatype_definition_integer_refAPI)
+	}
+
+	for _, a_datatype_definition_real_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_REAL_REF.Map_A_DATATYPE_DEFINITION_REAL_REFDBID_A_DATATYPE_DEFINITION_REAL_REFDB {
+
+		var a_datatype_definition_real_refAPI A_DATATYPE_DEFINITION_REAL_REFAPI
+		a_datatype_definition_real_refAPI.ID = a_datatype_definition_real_refDB.ID
+		a_datatype_definition_real_refAPI.A_DATATYPE_DEFINITION_REAL_REFPointersEncoding = a_datatype_definition_real_refDB.A_DATATYPE_DEFINITION_REAL_REFPointersEncoding
+		a_datatype_definition_real_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_REAL_REF_WOP(&a_datatype_definition_real_refAPI.A_DATATYPE_DEFINITION_REAL_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_REAL_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_REAL_REFAPIs, &a_datatype_definition_real_refAPI)
+	}
+
+	for _, a_datatype_definition_string_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_STRING_REF.Map_A_DATATYPE_DEFINITION_STRING_REFDBID_A_DATATYPE_DEFINITION_STRING_REFDB {
+
+		var a_datatype_definition_string_refAPI A_DATATYPE_DEFINITION_STRING_REFAPI
+		a_datatype_definition_string_refAPI.ID = a_datatype_definition_string_refDB.ID
+		a_datatype_definition_string_refAPI.A_DATATYPE_DEFINITION_STRING_REFPointersEncoding = a_datatype_definition_string_refDB.A_DATATYPE_DEFINITION_STRING_REFPointersEncoding
+		a_datatype_definition_string_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_STRING_REF_WOP(&a_datatype_definition_string_refAPI.A_DATATYPE_DEFINITION_STRING_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_STRING_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_STRING_REFAPIs, &a_datatype_definition_string_refAPI)
+	}
+
+	for _, a_datatype_definition_xhtml_refDB := range backRepo.BackRepoA_DATATYPE_DEFINITION_XHTML_REF.Map_A_DATATYPE_DEFINITION_XHTML_REFDBID_A_DATATYPE_DEFINITION_XHTML_REFDB {
+
+		var a_datatype_definition_xhtml_refAPI A_DATATYPE_DEFINITION_XHTML_REFAPI
+		a_datatype_definition_xhtml_refAPI.ID = a_datatype_definition_xhtml_refDB.ID
+		a_datatype_definition_xhtml_refAPI.A_DATATYPE_DEFINITION_XHTML_REFPointersEncoding = a_datatype_definition_xhtml_refDB.A_DATATYPE_DEFINITION_XHTML_REFPointersEncoding
+		a_datatype_definition_xhtml_refDB.CopyBasicFieldsToA_DATATYPE_DEFINITION_XHTML_REF_WOP(&a_datatype_definition_xhtml_refAPI.A_DATATYPE_DEFINITION_XHTML_REF_WOP)
+
+		backRepoData.A_DATATYPE_DEFINITION_XHTML_REFAPIs = append(backRepoData.A_DATATYPE_DEFINITION_XHTML_REFAPIs, &a_datatype_definition_xhtml_refAPI)
+	}
+
+	for _, a_editable_attsDB := range backRepo.BackRepoA_EDITABLE_ATTS.Map_A_EDITABLE_ATTSDBID_A_EDITABLE_ATTSDB {
+
+		var a_editable_attsAPI A_EDITABLE_ATTSAPI
+		a_editable_attsAPI.ID = a_editable_attsDB.ID
+		a_editable_attsAPI.A_EDITABLE_ATTSPointersEncoding = a_editable_attsDB.A_EDITABLE_ATTSPointersEncoding
+		a_editable_attsDB.CopyBasicFieldsToA_EDITABLE_ATTS_WOP(&a_editable_attsAPI.A_EDITABLE_ATTS_WOP)
+
+		backRepoData.A_EDITABLE_ATTSAPIs = append(backRepoData.A_EDITABLE_ATTSAPIs, &a_editable_attsAPI)
+	}
+
+	for _, a_enum_value_refDB := range backRepo.BackRepoA_ENUM_VALUE_REF.Map_A_ENUM_VALUE_REFDBID_A_ENUM_VALUE_REFDB {
+
+		var a_enum_value_refAPI A_ENUM_VALUE_REFAPI
+		a_enum_value_refAPI.ID = a_enum_value_refDB.ID
+		a_enum_value_refAPI.A_ENUM_VALUE_REFPointersEncoding = a_enum_value_refDB.A_ENUM_VALUE_REFPointersEncoding
+		a_enum_value_refDB.CopyBasicFieldsToA_ENUM_VALUE_REF_WOP(&a_enum_value_refAPI.A_ENUM_VALUE_REF_WOP)
+
+		backRepoData.A_ENUM_VALUE_REFAPIs = append(backRepoData.A_ENUM_VALUE_REFAPIs, &a_enum_value_refAPI)
+	}
+
+	for _, a_objectDB := range backRepo.BackRepoA_OBJECT.Map_A_OBJECTDBID_A_OBJECTDB {
+
+		var a_objectAPI A_OBJECTAPI
+		a_objectAPI.ID = a_objectDB.ID
+		a_objectAPI.A_OBJECTPointersEncoding = a_objectDB.A_OBJECTPointersEncoding
+		a_objectDB.CopyBasicFieldsToA_OBJECT_WOP(&a_objectAPI.A_OBJECT_WOP)
+
+		backRepoData.A_OBJECTAPIs = append(backRepoData.A_OBJECTAPIs, &a_objectAPI)
+	}
+
+	for _, a_propertiesDB := range backRepo.BackRepoA_PROPERTIES.Map_A_PROPERTIESDBID_A_PROPERTIESDB {
+
+		var a_propertiesAPI A_PROPERTIESAPI
+		a_propertiesAPI.ID = a_propertiesDB.ID
+		a_propertiesAPI.A_PROPERTIESPointersEncoding = a_propertiesDB.A_PROPERTIESPointersEncoding
+		a_propertiesDB.CopyBasicFieldsToA_PROPERTIES_WOP(&a_propertiesAPI.A_PROPERTIES_WOP)
+
+		backRepoData.A_PROPERTIESAPIs = append(backRepoData.A_PROPERTIESAPIs, &a_propertiesAPI)
+	}
+
+	for _, a_relation_group_type_refDB := range backRepo.BackRepoA_RELATION_GROUP_TYPE_REF.Map_A_RELATION_GROUP_TYPE_REFDBID_A_RELATION_GROUP_TYPE_REFDB {
+
+		var a_relation_group_type_refAPI A_RELATION_GROUP_TYPE_REFAPI
+		a_relation_group_type_refAPI.ID = a_relation_group_type_refDB.ID
+		a_relation_group_type_refAPI.A_RELATION_GROUP_TYPE_REFPointersEncoding = a_relation_group_type_refDB.A_RELATION_GROUP_TYPE_REFPointersEncoding
+		a_relation_group_type_refDB.CopyBasicFieldsToA_RELATION_GROUP_TYPE_REF_WOP(&a_relation_group_type_refAPI.A_RELATION_GROUP_TYPE_REF_WOP)
+
+		backRepoData.A_RELATION_GROUP_TYPE_REFAPIs = append(backRepoData.A_RELATION_GROUP_TYPE_REFAPIs, &a_relation_group_type_refAPI)
+	}
+
+	for _, a_source_1DB := range backRepo.BackRepoA_SOURCE_1.Map_A_SOURCE_1DBID_A_SOURCE_1DB {
+
+		var a_source_1API A_SOURCE_1API
+		a_source_1API.ID = a_source_1DB.ID
+		a_source_1API.A_SOURCE_1PointersEncoding = a_source_1DB.A_SOURCE_1PointersEncoding
+		a_source_1DB.CopyBasicFieldsToA_SOURCE_1_WOP(&a_source_1API.A_SOURCE_1_WOP)
+
+		backRepoData.A_SOURCE_1APIs = append(backRepoData.A_SOURCE_1APIs, &a_source_1API)
+	}
+
+	for _, a_source_specification_1DB := range backRepo.BackRepoA_SOURCE_SPECIFICATION_1.Map_A_SOURCE_SPECIFICATION_1DBID_A_SOURCE_SPECIFICATION_1DB {
+
+		var a_source_specification_1API A_SOURCE_SPECIFICATION_1API
+		a_source_specification_1API.ID = a_source_specification_1DB.ID
+		a_source_specification_1API.A_SOURCE_SPECIFICATION_1PointersEncoding = a_source_specification_1DB.A_SOURCE_SPECIFICATION_1PointersEncoding
+		a_source_specification_1DB.CopyBasicFieldsToA_SOURCE_SPECIFICATION_1_WOP(&a_source_specification_1API.A_SOURCE_SPECIFICATION_1_WOP)
+
+		backRepoData.A_SOURCE_SPECIFICATION_1APIs = append(backRepoData.A_SOURCE_SPECIFICATION_1APIs, &a_source_specification_1API)
+	}
+
+	for _, a_specificationsDB := range backRepo.BackRepoA_SPECIFICATIONS.Map_A_SPECIFICATIONSDBID_A_SPECIFICATIONSDB {
+
+		var a_specificationsAPI A_SPECIFICATIONSAPI
+		a_specificationsAPI.ID = a_specificationsDB.ID
+		a_specificationsAPI.A_SPECIFICATIONSPointersEncoding = a_specificationsDB.A_SPECIFICATIONSPointersEncoding
+		a_specificationsDB.CopyBasicFieldsToA_SPECIFICATIONS_WOP(&a_specificationsAPI.A_SPECIFICATIONS_WOP)
+
+		backRepoData.A_SPECIFICATIONSAPIs = append(backRepoData.A_SPECIFICATIONSAPIs, &a_specificationsAPI)
+	}
+
+	for _, a_specification_type_refDB := range backRepo.BackRepoA_SPECIFICATION_TYPE_REF.Map_A_SPECIFICATION_TYPE_REFDBID_A_SPECIFICATION_TYPE_REFDB {
+
+		var a_specification_type_refAPI A_SPECIFICATION_TYPE_REFAPI
+		a_specification_type_refAPI.ID = a_specification_type_refDB.ID
+		a_specification_type_refAPI.A_SPECIFICATION_TYPE_REFPointersEncoding = a_specification_type_refDB.A_SPECIFICATION_TYPE_REFPointersEncoding
+		a_specification_type_refDB.CopyBasicFieldsToA_SPECIFICATION_TYPE_REF_WOP(&a_specification_type_refAPI.A_SPECIFICATION_TYPE_REF_WOP)
+
+		backRepoData.A_SPECIFICATION_TYPE_REFAPIs = append(backRepoData.A_SPECIFICATION_TYPE_REFAPIs, &a_specification_type_refAPI)
+	}
+
+	for _, a_specified_valuesDB := range backRepo.BackRepoA_SPECIFIED_VALUES.Map_A_SPECIFIED_VALUESDBID_A_SPECIFIED_VALUESDB {
+
+		var a_specified_valuesAPI A_SPECIFIED_VALUESAPI
+		a_specified_valuesAPI.ID = a_specified_valuesDB.ID
+		a_specified_valuesAPI.A_SPECIFIED_VALUESPointersEncoding = a_specified_valuesDB.A_SPECIFIED_VALUESPointersEncoding
+		a_specified_valuesDB.CopyBasicFieldsToA_SPECIFIED_VALUES_WOP(&a_specified_valuesAPI.A_SPECIFIED_VALUES_WOP)
+
+		backRepoData.A_SPECIFIED_VALUESAPIs = append(backRepoData.A_SPECIFIED_VALUESAPIs, &a_specified_valuesAPI)
+	}
+
+	for _, a_spec_attributesDB := range backRepo.BackRepoA_SPEC_ATTRIBUTES.Map_A_SPEC_ATTRIBUTESDBID_A_SPEC_ATTRIBUTESDB {
+
+		var a_spec_attributesAPI A_SPEC_ATTRIBUTESAPI
+		a_spec_attributesAPI.ID = a_spec_attributesDB.ID
+		a_spec_attributesAPI.A_SPEC_ATTRIBUTESPointersEncoding = a_spec_attributesDB.A_SPEC_ATTRIBUTESPointersEncoding
+		a_spec_attributesDB.CopyBasicFieldsToA_SPEC_ATTRIBUTES_WOP(&a_spec_attributesAPI.A_SPEC_ATTRIBUTES_WOP)
+
+		backRepoData.A_SPEC_ATTRIBUTESAPIs = append(backRepoData.A_SPEC_ATTRIBUTESAPIs, &a_spec_attributesAPI)
+	}
+
+	for _, a_spec_objectsDB := range backRepo.BackRepoA_SPEC_OBJECTS.Map_A_SPEC_OBJECTSDBID_A_SPEC_OBJECTSDB {
+
+		var a_spec_objectsAPI A_SPEC_OBJECTSAPI
+		a_spec_objectsAPI.ID = a_spec_objectsDB.ID
+		a_spec_objectsAPI.A_SPEC_OBJECTSPointersEncoding = a_spec_objectsDB.A_SPEC_OBJECTSPointersEncoding
+		a_spec_objectsDB.CopyBasicFieldsToA_SPEC_OBJECTS_WOP(&a_spec_objectsAPI.A_SPEC_OBJECTS_WOP)
+
+		backRepoData.A_SPEC_OBJECTSAPIs = append(backRepoData.A_SPEC_OBJECTSAPIs, &a_spec_objectsAPI)
+	}
+
+	for _, a_spec_object_type_refDB := range backRepo.BackRepoA_SPEC_OBJECT_TYPE_REF.Map_A_SPEC_OBJECT_TYPE_REFDBID_A_SPEC_OBJECT_TYPE_REFDB {
+
+		var a_spec_object_type_refAPI A_SPEC_OBJECT_TYPE_REFAPI
+		a_spec_object_type_refAPI.ID = a_spec_object_type_refDB.ID
+		a_spec_object_type_refAPI.A_SPEC_OBJECT_TYPE_REFPointersEncoding = a_spec_object_type_refDB.A_SPEC_OBJECT_TYPE_REFPointersEncoding
+		a_spec_object_type_refDB.CopyBasicFieldsToA_SPEC_OBJECT_TYPE_REF_WOP(&a_spec_object_type_refAPI.A_SPEC_OBJECT_TYPE_REF_WOP)
+
+		backRepoData.A_SPEC_OBJECT_TYPE_REFAPIs = append(backRepoData.A_SPEC_OBJECT_TYPE_REFAPIs, &a_spec_object_type_refAPI)
+	}
+
+	for _, a_spec_relationsDB := range backRepo.BackRepoA_SPEC_RELATIONS.Map_A_SPEC_RELATIONSDBID_A_SPEC_RELATIONSDB {
+
+		var a_spec_relationsAPI A_SPEC_RELATIONSAPI
+		a_spec_relationsAPI.ID = a_spec_relationsDB.ID
+		a_spec_relationsAPI.A_SPEC_RELATIONSPointersEncoding = a_spec_relationsDB.A_SPEC_RELATIONSPointersEncoding
+		a_spec_relationsDB.CopyBasicFieldsToA_SPEC_RELATIONS_WOP(&a_spec_relationsAPI.A_SPEC_RELATIONS_WOP)
+
+		backRepoData.A_SPEC_RELATIONSAPIs = append(backRepoData.A_SPEC_RELATIONSAPIs, &a_spec_relationsAPI)
+	}
+
+	for _, a_spec_relation_groupsDB := range backRepo.BackRepoA_SPEC_RELATION_GROUPS.Map_A_SPEC_RELATION_GROUPSDBID_A_SPEC_RELATION_GROUPSDB {
+
+		var a_spec_relation_groupsAPI A_SPEC_RELATION_GROUPSAPI
+		a_spec_relation_groupsAPI.ID = a_spec_relation_groupsDB.ID
+		a_spec_relation_groupsAPI.A_SPEC_RELATION_GROUPSPointersEncoding = a_spec_relation_groupsDB.A_SPEC_RELATION_GROUPSPointersEncoding
+		a_spec_relation_groupsDB.CopyBasicFieldsToA_SPEC_RELATION_GROUPS_WOP(&a_spec_relation_groupsAPI.A_SPEC_RELATION_GROUPS_WOP)
+
+		backRepoData.A_SPEC_RELATION_GROUPSAPIs = append(backRepoData.A_SPEC_RELATION_GROUPSAPIs, &a_spec_relation_groupsAPI)
+	}
+
+	for _, a_spec_relation_refDB := range backRepo.BackRepoA_SPEC_RELATION_REF.Map_A_SPEC_RELATION_REFDBID_A_SPEC_RELATION_REFDB {
+
+		var a_spec_relation_refAPI A_SPEC_RELATION_REFAPI
+		a_spec_relation_refAPI.ID = a_spec_relation_refDB.ID
+		a_spec_relation_refAPI.A_SPEC_RELATION_REFPointersEncoding = a_spec_relation_refDB.A_SPEC_RELATION_REFPointersEncoding
+		a_spec_relation_refDB.CopyBasicFieldsToA_SPEC_RELATION_REF_WOP(&a_spec_relation_refAPI.A_SPEC_RELATION_REF_WOP)
+
+		backRepoData.A_SPEC_RELATION_REFAPIs = append(backRepoData.A_SPEC_RELATION_REFAPIs, &a_spec_relation_refAPI)
+	}
+
+	for _, a_spec_relation_type_refDB := range backRepo.BackRepoA_SPEC_RELATION_TYPE_REF.Map_A_SPEC_RELATION_TYPE_REFDBID_A_SPEC_RELATION_TYPE_REFDB {
+
+		var a_spec_relation_type_refAPI A_SPEC_RELATION_TYPE_REFAPI
+		a_spec_relation_type_refAPI.ID = a_spec_relation_type_refDB.ID
+		a_spec_relation_type_refAPI.A_SPEC_RELATION_TYPE_REFPointersEncoding = a_spec_relation_type_refDB.A_SPEC_RELATION_TYPE_REFPointersEncoding
+		a_spec_relation_type_refDB.CopyBasicFieldsToA_SPEC_RELATION_TYPE_REF_WOP(&a_spec_relation_type_refAPI.A_SPEC_RELATION_TYPE_REF_WOP)
+
+		backRepoData.A_SPEC_RELATION_TYPE_REFAPIs = append(backRepoData.A_SPEC_RELATION_TYPE_REFAPIs, &a_spec_relation_type_refAPI)
+	}
+
+	for _, a_spec_typesDB := range backRepo.BackRepoA_SPEC_TYPES.Map_A_SPEC_TYPESDBID_A_SPEC_TYPESDB {
+
+		var a_spec_typesAPI A_SPEC_TYPESAPI
+		a_spec_typesAPI.ID = a_spec_typesDB.ID
+		a_spec_typesAPI.A_SPEC_TYPESPointersEncoding = a_spec_typesDB.A_SPEC_TYPESPointersEncoding
+		a_spec_typesDB.CopyBasicFieldsToA_SPEC_TYPES_WOP(&a_spec_typesAPI.A_SPEC_TYPES_WOP)
+
+		backRepoData.A_SPEC_TYPESAPIs = append(backRepoData.A_SPEC_TYPESAPIs, &a_spec_typesAPI)
+	}
+
+	for _, a_the_headerDB := range backRepo.BackRepoA_THE_HEADER.Map_A_THE_HEADERDBID_A_THE_HEADERDB {
+
+		var a_the_headerAPI A_THE_HEADERAPI
+		a_the_headerAPI.ID = a_the_headerDB.ID
+		a_the_headerAPI.A_THE_HEADERPointersEncoding = a_the_headerDB.A_THE_HEADERPointersEncoding
+		a_the_headerDB.CopyBasicFieldsToA_THE_HEADER_WOP(&a_the_headerAPI.A_THE_HEADER_WOP)
+
+		backRepoData.A_THE_HEADERAPIs = append(backRepoData.A_THE_HEADERAPIs, &a_the_headerAPI)
+	}
+
+	for _, a_tool_extensionsDB := range backRepo.BackRepoA_TOOL_EXTENSIONS.Map_A_TOOL_EXTENSIONSDBID_A_TOOL_EXTENSIONSDB {
+
+		var a_tool_extensionsAPI A_TOOL_EXTENSIONSAPI
+		a_tool_extensionsAPI.ID = a_tool_extensionsDB.ID
+		a_tool_extensionsAPI.A_TOOL_EXTENSIONSPointersEncoding = a_tool_extensionsDB.A_TOOL_EXTENSIONSPointersEncoding
+		a_tool_extensionsDB.CopyBasicFieldsToA_TOOL_EXTENSIONS_WOP(&a_tool_extensionsAPI.A_TOOL_EXTENSIONS_WOP)
+
+		backRepoData.A_TOOL_EXTENSIONSAPIs = append(backRepoData.A_TOOL_EXTENSIONSAPIs, &a_tool_extensionsAPI)
 	}
 
 	for _, datatype_definition_booleanDB := range backRepo.BackRepoDATATYPE_DEFINITION_BOOLEAN.Map_DATATYPE_DEFINITION_BOOLEANDBID_DATATYPE_DEFINITION_BOOLEANDB {
@@ -575,476 +1021,6 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		xhtml_contentDB.CopyBasicFieldsToXHTML_CONTENT_WOP(&xhtml_contentAPI.XHTML_CONTENT_WOP)
 
 		backRepoData.XHTML_CONTENTAPIs = append(backRepoData.XHTML_CONTENTAPIs, &xhtml_contentAPI)
-	}
-
-	for _, xhtml_inlpres_typeDB := range backRepo.BackRepoXhtml_InlPres_type.Map_Xhtml_InlPres_typeDBID_Xhtml_InlPres_typeDB {
-
-		var xhtml_inlpres_typeAPI Xhtml_InlPres_typeAPI
-		xhtml_inlpres_typeAPI.ID = xhtml_inlpres_typeDB.ID
-		xhtml_inlpres_typeAPI.Xhtml_InlPres_typePointersEncoding = xhtml_inlpres_typeDB.Xhtml_InlPres_typePointersEncoding
-		xhtml_inlpres_typeDB.CopyBasicFieldsToXhtml_InlPres_type_WOP(&xhtml_inlpres_typeAPI.Xhtml_InlPres_type_WOP)
-
-		backRepoData.Xhtml_InlPres_typeAPIs = append(backRepoData.Xhtml_InlPres_typeAPIs, &xhtml_inlpres_typeAPI)
-	}
-
-	for _, xhtml_a_typeDB := range backRepo.BackRepoXhtml_a_type.Map_Xhtml_a_typeDBID_Xhtml_a_typeDB {
-
-		var xhtml_a_typeAPI Xhtml_a_typeAPI
-		xhtml_a_typeAPI.ID = xhtml_a_typeDB.ID
-		xhtml_a_typeAPI.Xhtml_a_typePointersEncoding = xhtml_a_typeDB.Xhtml_a_typePointersEncoding
-		xhtml_a_typeDB.CopyBasicFieldsToXhtml_a_type_WOP(&xhtml_a_typeAPI.Xhtml_a_type_WOP)
-
-		backRepoData.Xhtml_a_typeAPIs = append(backRepoData.Xhtml_a_typeAPIs, &xhtml_a_typeAPI)
-	}
-
-	for _, xhtml_abbr_typeDB := range backRepo.BackRepoXhtml_abbr_type.Map_Xhtml_abbr_typeDBID_Xhtml_abbr_typeDB {
-
-		var xhtml_abbr_typeAPI Xhtml_abbr_typeAPI
-		xhtml_abbr_typeAPI.ID = xhtml_abbr_typeDB.ID
-		xhtml_abbr_typeAPI.Xhtml_abbr_typePointersEncoding = xhtml_abbr_typeDB.Xhtml_abbr_typePointersEncoding
-		xhtml_abbr_typeDB.CopyBasicFieldsToXhtml_abbr_type_WOP(&xhtml_abbr_typeAPI.Xhtml_abbr_type_WOP)
-
-		backRepoData.Xhtml_abbr_typeAPIs = append(backRepoData.Xhtml_abbr_typeAPIs, &xhtml_abbr_typeAPI)
-	}
-
-	for _, xhtml_acronym_typeDB := range backRepo.BackRepoXhtml_acronym_type.Map_Xhtml_acronym_typeDBID_Xhtml_acronym_typeDB {
-
-		var xhtml_acronym_typeAPI Xhtml_acronym_typeAPI
-		xhtml_acronym_typeAPI.ID = xhtml_acronym_typeDB.ID
-		xhtml_acronym_typeAPI.Xhtml_acronym_typePointersEncoding = xhtml_acronym_typeDB.Xhtml_acronym_typePointersEncoding
-		xhtml_acronym_typeDB.CopyBasicFieldsToXhtml_acronym_type_WOP(&xhtml_acronym_typeAPI.Xhtml_acronym_type_WOP)
-
-		backRepoData.Xhtml_acronym_typeAPIs = append(backRepoData.Xhtml_acronym_typeAPIs, &xhtml_acronym_typeAPI)
-	}
-
-	for _, xhtml_address_typeDB := range backRepo.BackRepoXhtml_address_type.Map_Xhtml_address_typeDBID_Xhtml_address_typeDB {
-
-		var xhtml_address_typeAPI Xhtml_address_typeAPI
-		xhtml_address_typeAPI.ID = xhtml_address_typeDB.ID
-		xhtml_address_typeAPI.Xhtml_address_typePointersEncoding = xhtml_address_typeDB.Xhtml_address_typePointersEncoding
-		xhtml_address_typeDB.CopyBasicFieldsToXhtml_address_type_WOP(&xhtml_address_typeAPI.Xhtml_address_type_WOP)
-
-		backRepoData.Xhtml_address_typeAPIs = append(backRepoData.Xhtml_address_typeAPIs, &xhtml_address_typeAPI)
-	}
-
-	for _, xhtml_blockquote_typeDB := range backRepo.BackRepoXhtml_blockquote_type.Map_Xhtml_blockquote_typeDBID_Xhtml_blockquote_typeDB {
-
-		var xhtml_blockquote_typeAPI Xhtml_blockquote_typeAPI
-		xhtml_blockquote_typeAPI.ID = xhtml_blockquote_typeDB.ID
-		xhtml_blockquote_typeAPI.Xhtml_blockquote_typePointersEncoding = xhtml_blockquote_typeDB.Xhtml_blockquote_typePointersEncoding
-		xhtml_blockquote_typeDB.CopyBasicFieldsToXhtml_blockquote_type_WOP(&xhtml_blockquote_typeAPI.Xhtml_blockquote_type_WOP)
-
-		backRepoData.Xhtml_blockquote_typeAPIs = append(backRepoData.Xhtml_blockquote_typeAPIs, &xhtml_blockquote_typeAPI)
-	}
-
-	for _, xhtml_br_typeDB := range backRepo.BackRepoXhtml_br_type.Map_Xhtml_br_typeDBID_Xhtml_br_typeDB {
-
-		var xhtml_br_typeAPI Xhtml_br_typeAPI
-		xhtml_br_typeAPI.ID = xhtml_br_typeDB.ID
-		xhtml_br_typeAPI.Xhtml_br_typePointersEncoding = xhtml_br_typeDB.Xhtml_br_typePointersEncoding
-		xhtml_br_typeDB.CopyBasicFieldsToXhtml_br_type_WOP(&xhtml_br_typeAPI.Xhtml_br_type_WOP)
-
-		backRepoData.Xhtml_br_typeAPIs = append(backRepoData.Xhtml_br_typeAPIs, &xhtml_br_typeAPI)
-	}
-
-	for _, xhtml_caption_typeDB := range backRepo.BackRepoXhtml_caption_type.Map_Xhtml_caption_typeDBID_Xhtml_caption_typeDB {
-
-		var xhtml_caption_typeAPI Xhtml_caption_typeAPI
-		xhtml_caption_typeAPI.ID = xhtml_caption_typeDB.ID
-		xhtml_caption_typeAPI.Xhtml_caption_typePointersEncoding = xhtml_caption_typeDB.Xhtml_caption_typePointersEncoding
-		xhtml_caption_typeDB.CopyBasicFieldsToXhtml_caption_type_WOP(&xhtml_caption_typeAPI.Xhtml_caption_type_WOP)
-
-		backRepoData.Xhtml_caption_typeAPIs = append(backRepoData.Xhtml_caption_typeAPIs, &xhtml_caption_typeAPI)
-	}
-
-	for _, xhtml_cite_typeDB := range backRepo.BackRepoXhtml_cite_type.Map_Xhtml_cite_typeDBID_Xhtml_cite_typeDB {
-
-		var xhtml_cite_typeAPI Xhtml_cite_typeAPI
-		xhtml_cite_typeAPI.ID = xhtml_cite_typeDB.ID
-		xhtml_cite_typeAPI.Xhtml_cite_typePointersEncoding = xhtml_cite_typeDB.Xhtml_cite_typePointersEncoding
-		xhtml_cite_typeDB.CopyBasicFieldsToXhtml_cite_type_WOP(&xhtml_cite_typeAPI.Xhtml_cite_type_WOP)
-
-		backRepoData.Xhtml_cite_typeAPIs = append(backRepoData.Xhtml_cite_typeAPIs, &xhtml_cite_typeAPI)
-	}
-
-	for _, xhtml_code_typeDB := range backRepo.BackRepoXhtml_code_type.Map_Xhtml_code_typeDBID_Xhtml_code_typeDB {
-
-		var xhtml_code_typeAPI Xhtml_code_typeAPI
-		xhtml_code_typeAPI.ID = xhtml_code_typeDB.ID
-		xhtml_code_typeAPI.Xhtml_code_typePointersEncoding = xhtml_code_typeDB.Xhtml_code_typePointersEncoding
-		xhtml_code_typeDB.CopyBasicFieldsToXhtml_code_type_WOP(&xhtml_code_typeAPI.Xhtml_code_type_WOP)
-
-		backRepoData.Xhtml_code_typeAPIs = append(backRepoData.Xhtml_code_typeAPIs, &xhtml_code_typeAPI)
-	}
-
-	for _, xhtml_col_typeDB := range backRepo.BackRepoXhtml_col_type.Map_Xhtml_col_typeDBID_Xhtml_col_typeDB {
-
-		var xhtml_col_typeAPI Xhtml_col_typeAPI
-		xhtml_col_typeAPI.ID = xhtml_col_typeDB.ID
-		xhtml_col_typeAPI.Xhtml_col_typePointersEncoding = xhtml_col_typeDB.Xhtml_col_typePointersEncoding
-		xhtml_col_typeDB.CopyBasicFieldsToXhtml_col_type_WOP(&xhtml_col_typeAPI.Xhtml_col_type_WOP)
-
-		backRepoData.Xhtml_col_typeAPIs = append(backRepoData.Xhtml_col_typeAPIs, &xhtml_col_typeAPI)
-	}
-
-	for _, xhtml_colgroup_typeDB := range backRepo.BackRepoXhtml_colgroup_type.Map_Xhtml_colgroup_typeDBID_Xhtml_colgroup_typeDB {
-
-		var xhtml_colgroup_typeAPI Xhtml_colgroup_typeAPI
-		xhtml_colgroup_typeAPI.ID = xhtml_colgroup_typeDB.ID
-		xhtml_colgroup_typeAPI.Xhtml_colgroup_typePointersEncoding = xhtml_colgroup_typeDB.Xhtml_colgroup_typePointersEncoding
-		xhtml_colgroup_typeDB.CopyBasicFieldsToXhtml_colgroup_type_WOP(&xhtml_colgroup_typeAPI.Xhtml_colgroup_type_WOP)
-
-		backRepoData.Xhtml_colgroup_typeAPIs = append(backRepoData.Xhtml_colgroup_typeAPIs, &xhtml_colgroup_typeAPI)
-	}
-
-	for _, xhtml_dd_typeDB := range backRepo.BackRepoXhtml_dd_type.Map_Xhtml_dd_typeDBID_Xhtml_dd_typeDB {
-
-		var xhtml_dd_typeAPI Xhtml_dd_typeAPI
-		xhtml_dd_typeAPI.ID = xhtml_dd_typeDB.ID
-		xhtml_dd_typeAPI.Xhtml_dd_typePointersEncoding = xhtml_dd_typeDB.Xhtml_dd_typePointersEncoding
-		xhtml_dd_typeDB.CopyBasicFieldsToXhtml_dd_type_WOP(&xhtml_dd_typeAPI.Xhtml_dd_type_WOP)
-
-		backRepoData.Xhtml_dd_typeAPIs = append(backRepoData.Xhtml_dd_typeAPIs, &xhtml_dd_typeAPI)
-	}
-
-	for _, xhtml_dfn_typeDB := range backRepo.BackRepoXhtml_dfn_type.Map_Xhtml_dfn_typeDBID_Xhtml_dfn_typeDB {
-
-		var xhtml_dfn_typeAPI Xhtml_dfn_typeAPI
-		xhtml_dfn_typeAPI.ID = xhtml_dfn_typeDB.ID
-		xhtml_dfn_typeAPI.Xhtml_dfn_typePointersEncoding = xhtml_dfn_typeDB.Xhtml_dfn_typePointersEncoding
-		xhtml_dfn_typeDB.CopyBasicFieldsToXhtml_dfn_type_WOP(&xhtml_dfn_typeAPI.Xhtml_dfn_type_WOP)
-
-		backRepoData.Xhtml_dfn_typeAPIs = append(backRepoData.Xhtml_dfn_typeAPIs, &xhtml_dfn_typeAPI)
-	}
-
-	for _, xhtml_div_typeDB := range backRepo.BackRepoXhtml_div_type.Map_Xhtml_div_typeDBID_Xhtml_div_typeDB {
-
-		var xhtml_div_typeAPI Xhtml_div_typeAPI
-		xhtml_div_typeAPI.ID = xhtml_div_typeDB.ID
-		xhtml_div_typeAPI.Xhtml_div_typePointersEncoding = xhtml_div_typeDB.Xhtml_div_typePointersEncoding
-		xhtml_div_typeDB.CopyBasicFieldsToXhtml_div_type_WOP(&xhtml_div_typeAPI.Xhtml_div_type_WOP)
-
-		backRepoData.Xhtml_div_typeAPIs = append(backRepoData.Xhtml_div_typeAPIs, &xhtml_div_typeAPI)
-	}
-
-	for _, xhtml_dl_typeDB := range backRepo.BackRepoXhtml_dl_type.Map_Xhtml_dl_typeDBID_Xhtml_dl_typeDB {
-
-		var xhtml_dl_typeAPI Xhtml_dl_typeAPI
-		xhtml_dl_typeAPI.ID = xhtml_dl_typeDB.ID
-		xhtml_dl_typeAPI.Xhtml_dl_typePointersEncoding = xhtml_dl_typeDB.Xhtml_dl_typePointersEncoding
-		xhtml_dl_typeDB.CopyBasicFieldsToXhtml_dl_type_WOP(&xhtml_dl_typeAPI.Xhtml_dl_type_WOP)
-
-		backRepoData.Xhtml_dl_typeAPIs = append(backRepoData.Xhtml_dl_typeAPIs, &xhtml_dl_typeAPI)
-	}
-
-	for _, xhtml_dt_typeDB := range backRepo.BackRepoXhtml_dt_type.Map_Xhtml_dt_typeDBID_Xhtml_dt_typeDB {
-
-		var xhtml_dt_typeAPI Xhtml_dt_typeAPI
-		xhtml_dt_typeAPI.ID = xhtml_dt_typeDB.ID
-		xhtml_dt_typeAPI.Xhtml_dt_typePointersEncoding = xhtml_dt_typeDB.Xhtml_dt_typePointersEncoding
-		xhtml_dt_typeDB.CopyBasicFieldsToXhtml_dt_type_WOP(&xhtml_dt_typeAPI.Xhtml_dt_type_WOP)
-
-		backRepoData.Xhtml_dt_typeAPIs = append(backRepoData.Xhtml_dt_typeAPIs, &xhtml_dt_typeAPI)
-	}
-
-	for _, xhtml_edit_typeDB := range backRepo.BackRepoXhtml_edit_type.Map_Xhtml_edit_typeDBID_Xhtml_edit_typeDB {
-
-		var xhtml_edit_typeAPI Xhtml_edit_typeAPI
-		xhtml_edit_typeAPI.ID = xhtml_edit_typeDB.ID
-		xhtml_edit_typeAPI.Xhtml_edit_typePointersEncoding = xhtml_edit_typeDB.Xhtml_edit_typePointersEncoding
-		xhtml_edit_typeDB.CopyBasicFieldsToXhtml_edit_type_WOP(&xhtml_edit_typeAPI.Xhtml_edit_type_WOP)
-
-		backRepoData.Xhtml_edit_typeAPIs = append(backRepoData.Xhtml_edit_typeAPIs, &xhtml_edit_typeAPI)
-	}
-
-	for _, xhtml_em_typeDB := range backRepo.BackRepoXhtml_em_type.Map_Xhtml_em_typeDBID_Xhtml_em_typeDB {
-
-		var xhtml_em_typeAPI Xhtml_em_typeAPI
-		xhtml_em_typeAPI.ID = xhtml_em_typeDB.ID
-		xhtml_em_typeAPI.Xhtml_em_typePointersEncoding = xhtml_em_typeDB.Xhtml_em_typePointersEncoding
-		xhtml_em_typeDB.CopyBasicFieldsToXhtml_em_type_WOP(&xhtml_em_typeAPI.Xhtml_em_type_WOP)
-
-		backRepoData.Xhtml_em_typeAPIs = append(backRepoData.Xhtml_em_typeAPIs, &xhtml_em_typeAPI)
-	}
-
-	for _, xhtml_h1_typeDB := range backRepo.BackRepoXhtml_h1_type.Map_Xhtml_h1_typeDBID_Xhtml_h1_typeDB {
-
-		var xhtml_h1_typeAPI Xhtml_h1_typeAPI
-		xhtml_h1_typeAPI.ID = xhtml_h1_typeDB.ID
-		xhtml_h1_typeAPI.Xhtml_h1_typePointersEncoding = xhtml_h1_typeDB.Xhtml_h1_typePointersEncoding
-		xhtml_h1_typeDB.CopyBasicFieldsToXhtml_h1_type_WOP(&xhtml_h1_typeAPI.Xhtml_h1_type_WOP)
-
-		backRepoData.Xhtml_h1_typeAPIs = append(backRepoData.Xhtml_h1_typeAPIs, &xhtml_h1_typeAPI)
-	}
-
-	for _, xhtml_h2_typeDB := range backRepo.BackRepoXhtml_h2_type.Map_Xhtml_h2_typeDBID_Xhtml_h2_typeDB {
-
-		var xhtml_h2_typeAPI Xhtml_h2_typeAPI
-		xhtml_h2_typeAPI.ID = xhtml_h2_typeDB.ID
-		xhtml_h2_typeAPI.Xhtml_h2_typePointersEncoding = xhtml_h2_typeDB.Xhtml_h2_typePointersEncoding
-		xhtml_h2_typeDB.CopyBasicFieldsToXhtml_h2_type_WOP(&xhtml_h2_typeAPI.Xhtml_h2_type_WOP)
-
-		backRepoData.Xhtml_h2_typeAPIs = append(backRepoData.Xhtml_h2_typeAPIs, &xhtml_h2_typeAPI)
-	}
-
-	for _, xhtml_h3_typeDB := range backRepo.BackRepoXhtml_h3_type.Map_Xhtml_h3_typeDBID_Xhtml_h3_typeDB {
-
-		var xhtml_h3_typeAPI Xhtml_h3_typeAPI
-		xhtml_h3_typeAPI.ID = xhtml_h3_typeDB.ID
-		xhtml_h3_typeAPI.Xhtml_h3_typePointersEncoding = xhtml_h3_typeDB.Xhtml_h3_typePointersEncoding
-		xhtml_h3_typeDB.CopyBasicFieldsToXhtml_h3_type_WOP(&xhtml_h3_typeAPI.Xhtml_h3_type_WOP)
-
-		backRepoData.Xhtml_h3_typeAPIs = append(backRepoData.Xhtml_h3_typeAPIs, &xhtml_h3_typeAPI)
-	}
-
-	for _, xhtml_h4_typeDB := range backRepo.BackRepoXhtml_h4_type.Map_Xhtml_h4_typeDBID_Xhtml_h4_typeDB {
-
-		var xhtml_h4_typeAPI Xhtml_h4_typeAPI
-		xhtml_h4_typeAPI.ID = xhtml_h4_typeDB.ID
-		xhtml_h4_typeAPI.Xhtml_h4_typePointersEncoding = xhtml_h4_typeDB.Xhtml_h4_typePointersEncoding
-		xhtml_h4_typeDB.CopyBasicFieldsToXhtml_h4_type_WOP(&xhtml_h4_typeAPI.Xhtml_h4_type_WOP)
-
-		backRepoData.Xhtml_h4_typeAPIs = append(backRepoData.Xhtml_h4_typeAPIs, &xhtml_h4_typeAPI)
-	}
-
-	for _, xhtml_h5_typeDB := range backRepo.BackRepoXhtml_h5_type.Map_Xhtml_h5_typeDBID_Xhtml_h5_typeDB {
-
-		var xhtml_h5_typeAPI Xhtml_h5_typeAPI
-		xhtml_h5_typeAPI.ID = xhtml_h5_typeDB.ID
-		xhtml_h5_typeAPI.Xhtml_h5_typePointersEncoding = xhtml_h5_typeDB.Xhtml_h5_typePointersEncoding
-		xhtml_h5_typeDB.CopyBasicFieldsToXhtml_h5_type_WOP(&xhtml_h5_typeAPI.Xhtml_h5_type_WOP)
-
-		backRepoData.Xhtml_h5_typeAPIs = append(backRepoData.Xhtml_h5_typeAPIs, &xhtml_h5_typeAPI)
-	}
-
-	for _, xhtml_h6_typeDB := range backRepo.BackRepoXhtml_h6_type.Map_Xhtml_h6_typeDBID_Xhtml_h6_typeDB {
-
-		var xhtml_h6_typeAPI Xhtml_h6_typeAPI
-		xhtml_h6_typeAPI.ID = xhtml_h6_typeDB.ID
-		xhtml_h6_typeAPI.Xhtml_h6_typePointersEncoding = xhtml_h6_typeDB.Xhtml_h6_typePointersEncoding
-		xhtml_h6_typeDB.CopyBasicFieldsToXhtml_h6_type_WOP(&xhtml_h6_typeAPI.Xhtml_h6_type_WOP)
-
-		backRepoData.Xhtml_h6_typeAPIs = append(backRepoData.Xhtml_h6_typeAPIs, &xhtml_h6_typeAPI)
-	}
-
-	for _, xhtml_heading_typeDB := range backRepo.BackRepoXhtml_heading_type.Map_Xhtml_heading_typeDBID_Xhtml_heading_typeDB {
-
-		var xhtml_heading_typeAPI Xhtml_heading_typeAPI
-		xhtml_heading_typeAPI.ID = xhtml_heading_typeDB.ID
-		xhtml_heading_typeAPI.Xhtml_heading_typePointersEncoding = xhtml_heading_typeDB.Xhtml_heading_typePointersEncoding
-		xhtml_heading_typeDB.CopyBasicFieldsToXhtml_heading_type_WOP(&xhtml_heading_typeAPI.Xhtml_heading_type_WOP)
-
-		backRepoData.Xhtml_heading_typeAPIs = append(backRepoData.Xhtml_heading_typeAPIs, &xhtml_heading_typeAPI)
-	}
-
-	for _, xhtml_hr_typeDB := range backRepo.BackRepoXhtml_hr_type.Map_Xhtml_hr_typeDBID_Xhtml_hr_typeDB {
-
-		var xhtml_hr_typeAPI Xhtml_hr_typeAPI
-		xhtml_hr_typeAPI.ID = xhtml_hr_typeDB.ID
-		xhtml_hr_typeAPI.Xhtml_hr_typePointersEncoding = xhtml_hr_typeDB.Xhtml_hr_typePointersEncoding
-		xhtml_hr_typeDB.CopyBasicFieldsToXhtml_hr_type_WOP(&xhtml_hr_typeAPI.Xhtml_hr_type_WOP)
-
-		backRepoData.Xhtml_hr_typeAPIs = append(backRepoData.Xhtml_hr_typeAPIs, &xhtml_hr_typeAPI)
-	}
-
-	for _, xhtml_kbd_typeDB := range backRepo.BackRepoXhtml_kbd_type.Map_Xhtml_kbd_typeDBID_Xhtml_kbd_typeDB {
-
-		var xhtml_kbd_typeAPI Xhtml_kbd_typeAPI
-		xhtml_kbd_typeAPI.ID = xhtml_kbd_typeDB.ID
-		xhtml_kbd_typeAPI.Xhtml_kbd_typePointersEncoding = xhtml_kbd_typeDB.Xhtml_kbd_typePointersEncoding
-		xhtml_kbd_typeDB.CopyBasicFieldsToXhtml_kbd_type_WOP(&xhtml_kbd_typeAPI.Xhtml_kbd_type_WOP)
-
-		backRepoData.Xhtml_kbd_typeAPIs = append(backRepoData.Xhtml_kbd_typeAPIs, &xhtml_kbd_typeAPI)
-	}
-
-	for _, xhtml_li_typeDB := range backRepo.BackRepoXhtml_li_type.Map_Xhtml_li_typeDBID_Xhtml_li_typeDB {
-
-		var xhtml_li_typeAPI Xhtml_li_typeAPI
-		xhtml_li_typeAPI.ID = xhtml_li_typeDB.ID
-		xhtml_li_typeAPI.Xhtml_li_typePointersEncoding = xhtml_li_typeDB.Xhtml_li_typePointersEncoding
-		xhtml_li_typeDB.CopyBasicFieldsToXhtml_li_type_WOP(&xhtml_li_typeAPI.Xhtml_li_type_WOP)
-
-		backRepoData.Xhtml_li_typeAPIs = append(backRepoData.Xhtml_li_typeAPIs, &xhtml_li_typeAPI)
-	}
-
-	for _, xhtml_object_typeDB := range backRepo.BackRepoXhtml_object_type.Map_Xhtml_object_typeDBID_Xhtml_object_typeDB {
-
-		var xhtml_object_typeAPI Xhtml_object_typeAPI
-		xhtml_object_typeAPI.ID = xhtml_object_typeDB.ID
-		xhtml_object_typeAPI.Xhtml_object_typePointersEncoding = xhtml_object_typeDB.Xhtml_object_typePointersEncoding
-		xhtml_object_typeDB.CopyBasicFieldsToXhtml_object_type_WOP(&xhtml_object_typeAPI.Xhtml_object_type_WOP)
-
-		backRepoData.Xhtml_object_typeAPIs = append(backRepoData.Xhtml_object_typeAPIs, &xhtml_object_typeAPI)
-	}
-
-	for _, xhtml_ol_typeDB := range backRepo.BackRepoXhtml_ol_type.Map_Xhtml_ol_typeDBID_Xhtml_ol_typeDB {
-
-		var xhtml_ol_typeAPI Xhtml_ol_typeAPI
-		xhtml_ol_typeAPI.ID = xhtml_ol_typeDB.ID
-		xhtml_ol_typeAPI.Xhtml_ol_typePointersEncoding = xhtml_ol_typeDB.Xhtml_ol_typePointersEncoding
-		xhtml_ol_typeDB.CopyBasicFieldsToXhtml_ol_type_WOP(&xhtml_ol_typeAPI.Xhtml_ol_type_WOP)
-
-		backRepoData.Xhtml_ol_typeAPIs = append(backRepoData.Xhtml_ol_typeAPIs, &xhtml_ol_typeAPI)
-	}
-
-	for _, xhtml_p_typeDB := range backRepo.BackRepoXhtml_p_type.Map_Xhtml_p_typeDBID_Xhtml_p_typeDB {
-
-		var xhtml_p_typeAPI Xhtml_p_typeAPI
-		xhtml_p_typeAPI.ID = xhtml_p_typeDB.ID
-		xhtml_p_typeAPI.Xhtml_p_typePointersEncoding = xhtml_p_typeDB.Xhtml_p_typePointersEncoding
-		xhtml_p_typeDB.CopyBasicFieldsToXhtml_p_type_WOP(&xhtml_p_typeAPI.Xhtml_p_type_WOP)
-
-		backRepoData.Xhtml_p_typeAPIs = append(backRepoData.Xhtml_p_typeAPIs, &xhtml_p_typeAPI)
-	}
-
-	for _, xhtml_param_typeDB := range backRepo.BackRepoXhtml_param_type.Map_Xhtml_param_typeDBID_Xhtml_param_typeDB {
-
-		var xhtml_param_typeAPI Xhtml_param_typeAPI
-		xhtml_param_typeAPI.ID = xhtml_param_typeDB.ID
-		xhtml_param_typeAPI.Xhtml_param_typePointersEncoding = xhtml_param_typeDB.Xhtml_param_typePointersEncoding
-		xhtml_param_typeDB.CopyBasicFieldsToXhtml_param_type_WOP(&xhtml_param_typeAPI.Xhtml_param_type_WOP)
-
-		backRepoData.Xhtml_param_typeAPIs = append(backRepoData.Xhtml_param_typeAPIs, &xhtml_param_typeAPI)
-	}
-
-	for _, xhtml_pre_typeDB := range backRepo.BackRepoXhtml_pre_type.Map_Xhtml_pre_typeDBID_Xhtml_pre_typeDB {
-
-		var xhtml_pre_typeAPI Xhtml_pre_typeAPI
-		xhtml_pre_typeAPI.ID = xhtml_pre_typeDB.ID
-		xhtml_pre_typeAPI.Xhtml_pre_typePointersEncoding = xhtml_pre_typeDB.Xhtml_pre_typePointersEncoding
-		xhtml_pre_typeDB.CopyBasicFieldsToXhtml_pre_type_WOP(&xhtml_pre_typeAPI.Xhtml_pre_type_WOP)
-
-		backRepoData.Xhtml_pre_typeAPIs = append(backRepoData.Xhtml_pre_typeAPIs, &xhtml_pre_typeAPI)
-	}
-
-	for _, xhtml_q_typeDB := range backRepo.BackRepoXhtml_q_type.Map_Xhtml_q_typeDBID_Xhtml_q_typeDB {
-
-		var xhtml_q_typeAPI Xhtml_q_typeAPI
-		xhtml_q_typeAPI.ID = xhtml_q_typeDB.ID
-		xhtml_q_typeAPI.Xhtml_q_typePointersEncoding = xhtml_q_typeDB.Xhtml_q_typePointersEncoding
-		xhtml_q_typeDB.CopyBasicFieldsToXhtml_q_type_WOP(&xhtml_q_typeAPI.Xhtml_q_type_WOP)
-
-		backRepoData.Xhtml_q_typeAPIs = append(backRepoData.Xhtml_q_typeAPIs, &xhtml_q_typeAPI)
-	}
-
-	for _, xhtml_samp_typeDB := range backRepo.BackRepoXhtml_samp_type.Map_Xhtml_samp_typeDBID_Xhtml_samp_typeDB {
-
-		var xhtml_samp_typeAPI Xhtml_samp_typeAPI
-		xhtml_samp_typeAPI.ID = xhtml_samp_typeDB.ID
-		xhtml_samp_typeAPI.Xhtml_samp_typePointersEncoding = xhtml_samp_typeDB.Xhtml_samp_typePointersEncoding
-		xhtml_samp_typeDB.CopyBasicFieldsToXhtml_samp_type_WOP(&xhtml_samp_typeAPI.Xhtml_samp_type_WOP)
-
-		backRepoData.Xhtml_samp_typeAPIs = append(backRepoData.Xhtml_samp_typeAPIs, &xhtml_samp_typeAPI)
-	}
-
-	for _, xhtml_span_typeDB := range backRepo.BackRepoXhtml_span_type.Map_Xhtml_span_typeDBID_Xhtml_span_typeDB {
-
-		var xhtml_span_typeAPI Xhtml_span_typeAPI
-		xhtml_span_typeAPI.ID = xhtml_span_typeDB.ID
-		xhtml_span_typeAPI.Xhtml_span_typePointersEncoding = xhtml_span_typeDB.Xhtml_span_typePointersEncoding
-		xhtml_span_typeDB.CopyBasicFieldsToXhtml_span_type_WOP(&xhtml_span_typeAPI.Xhtml_span_type_WOP)
-
-		backRepoData.Xhtml_span_typeAPIs = append(backRepoData.Xhtml_span_typeAPIs, &xhtml_span_typeAPI)
-	}
-
-	for _, xhtml_strong_typeDB := range backRepo.BackRepoXhtml_strong_type.Map_Xhtml_strong_typeDBID_Xhtml_strong_typeDB {
-
-		var xhtml_strong_typeAPI Xhtml_strong_typeAPI
-		xhtml_strong_typeAPI.ID = xhtml_strong_typeDB.ID
-		xhtml_strong_typeAPI.Xhtml_strong_typePointersEncoding = xhtml_strong_typeDB.Xhtml_strong_typePointersEncoding
-		xhtml_strong_typeDB.CopyBasicFieldsToXhtml_strong_type_WOP(&xhtml_strong_typeAPI.Xhtml_strong_type_WOP)
-
-		backRepoData.Xhtml_strong_typeAPIs = append(backRepoData.Xhtml_strong_typeAPIs, &xhtml_strong_typeAPI)
-	}
-
-	for _, xhtml_table_typeDB := range backRepo.BackRepoXhtml_table_type.Map_Xhtml_table_typeDBID_Xhtml_table_typeDB {
-
-		var xhtml_table_typeAPI Xhtml_table_typeAPI
-		xhtml_table_typeAPI.ID = xhtml_table_typeDB.ID
-		xhtml_table_typeAPI.Xhtml_table_typePointersEncoding = xhtml_table_typeDB.Xhtml_table_typePointersEncoding
-		xhtml_table_typeDB.CopyBasicFieldsToXhtml_table_type_WOP(&xhtml_table_typeAPI.Xhtml_table_type_WOP)
-
-		backRepoData.Xhtml_table_typeAPIs = append(backRepoData.Xhtml_table_typeAPIs, &xhtml_table_typeAPI)
-	}
-
-	for _, xhtml_tbody_typeDB := range backRepo.BackRepoXhtml_tbody_type.Map_Xhtml_tbody_typeDBID_Xhtml_tbody_typeDB {
-
-		var xhtml_tbody_typeAPI Xhtml_tbody_typeAPI
-		xhtml_tbody_typeAPI.ID = xhtml_tbody_typeDB.ID
-		xhtml_tbody_typeAPI.Xhtml_tbody_typePointersEncoding = xhtml_tbody_typeDB.Xhtml_tbody_typePointersEncoding
-		xhtml_tbody_typeDB.CopyBasicFieldsToXhtml_tbody_type_WOP(&xhtml_tbody_typeAPI.Xhtml_tbody_type_WOP)
-
-		backRepoData.Xhtml_tbody_typeAPIs = append(backRepoData.Xhtml_tbody_typeAPIs, &xhtml_tbody_typeAPI)
-	}
-
-	for _, xhtml_td_typeDB := range backRepo.BackRepoXhtml_td_type.Map_Xhtml_td_typeDBID_Xhtml_td_typeDB {
-
-		var xhtml_td_typeAPI Xhtml_td_typeAPI
-		xhtml_td_typeAPI.ID = xhtml_td_typeDB.ID
-		xhtml_td_typeAPI.Xhtml_td_typePointersEncoding = xhtml_td_typeDB.Xhtml_td_typePointersEncoding
-		xhtml_td_typeDB.CopyBasicFieldsToXhtml_td_type_WOP(&xhtml_td_typeAPI.Xhtml_td_type_WOP)
-
-		backRepoData.Xhtml_td_typeAPIs = append(backRepoData.Xhtml_td_typeAPIs, &xhtml_td_typeAPI)
-	}
-
-	for _, xhtml_tfoot_typeDB := range backRepo.BackRepoXhtml_tfoot_type.Map_Xhtml_tfoot_typeDBID_Xhtml_tfoot_typeDB {
-
-		var xhtml_tfoot_typeAPI Xhtml_tfoot_typeAPI
-		xhtml_tfoot_typeAPI.ID = xhtml_tfoot_typeDB.ID
-		xhtml_tfoot_typeAPI.Xhtml_tfoot_typePointersEncoding = xhtml_tfoot_typeDB.Xhtml_tfoot_typePointersEncoding
-		xhtml_tfoot_typeDB.CopyBasicFieldsToXhtml_tfoot_type_WOP(&xhtml_tfoot_typeAPI.Xhtml_tfoot_type_WOP)
-
-		backRepoData.Xhtml_tfoot_typeAPIs = append(backRepoData.Xhtml_tfoot_typeAPIs, &xhtml_tfoot_typeAPI)
-	}
-
-	for _, xhtml_th_typeDB := range backRepo.BackRepoXhtml_th_type.Map_Xhtml_th_typeDBID_Xhtml_th_typeDB {
-
-		var xhtml_th_typeAPI Xhtml_th_typeAPI
-		xhtml_th_typeAPI.ID = xhtml_th_typeDB.ID
-		xhtml_th_typeAPI.Xhtml_th_typePointersEncoding = xhtml_th_typeDB.Xhtml_th_typePointersEncoding
-		xhtml_th_typeDB.CopyBasicFieldsToXhtml_th_type_WOP(&xhtml_th_typeAPI.Xhtml_th_type_WOP)
-
-		backRepoData.Xhtml_th_typeAPIs = append(backRepoData.Xhtml_th_typeAPIs, &xhtml_th_typeAPI)
-	}
-
-	for _, xhtml_thead_typeDB := range backRepo.BackRepoXhtml_thead_type.Map_Xhtml_thead_typeDBID_Xhtml_thead_typeDB {
-
-		var xhtml_thead_typeAPI Xhtml_thead_typeAPI
-		xhtml_thead_typeAPI.ID = xhtml_thead_typeDB.ID
-		xhtml_thead_typeAPI.Xhtml_thead_typePointersEncoding = xhtml_thead_typeDB.Xhtml_thead_typePointersEncoding
-		xhtml_thead_typeDB.CopyBasicFieldsToXhtml_thead_type_WOP(&xhtml_thead_typeAPI.Xhtml_thead_type_WOP)
-
-		backRepoData.Xhtml_thead_typeAPIs = append(backRepoData.Xhtml_thead_typeAPIs, &xhtml_thead_typeAPI)
-	}
-
-	for _, xhtml_tr_typeDB := range backRepo.BackRepoXhtml_tr_type.Map_Xhtml_tr_typeDBID_Xhtml_tr_typeDB {
-
-		var xhtml_tr_typeAPI Xhtml_tr_typeAPI
-		xhtml_tr_typeAPI.ID = xhtml_tr_typeDB.ID
-		xhtml_tr_typeAPI.Xhtml_tr_typePointersEncoding = xhtml_tr_typeDB.Xhtml_tr_typePointersEncoding
-		xhtml_tr_typeDB.CopyBasicFieldsToXhtml_tr_type_WOP(&xhtml_tr_typeAPI.Xhtml_tr_type_WOP)
-
-		backRepoData.Xhtml_tr_typeAPIs = append(backRepoData.Xhtml_tr_typeAPIs, &xhtml_tr_typeAPI)
-	}
-
-	for _, xhtml_ul_typeDB := range backRepo.BackRepoXhtml_ul_type.Map_Xhtml_ul_typeDBID_Xhtml_ul_typeDB {
-
-		var xhtml_ul_typeAPI Xhtml_ul_typeAPI
-		xhtml_ul_typeAPI.ID = xhtml_ul_typeDB.ID
-		xhtml_ul_typeAPI.Xhtml_ul_typePointersEncoding = xhtml_ul_typeDB.Xhtml_ul_typePointersEncoding
-		xhtml_ul_typeDB.CopyBasicFieldsToXhtml_ul_type_WOP(&xhtml_ul_typeAPI.Xhtml_ul_type_WOP)
-
-		backRepoData.Xhtml_ul_typeAPIs = append(backRepoData.Xhtml_ul_typeAPIs, &xhtml_ul_typeAPI)
-	}
-
-	for _, xhtml_var_typeDB := range backRepo.BackRepoXhtml_var_type.Map_Xhtml_var_typeDBID_Xhtml_var_typeDB {
-
-		var xhtml_var_typeAPI Xhtml_var_typeAPI
-		xhtml_var_typeAPI.ID = xhtml_var_typeDB.ID
-		xhtml_var_typeAPI.Xhtml_var_typePointersEncoding = xhtml_var_typeDB.Xhtml_var_typePointersEncoding
-		xhtml_var_typeDB.CopyBasicFieldsToXhtml_var_type_WOP(&xhtml_var_typeAPI.Xhtml_var_type_WOP)
-
-		backRepoData.Xhtml_var_typeAPIs = append(backRepoData.Xhtml_var_typeAPIs, &xhtml_var_typeAPI)
 	}
 
 }

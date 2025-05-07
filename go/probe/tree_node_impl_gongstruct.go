@@ -95,8 +95,143 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_VALUE_XHTML" {
 		updateAndCommitTable[models.ATTRIBUTE_VALUE_XHTML](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "AnyType" {
-		updateAndCommitTable[models.AnyType](nodeImplGongstruct.probe)
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ALTERNATIVE_ID" {
+		updateAndCommitTable[models.A_ALTERNATIVE_ID](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_DATE_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_DATE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_INTEGER_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_REAL_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_REAL_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_STRING_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_STRING_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_DEFINITION_XHTML_REF" {
+		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_XHTML_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_BOOLEAN" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_BOOLEAN](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_DATE" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_DATE](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_ENUMERATION" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_ENUMERATION](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_INTEGER" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_INTEGER](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_REAL" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_REAL](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_STRING" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_STRING](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_XHTML" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ATTRIBUTE_VALUE_XHTML_1" {
+		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML_1](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_CHILDREN" {
+		updateAndCommitTable[models.A_CHILDREN](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_CORE_CONTENT" {
+		updateAndCommitTable[models.A_CORE_CONTENT](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPES" {
+		updateAndCommitTable[models.A_DATATYPES](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_BOOLEAN_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_BOOLEAN_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_DATE_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_DATE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_ENUMERATION_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_ENUMERATION_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_INTEGER_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_INTEGER_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_REAL_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_REAL_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_STRING_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_STRING_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_DATATYPE_DEFINITION_XHTML_REF" {
+		updateAndCommitTable[models.A_DATATYPE_DEFINITION_XHTML_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_EDITABLE_ATTS" {
+		updateAndCommitTable[models.A_EDITABLE_ATTS](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_ENUM_VALUE_REF" {
+		updateAndCommitTable[models.A_ENUM_VALUE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_OBJECT" {
+		updateAndCommitTable[models.A_OBJECT](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_PROPERTIES" {
+		updateAndCommitTable[models.A_PROPERTIES](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_RELATION_GROUP_TYPE_REF" {
+		updateAndCommitTable[models.A_RELATION_GROUP_TYPE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SOURCE_1" {
+		updateAndCommitTable[models.A_SOURCE_1](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SOURCE_SPECIFICATION_1" {
+		updateAndCommitTable[models.A_SOURCE_SPECIFICATION_1](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPECIFICATIONS" {
+		updateAndCommitTable[models.A_SPECIFICATIONS](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPECIFICATION_TYPE_REF" {
+		updateAndCommitTable[models.A_SPECIFICATION_TYPE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPECIFIED_VALUES" {
+		updateAndCommitTable[models.A_SPECIFIED_VALUES](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_ATTRIBUTES" {
+		updateAndCommitTable[models.A_SPEC_ATTRIBUTES](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_OBJECTS" {
+		updateAndCommitTable[models.A_SPEC_OBJECTS](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_OBJECT_TYPE_REF" {
+		updateAndCommitTable[models.A_SPEC_OBJECT_TYPE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_RELATIONS" {
+		updateAndCommitTable[models.A_SPEC_RELATIONS](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_RELATION_GROUPS" {
+		updateAndCommitTable[models.A_SPEC_RELATION_GROUPS](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_RELATION_REF" {
+		updateAndCommitTable[models.A_SPEC_RELATION_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_RELATION_TYPE_REF" {
+		updateAndCommitTable[models.A_SPEC_RELATION_TYPE_REF](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_SPEC_TYPES" {
+		updateAndCommitTable[models.A_SPEC_TYPES](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_THE_HEADER" {
+		updateAndCommitTable[models.A_THE_HEADER](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "A_TOOL_EXTENSIONS" {
+		updateAndCommitTable[models.A_TOOL_EXTENSIONS](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "DATATYPE_DEFINITION_BOOLEAN" {
 		updateAndCommitTable[models.DATATYPE_DEFINITION_BOOLEAN](nodeImplGongstruct.probe)
@@ -166,147 +301,6 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "XHTML_CONTENT" {
 		updateAndCommitTable[models.XHTML_CONTENT](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_InlPres_type" {
-		updateAndCommitTable[models.Xhtml_InlPres_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_a_type" {
-		updateAndCommitTable[models.Xhtml_a_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_abbr_type" {
-		updateAndCommitTable[models.Xhtml_abbr_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_acronym_type" {
-		updateAndCommitTable[models.Xhtml_acronym_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_address_type" {
-		updateAndCommitTable[models.Xhtml_address_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_blockquote_type" {
-		updateAndCommitTable[models.Xhtml_blockquote_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_br_type" {
-		updateAndCommitTable[models.Xhtml_br_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_caption_type" {
-		updateAndCommitTable[models.Xhtml_caption_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_cite_type" {
-		updateAndCommitTable[models.Xhtml_cite_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_code_type" {
-		updateAndCommitTable[models.Xhtml_code_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_col_type" {
-		updateAndCommitTable[models.Xhtml_col_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_colgroup_type" {
-		updateAndCommitTable[models.Xhtml_colgroup_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_dd_type" {
-		updateAndCommitTable[models.Xhtml_dd_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_dfn_type" {
-		updateAndCommitTable[models.Xhtml_dfn_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_div_type" {
-		updateAndCommitTable[models.Xhtml_div_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_dl_type" {
-		updateAndCommitTable[models.Xhtml_dl_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_dt_type" {
-		updateAndCommitTable[models.Xhtml_dt_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_edit_type" {
-		updateAndCommitTable[models.Xhtml_edit_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_em_type" {
-		updateAndCommitTable[models.Xhtml_em_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_h1_type" {
-		updateAndCommitTable[models.Xhtml_h1_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_h2_type" {
-		updateAndCommitTable[models.Xhtml_h2_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_h3_type" {
-		updateAndCommitTable[models.Xhtml_h3_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_h4_type" {
-		updateAndCommitTable[models.Xhtml_h4_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_h5_type" {
-		updateAndCommitTable[models.Xhtml_h5_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_h6_type" {
-		updateAndCommitTable[models.Xhtml_h6_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_heading_type" {
-		updateAndCommitTable[models.Xhtml_heading_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_hr_type" {
-		updateAndCommitTable[models.Xhtml_hr_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_kbd_type" {
-		updateAndCommitTable[models.Xhtml_kbd_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_li_type" {
-		updateAndCommitTable[models.Xhtml_li_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_object_type" {
-		updateAndCommitTable[models.Xhtml_object_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_ol_type" {
-		updateAndCommitTable[models.Xhtml_ol_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_p_type" {
-		updateAndCommitTable[models.Xhtml_p_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_param_type" {
-		updateAndCommitTable[models.Xhtml_param_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_pre_type" {
-		updateAndCommitTable[models.Xhtml_pre_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_q_type" {
-		updateAndCommitTable[models.Xhtml_q_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_samp_type" {
-		updateAndCommitTable[models.Xhtml_samp_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_span_type" {
-		updateAndCommitTable[models.Xhtml_span_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_strong_type" {
-		updateAndCommitTable[models.Xhtml_strong_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_table_type" {
-		updateAndCommitTable[models.Xhtml_table_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_tbody_type" {
-		updateAndCommitTable[models.Xhtml_tbody_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_td_type" {
-		updateAndCommitTable[models.Xhtml_td_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_tfoot_type" {
-		updateAndCommitTable[models.Xhtml_tfoot_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_th_type" {
-		updateAndCommitTable[models.Xhtml_th_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_thead_type" {
-		updateAndCommitTable[models.Xhtml_thead_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_tr_type" {
-		updateAndCommitTable[models.Xhtml_tr_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_ul_type" {
-		updateAndCommitTable[models.Xhtml_ul_type](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Xhtml_var_type" {
-		updateAndCommitTable[models.Xhtml_var_type](nodeImplGongstruct.probe)
 	}
 
 	// set color for node and reset all other nodes color

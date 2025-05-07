@@ -63,6 +63,9 @@ type EMBEDDED_VALUEDB struct {
 	// Declation for basic field embedded_valueDB.Name
 	Name_Data sql.NullString
 
+	// Declation for basic field embedded_valueDB.KEY
+	KEY_Data sql.NullInt64
+
 	// Declation for basic field embedded_valueDB.OTHER_CONTENT
 	OTHER_CONTENT_Data sql.NullString
 
@@ -90,7 +93,9 @@ type EMBEDDED_VALUEWOP struct {
 
 	Name string `xlsx:"1"`
 
-	OTHER_CONTENT string `xlsx:"2"`
+	KEY int `xlsx:"2"`
+
+	OTHER_CONTENT string `xlsx:"3"`
 	// insertion for WOP pointer fields
 }
 
@@ -98,6 +103,7 @@ var EMBEDDED_VALUE_Fields = []string{
 	// insertion for WOP basic fields
 	"ID",
 	"Name",
+	"KEY",
 	"OTHER_CONTENT",
 }
 
@@ -379,6 +385,9 @@ func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsFromEMBEDDED_VALUE(embe
 	embedded_valueDB.Name_Data.String = embedded_value.Name
 	embedded_valueDB.Name_Data.Valid = true
 
+	embedded_valueDB.KEY_Data.Int64 = int64(embedded_value.KEY)
+	embedded_valueDB.KEY_Data.Valid = true
+
 	embedded_valueDB.OTHER_CONTENT_Data.String = embedded_value.OTHER_CONTENT
 	embedded_valueDB.OTHER_CONTENT_Data.Valid = true
 }
@@ -389,6 +398,9 @@ func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsFromEMBEDDED_VALUE_WOP(
 
 	embedded_valueDB.Name_Data.String = embedded_value.Name
 	embedded_valueDB.Name_Data.Valid = true
+
+	embedded_valueDB.KEY_Data.Int64 = int64(embedded_value.KEY)
+	embedded_valueDB.KEY_Data.Valid = true
 
 	embedded_valueDB.OTHER_CONTENT_Data.String = embedded_value.OTHER_CONTENT
 	embedded_valueDB.OTHER_CONTENT_Data.Valid = true
@@ -401,6 +413,9 @@ func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsFromEMBEDDED_VALUEWOP(e
 	embedded_valueDB.Name_Data.String = embedded_value.Name
 	embedded_valueDB.Name_Data.Valid = true
 
+	embedded_valueDB.KEY_Data.Int64 = int64(embedded_value.KEY)
+	embedded_valueDB.KEY_Data.Valid = true
+
 	embedded_valueDB.OTHER_CONTENT_Data.String = embedded_value.OTHER_CONTENT
 	embedded_valueDB.OTHER_CONTENT_Data.Valid = true
 }
@@ -409,6 +424,7 @@ func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsFromEMBEDDED_VALUEWOP(e
 func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsToEMBEDDED_VALUE(embedded_value *models.EMBEDDED_VALUE) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	embedded_value.Name = embedded_valueDB.Name_Data.String
+	embedded_value.KEY = int(embedded_valueDB.KEY_Data.Int64)
 	embedded_value.OTHER_CONTENT = embedded_valueDB.OTHER_CONTENT_Data.String
 }
 
@@ -416,6 +432,7 @@ func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsToEMBEDDED_VALUE(embedd
 func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsToEMBEDDED_VALUE_WOP(embedded_value *models.EMBEDDED_VALUE_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	embedded_value.Name = embedded_valueDB.Name_Data.String
+	embedded_value.KEY = int(embedded_valueDB.KEY_Data.Int64)
 	embedded_value.OTHER_CONTENT = embedded_valueDB.OTHER_CONTENT_Data.String
 }
 
@@ -424,6 +441,7 @@ func (embedded_valueDB *EMBEDDED_VALUEDB) CopyBasicFieldsToEMBEDDED_VALUEWOP(emb
 	embedded_value.ID = int(embedded_valueDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	embedded_value.Name = embedded_valueDB.Name_Data.String
+	embedded_value.KEY = int(embedded_valueDB.KEY_Data.Int64)
 	embedded_value.OTHER_CONTENT = embedded_valueDB.OTHER_CONTENT_Data.String
 }
 

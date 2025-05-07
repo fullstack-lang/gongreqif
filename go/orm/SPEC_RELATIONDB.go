@@ -48,37 +48,25 @@ type SPEC_RELATIONAPI struct {
 type SPEC_RELATIONPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
+	// field VALUES is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	VALUESID sql.NullInt64
 
-	} `gorm:"embedded"`
+	// field SOURCE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SOURCEID sql.NullInt64
 
-	VALUES struct {
+	// field TARGET is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	TARGETID sql.NullInt64
 
-		// field ATTRIBUTE_VALUE_BOOLEAN is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_BOOLEAN IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_VALUE_DATE is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_DATE IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_VALUE_ENUMERATION is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_ENUMERATION IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_VALUE_INTEGER is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_INTEGER IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_VALUE_REAL is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_REAL IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_VALUE_STRING is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_STRING IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_VALUE_XHTML is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_XHTML IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field TYPE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	TYPEID sql.NullInt64
 }
 
 // SPEC_RELATIONDB describes a spec_relation in the database
@@ -98,8 +86,11 @@ type SPEC_RELATIONDB struct {
 	// Declation for basic field spec_relationDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field spec_relationDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field spec_relationDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field spec_relationDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -130,9 +121,11 @@ type SPEC_RELATIONWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	LAST_CHANGE string `xlsx:"4"`
+
+	LONG_NAME string `xlsx:"5"`
 	// insertion for WOP pointer fields
 }
 
@@ -141,6 +134,7 @@ var SPEC_RELATION_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
 }
@@ -273,148 +267,64 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CommitPhaseTwoInstance
 		spec_relationDB.CopyBasicFieldsFromSPEC_RELATION(spec_relation)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range spec_relation.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_relation.ALTERNATIVE_ID translates to updating the spec_relation.ALTERNATIVE_IDID
+		spec_relationDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if spec_relation.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[spec_relation.ALTERNATIVE_ID]; ok {
+				spec_relationDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				spec_relationDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			spec_relationDB.ALTERNATIVE_IDID.Int64 = 0
+			spec_relationDB.ALTERNATIVE_IDID.Valid = true
 		}
 
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_BOOLEAN = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_booleanAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
-			attribute_value_booleanAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_BOOLEAN.GetATTRIBUTE_VALUE_BOOLEANDBFromATTRIBUTE_VALUE_BOOLEANPtr(attribute_value_booleanAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_booleanAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_booleanAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_relation.VALUES translates to updating the spec_relation.VALUESID
+		spec_relationDB.VALUESID.Valid = true // allow for a 0 value (nil association)
+		if spec_relation.VALUES != nil {
+			if VALUESId, ok := backRepo.BackRepoA_ATTRIBUTE_VALUE_XHTML_1.Map_A_ATTRIBUTE_VALUE_XHTML_1Ptr_A_ATTRIBUTE_VALUE_XHTML_1DBID[spec_relation.VALUES]; ok {
+				spec_relationDB.VALUESID.Int64 = int64(VALUESId)
+				spec_relationDB.VALUESID.Valid = true
 			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_BOOLEAN =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_BOOLEAN, int(attribute_value_booleanAssocEnd_DB.ID))
+		} else {
+			spec_relationDB.VALUESID.Int64 = 0
+			spec_relationDB.VALUESID.Valid = true
 		}
 
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_DATE = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_dateAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_DATE {
-			attribute_value_dateAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_DATE.GetATTRIBUTE_VALUE_DATEDBFromATTRIBUTE_VALUE_DATEPtr(attribute_value_dateAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_dateAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_dateAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_relation.SOURCE translates to updating the spec_relation.SOURCEID
+		spec_relationDB.SOURCEID.Valid = true // allow for a 0 value (nil association)
+		if spec_relation.SOURCE != nil {
+			if SOURCEId, ok := backRepo.BackRepoA_SOURCE_1.Map_A_SOURCE_1Ptr_A_SOURCE_1DBID[spec_relation.SOURCE]; ok {
+				spec_relationDB.SOURCEID.Int64 = int64(SOURCEId)
+				spec_relationDB.SOURCEID.Valid = true
 			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_DATE =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_DATE, int(attribute_value_dateAssocEnd_DB.ID))
+		} else {
+			spec_relationDB.SOURCEID.Int64 = 0
+			spec_relationDB.SOURCEID.Valid = true
 		}
 
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_ENUMERATION = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_enumerationAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
-			attribute_value_enumerationAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_ENUMERATION.GetATTRIBUTE_VALUE_ENUMERATIONDBFromATTRIBUTE_VALUE_ENUMERATIONPtr(attribute_value_enumerationAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_enumerationAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_enumerationAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_relation.TARGET translates to updating the spec_relation.TARGETID
+		spec_relationDB.TARGETID.Valid = true // allow for a 0 value (nil association)
+		if spec_relation.TARGET != nil {
+			if TARGETId, ok := backRepo.BackRepoA_SOURCE_1.Map_A_SOURCE_1Ptr_A_SOURCE_1DBID[spec_relation.TARGET]; ok {
+				spec_relationDB.TARGETID.Int64 = int64(TARGETId)
+				spec_relationDB.TARGETID.Valid = true
 			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_ENUMERATION =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_ENUMERATION, int(attribute_value_enumerationAssocEnd_DB.ID))
+		} else {
+			spec_relationDB.TARGETID.Int64 = 0
+			spec_relationDB.TARGETID.Valid = true
 		}
 
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_INTEGER = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_integerAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_INTEGER {
-			attribute_value_integerAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_INTEGER.GetATTRIBUTE_VALUE_INTEGERDBFromATTRIBUTE_VALUE_INTEGERPtr(attribute_value_integerAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_integerAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_integerAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_relation.TYPE translates to updating the spec_relation.TYPEID
+		spec_relationDB.TYPEID.Valid = true // allow for a 0 value (nil association)
+		if spec_relation.TYPE != nil {
+			if TYPEId, ok := backRepo.BackRepoA_SPEC_RELATION_TYPE_REF.Map_A_SPEC_RELATION_TYPE_REFPtr_A_SPEC_RELATION_TYPE_REFDBID[spec_relation.TYPE]; ok {
+				spec_relationDB.TYPEID.Int64 = int64(TYPEId)
+				spec_relationDB.TYPEID.Valid = true
 			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_INTEGER =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_INTEGER, int(attribute_value_integerAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_REAL = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_realAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_REAL {
-			attribute_value_realAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_REAL.GetATTRIBUTE_VALUE_REALDBFromATTRIBUTE_VALUE_REALPtr(attribute_value_realAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_realAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_realAssocEnd_DB == nil {
-				continue
-			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_REAL =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_REAL, int(attribute_value_realAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_STRING = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_stringAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_STRING {
-			attribute_value_stringAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_STRING.GetATTRIBUTE_VALUE_STRINGDBFromATTRIBUTE_VALUE_STRINGPtr(attribute_value_stringAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_stringAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_stringAssocEnd_DB == nil {
-				continue
-			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_STRING =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_STRING, int(attribute_value_stringAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_XHTML = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_xhtmlAssocEnd := range spec_relation.VALUES.ATTRIBUTE_VALUE_XHTML {
-			attribute_value_xhtmlAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_XHTML.GetATTRIBUTE_VALUE_XHTMLDBFromATTRIBUTE_VALUE_XHTMLPtr(attribute_value_xhtmlAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_xhtmlAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_xhtmlAssocEnd_DB == nil {
-				continue
-			}
-			
-			spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_XHTML =
-				append(spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_XHTML, int(attribute_value_xhtmlAssocEnd_DB.ID))
+		} else {
+			spec_relationDB.TYPEID.Int64 = 0
+			spec_relationDB.TYPEID.Valid = true
 		}
 
 		_, err := backRepoSPEC_RELATION.db.Save(spec_relationDB)
@@ -530,78 +440,111 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) CheckoutPhaseTwoInstan
 func (spec_relationDB *SPEC_RELATIONDB) DecodePointers(backRepo *BackRepoStruct, spec_relation *models.SPEC_RELATION) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem spec_relation.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.ALTERNATIVE_ID.ALTERNATIVE_ID = spec_relation.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range spec_relationDB.SPEC_RELATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		spec_relation.ALTERNATIVE_ID.ALTERNATIVE_ID = append(spec_relation.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := spec_relationDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_BOOLEAN in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_BOOLEANDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_BOOLEAN = spec_relation.VALUES.ATTRIBUTE_VALUE_BOOLEAN[:0]
-	for _, _ATTRIBUTE_VALUE_BOOLEANid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_BOOLEAN = append(spec_relation.VALUES.ATTRIBUTE_VALUE_BOOLEAN, backRepo.BackRepoATTRIBUTE_VALUE_BOOLEAN.Map_ATTRIBUTE_VALUE_BOOLEANDBID_ATTRIBUTE_VALUE_BOOLEANPtr[uint(_ATTRIBUTE_VALUE_BOOLEANid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_relation.ALTERNATIVE_ID, unknown pointer id", id)
+				spec_relation.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if spec_relation.ALTERNATIVE_ID == nil || spec_relation.ALTERNATIVE_ID != tmp {
+					spec_relation.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			spec_relation.ALTERNATIVE_ID = nil
+		}
 	}
+	
+	// VALUES field	
+	{
+		id := spec_relationDB.VALUESID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_VALUE_XHTML_1.Map_A_ATTRIBUTE_VALUE_XHTML_1DBID_A_ATTRIBUTE_VALUE_XHTML_1Ptr[uint(id)]
 
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_DATE in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_DATEDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_DATE = spec_relation.VALUES.ATTRIBUTE_VALUE_DATE[:0]
-	for _, _ATTRIBUTE_VALUE_DATEid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_DATE {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_DATE = append(spec_relation.VALUES.ATTRIBUTE_VALUE_DATE, backRepo.BackRepoATTRIBUTE_VALUE_DATE.Map_ATTRIBUTE_VALUE_DATEDBID_ATTRIBUTE_VALUE_DATEPtr[uint(_ATTRIBUTE_VALUE_DATEid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_relation.VALUES, unknown pointer id", id)
+				spec_relation.VALUES = nil
+			} else {
+				// updates only if field has changed
+				if spec_relation.VALUES == nil || spec_relation.VALUES != tmp {
+					spec_relation.VALUES = tmp
+				}
+			}
+		} else {
+			spec_relation.VALUES = nil
+		}
 	}
+	
+	// SOURCE field	
+	{
+		id := spec_relationDB.SOURCEID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SOURCE_1.Map_A_SOURCE_1DBID_A_SOURCE_1Ptr[uint(id)]
 
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_ENUMERATION in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_ENUMERATIONDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_ENUMERATION = spec_relation.VALUES.ATTRIBUTE_VALUE_ENUMERATION[:0]
-	for _, _ATTRIBUTE_VALUE_ENUMERATIONid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_ENUMERATION = append(spec_relation.VALUES.ATTRIBUTE_VALUE_ENUMERATION, backRepo.BackRepoATTRIBUTE_VALUE_ENUMERATION.Map_ATTRIBUTE_VALUE_ENUMERATIONDBID_ATTRIBUTE_VALUE_ENUMERATIONPtr[uint(_ATTRIBUTE_VALUE_ENUMERATIONid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_relation.SOURCE, unknown pointer id", id)
+				spec_relation.SOURCE = nil
+			} else {
+				// updates only if field has changed
+				if spec_relation.SOURCE == nil || spec_relation.SOURCE != tmp {
+					spec_relation.SOURCE = tmp
+				}
+			}
+		} else {
+			spec_relation.SOURCE = nil
+		}
 	}
+	
+	// TARGET field	
+	{
+		id := spec_relationDB.TARGETID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SOURCE_1.Map_A_SOURCE_1DBID_A_SOURCE_1Ptr[uint(id)]
 
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_INTEGER in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_INTEGERDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_INTEGER = spec_relation.VALUES.ATTRIBUTE_VALUE_INTEGER[:0]
-	for _, _ATTRIBUTE_VALUE_INTEGERid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_INTEGER {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_INTEGER = append(spec_relation.VALUES.ATTRIBUTE_VALUE_INTEGER, backRepo.BackRepoATTRIBUTE_VALUE_INTEGER.Map_ATTRIBUTE_VALUE_INTEGERDBID_ATTRIBUTE_VALUE_INTEGERPtr[uint(_ATTRIBUTE_VALUE_INTEGERid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_relation.TARGET, unknown pointer id", id)
+				spec_relation.TARGET = nil
+			} else {
+				// updates only if field has changed
+				if spec_relation.TARGET == nil || spec_relation.TARGET != tmp {
+					spec_relation.TARGET = tmp
+				}
+			}
+		} else {
+			spec_relation.TARGET = nil
+		}
 	}
+	
+	// TYPE field	
+	{
+		id := spec_relationDB.TYPEID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SPEC_RELATION_TYPE_REF.Map_A_SPEC_RELATION_TYPE_REFDBID_A_SPEC_RELATION_TYPE_REFPtr[uint(id)]
 
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_REAL in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_REALDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_REAL = spec_relation.VALUES.ATTRIBUTE_VALUE_REAL[:0]
-	for _, _ATTRIBUTE_VALUE_REALid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_REAL {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_REAL = append(spec_relation.VALUES.ATTRIBUTE_VALUE_REAL, backRepo.BackRepoATTRIBUTE_VALUE_REAL.Map_ATTRIBUTE_VALUE_REALDBID_ATTRIBUTE_VALUE_REALPtr[uint(_ATTRIBUTE_VALUE_REALid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_relation.TYPE, unknown pointer id", id)
+				spec_relation.TYPE = nil
+			} else {
+				// updates only if field has changed
+				if spec_relation.TYPE == nil || spec_relation.TYPE != tmp {
+					spec_relation.TYPE = tmp
+				}
+			}
+		} else {
+			spec_relation.TYPE = nil
+		}
 	}
-
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_STRING in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_STRINGDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_STRING = spec_relation.VALUES.ATTRIBUTE_VALUE_STRING[:0]
-	for _, _ATTRIBUTE_VALUE_STRINGid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_STRING {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_STRING = append(spec_relation.VALUES.ATTRIBUTE_VALUE_STRING, backRepo.BackRepoATTRIBUTE_VALUE_STRING.Map_ATTRIBUTE_VALUE_STRINGDBID_ATTRIBUTE_VALUE_STRINGPtr[uint(_ATTRIBUTE_VALUE_STRINGid)])
-	}
-
-	// This loop redeem spec_relation.VALUES.ATTRIBUTE_VALUE_XHTML in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_XHTMLDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_relation.VALUES.ATTRIBUTE_VALUE_XHTML = spec_relation.VALUES.ATTRIBUTE_VALUE_XHTML[:0]
-	for _, _ATTRIBUTE_VALUE_XHTMLid := range spec_relationDB.SPEC_RELATIONPointersEncoding.VALUES.ATTRIBUTE_VALUE_XHTML {
-		spec_relation.VALUES.ATTRIBUTE_VALUE_XHTML = append(spec_relation.VALUES.ATTRIBUTE_VALUE_XHTML, backRepo.BackRepoATTRIBUTE_VALUE_XHTML.Map_ATTRIBUTE_VALUE_XHTMLDBID_ATTRIBUTE_VALUE_XHTMLPtr[uint(_ATTRIBUTE_VALUE_XHTMLid)])
-	}
-
+	
 	return
 }
 
@@ -642,7 +585,10 @@ func (spec_relationDB *SPEC_RELATIONDB) CopyBasicFieldsFromSPEC_RELATION(spec_re
 	spec_relationDB.DESC_Data.String = spec_relation.DESC
 	spec_relationDB.DESC_Data.Valid = true
 
-	spec_relationDB.LAST_CHANGE_Data.Time = spec_relation.LAST_CHANGE
+	spec_relationDB.IDENTIFIER_Data.String = spec_relation.IDENTIFIER
+	spec_relationDB.IDENTIFIER_Data.Valid = true
+
+	spec_relationDB.LAST_CHANGE_Data.String = spec_relation.LAST_CHANGE
 	spec_relationDB.LAST_CHANGE_Data.Valid = true
 
 	spec_relationDB.LONG_NAME_Data.String = spec_relation.LONG_NAME
@@ -659,7 +605,10 @@ func (spec_relationDB *SPEC_RELATIONDB) CopyBasicFieldsFromSPEC_RELATION_WOP(spe
 	spec_relationDB.DESC_Data.String = spec_relation.DESC
 	spec_relationDB.DESC_Data.Valid = true
 
-	spec_relationDB.LAST_CHANGE_Data.Time = spec_relation.LAST_CHANGE
+	spec_relationDB.IDENTIFIER_Data.String = spec_relation.IDENTIFIER
+	spec_relationDB.IDENTIFIER_Data.Valid = true
+
+	spec_relationDB.LAST_CHANGE_Data.String = spec_relation.LAST_CHANGE
 	spec_relationDB.LAST_CHANGE_Data.Valid = true
 
 	spec_relationDB.LONG_NAME_Data.String = spec_relation.LONG_NAME
@@ -676,7 +625,10 @@ func (spec_relationDB *SPEC_RELATIONDB) CopyBasicFieldsFromSPEC_RELATIONWOP(spec
 	spec_relationDB.DESC_Data.String = spec_relation.DESC
 	spec_relationDB.DESC_Data.Valid = true
 
-	spec_relationDB.LAST_CHANGE_Data.Time = spec_relation.LAST_CHANGE
+	spec_relationDB.IDENTIFIER_Data.String = spec_relation.IDENTIFIER
+	spec_relationDB.IDENTIFIER_Data.Valid = true
+
+	spec_relationDB.LAST_CHANGE_Data.String = spec_relation.LAST_CHANGE
 	spec_relationDB.LAST_CHANGE_Data.Valid = true
 
 	spec_relationDB.LONG_NAME_Data.String = spec_relation.LONG_NAME
@@ -688,7 +640,8 @@ func (spec_relationDB *SPEC_RELATIONDB) CopyBasicFieldsToSPEC_RELATION(spec_rela
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_relation.Name = spec_relationDB.Name_Data.String
 	spec_relation.DESC = spec_relationDB.DESC_Data.String
-	spec_relation.LAST_CHANGE = spec_relationDB.LAST_CHANGE_Data.Time
+	spec_relation.IDENTIFIER = spec_relationDB.IDENTIFIER_Data.String
+	spec_relation.LAST_CHANGE = spec_relationDB.LAST_CHANGE_Data.String
 	spec_relation.LONG_NAME = spec_relationDB.LONG_NAME_Data.String
 }
 
@@ -697,7 +650,8 @@ func (spec_relationDB *SPEC_RELATIONDB) CopyBasicFieldsToSPEC_RELATION_WOP(spec_
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_relation.Name = spec_relationDB.Name_Data.String
 	spec_relation.DESC = spec_relationDB.DESC_Data.String
-	spec_relation.LAST_CHANGE = spec_relationDB.LAST_CHANGE_Data.Time
+	spec_relation.IDENTIFIER = spec_relationDB.IDENTIFIER_Data.String
+	spec_relation.LAST_CHANGE = spec_relationDB.LAST_CHANGE_Data.String
 	spec_relation.LONG_NAME = spec_relationDB.LONG_NAME_Data.String
 }
 
@@ -707,7 +661,8 @@ func (spec_relationDB *SPEC_RELATIONDB) CopyBasicFieldsToSPEC_RELATIONWOP(spec_r
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_relation.Name = spec_relationDB.Name_Data.String
 	spec_relation.DESC = spec_relationDB.DESC_Data.String
-	spec_relation.LAST_CHANGE = spec_relationDB.LAST_CHANGE_Data.Time
+	spec_relation.IDENTIFIER = spec_relationDB.IDENTIFIER_Data.String
+	spec_relation.LAST_CHANGE = spec_relationDB.LAST_CHANGE_Data.String
 	spec_relation.LONG_NAME = spec_relationDB.LONG_NAME_Data.String
 }
 
@@ -866,6 +821,36 @@ func (backRepoSPEC_RELATION *BackRepoSPEC_RELATIONStruct) RestorePhaseTwo() {
 		_ = spec_relationDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if spec_relationDB.ALTERNATIVE_IDID.Int64 != 0 {
+			spec_relationDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(spec_relationDB.ALTERNATIVE_IDID.Int64)])
+			spec_relationDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing VALUES field
+		if spec_relationDB.VALUESID.Int64 != 0 {
+			spec_relationDB.VALUESID.Int64 = int64(BackRepoA_ATTRIBUTE_VALUE_XHTML_1id_atBckpTime_newID[uint(spec_relationDB.VALUESID.Int64)])
+			spec_relationDB.VALUESID.Valid = true
+		}
+
+		// reindexing SOURCE field
+		if spec_relationDB.SOURCEID.Int64 != 0 {
+			spec_relationDB.SOURCEID.Int64 = int64(BackRepoA_SOURCE_1id_atBckpTime_newID[uint(spec_relationDB.SOURCEID.Int64)])
+			spec_relationDB.SOURCEID.Valid = true
+		}
+
+		// reindexing TARGET field
+		if spec_relationDB.TARGETID.Int64 != 0 {
+			spec_relationDB.TARGETID.Int64 = int64(BackRepoA_SOURCE_1id_atBckpTime_newID[uint(spec_relationDB.TARGETID.Int64)])
+			spec_relationDB.TARGETID.Valid = true
+		}
+
+		// reindexing TYPE field
+		if spec_relationDB.TYPEID.Int64 != 0 {
+			spec_relationDB.TYPEID.Int64 = int64(BackRepoA_SPEC_RELATION_TYPE_REFid_atBckpTime_newID[uint(spec_relationDB.TYPEID.Int64)])
+			spec_relationDB.TYPEID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoSPEC_RELATION.db.Model(spec_relationDB)
 		_, err := db.Updates(*spec_relationDB)

@@ -48,12 +48,9 @@ type DATATYPE_DEFINITION_INTEGERAPI struct {
 type DATATYPE_DEFINITION_INTEGERPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
-
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 }
 
 // DATATYPE_DEFINITION_INTEGERDB describes a datatype_definition_integer in the database
@@ -73,11 +70,20 @@ type DATATYPE_DEFINITION_INTEGERDB struct {
 	// Declation for basic field datatype_definition_integerDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field datatype_definition_integerDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field datatype_definition_integerDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field datatype_definition_integerDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
+
+	// Declation for basic field datatype_definition_integerDB.MAX
+	MAX_Data sql.NullInt64
+
+	// Declation for basic field datatype_definition_integerDB.MIN
+	MIN_Data sql.NullInt64
 
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
@@ -105,9 +111,15 @@ type DATATYPE_DEFINITION_INTEGERWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	LAST_CHANGE string `xlsx:"4"`
+
+	LONG_NAME string `xlsx:"5"`
+
+	MAX int `xlsx:"6"`
+
+	MIN int `xlsx:"7"`
 	// insertion for WOP pointer fields
 }
 
@@ -116,8 +128,11 @@ var DATATYPE_DEFINITION_INTEGER_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
+	"MAX",
+	"MIN",
 }
 
 type BackRepoDATATYPE_DEFINITION_INTEGERStruct struct {
@@ -248,22 +263,16 @@ func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERSt
 		datatype_definition_integerDB.CopyBasicFieldsFromDATATYPE_DEFINITION_INTEGER(datatype_definition_integer)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		datatype_definition_integerDB.DATATYPE_DEFINITION_INTEGERPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range datatype_definition_integer.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value datatype_definition_integer.ALTERNATIVE_ID translates to updating the datatype_definition_integer.ALTERNATIVE_IDID
+		datatype_definition_integerDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if datatype_definition_integer.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[datatype_definition_integer.ALTERNATIVE_ID]; ok {
+				datatype_definition_integerDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				datatype_definition_integerDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			datatype_definition_integerDB.DATATYPE_DEFINITION_INTEGERPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(datatype_definition_integerDB.DATATYPE_DEFINITION_INTEGERPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			datatype_definition_integerDB.ALTERNATIVE_IDID.Int64 = 0
+			datatype_definition_integerDB.ALTERNATIVE_IDID.Valid = true
 		}
 
 		_, err := backRepoDATATYPE_DEFINITION_INTEGER.db.Save(datatype_definition_integerDB)
@@ -379,15 +388,27 @@ func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERSt
 func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) DecodePointers(backRepo *BackRepoStruct, datatype_definition_integer *models.DATATYPE_DEFINITION_INTEGER) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem datatype_definition_integer.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	datatype_definition_integer.ALTERNATIVE_ID.ALTERNATIVE_ID = datatype_definition_integer.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range datatype_definition_integerDB.DATATYPE_DEFINITION_INTEGERPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		datatype_definition_integer.ALTERNATIVE_ID.ALTERNATIVE_ID = append(datatype_definition_integer.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := datatype_definition_integerDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: datatype_definition_integer.ALTERNATIVE_ID, unknown pointer id", id)
+				datatype_definition_integer.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if datatype_definition_integer.ALTERNATIVE_ID == nil || datatype_definition_integer.ALTERNATIVE_ID != tmp {
+					datatype_definition_integer.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			datatype_definition_integer.ALTERNATIVE_ID = nil
+		}
+	}
+	
 	return
 }
 
@@ -428,11 +449,20 @@ func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) CopyBasicFie
 	datatype_definition_integerDB.DESC_Data.String = datatype_definition_integer.DESC
 	datatype_definition_integerDB.DESC_Data.Valid = true
 
-	datatype_definition_integerDB.LAST_CHANGE_Data.Time = datatype_definition_integer.LAST_CHANGE
+	datatype_definition_integerDB.IDENTIFIER_Data.String = datatype_definition_integer.IDENTIFIER
+	datatype_definition_integerDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_integerDB.LAST_CHANGE_Data.String = datatype_definition_integer.LAST_CHANGE
 	datatype_definition_integerDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_integerDB.LONG_NAME_Data.String = datatype_definition_integer.LONG_NAME
 	datatype_definition_integerDB.LONG_NAME_Data.Valid = true
+
+	datatype_definition_integerDB.MAX_Data.Int64 = int64(datatype_definition_integer.MAX)
+	datatype_definition_integerDB.MAX_Data.Valid = true
+
+	datatype_definition_integerDB.MIN_Data.Int64 = int64(datatype_definition_integer.MIN)
+	datatype_definition_integerDB.MIN_Data.Valid = true
 }
 
 // CopyBasicFieldsFromDATATYPE_DEFINITION_INTEGER_WOP
@@ -445,11 +475,20 @@ func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) CopyBasicFie
 	datatype_definition_integerDB.DESC_Data.String = datatype_definition_integer.DESC
 	datatype_definition_integerDB.DESC_Data.Valid = true
 
-	datatype_definition_integerDB.LAST_CHANGE_Data.Time = datatype_definition_integer.LAST_CHANGE
+	datatype_definition_integerDB.IDENTIFIER_Data.String = datatype_definition_integer.IDENTIFIER
+	datatype_definition_integerDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_integerDB.LAST_CHANGE_Data.String = datatype_definition_integer.LAST_CHANGE
 	datatype_definition_integerDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_integerDB.LONG_NAME_Data.String = datatype_definition_integer.LONG_NAME
 	datatype_definition_integerDB.LONG_NAME_Data.Valid = true
+
+	datatype_definition_integerDB.MAX_Data.Int64 = int64(datatype_definition_integer.MAX)
+	datatype_definition_integerDB.MAX_Data.Valid = true
+
+	datatype_definition_integerDB.MIN_Data.Int64 = int64(datatype_definition_integer.MIN)
+	datatype_definition_integerDB.MIN_Data.Valid = true
 }
 
 // CopyBasicFieldsFromDATATYPE_DEFINITION_INTEGERWOP
@@ -462,11 +501,20 @@ func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) CopyBasicFie
 	datatype_definition_integerDB.DESC_Data.String = datatype_definition_integer.DESC
 	datatype_definition_integerDB.DESC_Data.Valid = true
 
-	datatype_definition_integerDB.LAST_CHANGE_Data.Time = datatype_definition_integer.LAST_CHANGE
+	datatype_definition_integerDB.IDENTIFIER_Data.String = datatype_definition_integer.IDENTIFIER
+	datatype_definition_integerDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_integerDB.LAST_CHANGE_Data.String = datatype_definition_integer.LAST_CHANGE
 	datatype_definition_integerDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_integerDB.LONG_NAME_Data.String = datatype_definition_integer.LONG_NAME
 	datatype_definition_integerDB.LONG_NAME_Data.Valid = true
+
+	datatype_definition_integerDB.MAX_Data.Int64 = int64(datatype_definition_integer.MAX)
+	datatype_definition_integerDB.MAX_Data.Valid = true
+
+	datatype_definition_integerDB.MIN_Data.Int64 = int64(datatype_definition_integer.MIN)
+	datatype_definition_integerDB.MIN_Data.Valid = true
 }
 
 // CopyBasicFieldsToDATATYPE_DEFINITION_INTEGER
@@ -474,8 +522,11 @@ func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) CopyBasicFie
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_integer.Name = datatype_definition_integerDB.Name_Data.String
 	datatype_definition_integer.DESC = datatype_definition_integerDB.DESC_Data.String
-	datatype_definition_integer.LAST_CHANGE = datatype_definition_integerDB.LAST_CHANGE_Data.Time
+	datatype_definition_integer.IDENTIFIER = datatype_definition_integerDB.IDENTIFIER_Data.String
+	datatype_definition_integer.LAST_CHANGE = datatype_definition_integerDB.LAST_CHANGE_Data.String
 	datatype_definition_integer.LONG_NAME = datatype_definition_integerDB.LONG_NAME_Data.String
+	datatype_definition_integer.MAX = int(datatype_definition_integerDB.MAX_Data.Int64)
+	datatype_definition_integer.MIN = int(datatype_definition_integerDB.MIN_Data.Int64)
 }
 
 // CopyBasicFieldsToDATATYPE_DEFINITION_INTEGER_WOP
@@ -483,8 +534,11 @@ func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) CopyBasicFie
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_integer.Name = datatype_definition_integerDB.Name_Data.String
 	datatype_definition_integer.DESC = datatype_definition_integerDB.DESC_Data.String
-	datatype_definition_integer.LAST_CHANGE = datatype_definition_integerDB.LAST_CHANGE_Data.Time
+	datatype_definition_integer.IDENTIFIER = datatype_definition_integerDB.IDENTIFIER_Data.String
+	datatype_definition_integer.LAST_CHANGE = datatype_definition_integerDB.LAST_CHANGE_Data.String
 	datatype_definition_integer.LONG_NAME = datatype_definition_integerDB.LONG_NAME_Data.String
+	datatype_definition_integer.MAX = int(datatype_definition_integerDB.MAX_Data.Int64)
+	datatype_definition_integer.MIN = int(datatype_definition_integerDB.MIN_Data.Int64)
 }
 
 // CopyBasicFieldsToDATATYPE_DEFINITION_INTEGERWOP
@@ -493,8 +547,11 @@ func (datatype_definition_integerDB *DATATYPE_DEFINITION_INTEGERDB) CopyBasicFie
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_integer.Name = datatype_definition_integerDB.Name_Data.String
 	datatype_definition_integer.DESC = datatype_definition_integerDB.DESC_Data.String
-	datatype_definition_integer.LAST_CHANGE = datatype_definition_integerDB.LAST_CHANGE_Data.Time
+	datatype_definition_integer.IDENTIFIER = datatype_definition_integerDB.IDENTIFIER_Data.String
+	datatype_definition_integer.LAST_CHANGE = datatype_definition_integerDB.LAST_CHANGE_Data.String
 	datatype_definition_integer.LONG_NAME = datatype_definition_integerDB.LONG_NAME_Data.String
+	datatype_definition_integer.MAX = int(datatype_definition_integerDB.MAX_Data.Int64)
+	datatype_definition_integer.MIN = int(datatype_definition_integerDB.MIN_Data.Int64)
 }
 
 // Backup generates a json file from a slice of all DATATYPE_DEFINITION_INTEGERDB instances in the backrepo
@@ -652,6 +709,12 @@ func (backRepoDATATYPE_DEFINITION_INTEGER *BackRepoDATATYPE_DEFINITION_INTEGERSt
 		_ = datatype_definition_integerDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if datatype_definition_integerDB.ALTERNATIVE_IDID.Int64 != 0 {
+			datatype_definition_integerDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(datatype_definition_integerDB.ALTERNATIVE_IDID.Int64)])
+			datatype_definition_integerDB.ALTERNATIVE_IDID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoDATATYPE_DEFINITION_INTEGER.db.Model(datatype_definition_integerDB)
 		_, err := db.Updates(*datatype_definition_integerDB)

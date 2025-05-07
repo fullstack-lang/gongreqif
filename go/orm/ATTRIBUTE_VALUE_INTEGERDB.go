@@ -47,6 +47,10 @@ type ATTRIBUTE_VALUE_INTEGERAPI struct {
 // reverse pointers of slice of poitners to Struct
 type ATTRIBUTE_VALUE_INTEGERPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field DEFINITION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFINITIONID sql.NullInt64
 }
 
 // ATTRIBUTE_VALUE_INTEGERDB describes a attribute_value_integer in the database
@@ -62,6 +66,9 @@ type ATTRIBUTE_VALUE_INTEGERDB struct {
 
 	// Declation for basic field attribute_value_integerDB.Name
 	Name_Data sql.NullString
+
+	// Declation for basic field attribute_value_integerDB.THE_VALUE
+	THE_VALUE_Data sql.NullInt64
 
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
@@ -86,6 +93,8 @@ type ATTRIBUTE_VALUE_INTEGERWOP struct {
 	// insertion for WOP basic fields
 
 	Name string `xlsx:"1"`
+
+	THE_VALUE int `xlsx:"2"`
 	// insertion for WOP pointer fields
 }
 
@@ -93,6 +102,7 @@ var ATTRIBUTE_VALUE_INTEGER_Fields = []string{
 	// insertion for WOP basic fields
 	"ID",
 	"Name",
+	"THE_VALUE",
 }
 
 type BackRepoATTRIBUTE_VALUE_INTEGERStruct struct {
@@ -223,6 +233,18 @@ func (backRepoATTRIBUTE_VALUE_INTEGER *BackRepoATTRIBUTE_VALUE_INTEGERStruct) Co
 		attribute_value_integerDB.CopyBasicFieldsFromATTRIBUTE_VALUE_INTEGER(attribute_value_integer)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value attribute_value_integer.DEFINITION translates to updating the attribute_value_integer.DEFINITIONID
+		attribute_value_integerDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_integer.DEFINITION != nil {
+			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_INTEGER_REF.Map_A_ATTRIBUTE_DEFINITION_INTEGER_REFPtr_A_ATTRIBUTE_DEFINITION_INTEGER_REFDBID[attribute_value_integer.DEFINITION]; ok {
+				attribute_value_integerDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
+				attribute_value_integerDB.DEFINITIONID.Valid = true
+			}
+		} else {
+			attribute_value_integerDB.DEFINITIONID.Int64 = 0
+			attribute_value_integerDB.DEFINITIONID.Valid = true
+		}
+
 		_, err := backRepoATTRIBUTE_VALUE_INTEGER.db.Save(attribute_value_integerDB)
 		if err != nil {
 			log.Fatal(err)
@@ -336,6 +358,27 @@ func (backRepoATTRIBUTE_VALUE_INTEGER *BackRepoATTRIBUTE_VALUE_INTEGERStruct) Ch
 func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) DecodePointers(backRepo *BackRepoStruct, attribute_value_integer *models.ATTRIBUTE_VALUE_INTEGER) {
 
 	// insertion point for checkout of pointer encoding
+	// DEFINITION field	
+	{
+		id := attribute_value_integerDB.DEFINITIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_INTEGER_REF.Map_A_ATTRIBUTE_DEFINITION_INTEGER_REFDBID_A_ATTRIBUTE_DEFINITION_INTEGER_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_integer.DEFINITION, unknown pointer id", id)
+				attribute_value_integer.DEFINITION = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_integer.DEFINITION == nil || attribute_value_integer.DEFINITION != tmp {
+					attribute_value_integer.DEFINITION = tmp
+				}
+			}
+		} else {
+			attribute_value_integer.DEFINITION = nil
+		}
+	}
+	
 	return
 }
 
@@ -372,6 +415,9 @@ func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) CopyBasicFieldsFromA
 
 	attribute_value_integerDB.Name_Data.String = attribute_value_integer.Name
 	attribute_value_integerDB.Name_Data.Valid = true
+
+	attribute_value_integerDB.THE_VALUE_Data.Int64 = int64(attribute_value_integer.THE_VALUE)
+	attribute_value_integerDB.THE_VALUE_Data.Valid = true
 }
 
 // CopyBasicFieldsFromATTRIBUTE_VALUE_INTEGER_WOP
@@ -380,6 +426,9 @@ func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) CopyBasicFieldsFromA
 
 	attribute_value_integerDB.Name_Data.String = attribute_value_integer.Name
 	attribute_value_integerDB.Name_Data.Valid = true
+
+	attribute_value_integerDB.THE_VALUE_Data.Int64 = int64(attribute_value_integer.THE_VALUE)
+	attribute_value_integerDB.THE_VALUE_Data.Valid = true
 }
 
 // CopyBasicFieldsFromATTRIBUTE_VALUE_INTEGERWOP
@@ -388,18 +437,23 @@ func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) CopyBasicFieldsFromA
 
 	attribute_value_integerDB.Name_Data.String = attribute_value_integer.Name
 	attribute_value_integerDB.Name_Data.Valid = true
+
+	attribute_value_integerDB.THE_VALUE_Data.Int64 = int64(attribute_value_integer.THE_VALUE)
+	attribute_value_integerDB.THE_VALUE_Data.Valid = true
 }
 
 // CopyBasicFieldsToATTRIBUTE_VALUE_INTEGER
 func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) CopyBasicFieldsToATTRIBUTE_VALUE_INTEGER(attribute_value_integer *models.ATTRIBUTE_VALUE_INTEGER) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_value_integer.Name = attribute_value_integerDB.Name_Data.String
+	attribute_value_integer.THE_VALUE = int(attribute_value_integerDB.THE_VALUE_Data.Int64)
 }
 
 // CopyBasicFieldsToATTRIBUTE_VALUE_INTEGER_WOP
 func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) CopyBasicFieldsToATTRIBUTE_VALUE_INTEGER_WOP(attribute_value_integer *models.ATTRIBUTE_VALUE_INTEGER_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_value_integer.Name = attribute_value_integerDB.Name_Data.String
+	attribute_value_integer.THE_VALUE = int(attribute_value_integerDB.THE_VALUE_Data.Int64)
 }
 
 // CopyBasicFieldsToATTRIBUTE_VALUE_INTEGERWOP
@@ -407,6 +461,7 @@ func (attribute_value_integerDB *ATTRIBUTE_VALUE_INTEGERDB) CopyBasicFieldsToATT
 	attribute_value_integer.ID = int(attribute_value_integerDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_value_integer.Name = attribute_value_integerDB.Name_Data.String
+	attribute_value_integer.THE_VALUE = int(attribute_value_integerDB.THE_VALUE_Data.Int64)
 }
 
 // Backup generates a json file from a slice of all ATTRIBUTE_VALUE_INTEGERDB instances in the backrepo
@@ -564,6 +619,12 @@ func (backRepoATTRIBUTE_VALUE_INTEGER *BackRepoATTRIBUTE_VALUE_INTEGERStruct) Re
 		_ = attribute_value_integerDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing DEFINITION field
+		if attribute_value_integerDB.DEFINITIONID.Int64 != 0 {
+			attribute_value_integerDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_INTEGER_REFid_atBckpTime_newID[uint(attribute_value_integerDB.DEFINITIONID.Int64)])
+			attribute_value_integerDB.DEFINITIONID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoATTRIBUTE_VALUE_INTEGER.db.Model(attribute_value_integerDB)
 		_, err := db.Updates(*attribute_value_integerDB)

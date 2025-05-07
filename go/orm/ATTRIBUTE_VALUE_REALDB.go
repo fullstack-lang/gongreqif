@@ -47,6 +47,10 @@ type ATTRIBUTE_VALUE_REALAPI struct {
 // reverse pointers of slice of poitners to Struct
 type ATTRIBUTE_VALUE_REALPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field DEFINITION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFINITIONID sql.NullInt64
 }
 
 // ATTRIBUTE_VALUE_REALDB describes a attribute_value_real in the database
@@ -229,6 +233,18 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) CommitPh
 		attribute_value_realDB.CopyBasicFieldsFromATTRIBUTE_VALUE_REAL(attribute_value_real)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value attribute_value_real.DEFINITION translates to updating the attribute_value_real.DEFINITIONID
+		attribute_value_realDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_real.DEFINITION != nil {
+			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_REAL_REF.Map_A_ATTRIBUTE_DEFINITION_REAL_REFPtr_A_ATTRIBUTE_DEFINITION_REAL_REFDBID[attribute_value_real.DEFINITION]; ok {
+				attribute_value_realDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
+				attribute_value_realDB.DEFINITIONID.Valid = true
+			}
+		} else {
+			attribute_value_realDB.DEFINITIONID.Int64 = 0
+			attribute_value_realDB.DEFINITIONID.Valid = true
+		}
+
 		_, err := backRepoATTRIBUTE_VALUE_REAL.db.Save(attribute_value_realDB)
 		if err != nil {
 			log.Fatal(err)
@@ -342,6 +358,27 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) Checkout
 func (attribute_value_realDB *ATTRIBUTE_VALUE_REALDB) DecodePointers(backRepo *BackRepoStruct, attribute_value_real *models.ATTRIBUTE_VALUE_REAL) {
 
 	// insertion point for checkout of pointer encoding
+	// DEFINITION field	
+	{
+		id := attribute_value_realDB.DEFINITIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_REAL_REF.Map_A_ATTRIBUTE_DEFINITION_REAL_REFDBID_A_ATTRIBUTE_DEFINITION_REAL_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_real.DEFINITION, unknown pointer id", id)
+				attribute_value_real.DEFINITION = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_real.DEFINITION == nil || attribute_value_real.DEFINITION != tmp {
+					attribute_value_real.DEFINITION = tmp
+				}
+			}
+		} else {
+			attribute_value_real.DEFINITION = nil
+		}
+	}
+	
 	return
 }
 
@@ -582,6 +619,12 @@ func (backRepoATTRIBUTE_VALUE_REAL *BackRepoATTRIBUTE_VALUE_REALStruct) RestoreP
 		_ = attribute_value_realDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing DEFINITION field
+		if attribute_value_realDB.DEFINITIONID.Int64 != 0 {
+			attribute_value_realDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_REAL_REFid_atBckpTime_newID[uint(attribute_value_realDB.DEFINITIONID.Int64)])
+			attribute_value_realDB.DEFINITIONID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoATTRIBUTE_VALUE_REAL.db.Model(attribute_value_realDB)
 		_, err := db.Updates(*attribute_value_realDB)

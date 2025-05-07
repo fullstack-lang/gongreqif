@@ -48,12 +48,25 @@ type RELATION_GROUPAPI struct {
 type RELATION_GROUPPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
+	// field SOURCE_SPECIFICATION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SOURCE_SPECIFICATIONID sql.NullInt64
 
-	} `gorm:"embedded"`
+	// field SPEC_RELATIONS is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SPEC_RELATIONSID sql.NullInt64
+
+	// field TARGET_SPECIFICATION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	TARGET_SPECIFICATIONID sql.NullInt64
+
+	// field TYPE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	TYPEID sql.NullInt64
 }
 
 // RELATION_GROUPDB describes a relation_group in the database
@@ -73,8 +86,11 @@ type RELATION_GROUPDB struct {
 	// Declation for basic field relation_groupDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field relation_groupDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field relation_groupDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field relation_groupDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -105,9 +121,11 @@ type RELATION_GROUPWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	LAST_CHANGE string `xlsx:"4"`
+
+	LONG_NAME string `xlsx:"5"`
 	// insertion for WOP pointer fields
 }
 
@@ -116,6 +134,7 @@ var RELATION_GROUP_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
 }
@@ -248,22 +267,64 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CommitPhaseTwoInstan
 		relation_groupDB.CopyBasicFieldsFromRELATION_GROUP(relation_group)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		relation_groupDB.RELATION_GROUPPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range relation_group.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value relation_group.ALTERNATIVE_ID translates to updating the relation_group.ALTERNATIVE_IDID
+		relation_groupDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if relation_group.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[relation_group.ALTERNATIVE_ID]; ok {
+				relation_groupDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				relation_groupDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			relation_groupDB.RELATION_GROUPPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(relation_groupDB.RELATION_GROUPPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			relation_groupDB.ALTERNATIVE_IDID.Int64 = 0
+			relation_groupDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// commit pointer value relation_group.SOURCE_SPECIFICATION translates to updating the relation_group.SOURCE_SPECIFICATIONID
+		relation_groupDB.SOURCE_SPECIFICATIONID.Valid = true // allow for a 0 value (nil association)
+		if relation_group.SOURCE_SPECIFICATION != nil {
+			if SOURCE_SPECIFICATIONId, ok := backRepo.BackRepoA_SOURCE_SPECIFICATION_1.Map_A_SOURCE_SPECIFICATION_1Ptr_A_SOURCE_SPECIFICATION_1DBID[relation_group.SOURCE_SPECIFICATION]; ok {
+				relation_groupDB.SOURCE_SPECIFICATIONID.Int64 = int64(SOURCE_SPECIFICATIONId)
+				relation_groupDB.SOURCE_SPECIFICATIONID.Valid = true
+			}
+		} else {
+			relation_groupDB.SOURCE_SPECIFICATIONID.Int64 = 0
+			relation_groupDB.SOURCE_SPECIFICATIONID.Valid = true
+		}
+
+		// commit pointer value relation_group.SPEC_RELATIONS translates to updating the relation_group.SPEC_RELATIONSID
+		relation_groupDB.SPEC_RELATIONSID.Valid = true // allow for a 0 value (nil association)
+		if relation_group.SPEC_RELATIONS != nil {
+			if SPEC_RELATIONSId, ok := backRepo.BackRepoA_SPEC_RELATION_REF.Map_A_SPEC_RELATION_REFPtr_A_SPEC_RELATION_REFDBID[relation_group.SPEC_RELATIONS]; ok {
+				relation_groupDB.SPEC_RELATIONSID.Int64 = int64(SPEC_RELATIONSId)
+				relation_groupDB.SPEC_RELATIONSID.Valid = true
+			}
+		} else {
+			relation_groupDB.SPEC_RELATIONSID.Int64 = 0
+			relation_groupDB.SPEC_RELATIONSID.Valid = true
+		}
+
+		// commit pointer value relation_group.TARGET_SPECIFICATION translates to updating the relation_group.TARGET_SPECIFICATIONID
+		relation_groupDB.TARGET_SPECIFICATIONID.Valid = true // allow for a 0 value (nil association)
+		if relation_group.TARGET_SPECIFICATION != nil {
+			if TARGET_SPECIFICATIONId, ok := backRepo.BackRepoA_SOURCE_SPECIFICATION_1.Map_A_SOURCE_SPECIFICATION_1Ptr_A_SOURCE_SPECIFICATION_1DBID[relation_group.TARGET_SPECIFICATION]; ok {
+				relation_groupDB.TARGET_SPECIFICATIONID.Int64 = int64(TARGET_SPECIFICATIONId)
+				relation_groupDB.TARGET_SPECIFICATIONID.Valid = true
+			}
+		} else {
+			relation_groupDB.TARGET_SPECIFICATIONID.Int64 = 0
+			relation_groupDB.TARGET_SPECIFICATIONID.Valid = true
+		}
+
+		// commit pointer value relation_group.TYPE translates to updating the relation_group.TYPEID
+		relation_groupDB.TYPEID.Valid = true // allow for a 0 value (nil association)
+		if relation_group.TYPE != nil {
+			if TYPEId, ok := backRepo.BackRepoA_RELATION_GROUP_TYPE_REF.Map_A_RELATION_GROUP_TYPE_REFPtr_A_RELATION_GROUP_TYPE_REFDBID[relation_group.TYPE]; ok {
+				relation_groupDB.TYPEID.Int64 = int64(TYPEId)
+				relation_groupDB.TYPEID.Valid = true
+			}
+		} else {
+			relation_groupDB.TYPEID.Int64 = 0
+			relation_groupDB.TYPEID.Valid = true
 		}
 
 		_, err := backRepoRELATION_GROUP.db.Save(relation_groupDB)
@@ -379,15 +440,111 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) CheckoutPhaseTwoInst
 func (relation_groupDB *RELATION_GROUPDB) DecodePointers(backRepo *BackRepoStruct, relation_group *models.RELATION_GROUP) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem relation_group.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group.ALTERNATIVE_ID.ALTERNATIVE_ID = relation_group.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range relation_groupDB.RELATION_GROUPPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		relation_group.ALTERNATIVE_ID.ALTERNATIVE_ID = append(relation_group.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := relation_groupDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group.ALTERNATIVE_ID, unknown pointer id", id)
+				relation_group.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if relation_group.ALTERNATIVE_ID == nil || relation_group.ALTERNATIVE_ID != tmp {
+					relation_group.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			relation_group.ALTERNATIVE_ID = nil
+		}
+	}
+	
+	// SOURCE_SPECIFICATION field	
+	{
+		id := relation_groupDB.SOURCE_SPECIFICATIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SOURCE_SPECIFICATION_1.Map_A_SOURCE_SPECIFICATION_1DBID_A_SOURCE_SPECIFICATION_1Ptr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group.SOURCE_SPECIFICATION, unknown pointer id", id)
+				relation_group.SOURCE_SPECIFICATION = nil
+			} else {
+				// updates only if field has changed
+				if relation_group.SOURCE_SPECIFICATION == nil || relation_group.SOURCE_SPECIFICATION != tmp {
+					relation_group.SOURCE_SPECIFICATION = tmp
+				}
+			}
+		} else {
+			relation_group.SOURCE_SPECIFICATION = nil
+		}
+	}
+	
+	// SPEC_RELATIONS field	
+	{
+		id := relation_groupDB.SPEC_RELATIONSID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SPEC_RELATION_REF.Map_A_SPEC_RELATION_REFDBID_A_SPEC_RELATION_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group.SPEC_RELATIONS, unknown pointer id", id)
+				relation_group.SPEC_RELATIONS = nil
+			} else {
+				// updates only if field has changed
+				if relation_group.SPEC_RELATIONS == nil || relation_group.SPEC_RELATIONS != tmp {
+					relation_group.SPEC_RELATIONS = tmp
+				}
+			}
+		} else {
+			relation_group.SPEC_RELATIONS = nil
+		}
+	}
+	
+	// TARGET_SPECIFICATION field	
+	{
+		id := relation_groupDB.TARGET_SPECIFICATIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SOURCE_SPECIFICATION_1.Map_A_SOURCE_SPECIFICATION_1DBID_A_SOURCE_SPECIFICATION_1Ptr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group.TARGET_SPECIFICATION, unknown pointer id", id)
+				relation_group.TARGET_SPECIFICATION = nil
+			} else {
+				// updates only if field has changed
+				if relation_group.TARGET_SPECIFICATION == nil || relation_group.TARGET_SPECIFICATION != tmp {
+					relation_group.TARGET_SPECIFICATION = tmp
+				}
+			}
+		} else {
+			relation_group.TARGET_SPECIFICATION = nil
+		}
+	}
+	
+	// TYPE field	
+	{
+		id := relation_groupDB.TYPEID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_RELATION_GROUP_TYPE_REF.Map_A_RELATION_GROUP_TYPE_REFDBID_A_RELATION_GROUP_TYPE_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group.TYPE, unknown pointer id", id)
+				relation_group.TYPE = nil
+			} else {
+				// updates only if field has changed
+				if relation_group.TYPE == nil || relation_group.TYPE != tmp {
+					relation_group.TYPE = tmp
+				}
+			}
+		} else {
+			relation_group.TYPE = nil
+		}
+	}
+	
 	return
 }
 
@@ -428,7 +585,10 @@ func (relation_groupDB *RELATION_GROUPDB) CopyBasicFieldsFromRELATION_GROUP(rela
 	relation_groupDB.DESC_Data.String = relation_group.DESC
 	relation_groupDB.DESC_Data.Valid = true
 
-	relation_groupDB.LAST_CHANGE_Data.Time = relation_group.LAST_CHANGE
+	relation_groupDB.IDENTIFIER_Data.String = relation_group.IDENTIFIER
+	relation_groupDB.IDENTIFIER_Data.Valid = true
+
+	relation_groupDB.LAST_CHANGE_Data.String = relation_group.LAST_CHANGE
 	relation_groupDB.LAST_CHANGE_Data.Valid = true
 
 	relation_groupDB.LONG_NAME_Data.String = relation_group.LONG_NAME
@@ -445,7 +605,10 @@ func (relation_groupDB *RELATION_GROUPDB) CopyBasicFieldsFromRELATION_GROUP_WOP(
 	relation_groupDB.DESC_Data.String = relation_group.DESC
 	relation_groupDB.DESC_Data.Valid = true
 
-	relation_groupDB.LAST_CHANGE_Data.Time = relation_group.LAST_CHANGE
+	relation_groupDB.IDENTIFIER_Data.String = relation_group.IDENTIFIER
+	relation_groupDB.IDENTIFIER_Data.Valid = true
+
+	relation_groupDB.LAST_CHANGE_Data.String = relation_group.LAST_CHANGE
 	relation_groupDB.LAST_CHANGE_Data.Valid = true
 
 	relation_groupDB.LONG_NAME_Data.String = relation_group.LONG_NAME
@@ -462,7 +625,10 @@ func (relation_groupDB *RELATION_GROUPDB) CopyBasicFieldsFromRELATION_GROUPWOP(r
 	relation_groupDB.DESC_Data.String = relation_group.DESC
 	relation_groupDB.DESC_Data.Valid = true
 
-	relation_groupDB.LAST_CHANGE_Data.Time = relation_group.LAST_CHANGE
+	relation_groupDB.IDENTIFIER_Data.String = relation_group.IDENTIFIER
+	relation_groupDB.IDENTIFIER_Data.Valid = true
+
+	relation_groupDB.LAST_CHANGE_Data.String = relation_group.LAST_CHANGE
 	relation_groupDB.LAST_CHANGE_Data.Valid = true
 
 	relation_groupDB.LONG_NAME_Data.String = relation_group.LONG_NAME
@@ -474,7 +640,8 @@ func (relation_groupDB *RELATION_GROUPDB) CopyBasicFieldsToRELATION_GROUP(relati
 	// insertion point for checkout of basic fields (back repo to stage)
 	relation_group.Name = relation_groupDB.Name_Data.String
 	relation_group.DESC = relation_groupDB.DESC_Data.String
-	relation_group.LAST_CHANGE = relation_groupDB.LAST_CHANGE_Data.Time
+	relation_group.IDENTIFIER = relation_groupDB.IDENTIFIER_Data.String
+	relation_group.LAST_CHANGE = relation_groupDB.LAST_CHANGE_Data.String
 	relation_group.LONG_NAME = relation_groupDB.LONG_NAME_Data.String
 }
 
@@ -483,7 +650,8 @@ func (relation_groupDB *RELATION_GROUPDB) CopyBasicFieldsToRELATION_GROUP_WOP(re
 	// insertion point for checkout of basic fields (back repo to stage)
 	relation_group.Name = relation_groupDB.Name_Data.String
 	relation_group.DESC = relation_groupDB.DESC_Data.String
-	relation_group.LAST_CHANGE = relation_groupDB.LAST_CHANGE_Data.Time
+	relation_group.IDENTIFIER = relation_groupDB.IDENTIFIER_Data.String
+	relation_group.LAST_CHANGE = relation_groupDB.LAST_CHANGE_Data.String
 	relation_group.LONG_NAME = relation_groupDB.LONG_NAME_Data.String
 }
 
@@ -493,7 +661,8 @@ func (relation_groupDB *RELATION_GROUPDB) CopyBasicFieldsToRELATION_GROUPWOP(rel
 	// insertion point for checkout of basic fields (back repo to stage)
 	relation_group.Name = relation_groupDB.Name_Data.String
 	relation_group.DESC = relation_groupDB.DESC_Data.String
-	relation_group.LAST_CHANGE = relation_groupDB.LAST_CHANGE_Data.Time
+	relation_group.IDENTIFIER = relation_groupDB.IDENTIFIER_Data.String
+	relation_group.LAST_CHANGE = relation_groupDB.LAST_CHANGE_Data.String
 	relation_group.LONG_NAME = relation_groupDB.LONG_NAME_Data.String
 }
 
@@ -652,6 +821,36 @@ func (backRepoRELATION_GROUP *BackRepoRELATION_GROUPStruct) RestorePhaseTwo() {
 		_ = relation_groupDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if relation_groupDB.ALTERNATIVE_IDID.Int64 != 0 {
+			relation_groupDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(relation_groupDB.ALTERNATIVE_IDID.Int64)])
+			relation_groupDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing SOURCE_SPECIFICATION field
+		if relation_groupDB.SOURCE_SPECIFICATIONID.Int64 != 0 {
+			relation_groupDB.SOURCE_SPECIFICATIONID.Int64 = int64(BackRepoA_SOURCE_SPECIFICATION_1id_atBckpTime_newID[uint(relation_groupDB.SOURCE_SPECIFICATIONID.Int64)])
+			relation_groupDB.SOURCE_SPECIFICATIONID.Valid = true
+		}
+
+		// reindexing SPEC_RELATIONS field
+		if relation_groupDB.SPEC_RELATIONSID.Int64 != 0 {
+			relation_groupDB.SPEC_RELATIONSID.Int64 = int64(BackRepoA_SPEC_RELATION_REFid_atBckpTime_newID[uint(relation_groupDB.SPEC_RELATIONSID.Int64)])
+			relation_groupDB.SPEC_RELATIONSID.Valid = true
+		}
+
+		// reindexing TARGET_SPECIFICATION field
+		if relation_groupDB.TARGET_SPECIFICATIONID.Int64 != 0 {
+			relation_groupDB.TARGET_SPECIFICATIONID.Int64 = int64(BackRepoA_SOURCE_SPECIFICATION_1id_atBckpTime_newID[uint(relation_groupDB.TARGET_SPECIFICATIONID.Int64)])
+			relation_groupDB.TARGET_SPECIFICATIONID.Valid = true
+		}
+
+		// reindexing TYPE field
+		if relation_groupDB.TYPEID.Int64 != 0 {
+			relation_groupDB.TYPEID.Int64 = int64(BackRepoA_RELATION_GROUP_TYPE_REFid_atBckpTime_newID[uint(relation_groupDB.TYPEID.Int64)])
+			relation_groupDB.TYPEID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoRELATION_GROUP.db.Model(relation_groupDB)
 		_, err := db.Updates(*relation_groupDB)

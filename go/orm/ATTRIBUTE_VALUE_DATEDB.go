@@ -47,6 +47,10 @@ type ATTRIBUTE_VALUE_DATEAPI struct {
 // reverse pointers of slice of poitners to Struct
 type ATTRIBUTE_VALUE_DATEPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field DEFINITION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFINITIONID sql.NullInt64
 }
 
 // ATTRIBUTE_VALUE_DATEDB describes a attribute_value_date in the database
@@ -64,7 +68,7 @@ type ATTRIBUTE_VALUE_DATEDB struct {
 	Name_Data sql.NullString
 
 	// Declation for basic field attribute_value_dateDB.THE_VALUE
-	THE_VALUE_Data sql.NullTime
+	THE_VALUE_Data sql.NullString
 
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
@@ -90,7 +94,7 @@ type ATTRIBUTE_VALUE_DATEWOP struct {
 
 	Name string `xlsx:"1"`
 
-	THE_VALUE time.Time `xlsx:"2"`
+	THE_VALUE string `xlsx:"2"`
 	// insertion for WOP pointer fields
 }
 
@@ -229,6 +233,18 @@ func (backRepoATTRIBUTE_VALUE_DATE *BackRepoATTRIBUTE_VALUE_DATEStruct) CommitPh
 		attribute_value_dateDB.CopyBasicFieldsFromATTRIBUTE_VALUE_DATE(attribute_value_date)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value attribute_value_date.DEFINITION translates to updating the attribute_value_date.DEFINITIONID
+		attribute_value_dateDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_date.DEFINITION != nil {
+			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_DATE_REF.Map_A_ATTRIBUTE_DEFINITION_DATE_REFPtr_A_ATTRIBUTE_DEFINITION_DATE_REFDBID[attribute_value_date.DEFINITION]; ok {
+				attribute_value_dateDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
+				attribute_value_dateDB.DEFINITIONID.Valid = true
+			}
+		} else {
+			attribute_value_dateDB.DEFINITIONID.Int64 = 0
+			attribute_value_dateDB.DEFINITIONID.Valid = true
+		}
+
 		_, err := backRepoATTRIBUTE_VALUE_DATE.db.Save(attribute_value_dateDB)
 		if err != nil {
 			log.Fatal(err)
@@ -342,6 +358,27 @@ func (backRepoATTRIBUTE_VALUE_DATE *BackRepoATTRIBUTE_VALUE_DATEStruct) Checkout
 func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) DecodePointers(backRepo *BackRepoStruct, attribute_value_date *models.ATTRIBUTE_VALUE_DATE) {
 
 	// insertion point for checkout of pointer encoding
+	// DEFINITION field	
+	{
+		id := attribute_value_dateDB.DEFINITIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_DATE_REF.Map_A_ATTRIBUTE_DEFINITION_DATE_REFDBID_A_ATTRIBUTE_DEFINITION_DATE_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_date.DEFINITION, unknown pointer id", id)
+				attribute_value_date.DEFINITION = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_date.DEFINITION == nil || attribute_value_date.DEFINITION != tmp {
+					attribute_value_date.DEFINITION = tmp
+				}
+			}
+		} else {
+			attribute_value_date.DEFINITION = nil
+		}
+	}
+	
 	return
 }
 
@@ -379,7 +416,7 @@ func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsFromATTRIBU
 	attribute_value_dateDB.Name_Data.String = attribute_value_date.Name
 	attribute_value_dateDB.Name_Data.Valid = true
 
-	attribute_value_dateDB.THE_VALUE_Data.Time = attribute_value_date.THE_VALUE
+	attribute_value_dateDB.THE_VALUE_Data.String = attribute_value_date.THE_VALUE
 	attribute_value_dateDB.THE_VALUE_Data.Valid = true
 }
 
@@ -390,7 +427,7 @@ func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsFromATTRIBU
 	attribute_value_dateDB.Name_Data.String = attribute_value_date.Name
 	attribute_value_dateDB.Name_Data.Valid = true
 
-	attribute_value_dateDB.THE_VALUE_Data.Time = attribute_value_date.THE_VALUE
+	attribute_value_dateDB.THE_VALUE_Data.String = attribute_value_date.THE_VALUE
 	attribute_value_dateDB.THE_VALUE_Data.Valid = true
 }
 
@@ -401,7 +438,7 @@ func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsFromATTRIBU
 	attribute_value_dateDB.Name_Data.String = attribute_value_date.Name
 	attribute_value_dateDB.Name_Data.Valid = true
 
-	attribute_value_dateDB.THE_VALUE_Data.Time = attribute_value_date.THE_VALUE
+	attribute_value_dateDB.THE_VALUE_Data.String = attribute_value_date.THE_VALUE
 	attribute_value_dateDB.THE_VALUE_Data.Valid = true
 }
 
@@ -409,14 +446,14 @@ func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsFromATTRIBU
 func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsToATTRIBUTE_VALUE_DATE(attribute_value_date *models.ATTRIBUTE_VALUE_DATE) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_value_date.Name = attribute_value_dateDB.Name_Data.String
-	attribute_value_date.THE_VALUE = attribute_value_dateDB.THE_VALUE_Data.Time
+	attribute_value_date.THE_VALUE = attribute_value_dateDB.THE_VALUE_Data.String
 }
 
 // CopyBasicFieldsToATTRIBUTE_VALUE_DATE_WOP
 func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsToATTRIBUTE_VALUE_DATE_WOP(attribute_value_date *models.ATTRIBUTE_VALUE_DATE_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_value_date.Name = attribute_value_dateDB.Name_Data.String
-	attribute_value_date.THE_VALUE = attribute_value_dateDB.THE_VALUE_Data.Time
+	attribute_value_date.THE_VALUE = attribute_value_dateDB.THE_VALUE_Data.String
 }
 
 // CopyBasicFieldsToATTRIBUTE_VALUE_DATEWOP
@@ -424,7 +461,7 @@ func (attribute_value_dateDB *ATTRIBUTE_VALUE_DATEDB) CopyBasicFieldsToATTRIBUTE
 	attribute_value_date.ID = int(attribute_value_dateDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_value_date.Name = attribute_value_dateDB.Name_Data.String
-	attribute_value_date.THE_VALUE = attribute_value_dateDB.THE_VALUE_Data.Time
+	attribute_value_date.THE_VALUE = attribute_value_dateDB.THE_VALUE_Data.String
 }
 
 // Backup generates a json file from a slice of all ATTRIBUTE_VALUE_DATEDB instances in the backrepo
@@ -582,6 +619,12 @@ func (backRepoATTRIBUTE_VALUE_DATE *BackRepoATTRIBUTE_VALUE_DATEStruct) RestoreP
 		_ = attribute_value_dateDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing DEFINITION field
+		if attribute_value_dateDB.DEFINITIONID.Int64 != 0 {
+			attribute_value_dateDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_DATE_REFid_atBckpTime_newID[uint(attribute_value_dateDB.DEFINITIONID.Int64)])
+			attribute_value_dateDB.DEFINITIONID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoATTRIBUTE_VALUE_DATE.db.Model(attribute_value_dateDB)
 		_, err := db.Updates(*attribute_value_dateDB)

@@ -48,12 +48,9 @@ type DATATYPE_DEFINITION_REALAPI struct {
 type DATATYPE_DEFINITION_REALPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
-
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 }
 
 // DATATYPE_DEFINITION_REALDB describes a datatype_definition_real in the database
@@ -70,11 +67,17 @@ type DATATYPE_DEFINITION_REALDB struct {
 	// Declation for basic field datatype_definition_realDB.Name
 	Name_Data sql.NullString
 
+	// Declation for basic field datatype_definition_realDB.ACCURACY
+	ACCURACY_Data sql.NullInt64
+
 	// Declation for basic field datatype_definition_realDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field datatype_definition_realDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field datatype_definition_realDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field datatype_definition_realDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -109,15 +112,19 @@ type DATATYPE_DEFINITION_REALWOP struct {
 
 	Name string `xlsx:"1"`
 
-	DESC string `xlsx:"2"`
+	ACCURACY int `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	DESC string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	IDENTIFIER string `xlsx:"4"`
 
-	MAX float64 `xlsx:"5"`
+	LAST_CHANGE string `xlsx:"5"`
 
-	MIN float64 `xlsx:"6"`
+	LONG_NAME string `xlsx:"6"`
+
+	MAX float64 `xlsx:"7"`
+
+	MIN float64 `xlsx:"8"`
 	// insertion for WOP pointer fields
 }
 
@@ -125,7 +132,9 @@ var DATATYPE_DEFINITION_REAL_Fields = []string{
 	// insertion for WOP basic fields
 	"ID",
 	"Name",
+	"ACCURACY",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
 	"MAX",
@@ -260,22 +269,16 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 		datatype_definition_realDB.CopyBasicFieldsFromDATATYPE_DEFINITION_REAL(datatype_definition_real)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		datatype_definition_realDB.DATATYPE_DEFINITION_REALPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range datatype_definition_real.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value datatype_definition_real.ALTERNATIVE_ID translates to updating the datatype_definition_real.ALTERNATIVE_IDID
+		datatype_definition_realDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if datatype_definition_real.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[datatype_definition_real.ALTERNATIVE_ID]; ok {
+				datatype_definition_realDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				datatype_definition_realDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			datatype_definition_realDB.DATATYPE_DEFINITION_REALPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(datatype_definition_realDB.DATATYPE_DEFINITION_REALPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			datatype_definition_realDB.ALTERNATIVE_IDID.Int64 = 0
+			datatype_definition_realDB.ALTERNATIVE_IDID.Valid = true
 		}
 
 		_, err := backRepoDATATYPE_DEFINITION_REAL.db.Save(datatype_definition_realDB)
@@ -391,15 +394,27 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) DecodePointers(backRepo *BackRepoStruct, datatype_definition_real *models.DATATYPE_DEFINITION_REAL) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem datatype_definition_real.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	datatype_definition_real.ALTERNATIVE_ID.ALTERNATIVE_ID = datatype_definition_real.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range datatype_definition_realDB.DATATYPE_DEFINITION_REALPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		datatype_definition_real.ALTERNATIVE_ID.ALTERNATIVE_ID = append(datatype_definition_real.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := datatype_definition_realDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: datatype_definition_real.ALTERNATIVE_ID, unknown pointer id", id)
+				datatype_definition_real.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if datatype_definition_real.ALTERNATIVE_ID == nil || datatype_definition_real.ALTERNATIVE_ID != tmp {
+					datatype_definition_real.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			datatype_definition_real.ALTERNATIVE_ID = nil
+		}
+	}
+	
 	return
 }
 
@@ -437,10 +452,16 @@ func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsFro
 	datatype_definition_realDB.Name_Data.String = datatype_definition_real.Name
 	datatype_definition_realDB.Name_Data.Valid = true
 
+	datatype_definition_realDB.ACCURACY_Data.Int64 = int64(datatype_definition_real.ACCURACY)
+	datatype_definition_realDB.ACCURACY_Data.Valid = true
+
 	datatype_definition_realDB.DESC_Data.String = datatype_definition_real.DESC
 	datatype_definition_realDB.DESC_Data.Valid = true
 
-	datatype_definition_realDB.LAST_CHANGE_Data.Time = datatype_definition_real.LAST_CHANGE
+	datatype_definition_realDB.IDENTIFIER_Data.String = datatype_definition_real.IDENTIFIER
+	datatype_definition_realDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_realDB.LAST_CHANGE_Data.String = datatype_definition_real.LAST_CHANGE
 	datatype_definition_realDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_realDB.LONG_NAME_Data.String = datatype_definition_real.LONG_NAME
@@ -460,10 +481,16 @@ func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsFro
 	datatype_definition_realDB.Name_Data.String = datatype_definition_real.Name
 	datatype_definition_realDB.Name_Data.Valid = true
 
+	datatype_definition_realDB.ACCURACY_Data.Int64 = int64(datatype_definition_real.ACCURACY)
+	datatype_definition_realDB.ACCURACY_Data.Valid = true
+
 	datatype_definition_realDB.DESC_Data.String = datatype_definition_real.DESC
 	datatype_definition_realDB.DESC_Data.Valid = true
 
-	datatype_definition_realDB.LAST_CHANGE_Data.Time = datatype_definition_real.LAST_CHANGE
+	datatype_definition_realDB.IDENTIFIER_Data.String = datatype_definition_real.IDENTIFIER
+	datatype_definition_realDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_realDB.LAST_CHANGE_Data.String = datatype_definition_real.LAST_CHANGE
 	datatype_definition_realDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_realDB.LONG_NAME_Data.String = datatype_definition_real.LONG_NAME
@@ -483,10 +510,16 @@ func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsFro
 	datatype_definition_realDB.Name_Data.String = datatype_definition_real.Name
 	datatype_definition_realDB.Name_Data.Valid = true
 
+	datatype_definition_realDB.ACCURACY_Data.Int64 = int64(datatype_definition_real.ACCURACY)
+	datatype_definition_realDB.ACCURACY_Data.Valid = true
+
 	datatype_definition_realDB.DESC_Data.String = datatype_definition_real.DESC
 	datatype_definition_realDB.DESC_Data.Valid = true
 
-	datatype_definition_realDB.LAST_CHANGE_Data.Time = datatype_definition_real.LAST_CHANGE
+	datatype_definition_realDB.IDENTIFIER_Data.String = datatype_definition_real.IDENTIFIER
+	datatype_definition_realDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_realDB.LAST_CHANGE_Data.String = datatype_definition_real.LAST_CHANGE
 	datatype_definition_realDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_realDB.LONG_NAME_Data.String = datatype_definition_real.LONG_NAME
@@ -503,8 +536,10 @@ func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsFro
 func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsToDATATYPE_DEFINITION_REAL(datatype_definition_real *models.DATATYPE_DEFINITION_REAL) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_real.Name = datatype_definition_realDB.Name_Data.String
+	datatype_definition_real.ACCURACY = int(datatype_definition_realDB.ACCURACY_Data.Int64)
 	datatype_definition_real.DESC = datatype_definition_realDB.DESC_Data.String
-	datatype_definition_real.LAST_CHANGE = datatype_definition_realDB.LAST_CHANGE_Data.Time
+	datatype_definition_real.IDENTIFIER = datatype_definition_realDB.IDENTIFIER_Data.String
+	datatype_definition_real.LAST_CHANGE = datatype_definition_realDB.LAST_CHANGE_Data.String
 	datatype_definition_real.LONG_NAME = datatype_definition_realDB.LONG_NAME_Data.String
 	datatype_definition_real.MAX = datatype_definition_realDB.MAX_Data.Float64
 	datatype_definition_real.MIN = datatype_definition_realDB.MIN_Data.Float64
@@ -514,8 +549,10 @@ func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsToD
 func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsToDATATYPE_DEFINITION_REAL_WOP(datatype_definition_real *models.DATATYPE_DEFINITION_REAL_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_real.Name = datatype_definition_realDB.Name_Data.String
+	datatype_definition_real.ACCURACY = int(datatype_definition_realDB.ACCURACY_Data.Int64)
 	datatype_definition_real.DESC = datatype_definition_realDB.DESC_Data.String
-	datatype_definition_real.LAST_CHANGE = datatype_definition_realDB.LAST_CHANGE_Data.Time
+	datatype_definition_real.IDENTIFIER = datatype_definition_realDB.IDENTIFIER_Data.String
+	datatype_definition_real.LAST_CHANGE = datatype_definition_realDB.LAST_CHANGE_Data.String
 	datatype_definition_real.LONG_NAME = datatype_definition_realDB.LONG_NAME_Data.String
 	datatype_definition_real.MAX = datatype_definition_realDB.MAX_Data.Float64
 	datatype_definition_real.MIN = datatype_definition_realDB.MIN_Data.Float64
@@ -526,8 +563,10 @@ func (datatype_definition_realDB *DATATYPE_DEFINITION_REALDB) CopyBasicFieldsToD
 	datatype_definition_real.ID = int(datatype_definition_realDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_real.Name = datatype_definition_realDB.Name_Data.String
+	datatype_definition_real.ACCURACY = int(datatype_definition_realDB.ACCURACY_Data.Int64)
 	datatype_definition_real.DESC = datatype_definition_realDB.DESC_Data.String
-	datatype_definition_real.LAST_CHANGE = datatype_definition_realDB.LAST_CHANGE_Data.Time
+	datatype_definition_real.IDENTIFIER = datatype_definition_realDB.IDENTIFIER_Data.String
+	datatype_definition_real.LAST_CHANGE = datatype_definition_realDB.LAST_CHANGE_Data.String
 	datatype_definition_real.LONG_NAME = datatype_definition_realDB.LONG_NAME_Data.String
 	datatype_definition_real.MAX = datatype_definition_realDB.MAX_Data.Float64
 	datatype_definition_real.MIN = datatype_definition_realDB.MIN_Data.Float64
@@ -688,6 +727,12 @@ func (backRepoDATATYPE_DEFINITION_REAL *BackRepoDATATYPE_DEFINITION_REALStruct) 
 		_ = datatype_definition_realDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if datatype_definition_realDB.ALTERNATIVE_IDID.Int64 != 0 {
+			datatype_definition_realDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(datatype_definition_realDB.ALTERNATIVE_IDID.Int64)])
+			datatype_definition_realDB.ALTERNATIVE_IDID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoDATATYPE_DEFINITION_REAL.db.Model(datatype_definition_realDB)
 		_, err := db.Updates(*datatype_definition_realDB)

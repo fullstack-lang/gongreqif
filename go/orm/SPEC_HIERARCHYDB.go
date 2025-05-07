@@ -48,19 +48,21 @@ type SPEC_HIERARCHYAPI struct {
 type SPEC_HIERARCHYPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
+	// field CHILDREN is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	CHILDRENID sql.NullInt64
 
-	} `gorm:"embedded"`
+	// field EDITABLE_ATTS is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	EDITABLE_ATTSID sql.NullInt64
 
-	CHILDREN struct {
-
-		// field SPEC_HIERARCHY is a slice of pointers to another Struct (optional or 0..1)
-		SPEC_HIERARCHY IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field OBJECT is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	OBJECTID sql.NullInt64
 }
 
 // SPEC_HIERARCHYDB describes a spec_hierarchy in the database
@@ -80,6 +82,9 @@ type SPEC_HIERARCHYDB struct {
 	// Declation for basic field spec_hierarchyDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field spec_hierarchyDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field spec_hierarchyDB.IS_EDITABLE
 	// provide the sql storage for the boolan
 	IS_EDITABLE_Data sql.NullBool
@@ -89,7 +94,7 @@ type SPEC_HIERARCHYDB struct {
 	IS_TABLE_INTERNAL_Data sql.NullBool
 
 	// Declation for basic field spec_hierarchyDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field spec_hierarchyDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -120,13 +125,15 @@ type SPEC_HIERARCHYWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	IS_EDITABLE bool `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	IS_TABLE_INTERNAL bool `xlsx:"4"`
+	IS_EDITABLE bool `xlsx:"4"`
 
-	LAST_CHANGE time.Time `xlsx:"5"`
+	IS_TABLE_INTERNAL bool `xlsx:"5"`
 
-	LONG_NAME string `xlsx:"6"`
+	LAST_CHANGE string `xlsx:"6"`
+
+	LONG_NAME string `xlsx:"7"`
 	// insertion for WOP pointer fields
 }
 
@@ -135,6 +142,7 @@ var SPEC_HIERARCHY_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"IS_EDITABLE",
 	"IS_TABLE_INTERNAL",
 	"LAST_CHANGE",
@@ -269,40 +277,52 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseTwoInstan
 		spec_hierarchyDB.CopyBasicFieldsFromSPEC_HIERARCHY(spec_hierarchy)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range spec_hierarchy.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_hierarchy.ALTERNATIVE_ID translates to updating the spec_hierarchy.ALTERNATIVE_IDID
+		spec_hierarchyDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if spec_hierarchy.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[spec_hierarchy.ALTERNATIVE_ID]; ok {
+				spec_hierarchyDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				spec_hierarchyDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			spec_hierarchyDB.ALTERNATIVE_IDID.Int64 = 0
+			spec_hierarchyDB.ALTERNATIVE_IDID.Valid = true
 		}
 
-		// 1. reset
-		spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.CHILDREN.SPEC_HIERARCHY = make([]int, 0)
-		// 2. encode
-		for _, spec_hierarchyAssocEnd := range spec_hierarchy.CHILDREN.SPEC_HIERARCHY {
-			spec_hierarchyAssocEnd_DB :=
-				backRepo.BackRepoSPEC_HIERARCHY.GetSPEC_HIERARCHYDBFromSPEC_HIERARCHYPtr(spec_hierarchyAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the spec_hierarchyAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if spec_hierarchyAssocEnd_DB == nil {
-				continue
+		// commit pointer value spec_hierarchy.CHILDREN translates to updating the spec_hierarchy.CHILDRENID
+		spec_hierarchyDB.CHILDRENID.Valid = true // allow for a 0 value (nil association)
+		if spec_hierarchy.CHILDREN != nil {
+			if CHILDRENId, ok := backRepo.BackRepoA_CHILDREN.Map_A_CHILDRENPtr_A_CHILDRENDBID[spec_hierarchy.CHILDREN]; ok {
+				spec_hierarchyDB.CHILDRENID.Int64 = int64(CHILDRENId)
+				spec_hierarchyDB.CHILDRENID.Valid = true
 			}
-			
-			spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.CHILDREN.SPEC_HIERARCHY =
-				append(spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.CHILDREN.SPEC_HIERARCHY, int(spec_hierarchyAssocEnd_DB.ID))
+		} else {
+			spec_hierarchyDB.CHILDRENID.Int64 = 0
+			spec_hierarchyDB.CHILDRENID.Valid = true
+		}
+
+		// commit pointer value spec_hierarchy.EDITABLE_ATTS translates to updating the spec_hierarchy.EDITABLE_ATTSID
+		spec_hierarchyDB.EDITABLE_ATTSID.Valid = true // allow for a 0 value (nil association)
+		if spec_hierarchy.EDITABLE_ATTS != nil {
+			if EDITABLE_ATTSId, ok := backRepo.BackRepoA_EDITABLE_ATTS.Map_A_EDITABLE_ATTSPtr_A_EDITABLE_ATTSDBID[spec_hierarchy.EDITABLE_ATTS]; ok {
+				spec_hierarchyDB.EDITABLE_ATTSID.Int64 = int64(EDITABLE_ATTSId)
+				spec_hierarchyDB.EDITABLE_ATTSID.Valid = true
+			}
+		} else {
+			spec_hierarchyDB.EDITABLE_ATTSID.Int64 = 0
+			spec_hierarchyDB.EDITABLE_ATTSID.Valid = true
+		}
+
+		// commit pointer value spec_hierarchy.OBJECT translates to updating the spec_hierarchy.OBJECTID
+		spec_hierarchyDB.OBJECTID.Valid = true // allow for a 0 value (nil association)
+		if spec_hierarchy.OBJECT != nil {
+			if OBJECTId, ok := backRepo.BackRepoA_OBJECT.Map_A_OBJECTPtr_A_OBJECTDBID[spec_hierarchy.OBJECT]; ok {
+				spec_hierarchyDB.OBJECTID.Int64 = int64(OBJECTId)
+				spec_hierarchyDB.OBJECTID.Valid = true
+			}
+		} else {
+			spec_hierarchyDB.OBJECTID.Int64 = 0
+			spec_hierarchyDB.OBJECTID.Valid = true
 		}
 
 		_, err := backRepoSPEC_HIERARCHY.db.Save(spec_hierarchyDB)
@@ -418,24 +438,90 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CheckoutPhaseTwoInst
 func (spec_hierarchyDB *SPEC_HIERARCHYDB) DecodePointers(backRepo *BackRepoStruct, spec_hierarchy *models.SPEC_HIERARCHY) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem spec_hierarchy.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_hierarchy.ALTERNATIVE_ID.ALTERNATIVE_ID = spec_hierarchy.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		spec_hierarchy.ALTERNATIVE_ID.ALTERNATIVE_ID = append(spec_hierarchy.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := spec_hierarchyDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
-	// This loop redeem spec_hierarchy.CHILDREN.SPEC_HIERARCHY in the stage from the encode in the back repo
-	// It parses all SPEC_HIERARCHYDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	spec_hierarchy.CHILDREN.SPEC_HIERARCHY = spec_hierarchy.CHILDREN.SPEC_HIERARCHY[:0]
-	for _, _SPEC_HIERARCHYid := range spec_hierarchyDB.SPEC_HIERARCHYPointersEncoding.CHILDREN.SPEC_HIERARCHY {
-		spec_hierarchy.CHILDREN.SPEC_HIERARCHY = append(spec_hierarchy.CHILDREN.SPEC_HIERARCHY, backRepo.BackRepoSPEC_HIERARCHY.Map_SPEC_HIERARCHYDBID_SPEC_HIERARCHYPtr[uint(_SPEC_HIERARCHYid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_hierarchy.ALTERNATIVE_ID, unknown pointer id", id)
+				spec_hierarchy.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if spec_hierarchy.ALTERNATIVE_ID == nil || spec_hierarchy.ALTERNATIVE_ID != tmp {
+					spec_hierarchy.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			spec_hierarchy.ALTERNATIVE_ID = nil
+		}
 	}
+	
+	// CHILDREN field	
+	{
+		id := spec_hierarchyDB.CHILDRENID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_CHILDREN.Map_A_CHILDRENDBID_A_CHILDRENPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_hierarchy.CHILDREN, unknown pointer id", id)
+				spec_hierarchy.CHILDREN = nil
+			} else {
+				// updates only if field has changed
+				if spec_hierarchy.CHILDREN == nil || spec_hierarchy.CHILDREN != tmp {
+					spec_hierarchy.CHILDREN = tmp
+				}
+			}
+		} else {
+			spec_hierarchy.CHILDREN = nil
+		}
+	}
+	
+	// EDITABLE_ATTS field	
+	{
+		id := spec_hierarchyDB.EDITABLE_ATTSID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_EDITABLE_ATTS.Map_A_EDITABLE_ATTSDBID_A_EDITABLE_ATTSPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_hierarchy.EDITABLE_ATTS, unknown pointer id", id)
+				spec_hierarchy.EDITABLE_ATTS = nil
+			} else {
+				// updates only if field has changed
+				if spec_hierarchy.EDITABLE_ATTS == nil || spec_hierarchy.EDITABLE_ATTS != tmp {
+					spec_hierarchy.EDITABLE_ATTS = tmp
+				}
+			}
+		} else {
+			spec_hierarchy.EDITABLE_ATTS = nil
+		}
+	}
+	
+	// OBJECT field	
+	{
+		id := spec_hierarchyDB.OBJECTID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_OBJECT.Map_A_OBJECTDBID_A_OBJECTPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_hierarchy.OBJECT, unknown pointer id", id)
+				spec_hierarchy.OBJECT = nil
+			} else {
+				// updates only if field has changed
+				if spec_hierarchy.OBJECT == nil || spec_hierarchy.OBJECT != tmp {
+					spec_hierarchy.OBJECT = tmp
+				}
+			}
+		} else {
+			spec_hierarchy.OBJECT = nil
+		}
+	}
+	
 	return
 }
 
@@ -476,13 +562,16 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHY(spec
 	spec_hierarchyDB.DESC_Data.String = spec_hierarchy.DESC
 	spec_hierarchyDB.DESC_Data.Valid = true
 
+	spec_hierarchyDB.IDENTIFIER_Data.String = spec_hierarchy.IDENTIFIER
+	spec_hierarchyDB.IDENTIFIER_Data.Valid = true
+
 	spec_hierarchyDB.IS_EDITABLE_Data.Bool = spec_hierarchy.IS_EDITABLE
 	spec_hierarchyDB.IS_EDITABLE_Data.Valid = true
 
 	spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Bool = spec_hierarchy.IS_TABLE_INTERNAL
 	spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Valid = true
 
-	spec_hierarchyDB.LAST_CHANGE_Data.Time = spec_hierarchy.LAST_CHANGE
+	spec_hierarchyDB.LAST_CHANGE_Data.String = spec_hierarchy.LAST_CHANGE
 	spec_hierarchyDB.LAST_CHANGE_Data.Valid = true
 
 	spec_hierarchyDB.LONG_NAME_Data.String = spec_hierarchy.LONG_NAME
@@ -499,13 +588,16 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHY_WOP(
 	spec_hierarchyDB.DESC_Data.String = spec_hierarchy.DESC
 	spec_hierarchyDB.DESC_Data.Valid = true
 
+	spec_hierarchyDB.IDENTIFIER_Data.String = spec_hierarchy.IDENTIFIER
+	spec_hierarchyDB.IDENTIFIER_Data.Valid = true
+
 	spec_hierarchyDB.IS_EDITABLE_Data.Bool = spec_hierarchy.IS_EDITABLE
 	spec_hierarchyDB.IS_EDITABLE_Data.Valid = true
 
 	spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Bool = spec_hierarchy.IS_TABLE_INTERNAL
 	spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Valid = true
 
-	spec_hierarchyDB.LAST_CHANGE_Data.Time = spec_hierarchy.LAST_CHANGE
+	spec_hierarchyDB.LAST_CHANGE_Data.String = spec_hierarchy.LAST_CHANGE
 	spec_hierarchyDB.LAST_CHANGE_Data.Valid = true
 
 	spec_hierarchyDB.LONG_NAME_Data.String = spec_hierarchy.LONG_NAME
@@ -522,13 +614,16 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsFromSPEC_HIERARCHYWOP(s
 	spec_hierarchyDB.DESC_Data.String = spec_hierarchy.DESC
 	spec_hierarchyDB.DESC_Data.Valid = true
 
+	spec_hierarchyDB.IDENTIFIER_Data.String = spec_hierarchy.IDENTIFIER
+	spec_hierarchyDB.IDENTIFIER_Data.Valid = true
+
 	spec_hierarchyDB.IS_EDITABLE_Data.Bool = spec_hierarchy.IS_EDITABLE
 	spec_hierarchyDB.IS_EDITABLE_Data.Valid = true
 
 	spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Bool = spec_hierarchy.IS_TABLE_INTERNAL
 	spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Valid = true
 
-	spec_hierarchyDB.LAST_CHANGE_Data.Time = spec_hierarchy.LAST_CHANGE
+	spec_hierarchyDB.LAST_CHANGE_Data.String = spec_hierarchy.LAST_CHANGE
 	spec_hierarchyDB.LAST_CHANGE_Data.Valid = true
 
 	spec_hierarchyDB.LONG_NAME_Data.String = spec_hierarchy.LONG_NAME
@@ -540,9 +635,10 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHY(spec_h
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_hierarchy.Name = spec_hierarchyDB.Name_Data.String
 	spec_hierarchy.DESC = spec_hierarchyDB.DESC_Data.String
+	spec_hierarchy.IDENTIFIER = spec_hierarchyDB.IDENTIFIER_Data.String
 	spec_hierarchy.IS_EDITABLE = spec_hierarchyDB.IS_EDITABLE_Data.Bool
 	spec_hierarchy.IS_TABLE_INTERNAL = spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Bool
-	spec_hierarchy.LAST_CHANGE = spec_hierarchyDB.LAST_CHANGE_Data.Time
+	spec_hierarchy.LAST_CHANGE = spec_hierarchyDB.LAST_CHANGE_Data.String
 	spec_hierarchy.LONG_NAME = spec_hierarchyDB.LONG_NAME_Data.String
 }
 
@@ -551,9 +647,10 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHY_WOP(sp
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_hierarchy.Name = spec_hierarchyDB.Name_Data.String
 	spec_hierarchy.DESC = spec_hierarchyDB.DESC_Data.String
+	spec_hierarchy.IDENTIFIER = spec_hierarchyDB.IDENTIFIER_Data.String
 	spec_hierarchy.IS_EDITABLE = spec_hierarchyDB.IS_EDITABLE_Data.Bool
 	spec_hierarchy.IS_TABLE_INTERNAL = spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Bool
-	spec_hierarchy.LAST_CHANGE = spec_hierarchyDB.LAST_CHANGE_Data.Time
+	spec_hierarchy.LAST_CHANGE = spec_hierarchyDB.LAST_CHANGE_Data.String
 	spec_hierarchy.LONG_NAME = spec_hierarchyDB.LONG_NAME_Data.String
 }
 
@@ -563,9 +660,10 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) CopyBasicFieldsToSPEC_HIERARCHYWOP(spe
 	// insertion point for checkout of basic fields (back repo to stage)
 	spec_hierarchy.Name = spec_hierarchyDB.Name_Data.String
 	spec_hierarchy.DESC = spec_hierarchyDB.DESC_Data.String
+	spec_hierarchy.IDENTIFIER = spec_hierarchyDB.IDENTIFIER_Data.String
 	spec_hierarchy.IS_EDITABLE = spec_hierarchyDB.IS_EDITABLE_Data.Bool
 	spec_hierarchy.IS_TABLE_INTERNAL = spec_hierarchyDB.IS_TABLE_INTERNAL_Data.Bool
-	spec_hierarchy.LAST_CHANGE = spec_hierarchyDB.LAST_CHANGE_Data.Time
+	spec_hierarchy.LAST_CHANGE = spec_hierarchyDB.LAST_CHANGE_Data.String
 	spec_hierarchy.LONG_NAME = spec_hierarchyDB.LONG_NAME_Data.String
 }
 
@@ -724,6 +822,30 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) RestorePhaseTwo() {
 		_ = spec_hierarchyDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if spec_hierarchyDB.ALTERNATIVE_IDID.Int64 != 0 {
+			spec_hierarchyDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(spec_hierarchyDB.ALTERNATIVE_IDID.Int64)])
+			spec_hierarchyDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing CHILDREN field
+		if spec_hierarchyDB.CHILDRENID.Int64 != 0 {
+			spec_hierarchyDB.CHILDRENID.Int64 = int64(BackRepoA_CHILDRENid_atBckpTime_newID[uint(spec_hierarchyDB.CHILDRENID.Int64)])
+			spec_hierarchyDB.CHILDRENID.Valid = true
+		}
+
+		// reindexing EDITABLE_ATTS field
+		if spec_hierarchyDB.EDITABLE_ATTSID.Int64 != 0 {
+			spec_hierarchyDB.EDITABLE_ATTSID.Int64 = int64(BackRepoA_EDITABLE_ATTSid_atBckpTime_newID[uint(spec_hierarchyDB.EDITABLE_ATTSID.Int64)])
+			spec_hierarchyDB.EDITABLE_ATTSID.Valid = true
+		}
+
+		// reindexing OBJECT field
+		if spec_hierarchyDB.OBJECTID.Int64 != 0 {
+			spec_hierarchyDB.OBJECTID.Int64 = int64(BackRepoA_OBJECTid_atBckpTime_newID[uint(spec_hierarchyDB.OBJECTID.Int64)])
+			spec_hierarchyDB.OBJECTID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoSPEC_HIERARCHY.db.Model(spec_hierarchyDB)
 		_, err := db.Updates(*spec_hierarchyDB)

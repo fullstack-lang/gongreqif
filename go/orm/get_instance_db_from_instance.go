@@ -75,9 +75,189 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		attribute_value_xhtmlInstance := any(concreteInstance).(*models.ATTRIBUTE_VALUE_XHTML)
 		ret2 := backRepo.BackRepoATTRIBUTE_VALUE_XHTML.GetATTRIBUTE_VALUE_XHTMLDBFromATTRIBUTE_VALUE_XHTMLPtr(attribute_value_xhtmlInstance)
 		ret = any(ret2).(*T2)
-	case *models.AnyType:
-		anytypeInstance := any(concreteInstance).(*models.AnyType)
-		ret2 := backRepo.BackRepoAnyType.GetAnyTypeDBFromAnyTypePtr(anytypeInstance)
+	case *models.A_ALTERNATIVE_ID:
+		a_alternative_idInstance := any(concreteInstance).(*models.A_ALTERNATIVE_ID)
+		ret2 := backRepo.BackRepoA_ALTERNATIVE_ID.GetA_ALTERNATIVE_IDDBFromA_ALTERNATIVE_IDPtr(a_alternative_idInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		a_attribute_definition_boolean_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_BOOLEAN_REF.GetA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDBFromA_ATTRIBUTE_DEFINITION_BOOLEAN_REFPtr(a_attribute_definition_boolean_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_DATE_REF:
+		a_attribute_definition_date_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_DATE_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_DATE_REF.GetA_ATTRIBUTE_DEFINITION_DATE_REFDBFromA_ATTRIBUTE_DEFINITION_DATE_REFPtr(a_attribute_definition_date_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		a_attribute_definition_enumeration_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_ENUMERATION_REF.GetA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDBFromA_ATTRIBUTE_DEFINITION_ENUMERATION_REFPtr(a_attribute_definition_enumeration_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		a_attribute_definition_integer_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_INTEGER_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_INTEGER_REF.GetA_ATTRIBUTE_DEFINITION_INTEGER_REFDBFromA_ATTRIBUTE_DEFINITION_INTEGER_REFPtr(a_attribute_definition_integer_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_REAL_REF:
+		a_attribute_definition_real_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_REAL_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_REAL_REF.GetA_ATTRIBUTE_DEFINITION_REAL_REFDBFromA_ATTRIBUTE_DEFINITION_REAL_REFPtr(a_attribute_definition_real_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_STRING_REF:
+		a_attribute_definition_string_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_STRING_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_STRING_REF.GetA_ATTRIBUTE_DEFINITION_STRING_REFDBFromA_ATTRIBUTE_DEFINITION_STRING_REFPtr(a_attribute_definition_string_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		a_attribute_definition_xhtml_refInstance := any(concreteInstance).(*models.A_ATTRIBUTE_DEFINITION_XHTML_REF)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REF.GetA_ATTRIBUTE_DEFINITION_XHTML_REFDBFromA_ATTRIBUTE_DEFINITION_XHTML_REFPtr(a_attribute_definition_xhtml_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_BOOLEAN:
+		a_attribute_value_booleanInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_BOOLEAN)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_BOOLEAN.GetA_ATTRIBUTE_VALUE_BOOLEANDBFromA_ATTRIBUTE_VALUE_BOOLEANPtr(a_attribute_value_booleanInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_DATE:
+		a_attribute_value_dateInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_DATE)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_DATE.GetA_ATTRIBUTE_VALUE_DATEDBFromA_ATTRIBUTE_VALUE_DATEPtr(a_attribute_value_dateInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_ENUMERATION:
+		a_attribute_value_enumerationInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_ENUMERATION)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_ENUMERATION.GetA_ATTRIBUTE_VALUE_ENUMERATIONDBFromA_ATTRIBUTE_VALUE_ENUMERATIONPtr(a_attribute_value_enumerationInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_INTEGER:
+		a_attribute_value_integerInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_INTEGER)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_INTEGER.GetA_ATTRIBUTE_VALUE_INTEGERDBFromA_ATTRIBUTE_VALUE_INTEGERPtr(a_attribute_value_integerInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_REAL:
+		a_attribute_value_realInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_REAL)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_REAL.GetA_ATTRIBUTE_VALUE_REALDBFromA_ATTRIBUTE_VALUE_REALPtr(a_attribute_value_realInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_STRING:
+		a_attribute_value_stringInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_STRING)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_STRING.GetA_ATTRIBUTE_VALUE_STRINGDBFromA_ATTRIBUTE_VALUE_STRINGPtr(a_attribute_value_stringInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_XHTML:
+		a_attribute_value_xhtmlInstance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_XHTML)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_XHTML.GetA_ATTRIBUTE_VALUE_XHTMLDBFromA_ATTRIBUTE_VALUE_XHTMLPtr(a_attribute_value_xhtmlInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ATTRIBUTE_VALUE_XHTML_1:
+		a_attribute_value_xhtml_1Instance := any(concreteInstance).(*models.A_ATTRIBUTE_VALUE_XHTML_1)
+		ret2 := backRepo.BackRepoA_ATTRIBUTE_VALUE_XHTML_1.GetA_ATTRIBUTE_VALUE_XHTML_1DBFromA_ATTRIBUTE_VALUE_XHTML_1Ptr(a_attribute_value_xhtml_1Instance)
+		ret = any(ret2).(*T2)
+	case *models.A_CHILDREN:
+		a_childrenInstance := any(concreteInstance).(*models.A_CHILDREN)
+		ret2 := backRepo.BackRepoA_CHILDREN.GetA_CHILDRENDBFromA_CHILDRENPtr(a_childrenInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_CORE_CONTENT:
+		a_core_contentInstance := any(concreteInstance).(*models.A_CORE_CONTENT)
+		ret2 := backRepo.BackRepoA_CORE_CONTENT.GetA_CORE_CONTENTDBFromA_CORE_CONTENTPtr(a_core_contentInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPES:
+		a_datatypesInstance := any(concreteInstance).(*models.A_DATATYPES)
+		ret2 := backRepo.BackRepoA_DATATYPES.GetA_DATATYPESDBFromA_DATATYPESPtr(a_datatypesInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		a_datatype_definition_boolean_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_BOOLEAN_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_BOOLEAN_REF.GetA_DATATYPE_DEFINITION_BOOLEAN_REFDBFromA_DATATYPE_DEFINITION_BOOLEAN_REFPtr(a_datatype_definition_boolean_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_DATE_REF:
+		a_datatype_definition_date_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_DATE_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_DATE_REF.GetA_DATATYPE_DEFINITION_DATE_REFDBFromA_DATATYPE_DEFINITION_DATE_REFPtr(a_datatype_definition_date_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		a_datatype_definition_enumeration_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_ENUMERATION_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_ENUMERATION_REF.GetA_DATATYPE_DEFINITION_ENUMERATION_REFDBFromA_DATATYPE_DEFINITION_ENUMERATION_REFPtr(a_datatype_definition_enumeration_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_INTEGER_REF:
+		a_datatype_definition_integer_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_INTEGER_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_INTEGER_REF.GetA_DATATYPE_DEFINITION_INTEGER_REFDBFromA_DATATYPE_DEFINITION_INTEGER_REFPtr(a_datatype_definition_integer_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_REAL_REF:
+		a_datatype_definition_real_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_REAL_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_REAL_REF.GetA_DATATYPE_DEFINITION_REAL_REFDBFromA_DATATYPE_DEFINITION_REAL_REFPtr(a_datatype_definition_real_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_STRING_REF:
+		a_datatype_definition_string_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_STRING_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_STRING_REF.GetA_DATATYPE_DEFINITION_STRING_REFDBFromA_DATATYPE_DEFINITION_STRING_REFPtr(a_datatype_definition_string_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_DATATYPE_DEFINITION_XHTML_REF:
+		a_datatype_definition_xhtml_refInstance := any(concreteInstance).(*models.A_DATATYPE_DEFINITION_XHTML_REF)
+		ret2 := backRepo.BackRepoA_DATATYPE_DEFINITION_XHTML_REF.GetA_DATATYPE_DEFINITION_XHTML_REFDBFromA_DATATYPE_DEFINITION_XHTML_REFPtr(a_datatype_definition_xhtml_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_EDITABLE_ATTS:
+		a_editable_attsInstance := any(concreteInstance).(*models.A_EDITABLE_ATTS)
+		ret2 := backRepo.BackRepoA_EDITABLE_ATTS.GetA_EDITABLE_ATTSDBFromA_EDITABLE_ATTSPtr(a_editable_attsInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_ENUM_VALUE_REF:
+		a_enum_value_refInstance := any(concreteInstance).(*models.A_ENUM_VALUE_REF)
+		ret2 := backRepo.BackRepoA_ENUM_VALUE_REF.GetA_ENUM_VALUE_REFDBFromA_ENUM_VALUE_REFPtr(a_enum_value_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_OBJECT:
+		a_objectInstance := any(concreteInstance).(*models.A_OBJECT)
+		ret2 := backRepo.BackRepoA_OBJECT.GetA_OBJECTDBFromA_OBJECTPtr(a_objectInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_PROPERTIES:
+		a_propertiesInstance := any(concreteInstance).(*models.A_PROPERTIES)
+		ret2 := backRepo.BackRepoA_PROPERTIES.GetA_PROPERTIESDBFromA_PROPERTIESPtr(a_propertiesInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_RELATION_GROUP_TYPE_REF:
+		a_relation_group_type_refInstance := any(concreteInstance).(*models.A_RELATION_GROUP_TYPE_REF)
+		ret2 := backRepo.BackRepoA_RELATION_GROUP_TYPE_REF.GetA_RELATION_GROUP_TYPE_REFDBFromA_RELATION_GROUP_TYPE_REFPtr(a_relation_group_type_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SOURCE_1:
+		a_source_1Instance := any(concreteInstance).(*models.A_SOURCE_1)
+		ret2 := backRepo.BackRepoA_SOURCE_1.GetA_SOURCE_1DBFromA_SOURCE_1Ptr(a_source_1Instance)
+		ret = any(ret2).(*T2)
+	case *models.A_SOURCE_SPECIFICATION_1:
+		a_source_specification_1Instance := any(concreteInstance).(*models.A_SOURCE_SPECIFICATION_1)
+		ret2 := backRepo.BackRepoA_SOURCE_SPECIFICATION_1.GetA_SOURCE_SPECIFICATION_1DBFromA_SOURCE_SPECIFICATION_1Ptr(a_source_specification_1Instance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPECIFICATIONS:
+		a_specificationsInstance := any(concreteInstance).(*models.A_SPECIFICATIONS)
+		ret2 := backRepo.BackRepoA_SPECIFICATIONS.GetA_SPECIFICATIONSDBFromA_SPECIFICATIONSPtr(a_specificationsInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPECIFICATION_TYPE_REF:
+		a_specification_type_refInstance := any(concreteInstance).(*models.A_SPECIFICATION_TYPE_REF)
+		ret2 := backRepo.BackRepoA_SPECIFICATION_TYPE_REF.GetA_SPECIFICATION_TYPE_REFDBFromA_SPECIFICATION_TYPE_REFPtr(a_specification_type_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPECIFIED_VALUES:
+		a_specified_valuesInstance := any(concreteInstance).(*models.A_SPECIFIED_VALUES)
+		ret2 := backRepo.BackRepoA_SPECIFIED_VALUES.GetA_SPECIFIED_VALUESDBFromA_SPECIFIED_VALUESPtr(a_specified_valuesInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_ATTRIBUTES:
+		a_spec_attributesInstance := any(concreteInstance).(*models.A_SPEC_ATTRIBUTES)
+		ret2 := backRepo.BackRepoA_SPEC_ATTRIBUTES.GetA_SPEC_ATTRIBUTESDBFromA_SPEC_ATTRIBUTESPtr(a_spec_attributesInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_OBJECTS:
+		a_spec_objectsInstance := any(concreteInstance).(*models.A_SPEC_OBJECTS)
+		ret2 := backRepo.BackRepoA_SPEC_OBJECTS.GetA_SPEC_OBJECTSDBFromA_SPEC_OBJECTSPtr(a_spec_objectsInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_OBJECT_TYPE_REF:
+		a_spec_object_type_refInstance := any(concreteInstance).(*models.A_SPEC_OBJECT_TYPE_REF)
+		ret2 := backRepo.BackRepoA_SPEC_OBJECT_TYPE_REF.GetA_SPEC_OBJECT_TYPE_REFDBFromA_SPEC_OBJECT_TYPE_REFPtr(a_spec_object_type_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_RELATIONS:
+		a_spec_relationsInstance := any(concreteInstance).(*models.A_SPEC_RELATIONS)
+		ret2 := backRepo.BackRepoA_SPEC_RELATIONS.GetA_SPEC_RELATIONSDBFromA_SPEC_RELATIONSPtr(a_spec_relationsInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_RELATION_GROUPS:
+		a_spec_relation_groupsInstance := any(concreteInstance).(*models.A_SPEC_RELATION_GROUPS)
+		ret2 := backRepo.BackRepoA_SPEC_RELATION_GROUPS.GetA_SPEC_RELATION_GROUPSDBFromA_SPEC_RELATION_GROUPSPtr(a_spec_relation_groupsInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_RELATION_REF:
+		a_spec_relation_refInstance := any(concreteInstance).(*models.A_SPEC_RELATION_REF)
+		ret2 := backRepo.BackRepoA_SPEC_RELATION_REF.GetA_SPEC_RELATION_REFDBFromA_SPEC_RELATION_REFPtr(a_spec_relation_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_RELATION_TYPE_REF:
+		a_spec_relation_type_refInstance := any(concreteInstance).(*models.A_SPEC_RELATION_TYPE_REF)
+		ret2 := backRepo.BackRepoA_SPEC_RELATION_TYPE_REF.GetA_SPEC_RELATION_TYPE_REFDBFromA_SPEC_RELATION_TYPE_REFPtr(a_spec_relation_type_refInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_SPEC_TYPES:
+		a_spec_typesInstance := any(concreteInstance).(*models.A_SPEC_TYPES)
+		ret2 := backRepo.BackRepoA_SPEC_TYPES.GetA_SPEC_TYPESDBFromA_SPEC_TYPESPtr(a_spec_typesInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_THE_HEADER:
+		a_the_headerInstance := any(concreteInstance).(*models.A_THE_HEADER)
+		ret2 := backRepo.BackRepoA_THE_HEADER.GetA_THE_HEADERDBFromA_THE_HEADERPtr(a_the_headerInstance)
+		ret = any(ret2).(*T2)
+	case *models.A_TOOL_EXTENSIONS:
+		a_tool_extensionsInstance := any(concreteInstance).(*models.A_TOOL_EXTENSIONS)
+		ret2 := backRepo.BackRepoA_TOOL_EXTENSIONS.GetA_TOOL_EXTENSIONSDBFromA_TOOL_EXTENSIONSPtr(a_tool_extensionsInstance)
 		ret = any(ret2).(*T2)
 	case *models.DATATYPE_DEFINITION_BOOLEAN:
 		datatype_definition_booleanInstance := any(concreteInstance).(*models.DATATYPE_DEFINITION_BOOLEAN)
@@ -171,194 +351,6 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		xhtml_contentInstance := any(concreteInstance).(*models.XHTML_CONTENT)
 		ret2 := backRepo.BackRepoXHTML_CONTENT.GetXHTML_CONTENTDBFromXHTML_CONTENTPtr(xhtml_contentInstance)
 		ret = any(ret2).(*T2)
-	case *models.Xhtml_InlPres_type:
-		xhtml_inlpres_typeInstance := any(concreteInstance).(*models.Xhtml_InlPres_type)
-		ret2 := backRepo.BackRepoXhtml_InlPres_type.GetXhtml_InlPres_typeDBFromXhtml_InlPres_typePtr(xhtml_inlpres_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_a_type:
-		xhtml_a_typeInstance := any(concreteInstance).(*models.Xhtml_a_type)
-		ret2 := backRepo.BackRepoXhtml_a_type.GetXhtml_a_typeDBFromXhtml_a_typePtr(xhtml_a_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_abbr_type:
-		xhtml_abbr_typeInstance := any(concreteInstance).(*models.Xhtml_abbr_type)
-		ret2 := backRepo.BackRepoXhtml_abbr_type.GetXhtml_abbr_typeDBFromXhtml_abbr_typePtr(xhtml_abbr_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_acronym_type:
-		xhtml_acronym_typeInstance := any(concreteInstance).(*models.Xhtml_acronym_type)
-		ret2 := backRepo.BackRepoXhtml_acronym_type.GetXhtml_acronym_typeDBFromXhtml_acronym_typePtr(xhtml_acronym_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_address_type:
-		xhtml_address_typeInstance := any(concreteInstance).(*models.Xhtml_address_type)
-		ret2 := backRepo.BackRepoXhtml_address_type.GetXhtml_address_typeDBFromXhtml_address_typePtr(xhtml_address_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_blockquote_type:
-		xhtml_blockquote_typeInstance := any(concreteInstance).(*models.Xhtml_blockquote_type)
-		ret2 := backRepo.BackRepoXhtml_blockquote_type.GetXhtml_blockquote_typeDBFromXhtml_blockquote_typePtr(xhtml_blockquote_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_br_type:
-		xhtml_br_typeInstance := any(concreteInstance).(*models.Xhtml_br_type)
-		ret2 := backRepo.BackRepoXhtml_br_type.GetXhtml_br_typeDBFromXhtml_br_typePtr(xhtml_br_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_caption_type:
-		xhtml_caption_typeInstance := any(concreteInstance).(*models.Xhtml_caption_type)
-		ret2 := backRepo.BackRepoXhtml_caption_type.GetXhtml_caption_typeDBFromXhtml_caption_typePtr(xhtml_caption_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_cite_type:
-		xhtml_cite_typeInstance := any(concreteInstance).(*models.Xhtml_cite_type)
-		ret2 := backRepo.BackRepoXhtml_cite_type.GetXhtml_cite_typeDBFromXhtml_cite_typePtr(xhtml_cite_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_code_type:
-		xhtml_code_typeInstance := any(concreteInstance).(*models.Xhtml_code_type)
-		ret2 := backRepo.BackRepoXhtml_code_type.GetXhtml_code_typeDBFromXhtml_code_typePtr(xhtml_code_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_col_type:
-		xhtml_col_typeInstance := any(concreteInstance).(*models.Xhtml_col_type)
-		ret2 := backRepo.BackRepoXhtml_col_type.GetXhtml_col_typeDBFromXhtml_col_typePtr(xhtml_col_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_colgroup_type:
-		xhtml_colgroup_typeInstance := any(concreteInstance).(*models.Xhtml_colgroup_type)
-		ret2 := backRepo.BackRepoXhtml_colgroup_type.GetXhtml_colgroup_typeDBFromXhtml_colgroup_typePtr(xhtml_colgroup_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_dd_type:
-		xhtml_dd_typeInstance := any(concreteInstance).(*models.Xhtml_dd_type)
-		ret2 := backRepo.BackRepoXhtml_dd_type.GetXhtml_dd_typeDBFromXhtml_dd_typePtr(xhtml_dd_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_dfn_type:
-		xhtml_dfn_typeInstance := any(concreteInstance).(*models.Xhtml_dfn_type)
-		ret2 := backRepo.BackRepoXhtml_dfn_type.GetXhtml_dfn_typeDBFromXhtml_dfn_typePtr(xhtml_dfn_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_div_type:
-		xhtml_div_typeInstance := any(concreteInstance).(*models.Xhtml_div_type)
-		ret2 := backRepo.BackRepoXhtml_div_type.GetXhtml_div_typeDBFromXhtml_div_typePtr(xhtml_div_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_dl_type:
-		xhtml_dl_typeInstance := any(concreteInstance).(*models.Xhtml_dl_type)
-		ret2 := backRepo.BackRepoXhtml_dl_type.GetXhtml_dl_typeDBFromXhtml_dl_typePtr(xhtml_dl_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_dt_type:
-		xhtml_dt_typeInstance := any(concreteInstance).(*models.Xhtml_dt_type)
-		ret2 := backRepo.BackRepoXhtml_dt_type.GetXhtml_dt_typeDBFromXhtml_dt_typePtr(xhtml_dt_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_edit_type:
-		xhtml_edit_typeInstance := any(concreteInstance).(*models.Xhtml_edit_type)
-		ret2 := backRepo.BackRepoXhtml_edit_type.GetXhtml_edit_typeDBFromXhtml_edit_typePtr(xhtml_edit_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_em_type:
-		xhtml_em_typeInstance := any(concreteInstance).(*models.Xhtml_em_type)
-		ret2 := backRepo.BackRepoXhtml_em_type.GetXhtml_em_typeDBFromXhtml_em_typePtr(xhtml_em_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_h1_type:
-		xhtml_h1_typeInstance := any(concreteInstance).(*models.Xhtml_h1_type)
-		ret2 := backRepo.BackRepoXhtml_h1_type.GetXhtml_h1_typeDBFromXhtml_h1_typePtr(xhtml_h1_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_h2_type:
-		xhtml_h2_typeInstance := any(concreteInstance).(*models.Xhtml_h2_type)
-		ret2 := backRepo.BackRepoXhtml_h2_type.GetXhtml_h2_typeDBFromXhtml_h2_typePtr(xhtml_h2_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_h3_type:
-		xhtml_h3_typeInstance := any(concreteInstance).(*models.Xhtml_h3_type)
-		ret2 := backRepo.BackRepoXhtml_h3_type.GetXhtml_h3_typeDBFromXhtml_h3_typePtr(xhtml_h3_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_h4_type:
-		xhtml_h4_typeInstance := any(concreteInstance).(*models.Xhtml_h4_type)
-		ret2 := backRepo.BackRepoXhtml_h4_type.GetXhtml_h4_typeDBFromXhtml_h4_typePtr(xhtml_h4_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_h5_type:
-		xhtml_h5_typeInstance := any(concreteInstance).(*models.Xhtml_h5_type)
-		ret2 := backRepo.BackRepoXhtml_h5_type.GetXhtml_h5_typeDBFromXhtml_h5_typePtr(xhtml_h5_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_h6_type:
-		xhtml_h6_typeInstance := any(concreteInstance).(*models.Xhtml_h6_type)
-		ret2 := backRepo.BackRepoXhtml_h6_type.GetXhtml_h6_typeDBFromXhtml_h6_typePtr(xhtml_h6_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_heading_type:
-		xhtml_heading_typeInstance := any(concreteInstance).(*models.Xhtml_heading_type)
-		ret2 := backRepo.BackRepoXhtml_heading_type.GetXhtml_heading_typeDBFromXhtml_heading_typePtr(xhtml_heading_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_hr_type:
-		xhtml_hr_typeInstance := any(concreteInstance).(*models.Xhtml_hr_type)
-		ret2 := backRepo.BackRepoXhtml_hr_type.GetXhtml_hr_typeDBFromXhtml_hr_typePtr(xhtml_hr_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_kbd_type:
-		xhtml_kbd_typeInstance := any(concreteInstance).(*models.Xhtml_kbd_type)
-		ret2 := backRepo.BackRepoXhtml_kbd_type.GetXhtml_kbd_typeDBFromXhtml_kbd_typePtr(xhtml_kbd_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_li_type:
-		xhtml_li_typeInstance := any(concreteInstance).(*models.Xhtml_li_type)
-		ret2 := backRepo.BackRepoXhtml_li_type.GetXhtml_li_typeDBFromXhtml_li_typePtr(xhtml_li_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_object_type:
-		xhtml_object_typeInstance := any(concreteInstance).(*models.Xhtml_object_type)
-		ret2 := backRepo.BackRepoXhtml_object_type.GetXhtml_object_typeDBFromXhtml_object_typePtr(xhtml_object_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_ol_type:
-		xhtml_ol_typeInstance := any(concreteInstance).(*models.Xhtml_ol_type)
-		ret2 := backRepo.BackRepoXhtml_ol_type.GetXhtml_ol_typeDBFromXhtml_ol_typePtr(xhtml_ol_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_p_type:
-		xhtml_p_typeInstance := any(concreteInstance).(*models.Xhtml_p_type)
-		ret2 := backRepo.BackRepoXhtml_p_type.GetXhtml_p_typeDBFromXhtml_p_typePtr(xhtml_p_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_param_type:
-		xhtml_param_typeInstance := any(concreteInstance).(*models.Xhtml_param_type)
-		ret2 := backRepo.BackRepoXhtml_param_type.GetXhtml_param_typeDBFromXhtml_param_typePtr(xhtml_param_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_pre_type:
-		xhtml_pre_typeInstance := any(concreteInstance).(*models.Xhtml_pre_type)
-		ret2 := backRepo.BackRepoXhtml_pre_type.GetXhtml_pre_typeDBFromXhtml_pre_typePtr(xhtml_pre_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_q_type:
-		xhtml_q_typeInstance := any(concreteInstance).(*models.Xhtml_q_type)
-		ret2 := backRepo.BackRepoXhtml_q_type.GetXhtml_q_typeDBFromXhtml_q_typePtr(xhtml_q_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_samp_type:
-		xhtml_samp_typeInstance := any(concreteInstance).(*models.Xhtml_samp_type)
-		ret2 := backRepo.BackRepoXhtml_samp_type.GetXhtml_samp_typeDBFromXhtml_samp_typePtr(xhtml_samp_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_span_type:
-		xhtml_span_typeInstance := any(concreteInstance).(*models.Xhtml_span_type)
-		ret2 := backRepo.BackRepoXhtml_span_type.GetXhtml_span_typeDBFromXhtml_span_typePtr(xhtml_span_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_strong_type:
-		xhtml_strong_typeInstance := any(concreteInstance).(*models.Xhtml_strong_type)
-		ret2 := backRepo.BackRepoXhtml_strong_type.GetXhtml_strong_typeDBFromXhtml_strong_typePtr(xhtml_strong_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_table_type:
-		xhtml_table_typeInstance := any(concreteInstance).(*models.Xhtml_table_type)
-		ret2 := backRepo.BackRepoXhtml_table_type.GetXhtml_table_typeDBFromXhtml_table_typePtr(xhtml_table_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_tbody_type:
-		xhtml_tbody_typeInstance := any(concreteInstance).(*models.Xhtml_tbody_type)
-		ret2 := backRepo.BackRepoXhtml_tbody_type.GetXhtml_tbody_typeDBFromXhtml_tbody_typePtr(xhtml_tbody_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_td_type:
-		xhtml_td_typeInstance := any(concreteInstance).(*models.Xhtml_td_type)
-		ret2 := backRepo.BackRepoXhtml_td_type.GetXhtml_td_typeDBFromXhtml_td_typePtr(xhtml_td_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_tfoot_type:
-		xhtml_tfoot_typeInstance := any(concreteInstance).(*models.Xhtml_tfoot_type)
-		ret2 := backRepo.BackRepoXhtml_tfoot_type.GetXhtml_tfoot_typeDBFromXhtml_tfoot_typePtr(xhtml_tfoot_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_th_type:
-		xhtml_th_typeInstance := any(concreteInstance).(*models.Xhtml_th_type)
-		ret2 := backRepo.BackRepoXhtml_th_type.GetXhtml_th_typeDBFromXhtml_th_typePtr(xhtml_th_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_thead_type:
-		xhtml_thead_typeInstance := any(concreteInstance).(*models.Xhtml_thead_type)
-		ret2 := backRepo.BackRepoXhtml_thead_type.GetXhtml_thead_typeDBFromXhtml_thead_typePtr(xhtml_thead_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_tr_type:
-		xhtml_tr_typeInstance := any(concreteInstance).(*models.Xhtml_tr_type)
-		ret2 := backRepo.BackRepoXhtml_tr_type.GetXhtml_tr_typeDBFromXhtml_tr_typePtr(xhtml_tr_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_ul_type:
-		xhtml_ul_typeInstance := any(concreteInstance).(*models.Xhtml_ul_type)
-		ret2 := backRepo.BackRepoXhtml_ul_type.GetXhtml_ul_typeDBFromXhtml_ul_typePtr(xhtml_ul_typeInstance)
-		ret = any(ret2).(*T2)
-	case *models.Xhtml_var_type:
-		xhtml_var_typeInstance := any(concreteInstance).(*models.Xhtml_var_type)
-		ret2 := backRepo.BackRepoXhtml_var_type.GetXhtml_var_typeDBFromXhtml_var_typePtr(xhtml_var_typeInstance)
-		ret = any(ret2).(*T2)
 	default:
 		_ = concreteInstance
 	}
@@ -447,8 +439,233 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
-	case *models.AnyType:
-		tmp := GetInstanceDBFromInstance[models.AnyType, AnyTypeDB](
+	case *models.A_ALTERNATIVE_ID:
+		tmp := GetInstanceDBFromInstance[models.A_ALTERNATIVE_ID, A_ALTERNATIVE_IDDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF, A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_DATE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_DATE_REF, A_ATTRIBUTE_DEFINITION_DATE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF, A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF, A_ATTRIBUTE_DEFINITION_INTEGER_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_REAL_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_REAL_REF, A_ATTRIBUTE_DEFINITION_REAL_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_STRING_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_STRING_REF, A_ATTRIBUTE_DEFINITION_STRING_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_XHTML_REF, A_ATTRIBUTE_DEFINITION_XHTML_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_BOOLEAN:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_BOOLEAN, A_ATTRIBUTE_VALUE_BOOLEANDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_DATE:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_DATE, A_ATTRIBUTE_VALUE_DATEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_ENUMERATION:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_ENUMERATION, A_ATTRIBUTE_VALUE_ENUMERATIONDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_INTEGER:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_INTEGER, A_ATTRIBUTE_VALUE_INTEGERDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_REAL:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_REAL, A_ATTRIBUTE_VALUE_REALDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_STRING:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_STRING, A_ATTRIBUTE_VALUE_STRINGDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_XHTML:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_XHTML, A_ATTRIBUTE_VALUE_XHTMLDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_XHTML_1:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_XHTML_1, A_ATTRIBUTE_VALUE_XHTML_1DB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_CHILDREN:
+		tmp := GetInstanceDBFromInstance[models.A_CHILDREN, A_CHILDRENDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_CORE_CONTENT:
+		tmp := GetInstanceDBFromInstance[models.A_CORE_CONTENT, A_CORE_CONTENTDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPES:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPES, A_DATATYPESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_BOOLEAN_REF, A_DATATYPE_DEFINITION_BOOLEAN_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_DATE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_DATE_REF, A_DATATYPE_DEFINITION_DATE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_ENUMERATION_REF, A_DATATYPE_DEFINITION_ENUMERATION_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_INTEGER_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_INTEGER_REF, A_DATATYPE_DEFINITION_INTEGER_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_REAL_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_REAL_REF, A_DATATYPE_DEFINITION_REAL_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_STRING_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_STRING_REF, A_DATATYPE_DEFINITION_STRING_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_XHTML_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_XHTML_REF, A_DATATYPE_DEFINITION_XHTML_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_EDITABLE_ATTS:
+		tmp := GetInstanceDBFromInstance[models.A_EDITABLE_ATTS, A_EDITABLE_ATTSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ENUM_VALUE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ENUM_VALUE_REF, A_ENUM_VALUE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_OBJECT:
+		tmp := GetInstanceDBFromInstance[models.A_OBJECT, A_OBJECTDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_PROPERTIES:
+		tmp := GetInstanceDBFromInstance[models.A_PROPERTIES, A_PROPERTIESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_RELATION_GROUP_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_RELATION_GROUP_TYPE_REF, A_RELATION_GROUP_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SOURCE_1:
+		tmp := GetInstanceDBFromInstance[models.A_SOURCE_1, A_SOURCE_1DB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SOURCE_SPECIFICATION_1:
+		tmp := GetInstanceDBFromInstance[models.A_SOURCE_SPECIFICATION_1, A_SOURCE_SPECIFICATION_1DB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPECIFICATIONS:
+		tmp := GetInstanceDBFromInstance[models.A_SPECIFICATIONS, A_SPECIFICATIONSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPECIFICATION_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPECIFICATION_TYPE_REF, A_SPECIFICATION_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPECIFIED_VALUES:
+		tmp := GetInstanceDBFromInstance[models.A_SPECIFIED_VALUES, A_SPECIFIED_VALUESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_ATTRIBUTES:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_ATTRIBUTES, A_SPEC_ATTRIBUTESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_OBJECTS:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_OBJECTS, A_SPEC_OBJECTSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_OBJECT_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_OBJECT_TYPE_REF, A_SPEC_OBJECT_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATIONS:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATIONS, A_SPEC_RELATIONSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATION_GROUPS:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATION_GROUPS, A_SPEC_RELATION_GROUPSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATION_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATION_REF, A_SPEC_RELATION_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATION_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATION_TYPE_REF, A_SPEC_RELATION_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_TYPES:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_TYPES, A_SPEC_TYPESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_THE_HEADER:
+		tmp := GetInstanceDBFromInstance[models.A_THE_HEADER, A_THE_HEADERDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_TOOL_EXTENSIONS:
+		tmp := GetInstanceDBFromInstance[models.A_TOOL_EXTENSIONS, A_TOOL_EXTENSIONSDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -564,241 +781,6 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.XHTML_CONTENT:
 		tmp := GetInstanceDBFromInstance[models.XHTML_CONTENT, XHTML_CONTENTDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_InlPres_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_InlPres_type, Xhtml_InlPres_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_a_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_a_type, Xhtml_a_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_abbr_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_abbr_type, Xhtml_abbr_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_acronym_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_acronym_type, Xhtml_acronym_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_address_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_address_type, Xhtml_address_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_blockquote_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_blockquote_type, Xhtml_blockquote_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_br_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_br_type, Xhtml_br_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_caption_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_caption_type, Xhtml_caption_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_cite_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_cite_type, Xhtml_cite_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_code_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_code_type, Xhtml_code_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_col_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_col_type, Xhtml_col_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_colgroup_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_colgroup_type, Xhtml_colgroup_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dd_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dd_type, Xhtml_dd_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dfn_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dfn_type, Xhtml_dfn_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_div_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_div_type, Xhtml_div_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dl_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dl_type, Xhtml_dl_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dt_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dt_type, Xhtml_dt_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_edit_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_edit_type, Xhtml_edit_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_em_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_em_type, Xhtml_em_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h1_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h1_type, Xhtml_h1_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h2_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h2_type, Xhtml_h2_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h3_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h3_type, Xhtml_h3_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h4_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h4_type, Xhtml_h4_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h5_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h5_type, Xhtml_h5_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h6_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h6_type, Xhtml_h6_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_heading_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_heading_type, Xhtml_heading_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_hr_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_hr_type, Xhtml_hr_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_kbd_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_kbd_type, Xhtml_kbd_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_li_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_li_type, Xhtml_li_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_object_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_object_type, Xhtml_object_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_ol_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_ol_type, Xhtml_ol_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_p_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_p_type, Xhtml_p_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_param_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_param_type, Xhtml_param_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_pre_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_pre_type, Xhtml_pre_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_q_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_q_type, Xhtml_q_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_samp_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_samp_type, Xhtml_samp_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_span_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_span_type, Xhtml_span_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_strong_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_strong_type, Xhtml_strong_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_table_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_table_type, Xhtml_table_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_tbody_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_tbody_type, Xhtml_tbody_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_td_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_td_type, Xhtml_td_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_tfoot_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_tfoot_type, Xhtml_tfoot_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_th_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_th_type, Xhtml_th_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_thead_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_thead_type, Xhtml_thead_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_tr_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_tr_type, Xhtml_tr_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_ul_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_ul_type, Xhtml_ul_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_var_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_var_type, Xhtml_var_typeDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -890,8 +872,233 @@ func GetIDPointer[T models.PointerToGongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
-	case *models.AnyType:
-		tmp := GetInstanceDBFromInstance[models.AnyType, AnyTypeDB](
+	case *models.A_ALTERNATIVE_ID:
+		tmp := GetInstanceDBFromInstance[models.A_ALTERNATIVE_ID, A_ALTERNATIVE_IDDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF, A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_DATE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_DATE_REF, A_ATTRIBUTE_DEFINITION_DATE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF, A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF, A_ATTRIBUTE_DEFINITION_INTEGER_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_REAL_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_REAL_REF, A_ATTRIBUTE_DEFINITION_REAL_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_STRING_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_STRING_REF, A_ATTRIBUTE_DEFINITION_STRING_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_DEFINITION_XHTML_REF, A_ATTRIBUTE_DEFINITION_XHTML_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_BOOLEAN:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_BOOLEAN, A_ATTRIBUTE_VALUE_BOOLEANDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_DATE:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_DATE, A_ATTRIBUTE_VALUE_DATEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_ENUMERATION:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_ENUMERATION, A_ATTRIBUTE_VALUE_ENUMERATIONDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_INTEGER:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_INTEGER, A_ATTRIBUTE_VALUE_INTEGERDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_REAL:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_REAL, A_ATTRIBUTE_VALUE_REALDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_STRING:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_STRING, A_ATTRIBUTE_VALUE_STRINGDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_XHTML:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_XHTML, A_ATTRIBUTE_VALUE_XHTMLDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ATTRIBUTE_VALUE_XHTML_1:
+		tmp := GetInstanceDBFromInstance[models.A_ATTRIBUTE_VALUE_XHTML_1, A_ATTRIBUTE_VALUE_XHTML_1DB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_CHILDREN:
+		tmp := GetInstanceDBFromInstance[models.A_CHILDREN, A_CHILDRENDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_CORE_CONTENT:
+		tmp := GetInstanceDBFromInstance[models.A_CORE_CONTENT, A_CORE_CONTENTDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPES:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPES, A_DATATYPESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_BOOLEAN_REF, A_DATATYPE_DEFINITION_BOOLEAN_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_DATE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_DATE_REF, A_DATATYPE_DEFINITION_DATE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_ENUMERATION_REF, A_DATATYPE_DEFINITION_ENUMERATION_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_INTEGER_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_INTEGER_REF, A_DATATYPE_DEFINITION_INTEGER_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_REAL_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_REAL_REF, A_DATATYPE_DEFINITION_REAL_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_STRING_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_STRING_REF, A_DATATYPE_DEFINITION_STRING_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_DATATYPE_DEFINITION_XHTML_REF:
+		tmp := GetInstanceDBFromInstance[models.A_DATATYPE_DEFINITION_XHTML_REF, A_DATATYPE_DEFINITION_XHTML_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_EDITABLE_ATTS:
+		tmp := GetInstanceDBFromInstance[models.A_EDITABLE_ATTS, A_EDITABLE_ATTSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_ENUM_VALUE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_ENUM_VALUE_REF, A_ENUM_VALUE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_OBJECT:
+		tmp := GetInstanceDBFromInstance[models.A_OBJECT, A_OBJECTDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_PROPERTIES:
+		tmp := GetInstanceDBFromInstance[models.A_PROPERTIES, A_PROPERTIESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_RELATION_GROUP_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_RELATION_GROUP_TYPE_REF, A_RELATION_GROUP_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SOURCE_1:
+		tmp := GetInstanceDBFromInstance[models.A_SOURCE_1, A_SOURCE_1DB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SOURCE_SPECIFICATION_1:
+		tmp := GetInstanceDBFromInstance[models.A_SOURCE_SPECIFICATION_1, A_SOURCE_SPECIFICATION_1DB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPECIFICATIONS:
+		tmp := GetInstanceDBFromInstance[models.A_SPECIFICATIONS, A_SPECIFICATIONSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPECIFICATION_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPECIFICATION_TYPE_REF, A_SPECIFICATION_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPECIFIED_VALUES:
+		tmp := GetInstanceDBFromInstance[models.A_SPECIFIED_VALUES, A_SPECIFIED_VALUESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_ATTRIBUTES:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_ATTRIBUTES, A_SPEC_ATTRIBUTESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_OBJECTS:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_OBJECTS, A_SPEC_OBJECTSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_OBJECT_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_OBJECT_TYPE_REF, A_SPEC_OBJECT_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATIONS:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATIONS, A_SPEC_RELATIONSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATION_GROUPS:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATION_GROUPS, A_SPEC_RELATION_GROUPSDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATION_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATION_REF, A_SPEC_RELATION_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_RELATION_TYPE_REF:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_RELATION_TYPE_REF, A_SPEC_RELATION_TYPE_REFDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_SPEC_TYPES:
+		tmp := GetInstanceDBFromInstance[models.A_SPEC_TYPES, A_SPEC_TYPESDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_THE_HEADER:
+		tmp := GetInstanceDBFromInstance[models.A_THE_HEADER, A_THE_HEADERDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.A_TOOL_EXTENSIONS:
+		tmp := GetInstanceDBFromInstance[models.A_TOOL_EXTENSIONS, A_TOOL_EXTENSIONSDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1007,241 +1214,6 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.XHTML_CONTENT:
 		tmp := GetInstanceDBFromInstance[models.XHTML_CONTENT, XHTML_CONTENTDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_InlPres_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_InlPres_type, Xhtml_InlPres_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_a_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_a_type, Xhtml_a_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_abbr_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_abbr_type, Xhtml_abbr_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_acronym_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_acronym_type, Xhtml_acronym_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_address_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_address_type, Xhtml_address_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_blockquote_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_blockquote_type, Xhtml_blockquote_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_br_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_br_type, Xhtml_br_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_caption_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_caption_type, Xhtml_caption_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_cite_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_cite_type, Xhtml_cite_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_code_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_code_type, Xhtml_code_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_col_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_col_type, Xhtml_col_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_colgroup_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_colgroup_type, Xhtml_colgroup_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dd_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dd_type, Xhtml_dd_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dfn_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dfn_type, Xhtml_dfn_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_div_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_div_type, Xhtml_div_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dl_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dl_type, Xhtml_dl_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_dt_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_dt_type, Xhtml_dt_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_edit_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_edit_type, Xhtml_edit_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_em_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_em_type, Xhtml_em_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h1_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h1_type, Xhtml_h1_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h2_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h2_type, Xhtml_h2_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h3_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h3_type, Xhtml_h3_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h4_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h4_type, Xhtml_h4_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h5_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h5_type, Xhtml_h5_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_h6_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_h6_type, Xhtml_h6_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_heading_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_heading_type, Xhtml_heading_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_hr_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_hr_type, Xhtml_hr_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_kbd_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_kbd_type, Xhtml_kbd_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_li_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_li_type, Xhtml_li_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_object_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_object_type, Xhtml_object_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_ol_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_ol_type, Xhtml_ol_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_p_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_p_type, Xhtml_p_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_param_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_param_type, Xhtml_param_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_pre_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_pre_type, Xhtml_pre_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_q_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_q_type, Xhtml_q_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_samp_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_samp_type, Xhtml_samp_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_span_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_span_type, Xhtml_span_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_strong_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_strong_type, Xhtml_strong_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_table_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_table_type, Xhtml_table_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_tbody_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_tbody_type, Xhtml_tbody_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_td_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_td_type, Xhtml_td_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_tfoot_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_tfoot_type, Xhtml_tfoot_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_th_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_th_type, Xhtml_th_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_thead_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_thead_type, Xhtml_thead_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_tr_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_tr_type, Xhtml_tr_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_ul_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_ul_type, Xhtml_ul_typeDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Xhtml_var_type:
-		tmp := GetInstanceDBFromInstance[models.Xhtml_var_type, Xhtml_var_typeDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

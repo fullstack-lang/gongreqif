@@ -48,19 +48,13 @@ type DATATYPE_DEFINITION_ENUMERATIONAPI struct {
 type DATATYPE_DEFINITION_ENUMERATIONPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
-
-	SPECIFIED_VALUES struct {
-
-		// field ENUM_VALUE is a slice of pointers to another Struct (optional or 0..1)
-		ENUM_VALUE IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field SPECIFIED_VALUES is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SPECIFIED_VALUESID sql.NullInt64
 }
 
 // DATATYPE_DEFINITION_ENUMERATIONDB describes a datatype_definition_enumeration in the database
@@ -80,8 +74,11 @@ type DATATYPE_DEFINITION_ENUMERATIONDB struct {
 	// Declation for basic field datatype_definition_enumerationDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field datatype_definition_enumerationDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field datatype_definition_enumerationDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field datatype_definition_enumerationDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -112,9 +109,11 @@ type DATATYPE_DEFINITION_ENUMERATIONWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	LAST_CHANGE string `xlsx:"4"`
+
+	LONG_NAME string `xlsx:"5"`
 	// insertion for WOP pointer fields
 }
 
@@ -123,6 +122,7 @@ var DATATYPE_DEFINITION_ENUMERATION_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
 }
@@ -255,40 +255,28 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 		datatype_definition_enumerationDB.CopyBasicFieldsFromDATATYPE_DEFINITION_ENUMERATION(datatype_definition_enumeration)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range datatype_definition_enumeration.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value datatype_definition_enumeration.ALTERNATIVE_ID translates to updating the datatype_definition_enumeration.ALTERNATIVE_IDID
+		datatype_definition_enumerationDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if datatype_definition_enumeration.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[datatype_definition_enumeration.ALTERNATIVE_ID]; ok {
+				datatype_definition_enumerationDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				datatype_definition_enumerationDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			datatype_definition_enumerationDB.ALTERNATIVE_IDID.Int64 = 0
+			datatype_definition_enumerationDB.ALTERNATIVE_IDID.Valid = true
 		}
 
-		// 1. reset
-		datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.SPECIFIED_VALUES.ENUM_VALUE = make([]int, 0)
-		// 2. encode
-		for _, enum_valueAssocEnd := range datatype_definition_enumeration.SPECIFIED_VALUES.ENUM_VALUE {
-			enum_valueAssocEnd_DB :=
-				backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the enum_valueAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if enum_valueAssocEnd_DB == nil {
-				continue
+		// commit pointer value datatype_definition_enumeration.SPECIFIED_VALUES translates to updating the datatype_definition_enumeration.SPECIFIED_VALUESID
+		datatype_definition_enumerationDB.SPECIFIED_VALUESID.Valid = true // allow for a 0 value (nil association)
+		if datatype_definition_enumeration.SPECIFIED_VALUES != nil {
+			if SPECIFIED_VALUESId, ok := backRepo.BackRepoA_SPECIFIED_VALUES.Map_A_SPECIFIED_VALUESPtr_A_SPECIFIED_VALUESDBID[datatype_definition_enumeration.SPECIFIED_VALUES]; ok {
+				datatype_definition_enumerationDB.SPECIFIED_VALUESID.Int64 = int64(SPECIFIED_VALUESId)
+				datatype_definition_enumerationDB.SPECIFIED_VALUESID.Valid = true
 			}
-			
-			datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.SPECIFIED_VALUES.ENUM_VALUE =
-				append(datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.SPECIFIED_VALUES.ENUM_VALUE, int(enum_valueAssocEnd_DB.ID))
+		} else {
+			datatype_definition_enumerationDB.SPECIFIED_VALUESID.Int64 = 0
+			datatype_definition_enumerationDB.SPECIFIED_VALUESID.Valid = true
 		}
 
 		_, err := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Save(datatype_definition_enumerationDB)
@@ -404,24 +392,48 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) DecodePointers(backRepo *BackRepoStruct, datatype_definition_enumeration *models.DATATYPE_DEFINITION_ENUMERATION) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem datatype_definition_enumeration.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	datatype_definition_enumeration.ALTERNATIVE_ID.ALTERNATIVE_ID = datatype_definition_enumeration.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		datatype_definition_enumeration.ALTERNATIVE_ID.ALTERNATIVE_ID = append(datatype_definition_enumeration.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := datatype_definition_enumerationDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
-	// This loop redeem datatype_definition_enumeration.SPECIFIED_VALUES.ENUM_VALUE in the stage from the encode in the back repo
-	// It parses all ENUM_VALUEDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	datatype_definition_enumeration.SPECIFIED_VALUES.ENUM_VALUE = datatype_definition_enumeration.SPECIFIED_VALUES.ENUM_VALUE[:0]
-	for _, _ENUM_VALUEid := range datatype_definition_enumerationDB.DATATYPE_DEFINITION_ENUMERATIONPointersEncoding.SPECIFIED_VALUES.ENUM_VALUE {
-		datatype_definition_enumeration.SPECIFIED_VALUES.ENUM_VALUE = append(datatype_definition_enumeration.SPECIFIED_VALUES.ENUM_VALUE, backRepo.BackRepoENUM_VALUE.Map_ENUM_VALUEDBID_ENUM_VALUEPtr[uint(_ENUM_VALUEid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: datatype_definition_enumeration.ALTERNATIVE_ID, unknown pointer id", id)
+				datatype_definition_enumeration.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if datatype_definition_enumeration.ALTERNATIVE_ID == nil || datatype_definition_enumeration.ALTERNATIVE_ID != tmp {
+					datatype_definition_enumeration.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			datatype_definition_enumeration.ALTERNATIVE_ID = nil
+		}
 	}
+	
+	// SPECIFIED_VALUES field	
+	{
+		id := datatype_definition_enumerationDB.SPECIFIED_VALUESID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SPECIFIED_VALUES.Map_A_SPECIFIED_VALUESDBID_A_SPECIFIED_VALUESPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: datatype_definition_enumeration.SPECIFIED_VALUES, unknown pointer id", id)
+				datatype_definition_enumeration.SPECIFIED_VALUES = nil
+			} else {
+				// updates only if field has changed
+				if datatype_definition_enumeration.SPECIFIED_VALUES == nil || datatype_definition_enumeration.SPECIFIED_VALUES != tmp {
+					datatype_definition_enumeration.SPECIFIED_VALUES = tmp
+				}
+			}
+		} else {
+			datatype_definition_enumeration.SPECIFIED_VALUES = nil
+		}
+	}
+	
 	return
 }
 
@@ -462,7 +474,10 @@ func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) Copy
 	datatype_definition_enumerationDB.DESC_Data.String = datatype_definition_enumeration.DESC
 	datatype_definition_enumerationDB.DESC_Data.Valid = true
 
-	datatype_definition_enumerationDB.LAST_CHANGE_Data.Time = datatype_definition_enumeration.LAST_CHANGE
+	datatype_definition_enumerationDB.IDENTIFIER_Data.String = datatype_definition_enumeration.IDENTIFIER
+	datatype_definition_enumerationDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_enumerationDB.LAST_CHANGE_Data.String = datatype_definition_enumeration.LAST_CHANGE
 	datatype_definition_enumerationDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_enumerationDB.LONG_NAME_Data.String = datatype_definition_enumeration.LONG_NAME
@@ -479,7 +494,10 @@ func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) Copy
 	datatype_definition_enumerationDB.DESC_Data.String = datatype_definition_enumeration.DESC
 	datatype_definition_enumerationDB.DESC_Data.Valid = true
 
-	datatype_definition_enumerationDB.LAST_CHANGE_Data.Time = datatype_definition_enumeration.LAST_CHANGE
+	datatype_definition_enumerationDB.IDENTIFIER_Data.String = datatype_definition_enumeration.IDENTIFIER
+	datatype_definition_enumerationDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_enumerationDB.LAST_CHANGE_Data.String = datatype_definition_enumeration.LAST_CHANGE
 	datatype_definition_enumerationDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_enumerationDB.LONG_NAME_Data.String = datatype_definition_enumeration.LONG_NAME
@@ -496,7 +514,10 @@ func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) Copy
 	datatype_definition_enumerationDB.DESC_Data.String = datatype_definition_enumeration.DESC
 	datatype_definition_enumerationDB.DESC_Data.Valid = true
 
-	datatype_definition_enumerationDB.LAST_CHANGE_Data.Time = datatype_definition_enumeration.LAST_CHANGE
+	datatype_definition_enumerationDB.IDENTIFIER_Data.String = datatype_definition_enumeration.IDENTIFIER
+	datatype_definition_enumerationDB.IDENTIFIER_Data.Valid = true
+
+	datatype_definition_enumerationDB.LAST_CHANGE_Data.String = datatype_definition_enumeration.LAST_CHANGE
 	datatype_definition_enumerationDB.LAST_CHANGE_Data.Valid = true
 
 	datatype_definition_enumerationDB.LONG_NAME_Data.String = datatype_definition_enumeration.LONG_NAME
@@ -508,7 +529,8 @@ func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) Copy
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_enumeration.Name = datatype_definition_enumerationDB.Name_Data.String
 	datatype_definition_enumeration.DESC = datatype_definition_enumerationDB.DESC_Data.String
-	datatype_definition_enumeration.LAST_CHANGE = datatype_definition_enumerationDB.LAST_CHANGE_Data.Time
+	datatype_definition_enumeration.IDENTIFIER = datatype_definition_enumerationDB.IDENTIFIER_Data.String
+	datatype_definition_enumeration.LAST_CHANGE = datatype_definition_enumerationDB.LAST_CHANGE_Data.String
 	datatype_definition_enumeration.LONG_NAME = datatype_definition_enumerationDB.LONG_NAME_Data.String
 }
 
@@ -517,7 +539,8 @@ func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) Copy
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_enumeration.Name = datatype_definition_enumerationDB.Name_Data.String
 	datatype_definition_enumeration.DESC = datatype_definition_enumerationDB.DESC_Data.String
-	datatype_definition_enumeration.LAST_CHANGE = datatype_definition_enumerationDB.LAST_CHANGE_Data.Time
+	datatype_definition_enumeration.IDENTIFIER = datatype_definition_enumerationDB.IDENTIFIER_Data.String
+	datatype_definition_enumeration.LAST_CHANGE = datatype_definition_enumerationDB.LAST_CHANGE_Data.String
 	datatype_definition_enumeration.LONG_NAME = datatype_definition_enumerationDB.LONG_NAME_Data.String
 }
 
@@ -527,7 +550,8 @@ func (datatype_definition_enumerationDB *DATATYPE_DEFINITION_ENUMERATIONDB) Copy
 	// insertion point for checkout of basic fields (back repo to stage)
 	datatype_definition_enumeration.Name = datatype_definition_enumerationDB.Name_Data.String
 	datatype_definition_enumeration.DESC = datatype_definition_enumerationDB.DESC_Data.String
-	datatype_definition_enumeration.LAST_CHANGE = datatype_definition_enumerationDB.LAST_CHANGE_Data.Time
+	datatype_definition_enumeration.IDENTIFIER = datatype_definition_enumerationDB.IDENTIFIER_Data.String
+	datatype_definition_enumeration.LAST_CHANGE = datatype_definition_enumerationDB.LAST_CHANGE_Data.String
 	datatype_definition_enumeration.LONG_NAME = datatype_definition_enumerationDB.LONG_NAME_Data.String
 }
 
@@ -686,6 +710,18 @@ func (backRepoDATATYPE_DEFINITION_ENUMERATION *BackRepoDATATYPE_DEFINITION_ENUME
 		_ = datatype_definition_enumerationDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if datatype_definition_enumerationDB.ALTERNATIVE_IDID.Int64 != 0 {
+			datatype_definition_enumerationDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(datatype_definition_enumerationDB.ALTERNATIVE_IDID.Int64)])
+			datatype_definition_enumerationDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing SPECIFIED_VALUES field
+		if datatype_definition_enumerationDB.SPECIFIED_VALUESID.Int64 != 0 {
+			datatype_definition_enumerationDB.SPECIFIED_VALUESID.Int64 = int64(BackRepoA_SPECIFIED_VALUESid_atBckpTime_newID[uint(datatype_definition_enumerationDB.SPECIFIED_VALUESID.Int64)])
+			datatype_definition_enumerationDB.SPECIFIED_VALUESID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoDATATYPE_DEFINITION_ENUMERATION.db.Model(datatype_definition_enumerationDB)
 		_, err := db.Updates(*datatype_definition_enumerationDB)

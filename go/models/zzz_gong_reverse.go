@@ -12,205 +12,16 @@ func GetReverseFieldOwnerName(
 	case *ALTERNATIVE_ID:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_boolean, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_boolean.Name
-				}
-			}
-		case "ATTRIBUTE_DEFINITION_DATE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_date, ok := stage.ATTRIBUTE_DEFINITION_DATE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_date.Name
-				}
-			}
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_enumeration, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_enumeration.Name
-				}
-			}
-		case "ATTRIBUTE_DEFINITION_INTEGER":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_integer, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_integer.Name
-				}
-			}
-		case "ATTRIBUTE_DEFINITION_REAL":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_real, ok := stage.ATTRIBUTE_DEFINITION_REAL_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_real.Name
-				}
-			}
-		case "ATTRIBUTE_DEFINITION_STRING":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_string, ok := stage.ATTRIBUTE_DEFINITION_STRING_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_string.Name
-				}
-			}
-		case "ATTRIBUTE_DEFINITION_XHTML":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _attribute_definition_xhtml, ok := stage.ATTRIBUTE_DEFINITION_XHTML_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _attribute_definition_xhtml.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_BOOLEAN":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_boolean, ok := stage.DATATYPE_DEFINITION_BOOLEAN_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_boolean.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_DATE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_date, ok := stage.DATATYPE_DEFINITION_DATE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_date.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_ENUMERATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_enumeration, ok := stage.DATATYPE_DEFINITION_ENUMERATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_enumeration.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_INTEGER":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_integer, ok := stage.DATATYPE_DEFINITION_INTEGER_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_integer.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_REAL":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_real, ok := stage.DATATYPE_DEFINITION_REAL_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_real.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_STRING":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_string, ok := stage.DATATYPE_DEFINITION_STRING_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_string.Name
-				}
-			}
-		case "DATATYPE_DEFINITION_XHTML":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _datatype_definition_xhtml, ok := stage.DATATYPE_DEFINITION_XHTML_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _datatype_definition_xhtml.Name
-				}
-			}
-		case "ENUM_VALUE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _enum_value, ok := stage.ENUM_VALUE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _enum_value.Name
-				}
-			}
-		case "RELATION_GROUP":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _relation_group, ok := stage.RELATION_GROUP_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _relation_group.Name
-				}
-			}
-		case "RELATION_GROUP_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _specification, ok := stage.SPECIFICATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_HIERARCHY":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _spec_hierarchy, ok := stage.SPEC_HIERARCHY_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _spec_hierarchy.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _spec_object, ok := stage.SPEC_OBJECT_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _spec_relation, ok := stage.SPEC_RELATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _spec_relation.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
-				}
-			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_BOOLEAN":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -218,32 +29,11 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_DEFINITION_DATE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_DATE":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -251,32 +41,11 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_ENUMERATION":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -284,32 +53,11 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_INTEGER":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -317,32 +65,11 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_DEFINITION_REAL:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_REAL":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -350,32 +77,11 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_DEFINITION_STRING:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_STRING":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -383,32 +89,11 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				if _relation_group_type, ok := stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]; ok {
-					res = _relation_group_type.Name
-				}
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				if _specification_type, ok := stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]; ok {
-					res = _specification_type.Name
-				}
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				if _spec_object_type, ok := stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]; ok {
-					res = _spec_object_type.Name
-				}
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				if _spec_relation_type, ok := stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]; ok {
-					res = _spec_relation_type.Name
+			case "ATTRIBUTE_DEFINITION_XHTML":
+				if _a_spec_attributes, ok := stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]; ok {
+					res = _a_spec_attributes.Name
 				}
 			}
 		}
@@ -416,32 +101,18 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		case "A_ATTRIBUTE_VALUE_BOOLEAN":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_BOOLEAN":
-				if _attribute_definition_boolean, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_DEFAULT_VALUE_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]; ok {
-					res = _attribute_definition_boolean.Name
+			case "ATTRIBUTE_VALUE_BOOLEAN":
+				if _a_attribute_value_boolean, ok := stage.A_ATTRIBUTE_VALUE_BOOLEAN_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]; ok {
+					res = _a_attribute_value_boolean.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_BOOLEAN":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_BOOLEAN":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_BOOLEAN":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_BOOLEAN":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
@@ -449,32 +120,18 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_DATE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_DATE":
+		case "A_ATTRIBUTE_VALUE_DATE":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_DATE":
-				if _attribute_definition_date, ok := stage.ATTRIBUTE_DEFINITION_DATE_DEFAULT_VALUE_ATTRIBUTE_VALUE_DATE_reverseMap[inst]; ok {
-					res = _attribute_definition_date.Name
+			case "ATTRIBUTE_VALUE_DATE":
+				if _a_attribute_value_date, ok := stage.A_ATTRIBUTE_VALUE_DATE_ATTRIBUTE_VALUE_DATE_reverseMap[inst]; ok {
+					res = _a_attribute_value_date.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_DATE":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_DATE":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_DATE":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_DATE":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_DATE_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
@@ -482,32 +139,18 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		case "A_ATTRIBUTE_VALUE_ENUMERATION":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_ENUMERATION":
-				if _attribute_definition_enumeration, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_DEFAULT_VALUE_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]; ok {
-					res = _attribute_definition_enumeration.Name
+			case "ATTRIBUTE_VALUE_ENUMERATION":
+				if _a_attribute_value_enumeration, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATION_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]; ok {
+					res = _a_attribute_value_enumeration.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_ENUMERATION":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_ENUMERATION":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_ENUMERATION":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_ENUMERATION":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
@@ -515,32 +158,18 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_INTEGER:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_INTEGER":
+		case "A_ATTRIBUTE_VALUE_INTEGER":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_INTEGER":
-				if _attribute_definition_integer, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_DEFAULT_VALUE_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]; ok {
-					res = _attribute_definition_integer.Name
+			case "ATTRIBUTE_VALUE_INTEGER":
+				if _a_attribute_value_integer, ok := stage.A_ATTRIBUTE_VALUE_INTEGER_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]; ok {
+					res = _a_attribute_value_integer.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_INTEGER":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_INTEGER":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_INTEGER":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_INTEGER":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
@@ -548,32 +177,18 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_REAL:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_REAL":
+		case "A_ATTRIBUTE_VALUE_REAL":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_REAL":
-				if _attribute_definition_real, ok := stage.ATTRIBUTE_DEFINITION_REAL_DEFAULT_VALUE_ATTRIBUTE_VALUE_REAL_reverseMap[inst]; ok {
-					res = _attribute_definition_real.Name
+			case "ATTRIBUTE_VALUE_REAL":
+				if _a_attribute_value_real, ok := stage.A_ATTRIBUTE_VALUE_REAL_ATTRIBUTE_VALUE_REAL_reverseMap[inst]; ok {
+					res = _a_attribute_value_real.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_REAL":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_REAL":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_REAL":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_REAL":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_REAL_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
@@ -581,32 +196,18 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_STRING:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_STRING":
+		case "A_ATTRIBUTE_VALUE_STRING":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_STRING":
-				if _attribute_definition_string, ok := stage.ATTRIBUTE_DEFINITION_STRING_DEFAULT_VALUE_ATTRIBUTE_VALUE_STRING_reverseMap[inst]; ok {
-					res = _attribute_definition_string.Name
+			case "ATTRIBUTE_VALUE_STRING":
+				if _a_attribute_value_string, ok := stage.A_ATTRIBUTE_VALUE_STRING_ATTRIBUTE_VALUE_STRING_reverseMap[inst]; ok {
+					res = _a_attribute_value_string.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_STRING":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_STRING":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_STRING":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_STRING":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_STRING_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
@@ -614,37 +215,248 @@ func GetReverseFieldOwnerName(
 	case *ATTRIBUTE_VALUE_XHTML:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_XHTML":
+		case "A_ATTRIBUTE_VALUE_XHTML":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_XHTML":
-				if _attribute_definition_xhtml, ok := stage.ATTRIBUTE_DEFINITION_XHTML_DEFAULT_VALUE_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]; ok {
-					res = _attribute_definition_xhtml.Name
+			case "ATTRIBUTE_VALUE_XHTML":
+				if _a_attribute_value_xhtml, ok := stage.A_ATTRIBUTE_VALUE_XHTML_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml.Name
 				}
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_XHTML":
-				if _specification, ok := stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_XHTML":
-				if _spec_object, ok := stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]; ok {
-					res = _spec_object.Name
-				}
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_XHTML":
-				if _spec_relation, ok := stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]; ok {
-					res = _spec_relation.Name
+			case "ATTRIBUTE_VALUE_XHTML":
+				if _a_attribute_value_xhtml_1, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]; ok {
+					res = _a_attribute_value_xhtml_1.Name
 				}
 			}
 		}
 
-	case *AnyType:
+	case *A_ALTERNATIVE_ID:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_BOOLEAN:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_DATE:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_ENUMERATION:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_INTEGER:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_REAL:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_STRING:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_XHTML:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_XHTML_1:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_CHILDREN:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_CORE_CONTENT:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_DATE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_INTEGER_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_REAL_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_STRING_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_XHTML_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_EDITABLE_ATTS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ENUM_VALUE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_OBJECT:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_PROPERTIES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_RELATION_GROUP_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SOURCE_1:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SOURCE_SPECIFICATION_1:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPECIFICATIONS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPECIFICATION_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPECIFIED_VALUES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_ATTRIBUTES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_OBJECTS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_OBJECT_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATIONS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATION_GROUPS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATION_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATION_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_TYPES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_THE_HEADER:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_TOOL_EXTENSIONS:
 		switch reverseField.GongstructName {
 		// insertion point
 		}
@@ -652,11 +464,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_BOOLEAN":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_BOOLEAN":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_BOOLEAN_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -664,11 +476,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_DATE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_DATE":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_DATE_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_DATE":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_DATE_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -676,11 +488,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_ENUMERATION":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_ENUMERATION":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_ENUMERATION_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -688,11 +500,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_INTEGER:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_INTEGER":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_INTEGER_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_INTEGER":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_INTEGER_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -700,11 +512,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_REAL:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_REAL":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_REAL_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_REAL":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_REAL_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -712,11 +524,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_STRING:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_STRING":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_STRING_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_STRING":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_STRING_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -724,11 +536,11 @@ func GetReverseFieldOwnerName(
 	case *DATATYPE_DEFINITION_XHTML:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_XHTML":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_XHTML_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "DATATYPE_DEFINITION_XHTML":
+				if _a_datatypes, ok := stage.A_DATATYPES_DATATYPE_DEFINITION_XHTML_reverseMap[inst]; ok {
+					res = _a_datatypes.Name
 				}
 			}
 		}
@@ -736,23 +548,16 @@ func GetReverseFieldOwnerName(
 	case *EMBEDDED_VALUE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ENUM_VALUE":
-			switch reverseField.Fieldname {
-			case "PROPERTIES_EMBEDDED_VALUE":
-				if _enum_value, ok := stage.ENUM_VALUE_PROPERTIES_EMBEDDED_VALUE_reverseMap[inst]; ok {
-					res = _enum_value.Name
-				}
-			}
 		}
 
 	case *ENUM_VALUE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "DATATYPE_DEFINITION_ENUMERATION":
+		case "A_SPECIFIED_VALUES":
 			switch reverseField.Fieldname {
-			case "SPECIFIED_VALUES_ENUM_VALUE":
-				if _datatype_definition_enumeration, ok := stage.DATATYPE_DEFINITION_ENUMERATION_SPECIFIED_VALUES_ENUM_VALUE_reverseMap[inst]; ok {
-					res = _datatype_definition_enumeration.Name
+			case "ENUM_VALUE":
+				if _a_specified_values, ok := stage.A_SPECIFIED_VALUES_ENUM_VALUE_reverseMap[inst]; ok {
+					res = _a_specified_values.Name
 				}
 			}
 		}
@@ -760,11 +565,11 @@ func GetReverseFieldOwnerName(
 	case *RELATION_GROUP:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_RELATION_GROUPS":
 			switch reverseField.Fieldname {
-			case "SPEC_RELATION_GROUPS_RELATION_GROUP":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_RELATION_GROUPS_RELATION_GROUP_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "RELATION_GROUP":
+				if _a_spec_relation_groups, ok := stage.A_SPEC_RELATION_GROUPS_RELATION_GROUP_reverseMap[inst]; ok {
+					res = _a_spec_relation_groups.Name
 				}
 			}
 		}
@@ -772,11 +577,11 @@ func GetReverseFieldOwnerName(
 	case *RELATION_GROUP_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_RELATION_GROUP_TYPE":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_TYPES_RELATION_GROUP_TYPE_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "RELATION_GROUP_TYPE":
+				if _a_spec_types, ok := stage.A_SPEC_TYPES_RELATION_GROUP_TYPE_reverseMap[inst]; ok {
+					res = _a_spec_types.Name
 				}
 			}
 		}
@@ -799,11 +604,11 @@ func GetReverseFieldOwnerName(
 	case *REQ_IF_TOOL_EXTENSION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF":
+		case "A_TOOL_EXTENSIONS":
 			switch reverseField.Fieldname {
-			case "TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION":
-				if _req_if, ok := stage.REQ_IF_TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION_reverseMap[inst]; ok {
-					res = _req_if.Name
+			case "REQ_IF_TOOL_EXTENSION":
+				if _a_tool_extensions, ok := stage.A_TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION_reverseMap[inst]; ok {
+					res = _a_tool_extensions.Name
 				}
 			}
 		}
@@ -811,11 +616,11 @@ func GetReverseFieldOwnerName(
 	case *SPECIFICATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPECIFICATIONS":
 			switch reverseField.Fieldname {
-			case "SPECIFICATIONS_SPECIFICATION":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPECIFICATIONS_SPECIFICATION_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "SPECIFICATION":
+				if _a_specifications, ok := stage.A_SPECIFICATIONS_SPECIFICATION_reverseMap[inst]; ok {
+					res = _a_specifications.Name
 				}
 			}
 		}
@@ -823,11 +628,11 @@ func GetReverseFieldOwnerName(
 	case *SPECIFICATION_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_SPECIFICATION_TYPE":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_TYPES_SPECIFICATION_TYPE_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "SPECIFICATION_TYPE":
+				if _a_spec_types, ok := stage.A_SPEC_TYPES_SPECIFICATION_TYPE_reverseMap[inst]; ok {
+					res = _a_spec_types.Name
 				}
 			}
 		}
@@ -835,18 +640,11 @@ func GetReverseFieldOwnerName(
 	case *SPEC_HIERARCHY:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "SPECIFICATION":
+		case "A_CHILDREN":
 			switch reverseField.Fieldname {
-			case "CHILDREN_SPEC_HIERARCHY":
-				if _specification, ok := stage.SPECIFICATION_CHILDREN_SPEC_HIERARCHY_reverseMap[inst]; ok {
-					res = _specification.Name
-				}
-			}
-		case "SPEC_HIERARCHY":
-			switch reverseField.Fieldname {
-			case "CHILDREN_SPEC_HIERARCHY":
-				if _spec_hierarchy, ok := stage.SPEC_HIERARCHY_CHILDREN_SPEC_HIERARCHY_reverseMap[inst]; ok {
-					res = _spec_hierarchy.Name
+			case "SPEC_HIERARCHY":
+				if _a_children, ok := stage.A_CHILDREN_SPEC_HIERARCHY_reverseMap[inst]; ok {
+					res = _a_children.Name
 				}
 			}
 		}
@@ -854,11 +652,11 @@ func GetReverseFieldOwnerName(
 	case *SPEC_OBJECT:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_OBJECTS":
 			switch reverseField.Fieldname {
-			case "SPEC_OBJECTS_SPEC_OBJECT":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_OBJECTS_SPEC_OBJECT_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "SPEC_OBJECT":
+				if _a_spec_objects, ok := stage.A_SPEC_OBJECTS_SPEC_OBJECT_reverseMap[inst]; ok {
+					res = _a_spec_objects.Name
 				}
 			}
 		}
@@ -866,11 +664,11 @@ func GetReverseFieldOwnerName(
 	case *SPEC_OBJECT_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_SPEC_OBJECT_TYPE":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_TYPES_SPEC_OBJECT_TYPE_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "SPEC_OBJECT_TYPE":
+				if _a_spec_types, ok := stage.A_SPEC_TYPES_SPEC_OBJECT_TYPE_reverseMap[inst]; ok {
+					res = _a_spec_types.Name
 				}
 			}
 		}
@@ -878,11 +676,11 @@ func GetReverseFieldOwnerName(
 	case *SPEC_RELATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_RELATIONS":
 			switch reverseField.Fieldname {
-			case "SPEC_RELATIONS_SPEC_RELATION":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_RELATIONS_SPEC_RELATION_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "SPEC_RELATION":
+				if _a_spec_relations, ok := stage.A_SPEC_RELATIONS_SPEC_RELATION_reverseMap[inst]; ok {
+					res = _a_spec_relations.Name
 				}
 			}
 		}
@@ -890,262 +688,16 @@ func GetReverseFieldOwnerName(
 	case *SPEC_RELATION_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_SPEC_RELATION_TYPE":
-				if _req_if_content, ok := stage.REQ_IF_CONTENT_SPEC_TYPES_SPEC_RELATION_TYPE_reverseMap[inst]; ok {
-					res = _req_if_content.Name
+			case "SPEC_RELATION_TYPE":
+				if _a_spec_types, ok := stage.A_SPEC_TYPES_SPEC_RELATION_TYPE_reverseMap[inst]; ok {
+					res = _a_spec_types.Name
 				}
 			}
 		}
 
 	case *XHTML_CONTENT:
-		switch reverseField.GongstructName {
-		// insertion point
-		case "ATTRIBUTE_VALUE_XHTML":
-			switch reverseField.Fieldname {
-			case "THE_VALUE":
-				if _attribute_value_xhtml, ok := stage.ATTRIBUTE_VALUE_XHTML_THE_VALUE_reverseMap[inst]; ok {
-					res = _attribute_value_xhtml.Name
-				}
-			case "THE_ORIGINAL_VALUE":
-				if _attribute_value_xhtml, ok := stage.ATTRIBUTE_VALUE_XHTML_THE_ORIGINAL_VALUE_reverseMap[inst]; ok {
-					res = _attribute_value_xhtml.Name
-				}
-			}
-		}
-
-	case *Xhtml_InlPres_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_a_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_abbr_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_acronym_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_address_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_blockquote_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_br_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_caption_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_cite_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_code_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_col_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_colgroup_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dd_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dfn_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_div_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dl_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dt_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_edit_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_em_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h1_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h2_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h3_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h4_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h5_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h6_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_heading_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_hr_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_kbd_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_li_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_object_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_ol_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_p_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_param_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_pre_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_q_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_samp_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_span_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_strong_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_table_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_tbody_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_td_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_tfoot_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_th_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_thead_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_tr_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_ul_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_var_type:
 		switch reverseField.GongstructName {
 		// insertion point
 		}
@@ -1167,479 +719,409 @@ func GetReverseFieldOwner[T Gongstruct](
 	case *ALTERNATIVE_ID:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_BOOLEAN_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ATTRIBUTE_DEFINITION_DATE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_DATE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_ENUMERATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ATTRIBUTE_DEFINITION_INTEGER":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_INTEGER_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ATTRIBUTE_DEFINITION_REAL":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_REAL_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ATTRIBUTE_DEFINITION_STRING":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_STRING_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ATTRIBUTE_DEFINITION_XHTML":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ATTRIBUTE_DEFINITION_XHTML_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_BOOLEAN":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_BOOLEAN_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_DATE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_DATE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_ENUMERATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_ENUMERATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_INTEGER":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_INTEGER_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_REAL":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_REAL_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_STRING":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_STRING_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "DATATYPE_DEFINITION_XHTML":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.DATATYPE_DEFINITION_XHTML_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "ENUM_VALUE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.ENUM_VALUE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "RELATION_GROUP":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.RELATION_GROUP_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "RELATION_GROUP_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.RELATION_GROUP_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPECIFICATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPECIFICATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPECIFICATION_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPEC_HIERARCHY":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPEC_HIERARCHY_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPEC_OBJECT_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPEC_OBJECT_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPEC_RELATION_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "ALTERNATIVE_ID_ALTERNATIVE_ID":
-				res = stage.SPEC_RELATION_TYPE_ALTERNATIVE_ID_ALTERNATIVE_ID_reverseMap[inst]
-			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_BOOLEAN":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_DATE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_DATE":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_ENUMERATION":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_ENUMERATION_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_INTEGER":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_INTEGER_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_REAL:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_REAL":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_STRING:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_STRING":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_STRING_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "RELATION_GROUP_TYPE":
+		case "A_SPEC_ATTRIBUTES":
 			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				res = stage.RELATION_GROUP_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]
-			}
-		case "SPECIFICATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				res = stage.SPECIFICATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]
-			}
-		case "SPEC_OBJECT_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				res = stage.SPEC_OBJECT_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]
-			}
-		case "SPEC_RELATION_TYPE":
-			switch reverseField.Fieldname {
-			case "SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML":
-				res = stage.SPEC_RELATION_TYPE_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]
+			case "ATTRIBUTE_DEFINITION_XHTML":
+				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		case "A_ATTRIBUTE_VALUE_BOOLEAN":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_BOOLEAN":
-				res = stage.ATTRIBUTE_DEFINITION_BOOLEAN_DEFAULT_VALUE_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_BOOLEAN":
+				res = stage.A_ATTRIBUTE_VALUE_BOOLEAN_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_BOOLEAN":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_BOOLEAN":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_BOOLEAN":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_BOOLEAN":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_BOOLEAN_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_DATE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_DATE":
+		case "A_ATTRIBUTE_VALUE_DATE":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_DATE":
-				res = stage.ATTRIBUTE_DEFINITION_DATE_DEFAULT_VALUE_ATTRIBUTE_VALUE_DATE_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_DATE":
+				res = stage.A_ATTRIBUTE_VALUE_DATE_ATTRIBUTE_VALUE_DATE_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_DATE":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_DATE":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_DATE":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_DATE_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_DATE":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_DATE_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		case "A_ATTRIBUTE_VALUE_ENUMERATION":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_ENUMERATION":
-				res = stage.ATTRIBUTE_DEFINITION_ENUMERATION_DEFAULT_VALUE_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_ENUMERATION":
+				res = stage.A_ATTRIBUTE_VALUE_ENUMERATION_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_ENUMERATION":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_ENUMERATION":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_ENUMERATION":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_ENUMERATION":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_ENUMERATION_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_INTEGER:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_INTEGER":
+		case "A_ATTRIBUTE_VALUE_INTEGER":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_INTEGER":
-				res = stage.ATTRIBUTE_DEFINITION_INTEGER_DEFAULT_VALUE_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_INTEGER":
+				res = stage.A_ATTRIBUTE_VALUE_INTEGER_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_INTEGER":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_INTEGER":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_INTEGER":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_INTEGER":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_INTEGER_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_REAL:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_REAL":
+		case "A_ATTRIBUTE_VALUE_REAL":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_REAL":
-				res = stage.ATTRIBUTE_DEFINITION_REAL_DEFAULT_VALUE_ATTRIBUTE_VALUE_REAL_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_REAL":
+				res = stage.A_ATTRIBUTE_VALUE_REAL_ATTRIBUTE_VALUE_REAL_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_REAL":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_REAL":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_REAL":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_REAL_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_REAL":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_REAL_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_STRING:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_STRING":
+		case "A_ATTRIBUTE_VALUE_STRING":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_STRING":
-				res = stage.ATTRIBUTE_DEFINITION_STRING_DEFAULT_VALUE_ATTRIBUTE_VALUE_STRING_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_STRING":
+				res = stage.A_ATTRIBUTE_VALUE_STRING_ATTRIBUTE_VALUE_STRING_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_STRING":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_STRING":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_STRING":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_STRING_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_STRING":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_STRING_reverseMap[inst]
 			}
 		}
 
 	case *ATTRIBUTE_VALUE_XHTML:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ATTRIBUTE_DEFINITION_XHTML":
+		case "A_ATTRIBUTE_VALUE_XHTML":
 			switch reverseField.Fieldname {
-			case "DEFAULT_VALUE_ATTRIBUTE_VALUE_XHTML":
-				res = stage.ATTRIBUTE_DEFINITION_XHTML_DEFAULT_VALUE_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_XHTML":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]
 			}
-		case "SPECIFICATION":
+		case "A_ATTRIBUTE_VALUE_XHTML_1":
 			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_XHTML":
-				res = stage.SPECIFICATION_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]
-			}
-		case "SPEC_OBJECT":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_XHTML":
-				res = stage.SPEC_OBJECT_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]
-			}
-		case "SPEC_RELATION":
-			switch reverseField.Fieldname {
-			case "VALUES_ATTRIBUTE_VALUE_XHTML":
-				res = stage.SPEC_RELATION_VALUES_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]
+			case "ATTRIBUTE_VALUE_XHTML":
+				res = stage.A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_XHTML_reverseMap[inst]
 			}
 		}
 
-	case *AnyType:
+	case *A_ALTERNATIVE_ID:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_BOOLEAN:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_DATE:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_ENUMERATION:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_INTEGER:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_REAL:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_STRING:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_XHTML:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ATTRIBUTE_VALUE_XHTML_1:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_CHILDREN:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_CORE_CONTENT:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_DATE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_INTEGER_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_REAL_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_STRING_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_DATATYPE_DEFINITION_XHTML_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_EDITABLE_ATTS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_ENUM_VALUE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_OBJECT:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_PROPERTIES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_RELATION_GROUP_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SOURCE_1:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SOURCE_SPECIFICATION_1:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPECIFICATIONS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPECIFICATION_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPECIFIED_VALUES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_ATTRIBUTES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_OBJECTS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_OBJECT_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATIONS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATION_GROUPS:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATION_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_RELATION_TYPE_REF:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_SPEC_TYPES:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_THE_HEADER:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *A_TOOL_EXTENSIONS:
 		switch reverseField.GongstructName {
 		// insertion point
 		}
@@ -1647,110 +1129,105 @@ func GetReverseFieldOwner[T Gongstruct](
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_BOOLEAN":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_BOOLEAN_reverseMap[inst]
+			case "DATATYPE_DEFINITION_BOOLEAN":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_BOOLEAN_reverseMap[inst]
 			}
 		}
 
 	case *DATATYPE_DEFINITION_DATE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_DATE":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_DATE_reverseMap[inst]
+			case "DATATYPE_DEFINITION_DATE":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_DATE_reverseMap[inst]
 			}
 		}
 
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_ENUMERATION":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_ENUMERATION_reverseMap[inst]
+			case "DATATYPE_DEFINITION_ENUMERATION":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_ENUMERATION_reverseMap[inst]
 			}
 		}
 
 	case *DATATYPE_DEFINITION_INTEGER:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_INTEGER":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_INTEGER_reverseMap[inst]
+			case "DATATYPE_DEFINITION_INTEGER":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_INTEGER_reverseMap[inst]
 			}
 		}
 
 	case *DATATYPE_DEFINITION_REAL:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_REAL":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_REAL_reverseMap[inst]
+			case "DATATYPE_DEFINITION_REAL":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_REAL_reverseMap[inst]
 			}
 		}
 
 	case *DATATYPE_DEFINITION_STRING:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_STRING":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_STRING_reverseMap[inst]
+			case "DATATYPE_DEFINITION_STRING":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_STRING_reverseMap[inst]
 			}
 		}
 
 	case *DATATYPE_DEFINITION_XHTML:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_DATATYPES":
 			switch reverseField.Fieldname {
-			case "DATATYPES_DATATYPE_DEFINITION_XHTML":
-				res = stage.REQ_IF_CONTENT_DATATYPES_DATATYPE_DEFINITION_XHTML_reverseMap[inst]
+			case "DATATYPE_DEFINITION_XHTML":
+				res = stage.A_DATATYPES_DATATYPE_DEFINITION_XHTML_reverseMap[inst]
 			}
 		}
 
 	case *EMBEDDED_VALUE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "ENUM_VALUE":
-			switch reverseField.Fieldname {
-			case "PROPERTIES_EMBEDDED_VALUE":
-				res = stage.ENUM_VALUE_PROPERTIES_EMBEDDED_VALUE_reverseMap[inst]
-			}
 		}
 
 	case *ENUM_VALUE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "DATATYPE_DEFINITION_ENUMERATION":
+		case "A_SPECIFIED_VALUES":
 			switch reverseField.Fieldname {
-			case "SPECIFIED_VALUES_ENUM_VALUE":
-				res = stage.DATATYPE_DEFINITION_ENUMERATION_SPECIFIED_VALUES_ENUM_VALUE_reverseMap[inst]
+			case "ENUM_VALUE":
+				res = stage.A_SPECIFIED_VALUES_ENUM_VALUE_reverseMap[inst]
 			}
 		}
 
 	case *RELATION_GROUP:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_RELATION_GROUPS":
 			switch reverseField.Fieldname {
-			case "SPEC_RELATION_GROUPS_RELATION_GROUP":
-				res = stage.REQ_IF_CONTENT_SPEC_RELATION_GROUPS_RELATION_GROUP_reverseMap[inst]
+			case "RELATION_GROUP":
+				res = stage.A_SPEC_RELATION_GROUPS_RELATION_GROUP_reverseMap[inst]
 			}
 		}
 
 	case *RELATION_GROUP_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_RELATION_GROUP_TYPE":
-				res = stage.REQ_IF_CONTENT_SPEC_TYPES_RELATION_GROUP_TYPE_reverseMap[inst]
+			case "RELATION_GROUP_TYPE":
+				res = stage.A_SPEC_TYPES_RELATION_GROUP_TYPE_reverseMap[inst]
 			}
 		}
 
@@ -1772,331 +1249,84 @@ func GetReverseFieldOwner[T Gongstruct](
 	case *REQ_IF_TOOL_EXTENSION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF":
+		case "A_TOOL_EXTENSIONS":
 			switch reverseField.Fieldname {
-			case "TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION":
-				res = stage.REQ_IF_TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION_reverseMap[inst]
+			case "REQ_IF_TOOL_EXTENSION":
+				res = stage.A_TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION_reverseMap[inst]
 			}
 		}
 
 	case *SPECIFICATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPECIFICATIONS":
 			switch reverseField.Fieldname {
-			case "SPECIFICATIONS_SPECIFICATION":
-				res = stage.REQ_IF_CONTENT_SPECIFICATIONS_SPECIFICATION_reverseMap[inst]
+			case "SPECIFICATION":
+				res = stage.A_SPECIFICATIONS_SPECIFICATION_reverseMap[inst]
 			}
 		}
 
 	case *SPECIFICATION_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_SPECIFICATION_TYPE":
-				res = stage.REQ_IF_CONTENT_SPEC_TYPES_SPECIFICATION_TYPE_reverseMap[inst]
+			case "SPECIFICATION_TYPE":
+				res = stage.A_SPEC_TYPES_SPECIFICATION_TYPE_reverseMap[inst]
 			}
 		}
 
 	case *SPEC_HIERARCHY:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "SPECIFICATION":
+		case "A_CHILDREN":
 			switch reverseField.Fieldname {
-			case "CHILDREN_SPEC_HIERARCHY":
-				res = stage.SPECIFICATION_CHILDREN_SPEC_HIERARCHY_reverseMap[inst]
-			}
-		case "SPEC_HIERARCHY":
-			switch reverseField.Fieldname {
-			case "CHILDREN_SPEC_HIERARCHY":
-				res = stage.SPEC_HIERARCHY_CHILDREN_SPEC_HIERARCHY_reverseMap[inst]
+			case "SPEC_HIERARCHY":
+				res = stage.A_CHILDREN_SPEC_HIERARCHY_reverseMap[inst]
 			}
 		}
 
 	case *SPEC_OBJECT:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_OBJECTS":
 			switch reverseField.Fieldname {
-			case "SPEC_OBJECTS_SPEC_OBJECT":
-				res = stage.REQ_IF_CONTENT_SPEC_OBJECTS_SPEC_OBJECT_reverseMap[inst]
+			case "SPEC_OBJECT":
+				res = stage.A_SPEC_OBJECTS_SPEC_OBJECT_reverseMap[inst]
 			}
 		}
 
 	case *SPEC_OBJECT_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_SPEC_OBJECT_TYPE":
-				res = stage.REQ_IF_CONTENT_SPEC_TYPES_SPEC_OBJECT_TYPE_reverseMap[inst]
+			case "SPEC_OBJECT_TYPE":
+				res = stage.A_SPEC_TYPES_SPEC_OBJECT_TYPE_reverseMap[inst]
 			}
 		}
 
 	case *SPEC_RELATION:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_RELATIONS":
 			switch reverseField.Fieldname {
-			case "SPEC_RELATIONS_SPEC_RELATION":
-				res = stage.REQ_IF_CONTENT_SPEC_RELATIONS_SPEC_RELATION_reverseMap[inst]
+			case "SPEC_RELATION":
+				res = stage.A_SPEC_RELATIONS_SPEC_RELATION_reverseMap[inst]
 			}
 		}
 
 	case *SPEC_RELATION_TYPE:
 		switch reverseField.GongstructName {
 		// insertion point
-		case "REQ_IF_CONTENT":
+		case "A_SPEC_TYPES":
 			switch reverseField.Fieldname {
-			case "SPEC_TYPES_SPEC_RELATION_TYPE":
-				res = stage.REQ_IF_CONTENT_SPEC_TYPES_SPEC_RELATION_TYPE_reverseMap[inst]
+			case "SPEC_RELATION_TYPE":
+				res = stage.A_SPEC_TYPES_SPEC_RELATION_TYPE_reverseMap[inst]
 			}
 		}
 
 	case *XHTML_CONTENT:
-		switch reverseField.GongstructName {
-		// insertion point
-		case "ATTRIBUTE_VALUE_XHTML":
-			switch reverseField.Fieldname {
-			case "THE_VALUE":
-				res = stage.ATTRIBUTE_VALUE_XHTML_THE_VALUE_reverseMap[inst]
-			case "THE_ORIGINAL_VALUE":
-				res = stage.ATTRIBUTE_VALUE_XHTML_THE_ORIGINAL_VALUE_reverseMap[inst]
-			}
-		}
-
-	case *Xhtml_InlPres_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_a_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_abbr_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_acronym_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_address_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_blockquote_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_br_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_caption_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_cite_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_code_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_col_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_colgroup_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dd_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dfn_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_div_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dl_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_dt_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_edit_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_em_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h1_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h2_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h3_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h4_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h5_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_h6_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_heading_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_hr_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_kbd_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_li_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_object_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_ol_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_p_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_param_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_pre_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_q_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_samp_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_span_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_strong_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_table_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_tbody_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_td_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_tfoot_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_th_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_thead_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_tr_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_ul_type:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Xhtml_var_type:
 		switch reverseField.GongstructName {
 		// insertion point
 		}

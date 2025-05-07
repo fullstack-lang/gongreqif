@@ -48,19 +48,13 @@ type ENUM_VALUEAPI struct {
 type ENUM_VALUEPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
-
-	PROPERTIES struct {
-
-		// field EMBEDDED_VALUE is a slice of pointers to another Struct (optional or 0..1)
-		EMBEDDED_VALUE IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field PROPERTIES is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	PROPERTIESID sql.NullInt64
 }
 
 // ENUM_VALUEDB describes a enum_value in the database
@@ -80,8 +74,11 @@ type ENUM_VALUEDB struct {
 	// Declation for basic field enum_valueDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field enum_valueDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field enum_valueDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field enum_valueDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -112,9 +109,11 @@ type ENUM_VALUEWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	LAST_CHANGE string `xlsx:"4"`
+
+	LONG_NAME string `xlsx:"5"`
 	// insertion for WOP pointer fields
 }
 
@@ -123,6 +122,7 @@ var ENUM_VALUE_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
 }
@@ -255,40 +255,28 @@ func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) CommitPhaseTwoInstance(backR
 		enum_valueDB.CopyBasicFieldsFromENUM_VALUE(enum_value)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		enum_valueDB.ENUM_VALUEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range enum_value.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value enum_value.ALTERNATIVE_ID translates to updating the enum_value.ALTERNATIVE_IDID
+		enum_valueDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if enum_value.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[enum_value.ALTERNATIVE_ID]; ok {
+				enum_valueDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				enum_valueDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			enum_valueDB.ENUM_VALUEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(enum_valueDB.ENUM_VALUEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			enum_valueDB.ALTERNATIVE_IDID.Int64 = 0
+			enum_valueDB.ALTERNATIVE_IDID.Valid = true
 		}
 
-		// 1. reset
-		enum_valueDB.ENUM_VALUEPointersEncoding.PROPERTIES.EMBEDDED_VALUE = make([]int, 0)
-		// 2. encode
-		for _, embedded_valueAssocEnd := range enum_value.PROPERTIES.EMBEDDED_VALUE {
-			embedded_valueAssocEnd_DB :=
-				backRepo.BackRepoEMBEDDED_VALUE.GetEMBEDDED_VALUEDBFromEMBEDDED_VALUEPtr(embedded_valueAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the embedded_valueAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if embedded_valueAssocEnd_DB == nil {
-				continue
+		// commit pointer value enum_value.PROPERTIES translates to updating the enum_value.PROPERTIESID
+		enum_valueDB.PROPERTIESID.Valid = true // allow for a 0 value (nil association)
+		if enum_value.PROPERTIES != nil {
+			if PROPERTIESId, ok := backRepo.BackRepoA_PROPERTIES.Map_A_PROPERTIESPtr_A_PROPERTIESDBID[enum_value.PROPERTIES]; ok {
+				enum_valueDB.PROPERTIESID.Int64 = int64(PROPERTIESId)
+				enum_valueDB.PROPERTIESID.Valid = true
 			}
-			
-			enum_valueDB.ENUM_VALUEPointersEncoding.PROPERTIES.EMBEDDED_VALUE =
-				append(enum_valueDB.ENUM_VALUEPointersEncoding.PROPERTIES.EMBEDDED_VALUE, int(embedded_valueAssocEnd_DB.ID))
+		} else {
+			enum_valueDB.PROPERTIESID.Int64 = 0
+			enum_valueDB.PROPERTIESID.Valid = true
 		}
 
 		_, err := backRepoENUM_VALUE.db.Save(enum_valueDB)
@@ -404,24 +392,48 @@ func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) CheckoutPhaseTwoInstance(bac
 func (enum_valueDB *ENUM_VALUEDB) DecodePointers(backRepo *BackRepoStruct, enum_value *models.ENUM_VALUE) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem enum_value.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	enum_value.ALTERNATIVE_ID.ALTERNATIVE_ID = enum_value.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range enum_valueDB.ENUM_VALUEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		enum_value.ALTERNATIVE_ID.ALTERNATIVE_ID = append(enum_value.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := enum_valueDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
-	// This loop redeem enum_value.PROPERTIES.EMBEDDED_VALUE in the stage from the encode in the back repo
-	// It parses all EMBEDDED_VALUEDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	enum_value.PROPERTIES.EMBEDDED_VALUE = enum_value.PROPERTIES.EMBEDDED_VALUE[:0]
-	for _, _EMBEDDED_VALUEid := range enum_valueDB.ENUM_VALUEPointersEncoding.PROPERTIES.EMBEDDED_VALUE {
-		enum_value.PROPERTIES.EMBEDDED_VALUE = append(enum_value.PROPERTIES.EMBEDDED_VALUE, backRepo.BackRepoEMBEDDED_VALUE.Map_EMBEDDED_VALUEDBID_EMBEDDED_VALUEPtr[uint(_EMBEDDED_VALUEid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: enum_value.ALTERNATIVE_ID, unknown pointer id", id)
+				enum_value.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if enum_value.ALTERNATIVE_ID == nil || enum_value.ALTERNATIVE_ID != tmp {
+					enum_value.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			enum_value.ALTERNATIVE_ID = nil
+		}
 	}
+	
+	// PROPERTIES field	
+	{
+		id := enum_valueDB.PROPERTIESID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_PROPERTIES.Map_A_PROPERTIESDBID_A_PROPERTIESPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: enum_value.PROPERTIES, unknown pointer id", id)
+				enum_value.PROPERTIES = nil
+			} else {
+				// updates only if field has changed
+				if enum_value.PROPERTIES == nil || enum_value.PROPERTIES != tmp {
+					enum_value.PROPERTIES = tmp
+				}
+			}
+		} else {
+			enum_value.PROPERTIES = nil
+		}
+	}
+	
 	return
 }
 
@@ -462,7 +474,10 @@ func (enum_valueDB *ENUM_VALUEDB) CopyBasicFieldsFromENUM_VALUE(enum_value *mode
 	enum_valueDB.DESC_Data.String = enum_value.DESC
 	enum_valueDB.DESC_Data.Valid = true
 
-	enum_valueDB.LAST_CHANGE_Data.Time = enum_value.LAST_CHANGE
+	enum_valueDB.IDENTIFIER_Data.String = enum_value.IDENTIFIER
+	enum_valueDB.IDENTIFIER_Data.Valid = true
+
+	enum_valueDB.LAST_CHANGE_Data.String = enum_value.LAST_CHANGE
 	enum_valueDB.LAST_CHANGE_Data.Valid = true
 
 	enum_valueDB.LONG_NAME_Data.String = enum_value.LONG_NAME
@@ -479,7 +494,10 @@ func (enum_valueDB *ENUM_VALUEDB) CopyBasicFieldsFromENUM_VALUE_WOP(enum_value *
 	enum_valueDB.DESC_Data.String = enum_value.DESC
 	enum_valueDB.DESC_Data.Valid = true
 
-	enum_valueDB.LAST_CHANGE_Data.Time = enum_value.LAST_CHANGE
+	enum_valueDB.IDENTIFIER_Data.String = enum_value.IDENTIFIER
+	enum_valueDB.IDENTIFIER_Data.Valid = true
+
+	enum_valueDB.LAST_CHANGE_Data.String = enum_value.LAST_CHANGE
 	enum_valueDB.LAST_CHANGE_Data.Valid = true
 
 	enum_valueDB.LONG_NAME_Data.String = enum_value.LONG_NAME
@@ -496,7 +514,10 @@ func (enum_valueDB *ENUM_VALUEDB) CopyBasicFieldsFromENUM_VALUEWOP(enum_value *E
 	enum_valueDB.DESC_Data.String = enum_value.DESC
 	enum_valueDB.DESC_Data.Valid = true
 
-	enum_valueDB.LAST_CHANGE_Data.Time = enum_value.LAST_CHANGE
+	enum_valueDB.IDENTIFIER_Data.String = enum_value.IDENTIFIER
+	enum_valueDB.IDENTIFIER_Data.Valid = true
+
+	enum_valueDB.LAST_CHANGE_Data.String = enum_value.LAST_CHANGE
 	enum_valueDB.LAST_CHANGE_Data.Valid = true
 
 	enum_valueDB.LONG_NAME_Data.String = enum_value.LONG_NAME
@@ -508,7 +529,8 @@ func (enum_valueDB *ENUM_VALUEDB) CopyBasicFieldsToENUM_VALUE(enum_value *models
 	// insertion point for checkout of basic fields (back repo to stage)
 	enum_value.Name = enum_valueDB.Name_Data.String
 	enum_value.DESC = enum_valueDB.DESC_Data.String
-	enum_value.LAST_CHANGE = enum_valueDB.LAST_CHANGE_Data.Time
+	enum_value.IDENTIFIER = enum_valueDB.IDENTIFIER_Data.String
+	enum_value.LAST_CHANGE = enum_valueDB.LAST_CHANGE_Data.String
 	enum_value.LONG_NAME = enum_valueDB.LONG_NAME_Data.String
 }
 
@@ -517,7 +539,8 @@ func (enum_valueDB *ENUM_VALUEDB) CopyBasicFieldsToENUM_VALUE_WOP(enum_value *mo
 	// insertion point for checkout of basic fields (back repo to stage)
 	enum_value.Name = enum_valueDB.Name_Data.String
 	enum_value.DESC = enum_valueDB.DESC_Data.String
-	enum_value.LAST_CHANGE = enum_valueDB.LAST_CHANGE_Data.Time
+	enum_value.IDENTIFIER = enum_valueDB.IDENTIFIER_Data.String
+	enum_value.LAST_CHANGE = enum_valueDB.LAST_CHANGE_Data.String
 	enum_value.LONG_NAME = enum_valueDB.LONG_NAME_Data.String
 }
 
@@ -527,7 +550,8 @@ func (enum_valueDB *ENUM_VALUEDB) CopyBasicFieldsToENUM_VALUEWOP(enum_value *ENU
 	// insertion point for checkout of basic fields (back repo to stage)
 	enum_value.Name = enum_valueDB.Name_Data.String
 	enum_value.DESC = enum_valueDB.DESC_Data.String
-	enum_value.LAST_CHANGE = enum_valueDB.LAST_CHANGE_Data.Time
+	enum_value.IDENTIFIER = enum_valueDB.IDENTIFIER_Data.String
+	enum_value.LAST_CHANGE = enum_valueDB.LAST_CHANGE_Data.String
 	enum_value.LONG_NAME = enum_valueDB.LONG_NAME_Data.String
 }
 
@@ -686,6 +710,18 @@ func (backRepoENUM_VALUE *BackRepoENUM_VALUEStruct) RestorePhaseTwo() {
 		_ = enum_valueDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if enum_valueDB.ALTERNATIVE_IDID.Int64 != 0 {
+			enum_valueDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(enum_valueDB.ALTERNATIVE_IDID.Int64)])
+			enum_valueDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing PROPERTIES field
+		if enum_valueDB.PROPERTIESID.Int64 != 0 {
+			enum_valueDB.PROPERTIESID.Int64 = int64(BackRepoA_PROPERTIESid_atBckpTime_newID[uint(enum_valueDB.PROPERTIESID.Int64)])
+			enum_valueDB.PROPERTIESID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoENUM_VALUE.db.Model(enum_valueDB)
 		_, err := db.Updates(*enum_valueDB)

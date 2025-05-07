@@ -47,6 +47,10 @@ type ATTRIBUTE_VALUE_BOOLEANAPI struct {
 // reverse pointers of slice of poitners to Struct
 type ATTRIBUTE_VALUE_BOOLEANPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field DEFINITION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFINITIONID sql.NullInt64
 }
 
 // ATTRIBUTE_VALUE_BOOLEANDB describes a attribute_value_boolean in the database
@@ -230,6 +234,18 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Co
 		attribute_value_booleanDB.CopyBasicFieldsFromATTRIBUTE_VALUE_BOOLEAN(attribute_value_boolean)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value attribute_value_boolean.DEFINITION translates to updating the attribute_value_boolean.DEFINITIONID
+		attribute_value_booleanDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_boolean.DEFINITION != nil {
+			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REFPtr_A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDBID[attribute_value_boolean.DEFINITION]; ok {
+				attribute_value_booleanDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
+				attribute_value_booleanDB.DEFINITIONID.Valid = true
+			}
+		} else {
+			attribute_value_booleanDB.DEFINITIONID.Int64 = 0
+			attribute_value_booleanDB.DEFINITIONID.Valid = true
+		}
+
 		_, err := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Save(attribute_value_booleanDB)
 		if err != nil {
 			log.Fatal(err)
@@ -343,6 +359,27 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Ch
 func (attribute_value_booleanDB *ATTRIBUTE_VALUE_BOOLEANDB) DecodePointers(backRepo *BackRepoStruct, attribute_value_boolean *models.ATTRIBUTE_VALUE_BOOLEAN) {
 
 	// insertion point for checkout of pointer encoding
+	// DEFINITION field	
+	{
+		id := attribute_value_booleanDB.DEFINITIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REFDBID_A_ATTRIBUTE_DEFINITION_BOOLEAN_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_boolean.DEFINITION, unknown pointer id", id)
+				attribute_value_boolean.DEFINITION = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_boolean.DEFINITION == nil || attribute_value_boolean.DEFINITION != tmp {
+					attribute_value_boolean.DEFINITION = tmp
+				}
+			}
+		} else {
+			attribute_value_boolean.DEFINITION = nil
+		}
+	}
+	
 	return
 }
 
@@ -583,6 +620,12 @@ func (backRepoATTRIBUTE_VALUE_BOOLEAN *BackRepoATTRIBUTE_VALUE_BOOLEANStruct) Re
 		_ = attribute_value_booleanDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing DEFINITION field
+		if attribute_value_booleanDB.DEFINITIONID.Int64 != 0 {
+			attribute_value_booleanDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_BOOLEAN_REFid_atBckpTime_newID[uint(attribute_value_booleanDB.DEFINITIONID.Int64)])
+			attribute_value_booleanDB.DEFINITIONID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoATTRIBUTE_VALUE_BOOLEAN.db.Model(attribute_value_booleanDB)
 		_, err := db.Updates(*attribute_value_booleanDB)

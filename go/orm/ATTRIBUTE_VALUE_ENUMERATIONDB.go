@@ -47,6 +47,14 @@ type ATTRIBUTE_VALUE_ENUMERATIONAPI struct {
 // reverse pointers of slice of poitners to Struct
 type ATTRIBUTE_VALUE_ENUMERATIONPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
+
+	// field DEFINITION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFINITIONID sql.NullInt64
+
+	// field VALUES is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	VALUESID sql.NullInt64
 }
 
 // ATTRIBUTE_VALUE_ENUMERATIONDB describes a attribute_value_enumeration in the database
@@ -223,6 +231,30 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 		attribute_value_enumerationDB.CopyBasicFieldsFromATTRIBUTE_VALUE_ENUMERATION(attribute_value_enumeration)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value attribute_value_enumeration.DEFINITION translates to updating the attribute_value_enumeration.DEFINITIONID
+		attribute_value_enumerationDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_enumeration.DEFINITION != nil {
+			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REFPtr_A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDBID[attribute_value_enumeration.DEFINITION]; ok {
+				attribute_value_enumerationDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
+				attribute_value_enumerationDB.DEFINITIONID.Valid = true
+			}
+		} else {
+			attribute_value_enumerationDB.DEFINITIONID.Int64 = 0
+			attribute_value_enumerationDB.DEFINITIONID.Valid = true
+		}
+
+		// commit pointer value attribute_value_enumeration.VALUES translates to updating the attribute_value_enumeration.VALUESID
+		attribute_value_enumerationDB.VALUESID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_enumeration.VALUES != nil {
+			if VALUESId, ok := backRepo.BackRepoA_ENUM_VALUE_REF.Map_A_ENUM_VALUE_REFPtr_A_ENUM_VALUE_REFDBID[attribute_value_enumeration.VALUES]; ok {
+				attribute_value_enumerationDB.VALUESID.Int64 = int64(VALUESId)
+				attribute_value_enumerationDB.VALUESID.Valid = true
+			}
+		} else {
+			attribute_value_enumerationDB.VALUESID.Int64 = 0
+			attribute_value_enumerationDB.VALUESID.Valid = true
+		}
+
 		_, err := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Save(attribute_value_enumerationDB)
 		if err != nil {
 			log.Fatal(err)
@@ -336,6 +368,48 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 func (attribute_value_enumerationDB *ATTRIBUTE_VALUE_ENUMERATIONDB) DecodePointers(backRepo *BackRepoStruct, attribute_value_enumeration *models.ATTRIBUTE_VALUE_ENUMERATION) {
 
 	// insertion point for checkout of pointer encoding
+	// DEFINITION field	
+	{
+		id := attribute_value_enumerationDB.DEFINITIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REFDBID_A_ATTRIBUTE_DEFINITION_ENUMERATION_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_enumeration.DEFINITION, unknown pointer id", id)
+				attribute_value_enumeration.DEFINITION = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_enumeration.DEFINITION == nil || attribute_value_enumeration.DEFINITION != tmp {
+					attribute_value_enumeration.DEFINITION = tmp
+				}
+			}
+		} else {
+			attribute_value_enumeration.DEFINITION = nil
+		}
+	}
+	
+	// VALUES field	
+	{
+		id := attribute_value_enumerationDB.VALUESID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ENUM_VALUE_REF.Map_A_ENUM_VALUE_REFDBID_A_ENUM_VALUE_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_enumeration.VALUES, unknown pointer id", id)
+				attribute_value_enumeration.VALUES = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_enumeration.VALUES == nil || attribute_value_enumeration.VALUES != tmp {
+					attribute_value_enumeration.VALUES = tmp
+				}
+			}
+		} else {
+			attribute_value_enumeration.VALUES = nil
+		}
+	}
+	
 	return
 }
 
@@ -564,6 +638,18 @@ func (backRepoATTRIBUTE_VALUE_ENUMERATION *BackRepoATTRIBUTE_VALUE_ENUMERATIONSt
 		_ = attribute_value_enumerationDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing DEFINITION field
+		if attribute_value_enumerationDB.DEFINITIONID.Int64 != 0 {
+			attribute_value_enumerationDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_ENUMERATION_REFid_atBckpTime_newID[uint(attribute_value_enumerationDB.DEFINITIONID.Int64)])
+			attribute_value_enumerationDB.DEFINITIONID.Valid = true
+		}
+
+		// reindexing VALUES field
+		if attribute_value_enumerationDB.VALUESID.Int64 != 0 {
+			attribute_value_enumerationDB.VALUESID.Int64 = int64(BackRepoA_ENUM_VALUE_REFid_atBckpTime_newID[uint(attribute_value_enumerationDB.VALUESID.Int64)])
+			attribute_value_enumerationDB.VALUESID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoATTRIBUTE_VALUE_ENUMERATION.db.Model(attribute_value_enumerationDB)
 		_, err := db.Updates(*attribute_value_enumerationDB)

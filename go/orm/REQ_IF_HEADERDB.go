@@ -63,11 +63,14 @@ type REQ_IF_HEADERDB struct {
 	// Declation for basic field req_if_headerDB.Name
 	Name_Data sql.NullString
 
+	// Declation for basic field req_if_headerDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field req_if_headerDB.COMMENT
 	COMMENT_Data sql.NullString
 
 	// Declation for basic field req_if_headerDB.CREATION_TIME
-	CREATION_TIME_Data sql.NullTime
+	CREATION_TIME_Data sql.NullString
 
 	// Declation for basic field req_if_headerDB.REPOSITORY_ID
 	REPOSITORY_ID_Data sql.NullString
@@ -108,19 +111,21 @@ type REQ_IF_HEADERWOP struct {
 
 	Name string `xlsx:"1"`
 
-	COMMENT string `xlsx:"2"`
+	IDENTIFIER string `xlsx:"2"`
 
-	CREATION_TIME time.Time `xlsx:"3"`
+	COMMENT string `xlsx:"3"`
 
-	REPOSITORY_ID string `xlsx:"4"`
+	CREATION_TIME string `xlsx:"4"`
 
-	REQ_IF_TOOL_ID string `xlsx:"5"`
+	REPOSITORY_ID string `xlsx:"5"`
 
-	REQ_IF_VERSION string `xlsx:"6"`
+	REQ_IF_TOOL_ID string `xlsx:"6"`
 
-	SOURCE_TOOL_ID string `xlsx:"7"`
+	REQ_IF_VERSION string `xlsx:"7"`
 
-	TITLE string `xlsx:"8"`
+	SOURCE_TOOL_ID string `xlsx:"8"`
+
+	TITLE string `xlsx:"9"`
 	// insertion for WOP pointer fields
 }
 
@@ -128,6 +133,7 @@ var REQ_IF_HEADER_Fields = []string{
 	// insertion for WOP basic fields
 	"ID",
 	"Name",
+	"IDENTIFIER",
 	"COMMENT",
 	"CREATION_TIME",
 	"REPOSITORY_ID",
@@ -415,10 +421,13 @@ func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsFromREQ_IF_HEADER(req_if_
 	req_if_headerDB.Name_Data.String = req_if_header.Name
 	req_if_headerDB.Name_Data.Valid = true
 
+	req_if_headerDB.IDENTIFIER_Data.String = req_if_header.IDENTIFIER
+	req_if_headerDB.IDENTIFIER_Data.Valid = true
+
 	req_if_headerDB.COMMENT_Data.String = req_if_header.COMMENT
 	req_if_headerDB.COMMENT_Data.Valid = true
 
-	req_if_headerDB.CREATION_TIME_Data.Time = req_if_header.CREATION_TIME
+	req_if_headerDB.CREATION_TIME_Data.String = req_if_header.CREATION_TIME
 	req_if_headerDB.CREATION_TIME_Data.Valid = true
 
 	req_if_headerDB.REPOSITORY_ID_Data.String = req_if_header.REPOSITORY_ID
@@ -444,10 +453,13 @@ func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsFromREQ_IF_HEADER_WOP(req
 	req_if_headerDB.Name_Data.String = req_if_header.Name
 	req_if_headerDB.Name_Data.Valid = true
 
+	req_if_headerDB.IDENTIFIER_Data.String = req_if_header.IDENTIFIER
+	req_if_headerDB.IDENTIFIER_Data.Valid = true
+
 	req_if_headerDB.COMMENT_Data.String = req_if_header.COMMENT
 	req_if_headerDB.COMMENT_Data.Valid = true
 
-	req_if_headerDB.CREATION_TIME_Data.Time = req_if_header.CREATION_TIME
+	req_if_headerDB.CREATION_TIME_Data.String = req_if_header.CREATION_TIME
 	req_if_headerDB.CREATION_TIME_Data.Valid = true
 
 	req_if_headerDB.REPOSITORY_ID_Data.String = req_if_header.REPOSITORY_ID
@@ -473,10 +485,13 @@ func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsFromREQ_IF_HEADERWOP(req_
 	req_if_headerDB.Name_Data.String = req_if_header.Name
 	req_if_headerDB.Name_Data.Valid = true
 
+	req_if_headerDB.IDENTIFIER_Data.String = req_if_header.IDENTIFIER
+	req_if_headerDB.IDENTIFIER_Data.Valid = true
+
 	req_if_headerDB.COMMENT_Data.String = req_if_header.COMMENT
 	req_if_headerDB.COMMENT_Data.Valid = true
 
-	req_if_headerDB.CREATION_TIME_Data.Time = req_if_header.CREATION_TIME
+	req_if_headerDB.CREATION_TIME_Data.String = req_if_header.CREATION_TIME
 	req_if_headerDB.CREATION_TIME_Data.Valid = true
 
 	req_if_headerDB.REPOSITORY_ID_Data.String = req_if_header.REPOSITORY_ID
@@ -499,8 +514,9 @@ func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsFromREQ_IF_HEADERWOP(req_
 func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsToREQ_IF_HEADER(req_if_header *models.REQ_IF_HEADER) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	req_if_header.Name = req_if_headerDB.Name_Data.String
+	req_if_header.IDENTIFIER = req_if_headerDB.IDENTIFIER_Data.String
 	req_if_header.COMMENT = req_if_headerDB.COMMENT_Data.String
-	req_if_header.CREATION_TIME = req_if_headerDB.CREATION_TIME_Data.Time
+	req_if_header.CREATION_TIME = req_if_headerDB.CREATION_TIME_Data.String
 	req_if_header.REPOSITORY_ID = req_if_headerDB.REPOSITORY_ID_Data.String
 	req_if_header.REQ_IF_TOOL_ID = req_if_headerDB.REQ_IF_TOOL_ID_Data.String
 	req_if_header.REQ_IF_VERSION = req_if_headerDB.REQ_IF_VERSION_Data.String
@@ -512,8 +528,9 @@ func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsToREQ_IF_HEADER(req_if_he
 func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsToREQ_IF_HEADER_WOP(req_if_header *models.REQ_IF_HEADER_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	req_if_header.Name = req_if_headerDB.Name_Data.String
+	req_if_header.IDENTIFIER = req_if_headerDB.IDENTIFIER_Data.String
 	req_if_header.COMMENT = req_if_headerDB.COMMENT_Data.String
-	req_if_header.CREATION_TIME = req_if_headerDB.CREATION_TIME_Data.Time
+	req_if_header.CREATION_TIME = req_if_headerDB.CREATION_TIME_Data.String
 	req_if_header.REPOSITORY_ID = req_if_headerDB.REPOSITORY_ID_Data.String
 	req_if_header.REQ_IF_TOOL_ID = req_if_headerDB.REQ_IF_TOOL_ID_Data.String
 	req_if_header.REQ_IF_VERSION = req_if_headerDB.REQ_IF_VERSION_Data.String
@@ -526,8 +543,9 @@ func (req_if_headerDB *REQ_IF_HEADERDB) CopyBasicFieldsToREQ_IF_HEADERWOP(req_if
 	req_if_header.ID = int(req_if_headerDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	req_if_header.Name = req_if_headerDB.Name_Data.String
+	req_if_header.IDENTIFIER = req_if_headerDB.IDENTIFIER_Data.String
 	req_if_header.COMMENT = req_if_headerDB.COMMENT_Data.String
-	req_if_header.CREATION_TIME = req_if_headerDB.CREATION_TIME_Data.Time
+	req_if_header.CREATION_TIME = req_if_headerDB.CREATION_TIME_Data.String
 	req_if_header.REPOSITORY_ID = req_if_headerDB.REPOSITORY_ID_Data.String
 	req_if_header.REQ_IF_TOOL_ID = req_if_headerDB.REQ_IF_TOOL_ID_Data.String
 	req_if_header.REQ_IF_VERSION = req_if_headerDB.REQ_IF_VERSION_Data.String

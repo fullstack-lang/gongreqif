@@ -48,37 +48,13 @@ type RELATION_GROUP_TYPEAPI struct {
 type RELATION_GROUP_TYPEPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
-
-	SPEC_ATTRIBUTES struct {
-
-		// field ATTRIBUTE_DEFINITION_BOOLEAN is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_BOOLEAN IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_DEFINITION_DATE is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_DATE IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_DEFINITION_ENUMERATION is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_ENUMERATION IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_DEFINITION_INTEGER is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_INTEGER IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_DEFINITION_REAL is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_REAL IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_DEFINITION_STRING is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_STRING IntSlice `gorm:"type:TEXT"`
-
-		// field ATTRIBUTE_DEFINITION_XHTML is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_DEFINITION_XHTML IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field SPEC_ATTRIBUTES is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	SPEC_ATTRIBUTESID sql.NullInt64
 }
 
 // RELATION_GROUP_TYPEDB describes a relation_group_type in the database
@@ -98,8 +74,11 @@ type RELATION_GROUP_TYPEDB struct {
 	// Declation for basic field relation_group_typeDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field relation_group_typeDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field relation_group_typeDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field relation_group_typeDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -130,9 +109,11 @@ type RELATION_GROUP_TYPEWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	LAST_CHANGE time.Time `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LONG_NAME string `xlsx:"4"`
+	LAST_CHANGE string `xlsx:"4"`
+
+	LONG_NAME string `xlsx:"5"`
 	// insertion for WOP pointer fields
 }
 
@@ -141,6 +122,7 @@ var RELATION_GROUP_TYPE_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"LAST_CHANGE",
 	"LONG_NAME",
 }
@@ -273,148 +255,28 @@ func (backRepoRELATION_GROUP_TYPE *BackRepoRELATION_GROUP_TYPEStruct) CommitPhas
 		relation_group_typeDB.CopyBasicFieldsFromRELATION_GROUP_TYPE(relation_group_type)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range relation_group_type.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value relation_group_type.ALTERNATIVE_ID translates to updating the relation_group_type.ALTERNATIVE_IDID
+		relation_group_typeDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if relation_group_type.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[relation_group_type.ALTERNATIVE_ID]; ok {
+				relation_group_typeDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				relation_group_typeDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			relation_group_typeDB.ALTERNATIVE_IDID.Int64 = 0
+			relation_group_typeDB.ALTERNATIVE_IDID.Valid = true
 		}
 
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_booleanAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
-			attribute_definition_booleanAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_BOOLEAN.GetATTRIBUTE_DEFINITION_BOOLEANDBFromATTRIBUTE_DEFINITION_BOOLEANPtr(attribute_definition_booleanAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_booleanAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_booleanAssocEnd_DB == nil {
-				continue
+		// commit pointer value relation_group_type.SPEC_ATTRIBUTES translates to updating the relation_group_type.SPEC_ATTRIBUTESID
+		relation_group_typeDB.SPEC_ATTRIBUTESID.Valid = true // allow for a 0 value (nil association)
+		if relation_group_type.SPEC_ATTRIBUTES != nil {
+			if SPEC_ATTRIBUTESId, ok := backRepo.BackRepoA_SPEC_ATTRIBUTES.Map_A_SPEC_ATTRIBUTESPtr_A_SPEC_ATTRIBUTESDBID[relation_group_type.SPEC_ATTRIBUTES]; ok {
+				relation_group_typeDB.SPEC_ATTRIBUTESID.Int64 = int64(SPEC_ATTRIBUTESId)
+				relation_group_typeDB.SPEC_ATTRIBUTESID.Valid = true
 			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN, int(attribute_definition_booleanAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_dateAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
-			attribute_definition_dateAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_DATE.GetATTRIBUTE_DEFINITION_DATEDBFromATTRIBUTE_DEFINITION_DATEPtr(attribute_definition_dateAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_dateAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_dateAssocEnd_DB == nil {
-				continue
-			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE, int(attribute_definition_dateAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_enumerationAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
-			attribute_definition_enumerationAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_ENUMERATION.GetATTRIBUTE_DEFINITION_ENUMERATIONDBFromATTRIBUTE_DEFINITION_ENUMERATIONPtr(attribute_definition_enumerationAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_enumerationAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_enumerationAssocEnd_DB == nil {
-				continue
-			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION, int(attribute_definition_enumerationAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_integerAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER {
-			attribute_definition_integerAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_INTEGER.GetATTRIBUTE_DEFINITION_INTEGERDBFromATTRIBUTE_DEFINITION_INTEGERPtr(attribute_definition_integerAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_integerAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_integerAssocEnd_DB == nil {
-				continue
-			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER, int(attribute_definition_integerAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_realAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL {
-			attribute_definition_realAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_REAL.GetATTRIBUTE_DEFINITION_REALDBFromATTRIBUTE_DEFINITION_REALPtr(attribute_definition_realAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_realAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_realAssocEnd_DB == nil {
-				continue
-			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL, int(attribute_definition_realAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_stringAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
-			attribute_definition_stringAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_STRING.GetATTRIBUTE_DEFINITION_STRINGDBFromATTRIBUTE_DEFINITION_STRINGPtr(attribute_definition_stringAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_stringAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_stringAssocEnd_DB == nil {
-				continue
-			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING, int(attribute_definition_stringAssocEnd_DB.ID))
-		}
-
-		// 1. reset
-		relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML = make([]int, 0)
-		// 2. encode
-		for _, attribute_definition_xhtmlAssocEnd := range relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
-			attribute_definition_xhtmlAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_DEFINITION_XHTML.GetATTRIBUTE_DEFINITION_XHTMLDBFromATTRIBUTE_DEFINITION_XHTMLPtr(attribute_definition_xhtmlAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_definition_xhtmlAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_definition_xhtmlAssocEnd_DB == nil {
-				continue
-			}
-			
-			relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML =
-				append(relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML, int(attribute_definition_xhtmlAssocEnd_DB.ID))
+		} else {
+			relation_group_typeDB.SPEC_ATTRIBUTESID.Int64 = 0
+			relation_group_typeDB.SPEC_ATTRIBUTESID.Valid = true
 		}
 
 		_, err := backRepoRELATION_GROUP_TYPE.db.Save(relation_group_typeDB)
@@ -530,78 +392,48 @@ func (backRepoRELATION_GROUP_TYPE *BackRepoRELATION_GROUP_TYPEStruct) CheckoutPh
 func (relation_group_typeDB *RELATION_GROUP_TYPEDB) DecodePointers(backRepo *BackRepoStruct, relation_group_type *models.RELATION_GROUP_TYPE) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem relation_group_type.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.ALTERNATIVE_ID.ALTERNATIVE_ID = relation_group_type.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		relation_group_type.ALTERNATIVE_ID.ALTERNATIVE_ID = append(relation_group_type.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := relation_group_typeDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_BOOLEANDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN[:0]
-	for _, _ATTRIBUTE_DEFINITION_BOOLEANid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN, backRepo.BackRepoATTRIBUTE_DEFINITION_BOOLEAN.Map_ATTRIBUTE_DEFINITION_BOOLEANDBID_ATTRIBUTE_DEFINITION_BOOLEANPtr[uint(_ATTRIBUTE_DEFINITION_BOOLEANid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group_type.ALTERNATIVE_ID, unknown pointer id", id)
+				relation_group_type.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if relation_group_type.ALTERNATIVE_ID == nil || relation_group_type.ALTERNATIVE_ID != tmp {
+					relation_group_type.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			relation_group_type.ALTERNATIVE_ID = nil
+		}
 	}
+	
+	// SPEC_ATTRIBUTES field	
+	{
+		id := relation_group_typeDB.SPEC_ATTRIBUTESID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SPEC_ATTRIBUTES.Map_A_SPEC_ATTRIBUTESDBID_A_SPEC_ATTRIBUTESPtr[uint(id)]
 
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_DATEDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE[:0]
-	for _, _ATTRIBUTE_DEFINITION_DATEid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE, backRepo.BackRepoATTRIBUTE_DEFINITION_DATE.Map_ATTRIBUTE_DEFINITION_DATEDBID_ATTRIBUTE_DEFINITION_DATEPtr[uint(_ATTRIBUTE_DEFINITION_DATEid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: relation_group_type.SPEC_ATTRIBUTES, unknown pointer id", id)
+				relation_group_type.SPEC_ATTRIBUTES = nil
+			} else {
+				// updates only if field has changed
+				if relation_group_type.SPEC_ATTRIBUTES == nil || relation_group_type.SPEC_ATTRIBUTES != tmp {
+					relation_group_type.SPEC_ATTRIBUTES = tmp
+				}
+			}
+		} else {
+			relation_group_type.SPEC_ATTRIBUTES = nil
+		}
 	}
-
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_ENUMERATIONDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION[:0]
-	for _, _ATTRIBUTE_DEFINITION_ENUMERATIONid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION, backRepo.BackRepoATTRIBUTE_DEFINITION_ENUMERATION.Map_ATTRIBUTE_DEFINITION_ENUMERATIONDBID_ATTRIBUTE_DEFINITION_ENUMERATIONPtr[uint(_ATTRIBUTE_DEFINITION_ENUMERATIONid)])
-	}
-
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_INTEGERDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER[:0]
-	for _, _ATTRIBUTE_DEFINITION_INTEGERid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER, backRepo.BackRepoATTRIBUTE_DEFINITION_INTEGER.Map_ATTRIBUTE_DEFINITION_INTEGERDBID_ATTRIBUTE_DEFINITION_INTEGERPtr[uint(_ATTRIBUTE_DEFINITION_INTEGERid)])
-	}
-
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_REALDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL[:0]
-	for _, _ATTRIBUTE_DEFINITION_REALid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL, backRepo.BackRepoATTRIBUTE_DEFINITION_REAL.Map_ATTRIBUTE_DEFINITION_REALDBID_ATTRIBUTE_DEFINITION_REALPtr[uint(_ATTRIBUTE_DEFINITION_REALid)])
-	}
-
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_STRINGDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING[:0]
-	for _, _ATTRIBUTE_DEFINITION_STRINGid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING, backRepo.BackRepoATTRIBUTE_DEFINITION_STRING.Map_ATTRIBUTE_DEFINITION_STRINGDBID_ATTRIBUTE_DEFINITION_STRINGPtr[uint(_ATTRIBUTE_DEFINITION_STRINGid)])
-	}
-
-	// This loop redeem relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_DEFINITION_XHTMLDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML = relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML[:0]
-	for _, _ATTRIBUTE_DEFINITION_XHTMLid := range relation_group_typeDB.RELATION_GROUP_TYPEPointersEncoding.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
-		relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML = append(relation_group_type.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML, backRepo.BackRepoATTRIBUTE_DEFINITION_XHTML.Map_ATTRIBUTE_DEFINITION_XHTMLDBID_ATTRIBUTE_DEFINITION_XHTMLPtr[uint(_ATTRIBUTE_DEFINITION_XHTMLid)])
-	}
-
+	
 	return
 }
 
@@ -642,7 +474,10 @@ func (relation_group_typeDB *RELATION_GROUP_TYPEDB) CopyBasicFieldsFromRELATION_
 	relation_group_typeDB.DESC_Data.String = relation_group_type.DESC
 	relation_group_typeDB.DESC_Data.Valid = true
 
-	relation_group_typeDB.LAST_CHANGE_Data.Time = relation_group_type.LAST_CHANGE
+	relation_group_typeDB.IDENTIFIER_Data.String = relation_group_type.IDENTIFIER
+	relation_group_typeDB.IDENTIFIER_Data.Valid = true
+
+	relation_group_typeDB.LAST_CHANGE_Data.String = relation_group_type.LAST_CHANGE
 	relation_group_typeDB.LAST_CHANGE_Data.Valid = true
 
 	relation_group_typeDB.LONG_NAME_Data.String = relation_group_type.LONG_NAME
@@ -659,7 +494,10 @@ func (relation_group_typeDB *RELATION_GROUP_TYPEDB) CopyBasicFieldsFromRELATION_
 	relation_group_typeDB.DESC_Data.String = relation_group_type.DESC
 	relation_group_typeDB.DESC_Data.Valid = true
 
-	relation_group_typeDB.LAST_CHANGE_Data.Time = relation_group_type.LAST_CHANGE
+	relation_group_typeDB.IDENTIFIER_Data.String = relation_group_type.IDENTIFIER
+	relation_group_typeDB.IDENTIFIER_Data.Valid = true
+
+	relation_group_typeDB.LAST_CHANGE_Data.String = relation_group_type.LAST_CHANGE
 	relation_group_typeDB.LAST_CHANGE_Data.Valid = true
 
 	relation_group_typeDB.LONG_NAME_Data.String = relation_group_type.LONG_NAME
@@ -676,7 +514,10 @@ func (relation_group_typeDB *RELATION_GROUP_TYPEDB) CopyBasicFieldsFromRELATION_
 	relation_group_typeDB.DESC_Data.String = relation_group_type.DESC
 	relation_group_typeDB.DESC_Data.Valid = true
 
-	relation_group_typeDB.LAST_CHANGE_Data.Time = relation_group_type.LAST_CHANGE
+	relation_group_typeDB.IDENTIFIER_Data.String = relation_group_type.IDENTIFIER
+	relation_group_typeDB.IDENTIFIER_Data.Valid = true
+
+	relation_group_typeDB.LAST_CHANGE_Data.String = relation_group_type.LAST_CHANGE
 	relation_group_typeDB.LAST_CHANGE_Data.Valid = true
 
 	relation_group_typeDB.LONG_NAME_Data.String = relation_group_type.LONG_NAME
@@ -688,7 +529,8 @@ func (relation_group_typeDB *RELATION_GROUP_TYPEDB) CopyBasicFieldsToRELATION_GR
 	// insertion point for checkout of basic fields (back repo to stage)
 	relation_group_type.Name = relation_group_typeDB.Name_Data.String
 	relation_group_type.DESC = relation_group_typeDB.DESC_Data.String
-	relation_group_type.LAST_CHANGE = relation_group_typeDB.LAST_CHANGE_Data.Time
+	relation_group_type.IDENTIFIER = relation_group_typeDB.IDENTIFIER_Data.String
+	relation_group_type.LAST_CHANGE = relation_group_typeDB.LAST_CHANGE_Data.String
 	relation_group_type.LONG_NAME = relation_group_typeDB.LONG_NAME_Data.String
 }
 
@@ -697,7 +539,8 @@ func (relation_group_typeDB *RELATION_GROUP_TYPEDB) CopyBasicFieldsToRELATION_GR
 	// insertion point for checkout of basic fields (back repo to stage)
 	relation_group_type.Name = relation_group_typeDB.Name_Data.String
 	relation_group_type.DESC = relation_group_typeDB.DESC_Data.String
-	relation_group_type.LAST_CHANGE = relation_group_typeDB.LAST_CHANGE_Data.Time
+	relation_group_type.IDENTIFIER = relation_group_typeDB.IDENTIFIER_Data.String
+	relation_group_type.LAST_CHANGE = relation_group_typeDB.LAST_CHANGE_Data.String
 	relation_group_type.LONG_NAME = relation_group_typeDB.LONG_NAME_Data.String
 }
 
@@ -707,7 +550,8 @@ func (relation_group_typeDB *RELATION_GROUP_TYPEDB) CopyBasicFieldsToRELATION_GR
 	// insertion point for checkout of basic fields (back repo to stage)
 	relation_group_type.Name = relation_group_typeDB.Name_Data.String
 	relation_group_type.DESC = relation_group_typeDB.DESC_Data.String
-	relation_group_type.LAST_CHANGE = relation_group_typeDB.LAST_CHANGE_Data.Time
+	relation_group_type.IDENTIFIER = relation_group_typeDB.IDENTIFIER_Data.String
+	relation_group_type.LAST_CHANGE = relation_group_typeDB.LAST_CHANGE_Data.String
 	relation_group_type.LONG_NAME = relation_group_typeDB.LONG_NAME_Data.String
 }
 
@@ -866,6 +710,18 @@ func (backRepoRELATION_GROUP_TYPE *BackRepoRELATION_GROUP_TYPEStruct) RestorePha
 		_ = relation_group_typeDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if relation_group_typeDB.ALTERNATIVE_IDID.Int64 != 0 {
+			relation_group_typeDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(relation_group_typeDB.ALTERNATIVE_IDID.Int64)])
+			relation_group_typeDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing SPEC_ATTRIBUTES field
+		if relation_group_typeDB.SPEC_ATTRIBUTESID.Int64 != 0 {
+			relation_group_typeDB.SPEC_ATTRIBUTESID.Int64 = int64(BackRepoA_SPEC_ATTRIBUTESid_atBckpTime_newID[uint(relation_group_typeDB.SPEC_ATTRIBUTESID.Int64)])
+			relation_group_typeDB.SPEC_ATTRIBUTESID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoRELATION_GROUP_TYPE.db.Model(relation_group_typeDB)
 		_, err := db.Updates(*relation_group_typeDB)

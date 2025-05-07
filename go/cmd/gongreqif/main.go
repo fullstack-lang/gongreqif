@@ -20,6 +20,8 @@ var (
 	embeddedDiagrams = flag.Bool("embeddedDiagrams", false, "parse/analysis go/models and go/embeddedDiagrams")
 
 	port = flag.Int("port", 8080, "port server")
+
+	pathToReqifFile = flag.String("pathToReqifFile", "", "Path to the reqif file")
 )
 
 func main() {
@@ -38,7 +40,7 @@ func main() {
 	stack.Probe.Refresh()
 
 	// insertion point for call to stager
-	gongreqif_models.NewStager(r, stack.Stage)
+	gongreqif_models.NewStager(r, stack.Stage, *pathToReqifFile)
 
 	log.Println("Server ready serve on localhost:" + strconv.Itoa(*port))
 	err := r.Run(":" + strconv.Itoa(*port))

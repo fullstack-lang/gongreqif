@@ -48,19 +48,17 @@ type ATTRIBUTE_DEFINITION_DATEAPI struct {
 type ATTRIBUTE_DEFINITION_DATEPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
-	ALTERNATIVE_ID struct {
+	// field ALTERNATIVE_ID is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	ALTERNATIVE_IDID sql.NullInt64
 
-		// field ALTERNATIVE_ID is a slice of pointers to another Struct (optional or 0..1)
-		ALTERNATIVE_ID IntSlice `gorm:"type:TEXT"`
+	// field DEFAULT_VALUE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFAULT_VALUEID sql.NullInt64
 
-	} `gorm:"embedded"`
-
-	DEFAULT_VALUE struct {
-
-		// field ATTRIBUTE_VALUE_DATE is a slice of pointers to another Struct (optional or 0..1)
-		ATTRIBUTE_VALUE_DATE IntSlice `gorm:"type:TEXT"`
-
-	} `gorm:"embedded"`
+	// field TYPE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	TYPEID sql.NullInt64
 }
 
 // ATTRIBUTE_DEFINITION_DATEDB describes a attribute_definition_date in the database
@@ -80,12 +78,15 @@ type ATTRIBUTE_DEFINITION_DATEDB struct {
 	// Declation for basic field attribute_definition_dateDB.DESC
 	DESC_Data sql.NullString
 
+	// Declation for basic field attribute_definition_dateDB.IDENTIFIER
+	IDENTIFIER_Data sql.NullString
+
 	// Declation for basic field attribute_definition_dateDB.IS_EDITABLE
 	// provide the sql storage for the boolan
 	IS_EDITABLE_Data sql.NullBool
 
 	// Declation for basic field attribute_definition_dateDB.LAST_CHANGE
-	LAST_CHANGE_Data sql.NullTime
+	LAST_CHANGE_Data sql.NullString
 
 	// Declation for basic field attribute_definition_dateDB.LONG_NAME
 	LONG_NAME_Data sql.NullString
@@ -116,11 +117,13 @@ type ATTRIBUTE_DEFINITION_DATEWOP struct {
 
 	DESC string `xlsx:"2"`
 
-	IS_EDITABLE bool `xlsx:"3"`
+	IDENTIFIER string `xlsx:"3"`
 
-	LAST_CHANGE time.Time `xlsx:"4"`
+	IS_EDITABLE bool `xlsx:"4"`
 
-	LONG_NAME string `xlsx:"5"`
+	LAST_CHANGE string `xlsx:"5"`
+
+	LONG_NAME string `xlsx:"6"`
 	// insertion for WOP pointer fields
 }
 
@@ -129,6 +132,7 @@ var ATTRIBUTE_DEFINITION_DATE_Fields = []string{
 	"ID",
 	"Name",
 	"DESC",
+	"IDENTIFIER",
 	"IS_EDITABLE",
 	"LAST_CHANGE",
 	"LONG_NAME",
@@ -262,40 +266,40 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 		attribute_definition_dateDB.CopyBasicFieldsFromATTRIBUTE_DEFINITION_DATE(attribute_definition_date)
 
 		// insertion point for translating pointers encodings into actual pointers
-		// 1. reset
-		attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID = make([]int, 0)
-		// 2. encode
-		for _, alternative_idAssocEnd := range attribute_definition_date.ALTERNATIVE_ID.ALTERNATIVE_ID {
-			alternative_idAssocEnd_DB :=
-				backRepo.BackRepoALTERNATIVE_ID.GetALTERNATIVE_IDDBFromALTERNATIVE_IDPtr(alternative_idAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the alternative_idAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if alternative_idAssocEnd_DB == nil {
-				continue
+		// commit pointer value attribute_definition_date.ALTERNATIVE_ID translates to updating the attribute_definition_date.ALTERNATIVE_IDID
+		attribute_definition_dateDB.ALTERNATIVE_IDID.Valid = true // allow for a 0 value (nil association)
+		if attribute_definition_date.ALTERNATIVE_ID != nil {
+			if ALTERNATIVE_IDId, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDPtr_A_ALTERNATIVE_IDDBID[attribute_definition_date.ALTERNATIVE_ID]; ok {
+				attribute_definition_dateDB.ALTERNATIVE_IDID.Int64 = int64(ALTERNATIVE_IDId)
+				attribute_definition_dateDB.ALTERNATIVE_IDID.Valid = true
 			}
-			
-			attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID =
-				append(attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID, int(alternative_idAssocEnd_DB.ID))
+		} else {
+			attribute_definition_dateDB.ALTERNATIVE_IDID.Int64 = 0
+			attribute_definition_dateDB.ALTERNATIVE_IDID.Valid = true
 		}
 
-		// 1. reset
-		attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE = make([]int, 0)
-		// 2. encode
-		for _, attribute_value_dateAssocEnd := range attribute_definition_date.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE {
-			attribute_value_dateAssocEnd_DB :=
-				backRepo.BackRepoATTRIBUTE_VALUE_DATE.GetATTRIBUTE_VALUE_DATEDBFromATTRIBUTE_VALUE_DATEPtr(attribute_value_dateAssocEnd)
-			
-			// the stage might be inconsistant, meaning that the attribute_value_dateAssocEnd_DB might
-			// be missing from the stage. In this case, the commit operation is robust
-			// An alternative would be to crash here to reveal the missing element.
-			if attribute_value_dateAssocEnd_DB == nil {
-				continue
+		// commit pointer value attribute_definition_date.DEFAULT_VALUE translates to updating the attribute_definition_date.DEFAULT_VALUEID
+		attribute_definition_dateDB.DEFAULT_VALUEID.Valid = true // allow for a 0 value (nil association)
+		if attribute_definition_date.DEFAULT_VALUE != nil {
+			if DEFAULT_VALUEId, ok := backRepo.BackRepoA_ATTRIBUTE_VALUE_DATE.Map_A_ATTRIBUTE_VALUE_DATEPtr_A_ATTRIBUTE_VALUE_DATEDBID[attribute_definition_date.DEFAULT_VALUE]; ok {
+				attribute_definition_dateDB.DEFAULT_VALUEID.Int64 = int64(DEFAULT_VALUEId)
+				attribute_definition_dateDB.DEFAULT_VALUEID.Valid = true
 			}
-			
-			attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE =
-				append(attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE, int(attribute_value_dateAssocEnd_DB.ID))
+		} else {
+			attribute_definition_dateDB.DEFAULT_VALUEID.Int64 = 0
+			attribute_definition_dateDB.DEFAULT_VALUEID.Valid = true
+		}
+
+		// commit pointer value attribute_definition_date.TYPE translates to updating the attribute_definition_date.TYPEID
+		attribute_definition_dateDB.TYPEID.Valid = true // allow for a 0 value (nil association)
+		if attribute_definition_date.TYPE != nil {
+			if TYPEId, ok := backRepo.BackRepoA_DATATYPE_DEFINITION_DATE_REF.Map_A_DATATYPE_DEFINITION_DATE_REFPtr_A_DATATYPE_DEFINITION_DATE_REFDBID[attribute_definition_date.TYPE]; ok {
+				attribute_definition_dateDB.TYPEID.Int64 = int64(TYPEId)
+				attribute_definition_dateDB.TYPEID.Valid = true
+			}
+		} else {
+			attribute_definition_dateDB.TYPEID.Int64 = 0
+			attribute_definition_dateDB.TYPEID.Valid = true
 		}
 
 		_, err := backRepoATTRIBUTE_DEFINITION_DATE.db.Save(attribute_definition_dateDB)
@@ -411,24 +415,69 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) DecodePointers(backRepo *BackRepoStruct, attribute_definition_date *models.ATTRIBUTE_DEFINITION_DATE) {
 
 	// insertion point for checkout of pointer encoding
-	// This loop redeem attribute_definition_date.ALTERNATIVE_ID.ALTERNATIVE_ID in the stage from the encode in the back repo
-	// It parses all ALTERNATIVE_IDDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	attribute_definition_date.ALTERNATIVE_ID.ALTERNATIVE_ID = attribute_definition_date.ALTERNATIVE_ID.ALTERNATIVE_ID[:0]
-	for _, _ALTERNATIVE_IDid := range attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.ALTERNATIVE_ID.ALTERNATIVE_ID {
-		attribute_definition_date.ALTERNATIVE_ID.ALTERNATIVE_ID = append(attribute_definition_date.ALTERNATIVE_ID.ALTERNATIVE_ID, backRepo.BackRepoALTERNATIVE_ID.Map_ALTERNATIVE_IDDBID_ALTERNATIVE_IDPtr[uint(_ALTERNATIVE_IDid)])
-	}
+	// ALTERNATIVE_ID field	
+	{
+		id := attribute_definition_dateDB.ALTERNATIVE_IDID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ALTERNATIVE_ID.Map_A_ALTERNATIVE_IDDBID_A_ALTERNATIVE_IDPtr[uint(id)]
 
-	// This loop redeem attribute_definition_date.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE in the stage from the encode in the back repo
-	// It parses all ATTRIBUTE_VALUE_DATEDB in the back repo and if the reverse pointer encoding matches the back repo ID
-	// it appends the stage instance
-	// 1. reset the slice
-	attribute_definition_date.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE = attribute_definition_date.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE[:0]
-	for _, _ATTRIBUTE_VALUE_DATEid := range attribute_definition_dateDB.ATTRIBUTE_DEFINITION_DATEPointersEncoding.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE {
-		attribute_definition_date.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE = append(attribute_definition_date.DEFAULT_VALUE.ATTRIBUTE_VALUE_DATE, backRepo.BackRepoATTRIBUTE_VALUE_DATE.Map_ATTRIBUTE_VALUE_DATEDBID_ATTRIBUTE_VALUE_DATEPtr[uint(_ATTRIBUTE_VALUE_DATEid)])
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_definition_date.ALTERNATIVE_ID, unknown pointer id", id)
+				attribute_definition_date.ALTERNATIVE_ID = nil
+			} else {
+				// updates only if field has changed
+				if attribute_definition_date.ALTERNATIVE_ID == nil || attribute_definition_date.ALTERNATIVE_ID != tmp {
+					attribute_definition_date.ALTERNATIVE_ID = tmp
+				}
+			}
+		} else {
+			attribute_definition_date.ALTERNATIVE_ID = nil
+		}
 	}
+	
+	// DEFAULT_VALUE field	
+	{
+		id := attribute_definition_dateDB.DEFAULT_VALUEID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_VALUE_DATE.Map_A_ATTRIBUTE_VALUE_DATEDBID_A_ATTRIBUTE_VALUE_DATEPtr[uint(id)]
 
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_definition_date.DEFAULT_VALUE, unknown pointer id", id)
+				attribute_definition_date.DEFAULT_VALUE = nil
+			} else {
+				// updates only if field has changed
+				if attribute_definition_date.DEFAULT_VALUE == nil || attribute_definition_date.DEFAULT_VALUE != tmp {
+					attribute_definition_date.DEFAULT_VALUE = tmp
+				}
+			}
+		} else {
+			attribute_definition_date.DEFAULT_VALUE = nil
+		}
+	}
+	
+	// TYPE field	
+	{
+		id := attribute_definition_dateDB.TYPEID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_DATATYPE_DEFINITION_DATE_REF.Map_A_DATATYPE_DEFINITION_DATE_REFDBID_A_DATATYPE_DEFINITION_DATE_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_definition_date.TYPE, unknown pointer id", id)
+				attribute_definition_date.TYPE = nil
+			} else {
+				// updates only if field has changed
+				if attribute_definition_date.TYPE == nil || attribute_definition_date.TYPE != tmp {
+					attribute_definition_date.TYPE = tmp
+				}
+			}
+		} else {
+			attribute_definition_date.TYPE = nil
+		}
+	}
+	
 	return
 }
 
@@ -469,10 +518,13 @@ func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) CopyBasicFieldsF
 	attribute_definition_dateDB.DESC_Data.String = attribute_definition_date.DESC
 	attribute_definition_dateDB.DESC_Data.Valid = true
 
+	attribute_definition_dateDB.IDENTIFIER_Data.String = attribute_definition_date.IDENTIFIER
+	attribute_definition_dateDB.IDENTIFIER_Data.Valid = true
+
 	attribute_definition_dateDB.IS_EDITABLE_Data.Bool = attribute_definition_date.IS_EDITABLE
 	attribute_definition_dateDB.IS_EDITABLE_Data.Valid = true
 
-	attribute_definition_dateDB.LAST_CHANGE_Data.Time = attribute_definition_date.LAST_CHANGE
+	attribute_definition_dateDB.LAST_CHANGE_Data.String = attribute_definition_date.LAST_CHANGE
 	attribute_definition_dateDB.LAST_CHANGE_Data.Valid = true
 
 	attribute_definition_dateDB.LONG_NAME_Data.String = attribute_definition_date.LONG_NAME
@@ -489,10 +541,13 @@ func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) CopyBasicFieldsF
 	attribute_definition_dateDB.DESC_Data.String = attribute_definition_date.DESC
 	attribute_definition_dateDB.DESC_Data.Valid = true
 
+	attribute_definition_dateDB.IDENTIFIER_Data.String = attribute_definition_date.IDENTIFIER
+	attribute_definition_dateDB.IDENTIFIER_Data.Valid = true
+
 	attribute_definition_dateDB.IS_EDITABLE_Data.Bool = attribute_definition_date.IS_EDITABLE
 	attribute_definition_dateDB.IS_EDITABLE_Data.Valid = true
 
-	attribute_definition_dateDB.LAST_CHANGE_Data.Time = attribute_definition_date.LAST_CHANGE
+	attribute_definition_dateDB.LAST_CHANGE_Data.String = attribute_definition_date.LAST_CHANGE
 	attribute_definition_dateDB.LAST_CHANGE_Data.Valid = true
 
 	attribute_definition_dateDB.LONG_NAME_Data.String = attribute_definition_date.LONG_NAME
@@ -509,10 +564,13 @@ func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) CopyBasicFieldsF
 	attribute_definition_dateDB.DESC_Data.String = attribute_definition_date.DESC
 	attribute_definition_dateDB.DESC_Data.Valid = true
 
+	attribute_definition_dateDB.IDENTIFIER_Data.String = attribute_definition_date.IDENTIFIER
+	attribute_definition_dateDB.IDENTIFIER_Data.Valid = true
+
 	attribute_definition_dateDB.IS_EDITABLE_Data.Bool = attribute_definition_date.IS_EDITABLE
 	attribute_definition_dateDB.IS_EDITABLE_Data.Valid = true
 
-	attribute_definition_dateDB.LAST_CHANGE_Data.Time = attribute_definition_date.LAST_CHANGE
+	attribute_definition_dateDB.LAST_CHANGE_Data.String = attribute_definition_date.LAST_CHANGE
 	attribute_definition_dateDB.LAST_CHANGE_Data.Valid = true
 
 	attribute_definition_dateDB.LONG_NAME_Data.String = attribute_definition_date.LONG_NAME
@@ -524,8 +582,9 @@ func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) CopyBasicFieldsT
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_definition_date.Name = attribute_definition_dateDB.Name_Data.String
 	attribute_definition_date.DESC = attribute_definition_dateDB.DESC_Data.String
+	attribute_definition_date.IDENTIFIER = attribute_definition_dateDB.IDENTIFIER_Data.String
 	attribute_definition_date.IS_EDITABLE = attribute_definition_dateDB.IS_EDITABLE_Data.Bool
-	attribute_definition_date.LAST_CHANGE = attribute_definition_dateDB.LAST_CHANGE_Data.Time
+	attribute_definition_date.LAST_CHANGE = attribute_definition_dateDB.LAST_CHANGE_Data.String
 	attribute_definition_date.LONG_NAME = attribute_definition_dateDB.LONG_NAME_Data.String
 }
 
@@ -534,8 +593,9 @@ func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) CopyBasicFieldsT
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_definition_date.Name = attribute_definition_dateDB.Name_Data.String
 	attribute_definition_date.DESC = attribute_definition_dateDB.DESC_Data.String
+	attribute_definition_date.IDENTIFIER = attribute_definition_dateDB.IDENTIFIER_Data.String
 	attribute_definition_date.IS_EDITABLE = attribute_definition_dateDB.IS_EDITABLE_Data.Bool
-	attribute_definition_date.LAST_CHANGE = attribute_definition_dateDB.LAST_CHANGE_Data.Time
+	attribute_definition_date.LAST_CHANGE = attribute_definition_dateDB.LAST_CHANGE_Data.String
 	attribute_definition_date.LONG_NAME = attribute_definition_dateDB.LONG_NAME_Data.String
 }
 
@@ -545,8 +605,9 @@ func (attribute_definition_dateDB *ATTRIBUTE_DEFINITION_DATEDB) CopyBasicFieldsT
 	// insertion point for checkout of basic fields (back repo to stage)
 	attribute_definition_date.Name = attribute_definition_dateDB.Name_Data.String
 	attribute_definition_date.DESC = attribute_definition_dateDB.DESC_Data.String
+	attribute_definition_date.IDENTIFIER = attribute_definition_dateDB.IDENTIFIER_Data.String
 	attribute_definition_date.IS_EDITABLE = attribute_definition_dateDB.IS_EDITABLE_Data.Bool
-	attribute_definition_date.LAST_CHANGE = attribute_definition_dateDB.LAST_CHANGE_Data.Time
+	attribute_definition_date.LAST_CHANGE = attribute_definition_dateDB.LAST_CHANGE_Data.String
 	attribute_definition_date.LONG_NAME = attribute_definition_dateDB.LONG_NAME_Data.String
 }
 
@@ -705,6 +766,24 @@ func (backRepoATTRIBUTE_DEFINITION_DATE *BackRepoATTRIBUTE_DEFINITION_DATEStruct
 		_ = attribute_definition_dateDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing ALTERNATIVE_ID field
+		if attribute_definition_dateDB.ALTERNATIVE_IDID.Int64 != 0 {
+			attribute_definition_dateDB.ALTERNATIVE_IDID.Int64 = int64(BackRepoA_ALTERNATIVE_IDid_atBckpTime_newID[uint(attribute_definition_dateDB.ALTERNATIVE_IDID.Int64)])
+			attribute_definition_dateDB.ALTERNATIVE_IDID.Valid = true
+		}
+
+		// reindexing DEFAULT_VALUE field
+		if attribute_definition_dateDB.DEFAULT_VALUEID.Int64 != 0 {
+			attribute_definition_dateDB.DEFAULT_VALUEID.Int64 = int64(BackRepoA_ATTRIBUTE_VALUE_DATEid_atBckpTime_newID[uint(attribute_definition_dateDB.DEFAULT_VALUEID.Int64)])
+			attribute_definition_dateDB.DEFAULT_VALUEID.Valid = true
+		}
+
+		// reindexing TYPE field
+		if attribute_definition_dateDB.TYPEID.Int64 != 0 {
+			attribute_definition_dateDB.TYPEID.Int64 = int64(BackRepoA_DATATYPE_DEFINITION_DATE_REFid_atBckpTime_newID[uint(attribute_definition_dateDB.TYPEID.Int64)])
+			attribute_definition_dateDB.TYPEID.Valid = true
+		}
+
 		// update databse with new index encoding
 		db, _ := backRepoATTRIBUTE_DEFINITION_DATE.db.Model(attribute_definition_dateDB)
 		_, err := db.Updates(*attribute_definition_dateDB)
