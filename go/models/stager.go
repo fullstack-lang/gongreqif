@@ -27,8 +27,8 @@ type Stager struct {
 	summaryTableStage *table.Stage
 	summaryTableName  string
 
-	metaTypeTreeStage *tree.Stage
-	metaTypeTreeName  string
+	dataTypeTreeStage *tree.Stage
+	dataTypeTreeName  string
 
 	rootReqif       *REQ_IF
 	pathToReqifFile string
@@ -46,8 +46,8 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
 	stager.summaryTableName = "Summary Table Name"
 
-	stager.metaTypeTreeStage = tree_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
-	stager.metaTypeTreeName = "Summary Meta Tree Name"
+	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
+	stager.dataTypeTreeName = "Summary Meta Tree Name"
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
@@ -79,8 +79,8 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 							ShowNameInHeader: false,
 							Size:             25,
 							Tree: &split.Tree{
-								StackName: stager.metaTypeTreeStage.GetName(),
-								TreeName:  stager.metaTypeTreeName,
+								StackName: stager.dataTypeTreeStage.GetName(),
+								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
@@ -151,6 +151,7 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()
+	stager.updateAndCommit_data_type_tree_stage()
 
 	return
 }

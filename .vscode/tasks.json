@@ -146,5 +146,17 @@
 		],
 		"group": "build"
 	  },
+	  {
+		"label": "00 - go install",
+		"type": "shell",
+		"options": {
+		  "cwd": "${workspaceFolder}/go/cmd/gongreqif"
+		},
+		"command": "go",
+		"args": [
+		  "install"
+		],
+		"group": "build"
+	  },
 	]
   }

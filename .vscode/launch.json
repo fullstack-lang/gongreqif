@@ -50,5 +50,41 @@
                 "-marshallOnCommit=data/doors_sample_2.go"
             ]
         },
+        {
+            "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 3.reqif`",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "args": [
+                "-pathToReqifFile",
+                "reqif samples/DOORS export sample 3.reqif",
+                "-marshallOnCommit=data/doors_sample_3.go"
+            ]
+        },
+        {
+            "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 4.reqif`",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "args": [
+                "-pathToReqifFile",
+                "reqif samples/DOORS export sample 4.reqif",
+                "-marshallOnCommit=data/doors_sample_4.go"
+            ]
+        },
+        {
+            "name": "go server -pathToReqifFile=`reqif samples/Unknown tool export sample 1.reqif`",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "args": [
+                "-pathToReqifFile",
+                "reqif samples/Unknown tool export sample 1.reqif",
+                "-marshallOnCommit=data/Unknown tool export sample 1.go"
+            ]
+        },
     ]
 }
