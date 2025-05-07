@@ -98,6 +98,8 @@ github.com/fullstack-lang/gong/lib/table/go/db
 github.com/fullstack-lang/gong/lib/table/go/fullstack
 github.com/fullstack-lang/gong/lib/table/go/models
 github.com/fullstack-lang/gong/lib/table/go/orm
+github.com/fullstack-lang/gong/lib/table/go/probe
+github.com/fullstack-lang/gong/lib/table/go/stack
 github.com/fullstack-lang/gong/lib/table/ng-github.com-fullstack-lang-gong-lib-table
 github.com/fullstack-lang/gong/lib/tone/ng-github.com-fullstack-lang-gong-lib-tone
 github.com/fullstack-lang/gong/lib/tree/go
@@ -107,12 +109,11 @@ github.com/fullstack-lang/gong/lib/tree/go/db
 github.com/fullstack-lang/gong/lib/tree/go/fullstack
 github.com/fullstack-lang/gong/lib/tree/go/models
 github.com/fullstack-lang/gong/lib/tree/go/orm
+github.com/fullstack-lang/gong/lib/tree/go/probe
+github.com/fullstack-lang/gong/lib/tree/go/stack
 github.com/fullstack-lang/gong/lib/tree/ng-github.com-fullstack-lang-gong-lib-tree
 github.com/fullstack-lang/gong/lib/xlsx/ng-github.com-fullstack-lang-gong-lib-xlsx
 github.com/fullstack-lang/gong/ng-github.com-fullstack-lang-gong
-# github.com/fullstack-lang/gongdoc v0.0.0-20241118055028-b29dade3ed5d
-## explicit; go 1.23.1
-github.com/fullstack-lang/gongdoc/go/models
 # github.com/fullstack-lang/maticons v0.0.0-20240913013021-27a7b8fd9369
 ## explicit; go 1.23.1
 github.com/fullstack-lang/maticons/maticons

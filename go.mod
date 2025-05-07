@@ -6,7 +6,6 @@ toolchain go1.23.3
 
 require (
 	github.com/fullstack-lang/gong v0.0.0-20250507051852-2d6005cab3b2
-	github.com/fullstack-lang/gongdoc v0.0.0-20241118055028-b29dade3ed5d
 	github.com/fullstack-lang/maticons v0.0.0-20240913013021-27a7b8fd9369
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-contrib/static v1.1.3
