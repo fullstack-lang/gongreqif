@@ -5,6 +5,7 @@ import "time"
 
 // to avoid compile error if no time field is present
 var __GONG_time_The_fool_doth_think_he_is_wise__ = time.Hour
+var _ = __GONG_time_The_fool_doth_think_he_is_wise__
 
 // insertion point
 type AttributeShape_WOP struct {
@@ -28,6 +29,8 @@ func (from *AttributeShape) CopyBasicFields(to *AttributeShape) {
 type Classdiagram_WOP struct {
 	// insertion point
 	Name string
+	Description string
+	IsIncludedInStaticWebSite bool
 	IsInRenameMode bool
 	IsExpanded bool
 	NodeGongStructsIsExpanded bool
@@ -41,6 +44,8 @@ type Classdiagram_WOP struct {
 func (from *Classdiagram) CopyBasicFields(to *Classdiagram) {
 	// insertion point
 	to.Name = from.Name
+	to.Description = from.Description
+	to.IsIncludedInStaticWebSite = from.IsIncludedInStaticWebSite
 	to.IsInRenameMode = from.IsInRenameMode
 	to.IsExpanded = from.IsExpanded
 	to.NodeGongStructsIsExpanded = from.NodeGongStructsIsExpanded
