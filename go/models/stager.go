@@ -49,6 +49,11 @@ type Stager struct {
 	objectNamer       ObjectNamerInterface
 }
 
+func (stager *Stager) GetStage() (stage *Stage) {
+	stage = stager.stage
+	return
+}
+
 func (stager *Stager) GetObjectTreeStage() (objectTreeStage *tree.Stage) {
 	objectTreeStage = stager.objectTreeStage
 	return
@@ -163,18 +168,18 @@ func NewStager(
 							},
 						},
 						{
-							Size: 25,
+							Size: 40,
 							Tree: &split.Tree{
 								StackName: stager.objectTreeStage.GetName(),
 								TreeName:  stager.objectTreeName,
 							},
 						},
-						{
-							Name:             "To be completed",
-							ShowNameInHeader: false,
+						// {
+						// 	Name:             "To be completed",
+						// 	ShowNameInHeader: false,
 
-							Size: 15,
-						},
+						// 	Size: 15,
+						// },
 					},
 				}),
 			},

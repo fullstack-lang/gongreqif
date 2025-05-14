@@ -87,7 +87,7 @@
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`foo.reqif` -pathToGoModelFile foo.go",
+            "name": "go server foo",
             "type": "go",
             "request": "launch",
             "mode": "debug",
