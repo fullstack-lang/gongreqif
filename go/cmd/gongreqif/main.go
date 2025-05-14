@@ -10,6 +10,8 @@ import (
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
 	gongreqif_static "github.com/fullstack-lang/gongreqif/go/static"
+
+	split_stack "github.com/fullstack-lang/gong/lib/split/go/stack"
 )
 
 var (
@@ -37,6 +39,10 @@ func main() {
 	// setup the static file server and get the controller
 	r := gongreqif_static.ServeStaticFiles(*logGINFlag)
 
+	// the root split name is "" by convention. Is is the same for all gong applications
+	// that do not develop their specific angular component
+	splitStage := split_stack.NewStack(r, "", "", "", "", false, false).Stage
+
 	// setup model stack with its probe
 	stack := gongreqif_stack.NewStack(r, "gongreqif", *unmarshallFromCode, *marshallOnCommit, "", *embeddedDiagrams, true)
 	stack.Probe.Refresh()
@@ -47,7 +53,7 @@ func main() {
 	}
 
 	// insertion point for call to stager
-	stager := gongreqif_models.NewStager(r, stack.Stage, *pathToReqifFile, modelGenerator)
+	stager := gongreqif_models.NewStager(r, splitStage, stack.Stage, *pathToReqifFile, modelGenerator)
 
 	modelGenerator.GenerateModels(stager)
 

@@ -12,7 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	split "github.com/fullstack-lang/gong/lib/split/go/models"
-	split_stack "github.com/fullstack-lang/gong/lib/split/go/stack"
 
 	table "github.com/fullstack-lang/gong/lib/table/go/models"
 	table_stack "github.com/fullstack-lang/gong/lib/table/go/stack"
@@ -49,13 +48,14 @@ type ModelGeneratorInterface interface {
 	GenerateModels(stager *Stager)
 }
 
-func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string, modelGenerator ModelGeneratorInterface) (
+func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqifFile string, modelGenerator ModelGeneratorInterface) (
 	stager *Stager,
 ) {
 
 	stager = new(Stager)
 
 	stager.stage = stage
+	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
 	stager.ModelGenerator = modelGenerator
 
@@ -69,10 +69,6 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string, modelGenerat
 	stager.specTypeTreeName = "Spec Type Tree Name"
 
 	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
-
-	// the root split name is "" by convention. Is is the same for all gong applications
-	// that do not develop their specific angular component
-	stager.splitStage = split_stack.NewStack(r, "", "", "", "", false, false).Stage
 
 	// StageBranch will stage on the the first argument
 	// all instances related to the second argument
