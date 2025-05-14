@@ -43,6 +43,7 @@ func main() {
 
 	modelGenerator := &generator.ModelGenerator{
 		PathToGoModelFile: *pathToGoModelFile,
+		Stage:             stack.Stage,
 	}
 
 	// insertion point for call to stager

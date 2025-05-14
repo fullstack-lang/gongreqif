@@ -1,27 +1,48 @@
 package generator
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strings"
 
-	"github.com/fullstack-lang/gongreqif/go/models"
+	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
 type ModelGenerator struct {
 	PathToGoModelFile string
+	Stage             *m.Stage
 }
 
-// GenerateModels implements models.ModelGeneratorInterface.
-func (m *ModelGenerator) GenerateModels(stager *models.Stager) {
+// GenerateModels implements m.ModelGeneratorInterface.
+func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 	var sb strings.Builder
 
 	sb.WriteString(`// Generated code, do not edit
 package models
 `)
 
+	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](modelGenerator.Stage) {
+
+		sb.WriteString(fmt.Sprintf(`type %s struct {
+	Name string`, specObjectType.Name))
+
+		sb.WriteString(`	
+	
+	// Attributes XHTML
+`)
+
+		for _, attributeXHTML := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+			sb.WriteString(fmt.Sprintf(`	%s string
+`, GenerateGoIdentifier(attributeXHTML.Name)))
+		}
+
+		sb.WriteString(`
+}`)
+	}
+
 	result := sb.String()
-	err := os.WriteFile(m.PathToGoModelFile, []byte(result), 0644)
+	err := os.WriteFile(modelGenerator.PathToGoModelFile, []byte(result), 0644)
 	if err != nil {
 		log.Panicln("Generate go models", err.Error())
 	}
