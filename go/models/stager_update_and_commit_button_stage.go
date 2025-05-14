@@ -55,7 +55,7 @@ func (e *GenerateModelButtonProxy) GetButtonsStage() *button.Stage {
 
 // OnAfterUpdateButton implements models.Target.
 func (e *GenerateModelButtonProxy) OnAfterUpdateButton() {
-	e.stager.ModelGenerator.GenerateModels(e.stager)
+	e.stager.modelGenerator.GenerateModels(e.stager)
 }
 
 type ExportStaticSiteButtonProxy struct {

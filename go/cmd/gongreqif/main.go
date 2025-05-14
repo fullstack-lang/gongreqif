@@ -6,7 +6,11 @@ import (
 	"strconv"
 
 	// insertion point for models import
+
 	"github.com/fullstack-lang/gongreqif/go/generator"
+	"github.com/fullstack-lang/gongreqif/go/names"
+	"github.com/fullstack-lang/gongreqif/go/objects"
+
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
 	gongreqif_static "github.com/fullstack-lang/gongreqif/go/static"
@@ -26,6 +30,7 @@ var (
 
 	pathToReqifFile   = flag.String("pathToReqifFile", "", "Path to the reqif file")
 	pathToGoModelFile = flag.String("pathToGoModelFile", "", "Path to the go model file")
+	pathToXLFile      = flag.String("pathToXLFile", "", "Path to the go model file")
 )
 
 func main() {
@@ -51,11 +56,20 @@ func main() {
 		PathToGoModelFile: *pathToGoModelFile,
 		Stage:             stack.Stage,
 	}
+	objectTreeUpdater := &objects.ObjectTreeStage{}
 
 	// insertion point for call to stager
-	stager := gongreqif_models.NewStager(r, splitStage, stack.Stage, *pathToReqifFile, modelGenerator)
+	stager := gongreqif_models.NewStager(r,
+		splitStage,
+		stack.Stage,
+		*pathToReqifFile,
+		modelGenerator,
+		objectTreeUpdater,
+		&names.ObjectNamer{})
 
 	modelGenerator.GenerateModels(stager)
+
+	gongreqif_models.SerializeStage(stack.Stage, *pathToXLFile)
 
 	log.Println("Server ready serve on localhost:" + strconv.Itoa(*port))
 	err := r.Run(":" + strconv.Itoa(*port))

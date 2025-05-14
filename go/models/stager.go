@@ -38,17 +38,51 @@ type Stager struct {
 	specTypeTreeStage *tree.Stage
 	specTypeTreeName  string
 
+	objectTreeStage *tree.Stage
+	objectTreeName  string
+
 	rootReqif       *REQ_IF
 	pathToReqifFile string
 
-	ModelGenerator ModelGeneratorInterface
+	modelGenerator    ModelGeneratorInterface
+	objectTreeUpdater ObjectTreeUpdaterInterface
+	objectNamer       ObjectNamerInterface
+}
+
+func (stager *Stager) GetObjectTreeStage() (objectTreeStage *tree.Stage) {
+	objectTreeStage = stager.objectTreeStage
+	return
+}
+
+func (stager *Stager) GetObjectTreeName() string {
+	return stager.objectTreeName
+}
+
+func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
+	rootReqif = stager.rootReqif
+	return
 }
 
 type ModelGeneratorInterface interface {
 	GenerateModels(stager *Stager)
 }
 
-func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqifFile string, modelGenerator ModelGeneratorInterface) (
+type ObjectTreeUpdaterInterface interface {
+	UpdateAndCommitObjectTreeStage(stager *Stager)
+}
+
+type ObjectNamerInterface interface {
+	SetNamesToElements(stage *Stage, reqif *REQ_IF)
+}
+
+func NewStager(
+	r *gin.Engine,
+	splitStage *split.Stage,
+	stage *Stage,
+	pathToReqifFile string,
+	modelGenerator ModelGeneratorInterface,
+	objectTreeUpdater ObjectTreeUpdaterInterface,
+	objectNamer ObjectNamerInterface) (
 	stager *Stager,
 ) {
 
@@ -57,7 +91,9 @@ func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqif
 	stager.stage = stage
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
-	stager.ModelGenerator = modelGenerator
+	stager.modelGenerator = modelGenerator
+	stager.objectTreeUpdater = objectTreeUpdater
+	stager.objectNamer = objectNamer
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
 	stager.summaryTableName = "Summary Table Name"
@@ -67,6 +103,9 @@ func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqif
 
 	stager.specTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"spectypes", "", "", "", false, true).Stage
 	stager.specTypeTreeName = "Spec Type Tree Name"
+
+	stager.objectTreeStage = tree_stack.NewStack(r, stage.GetName()+"object", "", "", "", false, true).Stage
+	stager.specTypeTreeName = "Object Tree Name"
 
 	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
@@ -84,7 +123,7 @@ func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqif
 					AsSplitAreas: []*split.AsSplitArea{
 						{
 							Name: "Summary + button",
-							Size: 25,
+							Size: 20,
 							AsSplit: (&split.AsSplit{
 								Direction: split.Vertical,
 								AsSplitAreas: []*split.AsSplitArea{
@@ -110,24 +149,31 @@ func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqif
 						},
 
 						{
-							Size: 25,
+							Size: 15,
 							Tree: &split.Tree{
 								StackName: stager.dataTypeTreeStage.GetName(),
 								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
-							Size: 25,
+							Size: 20,
 							Tree: &split.Tree{
 								StackName: stager.specTypeTreeStage.GetName(),
 								TreeName:  stager.specTypeTreeName,
 							},
 						},
-
+						{
+							Size: 25,
+							Tree: &split.Tree{
+								StackName: stager.objectTreeStage.GetName(),
+								TreeName:  stager.objectTreeName,
+							},
+						},
 						{
 							Name:             "To be completed",
 							ShowNameInHeader: false,
-							Size:             25,
+
+							Size: 15,
 						},
 					},
 				}),
@@ -210,13 +256,14 @@ func NewStager(r *gin.Engine, splitStage *split.Stage, stage *Stage, pathToReqif
 		log.Fatal("No REQ_IF element found in file", pathToReqifFile)
 	}
 
-	SetNamesToREQIF_Elements(stage)
+	stager.objectNamer.SetNamesToElements(stage, &req_if)
 
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()
 	stager.updateAndCommit_data_type_tree_stage()
 	stager.updateAndCommit_spec_type_tree_stage()
 	stager.UpdateAndCommitButtonStage()
+	stager.objectTreeUpdater.UpdateAndCommitObjectTreeStage(stager)
 
 	return
 }
