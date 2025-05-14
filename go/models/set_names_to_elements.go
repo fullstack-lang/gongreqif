@@ -1,7 +1,10 @@
 package models
 
+import "fmt"
+
 // SetNamesToREQIF_Elements fill up names of reqif objects
 func SetNamesToREQIF_Elements(stage *Stage) {
+	idx := 0
 
 	for x := range *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_ENUMERATION](stage) {
 		x.Name = x.LONG_NAME
@@ -86,8 +89,13 @@ func SetNamesToREQIF_Elements(stage *Stage) {
 		x.Name = x.LONG_NAME
 	}
 
+	idx = 0
 	for x := range *GetGongstructInstancesSet[SPECIFICATION_TYPE](stage) {
 		x.Name = x.LONG_NAME
+		if x.LONG_NAME == "" {
+			x.Name = fmt.Sprintf("Specification_type_%.2d", idx)
+			idx++
+		}
 	}
 
 	for x := range *GetGongstructInstancesSet[SPEC_HIERARCHY](stage) {
@@ -98,8 +106,13 @@ func SetNamesToREQIF_Elements(stage *Stage) {
 		x.Name = x.LONG_NAME
 	}
 
+	idx = 0
 	for x := range *GetGongstructInstancesSet[SPEC_OBJECT_TYPE](stage) {
 		x.Name = x.LONG_NAME
+		if x.LONG_NAME == "" {
+			x.Name = fmt.Sprintf("Spec_object_type_%.2d", idx)
+			idx++
+		}
 	}
 
 	for x := range *GetGongstructInstancesSet[SPEC_RELATION](stage) {

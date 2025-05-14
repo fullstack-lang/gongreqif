@@ -18,7 +18,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types XHTML",
+			Name:       "XHTML",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
@@ -34,7 +34,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types String",
+			Name:       "String",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
@@ -50,7 +50,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types Enumeration",
+			Name:       "Enumeration",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
@@ -71,7 +71,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types Boolean",
+			Name:       "Boolean",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
@@ -86,7 +86,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types Integer",
+			Name:       "Integer",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
@@ -101,7 +101,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types Date",
+			Name:       "Date",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
@@ -116,7 +116,7 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 
 	{
 		datatypeCategory := &tree.Node{
-			Name:       "Data types Real",
+			Name:       "Real",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}

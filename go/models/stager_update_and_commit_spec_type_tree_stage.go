@@ -35,26 +35,56 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
+
 		for _, spectype := range spectypes.SPEC_OBJECT_TYPE {
-			node := &tree.Node{
-				Name: spectype.LONG_NAME,
+			nodeSpecType := &tree.Node{
+				Name: spectype.Name,
 			}
-			spectypeCategory.Children = append(spectypeCategory.Children, node)
+			spectypeCategory.Children = append(spectypeCategory.Children, nodeSpecType)
 
 			if spectype.SPEC_ATTRIBUTES == nil {
 				continue
 			}
-			for _, attribute := range spectype.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
-				// provide the type
-				var attributeType string
-				if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
-					attributeType = datatype.LONG_NAME
-				}
 
-				nodeAttribute := &tree.Node{
-					Name: attribute.LONG_NAME + ":" + attributeType,
+			{
+				nodeSpecTypeAttribute := &tree.Node{
+					Name:       "XHTML",
+					IsExpanded: true,
+					FontStyle:  tree.ITALIC,
 				}
-				node.Children = append(node.Children, nodeAttribute)
+				nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+				for _, attribute := range spectype.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+					// provide the type
+					var attributeType string
+					if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
+						attributeType = datatype.LONG_NAME
+					}
+
+					nodeAttribute := &tree.Node{
+						Name: attribute.LONG_NAME + ":" + attributeType,
+					}
+					nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+				}
+			}
+			{
+				nodeSpecTypeAttribute := &tree.Node{
+					Name:       "ENUMERATION",
+					IsExpanded: true,
+					FontStyle:  tree.ITALIC,
+				}
+				nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+				for _, attribute := range spectype.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
+					// provide the type
+					var attributeType string
+					if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+						attributeType = datatype.LONG_NAME
+					}
+
+					nodeAttribute := &tree.Node{
+						Name: attribute.LONG_NAME + ":" + attributeType,
+					}
+					nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+				}
 			}
 		}
 	}
@@ -68,7 +98,7 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 		for _, spectype := range spectypes.SPEC_RELATION_TYPE {
 			node := &tree.Node{
-				Name: spectype.LONG_NAME,
+				Name: spectype.Name,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -99,7 +129,7 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 		for _, spectype := range spectypes.SPECIFICATION_TYPE {
 			node := &tree.Node{
-				Name: spectype.LONG_NAME,
+				Name: spectype.Name,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 

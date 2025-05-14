@@ -19,11 +19,17 @@ import (
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 	tree_stack "github.com/fullstack-lang/gong/lib/tree/go/stack"
+
+	button "github.com/fullstack-lang/gong/lib/button/go/models"
+	button_stack "github.com/fullstack-lang/gong/lib/button/go/stack"
 )
 
 type Stager struct {
-	stage             *Stage
-	splitStage        *split.Stage
+	stage      *Stage
+	splitStage *split.Stage
+
+	buttonStage *button.Stage
+
 	summaryTableStage *table.Stage
 	summaryTableName  string
 
@@ -35,9 +41,15 @@ type Stager struct {
 
 	rootReqif       *REQ_IF
 	pathToReqifFile string
+
+	ModelGenerator ModelGeneratorInterface
 }
 
-func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
+type ModelGeneratorInterface interface {
+	GenerateModels(stager *Stager)
+}
+
+func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string, modelGenerator ModelGeneratorInterface) (
 	stager *Stager,
 ) {
 
@@ -45,6 +57,7 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 
 	stager.stage = stage
 	stager.pathToReqifFile = pathToReqifFile
+	stager.ModelGenerator = modelGenerator
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
 	stager.summaryTableName = "Summary Table Name"
@@ -54,6 +67,8 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 
 	stager.specTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"spectypes", "", "", "", false, true).Stage
 	stager.specTypeTreeName = "Spec Type Tree Name"
+
+	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
@@ -72,14 +87,32 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 					Direction: split.Horizontal,
 					AsSplitAreas: []*split.AsSplitArea{
 						{
-							Name:             "Summary table",
-							ShowNameInHeader: false,
-							Size:             25,
-							Table: &split.Table{
-								StackName: stager.summaryTableStage.GetName(),
-								TableName: stager.summaryTableName,
-							},
+							Name: "Summary + button",
+							Size: 25,
+							AsSplit: (&split.AsSplit{
+								Direction: split.Vertical,
+								AsSplitAreas: []*split.AsSplitArea{
+									{
+										Name:             "Summary table",
+										ShowNameInHeader: false,
+										Size:             75,
+										Table: &split.Table{
+											StackName: stager.summaryTableStage.GetName(),
+											TableName: stager.summaryTableName,
+										},
+									},
+									{
+										Name:             "Buttons",
+										ShowNameInHeader: false,
+										Size:             25,
+										Button: &split.Button{
+											StackName: stager.buttonStage.GetName(),
+										},
+									},
+								},
+							}),
 						},
+
 						{
 							Size: 25,
 							Tree: &split.Tree{
@@ -170,8 +203,6 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 		return
 	}
 
-	SetNamesToREQIF_Elements(stage)
-
 	StageBranch(stage, &req_if)
 
 	// fetch the root REQ_IF element and exit otherwise
@@ -183,10 +214,13 @@ func NewStager(r *gin.Engine, stage *Stage, pathToReqifFile string) (
 		log.Fatal("No REQ_IF element found in file", pathToReqifFile)
 	}
 
+	SetNamesToREQIF_Elements(stage)
+
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()
 	stager.updateAndCommit_data_type_tree_stage()
 	stager.updateAndCommit_spec_type_tree_stage()
+	stager.UpdateAndCommitButtonStage()
 
 	return
 }
