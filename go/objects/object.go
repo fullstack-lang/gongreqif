@@ -1,6 +1,7 @@
 package objects
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -18,11 +19,7 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 
 	treeStage.Reset()
 
-	rootNode := &tree.Node{
-		Name:       "Objects",
-		IsExpanded: true,
-		FontStyle:  tree.ITALIC,
-	}
+	sliceOfSpecObjectNodes := make([]*tree.Node, 0)
 
 	objects := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS
 
@@ -54,6 +51,19 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 		enumValues_id_map[enumValue.IDENTIFIER] = enumValue
 	}
 
+	// prepare one node per spec obect type
+	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+	map_specType_node := make(map[*m.SPEC_OBJECT_TYPE]*tree.Node)
+	map_specType_nbInstances := make(map[*m.SPEC_OBJECT_TYPE]int)
+	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
+		nodeSpecType := &tree.Node{
+			Name: specObjectType.Name,
+		}
+		sliceOfSpecObjectNodes = append(sliceOfSpecObjectNodes, nodeSpecType)
+		map_specType_node[specObjectType] = nodeSpecType
+
+	}
+
 	for _, specObject := range objects.SPEC_OBJECT {
 
 		// try to match the type
@@ -63,7 +73,9 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 		objectNode := &tree.Node{
 			Name: specObject.Name + " : " + specObjectType.Name,
 		}
-		rootNode.Children = append(rootNode.Children, objectNode)
+		map_specType_node[specObjectType].Children =
+			append(map_specType_node[specObjectType].Children, objectNode)
+		map_specType_nbInstances[specObjectType] = map_specType_nbInstances[specObjectType] + 1
 
 		{
 			objectNodeAttributeCategoryXHTML := &tree.Node{
@@ -126,12 +138,17 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 		}
 	}
 
+	// update the node with the number of instances
+	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
+		nbInstances := map_specType_nbInstances[specObjectType]
+		nodeSpecType := map_specType_node[specObjectType]
+		nodeSpecType.Name = nodeSpecType.Name + fmt.Sprintf(" (%d)", nbInstances)
+	}
+
 	tree.StageBranch(treeStage,
 		&tree.Tree{
-			Name: stager.GetObjectTreeName(),
-			RootNodes: []*tree.Node{
-				rootNode,
-			},
+			Name:      stager.GetObjectTreeName(),
+			RootNodes: sliceOfSpecObjectNodes,
 		},
 	)
 
