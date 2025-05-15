@@ -7,6 +7,7 @@ import (
 
 	// insertion point for models import
 
+	"github.com/fullstack-lang/gongreqif/go/datatype"
 	"github.com/fullstack-lang/gongreqif/go/generator"
 	"github.com/fullstack-lang/gongreqif/go/names"
 	"github.com/fullstack-lang/gongreqif/go/objects"
@@ -57,7 +58,7 @@ func main() {
 		PathToGoModelFile: *pathToGoModelFile,
 		Stage:             stack.Stage,
 	}
-	objectTreeUpdater := &objects.ObjectTreeStage{}
+	objectTreeUpdater := &objects.ObjectTreeStageUpdater{}
 
 	// insertion point for call to stager
 	stager := gongreqif_models.NewStager(r,
@@ -65,7 +66,8 @@ func main() {
 		stack.Stage,
 		*pathToReqifFile,
 		modelGenerator,
-		&specs.Specs{},
+		&datatype.DataTypeTreeStageUpdater{},
+		&specs.SpecTreeStageUpdater{},
 		objectTreeUpdater,
 		&names.ObjectNamer{})
 

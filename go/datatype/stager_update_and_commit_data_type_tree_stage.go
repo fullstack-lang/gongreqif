@@ -1,14 +1,19 @@
-package models
+package datatype
 
 import (
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
+
+	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-func (stager *Stager) updateAndCommit_data_type_tree_stage() {
+type DataTypeTreeStageUpdater struct {
+}
 
-	stager.dataTypeTreeStage.Reset()
+func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTypeTreeStage(stager *m.Stager) {
 
-	datatypes := stager.rootReqif.CORE_CONTENT.REQ_IF_CONTENT.DATATYPES
+	stager.GetDataTypeTreeStage().Reset()
+
+	datatypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.DATATYPES
 
 	rootNode := &tree.Node{
 		Name:       "Data types",
@@ -129,14 +134,14 @@ func (stager *Stager) updateAndCommit_data_type_tree_stage() {
 		}
 	}
 
-	tree.StageBranch(stager.dataTypeTreeStage,
+	tree.StageBranch(stager.GetDataTypeTreeStage(),
 		&tree.Tree{
-			Name: stager.dataTypeTreeName,
+			Name: stager.GetDataTypeTreeName(),
 			RootNodes: []*tree.Node{
 				rootNode,
 			},
 		},
 	)
 
-	stager.dataTypeTreeStage.Commit()
+	stager.GetDataTypeTreeStage().Commit()
 }

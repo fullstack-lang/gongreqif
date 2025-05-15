@@ -1,15 +1,17 @@
 package specs
 
 import (
+	"log"
+
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-type Specs struct {
+type SpecTreeStageUpdater struct {
 }
 
-func (specs *Specs) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
+func (spectTreeStageUpdater *SpecTreeStageUpdater) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
 
 	stager.GetSpecTreeStage().Reset()
 
@@ -63,6 +65,9 @@ func (specs *Specs) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
 					var attributeType string
 					if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
 						attributeType = datatype.LONG_NAME
+					} else {
+						log.Panic("attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF", attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF,
+							"unknown ref")
 					}
 
 					nodeAttribute := &tree.Node{
@@ -81,12 +86,15 @@ func (specs *Specs) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
 				for _, attribute := range spectype.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
 					// provide the type
 					var attributeType string
-					if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+					if datatype, ok := datatypes_enumeration_id_map[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
 						attributeType = datatype.LONG_NAME
+					} else {
+						log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,
+							"unknown ref")
 					}
 
 					nodeAttribute := &tree.Node{
-						Name: attribute.LONG_NAME + ":" + attributeType,
+						Name: attribute.LONG_NAME + " : " + attributeType,
 					}
 					nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
 				}

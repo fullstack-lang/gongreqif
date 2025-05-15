@@ -8,11 +8,11 @@ import (
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )
 
-type ObjectTreeStage struct {
+type ObjectTreeStageUpdater struct {
 }
 
 // UpdateAndCommitObjectTreeStage implements models.ObjectTreeStageInterface.
-func (o *ObjectTreeStage) UpdateAndCommitObjectTreeStage(stager *m.Stager) {
+func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager) {
 	treeStage := stager.GetObjectTreeStage()
 
 	treeStage.Reset()

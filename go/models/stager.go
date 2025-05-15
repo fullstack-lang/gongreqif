@@ -23,6 +23,26 @@ import (
 	button_stack "github.com/fullstack-lang/gong/lib/button/go/stack"
 )
 
+type ModelGeneratorInterface interface {
+	GenerateModels(stager *Stager)
+}
+
+type DataTypeTreeUpdaterInterface interface {
+	UpdateAndCommitDataTypeTreeStage(stager *Stager)
+}
+
+type SpecTreeUpdaterInterface interface {
+	UpdateAndCommitSpecTreeStage(stager *Stager)
+}
+
+type ObjectTreeUpdaterInterface interface {
+	UpdateAndCommitObjectTreeStage(stager *Stager)
+}
+
+type ObjectNamerInterface interface {
+	SetNamesToElements(stage *Stage, reqif *REQ_IF)
+}
+
 type Stager struct {
 	stage      *Stage
 	splitStage *split.Stage
@@ -50,15 +70,25 @@ type Stager struct {
 	// of the models package can last an unusual long time
 	// for a go compilation. Therefore, processing is delegated to other
 	// package where modification will be compiled in a much faster time
-	modelGenerator    ModelGeneratorInterface
-	specsTreeUpdater  SpecTreeUpdaterInterface
-	objectTreeUpdater ObjectTreeUpdaterInterface
-	objectNamer       ObjectNamerInterface
+	modelGenerator      ModelGeneratorInterface
+	dataTypeTreeUpdater DataTypeTreeUpdaterInterface
+	specsTreeUpdater    SpecTreeUpdaterInterface
+	objectTreeUpdater   ObjectTreeUpdaterInterface
+	objectNamer         ObjectNamerInterface
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
 	stage = stager.stage
 	return
+}
+
+func (stager *Stager) GetDataTypeTreeStage() (dataTypeTreeStage *tree.Stage) {
+	dataTypeTreeStage = stager.dataTypeTreeStage
+	return
+}
+
+func (stager *Stager) GetDataTypeTreeName() string {
+	return stager.dataTypeTreeName
 }
 
 func (stager *Stager) GetObjectTreeStage() (objectTreeStage *tree.Stage) {
@@ -85,30 +115,17 @@ func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
 	return
 }
 
-type ModelGeneratorInterface interface {
-	GenerateModels(stager *Stager)
-}
-
-type SpecTreeUpdaterInterface interface {
-	UpdateAndCommitSpecTreeStage(stager *Stager)
-}
-
-type ObjectTreeUpdaterInterface interface {
-	UpdateAndCommitObjectTreeStage(stager *Stager)
-}
-
-type ObjectNamerInterface interface {
-	SetNamesToElements(stage *Stage, reqif *REQ_IF)
-}
-
 func NewStager(
 	r *gin.Engine,
 	splitStage *split.Stage,
 	stage *Stage,
 	pathToReqifFile string,
 	modelGenerator ModelGeneratorInterface,
+
+	dataTypeTreeUpdater DataTypeTreeUpdaterInterface,
 	specsTreeUpdater SpecTreeUpdaterInterface,
 	objectTreeUpdater ObjectTreeUpdaterInterface,
+
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
 ) {
@@ -119,6 +136,7 @@ func NewStager(
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
 	stager.modelGenerator = modelGenerator
+	stager.dataTypeTreeUpdater = dataTypeTreeUpdater
 	stager.specsTreeUpdater = specsTreeUpdater
 	stager.objectTreeUpdater = objectTreeUpdater
 	stager.objectNamer = objectNamer
@@ -288,9 +306,10 @@ func NewStager(
 
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()
-	stager.updateAndCommit_data_type_tree_stage()
-	stager.specsTreeUpdater.UpdateAndCommitSpecTreeStage(stager)
 	stager.UpdateAndCommitButtonStage()
+
+	stager.dataTypeTreeUpdater.UpdateAndCommitDataTypeTreeStage(stager)
+	stager.specsTreeUpdater.UpdateAndCommitSpecTreeStage(stager)
 	stager.objectTreeUpdater.UpdateAndCommitObjectTreeStage(stager)
 
 	return
