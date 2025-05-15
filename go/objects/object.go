@@ -1,6 +1,7 @@
 package objects
 
 import (
+	"log"
 	"strings"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
@@ -31,16 +32,20 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 		specobjectTypes_id_map[specObjectType.IDENTIFIER] = specObjectType
 	}
 
-	attributeDefinitionXHTMLs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
 	attributeDefinitionXHTML_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_XHTML)
-	for attributeDefinition := range attributeDefinitionXHTMLs {
-		attributeDefinitionXHTML_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
+	{
+		attributeDefinitionXHTMLs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionXHTMLs {
+			attributeDefinitionXHTML_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
 	}
 
-	attributeDefinitionENUMs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
 	attributeDefinitionENUM_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION)
-	for attributeDefinition := range attributeDefinitionENUMs {
-		attributeDefinitionENUM_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
+	{
+		attributeDefinitionENUMs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionENUMs {
+			attributeDefinitionENUM_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
 	}
 
 	enumValuess := *m.GetGongstructInstancesSet[m.ENUM_VALUE](stager.GetStage())
@@ -72,6 +77,9 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 				var attributeType string
 				if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 					attributeType = datatype.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
+						"unknown ref")
 				}
 
 				enclosedText := attribute.THE_VALUE.EnclosedText
@@ -96,9 +104,12 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 			objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
 			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
 				// provide the type
-				var attributeType string
-				if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
-					attributeType = datatype.LONG_NAME
+				var enumTypeString string
+				if enumType, ok := attributeDefinitionENUM_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+					enumTypeString = enumType.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
+						"unkonwn ref")
 				}
 
 				valueIdentifier := attribute.VALUES.Name
@@ -108,7 +119,7 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 				}
 
 				nodeXHTMLAttribute := &tree.Node{
-					Name: attributeType + " : " + enumValueString,
+					Name: enumTypeString + " : " + enumValueString,
 				}
 				objectNodeAttributeCategory.Children = append(objectNodeAttributeCategory.Children, nodeXHTMLAttribute)
 			}
