@@ -44,7 +44,14 @@ type Stager struct {
 	rootReqif       *REQ_IF
 	pathToReqifFile string
 
+	// those interface allows for processing outside the models
+	// package. This is for compilation time sake
+	// indeed, since the models is quite complex, the compilation
+	// of the models package can last an unusual long time
+	// for a go compilation. Therefore, processing is delegated to other
+	// package where modification will be compiled in a much faster time
 	modelGenerator    ModelGeneratorInterface
+	specsTreeUpdater  SpecTreeUpdaterInterface
 	objectTreeUpdater ObjectTreeUpdaterInterface
 	objectNamer       ObjectNamerInterface
 }
@@ -63,6 +70,16 @@ func (stager *Stager) GetObjectTreeName() string {
 	return stager.objectTreeName
 }
 
+func (stager *Stager) GetSpecTreeStage() (specTypeTreeStage *tree.Stage) {
+	specTypeTreeStage = stager.specTypeTreeStage
+	return
+}
+
+func (stager *Stager) GetSpecTreeName() (specTypeTreeName string) {
+	specTypeTreeName = stager.specTypeTreeName
+	return
+}
+
 func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
 	rootReqif = stager.rootReqif
 	return
@@ -70,6 +87,10 @@ func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
 
 type ModelGeneratorInterface interface {
 	GenerateModels(stager *Stager)
+}
+
+type SpecTreeUpdaterInterface interface {
+	UpdateAndCommitSpecTreeStage(stager *Stager)
 }
 
 type ObjectTreeUpdaterInterface interface {
@@ -86,6 +107,7 @@ func NewStager(
 	stage *Stage,
 	pathToReqifFile string,
 	modelGenerator ModelGeneratorInterface,
+	specsTreeUpdater SpecTreeUpdaterInterface,
 	objectTreeUpdater ObjectTreeUpdaterInterface,
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
@@ -97,6 +119,7 @@ func NewStager(
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
 	stager.modelGenerator = modelGenerator
+	stager.specsTreeUpdater = specsTreeUpdater
 	stager.objectTreeUpdater = objectTreeUpdater
 	stager.objectNamer = objectNamer
 
@@ -266,7 +289,7 @@ func NewStager(
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()
 	stager.updateAndCommit_data_type_tree_stage()
-	stager.updateAndCommit_spec_type_tree_stage()
+	stager.specsTreeUpdater.UpdateAndCommitSpecTreeStage(stager)
 	stager.UpdateAndCommitButtonStage()
 	stager.objectTreeUpdater.UpdateAndCommitObjectTreeStage(stager)
 

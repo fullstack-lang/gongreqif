@@ -10,6 +10,7 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/generator"
 	"github.com/fullstack-lang/gongreqif/go/names"
 	"github.com/fullstack-lang/gongreqif/go/objects"
+	"github.com/fullstack-lang/gongreqif/go/specs"
 
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
@@ -64,6 +65,7 @@ func main() {
 		stack.Stage,
 		*pathToReqifFile,
 		modelGenerator,
+		&specs.Specs{},
 		objectTreeUpdater,
 		&names.ObjectNamer{})
 

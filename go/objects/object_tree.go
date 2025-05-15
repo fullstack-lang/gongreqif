@@ -31,10 +31,22 @@ func (o *ObjectTreeStage) UpdateAndCommitObjectTreeStage(stager *m.Stager) {
 		specobjectTypes_id_map[specObjectType.IDENTIFIER] = specObjectType
 	}
 
-	attributeDefinitionXHTML := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
+	attributeDefinitionXHTMLs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
 	attributeDefinitionXHTML_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_XHTML)
-	for attributeDefinition := range attributeDefinitionXHTML {
+	for attributeDefinition := range attributeDefinitionXHTMLs {
 		attributeDefinitionXHTML_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
+	}
+
+	attributeDefinitionENUMs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
+	attributeDefinitionENUM_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION)
+	for attributeDefinition := range attributeDefinitionENUMs {
+		attributeDefinitionENUM_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
+	}
+
+	enumValuess := *m.GetGongstructInstancesSet[m.ENUM_VALUE](stager.GetStage())
+	enumValues_id_map := make(map[string]*m.ENUM_VALUE)
+	for enumValue := range enumValuess {
+		enumValues_id_map[enumValue.IDENTIFIER] = enumValue
 	}
 
 	for _, specObject := range objects.SPEC_OBJECT {
@@ -73,6 +85,32 @@ func (o *ObjectTreeStage) UpdateAndCommitObjectTreeStage(stager *m.Stager) {
 					Name: attributeType + " : " + enclosedText,
 				}
 				objectNodeAttributeCategoryXHTML.Children = append(objectNodeAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
+			}
+		}
+		{
+			objectNodeAttributeCategory := &tree.Node{
+				Name:       "Enums",
+				IsExpanded: true,
+				FontStyle:  tree.ITALIC,
+			}
+			objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
+			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
+				// provide the type
+				var attributeType string
+				if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+					attributeType = datatype.LONG_NAME
+				}
+
+				valueIdentifier := attribute.VALUES.Name
+				var enumValueString string
+				if enumValue, ok := enumValues_id_map[valueIdentifier]; ok {
+					enumValueString = enumValue.Name
+				}
+
+				nodeXHTMLAttribute := &tree.Node{
+					Name: attributeType + " : " + enumValueString,
+				}
+				objectNodeAttributeCategory.Children = append(objectNodeAttributeCategory.Children, nodeXHTMLAttribute)
 			}
 		}
 	}

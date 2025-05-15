@@ -1,23 +1,28 @@
-package models
+package specs
 
 import (
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
+
+	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
+type Specs struct {
+}
 
-	stager.specTypeTreeStage.Reset()
+func (specs *Specs) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
 
-	spectypes := stager.rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+	stager.GetSpecTreeStage().Reset()
 
-	datatypes_xhtml := *GetGongstructInstancesSet[DATATYPE_DEFINITION_XHTML](stager.stage)
-	datatypes_xhtml_id_map := make(map[string]*DATATYPE_DEFINITION_XHTML)
+	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+
+	datatypes_xhtml := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_XHTML](stager.GetStage())
+	datatypes_xhtml_id_map := make(map[string]*m.DATATYPE_DEFINITION_XHTML)
 	for datatype_xhtml := range datatypes_xhtml {
 		datatypes_xhtml_id_map[datatype_xhtml.IDENTIFIER] = datatype_xhtml
 	}
 
-	datatypes_enumeration := *GetGongstructInstancesSet[DATATYPE_DEFINITION_ENUMERATION](stager.stage)
-	datatypes_enumeration_id_map := make(map[string]*DATATYPE_DEFINITION_ENUMERATION)
+	datatypes_enumeration := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_ENUMERATION](stager.GetStage())
+	datatypes_enumeration_id_map := make(map[string]*m.DATATYPE_DEFINITION_ENUMERATION)
 	for datatype_enumeration := range datatypes_enumeration {
 		datatypes_enumeration_id_map[datatype_enumeration.IDENTIFIER] = datatype_enumeration
 	}
@@ -163,14 +168,14 @@ func (stager *Stager) updateAndCommit_spec_type_tree_stage() {
 		}
 	}
 
-	tree.StageBranch(stager.specTypeTreeStage,
+	tree.StageBranch(stager.GetSpecTreeStage(),
 		&tree.Tree{
-			Name: stager.specTypeTreeName,
+			Name: stager.GetSpecTreeName(),
 			RootNodes: []*tree.Node{
 				rootNode,
 			},
 		},
 	)
 
-	stager.specTypeTreeStage.Commit()
+	stager.GetSpecTreeStage().Commit()
 }
