@@ -66,9 +66,11 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 
 	for _, specObject := range objects.SPEC_OBJECT {
 
-		// try to match the type
-		typeId_ := specObject.TYPE.SPEC_OBJECT_TYPE_REF
-		specObjectType := specobjectTypes_id_map[typeId_]
+		specObjectType, ok := specobjectTypes_id_map[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+		if !ok {
+			log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
+				"unknown object type")
+		}
 
 		objectNode := &tree.Node{
 			Name: specObject.Name + " : " + specObjectType.Name,
@@ -86,9 +88,9 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 			objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
 			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
 				// provide the type
-				var attributeType string
+				var attributeDefinition string
 				if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
-					attributeType = datatype.LONG_NAME
+					attributeDefinition = datatype.LONG_NAME
 				} else {
 					log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
 						"unknown ref")
@@ -102,7 +104,7 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
 				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
 				nodeXHTMLAttribute := &tree.Node{
-					Name: attributeType + " : " + enclosedText,
+					Name: attributeDefinition + " : " + enclosedText,
 				}
 				objectNodeAttributeCategoryXHTML.Children = append(objectNodeAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
 			}
