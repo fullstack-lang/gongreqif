@@ -115,12 +115,15 @@ func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
 	return
 }
 
+func (stager *Stager) SetModelGenerator(modelGenerator ModelGeneratorInterface) {
+	stager.modelGenerator = modelGenerator
+}
+
 func NewStager(
 	r *gin.Engine,
 	splitStage *split.Stage,
 	stage *Stage,
 	pathToReqifFile string,
-	modelGenerator ModelGeneratorInterface,
 
 	dataTypeTreeUpdater DataTypeTreeUpdaterInterface,
 	specsTreeUpdater SpecTreeUpdaterInterface,
@@ -135,7 +138,6 @@ func NewStager(
 	stager.stage = stage
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
-	stager.modelGenerator = modelGenerator
 	stager.dataTypeTreeUpdater = dataTypeTreeUpdater
 	stager.specsTreeUpdater = specsTreeUpdater
 	stager.objectTreeUpdater = objectTreeUpdater

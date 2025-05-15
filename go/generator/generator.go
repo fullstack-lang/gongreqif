@@ -11,7 +11,6 @@ import (
 
 type ModelGenerator struct {
 	PathToGoModelFile string
-	Stage             *m.Stage
 }
 
 // GenerateModels implements m.ModelGeneratorInterface.
@@ -22,7 +21,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 package models
 `)
 
-	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](modelGenerator.Stage) {
+	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
 
 		sb.WriteString(fmt.Sprintf(`type %s struct {
 	Name string`, specObjectType.Name))

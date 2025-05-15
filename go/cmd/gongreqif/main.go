@@ -54,26 +54,27 @@ func main() {
 	stack := gongreqif_stack.NewStack(r, "gongreqif", *unmarshallFromCode, *marshallOnCommit, "", *embeddedDiagrams, true)
 	stack.Probe.Refresh()
 
-	modelGenerator := &generator.ModelGenerator{
-		PathToGoModelFile: *pathToGoModelFile,
-		Stage:             stack.Stage,
-	}
-	objectTreeUpdater := &objects.ObjectTreeStageUpdater{}
-
 	// insertion point for call to stager
 	stager := gongreqif_models.NewStager(r,
 		splitStage,
 		stack.Stage,
 		*pathToReqifFile,
-		modelGenerator,
 		&datatype.DataTypeTreeStageUpdater{},
 		&specs.SpecTreeStageUpdater{},
-		objectTreeUpdater,
+		&objects.ObjectTreeStageUpdater{},
 		&names.ObjectNamer{})
 
-	modelGenerator.GenerateModels(stager)
+	if *pathToGoModelFile != "" {
+		modelGenerator := &generator.ModelGenerator{
+			PathToGoModelFile: *pathToGoModelFile,
+		}
+		stager.SetModelGenerator(modelGenerator)
+		modelGenerator.GenerateModels(stager)
+	}
 
-	gongreqif_models.SerializeStage(stack.Stage, *pathToXLFile)
+	if *pathToXLFile != "" {
+		gongreqif_models.SerializeStage(stack.Stage, *pathToXLFile)
+	}
 
 	log.Println("Server ready serve on localhost:" + strconv.Itoa(*port))
 	err := r.Run(":" + strconv.Itoa(*port))
