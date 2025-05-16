@@ -9,10 +9,10 @@ import (
 
 	"github.com/fullstack-lang/gongreqif/go/generator"
 	"github.com/fullstack-lang/gongreqif/go/models/datatypes"
+	"github.com/fullstack-lang/gongreqif/go/models/namer"
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 	"github.com/fullstack-lang/gongreqif/go/models/specrelations"
 	"github.com/fullstack-lang/gongreqif/go/models/spectypes"
-	"github.com/fullstack-lang/gongreqif/go/names"
 
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
@@ -64,7 +64,7 @@ func main() {
 		&spectypes.SpecTypesTreeStageUpdater{},
 		&specobjects.SpecObjectsTreeStageUpdater{},
 		&specrelations.SpecRelationsTreeStageUpdater{},
-		&names.ObjectNamer{})
+		&namer.ObjectNamer{})
 
 	if *pathToGoModelFile != "" {
 		modelGenerator := &generator.ModelGenerator{

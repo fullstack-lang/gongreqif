@@ -137,7 +137,7 @@ func (stager *Stager) GetSpecObjectsTreeName() string {
 
 // Tree for spec relations
 
-func (stager *Stager) GetSpecRelationTreeStage() (s *tree.Stage) {
+func (stager *Stager) GetSpecRelationsTreeStage() (s *tree.Stage) {
 	s = stager.specRelationsTreeStage
 	return
 }

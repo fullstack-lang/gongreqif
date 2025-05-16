@@ -22,10 +22,12 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 
 	objects := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS
 
-	specObjectTypes := *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage())
-	specobjectTypes_id_map := make(map[string]*m.SPEC_OBJECT_TYPE)
-	for specObjectType := range specObjectTypes {
-		specobjectTypes_id_map[specObjectType.IDENTIFIER] = specObjectType
+	map_id_specobjectTypes := make(map[string]*m.SPEC_OBJECT_TYPE)
+	{
+		specObjectTypes := *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage())
+		for specObjectType := range specObjectTypes {
+			map_id_specobjectTypes[specObjectType.IDENTIFIER] = specObjectType
+		}
 	}
 
 	attributeDefinitionXHTML_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_XHTML)
@@ -50,33 +52,32 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 		enumValues_id_map[enumValue.IDENTIFIER] = enumValue
 	}
 
-	// prepare one node per spec obect type
+	// prepare one node per spec object type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
-	map_specType_node := make(map[*m.SPEC_OBJECT_TYPE]*tree.Node)
-	map_specType_nbInstances := make(map[*m.SPEC_OBJECT_TYPE]int)
+	map_specObjectType_node := make(map[*m.SPEC_OBJECT_TYPE]*tree.Node)
+	map_specObjectType_nbInstances := make(map[*m.SPEC_OBJECT_TYPE]int)
 	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
-		nodeSpecType := &tree.Node{
+		nodeSpecObjectType := &tree.Node{
 			Name: specObjectType.Name,
 		}
-		sliceOfSpecObjectNodes = append(sliceOfSpecObjectNodes, nodeSpecType)
-		map_specType_node[specObjectType] = nodeSpecType
-
+		sliceOfSpecObjectNodes = append(sliceOfSpecObjectNodes, nodeSpecObjectType)
+		map_specObjectType_node[specObjectType] = nodeSpecObjectType
 	}
 
 	for _, specObject := range objects.SPEC_OBJECT {
 
-		specObjectType, ok := specobjectTypes_id_map[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+		specObjectType, ok := map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 		if !ok {
 			log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 				"unknown object type")
 		}
 
 		objectNode := &tree.Node{
-			Name: specObject.Name + " : " + specObjectType.Name,
+			Name: specObject.Name,
 		}
-		map_specType_node[specObjectType].Children =
-			append(map_specType_node[specObjectType].Children, objectNode)
-		map_specType_nbInstances[specObjectType] = map_specType_nbInstances[specObjectType] + 1
+		map_specObjectType_node[specObjectType].Children =
+			append(map_specObjectType_node[specObjectType].Children, objectNode)
+		map_specObjectType_nbInstances[specObjectType] = map_specObjectType_nbInstances[specObjectType] + 1
 
 		{
 			objectNodeAttributeCategoryXHTML := &tree.Node{
@@ -141,8 +142,8 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 
 	// update the node with the number of instances
 	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
-		nbInstances := map_specType_nbInstances[specObjectType]
-		nodeSpecType := map_specType_node[specObjectType]
+		nbInstances := map_specObjectType_nbInstances[specObjectType]
+		nodeSpecType := map_specObjectType_node[specObjectType]
 		nodeSpecType.Name = nodeSpecType.Name + fmt.Sprintf(" (%d)", nbInstances)
 	}
 

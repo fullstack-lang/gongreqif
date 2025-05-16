@@ -1,4 +1,4 @@
-package names
+package namer
 
 import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
@@ -128,8 +128,13 @@ func (objectNamer *ObjectNamer) SetNamesToElements(stage *m.Stage, reqif *m.REQ_
 		}
 	}
 
-	for x := range *m.GetGongstructInstancesSet[m.SPEC_RELATION](stage) {
+	relations := reqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS
+	for idx, x := range relations.SPEC_RELATION {
 		x.Name = x.LONG_NAME
+		if x.LONG_NAME == "" {
+			x.Name = fmt.Sprintf("Spec_relation_%.4d", idx)
+			idx++
+		}
 	}
 
 	for x := range *m.GetGongstructInstancesSet[m.SPEC_RELATION_TYPE](stage) {
