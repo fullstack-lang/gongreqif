@@ -323,10 +323,24 @@ func NewStager(
 					Direction: split.Horizontal,
 					AsSplitAreas: []*split.AsSplitArea{
 						{
-							Size: 100,
+							Size: 33,
 							Tree: &split.Tree{
 								StackName: stager.specObjectsTreeStage.GetName(),
 								TreeName:  stager.specObjectsTreeName,
+							},
+						},
+						{
+							Size: 33,
+							Tree: &split.Tree{
+								StackName: stager.specRelationsTreeStage.GetName(),
+								TreeName:  stager.specRelationsTreeName,
+							},
+						},
+						{
+							Size: 34,
+							Tree: &split.Tree{
+								StackName: stager.specificationsTreeStage.GetName(),
+								TreeName:  stager.specificationsTreeName,
 							},
 						},
 						// {

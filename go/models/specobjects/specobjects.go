@@ -46,10 +46,12 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 		}
 	}
 
-	enumValuess := *m.GetGongstructInstancesSet[m.ENUM_VALUE](stager.GetStage())
 	enumValues_id_map := make(map[string]*m.ENUM_VALUE)
-	for enumValue := range enumValuess {
-		enumValues_id_map[enumValue.IDENTIFIER] = enumValue
+	{
+		enumValuess := *m.GetGongstructInstancesSet[m.ENUM_VALUE](stager.GetStage())
+		for enumValue := range enumValuess {
+			enumValues_id_map[enumValue.IDENTIFIER] = enumValue
+		}
 	}
 
 	// prepare one node per spec object type
@@ -80,63 +82,10 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 		map_specObjectType_nbInstances[specObjectType] = map_specObjectType_nbInstances[specObjectType] + 1
 
 		{
-			objectNodeAttributeCategoryXHTML := &tree.Node{
-				Name:       "XHTML",
-				IsExpanded: true,
-				FontStyle:  tree.ITALIC,
-			}
-			objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
-			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
-				// provide the type
-				var attributeDefinition string
-				if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
-					attributeDefinition = datatype.LONG_NAME
-				} else {
-					log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
-						"unknown ref")
-				}
-
-				enclosedText := attribute.THE_VALUE.EnclosedText
-
-				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", " ")
-				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "\n")
-				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br >", "-")
-				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
-				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
-				nodeXHTMLAttribute := &tree.Node{
-					Name: attributeDefinition + " : " + enclosedText,
-				}
-				objectNodeAttributeCategoryXHTML.Children = append(objectNodeAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
-			}
+			AddAttributeXHTMLNodes(objectNode, specObject, attributeDefinitionXHTML_id_map)
 		}
 		{
-			objectNodeAttributeCategory := &tree.Node{
-				Name:       "Enums",
-				IsExpanded: true,
-				FontStyle:  tree.ITALIC,
-			}
-			objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
-			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
-				// provide the type
-				var enumTypeString string
-				if enumType, ok := attributeDefinitionENUM_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
-					enumTypeString = enumType.LONG_NAME
-				} else {
-					log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
-						"unkonwn ref")
-				}
-
-				valueIdentifier := attribute.VALUES.Name
-				var enumValueString string
-				if enumValue, ok := enumValues_id_map[valueIdentifier]; ok {
-					enumValueString = enumValue.Name
-				}
-
-				nodeXHTMLAttribute := &tree.Node{
-					Name: enumTypeString + " : " + enumValueString,
-				}
-				objectNodeAttributeCategory.Children = append(objectNodeAttributeCategory.Children, nodeXHTMLAttribute)
-			}
+			AddAttributeENUMNodes(objectNode, specObject, attributeDefinitionENUM_id_map, enumValues_id_map)
 		}
 	}
 
@@ -155,4 +104,69 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 	)
 
 	treeStage.Commit()
+}
+
+func AddAttributeENUMNodes(
+	objectNode *tree.Node,
+	specObject *m.SPEC_OBJECT,
+	attributeDefinitionENUM_id_map map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION,
+	enumValues_id_map map[string]*m.ENUM_VALUE) {
+	objectNodeAttributeCategory := &tree.Node{
+		Name:       "Enums",
+		IsExpanded: true,
+		FontStyle:  tree.ITALIC,
+	}
+	objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
+	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
+		// provide the type
+		var enumTypeString string
+		if enumType, ok := attributeDefinitionENUM_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+			enumTypeString = enumType.LONG_NAME
+		} else {
+			log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
+				"unkonwn ref")
+		}
+
+		valueIdentifier := attribute.VALUES.Name
+		var enumValueString string
+		if enumValue, ok := enumValues_id_map[valueIdentifier]; ok {
+			enumValueString = enumValue.Name
+		}
+
+		nodeXHTMLAttribute := &tree.Node{
+			Name: enumTypeString + " : " + enumValueString,
+		}
+		objectNodeAttributeCategory.Children = append(objectNodeAttributeCategory.Children, nodeXHTMLAttribute)
+	}
+}
+
+func AddAttributeXHTMLNodes(objectNode *tree.Node, specObject *m.SPEC_OBJECT, attributeDefinitionXHTML_id_map map[string]*m.ATTRIBUTE_DEFINITION_XHTML) {
+	objectNodeAttributeCategoryXHTML := &tree.Node{
+		Name:       "XHTML",
+		IsExpanded: true,
+		FontStyle:  tree.ITALIC,
+	}
+	objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
+	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
+		// provide the type
+		var attributeDefinition string
+		if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+			attributeDefinition = datatype.LONG_NAME
+		} else {
+			log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
+				"unknown ref")
+		}
+
+		enclosedText := attribute.THE_VALUE.EnclosedText
+
+		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", " ")
+		enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "\n")
+		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br >", "-")
+		enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
+		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
+		nodeXHTMLAttribute := &tree.Node{
+			Name: attributeDefinition + " : " + enclosedText,
+		}
+		objectNodeAttributeCategoryXHTML.Children = append(objectNodeAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
+	}
 }
