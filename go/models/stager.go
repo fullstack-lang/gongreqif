@@ -49,6 +49,10 @@ type SpecRelationsTreeUpdaterInterface interface {
 	UpdateAndCommitSpecRelationsTreeStage(stager *Stager)
 }
 
+type SpecificationsTreeUpdaterInterface interface {
+	UpdateAndCommitSpecificationsTreeStage(stager *Stager)
+}
+
 type ObjectNamerInterface interface {
 	SetNamesToElements(stage *Stage, reqif *REQ_IF)
 }
@@ -78,6 +82,9 @@ type Stager struct {
 	specRelationsTreeStage *tree.Stage
 	specRelationsTreeName  string
 
+	specificationsTreeStage *tree.Stage
+	specificationsTreeName  string
+
 	rootReqif       *REQ_IF
 	pathToReqifFile string
 
@@ -89,11 +96,12 @@ type Stager struct {
 	// package where modification will be compiled in a much faster time
 	modelGenerator ModelGeneratorInterface
 
-	dataTypesTreeUpdater     DataTypesTreeUpdaterInterface
-	specTypesTreeUpdater     SpecTypesTreeUpdaterInterface
-	specObjectsTreeUpdater   SpecObjectsTreeUpdaterInterface
-	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface
-	objectNamer              ObjectNamerInterface
+	dataTypesTreeUpdater      DataTypesTreeUpdaterInterface
+	specTypesTreeUpdater      SpecTypesTreeUpdaterInterface
+	specObjectsTreeUpdater    SpecObjectsTreeUpdaterInterface
+	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
+	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
+	objectNamer               ObjectNamerInterface
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
@@ -147,6 +155,18 @@ func (stager *Stager) GetSpecRelationsTreeName() (s string) {
 	return
 }
 
+// Tree for specification
+
+func (stager *Stager) GetSpecificationsTreeStage() (s *tree.Stage) {
+	s = stager.specificationsTreeStage
+	return
+}
+
+func (stager *Stager) GetSpecificationsTreeName() (s string) {
+	s = stager.specificationsTreeName
+	return
+}
+
 // OTHERS
 
 func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
@@ -169,6 +189,8 @@ func NewStager(
 
 	specObjectsTreeUpdater SpecObjectsTreeUpdaterInterface,
 	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface,
+	specificationsTreeUpdater SpecificationsTreeUpdaterInterface,
+
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
 ) {
@@ -183,6 +205,7 @@ func NewStager(
 	stager.specTypesTreeUpdater = specTypesTreeUpdater
 	stager.specObjectsTreeUpdater = specObjectsTreeUpdater
 	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
+	stager.specificationsTreeUpdater = specificationsTreeUpdater
 
 	stager.objectNamer = objectNamer
 
@@ -202,7 +225,10 @@ func NewStager(
 	stager.specTypesTreeName = "Object Tree Name"
 
 	stager.specRelationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec relations", "", "", "", false, true).Stage
-	stager.specRelationsTreeName = "Spec Relation Type Tree Name"
+	stager.specRelationsTreeName = "Spec Relations Tree Name"
+
+	stager.specificationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"specifications", "", "", "", false, true).Stage
+	stager.specificationsTreeName = "Specifications Tree Name"
 
 	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
@@ -267,10 +293,17 @@ func NewStager(
 							},
 						},
 						{
-							Size: 20,
+							Size: 10,
 							Tree: &split.Tree{
 								StackName: stager.specRelationsTreeStage.GetName(),
 								TreeName:  stager.specRelationsTreeName,
+							},
+						},
+						{
+							Size: 10,
+							Tree: &split.Tree{
+								StackName: stager.specificationsTreeStage.GetName(),
+								TreeName:  stager.specificationsTreeName,
 							},
 						},
 					},
@@ -352,6 +385,17 @@ func NewStager(
 		},
 	})
 
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "specifications tree probe",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			(&split.AsSplitArea{
+				Split: (&split.Split{
+					StackName: stager.specificationsTreeStage.GetProbeSplitStageName(),
+				}),
+			}),
+		},
+	})
+
 	stager.splitStage.Commit()
 
 	// Open the XML file
@@ -399,6 +443,7 @@ func NewStager(
 
 	stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(stager)
 	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
+	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
 
 	return
 }
