@@ -1,4 +1,4 @@
-package specobjects
+package spectypes
 
 import (
 	"log"
@@ -8,12 +8,12 @@ import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-type SpecObjectsTreeStageUpdater struct {
+type SpecTypesTreeStageUpdater struct {
 }
 
-func (spectTreeStageUpdater *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
+func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stager *m.Stager) {
 
-	stager.GetSpecTreeStage().Reset()
+	stager.GetSpecTypesTreeStage().Reset()
 
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 
@@ -176,14 +176,14 @@ func (spectTreeStageUpdater *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecTre
 		}
 	}
 
-	tree.StageBranch(stager.GetSpecTreeStage(),
+	tree.StageBranch(stager.GetSpecTypesTreeStage(),
 		&tree.Tree{
-			Name: stager.GetSpecTreeName(),
+			Name: stager.GetSpecTypesTreeName(),
 			RootNodes: []*tree.Node{
 				rootNode,
 			},
 		},
 	)
 
-	stager.GetSpecTreeStage().Commit()
+	stager.GetSpecTypesTreeStage().Commit()
 }

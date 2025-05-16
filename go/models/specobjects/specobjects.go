@@ -1,4 +1,4 @@
-package objects
+package specobjects
 
 import (
 	"fmt"
@@ -10,12 +10,11 @@ import (
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )
 
-type ObjectTreeStageUpdater struct {
+type SpecObjectsTreeStageUpdater struct {
 }
 
-// UpdateAndCommitObjectTreeStage implements models.ObjectTreeStageInterface.
-func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager) {
-	treeStage := stager.GetObjectTreeStage()
+func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager *m.Stager) {
+	treeStage := stager.GetSpecObjectsTreeStage()
 
 	treeStage.Reset()
 
@@ -149,7 +148,7 @@ func (o *ObjectTreeStageUpdater) UpdateAndCommitObjectTreeStage(stager *m.Stager
 
 	tree.StageBranch(treeStage,
 		&tree.Tree{
-			Name:      stager.GetObjectTreeName(),
+			Name:      stager.GetSpecObjectsTreeName(),
 			RootNodes: sliceOfSpecObjectNodes,
 		},
 	)

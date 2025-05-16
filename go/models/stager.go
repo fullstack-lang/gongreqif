@@ -27,16 +27,26 @@ type ModelGeneratorInterface interface {
 	GenerateModels(stager *Stager)
 }
 
-type DataTypeTreeUpdaterInterface interface {
+// data types
+
+type DataTypesTreeUpdaterInterface interface {
 	UpdateAndCommitDataTypeTreeStage(stager *Stager)
 }
 
-type SpecTreeUpdaterInterface interface {
-	UpdateAndCommitSpecTreeStage(stager *Stager)
+// spec types
+
+type SpecTypesTreeUpdaterInterface interface {
+	UpdateAndCommitSpecTypesTreeStage(stager *Stager)
 }
 
-type ObjectTreeUpdaterInterface interface {
-	UpdateAndCommitObjectTreeStage(stager *Stager)
+// instances
+
+type SpecObjectsTreeUpdaterInterface interface {
+	UpdateAndCommitSpecObjectsTreeStage(stager *Stager)
+}
+
+type SpecRelationsTreeUpdaterInterface interface {
+	UpdateAndCommitSpecRelationsTreeStage(stager *Stager)
 }
 
 type ObjectNamerInterface interface {
@@ -52,14 +62,21 @@ type Stager struct {
 	summaryTableStage *table.Stage
 	summaryTableName  string
 
+	// types
+
 	dataTypeTreeStage *tree.Stage
 	dataTypeTreeName  string
 
-	specTypeTreeStage *tree.Stage
-	specTypeTreeName  string
+	specTypesTreeStage *tree.Stage
+	specTypesTreeName  string
 
-	objectTreeStage *tree.Stage
-	objectTreeName  string
+	// instances
+
+	specObjectsTreeStage *tree.Stage
+	specObjectsTreeName  string
+
+	specRelationsTreeStage *tree.Stage
+	specRelationsTreeName  string
 
 	rootReqif       *REQ_IF
 	pathToReqifFile string
@@ -70,17 +87,21 @@ type Stager struct {
 	// of the models package can last an unusual long time
 	// for a go compilation. Therefore, processing is delegated to other
 	// package where modification will be compiled in a much faster time
-	modelGenerator      ModelGeneratorInterface
-	dataTypeTreeUpdater DataTypeTreeUpdaterInterface
-	specsTreeUpdater    SpecTreeUpdaterInterface
-	objectTreeUpdater   ObjectTreeUpdaterInterface
-	objectNamer         ObjectNamerInterface
+	modelGenerator ModelGeneratorInterface
+
+	dataTypesTreeUpdater     DataTypesTreeUpdaterInterface
+	specTypesTreeUpdater     SpecTypesTreeUpdaterInterface
+	specObjectsTreeUpdater   SpecObjectsTreeUpdaterInterface
+	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface
+	objectNamer              ObjectNamerInterface
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
 	stage = stager.stage
 	return
 }
+
+// Tree for Data Types
 
 func (stager *Stager) GetDataTypeTreeStage() (dataTypeTreeStage *tree.Stage) {
 	dataTypeTreeStage = stager.dataTypeTreeStage
@@ -91,24 +112,42 @@ func (stager *Stager) GetDataTypeTreeName() string {
 	return stager.dataTypeTreeName
 }
 
-func (stager *Stager) GetObjectTreeStage() (objectTreeStage *tree.Stage) {
-	objectTreeStage = stager.objectTreeStage
+// Tree for spec types
+
+func (stager *Stager) GetSpecTypesTreeStage() (s *tree.Stage) {
+	s = stager.specTypesTreeStage
 	return
 }
 
-func (stager *Stager) GetObjectTreeName() string {
-	return stager.objectTreeName
-}
-
-func (stager *Stager) GetSpecTreeStage() (specTypeTreeStage *tree.Stage) {
-	specTypeTreeStage = stager.specTypeTreeStage
+func (stager *Stager) GetSpecTypesTreeName() (s string) {
+	s = stager.specTypesTreeName
 	return
 }
 
-func (stager *Stager) GetSpecTreeName() (specTypeTreeName string) {
-	specTypeTreeName = stager.specTypeTreeName
+// Tree for spec objects
+
+func (stager *Stager) GetSpecObjectsTreeStage() (s *tree.Stage) {
+	s = stager.specObjectsTreeStage
 	return
 }
+
+func (stager *Stager) GetSpecObjectsTreeName() string {
+	return stager.specObjectsTreeName
+}
+
+// Tree for spec relations
+
+func (stager *Stager) GetSpecRelationTreeStage() (s *tree.Stage) {
+	s = stager.specRelationsTreeStage
+	return
+}
+
+func (stager *Stager) GetSpecRelationsTreeName() (s string) {
+	s = stager.specRelationsTreeName
+	return
+}
+
+// OTHERS
 
 func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
 	rootReqif = stager.rootReqif
@@ -125,10 +164,11 @@ func NewStager(
 	stage *Stage,
 	pathToReqifFile string,
 
-	dataTypeTreeUpdater DataTypeTreeUpdaterInterface,
-	specsTreeUpdater SpecTreeUpdaterInterface,
-	objectTreeUpdater ObjectTreeUpdaterInterface,
+	dataTypesTreeUpdater DataTypesTreeUpdaterInterface,
+	specTypesTreeUpdater SpecTypesTreeUpdaterInterface,
 
+	specObjectsTreeUpdater SpecObjectsTreeUpdaterInterface,
+	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface,
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
 ) {
@@ -138,29 +178,38 @@ func NewStager(
 	stager.stage = stage
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
-	stager.dataTypeTreeUpdater = dataTypeTreeUpdater
-	stager.specsTreeUpdater = specsTreeUpdater
-	stager.objectTreeUpdater = objectTreeUpdater
+
+	stager.dataTypesTreeUpdater = dataTypesTreeUpdater
+	stager.specTypesTreeUpdater = specTypesTreeUpdater
+	stager.specObjectsTreeUpdater = specObjectsTreeUpdater
+	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
+
 	stager.objectNamer = objectNamer
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
 	stager.summaryTableName = "Summary Table Name"
 
-	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"datatypes", "", "", "", false, true).Stage
+	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"data types", "", "", "", false, true).Stage
 	stager.dataTypeTreeName = "Data Type Tree Name"
 
-	stager.specTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"spectypes", "", "", "", false, true).Stage
-	stager.specTypeTreeName = "Spec Type Tree Name"
+	stager.specTypesTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec types", "", "", "", false, true).Stage
+	stager.specTypesTreeName = "Spec Object Type Tree Name"
 
-	stager.objectTreeStage = tree_stack.NewStack(r, stage.GetName()+"object", "", "", "", false, true).Stage
-	stager.specTypeTreeName = "Object Tree Name"
+	// instancess
+	//
+
+	stager.specObjectsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec objects", "", "", "", false, true).Stage
+	stager.specTypesTreeName = "Object Tree Name"
+
+	stager.specRelationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec relations", "", "", "", false, true).Stage
+	stager.specRelationsTreeName = "Spec Relation Type Tree Name"
 
 	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	// StageBranch will stage on the the first argument
 	// all instances related to the second argument
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "REQIF Data",
+		Name: "REQIF Specification",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			{
 				Name:             "room for tree",
@@ -171,7 +220,7 @@ func NewStager(
 					AsSplitAreas: []*split.AsSplitArea{
 						{
 							Name: "Summary + button",
-							Size: 15,
+							Size: 20,
 							AsSplit: (&split.AsSplit{
 								Direction: split.Vertical,
 								AsSplitAreas: []*split.AsSplitArea{
@@ -197,24 +246,54 @@ func NewStager(
 						},
 
 						{
-							Size: 15,
+							Size: 20,
 							Tree: &split.Tree{
 								StackName: stager.dataTypeTreeStage.GetName(),
 								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
-							Size: 15,
+							Size: 20,
 							Tree: &split.Tree{
-								StackName: stager.specTypeTreeStage.GetName(),
-								TreeName:  stager.specTypeTreeName,
+								StackName: stager.specTypesTreeStage.GetName(),
+								TreeName:  stager.specTypesTreeName,
 							},
 						},
 						{
-							Size: 55,
+							Size: 20,
 							Tree: &split.Tree{
-								StackName: stager.objectTreeStage.GetName(),
-								TreeName:  stager.objectTreeName,
+								StackName: stager.specObjectsTreeStage.GetName(),
+								TreeName:  stager.specObjectsTreeName,
+							},
+						},
+						{
+							Size: 20,
+							Tree: &split.Tree{
+								StackName: stager.specRelationsTreeStage.GetName(),
+								TreeName:  stager.specRelationsTreeName,
+							},
+						},
+					},
+				}),
+			},
+		},
+	})
+
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "REQIF Data",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			{
+				Name:             "room for tree",
+				ShowNameInHeader: false,
+				Size:             100,
+				AsSplit: (&split.AsSplit{
+					Direction: split.Horizontal,
+					AsSplitAreas: []*split.AsSplitArea{
+						{
+							Size: 100,
+							Tree: &split.Tree{
+								StackName: stager.specObjectsTreeStage.GetName(),
+								TreeName:  stager.specObjectsTreeName,
 							},
 						},
 						// {
@@ -224,12 +303,6 @@ func NewStager(
 						// 	Size: 15,
 						// },
 					},
-				}),
-			},
-			{
-				Size: 0,
-				Split: (&split.Split{
-					StackName: stage.GetProbeSplitStageName(),
 				}),
 			},
 		},
@@ -273,7 +346,7 @@ func NewStager(
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
-					StackName: stager.specTypeTreeStage.GetProbeSplitStageName(),
+					StackName: stager.specTypesTreeStage.GetProbeSplitStageName(),
 				}),
 			}),
 		},
@@ -321,9 +394,11 @@ func NewStager(
 	stager.updateAndCommitSummaryTableStage()
 	stager.UpdateAndCommitButtonStage()
 
-	stager.dataTypeTreeUpdater.UpdateAndCommitDataTypeTreeStage(stager)
-	stager.specsTreeUpdater.UpdateAndCommitSpecTreeStage(stager)
-	stager.objectTreeUpdater.UpdateAndCommitObjectTreeStage(stager)
+	stager.dataTypesTreeUpdater.UpdateAndCommitDataTypeTreeStage(stager)
+	stager.specTypesTreeUpdater.UpdateAndCommitSpecTypesTreeStage(stager)
+
+	stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(stager)
+	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
 
 	return
 }

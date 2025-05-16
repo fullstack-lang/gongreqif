@@ -1,4 +1,4 @@
-package datatype
+package datatypes
 
 import (
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"

@@ -7,11 +7,12 @@ import (
 
 	// insertion point for models import
 
-	"github.com/fullstack-lang/gongreqif/go/datatype"
 	"github.com/fullstack-lang/gongreqif/go/generator"
+	"github.com/fullstack-lang/gongreqif/go/models/datatypes"
+	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
+	"github.com/fullstack-lang/gongreqif/go/models/specrelations"
+	"github.com/fullstack-lang/gongreqif/go/models/spectypes"
 	"github.com/fullstack-lang/gongreqif/go/names"
-	"github.com/fullstack-lang/gongreqif/go/objects"
-	"github.com/fullstack-lang/gongreqif/go/specobjects"
 
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
@@ -59,9 +60,10 @@ func main() {
 		splitStage,
 		stack.Stage,
 		*pathToReqifFile,
-		&datatype.DataTypeTreeStageUpdater{},
+		&datatypes.DataTypeTreeStageUpdater{},
+		&spectypes.SpecTypesTreeStageUpdater{},
 		&specobjects.SpecObjectsTreeStageUpdater{},
-		&objects.ObjectTreeStageUpdater{},
+		&specrelations.SpecRelationsTreeStageUpdater{},
 		&names.ObjectNamer{})
 
 	if *pathToGoModelFile != "" {
