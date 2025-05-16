@@ -1,4 +1,4 @@
-package specs
+package specobjects
 
 import (
 	"log"
@@ -8,10 +8,10 @@ import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-type SpecTreeStageUpdater struct {
+type SpecObjectsTreeStageUpdater struct {
 }
 
-func (spectTreeStageUpdater *SpecTreeStageUpdater) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
+func (spectTreeStageUpdater *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecTreeStage(stager *m.Stager) {
 
 	stager.GetSpecTreeStage().Reset()
 

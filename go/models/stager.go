@@ -160,18 +160,18 @@ func NewStager(
 	// StageBranch will stage on the the first argument
 	// all instances related to the second argument
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "Probe",
+		Name: "REQIF Data",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			{
 				Name:             "room for tree",
 				ShowNameInHeader: false,
-				Size:             70,
+				Size:             100,
 				AsSplit: (&split.AsSplit{
 					Direction: split.Horizontal,
 					AsSplitAreas: []*split.AsSplitArea{
 						{
 							Name: "Summary + button",
-							Size: 20,
+							Size: 15,
 							AsSplit: (&split.AsSplit{
 								Direction: split.Vertical,
 								AsSplitAreas: []*split.AsSplitArea{
@@ -204,14 +204,14 @@ func NewStager(
 							},
 						},
 						{
-							Size: 20,
+							Size: 15,
 							Tree: &split.Tree{
 								StackName: stager.specTypeTreeStage.GetName(),
 								TreeName:  stager.specTypeTreeName,
 							},
 						},
 						{
-							Size: 40,
+							Size: 55,
 							Tree: &split.Tree{
 								StackName: stager.objectTreeStage.GetName(),
 								TreeName:  stager.objectTreeName,
@@ -227,11 +227,22 @@ func NewStager(
 				}),
 			},
 			{
-				Size: 30,
+				Size: 0,
 				Split: (&split.Split{
 					StackName: stage.GetProbeSplitStageName(),
 				}),
 			},
+		},
+	})
+
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "REQIF Probe",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			(&split.AsSplitArea{
+				Split: (&split.Split{
+					StackName: stage.GetProbeSplitStageName(),
+				}),
+			}),
 		},
 	})
 
