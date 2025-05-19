@@ -19,30 +19,6 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 
 	relations := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS
 
-	map_id_specobjectTypes := make(map[string]*m.SPEC_OBJECT_TYPE)
-	{
-		specObjectTypes := *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage())
-		for specObjectType := range specObjectTypes {
-			map_id_specobjectTypes[specObjectType.IDENTIFIER] = specObjectType
-		}
-	}
-
-	map_id_specRelationType := make(map[string]*m.SPEC_RELATION_TYPE)
-	{
-		specRelationTypes := *m.GetGongstructInstancesSet[m.SPEC_RELATION_TYPE](stager.GetStage())
-		for specRelationType := range specRelationTypes {
-			map_id_specRelationType[specRelationType.IDENTIFIER] = specRelationType
-		}
-	}
-
-	map_id_specObject := make(map[string]*m.SPEC_OBJECT)
-	{
-		specObjects := *m.GetGongstructInstancesSet[m.SPEC_OBJECT](stager.GetStage())
-		for specObject := range specObjects {
-			map_id_specObject[specObject.IDENTIFIER] = specObject
-		}
-	}
-
 	// prepare one node per spec relation type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 	map_specRelationType_node := make(map[*m.SPEC_RELATION_TYPE]*tree.Node)
@@ -57,7 +33,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 
 	for _, specRelation := range relations.SPEC_RELATION {
 
-		specRelationType, ok := map_id_specRelationType[specRelation.TYPE.SPEC_RELATION_TYPE_REF]
+		specRelationType, ok := stager.Map_id_specRelationType[specRelation.TYPE.SPEC_RELATION_TYPE_REF]
 		if !ok {
 			log.Panic("specRelation.TYPE.SPEC_RELATION_TYPE_REF", specRelation.TYPE.SPEC_RELATION_TYPE_REF,
 				"unknown relation type")
@@ -71,13 +47,13 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 		map_specRelationType_nbInstances[specRelationType] = map_specRelationType_nbInstances[specRelationType] + 1
 
 		{
-			specObject, ok := map_id_specObject[specRelation.SOURCE.SPEC_OBJECT_REF]
+			specObject, ok := stager.Map_id_specObject[specRelation.SOURCE.SPEC_OBJECT_REF]
 			if !ok {
 				log.Panic("specRelation.SOURCE.SPEC_OBJECT_REF", specRelation.SOURCE.SPEC_OBJECT_REF,
 					"unknown ref")
 			}
 
-			specObjectType, ok := map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+			specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 			if !ok {
 				log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 					"unknown object type")
@@ -91,13 +67,13 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 		}
 
 		{
-			specObject, ok := map_id_specObject[specRelation.TARGET.SPEC_OBJECT_REF]
+			specObject, ok := stager.Map_id_specObject[specRelation.TARGET.SPEC_OBJECT_REF]
 			if !ok {
 				log.Panic("specRelation.TARGET.SPEC_OBJECT_REF", specRelation.TARGET.SPEC_OBJECT_REF,
 					"unknown ref")
 			}
 
-			specObjectType, ok := map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+			specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 			if !ok {
 				log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 					"unknown object type")

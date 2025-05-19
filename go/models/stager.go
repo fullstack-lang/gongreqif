@@ -102,6 +102,15 @@ type Stager struct {
 	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
 	objectNamer               ObjectNamerInterface
+
+	// maps for navigating the ReqIF data
+	Map_id_specobjectTypes          map[string]*SPEC_OBJECT_TYPE
+	Map_id_specificationType        map[string]*SPECIFICATION_TYPE
+	Map_id_specObject               map[string]*SPEC_OBJECT
+	Map_id_attributeDefinitionXHTML map[string]*ATTRIBUTE_DEFINITION_XHTML
+	Map_id_attributeDefinitionENUM  map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
+	Map_id_enumValues               map[string]*ENUM_VALUE
+	Map_id_specRelationType         map[string]*SPEC_RELATION_TYPE
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
@@ -447,6 +456,8 @@ func NewStager(
 	}
 
 	stager.objectNamer.SetNamesToElements(stage, &req_if)
+
+	stager.initMaps()
 
 	stage.Commit()
 	stager.updateAndCommitSummaryTableStage()

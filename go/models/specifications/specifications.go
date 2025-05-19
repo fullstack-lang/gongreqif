@@ -21,54 +21,6 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
 
-	map_id_specobjectTypes := make(map[string]*m.SPEC_OBJECT_TYPE)
-	{
-		specObjectTypes := *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage())
-		for specObjectType := range specObjectTypes {
-			map_id_specobjectTypes[specObjectType.IDENTIFIER] = specObjectType
-		}
-	}
-
-	map_id_specificationType := make(map[string]*m.SPECIFICATION_TYPE)
-	{
-		types := *m.GetGongstructInstancesSet[m.SPECIFICATION_TYPE](stager.GetStage())
-		for type_ := range types {
-			map_id_specificationType[type_.IDENTIFIER] = type_
-		}
-	}
-
-	map_id_specObject := make(map[string]*m.SPEC_OBJECT)
-	{
-		specObjects := *m.GetGongstructInstancesSet[m.SPEC_OBJECT](stager.GetStage())
-		for specObject := range specObjects {
-			map_id_specObject[specObject.IDENTIFIER] = specObject
-		}
-	}
-
-	attributeDefinitionXHTML_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_XHTML)
-	{
-		attributeDefinitionXHTMLs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			attributeDefinitionXHTML_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	attributeDefinitionENUM_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION)
-	{
-		attributeDefinitionENUMs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionENUMs {
-			attributeDefinitionENUM_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	enumValues_id_map := make(map[string]*m.ENUM_VALUE)
-	{
-		enumValuess := *m.GetGongstructInstancesSet[m.ENUM_VALUE](stager.GetStage())
-		for enumValue := range enumValuess {
-			enumValues_id_map[enumValue.IDENTIFIER] = enumValue
-		}
-	}
-
 	// prepare one node per specification type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 	map_specificationType_node := make(map[*m.SPECIFICATION_TYPE]*tree.Node)
@@ -83,7 +35,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 	for _, specification := range specifications.SPECIFICATION {
 
-		specificationType, ok := map_id_specificationType[specification.TYPE.SPECIFICATION_TYPE_REF]
+		specificationType, ok := stager.Map_id_specificationType[specification.TYPE.SPECIFICATION_TYPE_REF]
 		if !ok {
 			log.Panic("specRelation.TYPE.SPECIFICATION_TYPE_REF", specification.TYPE.SPECIFICATION_TYPE_REF,
 				"unknown relation type")
@@ -107,7 +59,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			for _, attribute := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
 				// provide the type
 				var attributeDefinition string
-				if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+				if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 					attributeDefinition = datatype.LONG_NAME
 				} else {
 					log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
@@ -138,10 +90,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 
 				processSpecHierarchy(
-					map_id_specObject,
-					attributeDefinitionXHTML_id_map,
-					attributeDefinitionENUM_id_map,
-					enumValues_id_map,
+					stager,
 					specHierarchy,
 					hierarchyParentNode)
 			}
@@ -167,13 +116,11 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 }
 
 func processSpecHierarchy(
-	map_id_specObject map[string]*m.SPEC_OBJECT,
-	attributeDefinitionXHTML_id_map map[string]*m.ATTRIBUTE_DEFINITION_XHTML,
-	attributeDefinitionENUM_id_map map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION,
-	enumValues_id_map map[string]*m.ENUM_VALUE,
+	stager *m.Stager,
 	specHierarchy *m.SPEC_HIERARCHY,
 	hierarchyParentNode *tree.Node) {
-	specObject, ok := map_id_specObject[specHierarchy.OBJECT.SPEC_OBJECT_REF]
+
+	specObject, ok := stager.Map_id_specObject[specHierarchy.OBJECT.SPEC_OBJECT_REF]
 	if !ok {
 		log.Panic("specHierarchy.OBJECT.SPEC_OBJECT_REF", specHierarchy.OBJECT.SPEC_OBJECT_REF,
 			"unknown ref")
@@ -183,16 +130,13 @@ func processSpecHierarchy(
 	}
 	hierarchyParentNode.Children = append(hierarchyParentNode.Children, hierarchyNode)
 
-	specobjects.AddAttributeXHTMLNodes(hierarchyNode, specObject, attributeDefinitionXHTML_id_map)
-	specobjects.AddAttributeENUMNodes(hierarchyNode, specObject, attributeDefinitionENUM_id_map, enumValues_id_map)
+	specobjects.AddAttributeXHTMLNodes(stager, hierarchyNode, specObject)
+	specobjects.AddAttributeENUMNodes(stager, hierarchyNode, specObject)
 
 	if specHierarchy.CHILDREN != nil {
 		for _, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
 			processSpecHierarchy(
-				map_id_specObject,
-				attributeDefinitionXHTML_id_map,
-				attributeDefinitionENUM_id_map,
-				enumValues_id_map,
+				stager,
 				specHierarchyChildren,
 				hierarchyNode)
 		}

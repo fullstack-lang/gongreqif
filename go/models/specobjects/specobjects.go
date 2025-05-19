@@ -22,38 +22,6 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 
 	objects := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS
 
-	map_id_specobjectTypes := make(map[string]*m.SPEC_OBJECT_TYPE)
-	{
-		specObjectTypes := *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage())
-		for specObjectType := range specObjectTypes {
-			map_id_specobjectTypes[specObjectType.IDENTIFIER] = specObjectType
-		}
-	}
-
-	attributeDefinitionXHTML_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_XHTML)
-	{
-		attributeDefinitionXHTMLs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			attributeDefinitionXHTML_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	attributeDefinitionENUM_id_map := make(map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION)
-	{
-		attributeDefinitionENUMs := *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionENUMs {
-			attributeDefinitionENUM_id_map[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	enumValues_id_map := make(map[string]*m.ENUM_VALUE)
-	{
-		enumValuess := *m.GetGongstructInstancesSet[m.ENUM_VALUE](stager.GetStage())
-		for enumValue := range enumValuess {
-			enumValues_id_map[enumValue.IDENTIFIER] = enumValue
-		}
-	}
-
 	// prepare one node per spec object type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 	map_specObjectType_node := make(map[*m.SPEC_OBJECT_TYPE]*tree.Node)
@@ -68,7 +36,7 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 
 	for _, specObject := range objects.SPEC_OBJECT {
 
-		specObjectType, ok := map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+		specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 		if !ok {
 			log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 				"unknown object type")
@@ -82,10 +50,10 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 		map_specObjectType_nbInstances[specObjectType] = map_specObjectType_nbInstances[specObjectType] + 1
 
 		{
-			AddAttributeXHTMLNodes(objectNode, specObject, attributeDefinitionXHTML_id_map)
+			AddAttributeXHTMLNodes(stager, objectNode, specObject)
 		}
 		{
-			AddAttributeENUMNodes(objectNode, specObject, attributeDefinitionENUM_id_map, enumValues_id_map)
+			AddAttributeENUMNodes(stager, objectNode, specObject)
 		}
 	}
 
@@ -107,10 +75,10 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 }
 
 func AddAttributeENUMNodes(
+	stager *m.Stager,
 	objectNode *tree.Node,
 	specObject *m.SPEC_OBJECT,
-	attributeDefinitionENUM_id_map map[string]*m.ATTRIBUTE_DEFINITION_ENUMERATION,
-	enumValues_id_map map[string]*m.ENUM_VALUE) {
+) {
 	objectNodeAttributeCategory := &tree.Node{
 		Name:       "Enums",
 		IsExpanded: true,
@@ -120,7 +88,7 @@ func AddAttributeENUMNodes(
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
 		// provide the type
 		var enumTypeString string
-		if enumType, ok := attributeDefinitionENUM_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+		if enumType, ok := stager.Map_id_attributeDefinitionENUM[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
 			enumTypeString = enumType.LONG_NAME
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
@@ -129,7 +97,7 @@ func AddAttributeENUMNodes(
 
 		valueIdentifier := attribute.VALUES.Name
 		var enumValueString string
-		if enumValue, ok := enumValues_id_map[valueIdentifier]; ok {
+		if enumValue, ok := stager.Map_id_enumValues[valueIdentifier]; ok {
 			enumValueString = enumValue.Name
 		}
 
@@ -140,7 +108,7 @@ func AddAttributeENUMNodes(
 	}
 }
 
-func AddAttributeXHTMLNodes(objectNode *tree.Node, specObject *m.SPEC_OBJECT, attributeDefinitionXHTML_id_map map[string]*m.ATTRIBUTE_DEFINITION_XHTML) {
+func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
 	objectNodeAttributeCategoryXHTML := &tree.Node{
 		Name:       "XHTML",
 		IsExpanded: true,
@@ -150,7 +118,7 @@ func AddAttributeXHTMLNodes(objectNode *tree.Node, specObject *m.SPEC_OBJECT, at
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
 		// provide the type
 		var attributeDefinition string
-		if datatype, ok := attributeDefinitionXHTML_id_map[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+		if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 			attributeDefinition = datatype.LONG_NAME
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
