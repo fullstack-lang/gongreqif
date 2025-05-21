@@ -51,39 +51,39 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 			if !ok {
 				log.Panic("specRelation.SOURCE.SPEC_OBJECT_REF", specRelation.SOURCE.SPEC_OBJECT_REF,
 					"unknown ref")
+			} else {
+				specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+				if !ok {
+					log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
+						"unknown object type")
+				}
+				sourceNode := &tree.Node{
+					Name:       "Source: " + specObject.Name + " : " + specObjectType.Name,
+					IsExpanded: true,
+					FontStyle:  tree.ITALIC,
+				}
+				relationNode.Children = append(relationNode.Children, sourceNode)
 			}
-
-			specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
-			if !ok {
-				log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
-					"unknown object type")
-			}
-			sourceNode := &tree.Node{
-				Name:       "Source: " + specObject.Name + " : " + specObjectType.Name,
-				IsExpanded: true,
-				FontStyle:  tree.ITALIC,
-			}
-			relationNode.Children = append(relationNode.Children, sourceNode)
 		}
 
 		{
 			specObject, ok := stager.Map_id_specObject[specRelation.TARGET.SPEC_OBJECT_REF]
 			if !ok {
-				log.Panic("specRelation.TARGET.SPEC_OBJECT_REF", specRelation.TARGET.SPEC_OBJECT_REF,
+				log.Println("specRelation.TARGET.SPEC_OBJECT_REF", specRelation.TARGET.SPEC_OBJECT_REF,
 					"unknown ref")
+			} else {
+				specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+				if !ok {
+					log.Println("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
+						"unknown object type")
+				}
+				targetNode := &tree.Node{
+					Name:       "Target: " + specObject.Name + " : " + specObjectType.Name,
+					IsExpanded: true,
+					FontStyle:  tree.ITALIC,
+				}
+				relationNode.Children = append(relationNode.Children, targetNode)
 			}
-
-			specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
-			if !ok {
-				log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
-					"unknown object type")
-			}
-			targetNode := &tree.Node{
-				Name:       "Target: " + specObject.Name + " : " + specObjectType.Name,
-				IsExpanded: true,
-				FontStyle:  tree.ITALIC,
-			}
-			relationNode.Children = append(relationNode.Children, targetNode)
 		}
 
 	}

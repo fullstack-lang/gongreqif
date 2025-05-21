@@ -56,27 +56,29 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				FontStyle:  tree.ITALIC,
 			}
 			relationNode.Children = append(relationNode.Children, specificationAttributeCategoryXHTML)
-			for _, attribute := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
-				// provide the type
-				var attributeDefinition string
-				if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
-					attributeDefinition = datatype.LONG_NAME
-				} else {
-					log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
-						"unknown ref")
-				}
+			if specification.VALUES != nil {
+				for _, attribute := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
+					// provide the type
+					var attributeDefinition string
+					if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+						attributeDefinition = datatype.LONG_NAME
+					} else {
+						log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
+							"unknown ref")
+					}
 
-				enclosedText := attribute.THE_VALUE.EnclosedText
+					enclosedText := attribute.THE_VALUE.EnclosedText
 
-				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", " ")
-				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "\n")
-				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br >", "-")
-				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
-				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
-				nodeXHTMLAttribute := &tree.Node{
-					Name: attributeDefinition + " : " + enclosedText,
+					enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", " ")
+					enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "\n")
+					enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br >", "-")
+					enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
+					enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
+					nodeXHTMLAttribute := &tree.Node{
+						Name: attributeDefinition + " : " + enclosedText,
+					}
+					specificationAttributeCategoryXHTML.Children = append(specificationAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
 				}
-				specificationAttributeCategoryXHTML.Children = append(specificationAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
 			}
 		}
 		{
