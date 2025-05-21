@@ -19,6 +19,11 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 	treeStage.Reset()
 
 	sliceOfSpecObjectNodes := make([]*tree.Node, 0)
+	nameNode := &tree.Node{
+		Name:      "Spec Objects",
+		FontStyle: tree.ITALIC,
+	}
+	sliceOfSpecObjectNodes = append(sliceOfSpecObjectNodes, nameNode)
 
 	objects := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS
 
@@ -49,12 +54,9 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 			append(map_specObjectType_node[specObjectType].Children, objectNode)
 		map_specObjectType_nbInstances[specObjectType] = map_specObjectType_nbInstances[specObjectType] + 1
 
-		{
-			AddAttributeXHTMLNodes(stager, objectNode, specObject)
-		}
-		{
-			AddAttributeENUMNodes(stager, objectNode, specObject)
-		}
+		AddAttributeXHTMLNodes(stager, objectNode, specObject)
+		AddAttributeENUMNodes(stager, objectNode, specObject)
+
 	}
 
 	// update the node with the number of instances

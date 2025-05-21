@@ -5,6 +5,7 @@ import (
 	"log"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
+	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )
@@ -16,6 +17,11 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 	treeStage := stager.GetSpecRelationsTreeStage()
 
 	sliceOfSpecRelationNodes := make([]*tree.Node, 0)
+	nameNode := &tree.Node{
+		Name:      "Spec Relations",
+		FontStyle: tree.ITALIC,
+	}
+	sliceOfSpecRelationNodes = append(sliceOfSpecRelationNodes, nameNode)
 
 	relations := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS
 
@@ -63,6 +69,9 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 					FontStyle:  tree.ITALIC,
 				}
 				relationNode.Children = append(relationNode.Children, sourceNode)
+
+				specobjects.AddAttributeXHTMLNodes(stager, sourceNode, specObject)
+				specobjects.AddAttributeENUMNodes(stager, sourceNode, specObject)
 			}
 		}
 
@@ -83,6 +92,9 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 					FontStyle:  tree.ITALIC,
 				}
 				relationNode.Children = append(relationNode.Children, targetNode)
+
+				specobjects.AddAttributeXHTMLNodes(stager, targetNode, specObject)
+				specobjects.AddAttributeENUMNodes(stager, targetNode, specObject)
 			}
 		}
 

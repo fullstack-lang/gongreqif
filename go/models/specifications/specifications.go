@@ -18,6 +18,11 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 	treeStage := stager.GetSpecificationsTreeStage()
 
 	sliceOfSpecificationNodes := make([]*tree.Node, 0)
+	nameNode := &tree.Node{
+		Name:      "Specifications",
+		FontStyle: tree.ITALIC,
+	}
+	sliceOfSpecificationNodes = append(sliceOfSpecificationNodes, nameNode)
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
 
