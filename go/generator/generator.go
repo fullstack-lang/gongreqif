@@ -65,7 +65,7 @@ const attributeXHTMLStart = `
 				switch attributeDefinition {
 `
 
-const attributeSTRINGStart = `
+const attributeStringStart = `
 			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 				// provide the type
 				var attributeDefinition string
@@ -80,7 +80,22 @@ const attributeSTRINGStart = `
 				switch attributeDefinition {
 `
 
-const attributeBOOLEANStart = `
+const attributeEnumStart = `
+			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
+				// provide the type
+				var attributeDefinition string
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionEnum[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+					attributeDefinition = datatype.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_STRING_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
+						"unknown ref")
+				}
+				_ = attributeDefinition
+
+				switch attributeDefinition {
+`
+
+const attributeBooleanStart = `
 			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
 				// provide the type
 				var attributeDefinition string
@@ -93,6 +108,20 @@ const attributeBOOLEANStart = `
 				_ = attributeDefinition
 
 				switch attributeDefinition {
+`
+
+const enumTemplate = `
+				case "%s":
+					var __val__ %s
+					value, err1 := stager.reqifStager.Map_id_enumValues[attribute.VALUES.ENUM_VALUE_REF]
+					if err1 != ok {
+						log.Println(attribute.GetName(), " is not a good enum ref")
+					}
+					err := __val__.FromString(value.Name)
+					if err != nil {
+						log.Println(attribute.GetName(), " is not a good enum")
+					}
+					specObjectInstance.%s = __val__
 `
 
 type ModelGenerator struct {
@@ -200,7 +229,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 		}
 		{
 			// attributes STRING
-			sb.WriteString(attributeSTRINGStart)
+			sb.WriteString(attributeStringStart)
 
 			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
 				sb.WriteString(fmt.Sprintf("\t\t\t\tcase \"%s\":\n", attribute.Name))
@@ -214,8 +243,34 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			sb.WriteString("\t\t\t} // end of the loop on the string attribute parsing\n")
 		}
 		{
+			// attributes Enumeration
+			sb.WriteString(attributeEnumStart)
+
+			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
+
+				var attributeType string
+				if datatype, ok := stager.Map_id_datatypes_enumeration[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+					attributeType = datatype.LONG_NAME
+				} else {
+					log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,
+						"unknown ref")
+				}
+
+				sb.WriteString(fmt.Sprintf(enumTemplate,
+					attribute.Name,
+					GenerateGoIdentifier(attributeType),
+					GenerateGoIdentifier(attribute.Name)))
+			}
+
+			sb.WriteString("\t\t\t\tdefault:\n")
+			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
+
+			sb.WriteString("\t\t\t} // end of the loop on the enumeration attribute parsing\n")
+		}
+		{
 			// attributes BOOLEAN
-			sb.WriteString(attributeBOOLEANStart)
+			sb.WriteString(attributeBooleanStart)
 
 			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
 				sb.WriteString(fmt.Sprintf("\t\t\t\tcase \"%s\":\n", attribute.Name))
@@ -226,7 +281,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
 			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
 
-			sb.WriteString("\t\t\t} // end of the loop on the string attribute parsing\n")
+			sb.WriteString("\t\t\t} // end of the loop on the boolean attribute parsing\n")
 		}
 	}
 
