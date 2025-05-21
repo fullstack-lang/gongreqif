@@ -21,6 +21,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-unmarshallFromCode=data/stage.go",
                 "-marshallOnCommit=data/stage"
@@ -32,6 +33,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 1.reqif",
@@ -44,6 +46,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 2.reqif",
@@ -56,6 +59,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 3.reqif",
@@ -68,6 +72,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 4.reqif",
@@ -80,6 +85,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "reqif samples/Unknown tool export sample 1.reqif",
@@ -92,6 +98,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "../../../../../../../../foo v2.reqif",
@@ -99,7 +106,6 @@
                 "../../../../../../../../foo v2.go",
                 "-pathToXLFile",
                 "../../../../../../../../foo v2.xlsx"
-
             ]
         },
         {
@@ -108,6 +114,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "../../../../../../../../foo v3.reqif",
@@ -123,6 +130,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
             "args": [
                 "-pathToReqifFile",
                 "../../../../../../../../foo v5.reqif",
