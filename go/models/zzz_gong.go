@@ -16,7 +16,8 @@ import (
 )
 
 // can be used for
-//     days := __Gong__Abs(int(int(inferedInstance.ComputedDuration.Hours()) / 24))
+//
+//	days := __Gong__Abs(int(int(inferedInstance.ComputedDuration.Hours()) / 24))
 func __Gong__Abs(x int) int {
 	if x < 0 {
 		return -x
@@ -53,8 +54,12 @@ var errUnkownEnum = errors.New("unkown enum")
 // needed to avoid when fmt package is not needed by generated code
 var __dummy__fmt_variable fmt.Scanner
 
+var _ = __dummy__fmt_variable
+
 // idem for math package when not need by generated code
 var __dummy_math_variable = math.E
+
+var _ = __dummy_math_variable
 
 // swagger:ignore
 type __void any
@@ -1231,180 +1236,179 @@ func GetNamedStructInstances[T PointerToGongstruct](set map[T]any, order map[T]u
 func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []string) {
 
 	switch namedStructName {
-	// insertion point for case 
-		case "ALTERNATIVE_ID":
-			res = GetNamedStructInstances(stage.ALTERNATIVE_IDs, stage.ALTERNATIVE_IDMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_BOOLEANs, stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_DATE":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_DATEs, stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_INTEGER":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_INTEGERs, stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_REAL":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_REALs, stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_STRING":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_STRINGs, stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order)
-		case "ATTRIBUTE_DEFINITION_XHTML":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_XHTMLs, stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_BOOLEAN":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_BOOLEANs, stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_DATE":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_DATEs, stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_ENUMERATION":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_ENUMERATIONs, stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_INTEGER":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_INTEGERs, stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_REAL":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_REALs, stage.ATTRIBUTE_VALUE_REALMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_STRING":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_STRINGs, stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order)
-		case "ATTRIBUTE_VALUE_XHTML":
-			res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_XHTMLs, stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order)
-		case "A_ALTERNATIVE_ID":
-			res = GetNamedStructInstances(stage.A_ALTERNATIVE_IDs, stage.A_ALTERNATIVE_IDMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs, stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_DATE_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs, stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs, stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_INTEGER_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs, stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_REAL_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs, stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_STRING_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs, stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_DEFINITION_XHTML_REF":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs, stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_BOOLEAN":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_BOOLEANs, stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_DATE":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_DATEs, stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_ENUMERATION":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs, stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_INTEGER":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_INTEGERs, stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_REAL":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_REALs, stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_STRING":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_STRINGs, stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_XHTML":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_XHTMLs, stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order)
-		case "A_ATTRIBUTE_VALUE_XHTML_1":
-			res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_XHTML_1s, stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order)
-		case "A_CHILDREN":
-			res = GetNamedStructInstances(stage.A_CHILDRENs, stage.A_CHILDRENMap_Staged_Order)
-		case "A_CORE_CONTENT":
-			res = GetNamedStructInstances(stage.A_CORE_CONTENTs, stage.A_CORE_CONTENTMap_Staged_Order)
-		case "A_DATATYPES":
-			res = GetNamedStructInstances(stage.A_DATATYPESs, stage.A_DATATYPESMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs, stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_DATE_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_DATE_REFs, stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_ENUMERATION_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs, stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_INTEGER_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_INTEGER_REFs, stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_REAL_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_REAL_REFs, stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_STRING_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_STRING_REFs, stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order)
-		case "A_DATATYPE_DEFINITION_XHTML_REF":
-			res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_XHTML_REFs, stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order)
-		case "A_EDITABLE_ATTS":
-			res = GetNamedStructInstances(stage.A_EDITABLE_ATTSs, stage.A_EDITABLE_ATTSMap_Staged_Order)
-		case "A_ENUM_VALUE_REF":
-			res = GetNamedStructInstances(stage.A_ENUM_VALUE_REFs, stage.A_ENUM_VALUE_REFMap_Staged_Order)
-		case "A_OBJECT":
-			res = GetNamedStructInstances(stage.A_OBJECTs, stage.A_OBJECTMap_Staged_Order)
-		case "A_PROPERTIES":
-			res = GetNamedStructInstances(stage.A_PROPERTIESs, stage.A_PROPERTIESMap_Staged_Order)
-		case "A_RELATION_GROUP_TYPE_REF":
-			res = GetNamedStructInstances(stage.A_RELATION_GROUP_TYPE_REFs, stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order)
-		case "A_SOURCE_1":
-			res = GetNamedStructInstances(stage.A_SOURCE_1s, stage.A_SOURCE_1Map_Staged_Order)
-		case "A_SOURCE_SPECIFICATION_1":
-			res = GetNamedStructInstances(stage.A_SOURCE_SPECIFICATION_1s, stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order)
-		case "A_SPECIFICATIONS":
-			res = GetNamedStructInstances(stage.A_SPECIFICATIONSs, stage.A_SPECIFICATIONSMap_Staged_Order)
-		case "A_SPECIFICATION_TYPE_REF":
-			res = GetNamedStructInstances(stage.A_SPECIFICATION_TYPE_REFs, stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order)
-		case "A_SPECIFIED_VALUES":
-			res = GetNamedStructInstances(stage.A_SPECIFIED_VALUESs, stage.A_SPECIFIED_VALUESMap_Staged_Order)
-		case "A_SPEC_ATTRIBUTES":
-			res = GetNamedStructInstances(stage.A_SPEC_ATTRIBUTESs, stage.A_SPEC_ATTRIBUTESMap_Staged_Order)
-		case "A_SPEC_OBJECTS":
-			res = GetNamedStructInstances(stage.A_SPEC_OBJECTSs, stage.A_SPEC_OBJECTSMap_Staged_Order)
-		case "A_SPEC_OBJECT_TYPE_REF":
-			res = GetNamedStructInstances(stage.A_SPEC_OBJECT_TYPE_REFs, stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order)
-		case "A_SPEC_RELATIONS":
-			res = GetNamedStructInstances(stage.A_SPEC_RELATIONSs, stage.A_SPEC_RELATIONSMap_Staged_Order)
-		case "A_SPEC_RELATION_GROUPS":
-			res = GetNamedStructInstances(stage.A_SPEC_RELATION_GROUPSs, stage.A_SPEC_RELATION_GROUPSMap_Staged_Order)
-		case "A_SPEC_RELATION_REF":
-			res = GetNamedStructInstances(stage.A_SPEC_RELATION_REFs, stage.A_SPEC_RELATION_REFMap_Staged_Order)
-		case "A_SPEC_RELATION_TYPE_REF":
-			res = GetNamedStructInstances(stage.A_SPEC_RELATION_TYPE_REFs, stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order)
-		case "A_SPEC_TYPES":
-			res = GetNamedStructInstances(stage.A_SPEC_TYPESs, stage.A_SPEC_TYPESMap_Staged_Order)
-		case "A_THE_HEADER":
-			res = GetNamedStructInstances(stage.A_THE_HEADERs, stage.A_THE_HEADERMap_Staged_Order)
-		case "A_TOOL_EXTENSIONS":
-			res = GetNamedStructInstances(stage.A_TOOL_EXTENSIONSs, stage.A_TOOL_EXTENSIONSMap_Staged_Order)
-		case "DATATYPE_DEFINITION_BOOLEAN":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_BOOLEANs, stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order)
-		case "DATATYPE_DEFINITION_DATE":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_DATEs, stage.DATATYPE_DEFINITION_DATEMap_Staged_Order)
-		case "DATATYPE_DEFINITION_ENUMERATION":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_ENUMERATIONs, stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order)
-		case "DATATYPE_DEFINITION_INTEGER":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_INTEGERs, stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order)
-		case "DATATYPE_DEFINITION_REAL":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_REALs, stage.DATATYPE_DEFINITION_REALMap_Staged_Order)
-		case "DATATYPE_DEFINITION_STRING":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_STRINGs, stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order)
-		case "DATATYPE_DEFINITION_XHTML":
-			res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_XHTMLs, stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order)
-		case "EMBEDDED_VALUE":
-			res = GetNamedStructInstances(stage.EMBEDDED_VALUEs, stage.EMBEDDED_VALUEMap_Staged_Order)
-		case "ENUM_VALUE":
-			res = GetNamedStructInstances(stage.ENUM_VALUEs, stage.ENUM_VALUEMap_Staged_Order)
-		case "RELATION_GROUP":
-			res = GetNamedStructInstances(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
-		case "RELATION_GROUP_TYPE":
-			res = GetNamedStructInstances(stage.RELATION_GROUP_TYPEs, stage.RELATION_GROUP_TYPEMap_Staged_Order)
-		case "REQ_IF":
-			res = GetNamedStructInstances(stage.REQ_IFs, stage.REQ_IFMap_Staged_Order)
-		case "REQ_IF_CONTENT":
-			res = GetNamedStructInstances(stage.REQ_IF_CONTENTs, stage.REQ_IF_CONTENTMap_Staged_Order)
-		case "REQ_IF_HEADER":
-			res = GetNamedStructInstances(stage.REQ_IF_HEADERs, stage.REQ_IF_HEADERMap_Staged_Order)
-		case "REQ_IF_TOOL_EXTENSION":
-			res = GetNamedStructInstances(stage.REQ_IF_TOOL_EXTENSIONs, stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order)
-		case "SPECIFICATION":
-			res = GetNamedStructInstances(stage.SPECIFICATIONs, stage.SPECIFICATIONMap_Staged_Order)
-		case "SPECIFICATION_TYPE":
-			res = GetNamedStructInstances(stage.SPECIFICATION_TYPEs, stage.SPECIFICATION_TYPEMap_Staged_Order)
-		case "SPEC_HIERARCHY":
-			res = GetNamedStructInstances(stage.SPEC_HIERARCHYs, stage.SPEC_HIERARCHYMap_Staged_Order)
-		case "SPEC_OBJECT":
-			res = GetNamedStructInstances(stage.SPEC_OBJECTs, stage.SPEC_OBJECTMap_Staged_Order)
-		case "SPEC_OBJECT_TYPE":
-			res = GetNamedStructInstances(stage.SPEC_OBJECT_TYPEs, stage.SPEC_OBJECT_TYPEMap_Staged_Order)
-		case "SPEC_RELATION":
-			res = GetNamedStructInstances(stage.SPEC_RELATIONs, stage.SPEC_RELATIONMap_Staged_Order)
-		case "SPEC_RELATION_TYPE":
-			res = GetNamedStructInstances(stage.SPEC_RELATION_TYPEs, stage.SPEC_RELATION_TYPEMap_Staged_Order)
-		case "XHTML_CONTENT":
-			res = GetNamedStructInstances(stage.XHTML_CONTENTs, stage.XHTML_CONTENTMap_Staged_Order)
+	// insertion point for case
+	case "ALTERNATIVE_ID":
+		res = GetNamedStructInstances(stage.ALTERNATIVE_IDs, stage.ALTERNATIVE_IDMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_BOOLEANs, stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_DATE":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_DATEs, stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_INTEGER":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_INTEGERs, stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_REAL":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_REALs, stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_STRING":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_STRINGs, stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_XHTML":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_XHTMLs, stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_BOOLEANs, stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_DATE":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_DATEs, stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_ENUMERATIONs, stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_INTEGER":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_INTEGERs, stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_REAL":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_REALs, stage.ATTRIBUTE_VALUE_REALMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_STRING":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_STRINGs, stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order)
+	case "ATTRIBUTE_VALUE_XHTML":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_VALUE_XHTMLs, stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order)
+	case "A_ALTERNATIVE_ID":
+		res = GetNamedStructInstances(stage.A_ALTERNATIVE_IDs, stage.A_ALTERNATIVE_IDMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs, stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_DATE_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs, stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs, stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_INTEGER_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs, stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_REAL_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs, stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_STRING_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs, stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_DEFINITION_XHTML_REF":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs, stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_BOOLEAN":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_BOOLEANs, stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_DATE":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_DATEs, stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_ENUMERATION":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs, stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_INTEGER":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_INTEGERs, stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_REAL":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_REALs, stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_STRING":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_STRINGs, stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_XHTML":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_XHTMLs, stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order)
+	case "A_ATTRIBUTE_VALUE_XHTML_1":
+		res = GetNamedStructInstances(stage.A_ATTRIBUTE_VALUE_XHTML_1s, stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order)
+	case "A_CHILDREN":
+		res = GetNamedStructInstances(stage.A_CHILDRENs, stage.A_CHILDRENMap_Staged_Order)
+	case "A_CORE_CONTENT":
+		res = GetNamedStructInstances(stage.A_CORE_CONTENTs, stage.A_CORE_CONTENTMap_Staged_Order)
+	case "A_DATATYPES":
+		res = GetNamedStructInstances(stage.A_DATATYPESs, stage.A_DATATYPESMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs, stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_DATE_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_DATE_REFs, stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_ENUMERATION_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs, stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_INTEGER_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_INTEGER_REFs, stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_REAL_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_REAL_REFs, stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_STRING_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_STRING_REFs, stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order)
+	case "A_DATATYPE_DEFINITION_XHTML_REF":
+		res = GetNamedStructInstances(stage.A_DATATYPE_DEFINITION_XHTML_REFs, stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order)
+	case "A_EDITABLE_ATTS":
+		res = GetNamedStructInstances(stage.A_EDITABLE_ATTSs, stage.A_EDITABLE_ATTSMap_Staged_Order)
+	case "A_ENUM_VALUE_REF":
+		res = GetNamedStructInstances(stage.A_ENUM_VALUE_REFs, stage.A_ENUM_VALUE_REFMap_Staged_Order)
+	case "A_OBJECT":
+		res = GetNamedStructInstances(stage.A_OBJECTs, stage.A_OBJECTMap_Staged_Order)
+	case "A_PROPERTIES":
+		res = GetNamedStructInstances(stage.A_PROPERTIESs, stage.A_PROPERTIESMap_Staged_Order)
+	case "A_RELATION_GROUP_TYPE_REF":
+		res = GetNamedStructInstances(stage.A_RELATION_GROUP_TYPE_REFs, stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order)
+	case "A_SOURCE_1":
+		res = GetNamedStructInstances(stage.A_SOURCE_1s, stage.A_SOURCE_1Map_Staged_Order)
+	case "A_SOURCE_SPECIFICATION_1":
+		res = GetNamedStructInstances(stage.A_SOURCE_SPECIFICATION_1s, stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order)
+	case "A_SPECIFICATIONS":
+		res = GetNamedStructInstances(stage.A_SPECIFICATIONSs, stage.A_SPECIFICATIONSMap_Staged_Order)
+	case "A_SPECIFICATION_TYPE_REF":
+		res = GetNamedStructInstances(stage.A_SPECIFICATION_TYPE_REFs, stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order)
+	case "A_SPECIFIED_VALUES":
+		res = GetNamedStructInstances(stage.A_SPECIFIED_VALUESs, stage.A_SPECIFIED_VALUESMap_Staged_Order)
+	case "A_SPEC_ATTRIBUTES":
+		res = GetNamedStructInstances(stage.A_SPEC_ATTRIBUTESs, stage.A_SPEC_ATTRIBUTESMap_Staged_Order)
+	case "A_SPEC_OBJECTS":
+		res = GetNamedStructInstances(stage.A_SPEC_OBJECTSs, stage.A_SPEC_OBJECTSMap_Staged_Order)
+	case "A_SPEC_OBJECT_TYPE_REF":
+		res = GetNamedStructInstances(stage.A_SPEC_OBJECT_TYPE_REFs, stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order)
+	case "A_SPEC_RELATIONS":
+		res = GetNamedStructInstances(stage.A_SPEC_RELATIONSs, stage.A_SPEC_RELATIONSMap_Staged_Order)
+	case "A_SPEC_RELATION_GROUPS":
+		res = GetNamedStructInstances(stage.A_SPEC_RELATION_GROUPSs, stage.A_SPEC_RELATION_GROUPSMap_Staged_Order)
+	case "A_SPEC_RELATION_REF":
+		res = GetNamedStructInstances(stage.A_SPEC_RELATION_REFs, stage.A_SPEC_RELATION_REFMap_Staged_Order)
+	case "A_SPEC_RELATION_TYPE_REF":
+		res = GetNamedStructInstances(stage.A_SPEC_RELATION_TYPE_REFs, stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order)
+	case "A_SPEC_TYPES":
+		res = GetNamedStructInstances(stage.A_SPEC_TYPESs, stage.A_SPEC_TYPESMap_Staged_Order)
+	case "A_THE_HEADER":
+		res = GetNamedStructInstances(stage.A_THE_HEADERs, stage.A_THE_HEADERMap_Staged_Order)
+	case "A_TOOL_EXTENSIONS":
+		res = GetNamedStructInstances(stage.A_TOOL_EXTENSIONSs, stage.A_TOOL_EXTENSIONSMap_Staged_Order)
+	case "DATATYPE_DEFINITION_BOOLEAN":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_BOOLEANs, stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order)
+	case "DATATYPE_DEFINITION_DATE":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_DATEs, stage.DATATYPE_DEFINITION_DATEMap_Staged_Order)
+	case "DATATYPE_DEFINITION_ENUMERATION":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_ENUMERATIONs, stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order)
+	case "DATATYPE_DEFINITION_INTEGER":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_INTEGERs, stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order)
+	case "DATATYPE_DEFINITION_REAL":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_REALs, stage.DATATYPE_DEFINITION_REALMap_Staged_Order)
+	case "DATATYPE_DEFINITION_STRING":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_STRINGs, stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order)
+	case "DATATYPE_DEFINITION_XHTML":
+		res = GetNamedStructInstances(stage.DATATYPE_DEFINITION_XHTMLs, stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order)
+	case "EMBEDDED_VALUE":
+		res = GetNamedStructInstances(stage.EMBEDDED_VALUEs, stage.EMBEDDED_VALUEMap_Staged_Order)
+	case "ENUM_VALUE":
+		res = GetNamedStructInstances(stage.ENUM_VALUEs, stage.ENUM_VALUEMap_Staged_Order)
+	case "RELATION_GROUP":
+		res = GetNamedStructInstances(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
+	case "RELATION_GROUP_TYPE":
+		res = GetNamedStructInstances(stage.RELATION_GROUP_TYPEs, stage.RELATION_GROUP_TYPEMap_Staged_Order)
+	case "REQ_IF":
+		res = GetNamedStructInstances(stage.REQ_IFs, stage.REQ_IFMap_Staged_Order)
+	case "REQ_IF_CONTENT":
+		res = GetNamedStructInstances(stage.REQ_IF_CONTENTs, stage.REQ_IF_CONTENTMap_Staged_Order)
+	case "REQ_IF_HEADER":
+		res = GetNamedStructInstances(stage.REQ_IF_HEADERs, stage.REQ_IF_HEADERMap_Staged_Order)
+	case "REQ_IF_TOOL_EXTENSION":
+		res = GetNamedStructInstances(stage.REQ_IF_TOOL_EXTENSIONs, stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order)
+	case "SPECIFICATION":
+		res = GetNamedStructInstances(stage.SPECIFICATIONs, stage.SPECIFICATIONMap_Staged_Order)
+	case "SPECIFICATION_TYPE":
+		res = GetNamedStructInstances(stage.SPECIFICATION_TYPEs, stage.SPECIFICATION_TYPEMap_Staged_Order)
+	case "SPEC_HIERARCHY":
+		res = GetNamedStructInstances(stage.SPEC_HIERARCHYs, stage.SPEC_HIERARCHYMap_Staged_Order)
+	case "SPEC_OBJECT":
+		res = GetNamedStructInstances(stage.SPEC_OBJECTs, stage.SPEC_OBJECTMap_Staged_Order)
+	case "SPEC_OBJECT_TYPE":
+		res = GetNamedStructInstances(stage.SPEC_OBJECT_TYPEs, stage.SPEC_OBJECT_TYPEMap_Staged_Order)
+	case "SPEC_RELATION":
+		res = GetNamedStructInstances(stage.SPEC_RELATIONs, stage.SPEC_RELATIONMap_Staged_Order)
+	case "SPEC_RELATION_TYPE":
+		res = GetNamedStructInstances(stage.SPEC_RELATION_TYPEs, stage.SPEC_RELATION_TYPEMap_Staged_Order)
+	case "XHTML_CONTENT":
+		res = GetNamedStructInstances(stage.XHTML_CONTENTs, stage.XHTML_CONTENTMap_Staged_Order)
 	}
 
 	return
 }
-
 
 type NamedStruct struct {
 	name string
@@ -2169,6 +2173,183 @@ func NewStage(name string) (stage *Stage) {
 }
 
 func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
+
+	switch instance := any(instance).(type) {
+	// insertion point for order map initialisations
+	case *ALTERNATIVE_ID:
+		return stage.ALTERNATIVE_IDMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_BOOLEAN:
+		return stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_DATE:
+		return stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_ENUMERATION:
+		return stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_INTEGER:
+		return stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_REAL:
+		return stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_STRING:
+		return stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_XHTML:
+		return stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_BOOLEAN:
+		return stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_DATE:
+		return stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_ENUMERATION:
+		return stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_INTEGER:
+		return stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_REAL:
+		return stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_STRING:
+		return stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[instance]
+	case *ATTRIBUTE_VALUE_XHTML:
+		return stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[instance]
+	case *A_ALTERNATIVE_ID:
+		return stage.A_ALTERNATIVE_IDMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		return stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_BOOLEAN:
+		return stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_DATE:
+		return stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_ENUMERATION:
+		return stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_INTEGER:
+		return stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_REAL:
+		return stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_STRING:
+		return stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_XHTML:
+		return stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[instance]
+	case *A_ATTRIBUTE_VALUE_XHTML_1:
+		return stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[instance]
+	case *A_CHILDREN:
+		return stage.A_CHILDRENMap_Staged_Order[instance]
+	case *A_CORE_CONTENT:
+		return stage.A_CORE_CONTENTMap_Staged_Order[instance]
+	case *A_DATATYPES:
+		return stage.A_DATATYPESMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		return stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_DATE_REF:
+		return stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		return stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_INTEGER_REF:
+		return stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_REAL_REF:
+		return stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_STRING_REF:
+		return stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[instance]
+	case *A_DATATYPE_DEFINITION_XHTML_REF:
+		return stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[instance]
+	case *A_EDITABLE_ATTS:
+		return stage.A_EDITABLE_ATTSMap_Staged_Order[instance]
+	case *A_ENUM_VALUE_REF:
+		return stage.A_ENUM_VALUE_REFMap_Staged_Order[instance]
+	case *A_OBJECT:
+		return stage.A_OBJECTMap_Staged_Order[instance]
+	case *A_PROPERTIES:
+		return stage.A_PROPERTIESMap_Staged_Order[instance]
+	case *A_RELATION_GROUP_TYPE_REF:
+		return stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[instance]
+	case *A_SOURCE_1:
+		return stage.A_SOURCE_1Map_Staged_Order[instance]
+	case *A_SOURCE_SPECIFICATION_1:
+		return stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[instance]
+	case *A_SPECIFICATIONS:
+		return stage.A_SPECIFICATIONSMap_Staged_Order[instance]
+	case *A_SPECIFICATION_TYPE_REF:
+		return stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[instance]
+	case *A_SPECIFIED_VALUES:
+		return stage.A_SPECIFIED_VALUESMap_Staged_Order[instance]
+	case *A_SPEC_ATTRIBUTES:
+		return stage.A_SPEC_ATTRIBUTESMap_Staged_Order[instance]
+	case *A_SPEC_OBJECTS:
+		return stage.A_SPEC_OBJECTSMap_Staged_Order[instance]
+	case *A_SPEC_OBJECT_TYPE_REF:
+		return stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[instance]
+	case *A_SPEC_RELATIONS:
+		return stage.A_SPEC_RELATIONSMap_Staged_Order[instance]
+	case *A_SPEC_RELATION_GROUPS:
+		return stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[instance]
+	case *A_SPEC_RELATION_REF:
+		return stage.A_SPEC_RELATION_REFMap_Staged_Order[instance]
+	case *A_SPEC_RELATION_TYPE_REF:
+		return stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[instance]
+	case *A_SPEC_TYPES:
+		return stage.A_SPEC_TYPESMap_Staged_Order[instance]
+	case *A_THE_HEADER:
+		return stage.A_THE_HEADERMap_Staged_Order[instance]
+	case *A_TOOL_EXTENSIONS:
+		return stage.A_TOOL_EXTENSIONSMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_BOOLEAN:
+		return stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_DATE:
+		return stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_ENUMERATION:
+		return stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_INTEGER:
+		return stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_REAL:
+		return stage.DATATYPE_DEFINITION_REALMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_STRING:
+		return stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[instance]
+	case *DATATYPE_DEFINITION_XHTML:
+		return stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[instance]
+	case *EMBEDDED_VALUE:
+		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
+	case *ENUM_VALUE:
+		return stage.ENUM_VALUEMap_Staged_Order[instance]
+	case *RELATION_GROUP:
+		return stage.RELATION_GROUPMap_Staged_Order[instance]
+	case *RELATION_GROUP_TYPE:
+		return stage.RELATION_GROUP_TYPEMap_Staged_Order[instance]
+	case *REQ_IF:
+		return stage.REQ_IFMap_Staged_Order[instance]
+	case *REQ_IF_CONTENT:
+		return stage.REQ_IF_CONTENTMap_Staged_Order[instance]
+	case *REQ_IF_HEADER:
+		return stage.REQ_IF_HEADERMap_Staged_Order[instance]
+	case *REQ_IF_TOOL_EXTENSION:
+		return stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[instance]
+	case *SPECIFICATION:
+		return stage.SPECIFICATIONMap_Staged_Order[instance]
+	case *SPECIFICATION_TYPE:
+		return stage.SPECIFICATION_TYPEMap_Staged_Order[instance]
+	case *SPEC_HIERARCHY:
+		return stage.SPEC_HIERARCHYMap_Staged_Order[instance]
+	case *SPEC_OBJECT:
+		return stage.SPEC_OBJECTMap_Staged_Order[instance]
+	case *SPEC_OBJECT_TYPE:
+		return stage.SPEC_OBJECT_TYPEMap_Staged_Order[instance]
+	case *SPEC_RELATION:
+		return stage.SPEC_RELATIONMap_Staged_Order[instance]
+	case *SPEC_RELATION_TYPE:
+		return stage.SPEC_RELATION_TYPEMap_Staged_Order[instance]
+	case *XHTML_CONTENT:
+		return stage.XHTML_CONTENTMap_Staged_Order[instance]
+	default:
+		return 0 // should not happen
+	}
+}
+
+func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance Type) uint {
 
 	switch instance := any(instance).(type) {
 	// insertion point for order map initialisations

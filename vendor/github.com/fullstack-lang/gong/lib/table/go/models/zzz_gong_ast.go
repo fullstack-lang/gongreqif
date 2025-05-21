@@ -391,11 +391,9 @@ var __gong__map_Table = make(map[string]*Table)
 func lookupPackage(name string) (importPath string, ok bool) {
 	return name, true
 }
-func lookupSym(recv, name string) (ok bool) {
-	if recv == "" {
-		return true
-	}
-	return false
+
+func lookupSym(recv, name string) bool {
+	return recv == ""
 }
 
 // UnmarshallGoStaging unmarshall a go assign statement
@@ -1146,6 +1144,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_FormEditAssocButton[identifier].Label = fielValue
+				case "AssociationStorage":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_FormEditAssocButton[identifier].AssociationStorage = fielValue
 				}
 			case "FormField":
 				switch fieldName {
@@ -1429,6 +1431,20 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			case "FormEditAssocButton":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "HasChanged":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_FormEditAssocButton[identifier].HasChanged = fielValue
+				case "IsForSavePurpose":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_FormEditAssocButton[identifier].IsForSavePurpose = fielValue
 				}
 			case "FormField":
 				switch fieldName {

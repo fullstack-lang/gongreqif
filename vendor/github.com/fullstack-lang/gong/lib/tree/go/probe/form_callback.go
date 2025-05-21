@@ -11,20 +11,12 @@ import (
 	"github.com/fullstack-lang/gong/lib/tree/go/models"
 )
 
-// code to avoid error when generated code does not need to import packages
-const __dummmy__time = time.Nanosecond
+// to avoid errors when time and slices packages are not used in the generated code
+const _ = time.Nanosecond
 
-var _ = __dummmy__time
+var _ = slices.Delete([]string{"a"}, 0, 1)
 
-var __dummmy__letters = slices.Delete([]string{"a"}, 0, 1)
-
-var _ = __dummmy__letters
-
-const __dummy__log = log.Ldate
-
-var _ = __dummy__log
-
-// end of code to avoid error when generated code does not need to import packages
+var _ = log.Panicf
 
 // insertion point
 func __gong__New__ButtonFormCallback(
@@ -119,11 +111,11 @@ func (buttonFormCallback *ButtonFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.Buttons, button_)
 					formerSource.Buttons = slices.Delete(formerSource.Buttons, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -149,7 +141,7 @@ func (buttonFormCallback *ButtonFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.Buttons = append(newSource.Buttons, button_)
 		}
 	}
@@ -254,12 +246,6 @@ func (nodeFormCallback *NodeFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(node_.IsSecondCheckboxDisabled), formDiv)
 		case "TextAfterSecondCheckbox":
 			FormDivBasicFieldToField(&(node_.TextAfterSecondCheckbox), formDiv)
-		case "SecondCheckboxHasToolTip":
-			FormDivBasicFieldToField(&(node_.SecondCheckboxHasToolTip), formDiv)
-		case "SecondCheckboxToolTipText":
-			FormDivBasicFieldToField(&(node_.SecondCheckboxToolTipText), formDiv)
-		case "SecondCheckboxToolTipPosition":
-			FormDivEnumStringFieldToField(&(node_.SecondCheckboxToolTipPosition), formDiv)
 		case "IsInEditMode":
 			FormDivBasicFieldToField(&(node_.IsInEditMode), formDiv)
 		case "IsNodeClickable":
@@ -270,6 +256,56 @@ func (nodeFormCallback *NodeFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(node_.PreceedingIcon), formDiv)
 		case "PreceedingSVGIcon":
 			FormDivSelectFieldToField(&(node_.PreceedingSVGIcon), nodeFormCallback.probe.stageOfInterest, formDiv)
+		case "Children":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Node](nodeFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Node, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Node)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					nodeFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			node_.Children = instanceSlice
+
+		case "Buttons":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Button](nodeFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Button, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Button)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					nodeFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			node_.Buttons = instanceSlice
+
 		case "Node:Children":
 			// WARNING : this form deals with the N-N association "Node.Children []*Node" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -305,11 +341,11 @@ func (nodeFormCallback *NodeFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.Children, node_)
 					formerSource.Children = slices.Delete(formerSource.Children, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -335,7 +371,7 @@ func (nodeFormCallback *NodeFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.Children = append(newSource.Children, node_)
 		case "Tree:RootNodes":
 			// WARNING : this form deals with the N-N association "Tree.RootNodes []*Node" but
@@ -372,11 +408,11 @@ func (nodeFormCallback *NodeFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.RootNodes, node_)
 					formerSource.RootNodes = slices.Delete(formerSource.RootNodes, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -402,7 +438,7 @@ func (nodeFormCallback *NodeFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.RootNodes = append(newSource.RootNodes, node_)
 		}
 	}
@@ -560,6 +596,31 @@ func (treeFormCallback *TreeFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(tree_.Name), formDiv)
+		case "RootNodes":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Node](treeFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Node, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Node)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					treeFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			tree_.RootNodes = instanceSlice
+
 		}
 	}
 

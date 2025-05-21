@@ -45,7 +45,7 @@ func FillUpForm(
 					formGroup,
 					probe)
 			} else {
-				AssociationReverseFieldToForm[*models.Node, *models.Button](
+				AssociationReverseFieldToForm[*models.Node](
 					nil,
 					"Buttons",
 					instanceWithInferedType,
@@ -82,11 +82,6 @@ func FillUpForm(
 			false, false, 0, false, 0)
 		BasicFieldtoForm("TextAfterSecondCheckbox", instanceWithInferedType.TextAfterSecondCheckbox, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("SecondCheckboxHasToolTip", instanceWithInferedType.SecondCheckboxHasToolTip, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("SecondCheckboxToolTipText", instanceWithInferedType.SecondCheckboxToolTipText, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		EnumTypeStringToForm("SecondCheckboxToolTipPosition", instanceWithInferedType.SecondCheckboxToolTipPosition, instanceWithInferedType, probe.formStage, formGroup)
 		BasicFieldtoForm("IsInEditMode", instanceWithInferedType.IsInEditMode, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("IsNodeClickable", instanceWithInferedType.IsNodeClickable, instanceWithInferedType, probe.formStage, formGroup,
@@ -112,7 +107,7 @@ func FillUpForm(
 					formGroup,
 					probe)
 			} else {
-				AssociationReverseFieldToForm[*models.Node, *models.Node](
+				AssociationReverseFieldToForm[*models.Node](
 					nil,
 					"Children",
 					instanceWithInferedType,
@@ -134,7 +129,7 @@ func FillUpForm(
 					formGroup,
 					probe)
 			} else {
-				AssociationReverseFieldToForm[*models.Tree, *models.Node](
+				AssociationReverseFieldToForm[*models.Tree](
 					nil,
 					"RootNodes",
 					instanceWithInferedType,

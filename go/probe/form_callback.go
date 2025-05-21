@@ -11,20 +11,12 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
-// code to avoid error when generated code does not need to import packages
-const __dummmy__time = time.Nanosecond
+// to avoid errors when time and slices packages are not used in the generated code
+const _ = time.Nanosecond
 
-var _ = __dummmy__time
+var _ = slices.Delete([]string{"a"}, 0, 1)
 
-var __dummmy__letters = slices.Delete([]string{"a"}, 0, 1)
-
-var _ = __dummmy__letters
-
-const __dummy__log = log.Ldate
-
-var _ = __dummy__log
-
-// end of code to avoid error when generated code does not need to import packages
+var _ = log.Panicf
 
 // insertion point
 func __gong__New__ALTERNATIVE_IDFormCallback(
@@ -202,11 +194,11 @@ func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANForm
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_BOOLEAN, attribute_definition_boolean_)
 					formerSource.ATTRIBUTE_DEFINITION_BOOLEAN = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_BOOLEAN, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -232,7 +224,7 @@ func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANForm
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_BOOLEAN = append(newSource.ATTRIBUTE_DEFINITION_BOOLEAN, attribute_definition_boolean_)
 		}
 	}
@@ -362,11 +354,11 @@ func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallba
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_DATE, attribute_definition_date_)
 					formerSource.ATTRIBUTE_DEFINITION_DATE = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_DATE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -392,7 +384,7 @@ func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallba
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_DATE = append(newSource.ATTRIBUTE_DEFINITION_DATE, attribute_definition_date_)
 		}
 	}
@@ -524,11 +516,11 @@ func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERA
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_ENUMERATION, attribute_definition_enumeration_)
 					formerSource.ATTRIBUTE_DEFINITION_ENUMERATION = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_ENUMERATION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -554,7 +546,7 @@ func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERA
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_ENUMERATION = append(newSource.ATTRIBUTE_DEFINITION_ENUMERATION, attribute_definition_enumeration_)
 		}
 	}
@@ -684,11 +676,11 @@ func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERForm
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_INTEGER, attribute_definition_integer_)
 					formerSource.ATTRIBUTE_DEFINITION_INTEGER = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_INTEGER, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -714,7 +706,7 @@ func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERForm
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_INTEGER = append(newSource.ATTRIBUTE_DEFINITION_INTEGER, attribute_definition_integer_)
 		}
 	}
@@ -844,11 +836,11 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_REAL, attribute_definition_real_)
 					formerSource.ATTRIBUTE_DEFINITION_REAL = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_REAL, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -874,7 +866,7 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_REAL = append(newSource.ATTRIBUTE_DEFINITION_REAL, attribute_definition_real_)
 		}
 	}
@@ -1004,11 +996,11 @@ func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_STRING, attribute_definition_string_)
 					formerSource.ATTRIBUTE_DEFINITION_STRING = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_STRING, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1034,7 +1026,7 @@ func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_STRING = append(newSource.ATTRIBUTE_DEFINITION_STRING, attribute_definition_string_)
 		}
 	}
@@ -1164,11 +1156,11 @@ func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCall
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_DEFINITION_XHTML, attribute_definition_xhtml_)
 					formerSource.ATTRIBUTE_DEFINITION_XHTML = slices.Delete(formerSource.ATTRIBUTE_DEFINITION_XHTML, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1194,7 +1186,7 @@ func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCall
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_DEFINITION_XHTML = append(newSource.ATTRIBUTE_DEFINITION_XHTML, attribute_definition_xhtml_)
 		}
 	}
@@ -1312,11 +1304,11 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_BOOLEAN, attribute_value_boolean_)
 					formerSource.ATTRIBUTE_VALUE_BOOLEAN = slices.Delete(formerSource.ATTRIBUTE_VALUE_BOOLEAN, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1342,7 +1334,7 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_BOOLEAN = append(newSource.ATTRIBUTE_VALUE_BOOLEAN, attribute_value_boolean_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_BOOLEAN":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_BOOLEAN []*ATTRIBUTE_VALUE_BOOLEAN" but
@@ -1379,11 +1371,11 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_BOOLEAN, attribute_value_boolean_)
 					formerSource.ATTRIBUTE_VALUE_BOOLEAN = slices.Delete(formerSource.ATTRIBUTE_VALUE_BOOLEAN, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1409,7 +1401,7 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_BOOLEAN = append(newSource.ATTRIBUTE_VALUE_BOOLEAN, attribute_value_boolean_)
 		}
 	}
@@ -1527,11 +1519,11 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_DATE, attribute_value_date_)
 					formerSource.ATTRIBUTE_VALUE_DATE = slices.Delete(formerSource.ATTRIBUTE_VALUE_DATE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1557,7 +1549,7 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_DATE = append(newSource.ATTRIBUTE_VALUE_DATE, attribute_value_date_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_DATE":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_DATE []*ATTRIBUTE_VALUE_DATE" but
@@ -1594,11 +1586,11 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_DATE, attribute_value_date_)
 					formerSource.ATTRIBUTE_VALUE_DATE = slices.Delete(formerSource.ATTRIBUTE_VALUE_DATE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1624,7 +1616,7 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_DATE = append(newSource.ATTRIBUTE_VALUE_DATE, attribute_value_date_)
 		}
 	}
@@ -1742,11 +1734,11 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_ENUMERATION, attribute_value_enumeration_)
 					formerSource.ATTRIBUTE_VALUE_ENUMERATION = slices.Delete(formerSource.ATTRIBUTE_VALUE_ENUMERATION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1772,7 +1764,7 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_ENUMERATION = append(newSource.ATTRIBUTE_VALUE_ENUMERATION, attribute_value_enumeration_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_ENUMERATION":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_ENUMERATION []*ATTRIBUTE_VALUE_ENUMERATION" but
@@ -1809,11 +1801,11 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_ENUMERATION, attribute_value_enumeration_)
 					formerSource.ATTRIBUTE_VALUE_ENUMERATION = slices.Delete(formerSource.ATTRIBUTE_VALUE_ENUMERATION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1839,7 +1831,7 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_ENUMERATION = append(newSource.ATTRIBUTE_VALUE_ENUMERATION, attribute_value_enumeration_)
 		}
 	}
@@ -1957,11 +1949,11 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_INTEGER, attribute_value_integer_)
 					formerSource.ATTRIBUTE_VALUE_INTEGER = slices.Delete(formerSource.ATTRIBUTE_VALUE_INTEGER, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1987,7 +1979,7 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_INTEGER = append(newSource.ATTRIBUTE_VALUE_INTEGER, attribute_value_integer_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_INTEGER":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_INTEGER []*ATTRIBUTE_VALUE_INTEGER" but
@@ -2024,11 +2016,11 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_INTEGER, attribute_value_integer_)
 					formerSource.ATTRIBUTE_VALUE_INTEGER = slices.Delete(formerSource.ATTRIBUTE_VALUE_INTEGER, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2054,7 +2046,7 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_INTEGER = append(newSource.ATTRIBUTE_VALUE_INTEGER, attribute_value_integer_)
 		}
 	}
@@ -2172,11 +2164,11 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_REAL, attribute_value_real_)
 					formerSource.ATTRIBUTE_VALUE_REAL = slices.Delete(formerSource.ATTRIBUTE_VALUE_REAL, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2202,7 +2194,7 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_REAL = append(newSource.ATTRIBUTE_VALUE_REAL, attribute_value_real_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_REAL":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_REAL []*ATTRIBUTE_VALUE_REAL" but
@@ -2239,11 +2231,11 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_REAL, attribute_value_real_)
 					formerSource.ATTRIBUTE_VALUE_REAL = slices.Delete(formerSource.ATTRIBUTE_VALUE_REAL, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2269,7 +2261,7 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_REAL = append(newSource.ATTRIBUTE_VALUE_REAL, attribute_value_real_)
 		}
 	}
@@ -2387,11 +2379,11 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_STRING, attribute_value_string_)
 					formerSource.ATTRIBUTE_VALUE_STRING = slices.Delete(formerSource.ATTRIBUTE_VALUE_STRING, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2417,7 +2409,7 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_STRING = append(newSource.ATTRIBUTE_VALUE_STRING, attribute_value_string_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_STRING":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_STRING []*ATTRIBUTE_VALUE_STRING" but
@@ -2454,11 +2446,11 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_STRING, attribute_value_string_)
 					formerSource.ATTRIBUTE_VALUE_STRING = slices.Delete(formerSource.ATTRIBUTE_VALUE_STRING, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2484,7 +2476,7 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_STRING = append(newSource.ATTRIBUTE_VALUE_STRING, attribute_value_string_)
 		}
 	}
@@ -2606,11 +2598,11 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_XHTML, attribute_value_xhtml_)
 					formerSource.ATTRIBUTE_VALUE_XHTML = slices.Delete(formerSource.ATTRIBUTE_VALUE_XHTML, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2636,7 +2628,7 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_XHTML = append(newSource.ATTRIBUTE_VALUE_XHTML, attribute_value_xhtml_)
 		case "A_ATTRIBUTE_VALUE_XHTML_1:ATTRIBUTE_VALUE_XHTML":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML_1.ATTRIBUTE_VALUE_XHTML []*ATTRIBUTE_VALUE_XHTML" but
@@ -2673,11 +2665,11 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ATTRIBUTE_VALUE_XHTML, attribute_value_xhtml_)
 					formerSource.ATTRIBUTE_VALUE_XHTML = slices.Delete(formerSource.ATTRIBUTE_VALUE_XHTML, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2703,7 +2695,7 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ATTRIBUTE_VALUE_XHTML = append(newSource.ATTRIBUTE_VALUE_XHTML, attribute_value_xhtml_)
 		}
 	}
@@ -3414,6 +3406,31 @@ func (a_attribute_value_booleanFormCallback *A_ATTRIBUTE_VALUE_BOOLEANFormCallba
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_boolean_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_BOOLEAN":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_BOOLEAN](a_attribute_value_booleanFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_BOOLEAN, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_BOOLEAN)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_booleanFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_boolean_.ATTRIBUTE_VALUE_BOOLEAN = instanceSlice
+
 		}
 	}
 
@@ -3491,6 +3508,31 @@ func (a_attribute_value_dateFormCallback *A_ATTRIBUTE_VALUE_DATEFormCallback) On
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_date_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_DATE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_DATE](a_attribute_value_dateFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_DATE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_DATE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_dateFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_date_.ATTRIBUTE_VALUE_DATE = instanceSlice
+
 		}
 	}
 
@@ -3568,6 +3610,31 @@ func (a_attribute_value_enumerationFormCallback *A_ATTRIBUTE_VALUE_ENUMERATIONFo
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_enumeration_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_ENUMERATION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_ENUMERATION](a_attribute_value_enumerationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_ENUMERATION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_ENUMERATION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_enumerationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_enumeration_.ATTRIBUTE_VALUE_ENUMERATION = instanceSlice
+
 		}
 	}
 
@@ -3645,6 +3712,31 @@ func (a_attribute_value_integerFormCallback *A_ATTRIBUTE_VALUE_INTEGERFormCallba
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_integer_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_INTEGER":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_INTEGER](a_attribute_value_integerFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_INTEGER, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_INTEGER)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_integerFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_integer_.ATTRIBUTE_VALUE_INTEGER = instanceSlice
+
 		}
 	}
 
@@ -3722,6 +3814,31 @@ func (a_attribute_value_realFormCallback *A_ATTRIBUTE_VALUE_REALFormCallback) On
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_real_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_REAL":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_REAL](a_attribute_value_realFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_REAL, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_REAL)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_realFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_real_.ATTRIBUTE_VALUE_REAL = instanceSlice
+
 		}
 	}
 
@@ -3799,6 +3916,31 @@ func (a_attribute_value_stringFormCallback *A_ATTRIBUTE_VALUE_STRINGFormCallback
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_string_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_STRING":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_STRING](a_attribute_value_stringFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_STRING, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_STRING)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_stringFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_string_.ATTRIBUTE_VALUE_STRING = instanceSlice
+
 		}
 	}
 
@@ -3876,6 +4018,31 @@ func (a_attribute_value_xhtmlFormCallback *A_ATTRIBUTE_VALUE_XHTMLFormCallback) 
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_xhtml_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_XHTML":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_XHTML](a_attribute_value_xhtmlFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_XHTML, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_XHTML)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtmlFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_.ATTRIBUTE_VALUE_XHTML = instanceSlice
+
 		}
 	}
 
@@ -3953,6 +4120,181 @@ func (a_attribute_value_xhtml_1FormCallback *A_ATTRIBUTE_VALUE_XHTML_1FormCallba
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_attribute_value_xhtml_1_.Name), formDiv)
+		case "ATTRIBUTE_VALUE_BOOLEAN":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_BOOLEAN](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_BOOLEAN, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_BOOLEAN)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_BOOLEAN = instanceSlice
+
+		case "ATTRIBUTE_VALUE_DATE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_DATE](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_DATE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_DATE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_DATE = instanceSlice
+
+		case "ATTRIBUTE_VALUE_ENUMERATION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_ENUMERATION](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_ENUMERATION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_ENUMERATION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_ENUMERATION = instanceSlice
+
+		case "ATTRIBUTE_VALUE_INTEGER":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_INTEGER](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_INTEGER, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_INTEGER)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_INTEGER = instanceSlice
+
+		case "ATTRIBUTE_VALUE_REAL":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_REAL](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_REAL, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_REAL)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_REAL = instanceSlice
+
+		case "ATTRIBUTE_VALUE_STRING":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_STRING](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_STRING, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_STRING)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_STRING = instanceSlice
+
+		case "ATTRIBUTE_VALUE_XHTML":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_VALUE_XHTML](a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_VALUE_XHTML, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_VALUE_XHTML)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_attribute_value_xhtml_1_.ATTRIBUTE_VALUE_XHTML = instanceSlice
+
 		}
 	}
 
@@ -4030,6 +4372,31 @@ func (a_childrenFormCallback *A_CHILDRENFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_children_.Name), formDiv)
+		case "SPEC_HIERARCHY":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_HIERARCHY](a_childrenFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPEC_HIERARCHY, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPEC_HIERARCHY)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_childrenFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_children_.SPEC_HIERARCHY = instanceSlice
+
 		}
 	}
 
@@ -4186,6 +4553,181 @@ func (a_datatypesFormCallback *A_DATATYPESFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_datatypes_.Name), formDiv)
+		case "DATATYPE_DEFINITION_BOOLEAN":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_BOOLEAN](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_BOOLEAN, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_BOOLEAN)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_BOOLEAN = instanceSlice
+
+		case "DATATYPE_DEFINITION_DATE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_DATE](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_DATE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_DATE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_DATE = instanceSlice
+
+		case "DATATYPE_DEFINITION_ENUMERATION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_ENUMERATION](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_ENUMERATION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_ENUMERATION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_ENUMERATION = instanceSlice
+
+		case "DATATYPE_DEFINITION_INTEGER":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_INTEGER](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_INTEGER, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_INTEGER)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_INTEGER = instanceSlice
+
+		case "DATATYPE_DEFINITION_REAL":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_REAL](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_REAL, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_REAL)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_REAL = instanceSlice
+
+		case "DATATYPE_DEFINITION_STRING":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_STRING](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_STRING, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_STRING)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_STRING = instanceSlice
+
+		case "DATATYPE_DEFINITION_XHTML":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DATATYPE_DEFINITION_XHTML](a_datatypesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DATATYPE_DEFINITION_XHTML, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DATATYPE_DEFINITION_XHTML)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_datatypesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_datatypes_.DATATYPE_DEFINITION_XHTML = instanceSlice
+
 		}
 	}
 
@@ -5381,6 +5923,31 @@ func (a_specificationsFormCallback *A_SPECIFICATIONSFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_specifications_.Name), formDiv)
+		case "SPECIFICATION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPECIFICATION](a_specificationsFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPECIFICATION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPECIFICATION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_specificationsFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_specifications_.SPECIFICATION = instanceSlice
+
 		}
 	}
 
@@ -5537,6 +6104,31 @@ func (a_specified_valuesFormCallback *A_SPECIFIED_VALUESFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_specified_values_.Name), formDiv)
+		case "ENUM_VALUE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ENUM_VALUE](a_specified_valuesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ENUM_VALUE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ENUM_VALUE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_specified_valuesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_specified_values_.ENUM_VALUE = instanceSlice
+
 		}
 	}
 
@@ -5614,6 +6206,181 @@ func (a_spec_attributesFormCallback *A_SPEC_ATTRIBUTESFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_spec_attributes_.Name), formDiv)
+		case "ATTRIBUTE_DEFINITION_BOOLEAN":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_BOOLEAN](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_BOOLEAN, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_BOOLEAN)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_BOOLEAN = instanceSlice
+
+		case "ATTRIBUTE_DEFINITION_DATE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_DATE](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_DATE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_DATE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_DATE = instanceSlice
+
+		case "ATTRIBUTE_DEFINITION_ENUMERATION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_ENUMERATION](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_ENUMERATION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_ENUMERATION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_ENUMERATION = instanceSlice
+
+		case "ATTRIBUTE_DEFINITION_INTEGER":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_INTEGER](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_INTEGER, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_INTEGER)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_INTEGER = instanceSlice
+
+		case "ATTRIBUTE_DEFINITION_REAL":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_REAL](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_REAL, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_REAL)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_REAL = instanceSlice
+
+		case "ATTRIBUTE_DEFINITION_STRING":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_STRING](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_STRING, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_STRING)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_STRING = instanceSlice
+
+		case "ATTRIBUTE_DEFINITION_XHTML":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_XHTML](a_spec_attributesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.ATTRIBUTE_DEFINITION_XHTML, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.ATTRIBUTE_DEFINITION_XHTML)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_attributesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_attributes_.ATTRIBUTE_DEFINITION_XHTML = instanceSlice
+
 		}
 	}
 
@@ -5691,6 +6458,31 @@ func (a_spec_objectsFormCallback *A_SPEC_OBJECTSFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_spec_objects_.Name), formDiv)
+		case "SPEC_OBJECT":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_OBJECT](a_spec_objectsFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPEC_OBJECT, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPEC_OBJECT)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_objectsFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_objects_.SPEC_OBJECT = instanceSlice
+
 		}
 	}
 
@@ -5847,6 +6639,31 @@ func (a_spec_relationsFormCallback *A_SPEC_RELATIONSFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_spec_relations_.Name), formDiv)
+		case "SPEC_RELATION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_RELATION](a_spec_relationsFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPEC_RELATION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPEC_RELATION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_relationsFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_relations_.SPEC_RELATION = instanceSlice
+
 		}
 	}
 
@@ -5924,6 +6741,31 @@ func (a_spec_relation_groupsFormCallback *A_SPEC_RELATION_GROUPSFormCallback) On
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_spec_relation_groups_.Name), formDiv)
+		case "RELATION_GROUP":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.RELATION_GROUP](a_spec_relation_groupsFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.RELATION_GROUP, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.RELATION_GROUP)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_relation_groupsFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_relation_groups_.RELATION_GROUP = instanceSlice
+
 		}
 	}
 
@@ -6159,6 +7001,106 @@ func (a_spec_typesFormCallback *A_SPEC_TYPESFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_spec_types_.Name), formDiv)
+		case "RELATION_GROUP_TYPE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.RELATION_GROUP_TYPE](a_spec_typesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.RELATION_GROUP_TYPE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.RELATION_GROUP_TYPE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_typesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_types_.RELATION_GROUP_TYPE = instanceSlice
+
+		case "SPEC_OBJECT_TYPE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_OBJECT_TYPE](a_spec_typesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPEC_OBJECT_TYPE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPEC_OBJECT_TYPE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_typesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_types_.SPEC_OBJECT_TYPE = instanceSlice
+
+		case "SPEC_RELATION_TYPE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_RELATION_TYPE](a_spec_typesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPEC_RELATION_TYPE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPEC_RELATION_TYPE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_typesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_types_.SPEC_RELATION_TYPE = instanceSlice
+
+		case "SPECIFICATION_TYPE":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.SPECIFICATION_TYPE](a_spec_typesFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.SPECIFICATION_TYPE, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.SPECIFICATION_TYPE)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_spec_typesFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_spec_types_.SPECIFICATION_TYPE = instanceSlice
+
 		}
 	}
 
@@ -6315,6 +7257,31 @@ func (a_tool_extensionsFormCallback *A_TOOL_EXTENSIONSFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(a_tool_extensions_.Name), formDiv)
+		case "REQ_IF_TOOL_EXTENSION":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.REQ_IF_TOOL_EXTENSION](a_tool_extensionsFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.REQ_IF_TOOL_EXTENSION, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.REQ_IF_TOOL_EXTENSION)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					a_tool_extensionsFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			a_tool_extensions_.REQ_IF_TOOL_EXTENSION = instanceSlice
+
 		}
 	}
 
@@ -6437,11 +7404,11 @@ func (datatype_definition_booleanFormCallback *DATATYPE_DEFINITION_BOOLEANFormCa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_BOOLEAN, datatype_definition_boolean_)
 					formerSource.DATATYPE_DEFINITION_BOOLEAN = slices.Delete(formerSource.DATATYPE_DEFINITION_BOOLEAN, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -6467,7 +7434,7 @@ func (datatype_definition_booleanFormCallback *DATATYPE_DEFINITION_BOOLEANFormCa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_BOOLEAN = append(newSource.DATATYPE_DEFINITION_BOOLEAN, datatype_definition_boolean_)
 		}
 	}
@@ -6591,11 +7558,11 @@ func (datatype_definition_dateFormCallback *DATATYPE_DEFINITION_DATEFormCallback
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_DATE, datatype_definition_date_)
 					formerSource.DATATYPE_DEFINITION_DATE = slices.Delete(formerSource.DATATYPE_DEFINITION_DATE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -6621,7 +7588,7 @@ func (datatype_definition_dateFormCallback *DATATYPE_DEFINITION_DATEFormCallback
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_DATE = append(newSource.DATATYPE_DEFINITION_DATE, datatype_definition_date_)
 		}
 	}
@@ -6747,11 +7714,11 @@ func (datatype_definition_enumerationFormCallback *DATATYPE_DEFINITION_ENUMERATI
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_ENUMERATION, datatype_definition_enumeration_)
 					formerSource.DATATYPE_DEFINITION_ENUMERATION = slices.Delete(formerSource.DATATYPE_DEFINITION_ENUMERATION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -6777,7 +7744,7 @@ func (datatype_definition_enumerationFormCallback *DATATYPE_DEFINITION_ENUMERATI
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_ENUMERATION = append(newSource.DATATYPE_DEFINITION_ENUMERATION, datatype_definition_enumeration_)
 		}
 	}
@@ -6905,11 +7872,11 @@ func (datatype_definition_integerFormCallback *DATATYPE_DEFINITION_INTEGERFormCa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_INTEGER, datatype_definition_integer_)
 					formerSource.DATATYPE_DEFINITION_INTEGER = slices.Delete(formerSource.DATATYPE_DEFINITION_INTEGER, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -6935,7 +7902,7 @@ func (datatype_definition_integerFormCallback *DATATYPE_DEFINITION_INTEGERFormCa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_INTEGER = append(newSource.DATATYPE_DEFINITION_INTEGER, datatype_definition_integer_)
 		}
 	}
@@ -7065,11 +8032,11 @@ func (datatype_definition_realFormCallback *DATATYPE_DEFINITION_REALFormCallback
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_REAL, datatype_definition_real_)
 					formerSource.DATATYPE_DEFINITION_REAL = slices.Delete(formerSource.DATATYPE_DEFINITION_REAL, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -7095,7 +8062,7 @@ func (datatype_definition_realFormCallback *DATATYPE_DEFINITION_REALFormCallback
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_REAL = append(newSource.DATATYPE_DEFINITION_REAL, datatype_definition_real_)
 		}
 	}
@@ -7221,11 +8188,11 @@ func (datatype_definition_stringFormCallback *DATATYPE_DEFINITION_STRINGFormCall
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_STRING, datatype_definition_string_)
 					formerSource.DATATYPE_DEFINITION_STRING = slices.Delete(formerSource.DATATYPE_DEFINITION_STRING, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -7251,7 +8218,7 @@ func (datatype_definition_stringFormCallback *DATATYPE_DEFINITION_STRINGFormCall
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_STRING = append(newSource.DATATYPE_DEFINITION_STRING, datatype_definition_string_)
 		}
 	}
@@ -7375,11 +8342,11 @@ func (datatype_definition_xhtmlFormCallback *DATATYPE_DEFINITION_XHTMLFormCallba
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DATATYPE_DEFINITION_XHTML, datatype_definition_xhtml_)
 					formerSource.DATATYPE_DEFINITION_XHTML = slices.Delete(formerSource.DATATYPE_DEFINITION_XHTML, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -7405,7 +8372,7 @@ func (datatype_definition_xhtmlFormCallback *DATATYPE_DEFINITION_XHTMLFormCallba
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DATATYPE_DEFINITION_XHTML = append(newSource.DATATYPE_DEFINITION_XHTML, datatype_definition_xhtml_)
 		}
 	}
@@ -7612,11 +8579,11 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.ENUM_VALUE, enum_value_)
 					formerSource.ENUM_VALUE = slices.Delete(formerSource.ENUM_VALUE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -7642,7 +8609,7 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.ENUM_VALUE = append(newSource.ENUM_VALUE, enum_value_)
 		}
 	}
@@ -7774,11 +8741,11 @@ func (relation_groupFormCallback *RELATION_GROUPFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.RELATION_GROUP, relation_group_)
 					formerSource.RELATION_GROUP = slices.Delete(formerSource.RELATION_GROUP, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -7804,7 +8771,7 @@ func (relation_groupFormCallback *RELATION_GROUPFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.RELATION_GROUP = append(newSource.RELATION_GROUP, relation_group_)
 		}
 	}
@@ -7930,11 +8897,11 @@ func (relation_group_typeFormCallback *RELATION_GROUP_TYPEFormCallback) OnSave()
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.RELATION_GROUP_TYPE, relation_group_type_)
 					formerSource.RELATION_GROUP_TYPE = slices.Delete(formerSource.RELATION_GROUP_TYPE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -7960,7 +8927,7 @@ func (relation_group_typeFormCallback *RELATION_GROUP_TYPEFormCallback) OnSave()
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.RELATION_GROUP_TYPE = append(newSource.RELATION_GROUP_TYPE, relation_group_type_)
 		}
 	}
@@ -8341,11 +9308,11 @@ func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSa
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.REQ_IF_TOOL_EXTENSION, req_if_tool_extension_)
 					formerSource.REQ_IF_TOOL_EXTENSION = slices.Delete(formerSource.REQ_IF_TOOL_EXTENSION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -8371,7 +9338,7 @@ func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSa
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.REQ_IF_TOOL_EXTENSION = append(newSource.REQ_IF_TOOL_EXTENSION, req_if_tool_extension_)
 		}
 	}
@@ -8501,11 +9468,11 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPECIFICATION, specification_)
 					formerSource.SPECIFICATION = slices.Delete(formerSource.SPECIFICATION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -8531,7 +9498,7 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPECIFICATION = append(newSource.SPECIFICATION, specification_)
 		}
 	}
@@ -8657,11 +9624,11 @@ func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPECIFICATION_TYPE, specification_type_)
 					formerSource.SPECIFICATION_TYPE = slices.Delete(formerSource.SPECIFICATION_TYPE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -8687,7 +9654,7 @@ func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPECIFICATION_TYPE = append(newSource.SPECIFICATION_TYPE, specification_type_)
 		}
 	}
@@ -8821,11 +9788,11 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPEC_HIERARCHY, spec_hierarchy_)
 					formerSource.SPEC_HIERARCHY = slices.Delete(formerSource.SPEC_HIERARCHY, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -8851,7 +9818,7 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPEC_HIERARCHY = append(newSource.SPEC_HIERARCHY, spec_hierarchy_)
 		}
 	}
@@ -8979,11 +9946,11 @@ func (spec_objectFormCallback *SPEC_OBJECTFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPEC_OBJECT, spec_object_)
 					formerSource.SPEC_OBJECT = slices.Delete(formerSource.SPEC_OBJECT, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -9009,7 +9976,7 @@ func (spec_objectFormCallback *SPEC_OBJECTFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPEC_OBJECT = append(newSource.SPEC_OBJECT, spec_object_)
 		}
 	}
@@ -9135,11 +10102,11 @@ func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPEC_OBJECT_TYPE, spec_object_type_)
 					formerSource.SPEC_OBJECT_TYPE = slices.Delete(formerSource.SPEC_OBJECT_TYPE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -9165,7 +10132,7 @@ func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPEC_OBJECT_TYPE = append(newSource.SPEC_OBJECT_TYPE, spec_object_type_)
 		}
 	}
@@ -9297,11 +10264,11 @@ func (spec_relationFormCallback *SPEC_RELATIONFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPEC_RELATION, spec_relation_)
 					formerSource.SPEC_RELATION = slices.Delete(formerSource.SPEC_RELATION, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -9327,7 +10294,7 @@ func (spec_relationFormCallback *SPEC_RELATIONFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPEC_RELATION = append(newSource.SPEC_RELATION, spec_relation_)
 		}
 	}
@@ -9453,11 +10420,11 @@ func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.SPEC_RELATION_TYPE, spec_relation_type_)
 					formerSource.SPEC_RELATION_TYPE = slices.Delete(formerSource.SPEC_RELATION_TYPE, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -9483,7 +10450,7 @@ func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.SPEC_RELATION_TYPE = append(newSource.SPEC_RELATION_TYPE, spec_relation_type_)
 		}
 	}

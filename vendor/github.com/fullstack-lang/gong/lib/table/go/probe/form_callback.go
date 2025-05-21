@@ -11,20 +11,12 @@ import (
 	"github.com/fullstack-lang/gong/lib/table/go/models"
 )
 
-// code to avoid error when generated code does not need to import packages
-const __dummmy__time = time.Nanosecond
+// to avoid errors when time and slices packages are not used in the generated code
+const _ = time.Nanosecond
 
-var _ = __dummmy__time
+var _ = slices.Delete([]string{"a"}, 0, 1)
 
-var __dummmy__letters = slices.Delete([]string{"a"}, 0, 1)
-
-var _ = __dummmy__letters
-
-const __dummy__log = log.Ldate
-
-var _ = __dummy__log
-
-// end of code to avoid error when generated code does not need to import packages
+var _ = log.Panicf
 
 // insertion point
 func __gong__New__CellFormCallback(
@@ -117,11 +109,11 @@ func (cellFormCallback *CellFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.Cells, cell_)
 					formerSource.Cells = slices.Delete(formerSource.Cells, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -147,7 +139,7 @@ func (cellFormCallback *CellFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.Cells = append(newSource.Cells, cell_)
 		}
 	}
@@ -658,11 +650,11 @@ func (checkboxFormCallback *CheckBoxFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.CheckBoxs, checkbox_)
 					formerSource.CheckBoxs = slices.Delete(formerSource.CheckBoxs, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -688,7 +680,7 @@ func (checkboxFormCallback *CheckBoxFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.CheckBoxs = append(newSource.CheckBoxs, checkbox_)
 		}
 	}
@@ -802,11 +794,11 @@ func (displayedcolumnFormCallback *DisplayedColumnFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.DisplayedColumns, displayedcolumn_)
 					formerSource.DisplayedColumns = slices.Delete(formerSource.DisplayedColumns, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -832,7 +824,7 @@ func (displayedcolumnFormCallback *DisplayedColumnFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.DisplayedColumns = append(newSource.DisplayedColumns, displayedcolumn_)
 		}
 	}
@@ -911,6 +903,56 @@ func (formdivFormCallback *FormDivFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(formdiv_.Name), formDiv)
+		case "FormFields":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.FormField](formdivFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.FormField, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.FormField)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					formdivFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			formdiv_.FormFields = instanceSlice
+
+		case "CheckBoxs":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.CheckBox](formdivFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.CheckBox, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.CheckBox)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					formdivFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			formdiv_.CheckBoxs = instanceSlice
+
 		case "FormEditAssocButton":
 			FormDivSelectFieldToField(&(formdiv_.FormEditAssocButton), formdivFormCallback.probe.stageOfInterest, formDiv)
 		case "FormSortAssocButton":
@@ -950,11 +992,11 @@ func (formdivFormCallback *FormDivFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.FormDivs, formdiv_)
 					formerSource.FormDivs = slices.Delete(formerSource.FormDivs, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -980,7 +1022,7 @@ func (formdivFormCallback *FormDivFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.FormDivs = append(newSource.FormDivs, formdiv_)
 		}
 	}
@@ -1061,6 +1103,12 @@ func (formeditassocbuttonFormCallback *FormEditAssocButtonFormCallback) OnSave()
 			FormDivBasicFieldToField(&(formeditassocbutton_.Name), formDiv)
 		case "Label":
 			FormDivBasicFieldToField(&(formeditassocbutton_.Label), formDiv)
+		case "AssociationStorage":
+			FormDivBasicFieldToField(&(formeditassocbutton_.AssociationStorage), formDiv)
+		case "HasChanged":
+			FormDivBasicFieldToField(&(formeditassocbutton_.HasChanged), formDiv)
+		case "IsForSavePurpose":
+			FormDivBasicFieldToField(&(formeditassocbutton_.IsForSavePurpose), formDiv)
 		}
 	}
 
@@ -1201,11 +1249,11 @@ func (formfieldFormCallback *FormFieldFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.FormFields, formfield_)
 					formerSource.FormFields = slices.Delete(formerSource.FormFields, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -1231,7 +1279,7 @@ func (formfieldFormCallback *FormFieldFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.FormFields = append(newSource.FormFields, formfield_)
 		}
 	}
@@ -1644,6 +1692,31 @@ func (formfieldselectFormCallback *FormFieldSelectFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(formfieldselect_.Name), formDiv)
 		case "Value":
 			FormDivSelectFieldToField(&(formfieldselect_.Value), formfieldselectFormCallback.probe.stageOfInterest, formDiv)
+		case "Options":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Option](formfieldselectFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Option, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Option)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					formfieldselectFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			formfieldselect_.Options = instanceSlice
+
 		case "CanBeEmpty":
 			FormDivBasicFieldToField(&(formfieldselect_.CanBeEmpty), formDiv)
 		}
@@ -1887,6 +1960,31 @@ func (formgroupFormCallback *FormGroupFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(formgroup_.Name), formDiv)
 		case "Label":
 			FormDivBasicFieldToField(&(formgroup_.Label), formDiv)
+		case "FormDivs":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.FormDiv](formgroupFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.FormDiv, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.FormDiv)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					formgroupFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			formgroup_.FormDivs = instanceSlice
+
 		case "HasSuppressButton":
 			FormDivBasicFieldToField(&(formgroup_.HasSuppressButton), formDiv)
 		case "HasSuppressButtonBeenPressed":
@@ -2082,11 +2180,11 @@ func (optionFormCallback *OptionFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.Options, option_)
 					formerSource.Options = slices.Delete(formerSource.Options, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2112,7 +2210,7 @@ func (optionFormCallback *OptionFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.Options = append(newSource.Options, option_)
 		}
 	}
@@ -2191,6 +2289,31 @@ func (rowFormCallback *RowFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(row_.Name), formDiv)
+		case "Cells":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Cell](rowFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Cell, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Cell)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					rowFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			row_.Cells = instanceSlice
+
 		case "IsChecked":
 			FormDivBasicFieldToField(&(row_.IsChecked), formDiv)
 		case "Table:Rows":
@@ -2228,11 +2351,11 @@ func (rowFormCallback *RowFormCallback) OnSave() {
 
 			// case when the user set empty for the source value
 			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
 				if formerSource != nil {
 					idx := slices.Index(formerSource.Rows, row_)
 					formerSource.Rows = slices.Delete(formerSource.Rows, idx, idx+1)
 				}
-				// That could mean we clear the assocation for all source instances
 				break // nothing else to do for this field
 			}
 
@@ -2258,7 +2381,7 @@ func (rowFormCallback *RowFormCallback) OnSave() {
 				break
 			}
 
-			// append the value to the new source field
+			// (3) append the new value to the new source field
 			newSource.Rows = append(newSource.Rows, row_)
 		}
 	}
@@ -2337,6 +2460,56 @@ func (tableFormCallback *TableFormCallback) OnSave() {
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(table_.Name), formDiv)
+		case "DisplayedColumns":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.DisplayedColumn](tableFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.DisplayedColumn, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.DisplayedColumn)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					tableFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			table_.DisplayedColumns = instanceSlice
+
+		case "Rows":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Row](tableFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Row, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Row)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					tableFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			table_.Rows = instanceSlice
+
 		case "HasFiltering":
 			FormDivBasicFieldToField(&(table_.HasFiltering), formDiv)
 		case "HasColumnSorting":

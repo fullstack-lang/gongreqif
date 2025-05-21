@@ -28,9 +28,6 @@ export class NodeAPI {
 	IsSecondCheckboxChecked: boolean = false
 	IsSecondCheckboxDisabled: boolean = false
 	TextAfterSecondCheckbox: string = ""
-	SecondCheckboxHasToolTip: boolean = false
-	SecondCheckboxToolTipText: string = ""
-	SecondCheckboxToolTipPosition: string = ""
 	IsInEditMode: boolean = false
 	IsNodeClickable: boolean = false
 	IsWithPreceedingIcon: boolean = false

@@ -5,12 +5,15 @@ import "time"
 
 // to avoid compile error if no time field is present
 var __GONG_time_The_fool_doth_think_he_is_wise__ = time.Hour
+
 var _ = __GONG_time_The_fool_doth_think_he_is_wise__
 
 // insertion point
 type ALTERNATIVE_ID_WOP struct {
 	// insertion point
+
 	Name string
+
 	IDENTIFIER string
 }
 
@@ -22,11 +25,17 @@ func (from *ALTERNATIVE_ID) CopyBasicFields(to *ALTERNATIVE_ID) {
 
 type ATTRIBUTE_DEFINITION_BOOLEAN_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -42,11 +51,17 @@ func (from *ATTRIBUTE_DEFINITION_BOOLEAN) CopyBasicFields(to *ATTRIBUTE_DEFINITI
 
 type ATTRIBUTE_DEFINITION_DATE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -62,12 +77,19 @@ func (from *ATTRIBUTE_DEFINITION_DATE) CopyBasicFields(to *ATTRIBUTE_DEFINITION_
 
 type ATTRIBUTE_DEFINITION_ENUMERATION_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
+
 	MULTI_VALUED bool
 }
 
@@ -84,11 +106,17 @@ func (from *ATTRIBUTE_DEFINITION_ENUMERATION) CopyBasicFields(to *ATTRIBUTE_DEFI
 
 type ATTRIBUTE_DEFINITION_INTEGER_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -104,11 +132,17 @@ func (from *ATTRIBUTE_DEFINITION_INTEGER) CopyBasicFields(to *ATTRIBUTE_DEFINITI
 
 type ATTRIBUTE_DEFINITION_REAL_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -124,11 +158,17 @@ func (from *ATTRIBUTE_DEFINITION_REAL) CopyBasicFields(to *ATTRIBUTE_DEFINITION_
 
 type ATTRIBUTE_DEFINITION_STRING_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -144,11 +184,17 @@ func (from *ATTRIBUTE_DEFINITION_STRING) CopyBasicFields(to *ATTRIBUTE_DEFINITIO
 
 type ATTRIBUTE_DEFINITION_XHTML_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -164,7 +210,9 @@ func (from *ATTRIBUTE_DEFINITION_XHTML) CopyBasicFields(to *ATTRIBUTE_DEFINITION
 
 type ATTRIBUTE_VALUE_BOOLEAN_WOP struct {
 	// insertion point
+
 	Name string
+
 	THE_VALUE bool
 }
 
@@ -176,7 +224,9 @@ func (from *ATTRIBUTE_VALUE_BOOLEAN) CopyBasicFields(to *ATTRIBUTE_VALUE_BOOLEAN
 
 type ATTRIBUTE_VALUE_DATE_WOP struct {
 	// insertion point
+
 	Name string
+
 	THE_VALUE string
 }
 
@@ -188,6 +238,7 @@ func (from *ATTRIBUTE_VALUE_DATE) CopyBasicFields(to *ATTRIBUTE_VALUE_DATE) {
 
 type ATTRIBUTE_VALUE_ENUMERATION_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -198,7 +249,9 @@ func (from *ATTRIBUTE_VALUE_ENUMERATION) CopyBasicFields(to *ATTRIBUTE_VALUE_ENU
 
 type ATTRIBUTE_VALUE_INTEGER_WOP struct {
 	// insertion point
+
 	Name string
+
 	THE_VALUE int
 }
 
@@ -210,7 +263,9 @@ func (from *ATTRIBUTE_VALUE_INTEGER) CopyBasicFields(to *ATTRIBUTE_VALUE_INTEGER
 
 type ATTRIBUTE_VALUE_REAL_WOP struct {
 	// insertion point
+
 	Name string
+
 	THE_VALUE float64
 }
 
@@ -222,7 +277,9 @@ func (from *ATTRIBUTE_VALUE_REAL) CopyBasicFields(to *ATTRIBUTE_VALUE_REAL) {
 
 type ATTRIBUTE_VALUE_STRING_WOP struct {
 	// insertion point
+
 	Name string
+
 	THE_VALUE string
 }
 
@@ -234,7 +291,9 @@ func (from *ATTRIBUTE_VALUE_STRING) CopyBasicFields(to *ATTRIBUTE_VALUE_STRING) 
 
 type ATTRIBUTE_VALUE_XHTML_WOP struct {
 	// insertion point
+
 	Name string
+
 	IS_SIMPLIFIED bool
 }
 
@@ -246,6 +305,7 @@ func (from *ATTRIBUTE_VALUE_XHTML) CopyBasicFields(to *ATTRIBUTE_VALUE_XHTML) {
 
 type A_ALTERNATIVE_ID_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -256,7 +316,9 @@ func (from *A_ALTERNATIVE_ID) CopyBasicFields(to *A_ALTERNATIVE_ID) {
 
 type A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_BOOLEAN_REF string
 }
 
@@ -268,7 +330,9 @@ func (from *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) CopyBasicFields(to *A_ATTRIBUTE_
 
 type A_ATTRIBUTE_DEFINITION_DATE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_DATE_REF string
 }
 
@@ -280,7 +344,9 @@ func (from *A_ATTRIBUTE_DEFINITION_DATE_REF) CopyBasicFields(to *A_ATTRIBUTE_DEF
 
 type A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_ENUMERATION_REF string
 }
 
@@ -292,7 +358,9 @@ func (from *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) CopyBasicFields(to *A_ATTRIB
 
 type A_ATTRIBUTE_DEFINITION_INTEGER_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_INTEGER_REF string
 }
 
@@ -304,7 +372,9 @@ func (from *A_ATTRIBUTE_DEFINITION_INTEGER_REF) CopyBasicFields(to *A_ATTRIBUTE_
 
 type A_ATTRIBUTE_DEFINITION_REAL_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_REAL_REF string
 }
 
@@ -316,7 +386,9 @@ func (from *A_ATTRIBUTE_DEFINITION_REAL_REF) CopyBasicFields(to *A_ATTRIBUTE_DEF
 
 type A_ATTRIBUTE_DEFINITION_STRING_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_STRING_REF string
 }
 
@@ -328,7 +400,9 @@ func (from *A_ATTRIBUTE_DEFINITION_STRING_REF) CopyBasicFields(to *A_ATTRIBUTE_D
 
 type A_ATTRIBUTE_DEFINITION_XHTML_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_XHTML_REF string
 }
 
@@ -340,6 +414,7 @@ func (from *A_ATTRIBUTE_DEFINITION_XHTML_REF) CopyBasicFields(to *A_ATTRIBUTE_DE
 
 type A_ATTRIBUTE_VALUE_BOOLEAN_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -350,6 +425,7 @@ func (from *A_ATTRIBUTE_VALUE_BOOLEAN) CopyBasicFields(to *A_ATTRIBUTE_VALUE_BOO
 
 type A_ATTRIBUTE_VALUE_DATE_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -360,6 +436,7 @@ func (from *A_ATTRIBUTE_VALUE_DATE) CopyBasicFields(to *A_ATTRIBUTE_VALUE_DATE) 
 
 type A_ATTRIBUTE_VALUE_ENUMERATION_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -370,6 +447,7 @@ func (from *A_ATTRIBUTE_VALUE_ENUMERATION) CopyBasicFields(to *A_ATTRIBUTE_VALUE
 
 type A_ATTRIBUTE_VALUE_INTEGER_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -380,6 +458,7 @@ func (from *A_ATTRIBUTE_VALUE_INTEGER) CopyBasicFields(to *A_ATTRIBUTE_VALUE_INT
 
 type A_ATTRIBUTE_VALUE_REAL_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -390,6 +469,7 @@ func (from *A_ATTRIBUTE_VALUE_REAL) CopyBasicFields(to *A_ATTRIBUTE_VALUE_REAL) 
 
 type A_ATTRIBUTE_VALUE_STRING_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -400,6 +480,7 @@ func (from *A_ATTRIBUTE_VALUE_STRING) CopyBasicFields(to *A_ATTRIBUTE_VALUE_STRI
 
 type A_ATTRIBUTE_VALUE_XHTML_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -410,6 +491,7 @@ func (from *A_ATTRIBUTE_VALUE_XHTML) CopyBasicFields(to *A_ATTRIBUTE_VALUE_XHTML
 
 type A_ATTRIBUTE_VALUE_XHTML_1_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -420,6 +502,7 @@ func (from *A_ATTRIBUTE_VALUE_XHTML_1) CopyBasicFields(to *A_ATTRIBUTE_VALUE_XHT
 
 type A_CHILDREN_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -430,6 +513,7 @@ func (from *A_CHILDREN) CopyBasicFields(to *A_CHILDREN) {
 
 type A_CORE_CONTENT_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -440,6 +524,7 @@ func (from *A_CORE_CONTENT) CopyBasicFields(to *A_CORE_CONTENT) {
 
 type A_DATATYPES_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -450,7 +535,9 @@ func (from *A_DATATYPES) CopyBasicFields(to *A_DATATYPES) {
 
 type A_DATATYPE_DEFINITION_BOOLEAN_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_BOOLEAN_REF string
 }
 
@@ -462,7 +549,9 @@ func (from *A_DATATYPE_DEFINITION_BOOLEAN_REF) CopyBasicFields(to *A_DATATYPE_DE
 
 type A_DATATYPE_DEFINITION_DATE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_DATE_REF string
 }
 
@@ -474,7 +563,9 @@ func (from *A_DATATYPE_DEFINITION_DATE_REF) CopyBasicFields(to *A_DATATYPE_DEFIN
 
 type A_DATATYPE_DEFINITION_ENUMERATION_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_ENUMERATION_REF string
 }
 
@@ -486,7 +577,9 @@ func (from *A_DATATYPE_DEFINITION_ENUMERATION_REF) CopyBasicFields(to *A_DATATYP
 
 type A_DATATYPE_DEFINITION_INTEGER_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_INTEGER_REF string
 }
 
@@ -498,7 +591,9 @@ func (from *A_DATATYPE_DEFINITION_INTEGER_REF) CopyBasicFields(to *A_DATATYPE_DE
 
 type A_DATATYPE_DEFINITION_REAL_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_REAL_REF string
 }
 
@@ -510,7 +605,9 @@ func (from *A_DATATYPE_DEFINITION_REAL_REF) CopyBasicFields(to *A_DATATYPE_DEFIN
 
 type A_DATATYPE_DEFINITION_STRING_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_STRING_REF string
 }
 
@@ -522,7 +619,9 @@ func (from *A_DATATYPE_DEFINITION_STRING_REF) CopyBasicFields(to *A_DATATYPE_DEF
 
 type A_DATATYPE_DEFINITION_XHTML_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	DATATYPE_DEFINITION_XHTML_REF string
 }
 
@@ -534,13 +633,21 @@ func (from *A_DATATYPE_DEFINITION_XHTML_REF) CopyBasicFields(to *A_DATATYPE_DEFI
 
 type A_EDITABLE_ATTS_WOP struct {
 	// insertion point
+
 	Name string
+
 	ATTRIBUTE_DEFINITION_BOOLEAN_REF string
+
 	ATTRIBUTE_DEFINITION_DATE_REF string
+
 	ATTRIBUTE_DEFINITION_ENUMERATION_REF string
+
 	ATTRIBUTE_DEFINITION_INTEGER_REF string
+
 	ATTRIBUTE_DEFINITION_REAL_REF string
+
 	ATTRIBUTE_DEFINITION_STRING_REF string
+
 	ATTRIBUTE_DEFINITION_XHTML_REF string
 }
 
@@ -558,7 +665,9 @@ func (from *A_EDITABLE_ATTS) CopyBasicFields(to *A_EDITABLE_ATTS) {
 
 type A_ENUM_VALUE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	ENUM_VALUE_REF string
 }
 
@@ -570,7 +679,9 @@ func (from *A_ENUM_VALUE_REF) CopyBasicFields(to *A_ENUM_VALUE_REF) {
 
 type A_OBJECT_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPEC_OBJECT_REF string
 }
 
@@ -582,6 +693,7 @@ func (from *A_OBJECT) CopyBasicFields(to *A_OBJECT) {
 
 type A_PROPERTIES_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -592,7 +704,9 @@ func (from *A_PROPERTIES) CopyBasicFields(to *A_PROPERTIES) {
 
 type A_RELATION_GROUP_TYPE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	RELATION_GROUP_TYPE_REF string
 }
 
@@ -604,7 +718,9 @@ func (from *A_RELATION_GROUP_TYPE_REF) CopyBasicFields(to *A_RELATION_GROUP_TYPE
 
 type A_SOURCE_1_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPEC_OBJECT_REF string
 }
 
@@ -616,7 +732,9 @@ func (from *A_SOURCE_1) CopyBasicFields(to *A_SOURCE_1) {
 
 type A_SOURCE_SPECIFICATION_1_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPECIFICATION_REF Enum_GLOBAL_REF
 }
 
@@ -628,6 +746,7 @@ func (from *A_SOURCE_SPECIFICATION_1) CopyBasicFields(to *A_SOURCE_SPECIFICATION
 
 type A_SPECIFICATIONS_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -638,7 +757,9 @@ func (from *A_SPECIFICATIONS) CopyBasicFields(to *A_SPECIFICATIONS) {
 
 type A_SPECIFICATION_TYPE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPECIFICATION_TYPE_REF string
 }
 
@@ -650,6 +771,7 @@ func (from *A_SPECIFICATION_TYPE_REF) CopyBasicFields(to *A_SPECIFICATION_TYPE_R
 
 type A_SPECIFIED_VALUES_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -660,6 +782,7 @@ func (from *A_SPECIFIED_VALUES) CopyBasicFields(to *A_SPECIFIED_VALUES) {
 
 type A_SPEC_ATTRIBUTES_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -670,6 +793,7 @@ func (from *A_SPEC_ATTRIBUTES) CopyBasicFields(to *A_SPEC_ATTRIBUTES) {
 
 type A_SPEC_OBJECTS_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -680,7 +804,9 @@ func (from *A_SPEC_OBJECTS) CopyBasicFields(to *A_SPEC_OBJECTS) {
 
 type A_SPEC_OBJECT_TYPE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPEC_OBJECT_TYPE_REF string
 }
 
@@ -692,6 +818,7 @@ func (from *A_SPEC_OBJECT_TYPE_REF) CopyBasicFields(to *A_SPEC_OBJECT_TYPE_REF) 
 
 type A_SPEC_RELATIONS_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -702,6 +829,7 @@ func (from *A_SPEC_RELATIONS) CopyBasicFields(to *A_SPEC_RELATIONS) {
 
 type A_SPEC_RELATION_GROUPS_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -712,7 +840,9 @@ func (from *A_SPEC_RELATION_GROUPS) CopyBasicFields(to *A_SPEC_RELATION_GROUPS) 
 
 type A_SPEC_RELATION_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPEC_RELATION_REF string
 }
 
@@ -724,7 +854,9 @@ func (from *A_SPEC_RELATION_REF) CopyBasicFields(to *A_SPEC_RELATION_REF) {
 
 type A_SPEC_RELATION_TYPE_REF_WOP struct {
 	// insertion point
+
 	Name string
+
 	SPEC_RELATION_TYPE_REF string
 }
 
@@ -736,6 +868,7 @@ func (from *A_SPEC_RELATION_TYPE_REF) CopyBasicFields(to *A_SPEC_RELATION_TYPE_R
 
 type A_SPEC_TYPES_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -746,6 +879,7 @@ func (from *A_SPEC_TYPES) CopyBasicFields(to *A_SPEC_TYPES) {
 
 type A_THE_HEADER_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -756,6 +890,7 @@ func (from *A_THE_HEADER) CopyBasicFields(to *A_THE_HEADER) {
 
 type A_TOOL_EXTENSIONS_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -766,10 +901,15 @@ func (from *A_TOOL_EXTENSIONS) CopyBasicFields(to *A_TOOL_EXTENSIONS) {
 
 type DATATYPE_DEFINITION_BOOLEAN_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -784,10 +924,15 @@ func (from *DATATYPE_DEFINITION_BOOLEAN) CopyBasicFields(to *DATATYPE_DEFINITION
 
 type DATATYPE_DEFINITION_DATE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -802,10 +947,15 @@ func (from *DATATYPE_DEFINITION_DATE) CopyBasicFields(to *DATATYPE_DEFINITION_DA
 
 type DATATYPE_DEFINITION_ENUMERATION_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -820,12 +970,19 @@ func (from *DATATYPE_DEFINITION_ENUMERATION) CopyBasicFields(to *DATATYPE_DEFINI
 
 type DATATYPE_DEFINITION_INTEGER_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
+
 	MAX int
+
 	MIN int
 }
 
@@ -842,13 +999,21 @@ func (from *DATATYPE_DEFINITION_INTEGER) CopyBasicFields(to *DATATYPE_DEFINITION
 
 type DATATYPE_DEFINITION_REAL_WOP struct {
 	// insertion point
+
 	Name string
+
 	ACCURACY int
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
+
 	MAX float64
+
 	MIN float64
 }
 
@@ -866,11 +1031,17 @@ func (from *DATATYPE_DEFINITION_REAL) CopyBasicFields(to *DATATYPE_DEFINITION_RE
 
 type DATATYPE_DEFINITION_STRING_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
+
 	MAX_LENGTH int
 }
 
@@ -886,10 +1057,15 @@ func (from *DATATYPE_DEFINITION_STRING) CopyBasicFields(to *DATATYPE_DEFINITION_
 
 type DATATYPE_DEFINITION_XHTML_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -904,8 +1080,11 @@ func (from *DATATYPE_DEFINITION_XHTML) CopyBasicFields(to *DATATYPE_DEFINITION_X
 
 type EMBEDDED_VALUE_WOP struct {
 	// insertion point
+
 	Name string
+
 	KEY int
+
 	OTHER_CONTENT string
 }
 
@@ -918,10 +1097,15 @@ func (from *EMBEDDED_VALUE) CopyBasicFields(to *EMBEDDED_VALUE) {
 
 type ENUM_VALUE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -936,10 +1120,15 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 
 type RELATION_GROUP_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -954,10 +1143,15 @@ func (from *RELATION_GROUP) CopyBasicFields(to *RELATION_GROUP) {
 
 type RELATION_GROUP_TYPE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -972,7 +1166,9 @@ func (from *RELATION_GROUP_TYPE) CopyBasicFields(to *RELATION_GROUP_TYPE) {
 
 type REQ_IF_WOP struct {
 	// insertion point
+
 	Name string
+
 	Lang string
 }
 
@@ -984,6 +1180,7 @@ func (from *REQ_IF) CopyBasicFields(to *REQ_IF) {
 
 type REQ_IF_CONTENT_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -994,14 +1191,23 @@ func (from *REQ_IF_CONTENT) CopyBasicFields(to *REQ_IF_CONTENT) {
 
 type REQ_IF_HEADER_WOP struct {
 	// insertion point
+
 	Name string
+
 	IDENTIFIER string
+
 	COMMENT string
+
 	CREATION_TIME string
+
 	REPOSITORY_ID string
+
 	REQ_IF_TOOL_ID string
+
 	REQ_IF_VERSION string
+
 	SOURCE_TOOL_ID string
+
 	TITLE string
 }
 
@@ -1020,6 +1226,7 @@ func (from *REQ_IF_HEADER) CopyBasicFields(to *REQ_IF_HEADER) {
 
 type REQ_IF_TOOL_EXTENSION_WOP struct {
 	// insertion point
+
 	Name string
 }
 
@@ -1030,10 +1237,15 @@ func (from *REQ_IF_TOOL_EXTENSION) CopyBasicFields(to *REQ_IF_TOOL_EXTENSION) {
 
 type SPECIFICATION_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1048,10 +1260,15 @@ func (from *SPECIFICATION) CopyBasicFields(to *SPECIFICATION) {
 
 type SPECIFICATION_TYPE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1066,12 +1283,19 @@ func (from *SPECIFICATION_TYPE) CopyBasicFields(to *SPECIFICATION_TYPE) {
 
 type SPEC_HIERARCHY_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	IS_EDITABLE bool
+
 	IS_TABLE_INTERNAL bool
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1088,10 +1312,15 @@ func (from *SPEC_HIERARCHY) CopyBasicFields(to *SPEC_HIERARCHY) {
 
 type SPEC_OBJECT_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1106,10 +1335,15 @@ func (from *SPEC_OBJECT) CopyBasicFields(to *SPEC_OBJECT) {
 
 type SPEC_OBJECT_TYPE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1124,10 +1358,15 @@ func (from *SPEC_OBJECT_TYPE) CopyBasicFields(to *SPEC_OBJECT_TYPE) {
 
 type SPEC_RELATION_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1142,10 +1381,15 @@ func (from *SPEC_RELATION) CopyBasicFields(to *SPEC_RELATION) {
 
 type SPEC_RELATION_TYPE_WOP struct {
 	// insertion point
+
 	Name string
+
 	DESC string
+
 	IDENTIFIER string
+
 	LAST_CHANGE string
+
 	LONG_NAME string
 }
 
@@ -1160,8 +1404,11 @@ func (from *SPEC_RELATION_TYPE) CopyBasicFields(to *SPEC_RELATION_TYPE) {
 
 type XHTML_CONTENT_WOP struct {
 	// insertion point
+
 	Name string
+
 	EnclosedText string
+
 	PureText string
 }
 
