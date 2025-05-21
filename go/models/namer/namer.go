@@ -13,10 +13,6 @@ type ObjectNamer struct {
 func (objectNamer *ObjectNamer) SetNamesToElements(stage *m.Stage, reqif *m.REQ_IF) {
 	idx := 0
 
-	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_ENUMERATION](stage) {
-		x.Name = x.LONG_NAME
-	}
-
 	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stage) {
 		x.Name = x.LONG_NAME
 	}
@@ -25,7 +21,23 @@ func (objectNamer *ObjectNamer) SetNamesToElements(stage *m.Stage, reqif *m.REQ_
 		x.Name = x.LONG_NAME
 	}
 
-	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_XHTML](stage) {
+	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_BOOLEAN](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_STRING](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_REAL](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_INTEGER](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.ATTRIBUTE_DEFINITION_DATE](stage) {
 		x.Name = x.LONG_NAME
 	}
 
@@ -75,6 +87,26 @@ func (objectNamer *ObjectNamer) SetNamesToElements(stage *m.Stage, reqif *m.REQ_
 	}
 
 	for x := range *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_ENUMERATION](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_BOOLEAN](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_INTEGER](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_REAL](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_DATE](stage) {
+		x.Name = x.LONG_NAME
+	}
+
+	for x := range *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_STRING](stage) {
 		x.Name = x.LONG_NAME
 	}
 
