@@ -19,12 +19,13 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 
 	sb.WriteString(`// Generated code, do not edit
 package models
+
 `)
 
 	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
 
 		sb.WriteString(fmt.Sprintf(`type %s struct {
-	Name string`, specObjectType.Name))
+	Name string`, GenerateGoIdentifier(specObjectType.Name)))
 
 		sb.WriteString(`	
 	

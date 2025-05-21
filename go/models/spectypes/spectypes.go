@@ -160,6 +160,8 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 	stager.GetSpecTypesTreeStage().Commit()
 }
 
+// addAttibutesNotes creates category nodes for attribute definitions
+// only if there is more than one attribute definition for that category.
 func addAttibutesNotes(
 	nodeSpecType *tree.Node,
 	specAttributes *m.A_SPEC_ATTRIBUTES,
@@ -170,20 +172,20 @@ func addAttibutesNotes(
 	datatypes_real_id_map map[string]*m.DATATYPE_DEFINITION_REAL,
 	datatypes_date_id_map map[string]*m.DATATYPE_DEFINITION_DATE,
 	datatypes_enumeration_id_map map[string]*m.DATATYPE_DEFINITION_ENUMERATION) {
-	{
 
-		if specAttributes == nil {
-			return
-		}
+	if specAttributes == nil {
+		return
+	}
 
-		nodeSpecTypeAttribute := &tree.Node{
+	// XHTML Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_XHTML) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "XHTML",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_XHTML {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -195,18 +197,19 @@ func addAttibutesNotes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType,
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
-	{
-		nodeSpecTypeAttribute := &tree.Node{
+
+	// String Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "String",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_STRING {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_string_id_map[attribute.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -218,18 +221,19 @@ func addAttibutesNotes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType,
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
-	{
-		nodeSpecTypeAttribute := &tree.Node{
+
+	// Boolean Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Boolean",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_boolean_id_map[attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -241,18 +245,19 @@ func addAttibutesNotes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType,
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
-	{
-		nodeSpecTypeAttribute := &tree.Node{
+
+	// Integer Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_INTEGER) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Integer",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_INTEGER {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_integer_id_map[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -264,18 +269,19 @@ func addAttibutesNotes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType,
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
-	{
-		nodeSpecTypeAttribute := &tree.Node{
+
+	// Real Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_REAL) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Real",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_REAL {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_real_id_map[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -287,18 +293,19 @@ func addAttibutesNotes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType,
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
-	{
-		nodeSpecTypeAttribute := &tree.Node{
+
+	// Date Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_DATE) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Date",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_DATE {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_date_id_map[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -310,18 +317,19 @@ func addAttibutesNotes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType,
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
-	{
-		nodeSpecTypeAttribute := &tree.Node{
+
+	// ENUMERATION Attributes
+	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 1 {
+		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "ENUMERATION",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttribute)
+		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION {
-			// provide the type
 			var attributeType string
 			if datatype, ok := datatypes_enumeration_id_map[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
 				attributeType = datatype.LONG_NAME
@@ -331,9 +339,9 @@ func addAttibutesNotes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + " : " + attributeType,
+				Name: attribute.LONG_NAME + " : " + attributeType, // Note: Original had " : " here, kept for consistency
 			}
-			nodeSpecTypeAttribute.Children = append(nodeSpecTypeAttribute.Children, nodeAttribute)
+			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
 	}
 }
