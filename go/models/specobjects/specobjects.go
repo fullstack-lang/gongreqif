@@ -3,7 +3,6 @@ package specobjects
 import (
 	"fmt"
 	"log"
-	"strings"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
 
@@ -54,9 +53,7 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 			append(map_specObjectType_node[specObjectType].Children, objectNode)
 		map_specObjectType_nbInstances[specObjectType] = map_specObjectType_nbInstances[specObjectType] + 1
 
-		AddAttributeXHTMLNodes(stager, objectNode, specObject)
-		AddAttributeENUMNodes(stager, objectNode, specObject)
-
+		AddAttributeNodes(stager, objectNode, specObject)
 	}
 
 	// update the node with the number of instances
@@ -74,69 +71,4 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 	)
 
 	treeStage.Commit()
-}
-
-func AddAttributeENUMNodes(
-	stager *m.Stager,
-	objectNode *tree.Node,
-	specObject *m.SPEC_OBJECT,
-) {
-	objectNodeAttributeCategory := &tree.Node{
-		Name:       "Enums",
-		IsExpanded: true,
-		FontStyle:  tree.ITALIC,
-	}
-	objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
-	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
-		// provide the type
-		var enumTypeString string
-		if enumType, ok := stager.Map_id_attributeDefinitionENUM[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
-			enumTypeString = enumType.LONG_NAME
-		} else {
-			log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
-				"unkonwn ref")
-		}
-
-		valueIdentifier := attribute.VALUES.Name
-		var enumValueString string
-		if enumValue, ok := stager.Map_id_enumValues[valueIdentifier]; ok {
-			enumValueString = enumValue.Name
-		}
-
-		nodeXHTMLAttribute := &tree.Node{
-			Name: enumTypeString + " : " + enumValueString,
-		}
-		objectNodeAttributeCategory.Children = append(objectNodeAttributeCategory.Children, nodeXHTMLAttribute)
-	}
-}
-
-func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	objectNodeAttributeCategoryXHTML := &tree.Node{
-		Name:       "XHTML",
-		IsExpanded: true,
-		FontStyle:  tree.ITALIC,
-	}
-	objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
-	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
-		// provide the type
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
-		} else {
-			log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
-				"unknown ref")
-		}
-
-		enclosedText := attribute.THE_VALUE.EnclosedText
-
-		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", " ")
-		enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "\n")
-		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br >", "-")
-		enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
-		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
-		nodeXHTMLAttribute := &tree.Node{
-			Name: attributeDefinition + " : " + enclosedText,
-		}
-		objectNodeAttributeCategoryXHTML.Children = append(objectNodeAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
-	}
 }

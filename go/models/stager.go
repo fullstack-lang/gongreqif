@@ -108,9 +108,14 @@ type Stager struct {
 	Map_id_specificationType map[string]*SPECIFICATION_TYPE
 	Map_id_specObject        map[string]*SPEC_OBJECT
 
-	Map_id_attributeDefinitionXHTML map[string]*ATTRIBUTE_DEFINITION_XHTML
-	Map_id_attributeDefinitionENUM  map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
-	Map_id_enumValues               map[string]*ENUM_VALUE
+	Map_id_attributeDefinitionXHTML   map[string]*ATTRIBUTE_DEFINITION_XHTML
+	Map_id_attributeDefinitionString  map[string]*ATTRIBUTE_DEFINITION_STRING
+	Map_id_attributeDefinitionBoolean map[string]*ATTRIBUTE_DEFINITION_BOOLEAN
+	Map_id_attributeDefinitionInteger map[string]*ATTRIBUTE_DEFINITION_INTEGER
+	Map_id_attributeDefinitionDate    map[string]*ATTRIBUTE_DEFINITION_DATE
+	Map_id_attributeDefinitionReal    map[string]*ATTRIBUTE_DEFINITION_REAL
+	Map_id_attributeDefinitionEnum    map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
+	Map_id_enumValues                 map[string]*ENUM_VALUE
 
 	Map_id_specRelationType map[string]*SPEC_RELATION_TYPE
 }
@@ -283,21 +288,21 @@ func NewStager(
 						},
 
 						{
-							Size: 20,
+							Size: 25,
 							Tree: &split.Tree{
 								StackName: stager.dataTypeTreeStage.GetName(),
 								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
-							Size: 20,
+							Size: 25,
 							Tree: &split.Tree{
 								StackName: stager.specTypesTreeStage.GetName(),
 								TreeName:  stager.specTypesTreeName,
 							},
 						},
 						{
-							Size: 20,
+							Size: 10,
 							Tree: &split.Tree{
 								StackName: stager.specObjectsTreeStage.GetName(),
 								TreeName:  stager.specObjectsTreeName,

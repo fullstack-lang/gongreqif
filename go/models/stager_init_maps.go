@@ -33,11 +33,51 @@ func (stager *Stager) initMaps() {
 		}
 	}
 
-	stager.Map_id_attributeDefinitionENUM = make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION)
+	stager.Map_id_attributeDefinitionString = make(map[string]*ATTRIBUTE_DEFINITION_STRING)
+	{
+		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_STRING](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionXHTMLs {
+			stager.Map_id_attributeDefinitionString[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
+	}
+
+	stager.Map_id_attributeDefinitionBoolean = make(map[string]*ATTRIBUTE_DEFINITION_BOOLEAN)
+	{
+		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_BOOLEAN](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionXHTMLs {
+			stager.Map_id_attributeDefinitionBoolean[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
+	}
+
+	stager.Map_id_attributeDefinitionInteger = make(map[string]*ATTRIBUTE_DEFINITION_INTEGER)
+	{
+		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_INTEGER](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionXHTMLs {
+			stager.Map_id_attributeDefinitionInteger[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
+	}
+
+	stager.Map_id_attributeDefinitionDate = make(map[string]*ATTRIBUTE_DEFINITION_DATE)
+	{
+		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_DATE](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionXHTMLs {
+			stager.Map_id_attributeDefinitionDate[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
+	}
+
+	stager.Map_id_attributeDefinitionReal = make(map[string]*ATTRIBUTE_DEFINITION_REAL)
+	{
+		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_REAL](stager.GetStage())
+		for attributeDefinition := range attributeDefinitionXHTMLs {
+			stager.Map_id_attributeDefinitionReal[attributeDefinition.IDENTIFIER] = attributeDefinition
+		}
+	}
+
+	stager.Map_id_attributeDefinitionEnum = make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION)
 	{
 		attributeDefinitionENUMs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
 		for attributeDefinition := range attributeDefinitionENUMs {
-			stager.Map_id_attributeDefinitionENUM[attributeDefinition.IDENTIFIER] = attributeDefinition
+			stager.Map_id_attributeDefinitionEnum[attributeDefinition.IDENTIFIER] = attributeDefinition
 		}
 	}
 

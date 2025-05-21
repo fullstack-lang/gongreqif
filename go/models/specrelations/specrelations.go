@@ -55,8 +55,14 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 		{
 			specObject, ok := stager.Map_id_specObject[specRelation.SOURCE.SPEC_OBJECT_REF]
 			if !ok {
-				log.Panic("specRelation.SOURCE.SPEC_OBJECT_REF", specRelation.SOURCE.SPEC_OBJECT_REF,
+				log.Println("specRelation.SOURCE.SPEC_OBJECT_REF", specRelation.SOURCE.SPEC_OBJECT_REF,
 					"unknown ref")
+				node := &tree.Node{
+					Name:       "Source unkown ref : " + specRelation.TARGET.SPEC_OBJECT_REF,
+					IsExpanded: true,
+					FontStyle:  tree.ITALIC,
+				}
+				relationNode.Children = append(relationNode.Children, node)
 			} else {
 				specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 				if !ok {
@@ -70,8 +76,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 				}
 				relationNode.Children = append(relationNode.Children, sourceNode)
 
-				specobjects.AddAttributeXHTMLNodes(stager, sourceNode, specObject)
-				specobjects.AddAttributeENUMNodes(stager, sourceNode, specObject)
+				specobjects.AddAttributeNodes(stager, sourceNode, specObject)
 			}
 		}
 
@@ -80,6 +85,12 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 			if !ok {
 				log.Println("specRelation.TARGET.SPEC_OBJECT_REF", specRelation.TARGET.SPEC_OBJECT_REF,
 					"unknown ref")
+				node := &tree.Node{
+					Name:       "Target unkown ref : " + specRelation.TARGET.SPEC_OBJECT_REF,
+					IsExpanded: true,
+					FontStyle:  tree.ITALIC,
+				}
+				relationNode.Children = append(relationNode.Children, node)
 			} else {
 				specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 				if !ok {
@@ -94,7 +105,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 				relationNode.Children = append(relationNode.Children, targetNode)
 
 				specobjects.AddAttributeXHTMLNodes(stager, targetNode, specObject)
-				specobjects.AddAttributeENUMNodes(stager, targetNode, specObject)
+				specobjects.AddAttributeEnumNodes(stager, targetNode, specObject)
 			}
 		}
 

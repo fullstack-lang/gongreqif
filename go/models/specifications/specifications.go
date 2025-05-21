@@ -137,8 +137,7 @@ func processSpecHierarchy(
 	}
 	hierarchyParentNode.Children = append(hierarchyParentNode.Children, hierarchyNode)
 
-	specobjects.AddAttributeXHTMLNodes(stager, hierarchyNode, specObject)
-	specobjects.AddAttributeENUMNodes(stager, hierarchyNode, specObject)
+	specobjects.AddAttributeNodes(stager, hierarchyNode, specObject)
 
 	if specHierarchy.CHILDREN != nil {
 		for _, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
