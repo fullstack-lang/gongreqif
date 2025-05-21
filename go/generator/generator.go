@@ -69,7 +69,7 @@ const attributeSTRINGStart = `
 			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 				// provide the type
 				var attributeDefinition string
-				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionSTRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionString[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
 					attributeDefinition = datatype.LONG_NAME
 				} else {
 					log.Panic("ATTRIBUTE_DEFINITION_STRING_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF,
@@ -84,7 +84,7 @@ const attributeBOOLEANStart = `
 			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
 				// provide the type
 				var attributeDefinition string
-				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionBOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionBoolean[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
 					attributeDefinition = datatype.LONG_NAME
 				} else {
 					log.Panic("ATTRIBUTE_DEFINITION_BOOLEAN_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF,
@@ -179,7 +179,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 
 	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
 		sb.WriteString(fmt.Sprintf(specObjectProlog,
-			GenerateGoIdentifier(specObjectType.GetName()),
+			specObjectType.GetName(),
 			GenerateGoIdentifier(specObjectType.GetName()),
 		))
 
