@@ -37,7 +37,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
-			addAttibutesNotes(
+			addAttibutesNodes(
 				stager,
 				node,
 				spectype.SPEC_ATTRIBUTES)
@@ -58,7 +58,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
-			addAttibutesNotes(
+			addAttibutesNodes(
 				stager,
 				node,
 				spectype.SPEC_ATTRIBUTES)
@@ -81,7 +81,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			if spectype.SPEC_ATTRIBUTES == nil {
 				continue
 			}
-			addAttibutesNotes(
+			addAttibutesNodes(
 				stager,
 				node,
 				spectype.SPEC_ATTRIBUTES)
@@ -100,9 +100,9 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 	stager.GetSpecTypesTreeStage().Commit()
 }
 
-// addAttibutesNotes creates category nodes for attribute definitions
+// addAttibutesNodes creates category nodes for attribute definitions
 // only if there is more than one attribute definition for that category.
-func addAttibutesNotes(
+func addAttibutesNodes(
 	stager *m.Stager,
 	nodeSpecType *tree.Node,
 	specAttributes *m.A_SPEC_ATTRIBUTES) {
@@ -112,7 +112,7 @@ func addAttibutesNotes(
 	}
 
 	// XHTML Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_XHTML) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_XHTML) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "XHTML",
 			IsExpanded: true,
@@ -136,7 +136,7 @@ func addAttibutesNotes(
 	}
 
 	// String Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "String",
 			IsExpanded: true,
@@ -160,7 +160,7 @@ func addAttibutesNotes(
 	}
 
 	// Boolean Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Boolean",
 			IsExpanded: true,
@@ -184,7 +184,7 @@ func addAttibutesNotes(
 	}
 
 	// Integer Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_INTEGER) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_INTEGER) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Integer",
 			IsExpanded: true,
@@ -208,7 +208,7 @@ func addAttibutesNotes(
 	}
 
 	// Real Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_REAL) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_REAL) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Real",
 			IsExpanded: true,
@@ -232,7 +232,7 @@ func addAttibutesNotes(
 	}
 
 	// Date Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_DATE) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_DATE) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "Date",
 			IsExpanded: true,
@@ -256,7 +256,7 @@ func addAttibutesNotes(
 	}
 
 	// ENUMERATION Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 1 {
+	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 0 {
 		nodeSpecTypeAttributeCategory := &tree.Node{
 			Name:       "ENUMERATION",
 			IsExpanded: true,

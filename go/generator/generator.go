@@ -9,6 +9,92 @@ import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
+const fileProlog = `// Generated code, do not edit
+package models
+
+import (
+	"log"
+	"strings"
+)
+
+`
+
+const specObjectProlog = `
+		case "%s":
+			specObjectInstance := (&%s{
+				Name: specObject.Name,
+			}).Stage(stage)
+			_ = specObjectInstance`
+
+const stagerFunctionStart = `
+
+func stageReqifObjects(stager *Stager, stage *Stage) {
+	objects := stager.reqifStager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS
+
+	for _, specObject := range objects.SPEC_OBJECT {
+
+		specObjectType, ok := stager.reqifStager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+		if !ok {
+			log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
+				"unknown object type")
+		}
+
+		switch specObjectType.Name {
+`
+
+const attributeXHTMLStart = `
+			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
+				// provide the type
+				var attributeDefinition string
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+					attributeDefinition = datatype.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
+						"unknown ref")
+				}
+				_ = attributeDefinition
+
+				enclosedText := attribute.THE_VALUE.EnclosedText
+
+				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", " ")
+				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "\n")
+				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br >", "-")
+				enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:br >", "\n")
+				enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", "\n")
+
+				switch attributeDefinition {
+`
+
+const attributeSTRINGStart = `
+			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
+				// provide the type
+				var attributeDefinition string
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionSTRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
+					attributeDefinition = datatype.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_STRING_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF,
+						"unknown ref")
+				}
+				_ = attributeDefinition
+
+				switch attributeDefinition {
+`
+
+const attributeBOOLEANStart = `
+			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
+				// provide the type
+				var attributeDefinition string
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionBOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
+					attributeDefinition = datatype.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_BOOLEAN_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF,
+						"unknown ref")
+				}
+				_ = attributeDefinition
+
+				switch attributeDefinition {
+`
+
 type ModelGenerator struct {
 	PathToGoModelFile string
 }
@@ -17,10 +103,7 @@ type ModelGenerator struct {
 func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 	var sb strings.Builder
 
-	sb.WriteString(`// Generated code, do not edit
-package models
-
-`)
+	sb.WriteString(fileProlog)
 
 	// generates the enums
 	datatypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.DATATYPES
@@ -90,6 +173,66 @@ package models
 
 		sb.WriteString("\n}\n")
 	}
+
+	// generates the stager function
+	sb.WriteString(stagerFunctionStart)
+
+	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
+		sb.WriteString(fmt.Sprintf(specObjectProlog,
+			GenerateGoIdentifier(specObjectType.GetName()),
+			GenerateGoIdentifier(specObjectType.GetName()),
+		))
+
+		{
+			// attributes XHTML
+			sb.WriteString(attributeXHTMLStart)
+
+			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+				sb.WriteString(fmt.Sprintf("\t\t\t\tcase \"%s\":\n", attribute.Name))
+				sb.WriteString(fmt.Sprintf("\t\t\t\t\tspecObjectInstance.%s = enclosedText\n", GenerateGoIdentifier(attribute.Name)))
+			}
+
+			sb.WriteString("\t\t\t\tdefault:\n")
+			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
+
+			sb.WriteString("\t\t\t} // end of the loop on the xhtml attribute parsing\n")
+		}
+		{
+			// attributes STRING
+			sb.WriteString(attributeSTRINGStart)
+
+			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
+				sb.WriteString(fmt.Sprintf("\t\t\t\tcase \"%s\":\n", attribute.Name))
+				sb.WriteString(fmt.Sprintf("\t\t\t\t\tspecObjectInstance.%s = attribute.THE_VALUE\n", GenerateGoIdentifier(attribute.Name)))
+			}
+
+			sb.WriteString("\t\t\t\tdefault:\n")
+			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
+
+			sb.WriteString("\t\t\t} // end of the loop on the string attribute parsing\n")
+		}
+		{
+			// attributes BOOLEAN
+			sb.WriteString(attributeBOOLEANStart)
+
+			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
+				sb.WriteString(fmt.Sprintf("\t\t\t\tcase \"%s\":\n", attribute.Name))
+				sb.WriteString(fmt.Sprintf("\t\t\t\t\tspecObjectInstance.%s = attribute.THE_VALUE\n", GenerateGoIdentifier(attribute.Name)))
+			}
+
+			sb.WriteString("\t\t\t\tdefault:\n")
+			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
+
+			sb.WriteString("\t\t\t} // end of the loop on the string attribute parsing\n")
+		}
+	}
+
+	sb.WriteString("\t\t} // end of the switch on spec object types attributes xhtml\n")
+	sb.WriteString("\t}// end of the loop on spec object types\n")
+	sb.WriteString("}\n")
 
 	result := sb.String()
 	err := os.WriteFile(modelGenerator.PathToGoModelFile, []byte(result), 0644)

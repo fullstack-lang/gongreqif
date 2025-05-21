@@ -22,7 +22,7 @@ func AddAttributeNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SP
 // AddAttributeXHTMLNodes - This is the function you provided as an example for the change.
 // For completeness and to ensure the pattern is clear, here's how it would look fully:
 func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_XHTML) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_XHTML) > 0 {
 		objectNodeAttributeCategoryXHTML := &tree.Node{
 			Name:       "XHTML",
 			IsExpanded: true,
@@ -55,7 +55,7 @@ func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject 
 }
 
 func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_STRING) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_STRING) > 0 {
 		objectNodeAttributeCategoryString := &tree.Node{
 			Name:       "STRING",
 			IsExpanded: true,
@@ -80,7 +80,7 @@ func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject
 }
 
 func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN) > 0 {
 		objectNodeAttributeCategoryBoolean := &tree.Node{
 			Name:       "BOOLEAN",
 			IsExpanded: true,
@@ -109,7 +109,7 @@ func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 }
 
 func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_INTEGER) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_INTEGER) > 0 {
 		objectNodeAttributeCategoryInteger := &tree.Node{
 			Name:       "Integer",
 			IsExpanded: true,
@@ -134,7 +134,7 @@ func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 }
 
 func AddAttributeDateNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_DATE) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_DATE) > 0 {
 		objectNodeAttributeCategoryDate := &tree.Node{
 			Name:       "Date",
 			IsExpanded: true,
@@ -159,7 +159,7 @@ func AddAttributeDateNodes(stager *m.Stager, objectNode *tree.Node, specObject *
 }
 
 func AddAttributeRealNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_REAL) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_REAL) > 0 {
 		objectNodeAttributeCategoryReal := &tree.Node{
 			Name:       "Real",
 			IsExpanded: true,
@@ -188,7 +188,7 @@ func AddAttributeEnumNodes(
 	objectNode *tree.Node,
 	specObject *m.SPEC_OBJECT,
 ) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION) > 1 {
+	if len(specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION) > 0 {
 		objectNodeAttributeCategory := &tree.Node{
 			Name:       "Enums",
 			IsExpanded: true,
