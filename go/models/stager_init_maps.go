@@ -1,6 +1,49 @@
 package models
 
 func (stager *Stager) initMaps() {
+
+	datatypes_xhtml := *GetGongstructInstancesSet[DATATYPE_DEFINITION_XHTML](stager.GetStage())
+	stager.Map_id_datatypes_xhtml = make(map[string]*DATATYPE_DEFINITION_XHTML)
+	for datatype_xhtml := range datatypes_xhtml {
+		stager.Map_id_datatypes_xhtml[datatype_xhtml.IDENTIFIER] = datatype_xhtml
+	}
+
+	datatypes_string := *GetGongstructInstancesSet[DATATYPE_DEFINITION_STRING](stager.GetStage())
+	stager.Map_id_datatypes_string = make(map[string]*DATATYPE_DEFINITION_STRING)
+	for datatype_string := range datatypes_string {
+		stager.Map_id_datatypes_string[datatype_string.IDENTIFIER] = datatype_string
+	}
+
+	datatypes_boolean := *GetGongstructInstancesSet[DATATYPE_DEFINITION_BOOLEAN](stager.GetStage())
+	stager.Map_id_datatypes_boolean = make(map[string]*DATATYPE_DEFINITION_BOOLEAN)
+	for datatype_boolean := range datatypes_boolean {
+		stager.Map_id_datatypes_boolean[datatype_boolean.IDENTIFIER] = datatype_boolean
+	}
+
+	datatypes_integer := *GetGongstructInstancesSet[DATATYPE_DEFINITION_INTEGER](stager.GetStage())
+	stager.Map_id_datatypes_integer = make(map[string]*DATATYPE_DEFINITION_INTEGER)
+	for datatype_integer := range datatypes_integer {
+		stager.Map_id_datatypes_integer[datatype_integer.IDENTIFIER] = datatype_integer
+	}
+
+	datatypes_real := *GetGongstructInstancesSet[DATATYPE_DEFINITION_REAL](stager.GetStage())
+	stager.Map_id_datatypes_real = make(map[string]*DATATYPE_DEFINITION_REAL)
+	for datatype_real := range datatypes_real {
+		stager.Map_id_datatypes_real[datatype_real.IDENTIFIER] = datatype_real
+	}
+
+	datatypes_date := *GetGongstructInstancesSet[DATATYPE_DEFINITION_DATE](stager.GetStage())
+	stager.Map_id_datatypes_date = make(map[string]*DATATYPE_DEFINITION_DATE)
+	for datatype_date := range datatypes_date {
+		stager.Map_id_datatypes_date[datatype_date.IDENTIFIER] = datatype_date
+	}
+
+	datatypes_enumeration := *GetGongstructInstancesSet[DATATYPE_DEFINITION_ENUMERATION](stager.GetStage())
+	stager.Map_id_datatypes_enumeration = make(map[string]*DATATYPE_DEFINITION_ENUMERATION)
+	for datatype_enumeration := range datatypes_enumeration {
+		stager.Map_id_datatypes_enumeration[datatype_enumeration.IDENTIFIER] = datatype_enumeration
+	}
+
 	stager.Map_id_specobjectTypes = make(map[string]*SPEC_OBJECT_TYPE)
 	{
 		specObjectTypes := *GetGongstructInstancesSet[SPEC_OBJECT_TYPE](stager.GetStage())

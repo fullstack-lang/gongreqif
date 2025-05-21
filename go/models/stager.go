@@ -104,6 +104,14 @@ type Stager struct {
 	objectNamer               ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
+	Map_id_datatypes_xhtml       map[string]*DATATYPE_DEFINITION_XHTML
+	Map_id_datatypes_string      map[string]*DATATYPE_DEFINITION_STRING
+	Map_id_datatypes_boolean     map[string]*DATATYPE_DEFINITION_BOOLEAN
+	Map_id_datatypes_integer     map[string]*DATATYPE_DEFINITION_INTEGER
+	Map_id_datatypes_real        map[string]*DATATYPE_DEFINITION_REAL
+	Map_id_datatypes_date        map[string]*DATATYPE_DEFINITION_DATE
+	Map_id_datatypes_enumeration map[string]*DATATYPE_DEFINITION_ENUMERATION
+
 	Map_id_specobjectTypes   map[string]*SPEC_OBJECT_TYPE
 	Map_id_specificationType map[string]*SPECIFICATION_TYPE
 	Map_id_specObject        map[string]*SPEC_OBJECT

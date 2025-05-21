@@ -22,6 +22,9 @@ package models
 
 `)
 
+	// generates the enums
+
+	// generates the struct
 	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
 
 		sb.WriteString(fmt.Sprintf(`type %s struct {
@@ -35,6 +38,11 @@ package models
 		for _, attributeXHTML := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
 			sb.WriteString(fmt.Sprintf(`	%s string
 `, GenerateGoIdentifier(attributeXHTML.Name)))
+		}
+
+		for _, attributeString := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
+			sb.WriteString(fmt.Sprintf(`	%s string
+`, GenerateGoIdentifier(attributeString.Name)))
 		}
 
 		sb.WriteString(`

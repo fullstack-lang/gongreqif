@@ -17,48 +17,6 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 
-	datatypes_xhtml := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_XHTML](stager.GetStage())
-	datatypes_xhtml_id_map := make(map[string]*m.DATATYPE_DEFINITION_XHTML)
-	for datatype_xhtml := range datatypes_xhtml {
-		datatypes_xhtml_id_map[datatype_xhtml.IDENTIFIER] = datatype_xhtml
-	}
-
-	datatypes_string := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_STRING](stager.GetStage())
-	datatypes_string_id_map := make(map[string]*m.DATATYPE_DEFINITION_STRING)
-	for datatype_string := range datatypes_string {
-		datatypes_string_id_map[datatype_string.IDENTIFIER] = datatype_string
-	}
-
-	datatypes_boolean := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_BOOLEAN](stager.GetStage())
-	datatypes_boolean_id_map := make(map[string]*m.DATATYPE_DEFINITION_BOOLEAN)
-	for datatype_boolean := range datatypes_boolean {
-		datatypes_boolean_id_map[datatype_boolean.IDENTIFIER] = datatype_boolean
-	}
-
-	datatypes_integer := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_INTEGER](stager.GetStage())
-	datatypes_integer_id_map := make(map[string]*m.DATATYPE_DEFINITION_INTEGER)
-	for datatype_integer := range datatypes_integer {
-		datatypes_integer_id_map[datatype_integer.IDENTIFIER] = datatype_integer
-	}
-
-	datatypes_real := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_REAL](stager.GetStage())
-	datatypes_real_id_map := make(map[string]*m.DATATYPE_DEFINITION_REAL)
-	for datatype_real := range datatypes_real {
-		datatypes_real_id_map[datatype_real.IDENTIFIER] = datatype_real
-	}
-
-	datatypes_date := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_DATE](stager.GetStage())
-	datatypes_date_id_map := make(map[string]*m.DATATYPE_DEFINITION_DATE)
-	for datatype_date := range datatypes_date {
-		datatypes_date_id_map[datatype_date.IDENTIFIER] = datatype_date
-	}
-
-	datatypes_enumeration := *m.GetGongstructInstancesSet[m.DATATYPE_DEFINITION_ENUMERATION](stager.GetStage())
-	datatypes_enumeration_id_map := make(map[string]*m.DATATYPE_DEFINITION_ENUMERATION)
-	for datatype_enumeration := range datatypes_enumeration {
-		datatypes_enumeration_id_map[datatype_enumeration.IDENTIFIER] = datatype_enumeration
-	}
-
 	rootNode := &tree.Node{
 		Name:       "Spec types",
 		IsExpanded: true,
@@ -80,15 +38,9 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
 			addAttibutesNotes(
+				stager,
 				node,
-				spectype.SPEC_ATTRIBUTES,
-				datatypes_xhtml_id_map,
-				datatypes_string_id_map,
-				datatypes_boolean_id_map,
-				datatypes_integer_id_map,
-				datatypes_real_id_map,
-				datatypes_date_id_map,
-				datatypes_enumeration_id_map)
+				spectype.SPEC_ATTRIBUTES)
 
 		}
 	}
@@ -107,15 +59,9 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
 			addAttibutesNotes(
+				stager,
 				node,
-				spectype.SPEC_ATTRIBUTES,
-				datatypes_xhtml_id_map,
-				datatypes_string_id_map,
-				datatypes_boolean_id_map,
-				datatypes_integer_id_map,
-				datatypes_real_id_map,
-				datatypes_date_id_map,
-				datatypes_enumeration_id_map)
+				spectype.SPEC_ATTRIBUTES)
 		}
 	}
 
@@ -136,15 +82,9 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 				continue
 			}
 			addAttibutesNotes(
+				stager,
 				node,
-				spectype.SPEC_ATTRIBUTES,
-				datatypes_xhtml_id_map,
-				datatypes_string_id_map,
-				datatypes_boolean_id_map,
-				datatypes_integer_id_map,
-				datatypes_real_id_map,
-				datatypes_date_id_map,
-				datatypes_enumeration_id_map)
+				spectype.SPEC_ATTRIBUTES)
 		}
 	}
 
@@ -163,15 +103,9 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 // addAttibutesNotes creates category nodes for attribute definitions
 // only if there is more than one attribute definition for that category.
 func addAttibutesNotes(
+	stager *m.Stager,
 	nodeSpecType *tree.Node,
-	specAttributes *m.A_SPEC_ATTRIBUTES,
-	datatypes_xhtml_id_map map[string]*m.DATATYPE_DEFINITION_XHTML,
-	datatypes_string_id_map map[string]*m.DATATYPE_DEFINITION_STRING,
-	datatypes_boolean_id_map map[string]*m.DATATYPE_DEFINITION_BOOLEAN,
-	datatypes_integer_id_map map[string]*m.DATATYPE_DEFINITION_INTEGER,
-	datatypes_real_id_map map[string]*m.DATATYPE_DEFINITION_REAL,
-	datatypes_date_id_map map[string]*m.DATATYPE_DEFINITION_DATE,
-	datatypes_enumeration_id_map map[string]*m.DATATYPE_DEFINITION_ENUMERATION) {
+	specAttributes *m.A_SPEC_ATTRIBUTES) {
 
 	if specAttributes == nil {
 		return
@@ -187,7 +121,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_XHTML {
 			var attributeType string
-			if datatype, ok := datatypes_xhtml_id_map[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_xhtml[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF", attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF,
@@ -211,7 +145,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_STRING {
 			var attributeType string
-			if datatype, ok := datatypes_string_id_map[attribute.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_string[attribute.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_STRING_REF", attribute.TYPE.DATATYPE_DEFINITION_STRING_REF,
@@ -235,7 +169,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN {
 			var attributeType string
-			if datatype, ok := datatypes_boolean_id_map[attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_boolean[attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF", attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF,
@@ -259,7 +193,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_INTEGER {
 			var attributeType string
-			if datatype, ok := datatypes_integer_id_map[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_integer[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF", attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF,
@@ -283,7 +217,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_REAL {
 			var attributeType string
-			if datatype, ok := datatypes_real_id_map[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_real[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_REAL_REF", attribute.TYPE.DATATYPE_DEFINITION_REAL_REF,
@@ -307,7 +241,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_DATE {
 			var attributeType string
-			if datatype, ok := datatypes_date_id_map[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_date[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_DATE_REF", attribute.TYPE.DATATYPE_DEFINITION_DATE_REF,
@@ -331,7 +265,7 @@ func addAttibutesNotes(
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION {
 			var attributeType string
-			if datatype, ok := datatypes_enumeration_id_map[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+			if datatype, ok := stager.Map_id_datatypes_enumeration[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,
