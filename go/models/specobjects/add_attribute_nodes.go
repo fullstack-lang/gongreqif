@@ -32,7 +32,7 @@ func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject 
 
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
 			var attributeDefinition string
-			if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
@@ -64,7 +64,7 @@ func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryString)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 			var attributeDefinition string
-			if datatype, ok := stager.Map_id_attributeDefinitionString[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
+			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_STRING_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF,
@@ -89,7 +89,7 @@ func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryBoolean)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
 			var attributeDefinition string
-			if datatype, ok := stager.Map_id_attributeDefinitionBoolean[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
+			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_BOOLEAN_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF,
@@ -118,7 +118,7 @@ func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryInteger)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_INTEGER {
 			var attributeDefinition string
-			if datatype, ok := stager.Map_id_attributeDefinitionInteger[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
+			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_INTEGER_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF,
@@ -143,7 +143,7 @@ func AddAttributeDateNodes(stager *m.Stager, objectNode *tree.Node, specObject *
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryDate)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_DATE {
 			var attributeDefinition string
-			if datatype, ok := stager.Map_id_attributeDefinitionDate[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
+			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_DATE[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_DATE_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF,
@@ -168,7 +168,7 @@ func AddAttributeRealNodes(stager *m.Stager, objectNode *tree.Node, specObject *
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryReal)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_REAL {
 			var attributeDefinition string
-			if datatype, ok := stager.Map_id_attributeDefinitionReal[attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF]; ok {
+			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_REAL[attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_REAL_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF,
@@ -197,7 +197,7 @@ func AddAttributeEnumNodes(
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
 			var enumTypeString string
-			if enumType, ok := stager.Map_id_attributeDefinitionEnum[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+			if enumType, ok := stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
 				enumTypeString = enumType.LONG_NAME
 			} else {
 				log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
@@ -211,7 +211,7 @@ func AddAttributeEnumNodes(
 			// For now, assuming attribute.VALUES.Name correctly gives the identifier for Map_id_enumValues.
 			// If attribute.VALUES itself is a slice of references, the logic might be attribute.VALUES[0].ENUM_VALUE_REF for single-select enums.
 			// The provided snippet uses `attribute.VALUES.Name`, I'll stick to that.
-			if enumValue, ok := stager.Map_id_enumValues[valueIdentifier]; ok {
+			if enumValue, ok := stager.Map_id_ENUM_VALUE[valueIdentifier]; ok {
 				enumValueString = enumValue.Name
 			} else {
 				// It might be valid for an enum value to not be found if the reference is optional or cleared

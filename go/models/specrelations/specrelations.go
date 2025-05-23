@@ -39,7 +39,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 
 	for _, specRelation := range relations.SPEC_RELATION {
 
-		specRelationType, ok := stager.Map_id_specRelationType[specRelation.TYPE.SPEC_RELATION_TYPE_REF]
+		specRelationType, ok := stager.Map_id_SPEC_RELATION_TYPE[specRelation.TYPE.SPEC_RELATION_TYPE_REF]
 		if !ok {
 			log.Panic("specRelation.TYPE.SPEC_RELATION_TYPE_REF", specRelation.TYPE.SPEC_RELATION_TYPE_REF,
 				"unknown relation type")
@@ -53,7 +53,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 		map_specRelationType_nbInstances[specRelationType] = map_specRelationType_nbInstances[specRelationType] + 1
 
 		{
-			specObject, ok := stager.Map_id_specObject[specRelation.SOURCE.SPEC_OBJECT_REF]
+			specObject, ok := stager.Map_id_SPEC_OBJECT[specRelation.SOURCE.SPEC_OBJECT_REF]
 			if !ok {
 				log.Println("specRelation.SOURCE.SPEC_OBJECT_REF", specRelation.SOURCE.SPEC_OBJECT_REF,
 					"unknown ref")
@@ -64,7 +64,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 				}
 				relationNode.Children = append(relationNode.Children, node)
 			} else {
-				specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+				specObjectType, ok := stager.Map_id_SPEC_OBJECT_TYPE[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 				if !ok {
 					log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 						"unknown object type")
@@ -81,7 +81,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 		}
 
 		{
-			specObject, ok := stager.Map_id_specObject[specRelation.TARGET.SPEC_OBJECT_REF]
+			specObject, ok := stager.Map_id_SPEC_OBJECT[specRelation.TARGET.SPEC_OBJECT_REF]
 			if !ok {
 				log.Println("specRelation.TARGET.SPEC_OBJECT_REF", specRelation.TARGET.SPEC_OBJECT_REF,
 					"unknown ref")
@@ -92,7 +92,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 				}
 				relationNode.Children = append(relationNode.Children, node)
 			} else {
-				specObjectType, ok := stager.Map_id_specobjectTypes[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+				specObjectType, ok := stager.Map_id_SPEC_OBJECT_TYPE[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
 				if !ok {
 					log.Println("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 						"unknown object type")

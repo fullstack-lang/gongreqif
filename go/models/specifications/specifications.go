@@ -40,7 +40,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 	for _, specification := range specifications.SPECIFICATION {
 
-		specificationType, ok := stager.Map_id_specificationType[specification.TYPE.SPECIFICATION_TYPE_REF]
+		specificationType, ok := stager.Map_id_SPECIFICATION_TYPE[specification.TYPE.SPECIFICATION_TYPE_REF]
 		if !ok {
 			log.Panic("specRelation.TYPE.SPECIFICATION_TYPE_REF", specification.TYPE.SPECIFICATION_TYPE_REF,
 				"unknown relation type")
@@ -65,7 +65,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				for _, attribute := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
 					// provide the type
 					var attributeDefinition string
-					if datatype, ok := stager.Map_id_attributeDefinitionXHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+					if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 						attributeDefinition = datatype.LONG_NAME
 					} else {
 						log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF,
@@ -127,7 +127,7 @@ func processSpecHierarchy(
 	specHierarchy *m.SPEC_HIERARCHY,
 	hierarchyParentNode *tree.Node) {
 
-	specObject, ok := stager.Map_id_specObject[specHierarchy.OBJECT.SPEC_OBJECT_REF]
+	specObject, ok := stager.Map_id_SPEC_OBJECT[specHierarchy.OBJECT.SPEC_OBJECT_REF]
 	if !ok {
 		log.Panic("specHierarchy.OBJECT.SPEC_OBJECT_REF", specHierarchy.OBJECT.SPEC_OBJECT_REF,
 			"unknown ref")

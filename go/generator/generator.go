@@ -188,7 +188,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 		for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
 
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_enumeration[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,
@@ -266,7 +266,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
 
 				var attributeType string
-				if datatype, ok := stager.Map_id_datatypes_enumeration[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+				if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
 					attributeType = datatype.LONG_NAME
 				} else {
 					log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,

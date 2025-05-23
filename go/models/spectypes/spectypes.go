@@ -1,6 +1,7 @@
 package spectypes
 
 import (
+	"fmt"
 	"log"
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
@@ -31,9 +32,22 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 
+		// compute the number of time this spec object type is used
+		map_specType_nbInstance := make(map[*m.SPEC_OBJECT_TYPE]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_SPEC_OBJECT_TYPE_REF](stager.GetStage()) {
+
+			datatypeDefinition, ok := stager.Map_id_SPEC_OBJECT_TYPE[x.SPEC_OBJECT_TYPE_REF]
+			if !ok {
+				log.Panic("x.SPEC_OBJECT_TYPE_REF", x.SPEC_OBJECT_TYPE_REF,
+					"unknown ref")
+			} else {
+				map_specType_nbInstance[datatypeDefinition]++
+			}
+		}
+
 		for _, spectype := range spectypes.SPEC_OBJECT_TYPE {
 			node := &tree.Node{
-				Name: spectype.Name,
+				Name: spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -52,9 +66,23 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
+
+		// compute the number of time this spec object type is used
+		map_specType_nbInstance := make(map[*m.SPEC_RELATION_TYPE]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_SPEC_RELATION_TYPE_REF](stager.GetStage()) {
+
+			datatypeDefinition, ok := stager.Map_id_SPEC_RELATION_TYPE[x.SPEC_RELATION_TYPE_REF]
+			if !ok {
+				log.Panic("x.SPEC_RELATION_TYPE_REF", x.SPEC_RELATION_TYPE_REF,
+					"unknown ref")
+			} else {
+				map_specType_nbInstance[datatypeDefinition]++
+			}
+		}
+
 		for _, spectype := range spectypes.SPEC_RELATION_TYPE {
 			node := &tree.Node{
-				Name: spectype.Name,
+				Name: spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -72,9 +100,23 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			FontStyle:  tree.ITALIC,
 		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
+
+		// compute the number of time this spec object type is used
+		map_specType_nbInstance := make(map[*m.SPECIFICATION_TYPE]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_SPECIFICATION_TYPE_REF](stager.GetStage()) {
+
+			datatypeDefinition, ok := stager.Map_id_SPECIFICATION_TYPE[x.SPECIFICATION_TYPE_REF]
+			if !ok {
+				log.Panic("x.SPECIFICATION_TYPE_REF", x.SPECIFICATION_TYPE_REF,
+					"unknown ref")
+			} else {
+				map_specType_nbInstance[datatypeDefinition]++
+			}
+		}
+
 		for _, spectype := range spectypes.SPECIFICATION_TYPE {
 			node := &tree.Node{
-				Name: spectype.Name,
+				Name: spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -119,9 +161,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_XHTML]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[x.ATTRIBUTE_DEFINITION_XHTML_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_XHTML_REF", x.ATTRIBUTE_DEFINITION_XHTML_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_XHTML {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_xhtml[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_XHTML[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF", attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF,
@@ -129,7 +185,7 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType,
+				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
@@ -143,9 +199,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_STRING]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[x.ATTRIBUTE_DEFINITION_STRING_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_STRING_REF", x.ATTRIBUTE_DEFINITION_STRING_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_STRING {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_string[attribute.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_STRING[attribute.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_STRING_REF", attribute.TYPE.DATATYPE_DEFINITION_STRING_REF,
@@ -153,7 +223,7 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType,
+				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
@@ -167,9 +237,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_BOOLEAN]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[x.ATTRIBUTE_DEFINITION_BOOLEAN_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_BOOLEAN_REF", x.ATTRIBUTE_DEFINITION_BOOLEAN_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_boolean[attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_BOOLEAN[attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF", attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF,
@@ -177,7 +261,7 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType,
+				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
@@ -191,9 +275,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_INTEGER]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_INTEGER_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[x.ATTRIBUTE_DEFINITION_INTEGER_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_INTEGER_REF", x.ATTRIBUTE_DEFINITION_INTEGER_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_INTEGER {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_integer[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_INTEGER[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF", attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF,
@@ -201,7 +299,7 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType,
+				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
@@ -215,9 +313,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_REAL]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_REAL_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_REAL[x.ATTRIBUTE_DEFINITION_REAL_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_REAL_REF", x.ATTRIBUTE_DEFINITION_REAL_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_REAL {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_real[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_REAL[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_REAL_REF", attribute.TYPE.DATATYPE_DEFINITION_REAL_REF,
@@ -225,7 +337,7 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType,
+				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
@@ -239,9 +351,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_DATE]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_DATE_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_DATE[x.ATTRIBUTE_DEFINITION_DATE_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_DATE_REF", x.ATTRIBUTE_DEFINITION_DATE_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_DATE {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_date[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_DATE[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_DATE_REF", attribute.TYPE.DATATYPE_DEFINITION_DATE_REF,
@@ -249,7 +375,7 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType,
+				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
@@ -263,9 +389,23 @@ func addAttibutesNodes(
 			FontStyle:  tree.ITALIC,
 		}
 		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_ENUMERATION]int)
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stager.GetStage()) {
+
+			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[x.ATTRIBUTE_DEFINITION_ENUMERATION_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_ENUMERATION_REF", x.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION {
 			var attributeType string
-			if datatype, ok := stager.Map_id_datatypes_enumeration[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
 				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,

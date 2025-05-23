@@ -104,28 +104,29 @@ type Stager struct {
 	objectNamer               ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
-	Map_id_datatypes_xhtml       map[string]*DATATYPE_DEFINITION_XHTML
-	Map_id_datatypes_string      map[string]*DATATYPE_DEFINITION_STRING
-	Map_id_datatypes_boolean     map[string]*DATATYPE_DEFINITION_BOOLEAN
-	Map_id_datatypes_integer     map[string]*DATATYPE_DEFINITION_INTEGER
-	Map_id_datatypes_real        map[string]*DATATYPE_DEFINITION_REAL
-	Map_id_datatypes_date        map[string]*DATATYPE_DEFINITION_DATE
-	Map_id_datatypes_enumeration map[string]*DATATYPE_DEFINITION_ENUMERATION
+	Map_id_DATATYPE_DEFINITION_XHTML       map[string]*DATATYPE_DEFINITION_XHTML
+	Map_id_DATATYPE_DEFINITION_STRING      map[string]*DATATYPE_DEFINITION_STRING
+	Map_id_DATATYPE_DEFINITION_BOOLEAN     map[string]*DATATYPE_DEFINITION_BOOLEAN
+	Map_id_DATATYPE_DEFINITION_INTEGER     map[string]*DATATYPE_DEFINITION_INTEGER
+	Map_id_DATATYPE_DEFINITION_REAL        map[string]*DATATYPE_DEFINITION_REAL
+	Map_id_DATATYPE_DEFINITION_DATE        map[string]*DATATYPE_DEFINITION_DATE
+	Map_id_DATATYPE_DEFINITION_ENUMERATION map[string]*DATATYPE_DEFINITION_ENUMERATION
 
-	Map_id_specobjectTypes   map[string]*SPEC_OBJECT_TYPE
-	Map_id_specificationType map[string]*SPECIFICATION_TYPE
-	Map_id_specObject        map[string]*SPEC_OBJECT
+	Map_id_SPEC_OBJECT_TYPE   map[string]*SPEC_OBJECT_TYPE
+	Map_id_SPECIFICATION_TYPE map[string]*SPECIFICATION_TYPE
+	Map_id_SPEC_OBJECT        map[string]*SPEC_OBJECT
 
-	Map_id_attributeDefinitionXHTML   map[string]*ATTRIBUTE_DEFINITION_XHTML
-	Map_id_attributeDefinitionString  map[string]*ATTRIBUTE_DEFINITION_STRING
-	Map_id_attributeDefinitionBoolean map[string]*ATTRIBUTE_DEFINITION_BOOLEAN
-	Map_id_attributeDefinitionInteger map[string]*ATTRIBUTE_DEFINITION_INTEGER
-	Map_id_attributeDefinitionDate    map[string]*ATTRIBUTE_DEFINITION_DATE
-	Map_id_attributeDefinitionReal    map[string]*ATTRIBUTE_DEFINITION_REAL
-	Map_id_attributeDefinitionEnum    map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
-	Map_id_enumValues                 map[string]*ENUM_VALUE
+	Map_id_ATTRIBUTE_DEFINITION_XHTML       map[string]*ATTRIBUTE_DEFINITION_XHTML
+	Map_id_ATTRIBUTE_DEFINITION_STRING      map[string]*ATTRIBUTE_DEFINITION_STRING
+	Map_id_ATTRIBUTE_DEFINITION_BOOLEAN     map[string]*ATTRIBUTE_DEFINITION_BOOLEAN
+	Map_id_ATTRIBUTE_DEFINITION_INTEGER     map[string]*ATTRIBUTE_DEFINITION_INTEGER
+	Map_id_ATTRIBUTE_DEFINITION_DATE        map[string]*ATTRIBUTE_DEFINITION_DATE
+	Map_id_ATTRIBUTE_DEFINITION_REAL        map[string]*ATTRIBUTE_DEFINITION_REAL
+	Map_id_ATTRIBUTE_DEFINITION_ENUMERATION map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
 
-	Map_id_specRelationType map[string]*SPEC_RELATION_TYPE
+	Map_id_ENUM_VALUE map[string]*ENUM_VALUE
+
+	Map_id_SPEC_RELATION_TYPE map[string]*SPEC_RELATION_TYPE
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {

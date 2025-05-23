@@ -37,7 +37,7 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_XHTML_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_xhtml[x.DATATYPE_DEFINITION_XHTML_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_XHTML[x.DATATYPE_DEFINITION_XHTML_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_XHTML_REF", x.DATATYPE_DEFINITION_XHTML_REF,
 					"unknown ref")
@@ -69,7 +69,7 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_STRING_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_string[x.DATATYPE_DEFINITION_STRING_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_STRING[x.DATATYPE_DEFINITION_STRING_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_STRING_REF", x.DATATYPE_DEFINITION_STRING_REF,
 					"unknown ref")
@@ -100,7 +100,7 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_ENUMERATION_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_enumeration[x.DATATYPE_DEFINITION_ENUMERATION_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[x.DATATYPE_DEFINITION_ENUMERATION_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_ENUMERATION_REF", x.DATATYPE_DEFINITION_ENUMERATION_REF,
 					"unknown ref")
@@ -137,7 +137,7 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_BOOLEAN_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_boolean[x.DATATYPE_DEFINITION_BOOLEAN_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_BOOLEAN[x.DATATYPE_DEFINITION_BOOLEAN_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_BOOLEAN_REF", x.DATATYPE_DEFINITION_BOOLEAN_REF,
 					"unknown ref")
@@ -167,7 +167,7 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_INTEGER_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_integer[x.DATATYPE_DEFINITION_INTEGER_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_INTEGER[x.DATATYPE_DEFINITION_INTEGER_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_INTEGER_REF", x.DATATYPE_DEFINITION_INTEGER_REF,
 					"unknown ref")
@@ -194,10 +194,9 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		// compute the number of time this datatype is used
 		map_datatypeDefinition_nbInstance := make(map[*m.DATATYPE_DEFINITION_DATE]int)
-
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_DATE_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_date[x.DATATYPE_DEFINITION_DATE_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_DATE[x.DATATYPE_DEFINITION_DATE_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_DATE_REF", x.DATATYPE_DEFINITION_DATE_REF,
 					"unknown ref")
@@ -227,7 +226,7 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 		for x := range *m.GetGongstructInstancesSet[m.A_DATATYPE_DEFINITION_REAL_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_datatypes_real[x.DATATYPE_DEFINITION_REAL_REF]
+			datatypeDefinition, ok := stager.Map_id_DATATYPE_DEFINITION_REAL[x.DATATYPE_DEFINITION_REAL_REF]
 			if !ok {
 				log.Panic("x.DATATYPE_DEFINITION_REAL_REF", x.DATATYPE_DEFINITION_REAL_REF,
 					"unknown ref")
