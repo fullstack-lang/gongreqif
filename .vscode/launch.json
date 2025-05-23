@@ -125,6 +125,22 @@
             ]
         },
         {
+            "name": "go server foo v4",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
+            "args": [
+                "-pathToReqifFile",
+                "../../../../../../../../foo v4.reqif",
+                "-pathToGoModelFile",
+                "../../../../../../../../foo v4.go",
+                "-pathToXLFile",
+                "../../../../../../../../foo v4.xlsx"
+            ]
+        },
+        {
             "name": "go server foo v5",
             "type": "go",
             "request": "launch",

@@ -124,6 +124,21 @@ const enumTemplate = `
 					specObjectInstance.%s = __val__
 `
 
+const attributeDateStart = `
+			for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_DATE {
+				// provide the type
+				var attributeDefinition string
+				if datatype, ok := stager.reqifStager.Map_id_attributeDefinitionDate[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
+					attributeDefinition = datatype.LONG_NAME
+				} else {
+					log.Panic("ATTRIBUTE_DEFINITION_DATE_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF,
+						"unknown ref")
+				}
+				_ = attributeDefinition
+
+				switch attributeDefinition {
+`
+
 type ModelGenerator struct {
 	PathToGoModelFile string
 }
@@ -158,7 +173,9 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 	}
 
 	// generates the struct
-	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
+	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+
+	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
 
 		sb.WriteString(fmt.Sprintf("type %s struct {", GenerateGoIdentifier(specObjectType.Name)))
 		sb.WriteString("\tName string\n")
@@ -206,7 +223,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 	// generates the stager function
 	sb.WriteString(stagerFunctionStart)
 
-	for specObjectType := range *m.GetGongstructInstancesSet[m.SPEC_OBJECT_TYPE](stager.GetStage()) {
+	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
 		sb.WriteString(fmt.Sprintf(specObjectProlog,
 			specObjectType.GetName(),
 			GenerateGoIdentifier(specObjectType.GetName()),
@@ -222,7 +239,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			}
 
 			sb.WriteString("\t\t\t\tdefault:\n")
-			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t\tlog.Println(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
 			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
 
 			sb.WriteString("\t\t\t} // end of the loop on the xhtml attribute parsing\n")
@@ -237,7 +254,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			}
 
 			sb.WriteString("\t\t\t\tdefault:\n")
-			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t\tlog.Println(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
 			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
 
 			sb.WriteString("\t\t\t} // end of the loop on the string attribute parsing\n")
@@ -263,7 +280,7 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			}
 
 			sb.WriteString("\t\t\t\tdefault:\n")
-			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t\tlog.Println(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
 			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
 
 			sb.WriteString("\t\t\t} // end of the loop on the enumeration attribute parsing\n")
@@ -278,10 +295,25 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 			}
 
 			sb.WriteString("\t\t\t\tdefault:\n")
-			sb.WriteString("\t\t\t\t\tlog.Panic(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t\tlog.Println(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
 			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
 
 			sb.WriteString("\t\t\t} // end of the loop on the boolean attribute parsing\n")
+		}
+		{
+			// attributes DATE
+			sb.WriteString(attributeDateStart)
+
+			for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
+				sb.WriteString(fmt.Sprintf("\t\t\t\tcase \"%s\":\n", attribute.Name))
+				sb.WriteString(fmt.Sprintf("\t\t\t\t\tspecObjectInstance.%s = attribute.THE_VALUE\n", GenerateGoIdentifier(attribute.Name)))
+			}
+
+			sb.WriteString("\t\t\t\tdefault:\n")
+			sb.WriteString("\t\t\t\t\tlog.Println(\"Unkown field name (attribute definition)\", attributeDefinition)\n")
+			sb.WriteString("\t\t\t\t} // end of the switch on the attribute id\n")
+
+			sb.WriteString("\t\t\t} // end of the loop on the date attribute parsing\n")
 		}
 	}
 
