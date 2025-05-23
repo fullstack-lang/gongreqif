@@ -24,7 +24,13 @@ const specObjectProlog = `
 			specObjectInstance := (&%s{
 				Name: specObject.Name,
 			}).Stage(stage)
-			_ = specObjectInstance`
+			_ = specObjectInstance
+			
+			specObjectInstance.DESC = specObject.DESC
+			specObjectInstance.IDENTIFIER = specObject.IDENTIFIER
+			specObjectInstance.LAST_CHANGE = specObject.LAST_CHANGE
+			specObjectInstance.LONG_NAME = specObject.LONG_NAME
+			`
 
 const stagerFunctionStart = `
 
@@ -179,6 +185,14 @@ func (modelGenerator *ModelGenerator) GenerateModels(stager *m.Stager) {
 
 		sb.WriteString(fmt.Sprintf("type %s struct {", GenerateGoIdentifier(specObjectType.Name)))
 		sb.WriteString("\tName string\n")
+		sb.WriteString("\n")
+		sb.WriteString("\nDESC string\n")
+		sb.WriteString("\n")
+		sb.WriteString("\tIDENTIFIER string\n")
+		sb.WriteString("\n")
+		sb.WriteString("\nLAST_CHANGE string\n")
+		sb.WriteString("\n")
+		sb.WriteString("\nLONG_NAME string\n")
 		sb.WriteString("\n")
 
 		for _, attribute := range specObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
