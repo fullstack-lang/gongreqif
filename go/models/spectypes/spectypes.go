@@ -413,7 +413,8 @@ func addAttibutesNodes(
 			}
 
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + " : " + attributeType, // Note: Original had " : " here, kept for consistency
+				Name: attribute.LONG_NAME + " : " + attributeType +
+					fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
 		}
