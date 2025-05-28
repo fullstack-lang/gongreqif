@@ -104,8 +104,7 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 				}
 				relationNode.Children = append(relationNode.Children, targetNode)
 
-				specobjects.AddAttributeXHTMLNodes(stager, targetNode, specObject)
-				specobjects.AddAttributeEnumNodes(stager, targetNode, specObject)
+				specobjects.AddAttributeNodes(stager, targetNode, specObject)
 			}
 		}
 
