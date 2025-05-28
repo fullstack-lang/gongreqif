@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"strconv"
+	"strings"
 
 	// insertion point for models import
 
@@ -14,6 +15,7 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 	"github.com/fullstack-lang/gongreqif/go/models/specrelations"
 	"github.com/fullstack-lang/gongreqif/go/models/spectypes"
+	"github.com/fullstack-lang/gongreqif/go/reqifz"
 
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
@@ -44,6 +46,18 @@ func main() {
 
 	// parse program arguments
 	flag.Parse()
+
+	if flag.NArg() > 0 {
+		pathToReqifOrReqifz := flag.Arg(0)
+		isReqifz, err := reqifz.ConvertReQIFzToReqIF(pathToReqifOrReqifz)
+		if err != nil {
+			log.Fatalln("Not able to convert reqif file", err.Error())
+		}
+
+		if isReqifz {
+			*pathToReqifFile = strings.TrimSuffix(pathToReqifOrReqifz, ".reqifz") + ".reqif"
+		}
+	}
 
 	// setup the static file server and get the controller
 	r := gongreqif_static.ServeStaticFiles(*logGINFlag)
