@@ -215,6 +215,15 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ENUM_VALUE:
 		ok = stage.IsStagedENUM_VALUE(target)
 
+	case *GeneratedImageMetamodel:
+		ok = stage.IsStagedGeneratedImageMetamodel(target)
+
+	case *Image:
+		ok = stage.IsStagedImage(target)
+
+	case *Paragraph:
+		ok = stage.IsStagedParagraph(target)
+
 	case *RELATION_GROUP:
 		ok = stage.IsStagedRELATION_GROUP(target)
 
@@ -253,6 +262,12 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	case *SPEC_RELATION_TYPE:
 		ok = stage.IsStagedSPEC_RELATION_TYPE(target)
+
+	case *StaticWebSite:
+		ok = stage.IsStagedStaticWebSite(target)
+
+	case *StaticWebSiteChapter:
+		ok = stage.IsStagedStaticWebSiteChapter(target)
 
 	case *XHTML_CONTENT:
 		ok = stage.IsStagedXHTML_CONTENT(target)
@@ -754,6 +769,27 @@ func (stage *Stage) IsStagedENUM_VALUE(enum_value *ENUM_VALUE) (ok bool) {
 	return
 }
 
+func (stage *Stage) IsStagedGeneratedImageMetamodel(generatedimagemetamodel *GeneratedImageMetamodel) (ok bool) {
+
+	_, ok = stage.GeneratedImageMetamodels[generatedimagemetamodel]
+
+	return
+}
+
+func (stage *Stage) IsStagedImage(image *Image) (ok bool) {
+
+	_, ok = stage.Images[image]
+
+	return
+}
+
+func (stage *Stage) IsStagedParagraph(paragraph *Paragraph) (ok bool) {
+
+	_, ok = stage.Paragraphs[paragraph]
+
+	return
+}
+
 func (stage *Stage) IsStagedRELATION_GROUP(relation_group *RELATION_GROUP) (ok bool) {
 
 	_, ok = stage.RELATION_GROUPs[relation_group]
@@ -841,6 +877,20 @@ func (stage *Stage) IsStagedSPEC_RELATION(spec_relation *SPEC_RELATION) (ok bool
 func (stage *Stage) IsStagedSPEC_RELATION_TYPE(spec_relation_type *SPEC_RELATION_TYPE) (ok bool) {
 
 	_, ok = stage.SPEC_RELATION_TYPEs[spec_relation_type]
+
+	return
+}
+
+func (stage *Stage) IsStagedStaticWebSite(staticwebsite *StaticWebSite) (ok bool) {
+
+	_, ok = stage.StaticWebSites[staticwebsite]
+
+	return
+}
+
+func (stage *Stage) IsStagedStaticWebSiteChapter(staticwebsitechapter *StaticWebSiteChapter) (ok bool) {
+
+	_, ok = stage.StaticWebSiteChapters[staticwebsitechapter]
 
 	return
 }
@@ -1070,6 +1120,15 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ENUM_VALUE:
 		stage.StageBranchENUM_VALUE(target)
 
+	case *GeneratedImageMetamodel:
+		stage.StageBranchGeneratedImageMetamodel(target)
+
+	case *Image:
+		stage.StageBranchImage(target)
+
+	case *Paragraph:
+		stage.StageBranchParagraph(target)
+
 	case *RELATION_GROUP:
 		stage.StageBranchRELATION_GROUP(target)
 
@@ -1108,6 +1167,12 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *SPEC_RELATION_TYPE:
 		stage.StageBranchSPEC_RELATION_TYPE(target)
+
+	case *StaticWebSite:
+		stage.StageBranchStaticWebSite(target)
+
+	case *StaticWebSiteChapter:
+		stage.StageBranchStaticWebSiteChapter(target)
 
 	case *XHTML_CONTENT:
 		stage.StageBranchXHTML_CONTENT(target)
@@ -2420,6 +2485,54 @@ func (stage *Stage) StageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) StageBranchGeneratedImageMetamodel(generatedimagemetamodel *GeneratedImageMetamodel) {
+
+	// check if instance is already staged
+	if IsStaged(stage, generatedimagemetamodel) {
+		return
+	}
+
+	generatedimagemetamodel.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchImage(image *Image) {
+
+	// check if instance is already staged
+	if IsStaged(stage, image) {
+		return
+	}
+
+	image.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchParagraph(paragraph *Paragraph) {
+
+	// check if instance is already staged
+	if IsStaged(stage, paragraph) {
+		return
+	}
+
+	paragraph.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+	if paragraph.Image != nil {
+		StageBranch(stage, paragraph.Image)
+	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchRELATION_GROUP(relation_group *RELATION_GROUP) {
 
 	// check if instance is already staged
@@ -2729,6 +2842,42 @@ func (stage *Stage) StageBranchSPEC_RELATION_TYPE(spec_relation_type *SPEC_RELAT
 
 }
 
+func (stage *Stage) StageBranchStaticWebSite(staticwebsite *StaticWebSite) {
+
+	// check if instance is already staged
+	if IsStaged(stage, staticwebsite) {
+		return
+	}
+
+	staticwebsite.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _staticwebsitechapter := range staticwebsite.Chapters {
+		StageBranch(stage, _staticwebsitechapter)
+	}
+
+}
+
+func (stage *Stage) StageBranchStaticWebSiteChapter(staticwebsitechapter *StaticWebSiteChapter) {
+
+	// check if instance is already staged
+	if IsStaged(stage, staticwebsitechapter) {
+		return
+	}
+
+	staticwebsitechapter.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _paragraph := range staticwebsitechapter.Paragraphs {
+		StageBranch(stage, _paragraph)
+	}
+
+}
+
 func (stage *Stage) StageBranchXHTML_CONTENT(xhtml_content *XHTML_CONTENT) {
 
 	// check if instance is already staged
@@ -3035,6 +3184,18 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchENUM_VALUE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *GeneratedImageMetamodel:
+		toT := CopyBranchGeneratedImageMetamodel(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Image:
+		toT := CopyBranchImage(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Paragraph:
+		toT := CopyBranchParagraph(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *RELATION_GROUP:
 		toT := CopyBranchRELATION_GROUP(mapOrigCopy, fromT)
 		return any(toT).(*Type)
@@ -3085,6 +3246,14 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *SPEC_RELATION_TYPE:
 		toT := CopyBranchSPEC_RELATION_TYPE(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *StaticWebSite:
+		toT := CopyBranchStaticWebSite(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *StaticWebSiteChapter:
+		toT := CopyBranchStaticWebSiteChapter(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *XHTML_CONTENT:
@@ -4680,6 +4849,66 @@ func CopyBranchENUM_VALUE(mapOrigCopy map[any]any, enum_valueFrom *ENUM_VALUE) (
 	return
 }
 
+func CopyBranchGeneratedImageMetamodel(mapOrigCopy map[any]any, generatedimagemetamodelFrom *GeneratedImageMetamodel) (generatedimagemetamodelTo *GeneratedImageMetamodel) {
+
+	// generatedimagemetamodelFrom has already been copied
+	if _generatedimagemetamodelTo, ok := mapOrigCopy[generatedimagemetamodelFrom]; ok {
+		generatedimagemetamodelTo = _generatedimagemetamodelTo.(*GeneratedImageMetamodel)
+		return
+	}
+
+	generatedimagemetamodelTo = new(GeneratedImageMetamodel)
+	mapOrigCopy[generatedimagemetamodelFrom] = generatedimagemetamodelTo
+	generatedimagemetamodelFrom.CopyBasicFields(generatedimagemetamodelTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchImage(mapOrigCopy map[any]any, imageFrom *Image) (imageTo *Image) {
+
+	// imageFrom has already been copied
+	if _imageTo, ok := mapOrigCopy[imageFrom]; ok {
+		imageTo = _imageTo.(*Image)
+		return
+	}
+
+	imageTo = new(Image)
+	mapOrigCopy[imageFrom] = imageTo
+	imageFrom.CopyBasicFields(imageTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchParagraph(mapOrigCopy map[any]any, paragraphFrom *Paragraph) (paragraphTo *Paragraph) {
+
+	// paragraphFrom has already been copied
+	if _paragraphTo, ok := mapOrigCopy[paragraphFrom]; ok {
+		paragraphTo = _paragraphTo.(*Paragraph)
+		return
+	}
+
+	paragraphTo = new(Paragraph)
+	mapOrigCopy[paragraphFrom] = paragraphTo
+	paragraphFrom.CopyBasicFields(paragraphTo)
+
+	//insertion point for the staging of instances referenced by pointers
+	if paragraphFrom.Image != nil {
+		paragraphTo.Image = CopyBranchImage(mapOrigCopy, paragraphFrom.Image)
+	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchRELATION_GROUP(mapOrigCopy map[any]any, relation_groupFrom *RELATION_GROUP) (relation_groupTo *RELATION_GROUP) {
 
 	// relation_groupFrom has already been copied
@@ -5041,6 +5270,50 @@ func CopyBranchSPEC_RELATION_TYPE(mapOrigCopy map[any]any, spec_relation_typeFro
 	return
 }
 
+func CopyBranchStaticWebSite(mapOrigCopy map[any]any, staticwebsiteFrom *StaticWebSite) (staticwebsiteTo *StaticWebSite) {
+
+	// staticwebsiteFrom has already been copied
+	if _staticwebsiteTo, ok := mapOrigCopy[staticwebsiteFrom]; ok {
+		staticwebsiteTo = _staticwebsiteTo.(*StaticWebSite)
+		return
+	}
+
+	staticwebsiteTo = new(StaticWebSite)
+	mapOrigCopy[staticwebsiteFrom] = staticwebsiteTo
+	staticwebsiteFrom.CopyBasicFields(staticwebsiteTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _staticwebsitechapter := range staticwebsiteFrom.Chapters {
+		staticwebsiteTo.Chapters = append(staticwebsiteTo.Chapters, CopyBranchStaticWebSiteChapter(mapOrigCopy, _staticwebsitechapter))
+	}
+
+	return
+}
+
+func CopyBranchStaticWebSiteChapter(mapOrigCopy map[any]any, staticwebsitechapterFrom *StaticWebSiteChapter) (staticwebsitechapterTo *StaticWebSiteChapter) {
+
+	// staticwebsitechapterFrom has already been copied
+	if _staticwebsitechapterTo, ok := mapOrigCopy[staticwebsitechapterFrom]; ok {
+		staticwebsitechapterTo = _staticwebsitechapterTo.(*StaticWebSiteChapter)
+		return
+	}
+
+	staticwebsitechapterTo = new(StaticWebSiteChapter)
+	mapOrigCopy[staticwebsitechapterFrom] = staticwebsitechapterTo
+	staticwebsitechapterFrom.CopyBasicFields(staticwebsitechapterTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _paragraph := range staticwebsitechapterFrom.Paragraphs {
+		staticwebsitechapterTo.Paragraphs = append(staticwebsitechapterTo.Paragraphs, CopyBranchParagraph(mapOrigCopy, _paragraph))
+	}
+
+	return
+}
+
 func CopyBranchXHTML_CONTENT(mapOrigCopy map[any]any, xhtml_contentFrom *XHTML_CONTENT) (xhtml_contentTo *XHTML_CONTENT) {
 
 	// xhtml_contentFrom has already been copied
@@ -5278,6 +5551,15 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ENUM_VALUE:
 		stage.UnstageBranchENUM_VALUE(target)
 
+	case *GeneratedImageMetamodel:
+		stage.UnstageBranchGeneratedImageMetamodel(target)
+
+	case *Image:
+		stage.UnstageBranchImage(target)
+
+	case *Paragraph:
+		stage.UnstageBranchParagraph(target)
+
 	case *RELATION_GROUP:
 		stage.UnstageBranchRELATION_GROUP(target)
 
@@ -5316,6 +5598,12 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *SPEC_RELATION_TYPE:
 		stage.UnstageBranchSPEC_RELATION_TYPE(target)
+
+	case *StaticWebSite:
+		stage.UnstageBranchStaticWebSite(target)
+
+	case *StaticWebSiteChapter:
+		stage.UnstageBranchStaticWebSiteChapter(target)
 
 	case *XHTML_CONTENT:
 		stage.UnstageBranchXHTML_CONTENT(target)
@@ -6628,6 +6916,54 @@ func (stage *Stage) UnstageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) UnstageBranchGeneratedImageMetamodel(generatedimagemetamodel *GeneratedImageMetamodel) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, generatedimagemetamodel) {
+		return
+	}
+
+	generatedimagemetamodel.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchImage(image *Image) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, image) {
+		return
+	}
+
+	image.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchParagraph(paragraph *Paragraph) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, paragraph) {
+		return
+	}
+
+	paragraph.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+	if paragraph.Image != nil {
+		UnstageBranch(stage, paragraph.Image)
+	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchRELATION_GROUP(relation_group *RELATION_GROUP) {
 
 	// check if instance is already staged
@@ -6934,6 +7270,42 @@ func (stage *Stage) UnstageBranchSPEC_RELATION_TYPE(spec_relation_type *SPEC_REL
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchStaticWebSite(staticwebsite *StaticWebSite) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, staticwebsite) {
+		return
+	}
+
+	staticwebsite.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _staticwebsitechapter := range staticwebsite.Chapters {
+		UnstageBranch(stage, _staticwebsitechapter)
+	}
+
+}
+
+func (stage *Stage) UnstageBranchStaticWebSiteChapter(staticwebsitechapter *StaticWebSiteChapter) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, staticwebsitechapter) {
+		return
+	}
+
+	staticwebsitechapter.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _paragraph := range staticwebsitechapter.Paragraphs {
+		UnstageBranch(stage, _paragraph)
+	}
 
 }
 

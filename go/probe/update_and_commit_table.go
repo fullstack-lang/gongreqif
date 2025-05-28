@@ -159,6 +159,12 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.EMBEDDED_VALUE](probe)
 	case *models.ENUM_VALUE:
 		updateAndCommitTable[models.ENUM_VALUE](probe)
+	case *models.GeneratedImageMetamodel:
+		updateAndCommitTable[models.GeneratedImageMetamodel](probe)
+	case *models.Image:
+		updateAndCommitTable[models.Image](probe)
+	case *models.Paragraph:
+		updateAndCommitTable[models.Paragraph](probe)
 	case *models.RELATION_GROUP:
 		updateAndCommitTable[models.RELATION_GROUP](probe)
 	case *models.RELATION_GROUP_TYPE:
@@ -185,6 +191,10 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.SPEC_RELATION](probe)
 	case *models.SPEC_RELATION_TYPE:
 		updateAndCommitTable[models.SPEC_RELATION_TYPE](probe)
+	case *models.StaticWebSite:
+		updateAndCommitTable[models.StaticWebSite](probe)
+	case *models.StaticWebSiteChapter:
+		updateAndCommitTable[models.StaticWebSiteChapter](probe)
 	case *models.XHTML_CONTENT:
 		updateAndCommitTable[models.XHTML_CONTENT](probe)
 	default:

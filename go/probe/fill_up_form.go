@@ -1314,6 +1314,56 @@ func FillUpForm(
 			}
 		}
 
+	case *models.GeneratedImageMetamodel:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("ImageName", instanceWithInferedType.ImageName, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("IsMetamodel", instanceWithInferedType.IsMetamodel, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("LegendMarkdownContent", instanceWithInferedType.LegendMarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 300, true, 300)
+
+	case *models.Image:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("SourceDirectoryPath", instanceWithInferedType.SourceDirectoryPath, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Height", instanceWithInferedType.Height, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+
+	case *models.Paragraph:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("LegendMarkdownContent", instanceWithInferedType.LegendMarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 300, true, 300)
+		AssociationFieldToForm("Image", instanceWithInferedType.Image, formGroup, probe)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "StaticWebSiteChapter"
+			rf.Fieldname = "Paragraphs"
+			reverseFieldOwner := models.GetReverseFieldOwner(probe.stageOfInterest, instanceWithInferedType, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.StaticWebSiteChapter),
+					"Paragraphs",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.StaticWebSiteChapter](
+					nil,
+					"Paragraphs",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+
 	case *models.RELATION_GROUP:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
@@ -1725,6 +1775,48 @@ func FillUpForm(
 				AssociationReverseFieldToForm[*models.A_SPEC_TYPES](
 					nil,
 					"SPEC_RELATION_TYPE",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+
+	case *models.StaticWebSite:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("MarkdownContent", instanceWithInferedType.MarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 900, true, 600)
+		AssociationSliceToForm("Chapters", instanceWithInferedType, &instanceWithInferedType.Chapters, formGroup, probe)
+		BasicFieldtoForm("InputImagesDir", instanceWithInferedType.InputImagesDir, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("OutputStaticWebDir", instanceWithInferedType.OutputStaticWebDir, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+
+	case *models.StaticWebSiteChapter:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("MarkdownContent", instanceWithInferedType.MarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 900, true, 600)
+		AssociationSliceToForm("Paragraphs", instanceWithInferedType, &instanceWithInferedType.Paragraphs, formGroup, probe)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "StaticWebSite"
+			rf.Fieldname = "Chapters"
+			reverseFieldOwner := models.GetReverseFieldOwner(probe.stageOfInterest, instanceWithInferedType, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.StaticWebSite),
+					"Chapters",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.StaticWebSite](
+					nil,
+					"Chapters",
 					instanceWithInferedType,
 					formGroup,
 					probe)

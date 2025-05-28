@@ -8643,6 +8643,318 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 
 	updateAndCommitTree(enum_valueFormCallback.probe)
 }
+func __gong__New__GeneratedImageMetamodelFormCallback(
+	generatedimagemetamodel *models.GeneratedImageMetamodel,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (generatedimagemetamodelFormCallback *GeneratedImageMetamodelFormCallback) {
+	generatedimagemetamodelFormCallback = new(GeneratedImageMetamodelFormCallback)
+	generatedimagemetamodelFormCallback.probe = probe
+	generatedimagemetamodelFormCallback.generatedimagemetamodel = generatedimagemetamodel
+	generatedimagemetamodelFormCallback.formGroup = formGroup
+
+	generatedimagemetamodelFormCallback.CreationMode = (generatedimagemetamodel == nil)
+
+	return
+}
+
+type GeneratedImageMetamodelFormCallback struct {
+	generatedimagemetamodel *models.GeneratedImageMetamodel
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (generatedimagemetamodelFormCallback *GeneratedImageMetamodelFormCallback) OnSave() {
+
+	// log.Println("GeneratedImageMetamodelFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	generatedimagemetamodelFormCallback.probe.formStage.Checkout()
+
+	if generatedimagemetamodelFormCallback.generatedimagemetamodel == nil {
+		generatedimagemetamodelFormCallback.generatedimagemetamodel = new(models.GeneratedImageMetamodel).Stage(generatedimagemetamodelFormCallback.probe.stageOfInterest)
+	}
+	generatedimagemetamodel_ := generatedimagemetamodelFormCallback.generatedimagemetamodel
+	_ = generatedimagemetamodel_
+
+	for _, formDiv := range generatedimagemetamodelFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(generatedimagemetamodel_.Name), formDiv)
+		case "ImageName":
+			FormDivBasicFieldToField(&(generatedimagemetamodel_.ImageName), formDiv)
+		case "IsMetamodel":
+			FormDivBasicFieldToField(&(generatedimagemetamodel_.IsMetamodel), formDiv)
+		case "LegendMarkdownContent":
+			FormDivBasicFieldToField(&(generatedimagemetamodel_.LegendMarkdownContent), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if generatedimagemetamodelFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		generatedimagemetamodel_.Unstage(generatedimagemetamodelFormCallback.probe.stageOfInterest)
+	}
+
+	generatedimagemetamodelFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.GeneratedImageMetamodel](
+		generatedimagemetamodelFormCallback.probe,
+	)
+	generatedimagemetamodelFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if generatedimagemetamodelFormCallback.CreationMode || generatedimagemetamodelFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		generatedimagemetamodelFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(generatedimagemetamodelFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__GeneratedImageMetamodelFormCallback(
+			nil,
+			generatedimagemetamodelFormCallback.probe,
+			newFormGroup,
+		)
+		generatedimagemetamodel := new(models.GeneratedImageMetamodel)
+		FillUpForm(generatedimagemetamodel, newFormGroup, generatedimagemetamodelFormCallback.probe)
+		generatedimagemetamodelFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(generatedimagemetamodelFormCallback.probe)
+}
+func __gong__New__ImageFormCallback(
+	image *models.Image,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (imageFormCallback *ImageFormCallback) {
+	imageFormCallback = new(ImageFormCallback)
+	imageFormCallback.probe = probe
+	imageFormCallback.image = image
+	imageFormCallback.formGroup = formGroup
+
+	imageFormCallback.CreationMode = (image == nil)
+
+	return
+}
+
+type ImageFormCallback struct {
+	image *models.Image
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (imageFormCallback *ImageFormCallback) OnSave() {
+
+	// log.Println("ImageFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	imageFormCallback.probe.formStage.Checkout()
+
+	if imageFormCallback.image == nil {
+		imageFormCallback.image = new(models.Image).Stage(imageFormCallback.probe.stageOfInterest)
+	}
+	image_ := imageFormCallback.image
+	_ = image_
+
+	for _, formDiv := range imageFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(image_.Name), formDiv)
+		case "SourceDirectoryPath":
+			FormDivBasicFieldToField(&(image_.SourceDirectoryPath), formDiv)
+		case "Height":
+			FormDivBasicFieldToField(&(image_.Height), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if imageFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		image_.Unstage(imageFormCallback.probe.stageOfInterest)
+	}
+
+	imageFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Image](
+		imageFormCallback.probe,
+	)
+	imageFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if imageFormCallback.CreationMode || imageFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		imageFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(imageFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ImageFormCallback(
+			nil,
+			imageFormCallback.probe,
+			newFormGroup,
+		)
+		image := new(models.Image)
+		FillUpForm(image, newFormGroup, imageFormCallback.probe)
+		imageFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(imageFormCallback.probe)
+}
+func __gong__New__ParagraphFormCallback(
+	paragraph *models.Paragraph,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (paragraphFormCallback *ParagraphFormCallback) {
+	paragraphFormCallback = new(ParagraphFormCallback)
+	paragraphFormCallback.probe = probe
+	paragraphFormCallback.paragraph = paragraph
+	paragraphFormCallback.formGroup = formGroup
+
+	paragraphFormCallback.CreationMode = (paragraph == nil)
+
+	return
+}
+
+type ParagraphFormCallback struct {
+	paragraph *models.Paragraph
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (paragraphFormCallback *ParagraphFormCallback) OnSave() {
+
+	// log.Println("ParagraphFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	paragraphFormCallback.probe.formStage.Checkout()
+
+	if paragraphFormCallback.paragraph == nil {
+		paragraphFormCallback.paragraph = new(models.Paragraph).Stage(paragraphFormCallback.probe.stageOfInterest)
+	}
+	paragraph_ := paragraphFormCallback.paragraph
+	_ = paragraph_
+
+	for _, formDiv := range paragraphFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(paragraph_.Name), formDiv)
+		case "LegendMarkdownContent":
+			FormDivBasicFieldToField(&(paragraph_.LegendMarkdownContent), formDiv)
+		case "Image":
+			FormDivSelectFieldToField(&(paragraph_.Image), paragraphFormCallback.probe.stageOfInterest, formDiv)
+		case "StaticWebSiteChapter:Paragraphs":
+			// WARNING : this form deals with the N-N association "StaticWebSiteChapter.Paragraphs []*Paragraph" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Paragraph). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.StaticWebSiteChapter
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "StaticWebSiteChapter"
+				rf.Fieldname = "Paragraphs"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					paragraphFormCallback.probe.stageOfInterest,
+					paragraph_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.StaticWebSiteChapter)
+					if !ok {
+						log.Fatalln("Source of StaticWebSiteChapter.Paragraphs []*Paragraph, is not an StaticWebSiteChapter instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Paragraphs, paragraph_)
+					formerSource.Paragraphs = slices.Delete(formerSource.Paragraphs, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.StaticWebSiteChapter
+			for _staticwebsitechapter := range *models.GetGongstructInstancesSet[models.StaticWebSiteChapter](paragraphFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _staticwebsitechapter.GetName() == newSourceName.GetName() {
+					newSource = _staticwebsitechapter // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of StaticWebSiteChapter.Paragraphs []*Paragraph, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Paragraphs = append(newSource.Paragraphs, paragraph_)
+		}
+	}
+
+	// manage the suppress operation
+	if paragraphFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		paragraph_.Unstage(paragraphFormCallback.probe.stageOfInterest)
+	}
+
+	paragraphFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Paragraph](
+		paragraphFormCallback.probe,
+	)
+	paragraphFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if paragraphFormCallback.CreationMode || paragraphFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		paragraphFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(paragraphFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ParagraphFormCallback(
+			nil,
+			paragraphFormCallback.probe,
+			newFormGroup,
+		)
+		paragraph := new(models.Paragraph)
+		FillUpForm(paragraph, newFormGroup, paragraphFormCallback.probe)
+		paragraphFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(paragraphFormCallback.probe)
+}
 func __gong__New__RELATION_GROUPFormCallback(
 	relation_group *models.RELATION_GROUP,
 	probe *Probe,
@@ -10483,6 +10795,285 @@ func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
 	}
 
 	updateAndCommitTree(spec_relation_typeFormCallback.probe)
+}
+func __gong__New__StaticWebSiteFormCallback(
+	staticwebsite *models.StaticWebSite,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (staticwebsiteFormCallback *StaticWebSiteFormCallback) {
+	staticwebsiteFormCallback = new(StaticWebSiteFormCallback)
+	staticwebsiteFormCallback.probe = probe
+	staticwebsiteFormCallback.staticwebsite = staticwebsite
+	staticwebsiteFormCallback.formGroup = formGroup
+
+	staticwebsiteFormCallback.CreationMode = (staticwebsite == nil)
+
+	return
+}
+
+type StaticWebSiteFormCallback struct {
+	staticwebsite *models.StaticWebSite
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (staticwebsiteFormCallback *StaticWebSiteFormCallback) OnSave() {
+
+	// log.Println("StaticWebSiteFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	staticwebsiteFormCallback.probe.formStage.Checkout()
+
+	if staticwebsiteFormCallback.staticwebsite == nil {
+		staticwebsiteFormCallback.staticwebsite = new(models.StaticWebSite).Stage(staticwebsiteFormCallback.probe.stageOfInterest)
+	}
+	staticwebsite_ := staticwebsiteFormCallback.staticwebsite
+	_ = staticwebsite_
+
+	for _, formDiv := range staticwebsiteFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(staticwebsite_.Name), formDiv)
+		case "MarkdownContent":
+			FormDivBasicFieldToField(&(staticwebsite_.MarkdownContent), formDiv)
+		case "Chapters":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.StaticWebSiteChapter](staticwebsiteFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.StaticWebSiteChapter, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.StaticWebSiteChapter)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					staticwebsiteFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			staticwebsite_.Chapters = instanceSlice
+
+		case "InputImagesDir":
+			FormDivBasicFieldToField(&(staticwebsite_.InputImagesDir), formDiv)
+		case "OutputStaticWebDir":
+			FormDivBasicFieldToField(&(staticwebsite_.OutputStaticWebDir), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if staticwebsiteFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		staticwebsite_.Unstage(staticwebsiteFormCallback.probe.stageOfInterest)
+	}
+
+	staticwebsiteFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.StaticWebSite](
+		staticwebsiteFormCallback.probe,
+	)
+	staticwebsiteFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if staticwebsiteFormCallback.CreationMode || staticwebsiteFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		staticwebsiteFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(staticwebsiteFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__StaticWebSiteFormCallback(
+			nil,
+			staticwebsiteFormCallback.probe,
+			newFormGroup,
+		)
+		staticwebsite := new(models.StaticWebSite)
+		FillUpForm(staticwebsite, newFormGroup, staticwebsiteFormCallback.probe)
+		staticwebsiteFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(staticwebsiteFormCallback.probe)
+}
+func __gong__New__StaticWebSiteChapterFormCallback(
+	staticwebsitechapter *models.StaticWebSiteChapter,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (staticwebsitechapterFormCallback *StaticWebSiteChapterFormCallback) {
+	staticwebsitechapterFormCallback = new(StaticWebSiteChapterFormCallback)
+	staticwebsitechapterFormCallback.probe = probe
+	staticwebsitechapterFormCallback.staticwebsitechapter = staticwebsitechapter
+	staticwebsitechapterFormCallback.formGroup = formGroup
+
+	staticwebsitechapterFormCallback.CreationMode = (staticwebsitechapter == nil)
+
+	return
+}
+
+type StaticWebSiteChapterFormCallback struct {
+	staticwebsitechapter *models.StaticWebSiteChapter
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (staticwebsitechapterFormCallback *StaticWebSiteChapterFormCallback) OnSave() {
+
+	// log.Println("StaticWebSiteChapterFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	staticwebsitechapterFormCallback.probe.formStage.Checkout()
+
+	if staticwebsitechapterFormCallback.staticwebsitechapter == nil {
+		staticwebsitechapterFormCallback.staticwebsitechapter = new(models.StaticWebSiteChapter).Stage(staticwebsitechapterFormCallback.probe.stageOfInterest)
+	}
+	staticwebsitechapter_ := staticwebsitechapterFormCallback.staticwebsitechapter
+	_ = staticwebsitechapter_
+
+	for _, formDiv := range staticwebsitechapterFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(staticwebsitechapter_.Name), formDiv)
+		case "MarkdownContent":
+			FormDivBasicFieldToField(&(staticwebsitechapter_.MarkdownContent), formDiv)
+		case "Paragraphs":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Paragraph](staticwebsitechapterFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Paragraph, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Paragraph)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					staticwebsitechapterFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			staticwebsitechapter_.Paragraphs = instanceSlice
+
+		case "StaticWebSite:Chapters":
+			// WARNING : this form deals with the N-N association "StaticWebSite.Chapters []*StaticWebSiteChapter" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of StaticWebSiteChapter). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.StaticWebSite
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "StaticWebSite"
+				rf.Fieldname = "Chapters"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					staticwebsitechapterFormCallback.probe.stageOfInterest,
+					staticwebsitechapter_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.StaticWebSite)
+					if !ok {
+						log.Fatalln("Source of StaticWebSite.Chapters []*StaticWebSiteChapter, is not an StaticWebSite instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Chapters, staticwebsitechapter_)
+					formerSource.Chapters = slices.Delete(formerSource.Chapters, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.StaticWebSite
+			for _staticwebsite := range *models.GetGongstructInstancesSet[models.StaticWebSite](staticwebsitechapterFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _staticwebsite.GetName() == newSourceName.GetName() {
+					newSource = _staticwebsite // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of StaticWebSite.Chapters []*StaticWebSiteChapter, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Chapters = append(newSource.Chapters, staticwebsitechapter_)
+		}
+	}
+
+	// manage the suppress operation
+	if staticwebsitechapterFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		staticwebsitechapter_.Unstage(staticwebsitechapterFormCallback.probe.stageOfInterest)
+	}
+
+	staticwebsitechapterFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.StaticWebSiteChapter](
+		staticwebsitechapterFormCallback.probe,
+	)
+	staticwebsitechapterFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if staticwebsitechapterFormCallback.CreationMode || staticwebsitechapterFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		staticwebsitechapterFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(staticwebsitechapterFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__StaticWebSiteChapterFormCallback(
+			nil,
+			staticwebsitechapterFormCallback.probe,
+			newFormGroup,
+		)
+		staticwebsitechapter := new(models.StaticWebSiteChapter)
+		FillUpForm(staticwebsitechapter, newFormGroup, staticwebsitechapterFormCallback.probe)
+		staticwebsitechapterFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(staticwebsitechapterFormCallback.probe)
 }
 func __gong__New__XHTML_CONTENTFormCallback(
 	xhtml_content *models.XHTML_CONTENT,

@@ -527,6 +527,15 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ENUM_VALUE
 	// insertion point per field
 
+	// Compute reverse map for named struct GeneratedImageMetamodel
+	// insertion point per field
+
+	// Compute reverse map for named struct Image
+	// insertion point per field
+
+	// Compute reverse map for named struct Paragraph
+	// insertion point per field
+
 	// Compute reverse map for named struct RELATION_GROUP
 	// insertion point per field
 
@@ -565,6 +574,28 @@ func (stage *Stage) ComputeReverseMaps() {
 
 	// Compute reverse map for named struct SPEC_RELATION_TYPE
 	// insertion point per field
+
+	// Compute reverse map for named struct StaticWebSite
+	// insertion point per field
+	clear(stage.StaticWebSite_Chapters_reverseMap)
+	stage.StaticWebSite_Chapters_reverseMap = make(map[*StaticWebSiteChapter]*StaticWebSite)
+	for staticwebsite := range stage.StaticWebSites {
+		_ = staticwebsite
+		for _, _staticwebsitechapter := range staticwebsite.Chapters {
+			stage.StaticWebSite_Chapters_reverseMap[_staticwebsitechapter] = staticwebsite
+		}
+	}
+
+	// Compute reverse map for named struct StaticWebSiteChapter
+	// insertion point per field
+	clear(stage.StaticWebSiteChapter_Paragraphs_reverseMap)
+	stage.StaticWebSiteChapter_Paragraphs_reverseMap = make(map[*Paragraph]*StaticWebSiteChapter)
+	for staticwebsitechapter := range stage.StaticWebSiteChapters {
+		_ = staticwebsitechapter
+		for _, _paragraph := range staticwebsitechapter.Paragraphs {
+			stage.StaticWebSiteChapter_Paragraphs_reverseMap[_paragraph] = staticwebsitechapter
+		}
+	}
 
 	// Compute reverse map for named struct XHTML_CONTENT
 	// insertion point per field

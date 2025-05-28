@@ -144,6 +144,12 @@ type BackRepoData struct {
 
 	ENUM_VALUEAPIs []*ENUM_VALUEAPI
 
+	GeneratedImageMetamodelAPIs []*GeneratedImageMetamodelAPI
+
+	ImageAPIs []*ImageAPI
+
+	ParagraphAPIs []*ParagraphAPI
+
 	RELATION_GROUPAPIs []*RELATION_GROUPAPI
 
 	RELATION_GROUP_TYPEAPIs []*RELATION_GROUP_TYPEAPI
@@ -169,6 +175,10 @@ type BackRepoData struct {
 	SPEC_RELATIONAPIs []*SPEC_RELATIONAPI
 
 	SPEC_RELATION_TYPEAPIs []*SPEC_RELATION_TYPEAPI
+
+	StaticWebSiteAPIs []*StaticWebSiteAPI
+
+	StaticWebSiteChapterAPIs []*StaticWebSiteChapterAPI
 
 	XHTML_CONTENTAPIs []*XHTML_CONTENTAPI
 
@@ -883,6 +893,36 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		backRepoData.ENUM_VALUEAPIs = append(backRepoData.ENUM_VALUEAPIs, &enum_valueAPI)
 	}
 
+	for _, generatedimagemetamodelDB := range backRepo.BackRepoGeneratedImageMetamodel.Map_GeneratedImageMetamodelDBID_GeneratedImageMetamodelDB {
+
+		var generatedimagemetamodelAPI GeneratedImageMetamodelAPI
+		generatedimagemetamodelAPI.ID = generatedimagemetamodelDB.ID
+		generatedimagemetamodelAPI.GeneratedImageMetamodelPointersEncoding = generatedimagemetamodelDB.GeneratedImageMetamodelPointersEncoding
+		generatedimagemetamodelDB.CopyBasicFieldsToGeneratedImageMetamodel_WOP(&generatedimagemetamodelAPI.GeneratedImageMetamodel_WOP)
+
+		backRepoData.GeneratedImageMetamodelAPIs = append(backRepoData.GeneratedImageMetamodelAPIs, &generatedimagemetamodelAPI)
+	}
+
+	for _, imageDB := range backRepo.BackRepoImage.Map_ImageDBID_ImageDB {
+
+		var imageAPI ImageAPI
+		imageAPI.ID = imageDB.ID
+		imageAPI.ImagePointersEncoding = imageDB.ImagePointersEncoding
+		imageDB.CopyBasicFieldsToImage_WOP(&imageAPI.Image_WOP)
+
+		backRepoData.ImageAPIs = append(backRepoData.ImageAPIs, &imageAPI)
+	}
+
+	for _, paragraphDB := range backRepo.BackRepoParagraph.Map_ParagraphDBID_ParagraphDB {
+
+		var paragraphAPI ParagraphAPI
+		paragraphAPI.ID = paragraphDB.ID
+		paragraphAPI.ParagraphPointersEncoding = paragraphDB.ParagraphPointersEncoding
+		paragraphDB.CopyBasicFieldsToParagraph_WOP(&paragraphAPI.Paragraph_WOP)
+
+		backRepoData.ParagraphAPIs = append(backRepoData.ParagraphAPIs, &paragraphAPI)
+	}
+
 	for _, relation_groupDB := range backRepo.BackRepoRELATION_GROUP.Map_RELATION_GROUPDBID_RELATION_GROUPDB {
 
 		var relation_groupAPI RELATION_GROUPAPI
@@ -1011,6 +1051,26 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		spec_relation_typeDB.CopyBasicFieldsToSPEC_RELATION_TYPE_WOP(&spec_relation_typeAPI.SPEC_RELATION_TYPE_WOP)
 
 		backRepoData.SPEC_RELATION_TYPEAPIs = append(backRepoData.SPEC_RELATION_TYPEAPIs, &spec_relation_typeAPI)
+	}
+
+	for _, staticwebsiteDB := range backRepo.BackRepoStaticWebSite.Map_StaticWebSiteDBID_StaticWebSiteDB {
+
+		var staticwebsiteAPI StaticWebSiteAPI
+		staticwebsiteAPI.ID = staticwebsiteDB.ID
+		staticwebsiteAPI.StaticWebSitePointersEncoding = staticwebsiteDB.StaticWebSitePointersEncoding
+		staticwebsiteDB.CopyBasicFieldsToStaticWebSite_WOP(&staticwebsiteAPI.StaticWebSite_WOP)
+
+		backRepoData.StaticWebSiteAPIs = append(backRepoData.StaticWebSiteAPIs, &staticwebsiteAPI)
+	}
+
+	for _, staticwebsitechapterDB := range backRepo.BackRepoStaticWebSiteChapter.Map_StaticWebSiteChapterDBID_StaticWebSiteChapterDB {
+
+		var staticwebsitechapterAPI StaticWebSiteChapterAPI
+		staticwebsitechapterAPI.ID = staticwebsitechapterDB.ID
+		staticwebsitechapterAPI.StaticWebSiteChapterPointersEncoding = staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding
+		staticwebsitechapterDB.CopyBasicFieldsToStaticWebSiteChapter_WOP(&staticwebsitechapterAPI.StaticWebSiteChapter_WOP)
+
+		backRepoData.StaticWebSiteChapterAPIs = append(backRepoData.StaticWebSiteChapterAPIs, &staticwebsitechapterAPI)
 	}
 
 	for _, xhtml_contentDB := range backRepo.BackRepoXHTML_CONTENT.Map_XHTML_CONTENTDBID_XHTML_CONTENTDB {

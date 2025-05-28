@@ -430,6 +430,9 @@ var __gong__map_DATATYPE_DEFINITION_STRING = make(map[string]*DATATYPE_DEFINITIO
 var __gong__map_DATATYPE_DEFINITION_XHTML = make(map[string]*DATATYPE_DEFINITION_XHTML)
 var __gong__map_EMBEDDED_VALUE = make(map[string]*EMBEDDED_VALUE)
 var __gong__map_ENUM_VALUE = make(map[string]*ENUM_VALUE)
+var __gong__map_GeneratedImageMetamodel = make(map[string]*GeneratedImageMetamodel)
+var __gong__map_Image = make(map[string]*Image)
+var __gong__map_Paragraph = make(map[string]*Paragraph)
 var __gong__map_RELATION_GROUP = make(map[string]*RELATION_GROUP)
 var __gong__map_RELATION_GROUP_TYPE = make(map[string]*RELATION_GROUP_TYPE)
 var __gong__map_REQ_IF = make(map[string]*REQ_IF)
@@ -443,6 +446,8 @@ var __gong__map_SPEC_OBJECT = make(map[string]*SPEC_OBJECT)
 var __gong__map_SPEC_OBJECT_TYPE = make(map[string]*SPEC_OBJECT_TYPE)
 var __gong__map_SPEC_RELATION = make(map[string]*SPEC_RELATION)
 var __gong__map_SPEC_RELATION_TYPE = make(map[string]*SPEC_RELATION_TYPE)
+var __gong__map_StaticWebSite = make(map[string]*StaticWebSite)
+var __gong__map_StaticWebSiteChapter = make(map[string]*StaticWebSiteChapter)
 var __gong__map_XHTML_CONTENT = make(map[string]*XHTML_CONTENT)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
@@ -1034,6 +1039,24 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceENUM_VALUE.Stage(stage)
 										instance = any(instanceENUM_VALUE)
 										__gong__map_ENUM_VALUE[identifier] = instanceENUM_VALUE
+									case "GeneratedImageMetamodel":
+										instanceGeneratedImageMetamodel := new(GeneratedImageMetamodel)
+										instanceGeneratedImageMetamodel.Name = instanceName
+										instanceGeneratedImageMetamodel.Stage(stage)
+										instance = any(instanceGeneratedImageMetamodel)
+										__gong__map_GeneratedImageMetamodel[identifier] = instanceGeneratedImageMetamodel
+									case "Image":
+										instanceImage := new(Image)
+										instanceImage.Name = instanceName
+										instanceImage.Stage(stage)
+										instance = any(instanceImage)
+										__gong__map_Image[identifier] = instanceImage
+									case "Paragraph":
+										instanceParagraph := new(Paragraph)
+										instanceParagraph.Name = instanceName
+										instanceParagraph.Stage(stage)
+										instance = any(instanceParagraph)
+										__gong__map_Paragraph[identifier] = instanceParagraph
 									case "RELATION_GROUP":
 										instanceRELATION_GROUP := new(RELATION_GROUP)
 										instanceRELATION_GROUP.Name = instanceName
@@ -1112,6 +1135,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceSPEC_RELATION_TYPE.Stage(stage)
 										instance = any(instanceSPEC_RELATION_TYPE)
 										__gong__map_SPEC_RELATION_TYPE[identifier] = instanceSPEC_RELATION_TYPE
+									case "StaticWebSite":
+										instanceStaticWebSite := new(StaticWebSite)
+										instanceStaticWebSite.Name = instanceName
+										instanceStaticWebSite.Stage(stage)
+										instance = any(instanceStaticWebSite)
+										__gong__map_StaticWebSite[identifier] = instanceStaticWebSite
+									case "StaticWebSiteChapter":
+										instanceStaticWebSiteChapter := new(StaticWebSiteChapter)
+										instanceStaticWebSiteChapter.Name = instanceName
+										instanceStaticWebSiteChapter.Stage(stage)
+										instance = any(instanceStaticWebSiteChapter)
+										__gong__map_StaticWebSiteChapter[identifier] = instanceStaticWebSiteChapter
 									case "XHTML_CONTENT":
 										instanceXHTML_CONTENT := new(XHTML_CONTENT)
 										instanceXHTML_CONTENT.Name = instanceName
@@ -1434,6 +1469,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							switch fieldName {
 							// insertion point for date assign code
 							}
+						case "GeneratedImageMetamodel":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "Image":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "Paragraph":
+							switch fieldName {
+							// insertion point for date assign code
+							}
 						case "RELATION_GROUP":
 							switch fieldName {
 							// insertion point for date assign code
@@ -1483,6 +1530,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "SPEC_RELATION_TYPE":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "StaticWebSite":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "StaticWebSiteChapter":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -2029,6 +2084,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
+					case "GeneratedImageMetamodel":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "Image":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "Paragraph":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
 					case "RELATION_GROUP":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
@@ -2080,6 +2147,26 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					case "SPEC_RELATION_TYPE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
+						}
+					case "StaticWebSite":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						case "Chapters":
+							// remove first and last char
+							targetIdentifier := ident.Name
+							target := __gong__map_StaticWebSiteChapter[targetIdentifier]
+							__gong__map_StaticWebSite[identifier].Chapters =
+								append(__gong__map_StaticWebSite[identifier].Chapters, target)
+						}
+					case "StaticWebSiteChapter":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						case "Paragraphs":
+							// remove first and last char
+							targetIdentifier := ident.Name
+							target := __gong__map_Paragraph[targetIdentifier]
+							__gong__map_StaticWebSiteChapter[identifier].Paragraphs =
+								append(__gong__map_StaticWebSiteChapter[identifier].Paragraphs, target)
 						}
 					case "XHTML_CONTENT":
 						switch fieldName {
@@ -3129,6 +3216,53 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ENUM_VALUE[identifier].LONG_NAME = fielValue
 				}
+			case "GeneratedImageMetamodel":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_GeneratedImageMetamodel[identifier].Name = fielValue
+				case "ImageName":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_GeneratedImageMetamodel[identifier].ImageName = fielValue
+				case "LegendMarkdownContent":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_GeneratedImageMetamodel[identifier].LegendMarkdownContent = fielValue
+				}
+			case "Image":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_Image[identifier].Name = fielValue
+				case "SourceDirectoryPath":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_Image[identifier].SourceDirectoryPath = fielValue
+				case "Height":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_Image[identifier].Height = int(exprSign) * int(fielValue)
+				}
+			case "Paragraph":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_Paragraph[identifier].Name = fielValue
+				case "LegendMarkdownContent":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_Paragraph[identifier].LegendMarkdownContent = fielValue
+				}
 			case "RELATION_GROUP":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -3412,6 +3546,38 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPEC_RELATION_TYPE[identifier].LONG_NAME = fielValue
+				}
+			case "StaticWebSite":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_StaticWebSite[identifier].Name = fielValue
+				case "MarkdownContent":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_StaticWebSite[identifier].MarkdownContent = fielValue
+				case "InputImagesDir":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_StaticWebSite[identifier].InputImagesDir = fielValue
+				case "OutputStaticWebDir":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_StaticWebSite[identifier].OutputStaticWebDir = fielValue
+				}
+			case "StaticWebSiteChapter":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_StaticWebSiteChapter[identifier].Name = fielValue
+				case "MarkdownContent":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_StaticWebSiteChapter[identifier].MarkdownContent = fielValue
 				}
 			case "XHTML_CONTENT":
 				switch fieldName {
@@ -3928,6 +4094,28 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					targetIdentifier := ident.Name
 					__gong__map_ENUM_VALUE[identifier].PROPERTIES = __gong__map_A_PROPERTIES[targetIdentifier]
 				}
+			case "GeneratedImageMetamodel":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "IsMetamodel":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_GeneratedImageMetamodel[identifier].IsMetamodel = fielValue
+				}
+			case "Image":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
+			case "Paragraph":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Image":
+					targetIdentifier := ident.Name
+					__gong__map_Paragraph[identifier].Image = __gong__map_Image[targetIdentifier]
+				}
 			case "RELATION_GROUP":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -4107,6 +4295,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "SPEC_ATTRIBUTES":
 					targetIdentifier := ident.Name
 					__gong__map_SPEC_RELATION_TYPE[identifier].SPEC_ATTRIBUTES = __gong__map_A_SPEC_ATTRIBUTES[targetIdentifier]
+				}
+			case "StaticWebSite":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
+			case "StaticWebSiteChapter":
+				switch fieldName {
+				// insertion point for field dependant code
 				}
 			case "XHTML_CONTENT":
 				switch fieldName {
@@ -4427,6 +4623,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					switch fieldName {
 					// insertion point for enum assign code
 					}
+				case "GeneratedImageMetamodel":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "Image":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "Paragraph":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
 				case "RELATION_GROUP":
 					switch fieldName {
 					// insertion point for enum assign code
@@ -4476,6 +4684,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for enum assign code
 					}
 				case "SPEC_RELATION_TYPE":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "StaticWebSite":
+					switch fieldName {
+					// insertion point for enum assign code
+					}
+				case "StaticWebSiteChapter":
 					switch fieldName {
 					// insertion point for enum assign code
 					}

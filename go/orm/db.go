@@ -300,6 +300,18 @@ type DBLite struct {
 
 	nextIDENUM_VALUEDB uint
 
+	generatedimagemetamodelDBs map[uint]*GeneratedImageMetamodelDB
+
+	nextIDGeneratedImageMetamodelDB uint
+
+	imageDBs map[uint]*ImageDB
+
+	nextIDImageDB uint
+
+	paragraphDBs map[uint]*ParagraphDB
+
+	nextIDParagraphDB uint
+
 	relation_groupDBs map[uint]*RELATION_GROUPDB
 
 	nextIDRELATION_GROUPDB uint
@@ -351,6 +363,14 @@ type DBLite struct {
 	spec_relation_typeDBs map[uint]*SPEC_RELATION_TYPEDB
 
 	nextIDSPEC_RELATION_TYPEDB uint
+
+	staticwebsiteDBs map[uint]*StaticWebSiteDB
+
+	nextIDStaticWebSiteDB uint
+
+	staticwebsitechapterDBs map[uint]*StaticWebSiteChapterDB
+
+	nextIDStaticWebSiteChapterDB uint
 
 	xhtml_contentDBs map[uint]*XHTML_CONTENTDB
 
@@ -502,6 +522,12 @@ func NewDBLite() *DBLite {
 
 		enum_valueDBs: make(map[uint]*ENUM_VALUEDB),
 
+		generatedimagemetamodelDBs: make(map[uint]*GeneratedImageMetamodelDB),
+
+		imageDBs: make(map[uint]*ImageDB),
+
+		paragraphDBs: make(map[uint]*ParagraphDB),
+
 		relation_groupDBs: make(map[uint]*RELATION_GROUPDB),
 
 		relation_group_typeDBs: make(map[uint]*RELATION_GROUP_TYPEDB),
@@ -527,6 +553,10 @@ func NewDBLite() *DBLite {
 		spec_relationDBs: make(map[uint]*SPEC_RELATIONDB),
 
 		spec_relation_typeDBs: make(map[uint]*SPEC_RELATION_TYPEDB),
+
+		staticwebsiteDBs: make(map[uint]*StaticWebSiteDB),
+
+		staticwebsitechapterDBs: make(map[uint]*StaticWebSiteChapterDB),
 
 		xhtml_contentDBs: make(map[uint]*XHTML_CONTENTDB),
 	}
@@ -823,6 +853,18 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDENUM_VALUEDB++
 		v.ID = db.nextIDENUM_VALUEDB
 		db.enum_valueDBs[v.ID] = v
+	case *GeneratedImageMetamodelDB:
+		db.nextIDGeneratedImageMetamodelDB++
+		v.ID = db.nextIDGeneratedImageMetamodelDB
+		db.generatedimagemetamodelDBs[v.ID] = v
+	case *ImageDB:
+		db.nextIDImageDB++
+		v.ID = db.nextIDImageDB
+		db.imageDBs[v.ID] = v
+	case *ParagraphDB:
+		db.nextIDParagraphDB++
+		v.ID = db.nextIDParagraphDB
+		db.paragraphDBs[v.ID] = v
 	case *RELATION_GROUPDB:
 		db.nextIDRELATION_GROUPDB++
 		v.ID = db.nextIDRELATION_GROUPDB
@@ -875,6 +917,14 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDSPEC_RELATION_TYPEDB++
 		v.ID = db.nextIDSPEC_RELATION_TYPEDB
 		db.spec_relation_typeDBs[v.ID] = v
+	case *StaticWebSiteDB:
+		db.nextIDStaticWebSiteDB++
+		v.ID = db.nextIDStaticWebSiteDB
+		db.staticwebsiteDBs[v.ID] = v
+	case *StaticWebSiteChapterDB:
+		db.nextIDStaticWebSiteChapterDB++
+		v.ID = db.nextIDStaticWebSiteChapterDB
+		db.staticwebsitechapterDBs[v.ID] = v
 	case *XHTML_CONTENTDB:
 		db.nextIDXHTML_CONTENTDB++
 		v.ID = db.nextIDXHTML_CONTENTDB
@@ -1047,6 +1097,12 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.embedded_valueDBs, v.ID)
 	case *ENUM_VALUEDB:
 		delete(db.enum_valueDBs, v.ID)
+	case *GeneratedImageMetamodelDB:
+		delete(db.generatedimagemetamodelDBs, v.ID)
+	case *ImageDB:
+		delete(db.imageDBs, v.ID)
+	case *ParagraphDB:
+		delete(db.paragraphDBs, v.ID)
 	case *RELATION_GROUPDB:
 		delete(db.relation_groupDBs, v.ID)
 	case *RELATION_GROUP_TYPEDB:
@@ -1073,6 +1129,10 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.spec_relationDBs, v.ID)
 	case *SPEC_RELATION_TYPEDB:
 		delete(db.spec_relation_typeDBs, v.ID)
+	case *StaticWebSiteDB:
+		delete(db.staticwebsiteDBs, v.ID)
+	case *StaticWebSiteChapterDB:
+		delete(db.staticwebsitechapterDBs, v.ID)
 	case *XHTML_CONTENTDB:
 		delete(db.xhtml_contentDBs, v.ID)
 	default:
@@ -1303,6 +1363,15 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 	case *ENUM_VALUEDB:
 		db.enum_valueDBs[v.ID] = v
 		return db, nil
+	case *GeneratedImageMetamodelDB:
+		db.generatedimagemetamodelDBs[v.ID] = v
+		return db, nil
+	case *ImageDB:
+		db.imageDBs[v.ID] = v
+		return db, nil
+	case *ParagraphDB:
+		db.paragraphDBs[v.ID] = v
+		return db, nil
 	case *RELATION_GROUPDB:
 		db.relation_groupDBs[v.ID] = v
 		return db, nil
@@ -1341,6 +1410,12 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 		return db, nil
 	case *SPEC_RELATION_TYPEDB:
 		db.spec_relation_typeDBs[v.ID] = v
+		return db, nil
+	case *StaticWebSiteDB:
+		db.staticwebsiteDBs[v.ID] = v
+		return db, nil
+	case *StaticWebSiteChapterDB:
+		db.staticwebsitechapterDBs[v.ID] = v
 		return db, nil
 	case *XHTML_CONTENTDB:
 		db.xhtml_contentDBs[v.ID] = v
@@ -1781,6 +1856,24 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 		} else {
 			return nil, errors.New("db ENUM_VALUE github.com/fullstack-lang/gongreqif/go, record not found")
 		}
+	case *GeneratedImageMetamodelDB:
+		if existing, ok := db.generatedimagemetamodelDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db GeneratedImageMetamodel github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *ImageDB:
+		if existing, ok := db.imageDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Image github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *ParagraphDB:
+		if existing, ok := db.paragraphDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Paragraph github.com/fullstack-lang/gongreqif/go, record not found")
+		}
 	case *RELATION_GROUPDB:
 		if existing, ok := db.relation_groupDBs[v.ID]; ok {
 			*existing = *v
@@ -1858,6 +1951,18 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 			*existing = *v
 		} else {
 			return nil, errors.New("db SPEC_RELATION_TYPE github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *StaticWebSiteDB:
+		if existing, ok := db.staticwebsiteDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db StaticWebSite github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *StaticWebSiteChapterDB:
+		if existing, ok := db.staticwebsitechapterDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db StaticWebSiteChapter github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *XHTML_CONTENTDB:
 		if existing, ok := db.xhtml_contentDBs[v.ID]; ok {
@@ -2299,6 +2404,24 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
+	case *[]GeneratedImageMetamodelDB:
+		*ptr = make([]GeneratedImageMetamodelDB, 0, len(db.generatedimagemetamodelDBs))
+		for _, v := range db.generatedimagemetamodelDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]ImageDB:
+		*ptr = make([]ImageDB, 0, len(db.imageDBs))
+		for _, v := range db.imageDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]ParagraphDB:
+		*ptr = make([]ParagraphDB, 0, len(db.paragraphDBs))
+		for _, v := range db.paragraphDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
 	case *[]RELATION_GROUPDB:
 		*ptr = make([]RELATION_GROUPDB, 0, len(db.relation_groupDBs))
 		for _, v := range db.relation_groupDBs {
@@ -2374,6 +2497,18 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 	case *[]SPEC_RELATION_TYPEDB:
 		*ptr = make([]SPEC_RELATION_TYPEDB, 0, len(db.spec_relation_typeDBs))
 		for _, v := range db.spec_relation_typeDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]StaticWebSiteDB:
+		*ptr = make([]StaticWebSiteDB, 0, len(db.staticwebsiteDBs))
+		for _, v := range db.staticwebsiteDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]StaticWebSiteChapterDB:
+		*ptr = make([]StaticWebSiteChapterDB, 0, len(db.staticwebsitechapterDBs))
+		for _, v := range db.staticwebsitechapterDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -3116,6 +3251,36 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 		enum_valueDB, _ := instanceDB.(*ENUM_VALUEDB)
 		*enum_valueDB = *tmp
 		
+	case *GeneratedImageMetamodelDB:
+		tmp, ok := db.generatedimagemetamodelDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First GeneratedImageMetamodel Unkown entry %d", i))
+		}
+
+		generatedimagemetamodelDB, _ := instanceDB.(*GeneratedImageMetamodelDB)
+		*generatedimagemetamodelDB = *tmp
+		
+	case *ImageDB:
+		tmp, ok := db.imageDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Image Unkown entry %d", i))
+		}
+
+		imageDB, _ := instanceDB.(*ImageDB)
+		*imageDB = *tmp
+		
+	case *ParagraphDB:
+		tmp, ok := db.paragraphDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Paragraph Unkown entry %d", i))
+		}
+
+		paragraphDB, _ := instanceDB.(*ParagraphDB)
+		*paragraphDB = *tmp
+		
 	case *RELATION_GROUPDB:
 		tmp, ok := db.relation_groupDBs[uint(i)]
 
@@ -3245,6 +3410,26 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 
 		spec_relation_typeDB, _ := instanceDB.(*SPEC_RELATION_TYPEDB)
 		*spec_relation_typeDB = *tmp
+		
+	case *StaticWebSiteDB:
+		tmp, ok := db.staticwebsiteDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First StaticWebSite Unkown entry %d", i))
+		}
+
+		staticwebsiteDB, _ := instanceDB.(*StaticWebSiteDB)
+		*staticwebsiteDB = *tmp
+		
+	case *StaticWebSiteChapterDB:
+		tmp, ok := db.staticwebsitechapterDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First StaticWebSiteChapter Unkown entry %d", i))
+		}
+
+		staticwebsitechapterDB, _ := instanceDB.(*StaticWebSiteChapterDB)
+		*staticwebsitechapterDB = *tmp
 		
 	case *XHTML_CONTENTDB:
 		tmp, ok := db.xhtml_contentDBs[uint(i)]

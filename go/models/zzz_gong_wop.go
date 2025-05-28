@@ -1118,6 +1118,57 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type GeneratedImageMetamodel_WOP struct {
+	// insertion point
+
+	Name string
+
+	ImageName string
+
+	IsMetamodel bool
+
+	LegendMarkdownContent string
+}
+
+func (from *GeneratedImageMetamodel) CopyBasicFields(to *GeneratedImageMetamodel) {
+	// insertion point
+	to.Name = from.Name
+	to.ImageName = from.ImageName
+	to.IsMetamodel = from.IsMetamodel
+	to.LegendMarkdownContent = from.LegendMarkdownContent
+}
+
+type Image_WOP struct {
+	// insertion point
+
+	Name string
+
+	SourceDirectoryPath string
+
+	Height int
+}
+
+func (from *Image) CopyBasicFields(to *Image) {
+	// insertion point
+	to.Name = from.Name
+	to.SourceDirectoryPath = from.SourceDirectoryPath
+	to.Height = from.Height
+}
+
+type Paragraph_WOP struct {
+	// insertion point
+
+	Name string
+
+	LegendMarkdownContent string
+}
+
+func (from *Paragraph) CopyBasicFields(to *Paragraph) {
+	// insertion point
+	to.Name = from.Name
+	to.LegendMarkdownContent = from.LegendMarkdownContent
+}
+
 type RELATION_GROUP_WOP struct {
 	// insertion point
 
@@ -1400,6 +1451,40 @@ func (from *SPEC_RELATION_TYPE) CopyBasicFields(to *SPEC_RELATION_TYPE) {
 	to.IDENTIFIER = from.IDENTIFIER
 	to.LAST_CHANGE = from.LAST_CHANGE
 	to.LONG_NAME = from.LONG_NAME
+}
+
+type StaticWebSite_WOP struct {
+	// insertion point
+
+	Name string
+
+	MarkdownContent string
+
+	InputImagesDir string
+
+	OutputStaticWebDir string
+}
+
+func (from *StaticWebSite) CopyBasicFields(to *StaticWebSite) {
+	// insertion point
+	to.Name = from.Name
+	to.MarkdownContent = from.MarkdownContent
+	to.InputImagesDir = from.InputImagesDir
+	to.OutputStaticWebDir = from.OutputStaticWebDir
+}
+
+type StaticWebSiteChapter_WOP struct {
+	// insertion point
+
+	Name string
+
+	MarkdownContent string
+}
+
+func (from *StaticWebSiteChapter) CopyBasicFields(to *StaticWebSiteChapter) {
+	// insertion point
+	to.Name = from.Name
+	to.MarkdownContent = from.MarkdownContent
 }
 
 type XHTML_CONTENT_WOP struct {

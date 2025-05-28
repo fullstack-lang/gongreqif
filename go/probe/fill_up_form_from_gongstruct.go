@@ -859,6 +859,42 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.GeneratedImageMetamodel:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "GeneratedImageMetamodel Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__GeneratedImageMetamodelFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.Image:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "Image Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__ImageFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.Paragraph:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "Paragraph Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__ParagraphFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.RELATION_GROUP:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
@@ -1009,6 +1045,30 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 			Label: "SPEC_RELATION_TYPE Form",
 		}).Stage(formStage)
 		formGroup.OnSave = __gong__New__SPEC_RELATION_TYPEFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.StaticWebSite:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "StaticWebSite Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__StaticWebSiteFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.StaticWebSiteChapter:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "StaticWebSiteChapter Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__StaticWebSiteChapterFormCallback(
 			instancesTyped,
 			probe,
 			formGroup,

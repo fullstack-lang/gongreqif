@@ -295,6 +295,18 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		enum_valueInstance := any(concreteInstance).(*models.ENUM_VALUE)
 		ret2 := backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueInstance)
 		ret = any(ret2).(*T2)
+	case *models.GeneratedImageMetamodel:
+		generatedimagemetamodelInstance := any(concreteInstance).(*models.GeneratedImageMetamodel)
+		ret2 := backRepo.BackRepoGeneratedImageMetamodel.GetGeneratedImageMetamodelDBFromGeneratedImageMetamodelPtr(generatedimagemetamodelInstance)
+		ret = any(ret2).(*T2)
+	case *models.Image:
+		imageInstance := any(concreteInstance).(*models.Image)
+		ret2 := backRepo.BackRepoImage.GetImageDBFromImagePtr(imageInstance)
+		ret = any(ret2).(*T2)
+	case *models.Paragraph:
+		paragraphInstance := any(concreteInstance).(*models.Paragraph)
+		ret2 := backRepo.BackRepoParagraph.GetParagraphDBFromParagraphPtr(paragraphInstance)
+		ret = any(ret2).(*T2)
 	case *models.RELATION_GROUP:
 		relation_groupInstance := any(concreteInstance).(*models.RELATION_GROUP)
 		ret2 := backRepo.BackRepoRELATION_GROUP.GetRELATION_GROUPDBFromRELATION_GROUPPtr(relation_groupInstance)
@@ -346,6 +358,14 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 	case *models.SPEC_RELATION_TYPE:
 		spec_relation_typeInstance := any(concreteInstance).(*models.SPEC_RELATION_TYPE)
 		ret2 := backRepo.BackRepoSPEC_RELATION_TYPE.GetSPEC_RELATION_TYPEDBFromSPEC_RELATION_TYPEPtr(spec_relation_typeInstance)
+		ret = any(ret2).(*T2)
+	case *models.StaticWebSite:
+		staticwebsiteInstance := any(concreteInstance).(*models.StaticWebSite)
+		ret2 := backRepo.BackRepoStaticWebSite.GetStaticWebSiteDBFromStaticWebSitePtr(staticwebsiteInstance)
+		ret = any(ret2).(*T2)
+	case *models.StaticWebSiteChapter:
+		staticwebsitechapterInstance := any(concreteInstance).(*models.StaticWebSiteChapter)
+		ret2 := backRepo.BackRepoStaticWebSiteChapter.GetStaticWebSiteChapterDBFromStaticWebSiteChapterPtr(staticwebsitechapterInstance)
 		ret = any(ret2).(*T2)
 	case *models.XHTML_CONTENT:
 		xhtml_contentInstance := any(concreteInstance).(*models.XHTML_CONTENT)
@@ -714,6 +734,21 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.GeneratedImageMetamodel:
+		tmp := GetInstanceDBFromInstance[models.GeneratedImageMetamodel, GeneratedImageMetamodelDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Image:
+		tmp := GetInstanceDBFromInstance[models.Image, ImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Paragraph:
+		tmp := GetInstanceDBFromInstance[models.Paragraph, ParagraphDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -776,6 +811,16 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.SPEC_RELATION_TYPE:
 		tmp := GetInstanceDBFromInstance[models.SPEC_RELATION_TYPE, SPEC_RELATION_TYPEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSite:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSite, StaticWebSiteDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteChapter:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteChapter, StaticWebSiteChapterDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1147,6 +1192,21 @@ func GetIDPointer[T models.PointerToGongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.GeneratedImageMetamodel:
+		tmp := GetInstanceDBFromInstance[models.GeneratedImageMetamodel, GeneratedImageMetamodelDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Image:
+		tmp := GetInstanceDBFromInstance[models.Image, ImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Paragraph:
+		tmp := GetInstanceDBFromInstance[models.Paragraph, ParagraphDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -1209,6 +1269,16 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.SPEC_RELATION_TYPE:
 		tmp := GetInstanceDBFromInstance[models.SPEC_RELATION_TYPE, SPEC_RELATION_TYPEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSite:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSite, StaticWebSiteDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteChapter:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteChapter, StaticWebSiteChapterDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

@@ -3644,6 +3644,165 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
+	map_GeneratedImageMetamodel_Identifiers := make(map[*GeneratedImageMetamodel]string)
+	_ = map_GeneratedImageMetamodel_Identifiers
+
+	generatedimagemetamodelOrdered := []*GeneratedImageMetamodel{}
+	for generatedimagemetamodel := range stage.GeneratedImageMetamodels {
+		generatedimagemetamodelOrdered = append(generatedimagemetamodelOrdered, generatedimagemetamodel)
+	}
+	sort.Slice(generatedimagemetamodelOrdered[:], func(i, j int) bool {
+		generatedimagemetamodeli := generatedimagemetamodelOrdered[i]
+		generatedimagemetamodelj := generatedimagemetamodelOrdered[j]
+		generatedimagemetamodeli_order, oki := stage.GeneratedImageMetamodelMap_Staged_Order[generatedimagemetamodeli]
+		generatedimagemetamodelj_order, okj := stage.GeneratedImageMetamodelMap_Staged_Order[generatedimagemetamodelj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return generatedimagemetamodeli_order < generatedimagemetamodelj_order
+	})
+	if len(generatedimagemetamodelOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, generatedimagemetamodel := range generatedimagemetamodelOrdered {
+
+		id = generatesIdentifier("GeneratedImageMetamodel", idx, generatedimagemetamodel.Name)
+		map_GeneratedImageMetamodel_Identifiers[generatedimagemetamodel] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "GeneratedImageMetamodel")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", generatedimagemetamodel.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(generatedimagemetamodel.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ImageName")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(generatedimagemetamodel.ImageName))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsMetamodel")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", generatedimagemetamodel.IsMetamodel))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LegendMarkdownContent")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(generatedimagemetamodel.LegendMarkdownContent))
+		initializerStatements += setValueField
+
+	}
+
+	map_Image_Identifiers := make(map[*Image]string)
+	_ = map_Image_Identifiers
+
+	imageOrdered := []*Image{}
+	for image := range stage.Images {
+		imageOrdered = append(imageOrdered, image)
+	}
+	sort.Slice(imageOrdered[:], func(i, j int) bool {
+		imagei := imageOrdered[i]
+		imagej := imageOrdered[j]
+		imagei_order, oki := stage.ImageMap_Staged_Order[imagei]
+		imagej_order, okj := stage.ImageMap_Staged_Order[imagej]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return imagei_order < imagej_order
+	})
+	if len(imageOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, image := range imageOrdered {
+
+		id = generatesIdentifier("Image", idx, image.Name)
+		map_Image_Identifiers[image] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Image")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", image.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(image.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SourceDirectoryPath")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(image.SourceDirectoryPath))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Height")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", image.Height))
+		initializerStatements += setValueField
+
+	}
+
+	map_Paragraph_Identifiers := make(map[*Paragraph]string)
+	_ = map_Paragraph_Identifiers
+
+	paragraphOrdered := []*Paragraph{}
+	for paragraph := range stage.Paragraphs {
+		paragraphOrdered = append(paragraphOrdered, paragraph)
+	}
+	sort.Slice(paragraphOrdered[:], func(i, j int) bool {
+		paragraphi := paragraphOrdered[i]
+		paragraphj := paragraphOrdered[j]
+		paragraphi_order, oki := stage.ParagraphMap_Staged_Order[paragraphi]
+		paragraphj_order, okj := stage.ParagraphMap_Staged_Order[paragraphj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return paragraphi_order < paragraphj_order
+	})
+	if len(paragraphOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, paragraph := range paragraphOrdered {
+
+		id = generatesIdentifier("Paragraph", idx, paragraph.Name)
+		map_Paragraph_Identifiers[paragraph] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Paragraph")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", paragraph.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(paragraph.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LegendMarkdownContent")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(paragraph.LegendMarkdownContent))
+		initializerStatements += setValueField
+
+	}
+
 	map_RELATION_GROUP_Identifiers := make(map[*RELATION_GROUP]string)
 	_ = map_RELATION_GROUP_Identifiers
 
@@ -4455,6 +4614,112 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
+	map_StaticWebSite_Identifiers := make(map[*StaticWebSite]string)
+	_ = map_StaticWebSite_Identifiers
+
+	staticwebsiteOrdered := []*StaticWebSite{}
+	for staticwebsite := range stage.StaticWebSites {
+		staticwebsiteOrdered = append(staticwebsiteOrdered, staticwebsite)
+	}
+	sort.Slice(staticwebsiteOrdered[:], func(i, j int) bool {
+		staticwebsitei := staticwebsiteOrdered[i]
+		staticwebsitej := staticwebsiteOrdered[j]
+		staticwebsitei_order, oki := stage.StaticWebSiteMap_Staged_Order[staticwebsitei]
+		staticwebsitej_order, okj := stage.StaticWebSiteMap_Staged_Order[staticwebsitej]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return staticwebsitei_order < staticwebsitej_order
+	})
+	if len(staticwebsiteOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, staticwebsite := range staticwebsiteOrdered {
+
+		id = generatesIdentifier("StaticWebSite", idx, staticwebsite.Name)
+		map_StaticWebSite_Identifiers[staticwebsite] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSite")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsite.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MarkdownContent")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.MarkdownContent))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "InputImagesDir")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.InputImagesDir))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "OutputStaticWebDir")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.OutputStaticWebDir))
+		initializerStatements += setValueField
+
+	}
+
+	map_StaticWebSiteChapter_Identifiers := make(map[*StaticWebSiteChapter]string)
+	_ = map_StaticWebSiteChapter_Identifiers
+
+	staticwebsitechapterOrdered := []*StaticWebSiteChapter{}
+	for staticwebsitechapter := range stage.StaticWebSiteChapters {
+		staticwebsitechapterOrdered = append(staticwebsitechapterOrdered, staticwebsitechapter)
+	}
+	sort.Slice(staticwebsitechapterOrdered[:], func(i, j int) bool {
+		staticwebsitechapteri := staticwebsitechapterOrdered[i]
+		staticwebsitechapterj := staticwebsitechapterOrdered[j]
+		staticwebsitechapteri_order, oki := stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapteri]
+		staticwebsitechapterj_order, okj := stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapterj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return staticwebsitechapteri_order < staticwebsitechapterj_order
+	})
+	if len(staticwebsitechapterOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, staticwebsitechapter := range staticwebsitechapterOrdered {
+
+		id = generatesIdentifier("StaticWebSiteChapter", idx, staticwebsitechapter.Name)
+		map_StaticWebSiteChapter_Identifiers[staticwebsitechapter] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteChapter")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitechapter.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MarkdownContent")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.MarkdownContent))
 		initializerStatements += setValueField
 
 	}
@@ -6095,6 +6360,53 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
+	if len(generatedimagemetamodelOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of GeneratedImageMetamodel instances pointers"
+	}
+	for idx, generatedimagemetamodel := range generatedimagemetamodelOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("GeneratedImageMetamodel", idx, generatedimagemetamodel.Name)
+		map_GeneratedImageMetamodel_Identifiers[generatedimagemetamodel] = id
+
+		// Initialisation of values
+	}
+
+	if len(imageOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Image instances pointers"
+	}
+	for idx, image := range imageOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Image", idx, image.Name)
+		map_Image_Identifiers[image] = id
+
+		// Initialisation of values
+	}
+
+	if len(paragraphOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Paragraph instances pointers"
+	}
+	for idx, paragraph := range paragraphOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Paragraph", idx, paragraph.Name)
+		map_Paragraph_Identifiers[paragraph] = id
+
+		// Initialisation of values
+		if paragraph.Image != nil {
+			setPointerField = PointerFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Image")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Image_Identifiers[paragraph.Image])
+			pointersInitializesStatements += setPointerField
+		}
+
+	}
+
 	if len(relation_groupOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP instances pointers"
 	}
@@ -6563,6 +6875,48 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_ATTRIBUTES_Identifiers[spec_relation_type.SPEC_ATTRIBUTES])
+			pointersInitializesStatements += setPointerField
+		}
+
+	}
+
+	if len(staticwebsiteOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of StaticWebSite instances pointers"
+	}
+	for idx, staticwebsite := range staticwebsiteOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("StaticWebSite", idx, staticwebsite.Name)
+		map_StaticWebSite_Identifiers[staticwebsite] = id
+
+		// Initialisation of values
+		for _, _staticwebsitechapter := range staticwebsite.Chapters {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Chapters")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_StaticWebSiteChapter_Identifiers[_staticwebsitechapter])
+			pointersInitializesStatements += setPointerField
+		}
+
+	}
+
+	if len(staticwebsitechapterOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of StaticWebSiteChapter instances pointers"
+	}
+	for idx, staticwebsitechapter := range staticwebsitechapterOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("StaticWebSiteChapter", idx, staticwebsitechapter.Name)
+		map_StaticWebSiteChapter_Identifiers[staticwebsitechapter] = id
+
+		// Initialisation of values
+		for _, _paragraph := range staticwebsitechapter.Paragraphs {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Paragraphs")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Paragraph_Identifiers[_paragraph])
 			pointersInitializesStatements += setPointerField
 		}
 

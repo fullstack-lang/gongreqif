@@ -286,6 +286,18 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUECreateCallback != nil {
 			stage.OnAfterENUM_VALUECreateCallback.OnAfterCreate(stage, target)
 		}
+	case *GeneratedImageMetamodel:
+		if stage.OnAfterGeneratedImageMetamodelCreateCallback != nil {
+			stage.OnAfterGeneratedImageMetamodelCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Image:
+		if stage.OnAfterImageCreateCallback != nil {
+			stage.OnAfterImageCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Paragraph:
+		if stage.OnAfterParagraphCreateCallback != nil {
+			stage.OnAfterParagraphCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPCreateCallback != nil {
 			stage.OnAfterRELATION_GROUPCreateCallback.OnAfterCreate(stage, target)
@@ -337,6 +349,14 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *SPEC_RELATION_TYPE:
 		if stage.OnAfterSPEC_RELATION_TYPECreateCallback != nil {
 			stage.OnAfterSPEC_RELATION_TYPECreateCallback.OnAfterCreate(stage, target)
+		}
+	case *StaticWebSite:
+		if stage.OnAfterStaticWebSiteCreateCallback != nil {
+			stage.OnAfterStaticWebSiteCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *StaticWebSiteChapter:
+		if stage.OnAfterStaticWebSiteChapterCreateCallback != nil {
+			stage.OnAfterStaticWebSiteChapterCreateCallback.OnAfterCreate(stage, target)
 		}
 	case *XHTML_CONTENT:
 		if stage.OnAfterXHTML_CONTENTCreateCallback != nil {
@@ -702,6 +722,21 @@ func AfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		if stage.OnAfterENUM_VALUEUpdateCallback != nil {
 			stage.OnAfterENUM_VALUEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
+	case *GeneratedImageMetamodel:
+		newTarget := any(new).(*GeneratedImageMetamodel)
+		if stage.OnAfterGeneratedImageMetamodelUpdateCallback != nil {
+			stage.OnAfterGeneratedImageMetamodelUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *Image:
+		newTarget := any(new).(*Image)
+		if stage.OnAfterImageUpdateCallback != nil {
+			stage.OnAfterImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *Paragraph:
+		newTarget := any(new).(*Paragraph)
+		if stage.OnAfterParagraphUpdateCallback != nil {
+			stage.OnAfterParagraphUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
 	case *RELATION_GROUP:
 		newTarget := any(new).(*RELATION_GROUP)
 		if stage.OnAfterRELATION_GROUPUpdateCallback != nil {
@@ -766,6 +801,16 @@ func AfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		newTarget := any(new).(*SPEC_RELATION_TYPE)
 		if stage.OnAfterSPEC_RELATION_TYPEUpdateCallback != nil {
 			stage.OnAfterSPEC_RELATION_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *StaticWebSite:
+		newTarget := any(new).(*StaticWebSite)
+		if stage.OnAfterStaticWebSiteUpdateCallback != nil {
+			stage.OnAfterStaticWebSiteUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *StaticWebSiteChapter:
+		newTarget := any(new).(*StaticWebSiteChapter)
+		if stage.OnAfterStaticWebSiteChapterUpdateCallback != nil {
+			stage.OnAfterStaticWebSiteChapterUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *XHTML_CONTENT:
 		newTarget := any(new).(*XHTML_CONTENT)
@@ -1132,6 +1177,21 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*ENUM_VALUE)
 			stage.OnAfterENUM_VALUEDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *GeneratedImageMetamodel:
+		if stage.OnAfterGeneratedImageMetamodelDeleteCallback != nil {
+			staged := any(staged).(*GeneratedImageMetamodel)
+			stage.OnAfterGeneratedImageMetamodelDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Image:
+		if stage.OnAfterImageDeleteCallback != nil {
+			staged := any(staged).(*Image)
+			stage.OnAfterImageDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Paragraph:
+		if stage.OnAfterParagraphDeleteCallback != nil {
+			staged := any(staged).(*Paragraph)
+			stage.OnAfterParagraphDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPDeleteCallback != nil {
 			staged := any(staged).(*RELATION_GROUP)
@@ -1196,6 +1256,16 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 		if stage.OnAfterSPEC_RELATION_TYPEDeleteCallback != nil {
 			staged := any(staged).(*SPEC_RELATION_TYPE)
 			stage.OnAfterSPEC_RELATION_TYPEDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *StaticWebSite:
+		if stage.OnAfterStaticWebSiteDeleteCallback != nil {
+			staged := any(staged).(*StaticWebSite)
+			stage.OnAfterStaticWebSiteDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *StaticWebSiteChapter:
+		if stage.OnAfterStaticWebSiteChapterDeleteCallback != nil {
+			staged := any(staged).(*StaticWebSiteChapter)
+			stage.OnAfterStaticWebSiteChapterDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
 	case *XHTML_CONTENT:
 		if stage.OnAfterXHTML_CONTENTDeleteCallback != nil {
@@ -1492,6 +1562,18 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUEReadCallback != nil {
 			stage.OnAfterENUM_VALUEReadCallback.OnAfterRead(stage, target)
 		}
+	case *GeneratedImageMetamodel:
+		if stage.OnAfterGeneratedImageMetamodelReadCallback != nil {
+			stage.OnAfterGeneratedImageMetamodelReadCallback.OnAfterRead(stage, target)
+		}
+	case *Image:
+		if stage.OnAfterImageReadCallback != nil {
+			stage.OnAfterImageReadCallback.OnAfterRead(stage, target)
+		}
+	case *Paragraph:
+		if stage.OnAfterParagraphReadCallback != nil {
+			stage.OnAfterParagraphReadCallback.OnAfterRead(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPReadCallback != nil {
 			stage.OnAfterRELATION_GROUPReadCallback.OnAfterRead(stage, target)
@@ -1543,6 +1625,14 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *SPEC_RELATION_TYPE:
 		if stage.OnAfterSPEC_RELATION_TYPEReadCallback != nil {
 			stage.OnAfterSPEC_RELATION_TYPEReadCallback.OnAfterRead(stage, target)
+		}
+	case *StaticWebSite:
+		if stage.OnAfterStaticWebSiteReadCallback != nil {
+			stage.OnAfterStaticWebSiteReadCallback.OnAfterRead(stage, target)
+		}
+	case *StaticWebSiteChapter:
+		if stage.OnAfterStaticWebSiteChapterReadCallback != nil {
+			stage.OnAfterStaticWebSiteChapterReadCallback.OnAfterRead(stage, target)
 		}
 	case *XHTML_CONTENT:
 		if stage.OnAfterXHTML_CONTENTReadCallback != nil {
@@ -1769,6 +1859,15 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[ENUM_VALUE])
 	
+	case *GeneratedImageMetamodel:
+		stage.OnAfterGeneratedImageMetamodelUpdateCallback = any(callback).(OnAfterUpdateInterface[GeneratedImageMetamodel])
+	
+	case *Image:
+		stage.OnAfterImageUpdateCallback = any(callback).(OnAfterUpdateInterface[Image])
+	
+	case *Paragraph:
+		stage.OnAfterParagraphUpdateCallback = any(callback).(OnAfterUpdateInterface[Paragraph])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPUpdateCallback = any(callback).(OnAfterUpdateInterface[RELATION_GROUP])
 	
@@ -1807,6 +1906,12 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_RELATION_TYPE])
+	
+	case *StaticWebSite:
+		stage.OnAfterStaticWebSiteUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSite])
+	
+	case *StaticWebSiteChapter:
+		stage.OnAfterStaticWebSiteChapterUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSiteChapter])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTUpdateCallback = any(callback).(OnAfterUpdateInterface[XHTML_CONTENT])
@@ -2028,6 +2133,15 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUECreateCallback = any(callback).(OnAfterCreateInterface[ENUM_VALUE])
 	
+	case *GeneratedImageMetamodel:
+		stage.OnAfterGeneratedImageMetamodelCreateCallback = any(callback).(OnAfterCreateInterface[GeneratedImageMetamodel])
+	
+	case *Image:
+		stage.OnAfterImageCreateCallback = any(callback).(OnAfterCreateInterface[Image])
+	
+	case *Paragraph:
+		stage.OnAfterParagraphCreateCallback = any(callback).(OnAfterCreateInterface[Paragraph])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPCreateCallback = any(callback).(OnAfterCreateInterface[RELATION_GROUP])
 	
@@ -2066,6 +2180,12 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPEC_RELATION_TYPE])
+	
+	case *StaticWebSite:
+		stage.OnAfterStaticWebSiteCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSite])
+	
+	case *StaticWebSiteChapter:
+		stage.OnAfterStaticWebSiteChapterCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSiteChapter])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTCreateCallback = any(callback).(OnAfterCreateInterface[XHTML_CONTENT])
@@ -2287,6 +2407,15 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[ENUM_VALUE])
 	
+	case *GeneratedImageMetamodel:
+		stage.OnAfterGeneratedImageMetamodelDeleteCallback = any(callback).(OnAfterDeleteInterface[GeneratedImageMetamodel])
+	
+	case *Image:
+		stage.OnAfterImageDeleteCallback = any(callback).(OnAfterDeleteInterface[Image])
+	
+	case *Paragraph:
+		stage.OnAfterParagraphDeleteCallback = any(callback).(OnAfterDeleteInterface[Paragraph])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPDeleteCallback = any(callback).(OnAfterDeleteInterface[RELATION_GROUP])
 	
@@ -2325,6 +2454,12 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_RELATION_TYPE])
+	
+	case *StaticWebSite:
+		stage.OnAfterStaticWebSiteDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSite])
+	
+	case *StaticWebSiteChapter:
+		stage.OnAfterStaticWebSiteChapterDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSiteChapter])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTDeleteCallback = any(callback).(OnAfterDeleteInterface[XHTML_CONTENT])
@@ -2546,6 +2681,15 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEReadCallback = any(callback).(OnAfterReadInterface[ENUM_VALUE])
 	
+	case *GeneratedImageMetamodel:
+		stage.OnAfterGeneratedImageMetamodelReadCallback = any(callback).(OnAfterReadInterface[GeneratedImageMetamodel])
+	
+	case *Image:
+		stage.OnAfterImageReadCallback = any(callback).(OnAfterReadInterface[Image])
+	
+	case *Paragraph:
+		stage.OnAfterParagraphReadCallback = any(callback).(OnAfterReadInterface[Paragraph])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPReadCallback = any(callback).(OnAfterReadInterface[RELATION_GROUP])
 	
@@ -2584,6 +2728,12 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPEC_RELATION_TYPE])
+	
+	case *StaticWebSite:
+		stage.OnAfterStaticWebSiteReadCallback = any(callback).(OnAfterReadInterface[StaticWebSite])
+	
+	case *StaticWebSiteChapter:
+		stage.OnAfterStaticWebSiteChapterReadCallback = any(callback).(OnAfterReadInterface[StaticWebSiteChapter])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTReadCallback = any(callback).(OnAfterReadInterface[XHTML_CONTENT])

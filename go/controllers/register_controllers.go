@@ -541,6 +541,27 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/enum_values/:id", GetController().UpdateENUM_VALUE)
 		v1.DELETE("/v1/enum_values/:id", GetController().DeleteENUM_VALUE)
 
+		v1.GET("/v1/generatedimagemetamodels", GetController().GetGeneratedImageMetamodels)
+		v1.GET("/v1/generatedimagemetamodels/:id", GetController().GetGeneratedImageMetamodel)
+		v1.POST("/v1/generatedimagemetamodels", GetController().PostGeneratedImageMetamodel)
+		v1.PATCH("/v1/generatedimagemetamodels/:id", GetController().UpdateGeneratedImageMetamodel)
+		v1.PUT("/v1/generatedimagemetamodels/:id", GetController().UpdateGeneratedImageMetamodel)
+		v1.DELETE("/v1/generatedimagemetamodels/:id", GetController().DeleteGeneratedImageMetamodel)
+
+		v1.GET("/v1/images", GetController().GetImages)
+		v1.GET("/v1/images/:id", GetController().GetImage)
+		v1.POST("/v1/images", GetController().PostImage)
+		v1.PATCH("/v1/images/:id", GetController().UpdateImage)
+		v1.PUT("/v1/images/:id", GetController().UpdateImage)
+		v1.DELETE("/v1/images/:id", GetController().DeleteImage)
+
+		v1.GET("/v1/paragraphs", GetController().GetParagraphs)
+		v1.GET("/v1/paragraphs/:id", GetController().GetParagraph)
+		v1.POST("/v1/paragraphs", GetController().PostParagraph)
+		v1.PATCH("/v1/paragraphs/:id", GetController().UpdateParagraph)
+		v1.PUT("/v1/paragraphs/:id", GetController().UpdateParagraph)
+		v1.DELETE("/v1/paragraphs/:id", GetController().DeleteParagraph)
+
 		v1.GET("/v1/relation_groups", GetController().GetRELATION_GROUPs)
 		v1.GET("/v1/relation_groups/:id", GetController().GetRELATION_GROUP)
 		v1.POST("/v1/relation_groups", GetController().PostRELATION_GROUP)
@@ -631,6 +652,20 @@ func registerControllers(r *gin.Engine) {
 		v1.PATCH("/v1/spec_relation_types/:id", GetController().UpdateSPEC_RELATION_TYPE)
 		v1.PUT("/v1/spec_relation_types/:id", GetController().UpdateSPEC_RELATION_TYPE)
 		v1.DELETE("/v1/spec_relation_types/:id", GetController().DeleteSPEC_RELATION_TYPE)
+
+		v1.GET("/v1/staticwebsites", GetController().GetStaticWebSites)
+		v1.GET("/v1/staticwebsites/:id", GetController().GetStaticWebSite)
+		v1.POST("/v1/staticwebsites", GetController().PostStaticWebSite)
+		v1.PATCH("/v1/staticwebsites/:id", GetController().UpdateStaticWebSite)
+		v1.PUT("/v1/staticwebsites/:id", GetController().UpdateStaticWebSite)
+		v1.DELETE("/v1/staticwebsites/:id", GetController().DeleteStaticWebSite)
+
+		v1.GET("/v1/staticwebsitechapters", GetController().GetStaticWebSiteChapters)
+		v1.GET("/v1/staticwebsitechapters/:id", GetController().GetStaticWebSiteChapter)
+		v1.POST("/v1/staticwebsitechapters", GetController().PostStaticWebSiteChapter)
+		v1.PATCH("/v1/staticwebsitechapters/:id", GetController().UpdateStaticWebSiteChapter)
+		v1.PUT("/v1/staticwebsitechapters/:id", GetController().UpdateStaticWebSiteChapter)
+		v1.DELETE("/v1/staticwebsitechapters/:id", GetController().DeleteStaticWebSiteChapter)
 
 		v1.GET("/v1/xhtml_contents", GetController().GetXHTML_CONTENTs)
 		v1.GET("/v1/xhtml_contents/:id", GetController().GetXHTML_CONTENT)

@@ -102,6 +102,8 @@ github.com/fullstack-lang/gong/lib/ssg/go/fullstack
 github.com/fullstack-lang/gong/lib/ssg/go/gen
 github.com/fullstack-lang/gong/lib/ssg/go/models
 github.com/fullstack-lang/gong/lib/ssg/go/orm
+github.com/fullstack-lang/gong/lib/ssg/go/probe
+github.com/fullstack-lang/gong/lib/ssg/go/stack
 github.com/fullstack-lang/gong/lib/ssg/ng-github.com-fullstack-lang-gong-lib-ssg
 github.com/fullstack-lang/gong/lib/svg/go
 github.com/fullstack-lang/gong/lib/svg/go/controllers
