@@ -491,6 +491,9 @@ func NewStager(
 
 func (stager *Stager) processReqifData(reqifData []byte, pathToReqifFile string) {
 
+	stager.stage.Reset()
+	stager.pathToReqifFile = pathToReqifFile
+
 	// Unmarshal the XML into the Reqif struct
 	var req_if REQ_IF
 	err := xml.Unmarshal(reqifData, &req_if)
