@@ -28,7 +28,7 @@ func (emptystring *EmptyString) FromCodeString(input string) (err error) {
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }
@@ -85,7 +85,7 @@ func (enum_global_ref *Enum_GLOBAL_REF) FromCodeString(input string) (err error)
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }
@@ -142,7 +142,7 @@ func (id *ID) FromCodeString(input string) (err error) {
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }
@@ -199,7 +199,7 @@ func (idref *IDREF) FromCodeString(input string) (err error) {
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }
@@ -256,7 +256,7 @@ func (language *Language) FromCodeString(input string) (err error) {
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }
@@ -313,7 +313,7 @@ func (nmtoken *NMTOKEN) FromCodeString(input string) (err error) {
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }
@@ -370,7 +370,7 @@ func (normalizedstring *NormalizedString) FromCodeString(input string) (err erro
 	switch input {
 	// insertion code per enum code
 	default:
-		return errUnkownEnum
+		err = errUnkownEnum
 	}
 	return
 }

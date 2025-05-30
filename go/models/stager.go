@@ -24,6 +24,9 @@ import (
 
 	ssg "github.com/fullstack-lang/gong/lib/ssg/go/models"
 	ssg_stack "github.com/fullstack-lang/gong/lib/ssg/go/stack"
+
+	load "github.com/fullstack-lang/gong/lib/load/go/models"
+	load_stack "github.com/fullstack-lang/gong/lib/load/go/stack"
 )
 
 type ModelGeneratorInterface interface {
@@ -149,6 +152,8 @@ type Stager struct {
 
 	// (4) that will be used for the path to the ssg site
 	rootPathToStaticOutputs string
+
+	loadStage *load.Stage
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
@@ -257,6 +262,7 @@ func NewStager(
 	stager.objectNamer = objectNamer
 
 	stager.ssgStage = ssg_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
+	stager.loadStage = load_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
 	stager.summaryTableName = "Summary Table Name"
