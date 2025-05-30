@@ -5,7 +5,6 @@ package models
 import (
 	"encoding/xml"
 	"fmt"
-	"io"
 	"log"
 	"os"
 
@@ -300,7 +299,7 @@ func NewStager(
 					Direction: split.Horizontal,
 					AsSplitAreas: []*split.AsSplitArea{
 						{
-							Name: "Summary + button",
+							Name: "Summary + upload + button",
 							Size: 20,
 							AsSplit: (&split.AsSplit{
 								Direction: split.Vertical,
@@ -308,12 +307,21 @@ func NewStager(
 									{
 										Name:             "Summary table",
 										ShowNameInHeader: false,
-										Size:             75,
+										Size:             50,
 										Table: &split.Table{
 											StackName: stager.summaryTableStage.GetName(),
 											TableName: stager.summaryTableName,
 										},
 									},
+									(&split.AsSplitArea{
+										Name: "Upload",
+										Size: 25,
+										AsSplit: (&split.AsSplit{
+											Direction: split.Horizontal,
+											AsSplitAreas: []*split.AsSplitArea{
+												load.NewStager(r, stager.loadStage, stager.splitStage).GetAsSplitArea()},
+										}),
+									}),
 									{
 										Name:             "Buttons",
 										ShowNameInHeader: false,
@@ -467,33 +475,34 @@ func NewStager(
 
 	stager.splitStage.Commit()
 
-	// Open the XML file
-	xmlFile, err := os.Open(pathToReqifFile)
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
+	if pathToReqifFile != "" {
+		// Open the XML file
+		reqifData, err := os.ReadFile(pathToReqifFile) // os.ReadFile is simpler
+		if err != nil {
+			fmt.Printf("Error reading file %s: %v\n", pathToReqifFile, err)
+		}
+		stager.processReqifData(reqifData, pathToReqifFile)
 	}
-	defer xmlFile.Close()
 
-	// Read the XML file
-	byteValue, err := io.ReadAll(xmlFile)
-	if err != nil {
-		fmt.Println("Error reading file:", err)
-		return
-	}
+	stager.updateAndCommitSummaryLoadStage()
+
+	return
+}
+
+func (stager *Stager) processReqifData(reqifData []byte, pathToReqifFile string) {
 
 	// Unmarshal the XML into the Reqif struct
 	var req_if REQ_IF
-	err = xml.Unmarshal(byteValue, &req_if)
+	err := xml.Unmarshal(reqifData, &req_if)
 	if err != nil {
 		fmt.Println("Error unmarshalling XML:", err)
 		return
 	}
 
-	StageBranch(stage, &req_if)
+	StageBranch(stager.stage, &req_if)
 
 	// fetch the root REQ_IF element and exit otherwise
-	for reqif := range *GetGongstructInstancesSet[REQ_IF](stage) {
+	for reqif := range *GetGongstructInstancesSet[REQ_IF](stager.stage) {
 		stager.rootReqif = reqif
 	}
 
@@ -501,13 +510,13 @@ func NewStager(
 		log.Fatal("No REQ_IF element found in file", pathToReqifFile)
 	}
 
-	stager.objectNamer.SetNamesToElements(stage, &req_if)
+	stager.objectNamer.SetNamesToElements(stager.stage, &req_if)
 
 	stager.initMaps()
 
-	stage.Commit()
+	stager.stage.Commit()
+
 	stager.updateAndCommitSummaryTableStage()
-	stager.UpdateAndCommitButtonStage()
 
 	stager.dataTypesTreeUpdater.UpdateAndCommitDataTypeTreeStage(stager)
 	stager.specTypesTreeUpdater.UpdateAndCommitSpecTypesTreeStage(stager)
@@ -516,5 +525,6 @@ func NewStager(
 	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
 	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
 
-	return
+	stager.UpdateAndCommitButtonStage()
+
 }
