@@ -18,9 +18,7 @@ export class FileToUpload {
 
 	// insertion point for basic fields declarations
 	Name: string = ""
-	Content: string = ""
-	InvitationToUpload: string = ""
-	AfterProcessingMessage: string = ""
+	Base64EncodedContent: string = ""
 
 	// insertion point for pointers and slices of pointers declarations
 }
@@ -33,9 +31,7 @@ export function CopyFileToUploadToFileToUploadAPI(filetoupload: FileToUpload, fi
 
 	// insertion point for basic fields copy operations
 	filetouploadAPI.Name = filetoupload.Name
-	filetouploadAPI.Content = filetoupload.Content
-	filetouploadAPI.InvitationToUpload = filetoupload.InvitationToUpload
-	filetouploadAPI.AfterProcessingMessage = filetoupload.AfterProcessingMessage
+	filetouploadAPI.Base64EncodedContent = filetoupload.Base64EncodedContent
 
 	// insertion point for pointer fields encoding
 
@@ -54,9 +50,7 @@ export function CopyFileToUploadAPIToFileToUpload(filetouploadAPI: FileToUploadA
 
 	// insertion point for basic fields copy operations
 	filetoupload.Name = filetouploadAPI.Name
-	filetoupload.Content = filetouploadAPI.Content
-	filetoupload.InvitationToUpload = filetouploadAPI.InvitationToUpload
-	filetoupload.AfterProcessingMessage = filetouploadAPI.AfterProcessingMessage
+	filetoupload.Base64EncodedContent = filetouploadAPI.Base64EncodedContent
 
 	// insertion point for pointer fields encoding
 

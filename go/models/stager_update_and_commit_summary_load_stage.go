@@ -3,6 +3,7 @@ package models
 import (
 	"archive/zip"
 	"bytes"
+	"encoding/base64"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -22,14 +23,20 @@ func (fileToUploadProxy *FileToUploadProxy) OnFileUpload(uploadedFile *load.File
 	var contentToProcess []byte
 	var err error
 
+	// Direct processing for .reqif files
+	decodedBytes, err := base64.StdEncoding.DecodeString(uploadedFile.Base64EncodedContent)
+	if err != nil {
+		return fmt.Errorf("base64.StdEncoding.DecodeString failed: %w", err)
+	}
+
 	switch fileExt {
 	case ".reqif":
-		// Direct processing for .reqif files
-		contentToProcess = []byte(uploadedFile.Content)
+
+		contentToProcess = decodedBytes
 
 	case ".reqifz":
 		// Unzip and extract .reqif content for .reqifz files
-		contentToProcess, err = extractReqifFromZip([]byte(uploadedFile.Content))
+		contentToProcess, err = extractReqifFromZip(decodedBytes)
 		if err != nil {
 			return fmt.Errorf("failed to extract REQIF from zip: %w", err)
 		}

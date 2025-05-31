@@ -16,8 +16,6 @@ cd "$ORIGINAL_DIR"
 echo "Updating module with latest commit: $LATEST_COMMIT"
 go get github.com/fullstack-lang/gong@"$LATEST_COMMIT"
 
-# Optional: Run go mod tidy to clean up dependencies
-go mod tidy
-go mod vendor
+gongc go/models
 
 echo "Module updated successfully!"

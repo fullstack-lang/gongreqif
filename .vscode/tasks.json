@@ -33,6 +33,19 @@
 		],
 		"group": "build"
 	  },
+	  	  {
+		"label": "02 - run gongreqif upload",
+		"type": "shell",
+		"options": {
+		  "cwd": "${workspaceFolder}/go/cmd/gongreqif"
+		},
+		"command": "go",
+		"args": [
+		  "run",
+		  ".",
+		],
+		"group": "build"
+	  },
 	  {
 		"label": "03 - lsof -i tcp:8080 ",
 		"type": "shell",
@@ -103,11 +116,7 @@
 	  {
 		"label": "00 - update dependencies",
 		"type": "shell",
-		"command": "go",
-		"args": [
-		  "get",
-		  "github.com/fullstack-lang/gong@main",
-		],
+		"command": "./update_gong_dep.sh",
 		"group": "build"
 	  },
 	  {
