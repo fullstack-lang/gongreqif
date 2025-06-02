@@ -28,6 +28,16 @@
             ]
         },
         {
+            "name": "go server with upload",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
+            "args": [
+            ]
+        },
+        {
             "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 1.reqif`",
             "type": "go",
             "request": "launch",

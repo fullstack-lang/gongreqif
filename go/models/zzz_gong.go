@@ -12575,7 +12575,7 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 // The function provides a map with keys as instances of End and values to *Start instances
 // the map is construed by iterating over all Start instances and populating keys with End instances
 // and values with the Start instances
-func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage *Stage) map[*End]*Start {
+func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage *Stage) map[*End][]*Start {
 
 	var ret Start
 
@@ -12701,165 +12701,165 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_BOOLEAN":
-			res := make(map[*ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_BOOLEAN)
+			res := make(map[*ATTRIBUTE_VALUE_BOOLEAN][]*A_ATTRIBUTE_VALUE_BOOLEAN)
 			for a_attribute_value_boolean := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
 				for _, attribute_value_boolean_ := range a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN {
-					res[attribute_value_boolean_] = a_attribute_value_boolean
+					res[attribute_value_boolean_] = append(res[attribute_value_boolean_], a_attribute_value_boolean)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_DATE
 	case A_ATTRIBUTE_VALUE_DATE:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_DATE":
-			res := make(map[*ATTRIBUTE_VALUE_DATE]*A_ATTRIBUTE_VALUE_DATE)
+			res := make(map[*ATTRIBUTE_VALUE_DATE][]*A_ATTRIBUTE_VALUE_DATE)
 			for a_attribute_value_date := range stage.A_ATTRIBUTE_VALUE_DATEs {
 				for _, attribute_value_date_ := range a_attribute_value_date.ATTRIBUTE_VALUE_DATE {
-					res[attribute_value_date_] = a_attribute_value_date
+					res[attribute_value_date_] = append(res[attribute_value_date_], a_attribute_value_date)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_ENUMERATION
 	case A_ATTRIBUTE_VALUE_ENUMERATION:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_ENUMERATION":
-			res := make(map[*ATTRIBUTE_VALUE_ENUMERATION]*A_ATTRIBUTE_VALUE_ENUMERATION)
+			res := make(map[*ATTRIBUTE_VALUE_ENUMERATION][]*A_ATTRIBUTE_VALUE_ENUMERATION)
 			for a_attribute_value_enumeration := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
 				for _, attribute_value_enumeration_ := range a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION {
-					res[attribute_value_enumeration_] = a_attribute_value_enumeration
+					res[attribute_value_enumeration_] = append(res[attribute_value_enumeration_], a_attribute_value_enumeration)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_INTEGER
 	case A_ATTRIBUTE_VALUE_INTEGER:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_INTEGER":
-			res := make(map[*ATTRIBUTE_VALUE_INTEGER]*A_ATTRIBUTE_VALUE_INTEGER)
+			res := make(map[*ATTRIBUTE_VALUE_INTEGER][]*A_ATTRIBUTE_VALUE_INTEGER)
 			for a_attribute_value_integer := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
 				for _, attribute_value_integer_ := range a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER {
-					res[attribute_value_integer_] = a_attribute_value_integer
+					res[attribute_value_integer_] = append(res[attribute_value_integer_], a_attribute_value_integer)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_REAL
 	case A_ATTRIBUTE_VALUE_REAL:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_REAL":
-			res := make(map[*ATTRIBUTE_VALUE_REAL]*A_ATTRIBUTE_VALUE_REAL)
+			res := make(map[*ATTRIBUTE_VALUE_REAL][]*A_ATTRIBUTE_VALUE_REAL)
 			for a_attribute_value_real := range stage.A_ATTRIBUTE_VALUE_REALs {
 				for _, attribute_value_real_ := range a_attribute_value_real.ATTRIBUTE_VALUE_REAL {
-					res[attribute_value_real_] = a_attribute_value_real
+					res[attribute_value_real_] = append(res[attribute_value_real_], a_attribute_value_real)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_STRING
 	case A_ATTRIBUTE_VALUE_STRING:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_STRING":
-			res := make(map[*ATTRIBUTE_VALUE_STRING]*A_ATTRIBUTE_VALUE_STRING)
+			res := make(map[*ATTRIBUTE_VALUE_STRING][]*A_ATTRIBUTE_VALUE_STRING)
 			for a_attribute_value_string := range stage.A_ATTRIBUTE_VALUE_STRINGs {
 				for _, attribute_value_string_ := range a_attribute_value_string.ATTRIBUTE_VALUE_STRING {
-					res[attribute_value_string_] = a_attribute_value_string
+					res[attribute_value_string_] = append(res[attribute_value_string_], a_attribute_value_string)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_XHTML
 	case A_ATTRIBUTE_VALUE_XHTML:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_XHTML":
-			res := make(map[*ATTRIBUTE_VALUE_XHTML]*A_ATTRIBUTE_VALUE_XHTML)
+			res := make(map[*ATTRIBUTE_VALUE_XHTML][]*A_ATTRIBUTE_VALUE_XHTML)
 			for a_attribute_value_xhtml := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
 				for _, attribute_value_xhtml_ := range a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML {
-					res[attribute_value_xhtml_] = a_attribute_value_xhtml
+					res[attribute_value_xhtml_] = append(res[attribute_value_xhtml_], a_attribute_value_xhtml)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_ATTRIBUTE_VALUE_XHTML_1
 	case A_ATTRIBUTE_VALUE_XHTML_1:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_VALUE_BOOLEAN":
-			res := make(map[*ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_BOOLEAN][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_boolean_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN {
-					res[attribute_value_boolean_] = a_attribute_value_xhtml_1
+					res[attribute_value_boolean_] = append(res[attribute_value_boolean_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_VALUE_DATE":
-			res := make(map[*ATTRIBUTE_VALUE_DATE]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_DATE][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_date_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE {
-					res[attribute_value_date_] = a_attribute_value_xhtml_1
+					res[attribute_value_date_] = append(res[attribute_value_date_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_VALUE_ENUMERATION":
-			res := make(map[*ATTRIBUTE_VALUE_ENUMERATION]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_ENUMERATION][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_enumeration_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION {
-					res[attribute_value_enumeration_] = a_attribute_value_xhtml_1
+					res[attribute_value_enumeration_] = append(res[attribute_value_enumeration_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_VALUE_INTEGER":
-			res := make(map[*ATTRIBUTE_VALUE_INTEGER]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_INTEGER][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_integer_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER {
-					res[attribute_value_integer_] = a_attribute_value_xhtml_1
+					res[attribute_value_integer_] = append(res[attribute_value_integer_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_VALUE_REAL":
-			res := make(map[*ATTRIBUTE_VALUE_REAL]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_REAL][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_real_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL {
-					res[attribute_value_real_] = a_attribute_value_xhtml_1
+					res[attribute_value_real_] = append(res[attribute_value_real_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_VALUE_STRING":
-			res := make(map[*ATTRIBUTE_VALUE_STRING]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_STRING][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_string_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING {
-					res[attribute_value_string_] = a_attribute_value_xhtml_1
+					res[attribute_value_string_] = append(res[attribute_value_string_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_VALUE_XHTML":
-			res := make(map[*ATTRIBUTE_VALUE_XHTML]*A_ATTRIBUTE_VALUE_XHTML_1)
+			res := make(map[*ATTRIBUTE_VALUE_XHTML][]*A_ATTRIBUTE_VALUE_XHTML_1)
 			for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 				for _, attribute_value_xhtml_ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML {
-					res[attribute_value_xhtml_] = a_attribute_value_xhtml_1
+					res[attribute_value_xhtml_] = append(res[attribute_value_xhtml_], a_attribute_value_xhtml_1)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_CHILDREN
 	case A_CHILDREN:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "SPEC_HIERARCHY":
-			res := make(map[*SPEC_HIERARCHY]*A_CHILDREN)
+			res := make(map[*SPEC_HIERARCHY][]*A_CHILDREN)
 			for a_children := range stage.A_CHILDRENs {
 				for _, spec_hierarchy_ := range a_children.SPEC_HIERARCHY {
-					res[spec_hierarchy_] = a_children
+					res[spec_hierarchy_] = append(res[spec_hierarchy_], a_children)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_CORE_CONTENT
 	case A_CORE_CONTENT:
@@ -12871,61 +12871,61 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "DATATYPE_DEFINITION_BOOLEAN":
-			res := make(map[*DATATYPE_DEFINITION_BOOLEAN]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_BOOLEAN][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_boolean_ := range a_datatypes.DATATYPE_DEFINITION_BOOLEAN {
-					res[datatype_definition_boolean_] = a_datatypes
+					res[datatype_definition_boolean_] = append(res[datatype_definition_boolean_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "DATATYPE_DEFINITION_DATE":
-			res := make(map[*DATATYPE_DEFINITION_DATE]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_DATE][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_date_ := range a_datatypes.DATATYPE_DEFINITION_DATE {
-					res[datatype_definition_date_] = a_datatypes
+					res[datatype_definition_date_] = append(res[datatype_definition_date_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "DATATYPE_DEFINITION_ENUMERATION":
-			res := make(map[*DATATYPE_DEFINITION_ENUMERATION]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_ENUMERATION][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_enumeration_ := range a_datatypes.DATATYPE_DEFINITION_ENUMERATION {
-					res[datatype_definition_enumeration_] = a_datatypes
+					res[datatype_definition_enumeration_] = append(res[datatype_definition_enumeration_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "DATATYPE_DEFINITION_INTEGER":
-			res := make(map[*DATATYPE_DEFINITION_INTEGER]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_INTEGER][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_integer_ := range a_datatypes.DATATYPE_DEFINITION_INTEGER {
-					res[datatype_definition_integer_] = a_datatypes
+					res[datatype_definition_integer_] = append(res[datatype_definition_integer_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "DATATYPE_DEFINITION_REAL":
-			res := make(map[*DATATYPE_DEFINITION_REAL]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_REAL][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_real_ := range a_datatypes.DATATYPE_DEFINITION_REAL {
-					res[datatype_definition_real_] = a_datatypes
+					res[datatype_definition_real_] = append(res[datatype_definition_real_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "DATATYPE_DEFINITION_STRING":
-			res := make(map[*DATATYPE_DEFINITION_STRING]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_STRING][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_string_ := range a_datatypes.DATATYPE_DEFINITION_STRING {
-					res[datatype_definition_string_] = a_datatypes
+					res[datatype_definition_string_] = append(res[datatype_definition_string_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "DATATYPE_DEFINITION_XHTML":
-			res := make(map[*DATATYPE_DEFINITION_XHTML]*A_DATATYPES)
+			res := make(map[*DATATYPE_DEFINITION_XHTML][]*A_DATATYPES)
 			for a_datatypes := range stage.A_DATATYPESs {
 				for _, datatype_definition_xhtml_ := range a_datatypes.DATATYPE_DEFINITION_XHTML {
-					res[datatype_definition_xhtml_] = a_datatypes
+					res[datatype_definition_xhtml_] = append(res[datatype_definition_xhtml_], a_datatypes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_DATATYPE_DEFINITION_BOOLEAN_REF
 	case A_DATATYPE_DEFINITION_BOOLEAN_REF:
@@ -13002,13 +13002,13 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "SPECIFICATION":
-			res := make(map[*SPECIFICATION]*A_SPECIFICATIONS)
+			res := make(map[*SPECIFICATION][]*A_SPECIFICATIONS)
 			for a_specifications := range stage.A_SPECIFICATIONSs {
 				for _, specification_ := range a_specifications.SPECIFICATION {
-					res[specification_] = a_specifications
+					res[specification_] = append(res[specification_], a_specifications)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_SPECIFICATION_TYPE_REF
 	case A_SPECIFICATION_TYPE_REF:
@@ -13020,87 +13020,87 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ENUM_VALUE":
-			res := make(map[*ENUM_VALUE]*A_SPECIFIED_VALUES)
+			res := make(map[*ENUM_VALUE][]*A_SPECIFIED_VALUES)
 			for a_specified_values := range stage.A_SPECIFIED_VALUESs {
 				for _, enum_value_ := range a_specified_values.ENUM_VALUE {
-					res[enum_value_] = a_specified_values
+					res[enum_value_] = append(res[enum_value_], a_specified_values)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_SPEC_ATTRIBUTES
 	case A_SPEC_ATTRIBUTES:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "ATTRIBUTE_DEFINITION_BOOLEAN":
-			res := make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_BOOLEAN][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_boolean_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN {
-					res[attribute_definition_boolean_] = a_spec_attributes
+					res[attribute_definition_boolean_] = append(res[attribute_definition_boolean_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_DEFINITION_DATE":
-			res := make(map[*ATTRIBUTE_DEFINITION_DATE]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_DATE][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_date_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_DATE {
-					res[attribute_definition_date_] = a_spec_attributes
+					res[attribute_definition_date_] = append(res[attribute_definition_date_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_DEFINITION_ENUMERATION":
-			res := make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_ENUMERATION][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_enumeration_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION {
-					res[attribute_definition_enumeration_] = a_spec_attributes
+					res[attribute_definition_enumeration_] = append(res[attribute_definition_enumeration_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_DEFINITION_INTEGER":
-			res := make(map[*ATTRIBUTE_DEFINITION_INTEGER]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_INTEGER][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_integer_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER {
-					res[attribute_definition_integer_] = a_spec_attributes
+					res[attribute_definition_integer_] = append(res[attribute_definition_integer_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_DEFINITION_REAL":
-			res := make(map[*ATTRIBUTE_DEFINITION_REAL]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_REAL][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_real_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_REAL {
-					res[attribute_definition_real_] = a_spec_attributes
+					res[attribute_definition_real_] = append(res[attribute_definition_real_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_DEFINITION_STRING":
-			res := make(map[*ATTRIBUTE_DEFINITION_STRING]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_STRING][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_string_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_STRING {
-					res[attribute_definition_string_] = a_spec_attributes
+					res[attribute_definition_string_] = append(res[attribute_definition_string_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "ATTRIBUTE_DEFINITION_XHTML":
-			res := make(map[*ATTRIBUTE_DEFINITION_XHTML]*A_SPEC_ATTRIBUTES)
+			res := make(map[*ATTRIBUTE_DEFINITION_XHTML][]*A_SPEC_ATTRIBUTES)
 			for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 				for _, attribute_definition_xhtml_ := range a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML {
-					res[attribute_definition_xhtml_] = a_spec_attributes
+					res[attribute_definition_xhtml_] = append(res[attribute_definition_xhtml_], a_spec_attributes)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_SPEC_OBJECTS
 	case A_SPEC_OBJECTS:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "SPEC_OBJECT":
-			res := make(map[*SPEC_OBJECT]*A_SPEC_OBJECTS)
+			res := make(map[*SPEC_OBJECT][]*A_SPEC_OBJECTS)
 			for a_spec_objects := range stage.A_SPEC_OBJECTSs {
 				for _, spec_object_ := range a_spec_objects.SPEC_OBJECT {
-					res[spec_object_] = a_spec_objects
+					res[spec_object_] = append(res[spec_object_], a_spec_objects)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_SPEC_OBJECT_TYPE_REF
 	case A_SPEC_OBJECT_TYPE_REF:
@@ -13112,26 +13112,26 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "SPEC_RELATION":
-			res := make(map[*SPEC_RELATION]*A_SPEC_RELATIONS)
+			res := make(map[*SPEC_RELATION][]*A_SPEC_RELATIONS)
 			for a_spec_relations := range stage.A_SPEC_RELATIONSs {
 				for _, spec_relation_ := range a_spec_relations.SPEC_RELATION {
-					res[spec_relation_] = a_spec_relations
+					res[spec_relation_] = append(res[spec_relation_], a_spec_relations)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_SPEC_RELATION_GROUPS
 	case A_SPEC_RELATION_GROUPS:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "RELATION_GROUP":
-			res := make(map[*RELATION_GROUP]*A_SPEC_RELATION_GROUPS)
+			res := make(map[*RELATION_GROUP][]*A_SPEC_RELATION_GROUPS)
 			for a_spec_relation_groups := range stage.A_SPEC_RELATION_GROUPSs {
 				for _, relation_group_ := range a_spec_relation_groups.RELATION_GROUP {
-					res[relation_group_] = a_spec_relation_groups
+					res[relation_group_] = append(res[relation_group_], a_spec_relation_groups)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_SPEC_RELATION_REF
 	case A_SPEC_RELATION_REF:
@@ -13148,37 +13148,37 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "RELATION_GROUP_TYPE":
-			res := make(map[*RELATION_GROUP_TYPE]*A_SPEC_TYPES)
+			res := make(map[*RELATION_GROUP_TYPE][]*A_SPEC_TYPES)
 			for a_spec_types := range stage.A_SPEC_TYPESs {
 				for _, relation_group_type_ := range a_spec_types.RELATION_GROUP_TYPE {
-					res[relation_group_type_] = a_spec_types
+					res[relation_group_type_] = append(res[relation_group_type_], a_spec_types)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "SPEC_OBJECT_TYPE":
-			res := make(map[*SPEC_OBJECT_TYPE]*A_SPEC_TYPES)
+			res := make(map[*SPEC_OBJECT_TYPE][]*A_SPEC_TYPES)
 			for a_spec_types := range stage.A_SPEC_TYPESs {
 				for _, spec_object_type_ := range a_spec_types.SPEC_OBJECT_TYPE {
-					res[spec_object_type_] = a_spec_types
+					res[spec_object_type_] = append(res[spec_object_type_], a_spec_types)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "SPEC_RELATION_TYPE":
-			res := make(map[*SPEC_RELATION_TYPE]*A_SPEC_TYPES)
+			res := make(map[*SPEC_RELATION_TYPE][]*A_SPEC_TYPES)
 			for a_spec_types := range stage.A_SPEC_TYPESs {
 				for _, spec_relation_type_ := range a_spec_types.SPEC_RELATION_TYPE {
-					res[spec_relation_type_] = a_spec_types
+					res[spec_relation_type_] = append(res[spec_relation_type_], a_spec_types)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		case "SPECIFICATION_TYPE":
-			res := make(map[*SPECIFICATION_TYPE]*A_SPEC_TYPES)
+			res := make(map[*SPECIFICATION_TYPE][]*A_SPEC_TYPES)
 			for a_spec_types := range stage.A_SPEC_TYPESs {
 				for _, specification_type_ := range a_spec_types.SPECIFICATION_TYPE {
-					res[specification_type_] = a_spec_types
+					res[specification_type_] = append(res[specification_type_], a_spec_types)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of A_THE_HEADER
 	case A_THE_HEADER:
@@ -13190,13 +13190,13 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "REQ_IF_TOOL_EXTENSION":
-			res := make(map[*REQ_IF_TOOL_EXTENSION]*A_TOOL_EXTENSIONS)
+			res := make(map[*REQ_IF_TOOL_EXTENSION][]*A_TOOL_EXTENSIONS)
 			for a_tool_extensions := range stage.A_TOOL_EXTENSIONSs {
 				for _, req_if_tool_extension_ := range a_tool_extensions.REQ_IF_TOOL_EXTENSION {
-					res[req_if_tool_extension_] = a_tool_extensions
+					res[req_if_tool_extension_] = append(res[req_if_tool_extension_], a_tool_extensions)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of DATATYPE_DEFINITION_BOOLEAN
 	case DATATYPE_DEFINITION_BOOLEAN:
@@ -13328,26 +13328,26 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "Chapters":
-			res := make(map[*StaticWebSiteChapter]*StaticWebSite)
+			res := make(map[*StaticWebSiteChapter][]*StaticWebSite)
 			for staticwebsite := range stage.StaticWebSites {
 				for _, staticwebsitechapter_ := range staticwebsite.Chapters {
-					res[staticwebsitechapter_] = staticwebsite
+					res[staticwebsitechapter_] = append(res[staticwebsitechapter_], staticwebsite)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of StaticWebSiteChapter
 	case StaticWebSiteChapter:
 		switch fieldname {
 		// insertion point for per direct association field
 		case "Paragraphs":
-			res := make(map[*Paragraph]*StaticWebSiteChapter)
+			res := make(map[*Paragraph][]*StaticWebSiteChapter)
 			for staticwebsitechapter := range stage.StaticWebSiteChapters {
 				for _, paragraph_ := range staticwebsitechapter.Paragraphs {
-					res[paragraph_] = staticwebsitechapter
+					res[paragraph_] = append(res[paragraph_], staticwebsitechapter)
 				}
 			}
-			return any(res).(map[*End]*Start)
+			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of XHTML_CONTENT
 	case XHTML_CONTENT:
