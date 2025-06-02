@@ -16,6 +16,8 @@ type AttributeShape_WOP struct {
 
 	Identifier string
 
+	IdentifierMeta any
+
 	FieldTypeAsString string
 
 	Structname string
@@ -27,6 +29,7 @@ func (from *AttributeShape) CopyBasicFields(to *AttributeShape) {
 	// insertion point
 	to.Name = from.Name
 	to.Identifier = from.Identifier
+	to.IdentifierMeta = from.IdentifierMeta
 	to.FieldTypeAsString = from.FieldTypeAsString
 	to.Structname = from.Structname
 	to.Fieldtypename = from.Fieldtypename
@@ -104,6 +107,8 @@ type GongEnumShape_WOP struct {
 
 	Identifier string
 
+	IdentifierMeta any
+
 	Width float64
 
 	Height float64
@@ -117,6 +122,7 @@ func (from *GongEnumShape) CopyBasicFields(to *GongEnumShape) {
 	to.X = from.X
 	to.Y = from.Y
 	to.Identifier = from.Identifier
+	to.IdentifierMeta = from.IdentifierMeta
 	to.Width = from.Width
 	to.Height = from.Height
 	to.IsExpanded = from.IsExpanded
@@ -236,6 +242,8 @@ type LinkShape_WOP struct {
 
 	Identifier string
 
+	IdentifierMeta any
+
 	Fieldtypename string
 
 	FieldOffsetX float64
@@ -273,6 +281,7 @@ func (from *LinkShape) CopyBasicFields(to *LinkShape) {
 	// insertion point
 	to.Name = from.Name
 	to.Identifier = from.Identifier
+	to.IdentifierMeta = from.IdentifierMeta
 	to.Fieldtypename = from.Fieldtypename
 	to.FieldOffsetX = from.FieldOffsetX
 	to.FieldOffsetY = from.FieldOffsetY

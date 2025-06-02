@@ -1773,13 +1773,13 @@ func GetFields[Type Gongstruct]() (res []string) {
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
 	case AttributeShape:
-		res = []string{"Name", "Identifier", "FieldTypeAsString", "Structname", "Fieldtypename"}
+		res = []string{"Name", "Identifier", "IdentifierMeta", "FieldTypeAsString", "Structname", "Fieldtypename"}
 	case Classdiagram:
 		res = []string{"Name", "Description", "IsIncludedInStaticWebSite", "GongStructShapes", "GongEnumShapes", "GongNoteShapes", "IsInRenameMode", "IsExpanded", "NodeGongStructsIsExpanded", "NodeGongStructNodeExpansion", "NodeGongEnumsIsExpanded", "NodeGongEnumNodeExpansion", "NodeGongNotesIsExpanded", "NodeGongNoteNodeExpansion"}
 	case DiagramPackage:
 		res = []string{"Name", "Path", "GongModelPath", "Classdiagrams", "SelectedClassdiagram", "AbsolutePathToDiagramPackage"}
 	case GongEnumShape:
-		res = []string{"Name", "X", "Y", "Identifier", "GongEnumValueShapes", "Width", "Height", "IsExpanded"}
+		res = []string{"Name", "X", "Y", "Identifier", "IdentifierMeta", "GongEnumValueShapes", "Width", "Height", "IsExpanded"}
 	case GongEnumValueShape:
 		res = []string{"Name", "Identifier"}
 	case GongNoteLinkShape:
@@ -1789,7 +1789,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case GongStructShape:
 		res = []string{"Name", "X", "Y", "Identifier", "IdentifierMeta", "ShowNbInstances", "NbInstances", "AttributeShapes", "LinkShapes", "Width", "Height", "IsSelected"}
 	case LinkShape:
-		res = []string{"Name", "Identifier", "Fieldtypename", "FieldOffsetX", "FieldOffsetY", "TargetMultiplicity", "TargetMultiplicityOffsetX", "TargetMultiplicityOffsetY", "SourceMultiplicity", "SourceMultiplicityOffsetX", "SourceMultiplicityOffsetY", "X", "Y", "StartOrientation", "StartRatio", "EndOrientation", "EndRatio", "CornerOffsetRatio"}
+		res = []string{"Name", "Identifier", "IdentifierMeta", "Fieldtypename", "FieldOffsetX", "FieldOffsetY", "TargetMultiplicity", "TargetMultiplicityOffsetX", "TargetMultiplicityOffsetY", "SourceMultiplicity", "SourceMultiplicityOffsetX", "SourceMultiplicityOffsetY", "X", "Y", "StartOrientation", "StartRatio", "EndOrientation", "EndRatio", "CornerOffsetRatio"}
 	}
 	return
 }
@@ -1871,13 +1871,13 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	switch any(ret).(type) {
 	// insertion point for generic get gongstruct name
 	case *AttributeShape:
-		res = []string{"Name", "Identifier", "FieldTypeAsString", "Structname", "Fieldtypename"}
+		res = []string{"Name", "Identifier", "IdentifierMeta", "FieldTypeAsString", "Structname", "Fieldtypename"}
 	case *Classdiagram:
 		res = []string{"Name", "Description", "IsIncludedInStaticWebSite", "GongStructShapes", "GongEnumShapes", "GongNoteShapes", "IsInRenameMode", "IsExpanded", "NodeGongStructsIsExpanded", "NodeGongStructNodeExpansion", "NodeGongEnumsIsExpanded", "NodeGongEnumNodeExpansion", "NodeGongNotesIsExpanded", "NodeGongNoteNodeExpansion"}
 	case *DiagramPackage:
 		res = []string{"Name", "Path", "GongModelPath", "Classdiagrams", "SelectedClassdiagram", "AbsolutePathToDiagramPackage"}
 	case *GongEnumShape:
-		res = []string{"Name", "X", "Y", "Identifier", "GongEnumValueShapes", "Width", "Height", "IsExpanded"}
+		res = []string{"Name", "X", "Y", "Identifier", "IdentifierMeta", "GongEnumValueShapes", "Width", "Height", "IsExpanded"}
 	case *GongEnumValueShape:
 		res = []string{"Name", "Identifier"}
 	case *GongNoteLinkShape:
@@ -1887,7 +1887,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *GongStructShape:
 		res = []string{"Name", "X", "Y", "Identifier", "IdentifierMeta", "ShowNbInstances", "NbInstances", "AttributeShapes", "LinkShapes", "Width", "Height", "IsSelected"}
 	case *LinkShape:
-		res = []string{"Name", "Identifier", "Fieldtypename", "FieldOffsetX", "FieldOffsetY", "TargetMultiplicity", "TargetMultiplicityOffsetX", "TargetMultiplicityOffsetY", "SourceMultiplicity", "SourceMultiplicityOffsetX", "SourceMultiplicityOffsetY", "X", "Y", "StartOrientation", "StartRatio", "EndOrientation", "EndRatio", "CornerOffsetRatio"}
+		res = []string{"Name", "Identifier", "IdentifierMeta", "Fieldtypename", "FieldOffsetX", "FieldOffsetY", "TargetMultiplicity", "TargetMultiplicityOffsetX", "TargetMultiplicityOffsetY", "SourceMultiplicity", "SourceMultiplicityOffsetX", "SourceMultiplicityOffsetY", "X", "Y", "StartOrientation", "StartRatio", "EndOrientation", "EndRatio", "CornerOffsetRatio"}
 	}
 	return
 }

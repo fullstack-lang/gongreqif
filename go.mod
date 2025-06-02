@@ -3,7 +3,7 @@ module github.com/fullstack-lang/gongreqif
 go 1.24.3
 
 require (
-	github.com/fullstack-lang/gong v0.0.0-20250531050814-1a31b41f3e3d
+	github.com/fullstack-lang/gong v0.0.0-20250602070557-66a9bcf3a6c4
 	github.com/fullstack-lang/maticons v0.0.0-20240913013021-27a7b8fd9369
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-contrib/static v1.1.3

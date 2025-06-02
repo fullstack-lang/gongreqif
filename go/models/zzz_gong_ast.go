@@ -547,6 +547,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 		// astCoordinate := astCoordinate + "\tRhs"
 		switch expr := expr.(type) {
 		case *ast.CallExpr:
+			var basicLit *ast.BasicLit
+
 			callExpr := expr
 			// astCoordinate := astCoordinate + "\tFun"
 			switch fun := callExpr.Fun.(type) {
@@ -1549,21 +1551,51 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					}
 				}
 			case *ast.Ident:
-				// append function
-				ident := fun
-				_ = ident
-				// astCoordinate := astCoordinate + "\tIdent" + "." + ident.Name
-				// log.Println(astCoordinate)
+				// pick up the first arg
+				if len(callExpr.Args) != 1 {
+					break
+				}
+				arg0 := callExpr.Args[0]
+
+				var se *ast.SelectorExpr
+				var ok bool
+				if se, ok = arg0.(*ast.SelectorExpr); !ok {
+					break
+				}
+
+				var seXident *ast.Ident
+				if seXident = se.X.(*ast.Ident); !ok {
+					break
+				}
+
+				basicLit = new(ast.BasicLit)
+				// For a "fake" literal, Kind might be set to something like token.STRING or a custom indicator
+				basicLit.Kind = token.STRING // Or another appropriate token.Kind
+				basicLit.Value = "new(" + seXident.Name + "." + se.Sel.Name + ")"
+				// following lines are here to avoid warning "unused write to field..."
+				_ = basicLit.Kind
+				_ = basicLit.Value
+				_ = basicLit
 			}
 			for _, arg := range callExpr.Args {
 				// astCoordinate := astCoordinate + "\tArg"
 				switch arg := arg.(type) {
-				case *ast.Ident:
-					ident := arg
-					_ = ident
-					// astCoordinate := astCoordinate + "\tIdent" + "." + ident.Name
-					// log.Println(astCoordinate)
+				case *ast.Ident, *ast.SelectorExpr:
+					var ident *ast.Ident
 					var ok bool
+					_ = ok
+					if ident, ok = arg.(*ast.Ident); !ok {
+						// log.Println("we are in the case of new(....)")
+					}
+
+					var se *ast.SelectorExpr
+					if se, ok = arg.(*ast.SelectorExpr); ok {
+						if ident, ok = se.X.(*ast.Ident); !ok {
+							// log.Println("we are in the case of append(....)")
+						}
+					}
+					_ = ident
+
 					gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 					if !ok {
 						log.Fatalln("gongstructName not found for identifier", identifier)
@@ -2173,37 +2205,46 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					}
-				case *ast.SelectorExpr:
-					slcExpr := arg
-					// astCoordinate := astCoordinate + "\tSelectorExpr"
-					switch X := slcExpr.X.(type) {
-					case *ast.Ident:
-						ident := X
-						_ = ident
-						// astCoordinate := astCoordinate + "\tX" + "." + ident.Name
-						// log.Println(astCoordinate)
-
-					}
-					if Sel := slcExpr.Sel; Sel != nil {
-						// astCoordinate := astCoordinate + "\tSel" + "." + Sel.Name
-						// log.Println(astCoordinate)
-					}
 				}
 			}
-		case *ast.BasicLit, *ast.UnaryExpr:
+		case *ast.BasicLit, *ast.UnaryExpr, *ast.CompositeLit:
 
 			var basicLit *ast.BasicLit
 			var exprSign = 1.0
 			_ = exprSign // in case this is not used
-
-			if bl, ok := expr.(*ast.BasicLit); ok {
-				// expression is  for instance ... = 18.000
-				basicLit = bl
-			} else if ue, ok := expr.(*ast.UnaryExpr); ok {
-				// expression is  for instance ... = -18.000
+			switch v := expr.(type) {
+			case *ast.BasicLit:
+				// expression is for instance ... = 18.000
+				basicLit = v
+			case *ast.UnaryExpr:
+				// expression is for instance ... = -18.000
 				// we want to extract a *ast.BasicLit from the *ast.UnaryExpr
-				basicLit = ue.X.(*ast.BasicLit)
-				exprSign = -1
+				if bl, ok := v.X.(*ast.BasicLit); ok {
+					basicLit = bl
+					// Check the operator to set the sign
+					if v.Op == token.SUB { // token.SUB is for '-'
+						exprSign = -1
+					} else if v.Op == token.ADD { // token.ADD is for '+'
+						exprSign = 1
+					}
+				}
+			case *ast.CompositeLit:
+				var sl *ast.SelectorExpr
+				var ident *ast.Ident
+				var ok bool
+
+				if sl, ok = v.Type.(*ast.SelectorExpr); !ok {
+					break // Exits the switch case
+				}
+
+				if ident, ok = sl.X.(*ast.Ident); !ok {
+					break // Exits the switch case
+				}
+
+				basicLit = new(ast.BasicLit)
+				// For a "fake" literal, Kind might be set to something like token.STRING or a custom indicator
+				basicLit.Kind = token.STRING // Or another appropriate token.Kind
+				basicLit.Value = ident.Name + "." + sl.Sel.Name + "{}"
 			}
 
 			// astCoordinate := astCoordinate + "\tBasicLit" + "." + basicLit.Value
@@ -4310,6 +4351,9 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				}
 			}
 		case *ast.SelectorExpr:
+			var basicLit *ast.BasicLit
+			var ident *ast.Ident
+
 			// assignment to enum field
 			selectorExpr := expr
 			// astCoordinate := astCoordinate + "\tSelectorExpr"
@@ -4319,7 +4363,24 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				_ = ident
 				// astCoordinate := astCoordinate + "\tX" + "." + ident.Name
 				// log.Println(astCoordinate)
+			case *ast.CompositeLit:
+				var ok bool
+				var sl *ast.SelectorExpr
+
+				if sl, ok = X.Type.(*ast.SelectorExpr); !ok {
+					break // Exits the switch case
+				}
+
+				if ident, ok = sl.X.(*ast.Ident); !ok {
+					break // Exits the switch case
+				}
+
+				basicLit = new(ast.BasicLit)
+				// For a "fake" literal, Kind might be set to something like token.STRING or a custom indicator
+				basicLit.Kind = token.STRING // Or another appropriate token.Kind
+				basicLit.Value = ident.Name + "." + sl.Sel.Name + "{}." + selectorExpr.Sel.Name
 			}
+
 			if Sel := selectorExpr.Sel; Sel != nil {
 				// astCoordinate := astCoordinate + "\tSel" + "." + Sel.Name
 				// log.Println(astCoordinate)
@@ -4335,198 +4396,198 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				enumValue := Sel.Name
 				_ = enumValue
 				switch gongstructName {
-				// insertion point for enums assignments
+				// insertion point for selector expr assignments
 				case "ALTERNATIVE_ID":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_BOOLEAN":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_DATE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_ENUMERATION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_INTEGER":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_REAL":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_STRING":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_XHTML":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_BOOLEAN":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_DATE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_ENUMERATION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_INTEGER":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_REAL":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_STRING":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_VALUE_XHTML":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ALTERNATIVE_ID":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_DATE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_INTEGER_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_REAL_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_STRING_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_DEFINITION_XHTML_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_BOOLEAN":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_DATE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_ENUMERATION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_INTEGER":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_REAL":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_STRING":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_XHTML":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ATTRIBUTE_VALUE_XHTML_1":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_CHILDREN":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_CORE_CONTENT":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPES":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_DATE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_ENUMERATION_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_INTEGER_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_REAL_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_STRING_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_DATATYPE_DEFINITION_XHTML_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_EDITABLE_ATTS":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_ENUM_VALUE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_OBJECT":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_PROPERTIES":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_RELATION_GROUP_TYPE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SOURCE_1":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SOURCE_SPECIFICATION_1":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					case "SPECIFICATION_REF":
 						var val Enum_GLOBAL_REF
 						err := (&val).FromCodeString(enumValue)
@@ -4537,167 +4598,167 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					}
 				case "A_SPECIFICATIONS":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPECIFICATION_TYPE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPECIFIED_VALUES":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_ATTRIBUTES":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_OBJECTS":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_OBJECT_TYPE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_RELATIONS":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_RELATION_GROUPS":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_RELATION_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_RELATION_TYPE_REF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_SPEC_TYPES":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_THE_HEADER":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "A_TOOL_EXTENSIONS":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_BOOLEAN":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_DATE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_ENUMERATION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_INTEGER":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_REAL":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_STRING":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "DATATYPE_DEFINITION_XHTML":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "EMBEDDED_VALUE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "ENUM_VALUE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "GeneratedImageMetamodel":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "Image":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "Paragraph":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "RELATION_GROUP":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "RELATION_GROUP_TYPE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "REQ_IF":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "REQ_IF_CONTENT":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "REQ_IF_HEADER":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "REQ_IF_TOOL_EXTENSION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPECIFICATION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPECIFICATION_TYPE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPEC_HIERARCHY":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPEC_OBJECT":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPEC_OBJECT_TYPE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPEC_RELATION":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "SPEC_RELATION_TYPE":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "StaticWebSite":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "StaticWebSiteChapter":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				case "XHTML_CONTENT":
 					switch fieldName {
-					// insertion point for enum assign code
+					// insertion point for selector expr assign code
 					}
 				}
 			}
