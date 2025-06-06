@@ -1187,7 +1187,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						var ok bool
 						gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 						if !ok {
-							log.Fatalln("gongstructName not found for identifier", identifier)
+							log.Println("gongstructName not found for identifier", identifier)
+							break
 						}
 						switch gongstructName {
 						// insertion point for basic lit assignments
@@ -1598,7 +1599,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 
 					gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 					if !ok {
-						log.Fatalln("gongstructName not found for identifier", identifier)
+						log.Println("gongstructName not found for identifier", identifier)
+						break
 					}
 					switch gongstructName {
 					// insertion point for slice of pointers assignments
@@ -1700,9 +1702,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_BOOLEAN":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN =
-								append(__gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN, target)
+							// when parsing A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN = append(A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN, ATTRIBUTE_VALUE_BOOLEAN instance )
+							// the map will not find the ATTRIBUTE_VALUE_BOOLEAN instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN =
+									append(__gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_DATE":
 						switch fieldName {
@@ -1710,9 +1716,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_DATE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_DATE[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE =
-								append(__gong__map_A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE, target)
+							// when parsing A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE = append(A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE, ATTRIBUTE_VALUE_DATE instance )
+							// the map will not find the ATTRIBUTE_VALUE_DATE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_DATE[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE =
+									append(__gong__map_A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_ENUMERATION":
 						switch fieldName {
@@ -1720,9 +1730,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_ENUMERATION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION =
-								append(__gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION, target)
+							// when parsing A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION = append(A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION, ATTRIBUTE_VALUE_ENUMERATION instance )
+							// the map will not find the ATTRIBUTE_VALUE_ENUMERATION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION =
+									append(__gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_INTEGER":
 						switch fieldName {
@@ -1730,9 +1744,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_INTEGER":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_INTEGER[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER =
-								append(__gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER, target)
+							// when parsing A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER = append(A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER, ATTRIBUTE_VALUE_INTEGER instance )
+							// the map will not find the ATTRIBUTE_VALUE_INTEGER instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER =
+									append(__gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_REAL":
 						switch fieldName {
@@ -1740,9 +1758,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_REAL":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_REAL[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL =
-								append(__gong__map_A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL, target)
+							// when parsing A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL = append(A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL, ATTRIBUTE_VALUE_REAL instance )
+							// the map will not find the ATTRIBUTE_VALUE_REAL instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_REAL[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL =
+									append(__gong__map_A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_STRING":
 						switch fieldName {
@@ -1750,9 +1772,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_STRING":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_STRING[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING =
-								append(__gong__map_A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING, target)
+							// when parsing A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING = append(A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING, ATTRIBUTE_VALUE_STRING instance )
+							// the map will not find the ATTRIBUTE_VALUE_STRING instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_STRING[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING =
+									append(__gong__map_A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_XHTML":
 						switch fieldName {
@@ -1760,9 +1786,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_XHTML":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_XHTML[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML = append(A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML, ATTRIBUTE_VALUE_XHTML instance )
+							// the map will not find the ATTRIBUTE_VALUE_XHTML instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML, target)
+							}
 						}
 					case "A_ATTRIBUTE_VALUE_XHTML_1":
 						switch fieldName {
@@ -1770,45 +1800,73 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_VALUE_BOOLEAN":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN, ATTRIBUTE_VALUE_BOOLEAN instance )
+							// the map will not find the ATTRIBUTE_VALUE_BOOLEAN instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN, target)
+							}
 						case "ATTRIBUTE_VALUE_DATE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_DATE[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE, ATTRIBUTE_VALUE_DATE instance )
+							// the map will not find the ATTRIBUTE_VALUE_DATE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_DATE[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE, target)
+							}
 						case "ATTRIBUTE_VALUE_ENUMERATION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION, ATTRIBUTE_VALUE_ENUMERATION instance )
+							// the map will not find the ATTRIBUTE_VALUE_ENUMERATION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION, target)
+							}
 						case "ATTRIBUTE_VALUE_INTEGER":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_INTEGER[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER, ATTRIBUTE_VALUE_INTEGER instance )
+							// the map will not find the ATTRIBUTE_VALUE_INTEGER instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER, target)
+							}
 						case "ATTRIBUTE_VALUE_REAL":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_REAL[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL, ATTRIBUTE_VALUE_REAL instance )
+							// the map will not find the ATTRIBUTE_VALUE_REAL instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_REAL[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL, target)
+							}
 						case "ATTRIBUTE_VALUE_STRING":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_STRING[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING, ATTRIBUTE_VALUE_STRING instance )
+							// the map will not find the ATTRIBUTE_VALUE_STRING instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_STRING[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING, target)
+							}
 						case "ATTRIBUTE_VALUE_XHTML":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_VALUE_XHTML[targetIdentifier]
-							__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML =
-								append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML, target)
+							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML, ATTRIBUTE_VALUE_XHTML instance )
+							// the map will not find the ATTRIBUTE_VALUE_XHTML instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[targetIdentifier]; ok {
+								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML =
+									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML, target)
+							}
 						}
 					case "A_CHILDREN":
 						switch fieldName {
@@ -1816,9 +1874,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "SPEC_HIERARCHY":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPEC_HIERARCHY[targetIdentifier]
-							__gong__map_A_CHILDREN[identifier].SPEC_HIERARCHY =
-								append(__gong__map_A_CHILDREN[identifier].SPEC_HIERARCHY, target)
+							// when parsing A_CHILDREN[identifier].SPEC_HIERARCHY = append(A_CHILDREN[identifier].SPEC_HIERARCHY, SPEC_HIERARCHY instance )
+							// the map will not find the SPEC_HIERARCHY instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPEC_HIERARCHY[targetIdentifier]; ok {
+								__gong__map_A_CHILDREN[identifier].SPEC_HIERARCHY =
+									append(__gong__map_A_CHILDREN[identifier].SPEC_HIERARCHY, target)
+							}
 						}
 					case "A_CORE_CONTENT":
 						switch fieldName {
@@ -1830,45 +1892,73 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "DATATYPE_DEFINITION_BOOLEAN":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_BOOLEAN[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN, DATATYPE_DEFINITION_BOOLEAN instance )
+							// the map will not find the DATATYPE_DEFINITION_BOOLEAN instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_BOOLEAN[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN, target)
+							}
 						case "DATATYPE_DEFINITION_DATE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_DATE[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE, DATATYPE_DEFINITION_DATE instance )
+							// the map will not find the DATATYPE_DEFINITION_DATE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_DATE[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE, target)
+							}
 						case "DATATYPE_DEFINITION_ENUMERATION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_ENUMERATION[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION, DATATYPE_DEFINITION_ENUMERATION instance )
+							// the map will not find the DATATYPE_DEFINITION_ENUMERATION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_ENUMERATION[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION, target)
+							}
 						case "DATATYPE_DEFINITION_INTEGER":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_INTEGER[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER, DATATYPE_DEFINITION_INTEGER instance )
+							// the map will not find the DATATYPE_DEFINITION_INTEGER instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_INTEGER[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER, target)
+							}
 						case "DATATYPE_DEFINITION_REAL":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_REAL[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL, DATATYPE_DEFINITION_REAL instance )
+							// the map will not find the DATATYPE_DEFINITION_REAL instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_REAL[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL, target)
+							}
 						case "DATATYPE_DEFINITION_STRING":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_STRING[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING, DATATYPE_DEFINITION_STRING instance )
+							// the map will not find the DATATYPE_DEFINITION_STRING instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_STRING[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING, target)
+							}
 						case "DATATYPE_DEFINITION_XHTML":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_DATATYPE_DEFINITION_XHTML[targetIdentifier]
-							__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML =
-								append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML, target)
+							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML, DATATYPE_DEFINITION_XHTML instance )
+							// the map will not find the DATATYPE_DEFINITION_XHTML instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_DATATYPE_DEFINITION_XHTML[targetIdentifier]; ok {
+								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML =
+									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML, target)
+							}
 						}
 					case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
 						switch fieldName {
@@ -1932,9 +2022,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "SPECIFICATION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPECIFICATION[targetIdentifier]
-							__gong__map_A_SPECIFICATIONS[identifier].SPECIFICATION =
-								append(__gong__map_A_SPECIFICATIONS[identifier].SPECIFICATION, target)
+							// when parsing A_SPECIFICATIONS[identifier].SPECIFICATION = append(A_SPECIFICATIONS[identifier].SPECIFICATION, SPECIFICATION instance )
+							// the map will not find the SPECIFICATION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPECIFICATION[targetIdentifier]; ok {
+								__gong__map_A_SPECIFICATIONS[identifier].SPECIFICATION =
+									append(__gong__map_A_SPECIFICATIONS[identifier].SPECIFICATION, target)
+							}
 						}
 					case "A_SPECIFICATION_TYPE_REF":
 						switch fieldName {
@@ -1946,9 +2040,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ENUM_VALUE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ENUM_VALUE[targetIdentifier]
-							__gong__map_A_SPECIFIED_VALUES[identifier].ENUM_VALUE =
-								append(__gong__map_A_SPECIFIED_VALUES[identifier].ENUM_VALUE, target)
+							// when parsing A_SPECIFIED_VALUES[identifier].ENUM_VALUE = append(A_SPECIFIED_VALUES[identifier].ENUM_VALUE, ENUM_VALUE instance )
+							// the map will not find the ENUM_VALUE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ENUM_VALUE[targetIdentifier]; ok {
+								__gong__map_A_SPECIFIED_VALUES[identifier].ENUM_VALUE =
+									append(__gong__map_A_SPECIFIED_VALUES[identifier].ENUM_VALUE, target)
+							}
 						}
 					case "A_SPEC_ATTRIBUTES":
 						switch fieldName {
@@ -1956,45 +2054,73 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "ATTRIBUTE_DEFINITION_BOOLEAN":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN, ATTRIBUTE_DEFINITION_BOOLEAN instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_BOOLEAN instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN, target)
+							}
 						case "ATTRIBUTE_DEFINITION_DATE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_DATE[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE, ATTRIBUTE_DEFINITION_DATE instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_DATE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_DATE[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE, target)
+							}
 						case "ATTRIBUTE_DEFINITION_ENUMERATION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION, ATTRIBUTE_DEFINITION_ENUMERATION instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_ENUMERATION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION, target)
+							}
 						case "ATTRIBUTE_DEFINITION_INTEGER":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER, ATTRIBUTE_DEFINITION_INTEGER instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_INTEGER instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER, target)
+							}
 						case "ATTRIBUTE_DEFINITION_REAL":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_REAL[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL, ATTRIBUTE_DEFINITION_REAL instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_REAL instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_REAL[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL, target)
+							}
 						case "ATTRIBUTE_DEFINITION_STRING":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_STRING[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING, ATTRIBUTE_DEFINITION_STRING instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_STRING instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_STRING[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING, target)
+							}
 						case "ATTRIBUTE_DEFINITION_XHTML":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_ATTRIBUTE_DEFINITION_XHTML[targetIdentifier]
-							__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML =
-								append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML, target)
+							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML, ATTRIBUTE_DEFINITION_XHTML instance )
+							// the map will not find the ATTRIBUTE_DEFINITION_XHTML instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_XHTML[targetIdentifier]; ok {
+								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML =
+									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML, target)
+							}
 						}
 					case "A_SPEC_OBJECTS":
 						switch fieldName {
@@ -2002,9 +2128,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "SPEC_OBJECT":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPEC_OBJECT[targetIdentifier]
-							__gong__map_A_SPEC_OBJECTS[identifier].SPEC_OBJECT =
-								append(__gong__map_A_SPEC_OBJECTS[identifier].SPEC_OBJECT, target)
+							// when parsing A_SPEC_OBJECTS[identifier].SPEC_OBJECT = append(A_SPEC_OBJECTS[identifier].SPEC_OBJECT, SPEC_OBJECT instance )
+							// the map will not find the SPEC_OBJECT instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPEC_OBJECT[targetIdentifier]; ok {
+								__gong__map_A_SPEC_OBJECTS[identifier].SPEC_OBJECT =
+									append(__gong__map_A_SPEC_OBJECTS[identifier].SPEC_OBJECT, target)
+							}
 						}
 					case "A_SPEC_OBJECT_TYPE_REF":
 						switch fieldName {
@@ -2016,9 +2146,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "SPEC_RELATION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPEC_RELATION[targetIdentifier]
-							__gong__map_A_SPEC_RELATIONS[identifier].SPEC_RELATION =
-								append(__gong__map_A_SPEC_RELATIONS[identifier].SPEC_RELATION, target)
+							// when parsing A_SPEC_RELATIONS[identifier].SPEC_RELATION = append(A_SPEC_RELATIONS[identifier].SPEC_RELATION, SPEC_RELATION instance )
+							// the map will not find the SPEC_RELATION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPEC_RELATION[targetIdentifier]; ok {
+								__gong__map_A_SPEC_RELATIONS[identifier].SPEC_RELATION =
+									append(__gong__map_A_SPEC_RELATIONS[identifier].SPEC_RELATION, target)
+							}
 						}
 					case "A_SPEC_RELATION_GROUPS":
 						switch fieldName {
@@ -2026,9 +2160,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "RELATION_GROUP":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_RELATION_GROUP[targetIdentifier]
-							__gong__map_A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP =
-								append(__gong__map_A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP, target)
+							// when parsing A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP = append(A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP, RELATION_GROUP instance )
+							// the map will not find the RELATION_GROUP instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_RELATION_GROUP[targetIdentifier]; ok {
+								__gong__map_A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP =
+									append(__gong__map_A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP, target)
+							}
 						}
 					case "A_SPEC_RELATION_REF":
 						switch fieldName {
@@ -2044,27 +2182,43 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "RELATION_GROUP_TYPE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_RELATION_GROUP_TYPE[targetIdentifier]
-							__gong__map_A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE =
-								append(__gong__map_A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE, target)
+							// when parsing A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE = append(A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE, RELATION_GROUP_TYPE instance )
+							// the map will not find the RELATION_GROUP_TYPE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_RELATION_GROUP_TYPE[targetIdentifier]; ok {
+								__gong__map_A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE =
+									append(__gong__map_A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE, target)
+							}
 						case "SPEC_OBJECT_TYPE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPEC_OBJECT_TYPE[targetIdentifier]
-							__gong__map_A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE =
-								append(__gong__map_A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE, target)
+							// when parsing A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE = append(A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE, SPEC_OBJECT_TYPE instance )
+							// the map will not find the SPEC_OBJECT_TYPE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPEC_OBJECT_TYPE[targetIdentifier]; ok {
+								__gong__map_A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE =
+									append(__gong__map_A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE, target)
+							}
 						case "SPEC_RELATION_TYPE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPEC_RELATION_TYPE[targetIdentifier]
-							__gong__map_A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE =
-								append(__gong__map_A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE, target)
+							// when parsing A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE = append(A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE, SPEC_RELATION_TYPE instance )
+							// the map will not find the SPEC_RELATION_TYPE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPEC_RELATION_TYPE[targetIdentifier]; ok {
+								__gong__map_A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE =
+									append(__gong__map_A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE, target)
+							}
 						case "SPECIFICATION_TYPE":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_SPECIFICATION_TYPE[targetIdentifier]
-							__gong__map_A_SPEC_TYPES[identifier].SPECIFICATION_TYPE =
-								append(__gong__map_A_SPEC_TYPES[identifier].SPECIFICATION_TYPE, target)
+							// when parsing A_SPEC_TYPES[identifier].SPECIFICATION_TYPE = append(A_SPEC_TYPES[identifier].SPECIFICATION_TYPE, SPECIFICATION_TYPE instance )
+							// the map will not find the SPECIFICATION_TYPE instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_SPECIFICATION_TYPE[targetIdentifier]; ok {
+								__gong__map_A_SPEC_TYPES[identifier].SPECIFICATION_TYPE =
+									append(__gong__map_A_SPEC_TYPES[identifier].SPECIFICATION_TYPE, target)
+							}
 						}
 					case "A_THE_HEADER":
 						switch fieldName {
@@ -2076,9 +2230,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "REQ_IF_TOOL_EXTENSION":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_REQ_IF_TOOL_EXTENSION[targetIdentifier]
-							__gong__map_A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION =
-								append(__gong__map_A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION, target)
+							// when parsing A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION = append(A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION, REQ_IF_TOOL_EXTENSION instance )
+							// the map will not find the REQ_IF_TOOL_EXTENSION instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_REQ_IF_TOOL_EXTENSION[targetIdentifier]; ok {
+								__gong__map_A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION =
+									append(__gong__map_A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION, target)
+							}
 						}
 					case "DATATYPE_DEFINITION_BOOLEAN":
 						switch fieldName {
@@ -2186,9 +2344,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "Chapters":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_StaticWebSiteChapter[targetIdentifier]
-							__gong__map_StaticWebSite[identifier].Chapters =
-								append(__gong__map_StaticWebSite[identifier].Chapters, target)
+							// when parsing StaticWebSite[identifier].Chapters = append(StaticWebSite[identifier].Chapters, StaticWebSiteChapter instance )
+							// the map will not find the StaticWebSiteChapter instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_StaticWebSiteChapter[targetIdentifier]; ok {
+								__gong__map_StaticWebSite[identifier].Chapters =
+									append(__gong__map_StaticWebSite[identifier].Chapters, target)
+							}
 						}
 					case "StaticWebSiteChapter":
 						switch fieldName {
@@ -2196,9 +2358,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "Paragraphs":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_Paragraph[targetIdentifier]
-							__gong__map_StaticWebSiteChapter[identifier].Paragraphs =
-								append(__gong__map_StaticWebSiteChapter[identifier].Paragraphs, target)
+							// when parsing StaticWebSiteChapter[identifier].Paragraphs = append(StaticWebSiteChapter[identifier].Paragraphs, Paragraph instance )
+							// the map will not find the Paragraph instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_Paragraph[targetIdentifier]; ok {
+								__gong__map_StaticWebSiteChapter[identifier].Paragraphs =
+									append(__gong__map_StaticWebSiteChapter[identifier].Paragraphs, target)
+							}
 						}
 					case "XHTML_CONTENT":
 						switch fieldName {
@@ -2252,7 +2418,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var ok bool
 			gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 			if !ok {
-				log.Fatalln("gongstructName not found for identifier", identifier)
+				log.Println("gongstructName not found for identifier", identifier)
+				break
 			}
 
 			// substitute the RHS part of the assignment if a //gong:ident directive is met
@@ -3646,7 +3813,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var ok bool
 			gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 			if !ok {
-				log.Fatalln("gongstructName not found for identifier", identifier)
+				log.Println("gongstructName not found for identifier", identifier)
+				break
 			}
 			switch gongstructName {
 			// insertion point for bool & pointers assignments
@@ -4389,7 +4557,17 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				var ok bool
 				gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 				if !ok {
-					log.Fatalln("gongstructName not found for identifier", identifier)
+					log.Println("gongstructName not found for identifier", identifier)
+					break
+				}
+
+				if basicLit == nil {
+					// for the meta field written as ref_models.ENUM_VALUE1
+					basicLit = new(ast.BasicLit)
+					basicLit.Kind = token.STRING // Or another appropriate token.Kind
+					basicLit.Value =  selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
+					_ = basicLit.Kind
+					_ = basicLit.Value
 				}
 
 				// remove first and last char

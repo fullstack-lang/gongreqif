@@ -429,6 +429,30 @@ func GetNamedStructInstances[T PointerToGongstruct](set map[T]any, order map[T]u
 	return
 }
 
+func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]any, order map[T]uint) (res []T) {
+
+	orderedSet := []T{}
+	for instance := range set {
+		orderedSet = append(orderedSet, instance)
+	}
+	sort.Slice(orderedSet[:], func(i, j int) bool {
+		instancei := orderedSet[i]
+		instancej := orderedSet[j]
+		i_order, oki := order[instancei]
+		j_order, okj := order[instancej]
+		if !oki || !okj {
+			log.Fatalf("GetNamedStructInstances: pointer not found")
+		}
+		return i_order < j_order
+	})
+
+	for _, instance := range orderedSet {
+		res = append(res, instance)
+	}
+
+	return
+}
+
 func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []string) {
 
 	switch namedStructName {
@@ -3368,13 +3392,13 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case Polyline:
 		res = []string{"Name", "Points", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animates"}
 	case Rect:
-		res = []string{"Name", "X", "Y", "Width", "Height", "RX", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animations", "IsSelectable", "IsSelected", "CanHaveLeftHandle", "HasLeftHandle", "CanHaveRightHandle", "HasRightHandle", "CanHaveTopHandle", "HasTopHandle", "IsScalingProportionally", "CanHaveBottomHandle", "HasBottomHandle", "CanMoveHorizontaly", "CanMoveVerticaly", "RectAnchoredTexts", "RectAnchoredRects", "RectAnchoredPaths"}
+		res = []string{"Name", "X", "Y", "Width", "Height", "RX", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animations", "IsSelectable", "IsSelected", "CanHaveLeftHandle", "HasLeftHandle", "CanHaveRightHandle", "HasRightHandle", "CanHaveTopHandle", "HasTopHandle", "IsScalingProportionally", "CanHaveBottomHandle", "HasBottomHandle", "CanMoveHorizontaly", "CanMoveVerticaly", "RectAnchoredTexts", "RectAnchoredRects", "RectAnchoredPaths", "ChangeColorWhenHovered", "ColorWhenHovered", "OriginalColor", "FillOpacityWhenHovered", "OriginalFillOpacity"}
 	case RectAnchoredPath:
 		res = []string{"Name", "Definition", "X_Offset", "Y_Offset", "RectAnchorType", "ScalePropotionnally", "AppliedScaling", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform"}
 	case RectAnchoredRect:
 		res = []string{"Name", "X", "Y", "Width", "Height", "RX", "X_Offset", "Y_Offset", "RectAnchorType", "WidthFollowRect", "HeightFollowRect", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform"}
 	case RectAnchoredText:
-		res = []string{"Name", "Content", "FontWeight", "FontSize", "FontStyle", "LetterSpacing", "X_Offset", "Y_Offset", "RectAnchorType", "TextAnchorType", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animates"}
+		res = []string{"Name", "Content", "FontWeight", "FontSize", "FontStyle", "LetterSpacing", "X_Offset", "Y_Offset", "RectAnchorType", "TextAnchorType", "WritingMode", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animates"}
 	case RectLinkLink:
 		res = []string{"Name", "Start", "End", "TargetAnchorPosition", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform"}
 	case SVG:
@@ -3573,13 +3597,13 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *Polyline:
 		res = []string{"Name", "Points", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animates"}
 	case *Rect:
-		res = []string{"Name", "X", "Y", "Width", "Height", "RX", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animations", "IsSelectable", "IsSelected", "CanHaveLeftHandle", "HasLeftHandle", "CanHaveRightHandle", "HasRightHandle", "CanHaveTopHandle", "HasTopHandle", "IsScalingProportionally", "CanHaveBottomHandle", "HasBottomHandle", "CanMoveHorizontaly", "CanMoveVerticaly", "RectAnchoredTexts", "RectAnchoredRects", "RectAnchoredPaths"}
+		res = []string{"Name", "X", "Y", "Width", "Height", "RX", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animations", "IsSelectable", "IsSelected", "CanHaveLeftHandle", "HasLeftHandle", "CanHaveRightHandle", "HasRightHandle", "CanHaveTopHandle", "HasTopHandle", "IsScalingProportionally", "CanHaveBottomHandle", "HasBottomHandle", "CanMoveHorizontaly", "CanMoveVerticaly", "RectAnchoredTexts", "RectAnchoredRects", "RectAnchoredPaths", "ChangeColorWhenHovered", "ColorWhenHovered", "OriginalColor", "FillOpacityWhenHovered", "OriginalFillOpacity"}
 	case *RectAnchoredPath:
 		res = []string{"Name", "Definition", "X_Offset", "Y_Offset", "RectAnchorType", "ScalePropotionnally", "AppliedScaling", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform"}
 	case *RectAnchoredRect:
 		res = []string{"Name", "X", "Y", "Width", "Height", "RX", "X_Offset", "Y_Offset", "RectAnchorType", "WidthFollowRect", "HeightFollowRect", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform"}
 	case *RectAnchoredText:
-		res = []string{"Name", "Content", "FontWeight", "FontSize", "FontStyle", "LetterSpacing", "X_Offset", "Y_Offset", "RectAnchorType", "TextAnchorType", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animates"}
+		res = []string{"Name", "Content", "FontWeight", "FontSize", "FontStyle", "LetterSpacing", "X_Offset", "Y_Offset", "RectAnchorType", "TextAnchorType", "WritingMode", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform", "Animates"}
 	case *RectLinkLink:
 		res = []string{"Name", "Start", "End", "TargetAnchorPosition", "Color", "FillOpacity", "Stroke", "StrokeOpacity", "StrokeWidth", "StrokeDashArray", "StrokeDashArrayWhenSelected", "Transform"}
 	case *SVG:
@@ -4300,6 +4324,22 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 				}
 				res.valueString += __instance__.Name
 			}
+		case "ChangeColorWhenHovered":
+			res.valueString = fmt.Sprintf("%t", inferedInstance.ChangeColorWhenHovered)
+			res.valueBool = inferedInstance.ChangeColorWhenHovered
+			res.GongFieldValueType = GongFieldValueTypeBool
+		case "ColorWhenHovered":
+			res.valueString = inferedInstance.ColorWhenHovered
+		case "OriginalColor":
+			res.valueString = inferedInstance.OriginalColor
+		case "FillOpacityWhenHovered":
+			res.valueString = fmt.Sprintf("%f", inferedInstance.FillOpacityWhenHovered)
+			res.valueFloat = inferedInstance.FillOpacityWhenHovered
+			res.GongFieldValueType = GongFieldValueTypeFloat
+		case "OriginalFillOpacity":
+			res.valueString = fmt.Sprintf("%f", inferedInstance.OriginalFillOpacity)
+			res.valueFloat = inferedInstance.OriginalFillOpacity
+			res.GongFieldValueType = GongFieldValueTypeFloat
 		}
 	case *RectAnchoredPath:
 		switch fieldName {
@@ -4445,6 +4485,9 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			res.valueString = enum.ToCodeString()
 		case "TextAnchorType":
 			enum := inferedInstance.TextAnchorType
+			res.valueString = enum.ToCodeString()
+		case "WritingMode":
+			enum := inferedInstance.WritingMode
 			res.valueString = enum.ToCodeString()
 		case "Color":
 			res.valueString = inferedInstance.Color
@@ -5296,6 +5339,22 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 				}
 				res.valueString += __instance__.Name
 			}
+		case "ChangeColorWhenHovered":
+			res.valueString = fmt.Sprintf("%t", inferedInstance.ChangeColorWhenHovered)
+			res.valueBool = inferedInstance.ChangeColorWhenHovered
+			res.GongFieldValueType = GongFieldValueTypeBool
+		case "ColorWhenHovered":
+			res.valueString = inferedInstance.ColorWhenHovered
+		case "OriginalColor":
+			res.valueString = inferedInstance.OriginalColor
+		case "FillOpacityWhenHovered":
+			res.valueString = fmt.Sprintf("%f", inferedInstance.FillOpacityWhenHovered)
+			res.valueFloat = inferedInstance.FillOpacityWhenHovered
+			res.GongFieldValueType = GongFieldValueTypeFloat
+		case "OriginalFillOpacity":
+			res.valueString = fmt.Sprintf("%f", inferedInstance.OriginalFillOpacity)
+			res.valueFloat = inferedInstance.OriginalFillOpacity
+			res.GongFieldValueType = GongFieldValueTypeFloat
 		}
 	case RectAnchoredPath:
 		switch fieldName {
@@ -5441,6 +5500,9 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			res.valueString = enum.ToCodeString()
 		case "TextAnchorType":
 			enum := inferedInstance.TextAnchorType
+			res.valueString = enum.ToCodeString()
+		case "WritingMode":
+			enum := inferedInstance.WritingMode
 			res.valueString = enum.ToCodeString()
 		case "Color":
 			res.valueString = inferedInstance.Color

@@ -22,7 +22,7 @@ func (stager *Stager) compute_map_modelElement_shape(
 
 	for _, gongStructShape := range classdiagram.GongStructShapes {
 
-		gongStructName := IdentifierToGongObjectName(gongStructShape.Identifier)
+		gongStructName := IdentifierMetaToGongStructName(gongStructShape.IdentifierMeta)
 		gongStruct, ok := gongStructSet[gongStructName]
 
 		if !ok {
@@ -67,7 +67,7 @@ func (stager *Stager) compute_map_modelElement_shape(
 	gongEnumSet := *gong.GetGongstructInstancesMap[gong.GongEnum](gongStage)
 	for _, gongEnumShape := range classdiagram.GongEnumShapes {
 
-		gongEnumName := IdentifierToGongObjectName(gongEnumShape.Identifier)
+		gongEnumName := IdentifierToGongStructName(gongEnumShape.Identifier)
 		gongEnum, ok := gongEnumSet[gongEnumName]
 		if !ok {
 			log.Fatalln("unkown element", gongEnumShape.Identifier)
@@ -75,12 +75,12 @@ func (stager *Stager) compute_map_modelElement_shape(
 
 		map_ModelElement_Shape[gongEnum] = gongEnumShape
 
-		for _, valueShape := range gongEnumShape.GongEnumValueShapes {
-			valueShapeName := IdentifierToFieldName(valueShape.Identifier)
+		for _, gongEnumValueShape := range gongEnumShape.GongEnumValueShapes {
+			valueShapeName := GongEnumValueShapeIdentifierMetaToValueName(gongEnumValueShape.IdentifierMeta)
 
 			for _, value := range gongEnum.GongEnumValues {
 				if value.GetName() == valueShapeName {
-					map_ModelElement_Shape[value] = valueShape
+					map_ModelElement_Shape[value] = gongEnumValueShape
 				}
 			}
 		}
@@ -89,7 +89,7 @@ func (stager *Stager) compute_map_modelElement_shape(
 	gongNoteSet := *gong.GetGongstructInstancesMap[gong.GongNote](gongStage)
 	for _, gongNoteShape := range classdiagram.GongNoteShapes {
 
-		gongNoteName := IdentifierToGongObjectName(gongNoteShape.Identifier)
+		gongNoteName := IdentifierToGongStructName(gongNoteShape.Identifier)
 		gongNote, ok := gongNoteSet[gongNoteName]
 		if !ok {
 			log.Fatalln("unkown element", gongNoteShape.Identifier)
@@ -101,7 +101,7 @@ func (stager *Stager) compute_map_modelElement_shape(
 
 			switch noteLinkShape.Type {
 			case NOTE_SHAPE_LINK_TO_GONG_STRUCT_OR_ENUM_SHAPE:
-				nodeLinkShapeTarget := IdentifierToGongObjectName(noteLinkShape.Identifier)
+				nodeLinkShapeTarget := IdentifierToGongStructName(noteLinkShape.Identifier)
 				for _, link := range gongNote.Links {
 					if link.GetName() == nodeLinkShapeTarget {
 						map_ModelElement_Shape[link] = noteLinkShape

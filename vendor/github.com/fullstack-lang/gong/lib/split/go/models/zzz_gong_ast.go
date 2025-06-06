@@ -669,7 +669,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						var ok bool
 						gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 						if !ok {
-							log.Fatalln("gongstructName not found for identifier", identifier)
+							log.Println("gongstructName not found for identifier", identifier)
+							break
 						}
 						switch gongstructName {
 						// insertion point for basic lit assignments
@@ -784,7 +785,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 
 					gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 					if !ok {
-						log.Fatalln("gongstructName not found for identifier", identifier)
+						log.Println("gongstructName not found for identifier", identifier)
+						break
 					}
 					switch gongstructName {
 					// insertion point for slice of pointers assignments
@@ -794,9 +796,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "AsSplitAreas":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_AsSplitArea[targetIdentifier]
-							__gong__map_AsSplit[identifier].AsSplitAreas =
-								append(__gong__map_AsSplit[identifier].AsSplitAreas, target)
+							// when parsing AsSplit[identifier].AsSplitAreas = append(AsSplit[identifier].AsSplitAreas, AsSplitArea instance )
+							// the map will not find the AsSplitArea instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_AsSplitArea[targetIdentifier]; ok {
+								__gong__map_AsSplit[identifier].AsSplitAreas =
+									append(__gong__map_AsSplit[identifier].AsSplitAreas, target)
+							}
 						}
 					case "AsSplitArea":
 						switch fieldName {
@@ -852,9 +858,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "RootAsSplitAreas":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_AsSplitArea[targetIdentifier]
-							__gong__map_View[identifier].RootAsSplitAreas =
-								append(__gong__map_View[identifier].RootAsSplitAreas, target)
+							// when parsing View[identifier].RootAsSplitAreas = append(View[identifier].RootAsSplitAreas, AsSplitArea instance )
+							// the map will not find the AsSplitArea instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_AsSplitArea[targetIdentifier]; ok {
+								__gong__map_View[identifier].RootAsSplitAreas =
+									append(__gong__map_View[identifier].RootAsSplitAreas, target)
+							}
 						}
 					case "Xlsx":
 						switch fieldName {
@@ -908,7 +918,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var ok bool
 			gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 			if !ok {
-				log.Fatalln("gongstructName not found for identifier", identifier)
+				log.Println("gongstructName not found for identifier", identifier)
+				break
 			}
 
 			// substitute the RHS part of the assignment if a //gong:ident directive is met
@@ -1127,7 +1138,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var ok bool
 			gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 			if !ok {
-				log.Fatalln("gongstructName not found for identifier", identifier)
+				log.Println("gongstructName not found for identifier", identifier)
+				break
 			}
 			switch gongstructName {
 			// insertion point for bool & pointers assignments
@@ -1298,7 +1310,17 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				var ok bool
 				gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 				if !ok {
-					log.Fatalln("gongstructName not found for identifier", identifier)
+					log.Println("gongstructName not found for identifier", identifier)
+					break
+				}
+
+				if basicLit == nil {
+					// for the meta field written as ref_models.ENUM_VALUE1
+					basicLit = new(ast.BasicLit)
+					basicLit.Kind = token.STRING // Or another appropriate token.Kind
+					basicLit.Value =  selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
+					_ = basicLit.Kind
+					_ = basicLit.Value
 				}
 
 				// remove first and last char

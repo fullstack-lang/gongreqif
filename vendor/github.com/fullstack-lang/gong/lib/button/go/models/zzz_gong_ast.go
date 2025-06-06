@@ -585,7 +585,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						var ok bool
 						gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 						if !ok {
-							log.Fatalln("gongstructName not found for identifier", identifier)
+							log.Println("gongstructName not found for identifier", identifier)
+							break
 						}
 						switch gongstructName {
 						// insertion point for basic lit assignments
@@ -652,7 +653,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 
 					gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 					if !ok {
-						log.Fatalln("gongstructName not found for identifier", identifier)
+						log.Println("gongstructName not found for identifier", identifier)
+						break
 					}
 					switch gongstructName {
 					// insertion point for slice of pointers assignments
@@ -666,9 +668,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "Buttons":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_Button[targetIdentifier]
-							__gong__map_Group[identifier].Buttons =
-								append(__gong__map_Group[identifier].Buttons, target)
+							// when parsing Group[identifier].Buttons = append(Group[identifier].Buttons, Button instance )
+							// the map will not find the Button instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_Button[targetIdentifier]; ok {
+								__gong__map_Group[identifier].Buttons =
+									append(__gong__map_Group[identifier].Buttons, target)
+							}
 						}
 					case "Layout":
 						switch fieldName {
@@ -676,9 +682,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						case "Groups":
 							// remove first and last char
 							targetIdentifier := ident.Name
-							target := __gong__map_Group[targetIdentifier]
-							__gong__map_Layout[identifier].Groups =
-								append(__gong__map_Layout[identifier].Groups, target)
+							// when parsing Layout[identifier].Groups = append(Layout[identifier].Groups, Group instance )
+							// the map will not find the Group instance, when parsing the first arg
+							// therefore, the condition is necessary
+							if target, ok := __gong__map_Group[targetIdentifier]; ok {
+								__gong__map_Layout[identifier].Groups =
+									append(__gong__map_Layout[identifier].Groups, target)
+							}
 						}
 					}
 				}
@@ -728,7 +738,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var ok bool
 			gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 			if !ok {
-				log.Fatalln("gongstructName not found for identifier", identifier)
+				log.Println("gongstructName not found for identifier", identifier)
+				break
 			}
 
 			// substitute the RHS part of the assignment if a //gong:ident directive is met
@@ -787,7 +798,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var ok bool
 			gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 			if !ok {
-				log.Fatalln("gongstructName not found for identifier", identifier)
+				log.Println("gongstructName not found for identifier", identifier)
+				break
 			}
 			switch gongstructName {
 			// insertion point for bool & pointers assignments
@@ -843,7 +855,17 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				var ok bool
 				gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 				if !ok {
-					log.Fatalln("gongstructName not found for identifier", identifier)
+					log.Println("gongstructName not found for identifier", identifier)
+					break
+				}
+
+				if basicLit == nil {
+					// for the meta field written as ref_models.ENUM_VALUE1
+					basicLit = new(ast.BasicLit)
+					basicLit.Kind = token.STRING // Or another appropriate token.Kind
+					basicLit.Value =  selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
+					_ = basicLit.Kind
+					_ = basicLit.Value
 				}
 
 				// remove first and last char
