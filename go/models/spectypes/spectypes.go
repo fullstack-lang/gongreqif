@@ -6,8 +6,6 @@ import (
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 
-	"github.com/fullstack-lang/gong/lib/tree/go/buttons"
-
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -190,7 +188,7 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
@@ -229,7 +227,7 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
@@ -268,7 +266,7 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
@@ -307,7 +305,7 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
@@ -346,7 +344,7 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
@@ -385,7 +383,7 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
@@ -425,29 +423,7 @@ func addAttibutesNodes(
 					fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
 			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			addIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
-	}
-}
-
-func addIconForEditabilityOfAttribute(attributeIS_EDITABLE bool, attributeLONG_NAME string, nodeAttribute *tree.Node) {
-	if attributeIS_EDITABLE {
-		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
-			&tree.Button{
-				Name:            attributeLONG_NAME + " " + string(buttons.BUTTON_edit),
-				Icon:            string(buttons.BUTTON_edit),
-				HasToolTip:      true,
-				ToolTipText:     "REQIF specifies that this is an editable attribute",
-				ToolTipPosition: tree.Above,
-			})
-	} else {
-		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
-			&tree.Button{
-				Name:            attributeLONG_NAME + " " + string(buttons.BUTTON_edit_off),
-				Icon:            string(buttons.BUTTON_edit_off),
-				HasToolTip:      true,
-				ToolTipText:     "REQIF specifies that this is this is not an editable attribute",
-				ToolTipPosition: tree.Above,
-			})
 	}
 }

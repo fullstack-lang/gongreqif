@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
+
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
@@ -138,6 +139,8 @@ func processSpecHierarchy(
 	hierarchyParentNode.Children = append(hierarchyParentNode.Children, hierarchyNode)
 
 	specobjects.AddAttributeNodes(stager, hierarchyNode, specObject)
+
+	m.AddIconForEditabilityOfAttribute(specHierarchy.IS_EDITABLE, specObject.Name, hierarchyNode)
 
 	if specHierarchy.CHILDREN != nil {
 		for _, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
