@@ -35,7 +35,21 @@ func updateAndCommitTree(
 	probe.treeStage.Reset()
 
 	// create tree
-	sidebar := (&tree.Tree{Name: SideBarTreeName}).Stage(probe.treeStage)
+	sidebar := &tree.Tree{Name: SideBarTreeName}
+
+	// Add a refresh button
+	nodeRefreshButton := &tree.Node{Name: ""}
+	sidebar.RootNodes = append(sidebar.RootNodes, nodeRefreshButton)
+	refreshButton := &tree.Button{
+		Name:            "RefreshButton" + " " + string(gongtree_buttons.BUTTON_refresh),
+		Icon:            string(gongtree_buttons.BUTTON_refresh),
+		HasToolTip:      true,
+		ToolTipText:     "Refresh probe",
+		ToolTipPosition: tree.Left,
+	}
+
+	nodeRefreshButton.Buttons = append(nodeRefreshButton.Buttons, refreshButton)
+	refreshButton.Impl = NewButtonImplRefresh(probe)
 
 	// collect all gong struct to construe the true
 	setOfGongStructs := *gong_models.GetGongstructInstancesSet[gong_models.GongStruct](probe.gongStage)
@@ -68,7 +82,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ALTERNATIVE_ID](probe.stageOfInterest)
 			for _alternative_id := range set {
-				nodeInstance := (&tree.Node{Name: _alternative_id.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _alternative_id.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_alternative_id, "ALTERNATIVE_ID", probe)
 
@@ -78,7 +92,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_BOOLEAN](probe.stageOfInterest)
 			for _attribute_definition_boolean := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_boolean.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_boolean.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_boolean, "ATTRIBUTE_DEFINITION_BOOLEAN", probe)
 
@@ -88,7 +102,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_DATE](probe.stageOfInterest)
 			for _attribute_definition_date := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_date.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_date.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_date, "ATTRIBUTE_DEFINITION_DATE", probe)
 
@@ -98,7 +112,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_ENUMERATION](probe.stageOfInterest)
 			for _attribute_definition_enumeration := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_enumeration.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_enumeration.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_enumeration, "ATTRIBUTE_DEFINITION_ENUMERATION", probe)
 
@@ -108,7 +122,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_INTEGER](probe.stageOfInterest)
 			for _attribute_definition_integer := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_integer.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_integer.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_integer, "ATTRIBUTE_DEFINITION_INTEGER", probe)
 
@@ -118,7 +132,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_REAL](probe.stageOfInterest)
 			for _attribute_definition_real := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_real.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_real.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_real, "ATTRIBUTE_DEFINITION_REAL", probe)
 
@@ -128,7 +142,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_STRING](probe.stageOfInterest)
 			for _attribute_definition_string := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_string.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_string.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_string, "ATTRIBUTE_DEFINITION_STRING", probe)
 
@@ -138,7 +152,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_DEFINITION_XHTML](probe.stageOfInterest)
 			for _attribute_definition_xhtml := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_definition_xhtml.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_definition_xhtml.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_xhtml, "ATTRIBUTE_DEFINITION_XHTML", probe)
 
@@ -148,7 +162,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_BOOLEAN](probe.stageOfInterest)
 			for _attribute_value_boolean := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_boolean.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_boolean.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_boolean, "ATTRIBUTE_VALUE_BOOLEAN", probe)
 
@@ -158,7 +172,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_DATE](probe.stageOfInterest)
 			for _attribute_value_date := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_date.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_date.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_date, "ATTRIBUTE_VALUE_DATE", probe)
 
@@ -168,7 +182,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_ENUMERATION](probe.stageOfInterest)
 			for _attribute_value_enumeration := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_enumeration.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_enumeration.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_enumeration, "ATTRIBUTE_VALUE_ENUMERATION", probe)
 
@@ -178,7 +192,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_INTEGER](probe.stageOfInterest)
 			for _attribute_value_integer := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_integer.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_integer.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_integer, "ATTRIBUTE_VALUE_INTEGER", probe)
 
@@ -188,7 +202,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_REAL](probe.stageOfInterest)
 			for _attribute_value_real := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_real.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_real.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_real, "ATTRIBUTE_VALUE_REAL", probe)
 
@@ -198,7 +212,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_STRING](probe.stageOfInterest)
 			for _attribute_value_string := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_string.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_string.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_string, "ATTRIBUTE_VALUE_STRING", probe)
 
@@ -208,7 +222,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ATTRIBUTE_VALUE_XHTML](probe.stageOfInterest)
 			for _attribute_value_xhtml := range set {
-				nodeInstance := (&tree.Node{Name: _attribute_value_xhtml.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _attribute_value_xhtml.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_value_xhtml, "ATTRIBUTE_VALUE_XHTML", probe)
 
@@ -218,7 +232,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ALTERNATIVE_ID](probe.stageOfInterest)
 			for _a_alternative_id := range set {
-				nodeInstance := (&tree.Node{Name: _a_alternative_id.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_alternative_id.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_alternative_id, "A_ALTERNATIVE_ID", probe)
 
@@ -228,7 +242,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](probe.stageOfInterest)
 			for _a_attribute_definition_boolean_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_boolean_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_boolean_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_boolean_ref, "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", probe)
 
@@ -238,7 +252,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_DATE_REF](probe.stageOfInterest)
 			for _a_attribute_definition_date_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_date_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_date_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_date_ref, "A_ATTRIBUTE_DEFINITION_DATE_REF", probe)
 
@@ -248,7 +262,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](probe.stageOfInterest)
 			for _a_attribute_definition_enumeration_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_enumeration_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_enumeration_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_enumeration_ref, "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", probe)
 
@@ -258,7 +272,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](probe.stageOfInterest)
 			for _a_attribute_definition_integer_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_integer_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_integer_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_integer_ref, "A_ATTRIBUTE_DEFINITION_INTEGER_REF", probe)
 
@@ -268,7 +282,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_REAL_REF](probe.stageOfInterest)
 			for _a_attribute_definition_real_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_real_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_real_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_real_ref, "A_ATTRIBUTE_DEFINITION_REAL_REF", probe)
 
@@ -278,7 +292,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_STRING_REF](probe.stageOfInterest)
 			for _a_attribute_definition_string_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_string_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_string_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_string_ref, "A_ATTRIBUTE_DEFINITION_STRING_REF", probe)
 
@@ -288,7 +302,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_DEFINITION_XHTML_REF](probe.stageOfInterest)
 			for _a_attribute_definition_xhtml_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_definition_xhtml_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_definition_xhtml_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_definition_xhtml_ref, "A_ATTRIBUTE_DEFINITION_XHTML_REF", probe)
 
@@ -298,7 +312,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_BOOLEAN](probe.stageOfInterest)
 			for _a_attribute_value_boolean := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_boolean.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_boolean.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_boolean, "A_ATTRIBUTE_VALUE_BOOLEAN", probe)
 
@@ -308,7 +322,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_DATE](probe.stageOfInterest)
 			for _a_attribute_value_date := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_date.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_date.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_date, "A_ATTRIBUTE_VALUE_DATE", probe)
 
@@ -318,7 +332,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_ENUMERATION](probe.stageOfInterest)
 			for _a_attribute_value_enumeration := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_enumeration.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_enumeration.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_enumeration, "A_ATTRIBUTE_VALUE_ENUMERATION", probe)
 
@@ -328,7 +342,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_INTEGER](probe.stageOfInterest)
 			for _a_attribute_value_integer := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_integer.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_integer.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_integer, "A_ATTRIBUTE_VALUE_INTEGER", probe)
 
@@ -338,7 +352,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_REAL](probe.stageOfInterest)
 			for _a_attribute_value_real := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_real.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_real.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_real, "A_ATTRIBUTE_VALUE_REAL", probe)
 
@@ -348,7 +362,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_STRING](probe.stageOfInterest)
 			for _a_attribute_value_string := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_string.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_string.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_string, "A_ATTRIBUTE_VALUE_STRING", probe)
 
@@ -358,7 +372,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_XHTML](probe.stageOfInterest)
 			for _a_attribute_value_xhtml := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_xhtml.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_xhtml.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_xhtml, "A_ATTRIBUTE_VALUE_XHTML", probe)
 
@@ -368,7 +382,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ATTRIBUTE_VALUE_XHTML_1](probe.stageOfInterest)
 			for _a_attribute_value_xhtml_1 := range set {
-				nodeInstance := (&tree.Node{Name: _a_attribute_value_xhtml_1.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_attribute_value_xhtml_1.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_attribute_value_xhtml_1, "A_ATTRIBUTE_VALUE_XHTML_1", probe)
 
@@ -378,7 +392,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_CHILDREN](probe.stageOfInterest)
 			for _a_children := range set {
-				nodeInstance := (&tree.Node{Name: _a_children.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_children.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_children, "A_CHILDREN", probe)
 
@@ -388,7 +402,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_CORE_CONTENT](probe.stageOfInterest)
 			for _a_core_content := range set {
-				nodeInstance := (&tree.Node{Name: _a_core_content.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_core_content.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_core_content, "A_CORE_CONTENT", probe)
 
@@ -398,7 +412,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPES](probe.stageOfInterest)
 			for _a_datatypes := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatypes.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatypes.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatypes, "A_DATATYPES", probe)
 
@@ -408,7 +422,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_BOOLEAN_REF](probe.stageOfInterest)
 			for _a_datatype_definition_boolean_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_boolean_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_boolean_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_boolean_ref, "A_DATATYPE_DEFINITION_BOOLEAN_REF", probe)
 
@@ -418,7 +432,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_DATE_REF](probe.stageOfInterest)
 			for _a_datatype_definition_date_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_date_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_date_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_date_ref, "A_DATATYPE_DEFINITION_DATE_REF", probe)
 
@@ -428,7 +442,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_ENUMERATION_REF](probe.stageOfInterest)
 			for _a_datatype_definition_enumeration_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_enumeration_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_enumeration_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_enumeration_ref, "A_DATATYPE_DEFINITION_ENUMERATION_REF", probe)
 
@@ -438,7 +452,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_INTEGER_REF](probe.stageOfInterest)
 			for _a_datatype_definition_integer_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_integer_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_integer_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_integer_ref, "A_DATATYPE_DEFINITION_INTEGER_REF", probe)
 
@@ -448,7 +462,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_REAL_REF](probe.stageOfInterest)
 			for _a_datatype_definition_real_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_real_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_real_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_real_ref, "A_DATATYPE_DEFINITION_REAL_REF", probe)
 
@@ -458,7 +472,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_STRING_REF](probe.stageOfInterest)
 			for _a_datatype_definition_string_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_string_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_string_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_string_ref, "A_DATATYPE_DEFINITION_STRING_REF", probe)
 
@@ -468,7 +482,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_DATATYPE_DEFINITION_XHTML_REF](probe.stageOfInterest)
 			for _a_datatype_definition_xhtml_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_datatype_definition_xhtml_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_datatype_definition_xhtml_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_datatype_definition_xhtml_ref, "A_DATATYPE_DEFINITION_XHTML_REF", probe)
 
@@ -478,7 +492,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_EDITABLE_ATTS](probe.stageOfInterest)
 			for _a_editable_atts := range set {
-				nodeInstance := (&tree.Node{Name: _a_editable_atts.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_editable_atts.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_editable_atts, "A_EDITABLE_ATTS", probe)
 
@@ -488,7 +502,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_ENUM_VALUE_REF](probe.stageOfInterest)
 			for _a_enum_value_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_enum_value_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_enum_value_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_enum_value_ref, "A_ENUM_VALUE_REF", probe)
 
@@ -498,7 +512,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_OBJECT](probe.stageOfInterest)
 			for _a_object := range set {
-				nodeInstance := (&tree.Node{Name: _a_object.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_object.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_object, "A_OBJECT", probe)
 
@@ -508,7 +522,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_PROPERTIES](probe.stageOfInterest)
 			for _a_properties := range set {
-				nodeInstance := (&tree.Node{Name: _a_properties.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_properties.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_properties, "A_PROPERTIES", probe)
 
@@ -518,7 +532,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_RELATION_GROUP_TYPE_REF](probe.stageOfInterest)
 			for _a_relation_group_type_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_relation_group_type_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_relation_group_type_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_relation_group_type_ref, "A_RELATION_GROUP_TYPE_REF", probe)
 
@@ -528,7 +542,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SOURCE_1](probe.stageOfInterest)
 			for _a_source_1 := range set {
-				nodeInstance := (&tree.Node{Name: _a_source_1.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_source_1.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_source_1, "A_SOURCE_1", probe)
 
@@ -538,7 +552,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SOURCE_SPECIFICATION_1](probe.stageOfInterest)
 			for _a_source_specification_1 := range set {
-				nodeInstance := (&tree.Node{Name: _a_source_specification_1.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_source_specification_1.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_source_specification_1, "A_SOURCE_SPECIFICATION_1", probe)
 
@@ -548,7 +562,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPECIFICATIONS](probe.stageOfInterest)
 			for _a_specifications := range set {
-				nodeInstance := (&tree.Node{Name: _a_specifications.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_specifications.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_specifications, "A_SPECIFICATIONS", probe)
 
@@ -558,7 +572,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPECIFICATION_TYPE_REF](probe.stageOfInterest)
 			for _a_specification_type_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_specification_type_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_specification_type_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_specification_type_ref, "A_SPECIFICATION_TYPE_REF", probe)
 
@@ -568,7 +582,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPECIFIED_VALUES](probe.stageOfInterest)
 			for _a_specified_values := range set {
-				nodeInstance := (&tree.Node{Name: _a_specified_values.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_specified_values.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_specified_values, "A_SPECIFIED_VALUES", probe)
 
@@ -578,7 +592,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_ATTRIBUTES](probe.stageOfInterest)
 			for _a_spec_attributes := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_attributes.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_attributes.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_attributes, "A_SPEC_ATTRIBUTES", probe)
 
@@ -588,7 +602,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_OBJECTS](probe.stageOfInterest)
 			for _a_spec_objects := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_objects.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_objects.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_objects, "A_SPEC_OBJECTS", probe)
 
@@ -598,7 +612,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_OBJECT_TYPE_REF](probe.stageOfInterest)
 			for _a_spec_object_type_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_object_type_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_object_type_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_object_type_ref, "A_SPEC_OBJECT_TYPE_REF", probe)
 
@@ -608,7 +622,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_RELATIONS](probe.stageOfInterest)
 			for _a_spec_relations := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_relations.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_relations.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_relations, "A_SPEC_RELATIONS", probe)
 
@@ -618,7 +632,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_RELATION_GROUPS](probe.stageOfInterest)
 			for _a_spec_relation_groups := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_relation_groups.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_relation_groups.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_relation_groups, "A_SPEC_RELATION_GROUPS", probe)
 
@@ -628,7 +642,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_RELATION_REF](probe.stageOfInterest)
 			for _a_spec_relation_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_relation_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_relation_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_relation_ref, "A_SPEC_RELATION_REF", probe)
 
@@ -638,7 +652,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_RELATION_TYPE_REF](probe.stageOfInterest)
 			for _a_spec_relation_type_ref := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_relation_type_ref.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_relation_type_ref.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_relation_type_ref, "A_SPEC_RELATION_TYPE_REF", probe)
 
@@ -648,7 +662,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_SPEC_TYPES](probe.stageOfInterest)
 			for _a_spec_types := range set {
-				nodeInstance := (&tree.Node{Name: _a_spec_types.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_spec_types.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_spec_types, "A_SPEC_TYPES", probe)
 
@@ -658,7 +672,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_THE_HEADER](probe.stageOfInterest)
 			for _a_the_header := range set {
-				nodeInstance := (&tree.Node{Name: _a_the_header.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_the_header.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_the_header, "A_THE_HEADER", probe)
 
@@ -668,7 +682,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.A_TOOL_EXTENSIONS](probe.stageOfInterest)
 			for _a_tool_extensions := range set {
-				nodeInstance := (&tree.Node{Name: _a_tool_extensions.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _a_tool_extensions.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_a_tool_extensions, "A_TOOL_EXTENSIONS", probe)
 
@@ -678,7 +692,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_BOOLEAN](probe.stageOfInterest)
 			for _datatype_definition_boolean := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_boolean.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_boolean.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_boolean, "DATATYPE_DEFINITION_BOOLEAN", probe)
 
@@ -688,7 +702,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_DATE](probe.stageOfInterest)
 			for _datatype_definition_date := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_date.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_date.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_date, "DATATYPE_DEFINITION_DATE", probe)
 
@@ -698,7 +712,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_ENUMERATION](probe.stageOfInterest)
 			for _datatype_definition_enumeration := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_enumeration.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_enumeration.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_enumeration, "DATATYPE_DEFINITION_ENUMERATION", probe)
 
@@ -708,7 +722,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_INTEGER](probe.stageOfInterest)
 			for _datatype_definition_integer := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_integer.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_integer.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_integer, "DATATYPE_DEFINITION_INTEGER", probe)
 
@@ -718,7 +732,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_REAL](probe.stageOfInterest)
 			for _datatype_definition_real := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_real.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_real.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_real, "DATATYPE_DEFINITION_REAL", probe)
 
@@ -728,7 +742,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_STRING](probe.stageOfInterest)
 			for _datatype_definition_string := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_string.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_string.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_string, "DATATYPE_DEFINITION_STRING", probe)
 
@@ -738,7 +752,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.DATATYPE_DEFINITION_XHTML](probe.stageOfInterest)
 			for _datatype_definition_xhtml := range set {
-				nodeInstance := (&tree.Node{Name: _datatype_definition_xhtml.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _datatype_definition_xhtml.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_datatype_definition_xhtml, "DATATYPE_DEFINITION_XHTML", probe)
 
@@ -748,7 +762,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.EMBEDDED_VALUE](probe.stageOfInterest)
 			for _embedded_value := range set {
-				nodeInstance := (&tree.Node{Name: _embedded_value.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _embedded_value.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_embedded_value, "EMBEDDED_VALUE", probe)
 
@@ -758,7 +772,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.ENUM_VALUE](probe.stageOfInterest)
 			for _enum_value := range set {
-				nodeInstance := (&tree.Node{Name: _enum_value.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _enum_value.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_enum_value, "ENUM_VALUE", probe)
 
@@ -768,7 +782,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.GeneratedImageMetamodel](probe.stageOfInterest)
 			for _generatedimagemetamodel := range set {
-				nodeInstance := (&tree.Node{Name: _generatedimagemetamodel.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _generatedimagemetamodel.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_generatedimagemetamodel, "GeneratedImageMetamodel", probe)
 
@@ -778,7 +792,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.Image](probe.stageOfInterest)
 			for _image := range set {
-				nodeInstance := (&tree.Node{Name: _image.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _image.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_image, "Image", probe)
 
@@ -788,7 +802,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.Paragraph](probe.stageOfInterest)
 			for _paragraph := range set {
-				nodeInstance := (&tree.Node{Name: _paragraph.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _paragraph.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_paragraph, "Paragraph", probe)
 
@@ -798,7 +812,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.RELATION_GROUP](probe.stageOfInterest)
 			for _relation_group := range set {
-				nodeInstance := (&tree.Node{Name: _relation_group.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _relation_group.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_relation_group, "RELATION_GROUP", probe)
 
@@ -808,7 +822,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.RELATION_GROUP_TYPE](probe.stageOfInterest)
 			for _relation_group_type := range set {
-				nodeInstance := (&tree.Node{Name: _relation_group_type.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _relation_group_type.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_relation_group_type, "RELATION_GROUP_TYPE", probe)
 
@@ -818,7 +832,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.REQ_IF](probe.stageOfInterest)
 			for _req_if := range set {
-				nodeInstance := (&tree.Node{Name: _req_if.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _req_if.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_req_if, "REQ_IF", probe)
 
@@ -828,7 +842,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.REQ_IF_CONTENT](probe.stageOfInterest)
 			for _req_if_content := range set {
-				nodeInstance := (&tree.Node{Name: _req_if_content.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _req_if_content.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_req_if_content, "REQ_IF_CONTENT", probe)
 
@@ -838,7 +852,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.REQ_IF_HEADER](probe.stageOfInterest)
 			for _req_if_header := range set {
-				nodeInstance := (&tree.Node{Name: _req_if_header.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _req_if_header.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_req_if_header, "REQ_IF_HEADER", probe)
 
@@ -848,7 +862,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.REQ_IF_TOOL_EXTENSION](probe.stageOfInterest)
 			for _req_if_tool_extension := range set {
-				nodeInstance := (&tree.Node{Name: _req_if_tool_extension.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _req_if_tool_extension.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_req_if_tool_extension, "REQ_IF_TOOL_EXTENSION", probe)
 
@@ -858,7 +872,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPECIFICATION](probe.stageOfInterest)
 			for _specification := range set {
-				nodeInstance := (&tree.Node{Name: _specification.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _specification.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_specification, "SPECIFICATION", probe)
 
@@ -868,7 +882,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPECIFICATION_TYPE](probe.stageOfInterest)
 			for _specification_type := range set {
-				nodeInstance := (&tree.Node{Name: _specification_type.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _specification_type.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_specification_type, "SPECIFICATION_TYPE", probe)
 
@@ -878,7 +892,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPEC_HIERARCHY](probe.stageOfInterest)
 			for _spec_hierarchy := range set {
-				nodeInstance := (&tree.Node{Name: _spec_hierarchy.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _spec_hierarchy.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_spec_hierarchy, "SPEC_HIERARCHY", probe)
 
@@ -888,7 +902,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPEC_OBJECT](probe.stageOfInterest)
 			for _spec_object := range set {
-				nodeInstance := (&tree.Node{Name: _spec_object.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _spec_object.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_spec_object, "SPEC_OBJECT", probe)
 
@@ -898,7 +912,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPEC_OBJECT_TYPE](probe.stageOfInterest)
 			for _spec_object_type := range set {
-				nodeInstance := (&tree.Node{Name: _spec_object_type.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _spec_object_type.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_spec_object_type, "SPEC_OBJECT_TYPE", probe)
 
@@ -908,7 +922,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPEC_RELATION](probe.stageOfInterest)
 			for _spec_relation := range set {
-				nodeInstance := (&tree.Node{Name: _spec_relation.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _spec_relation.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_spec_relation, "SPEC_RELATION", probe)
 
@@ -918,7 +932,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.SPEC_RELATION_TYPE](probe.stageOfInterest)
 			for _spec_relation_type := range set {
-				nodeInstance := (&tree.Node{Name: _spec_relation_type.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _spec_relation_type.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_spec_relation_type, "SPEC_RELATION_TYPE", probe)
 
@@ -928,7 +942,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.StaticWebSite](probe.stageOfInterest)
 			for _staticwebsite := range set {
-				nodeInstance := (&tree.Node{Name: _staticwebsite.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _staticwebsite.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsite, "StaticWebSite", probe)
 
@@ -938,7 +952,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.StaticWebSiteChapter](probe.stageOfInterest)
 			for _staticwebsitechapter := range set {
-				nodeInstance := (&tree.Node{Name: _staticwebsitechapter.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _staticwebsitechapter.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsitechapter, "StaticWebSiteChapter", probe)
 
@@ -948,7 +962,7 @@ func updateAndCommitTree(
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.XHTML_CONTENT](probe.stageOfInterest)
 			for _xhtml_content := range set {
-				nodeInstance := (&tree.Node{Name: _xhtml_content.GetName()}).Stage(probe.treeStage)
+				nodeInstance := &tree.Node{Name: _xhtml_content.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_xhtml_content, "XHTML_CONTENT", probe)
 
@@ -973,14 +987,7 @@ func updateAndCommitTree(
 		sidebar.RootNodes = append(sidebar.RootNodes, nodeGongstruct)
 	}
 
-	// Add a refresh button
-	nodeRefreshButton := (&tree.Node{Name: ""}).Stage(probe.treeStage)
-	sidebar.RootNodes = append(sidebar.RootNodes, nodeRefreshButton)
-	refreshButton := (&tree.Button{
-		Name: "RefreshButton" + " " + string(gongtree_buttons.BUTTON_refresh),
-		Icon: string(gongtree_buttons.BUTTON_refresh)}).Stage(probe.treeStage)
-	nodeRefreshButton.Buttons = append(nodeRefreshButton.Buttons, refreshButton)
-	refreshButton.Impl = NewButtonImplRefresh(probe)
+	tree.StageBranch(probe.treeStage, sidebar)
 
 	probe.treeStage.Commit()
 }

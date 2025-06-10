@@ -43,6 +43,9 @@ type Rect struct {
 	FillOpacityWhenHovered float64
 	OriginalFillOpacity    float64
 
+	CheckboxHasToolTip  bool
+	CheckboxToolTipText string
+
 	Impl RectImplInterface
 }
 
@@ -72,12 +75,22 @@ func (rect *Rect) WriteSVG(sb *strings.Builder) (maxX, maxY float64) {
 	rect.Presentation.WriteSVG(sb)
 	sb.WriteString(" />\n")
 
-	for _, anchoredText := range rect.RectAnchoredTexts {
+	for _, rectAnchoredText := range rect.RectAnchoredTexts {
+		x, y := getRectAnchorPoint(rect, rectAnchoredText.RectAnchorType)
+		rectAnchoredText.WriteSVG(sb, x, y)
 
-		x, y := getRectAnchorPoint(rect, anchoredText.RectAnchorType)
+	}
 
-		anchoredText.WriteSVG(sb, x, y)
+	for _, rectAnchoredRect := range rect.RectAnchoredRects {
+		x, y := getRectAnchorPoint(rect, rectAnchoredRect.RectAnchorType)
+		maxX_, maxY_ := rectAnchoredRect.WriteSVG(sb, x, y)
+		updateMaxx(maxX_, maxY_, &maxX, &maxY)
+	}
 
+	for _, rectAnchoredPath := range rect.RectAnchoredPaths {
+		x, y := getRectAnchorPoint(rect, rectAnchoredPath.RectAnchorType)
+		maxX_, maxY_ := rectAnchoredPath.WriteSVG(sb, x, y)
+		updateMaxx(maxX_, maxY_, &maxX, &maxY)
 	}
 
 	return

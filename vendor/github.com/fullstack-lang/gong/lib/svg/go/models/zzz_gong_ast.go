@@ -1977,6 +1977,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_Rect[identifier].OriginalFillOpacity = exprSign * fielValue
+				case "CheckboxToolTipText":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_Rect[identifier].CheckboxToolTipText = fielValue
 				}
 			case "RectAnchoredPath":
 				switch fieldName {
@@ -2108,6 +2112,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_RectAnchoredRect[identifier].Y_Offset = exprSign * fielValue
+				case "CheckboxToolTipText":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_RectAnchoredRect[identifier].CheckboxToolTipText = fielValue
 				case "Color":
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
@@ -2590,6 +2598,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_Rect[identifier].ChangeColorWhenHovered = fielValue
+				case "CheckboxHasToolTip":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_Rect[identifier].CheckboxHasToolTip = fielValue
 				}
 			case "RectAnchoredPath":
 				switch fieldName {
@@ -2619,6 +2634,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_RectAnchoredRect[identifier].HeightFollowRect = fielValue
+				case "CheckboxHasToolTip":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_RectAnchoredRect[identifier].CheckboxHasToolTip = fielValue
 				}
 			case "RectAnchoredText":
 				switch fieldName {
@@ -2721,7 +2743,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// for the meta field written as ref_models.ENUM_VALUE1
 					basicLit = new(ast.BasicLit)
 					basicLit.Kind = token.STRING // Or another appropriate token.Kind
-					basicLit.Value =  selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
+					basicLit.Value = selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
 					_ = basicLit.Kind
 					_ = basicLit.Value
 				}

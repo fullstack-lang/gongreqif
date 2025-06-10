@@ -17,9 +17,6 @@ type GongStructShape struct {
 	Y float64
 
 	// Identifier is the identifier of the struct referenced by the shape in the modeled package
-	//gong:ident
-	Identifier string
-
 	//gong:meta
 	IdentifierMeta any
 
@@ -75,13 +72,13 @@ func (classdiagram *Classdiagram) RemoveGongStructShape(stage *Stage, gongstruct
 	for _, fromGongStructShape := range classdiagram.GongStructShapes {
 
 		newSliceOfLinks := make([]*LinkShape, 0)
-		for _, link := range fromGongStructShape.LinkShapes {
+		for _, linkShape := range fromGongStructShape.LinkShapes {
 			typeOfTheField := IdentifierMetaToGongStructName(gongstructshape.IdentifierMeta)
-			typeOfTheLink := IdentifierToGongStructName(link.Fieldtypename)
+			typeOfTheLink := IdentifierMetaToGongStructName(linkShape.FieldTypeIdentifierMeta)
 			if typeOfTheLink == typeOfTheField {
-				link.Unstage(stage)
+				linkShape.Unstage(stage)
 			} else {
-				newSliceOfLinks = append(newSliceOfLinks, link)
+				newSliceOfLinks = append(newSliceOfLinks, linkShape)
 			}
 		}
 		fromGongStructShape.LinkShapes = newSliceOfLinks

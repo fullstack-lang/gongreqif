@@ -335,38 +335,17 @@ func NewStager(
 						},
 
 						{
-							Size: 25,
+							Size: 40,
 							Tree: &split.Tree{
 								StackName: stager.dataTypeTreeStage.GetName(),
 								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
-							Size: 25,
+							Size: 40,
 							Tree: &split.Tree{
 								StackName: stager.specTypesTreeStage.GetName(),
 								TreeName:  stager.specTypesTreeName,
-							},
-						},
-						{
-							Size: 10,
-							Tree: &split.Tree{
-								StackName: stager.specObjectsTreeStage.GetName(),
-								TreeName:  stager.specObjectsTreeName,
-							},
-						},
-						{
-							Size: 10,
-							Tree: &split.Tree{
-								StackName: stager.specRelationsTreeStage.GetName(),
-								TreeName:  stager.specRelationsTreeName,
-							},
-						},
-						{
-							Size: 10,
-							Tree: &split.Tree{
-								StackName: stager.specificationsTreeStage.GetName(),
-								TreeName:  stager.specificationsTreeName,
 							},
 						},
 					},

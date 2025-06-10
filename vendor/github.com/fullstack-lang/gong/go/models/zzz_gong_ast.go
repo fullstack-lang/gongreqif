@@ -1209,13 +1209,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "GongEnum":
 					targetIdentifier := ident.Name
 					__gong__map_GongBasicField[identifier].GongEnum = __gong__map_GongEnum[targetIdentifier]
-				case "IsDocLink":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_GongBasicField[identifier].IsDocLink = fielValue
 				case "IsTextArea":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
@@ -1357,7 +1350,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// for the meta field written as ref_models.ENUM_VALUE1
 					basicLit = new(ast.BasicLit)
 					basicLit.Kind = token.STRING // Or another appropriate token.Kind
-					basicLit.Value =  selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
+					basicLit.Value = selectorExpr.X.(*ast.Ident).Name + "." + Sel.Name
 					_ = basicLit.Kind
 					_ = basicLit.Value
 				}

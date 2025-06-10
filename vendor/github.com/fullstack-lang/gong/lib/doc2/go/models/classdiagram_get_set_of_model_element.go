@@ -32,7 +32,7 @@ func (stager *Stager) compute_map_modelElement_shape(
 		map_ModelElement_Shape[gongStruct] = gongStructShape
 
 		for _, fieldShape := range gongStructShape.AttributeShapes {
-			fieldShapeName := IdentifierToFieldName(fieldShape.Identifier)
+			fieldShapeName := IdentifierMetaToFieldName(fieldShape.IdentifierMeta)
 
 			var fieldFound bool
 			for _, field := range gongStruct.Fields {
@@ -48,7 +48,7 @@ func (stager *Stager) compute_map_modelElement_shape(
 		}
 
 		for _, linkShape := range gongStructShape.LinkShapes {
-			linkShapeName := IdentifierToFieldName(linkShape.Identifier)
+			linkShapeName := IdentifierMetaToFieldName(linkShape.IdentifierMeta)
 
 			for _, link := range gongStruct.SliceOfPointerToGongStructFields {
 				if link.GetName() == linkShapeName {
@@ -67,10 +67,10 @@ func (stager *Stager) compute_map_modelElement_shape(
 	gongEnumSet := *gong.GetGongstructInstancesMap[gong.GongEnum](gongStage)
 	for _, gongEnumShape := range classdiagram.GongEnumShapes {
 
-		gongEnumName := IdentifierToGongStructName(gongEnumShape.Identifier)
+		gongEnumName := GongEnumIdentifierMetaToGongEnumName(gongEnumShape.IdentifierMeta)
 		gongEnum, ok := gongEnumSet[gongEnumName]
 		if !ok {
-			log.Fatalln("unkown element", gongEnumShape.Identifier)
+			log.Fatalln("unkown element", gongEnumName)
 		}
 
 		map_ModelElement_Shape[gongEnum] = gongEnumShape

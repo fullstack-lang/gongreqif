@@ -133,8 +133,15 @@ func processSpecHierarchy(
 		log.Panic("specHierarchy.OBJECT.SPEC_OBJECT_REF", specHierarchy.OBJECT.SPEC_OBJECT_REF,
 			"unknown ref")
 	}
+
+	specObjectType, ok := stager.Map_id_SPEC_OBJECT_TYPE[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+	if !ok {
+		log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
+			"unknown ref")
+	}
+
 	hierarchyNode := &tree.Node{
-		Name: specObject.Name,
+		Name: specObject.Name + " : " + specObjectType.Name,
 	}
 	hierarchyParentNode.Children = append(hierarchyParentNode.Children, hierarchyNode)
 

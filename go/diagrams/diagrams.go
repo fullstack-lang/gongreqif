@@ -92,9 +92,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000000_Default_REQ_IF.Name = `Default-REQ_IF`
 	__GongStructShape__000000_Default_REQ_IF.X = 9.000000
 	__GongStructShape__000000_Default_REQ_IF.Y = 63.000000
-
-	//gong:ident [ref_models.REQ_IF] comment added to overcome the problem with the comment map association
-	__GongStructShape__000000_Default_REQ_IF.Identifier = `ref_models.REQ_IF`
 	__GongStructShape__000000_Default_REQ_IF.IdentifierMeta = ref_models.REQ_IF{}
 	__GongStructShape__000000_Default_REQ_IF.ShowNbInstances = false
 	__GongStructShape__000000_Default_REQ_IF.NbInstances = 0
@@ -105,9 +102,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.Name = `Default-REQ_IF_CONTENT`
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.X = 790.000000
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.Y = 333.000000
-
-	//gong:ident [ref_models.REQ_IF_CONTENT] comment added to overcome the problem with the comment map association
-	__GongStructShape__000001_Default_REQ_IF_CONTENT.Identifier = `ref_models.REQ_IF_CONTENT`
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.IdentifierMeta = ref_models.REQ_IF_CONTENT{}
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.ShowNbInstances = false
 	__GongStructShape__000001_Default_REQ_IF_CONTENT.NbInstances = 0
@@ -118,9 +112,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000002_Default_REQ_IF_HEADER.Name = `Default-REQ_IF_HEADER`
 	__GongStructShape__000002_Default_REQ_IF_HEADER.X = 787.000000
 	__GongStructShape__000002_Default_REQ_IF_HEADER.Y = 69.000000
-
-	//gong:ident [ref_models.REQ_IF_HEADER] comment added to overcome the problem with the comment map association
-	__GongStructShape__000002_Default_REQ_IF_HEADER.Identifier = `ref_models.REQ_IF_HEADER`
 	__GongStructShape__000002_Default_REQ_IF_HEADER.IdentifierMeta = ref_models.REQ_IF_HEADER{}
 	__GongStructShape__000002_Default_REQ_IF_HEADER.ShowNbInstances = false
 	__GongStructShape__000002_Default_REQ_IF_HEADER.NbInstances = 0
@@ -131,9 +122,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000003_Default_A_THE_HEADER.Name = `Default-A_THE_HEADER`
 	__GongStructShape__000003_Default_A_THE_HEADER.X = 385.000000
 	__GongStructShape__000003_Default_A_THE_HEADER.Y = 64.000000
-
-	//gong:ident [ref_models.A_THE_HEADER] comment added to overcome the problem with the comment map association
-	__GongStructShape__000003_Default_A_THE_HEADER.Identifier = `ref_models.A_THE_HEADER`
 	__GongStructShape__000003_Default_A_THE_HEADER.IdentifierMeta = ref_models.A_THE_HEADER{}
 	__GongStructShape__000003_Default_A_THE_HEADER.ShowNbInstances = false
 	__GongStructShape__000003_Default_A_THE_HEADER.NbInstances = 0
@@ -144,9 +132,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000004_Default_A_CORE_CONTENT.Name = `Default-A_CORE_CONTENT`
 	__GongStructShape__000004_Default_A_CORE_CONTENT.X = 383.000000
 	__GongStructShape__000004_Default_A_CORE_CONTENT.Y = 329.000000
-
-	//gong:ident [ref_models.A_CORE_CONTENT] comment added to overcome the problem with the comment map association
-	__GongStructShape__000004_Default_A_CORE_CONTENT.Identifier = `ref_models.A_CORE_CONTENT`
 	__GongStructShape__000004_Default_A_CORE_CONTENT.IdentifierMeta = ref_models.A_CORE_CONTENT{}
 	__GongStructShape__000004_Default_A_CORE_CONTENT.ShowNbInstances = false
 	__GongStructShape__000004_Default_A_CORE_CONTENT.NbInstances = 0
@@ -157,9 +142,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.Name = `Content-REQ_IF_CONTENT`
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.X = 71.000000
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.Y = 21.000000
-
-	//gong:ident [ref_models.REQ_IF_CONTENT] comment added to overcome the problem with the comment map association
-	__GongStructShape__000005_Content_REQ_IF_CONTENT.Identifier = `ref_models.REQ_IF_CONTENT`
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.IdentifierMeta = ref_models.REQ_IF_CONTENT{}
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.ShowNbInstances = false
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.NbInstances = 0
@@ -170,9 +152,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000006_Content_A_DATATYPES.Name = `Content-A_DATATYPES`
 	__GongStructShape__000006_Content_A_DATATYPES.X = 59.800000
 	__GongStructShape__000006_Content_A_DATATYPES.Y = 305.600000
-
-	//gong:ident [ref_models.A_DATATYPES] comment added to overcome the problem with the comment map association
-	__GongStructShape__000006_Content_A_DATATYPES.Identifier = `ref_models.A_DATATYPES`
 	__GongStructShape__000006_Content_A_DATATYPES.IdentifierMeta = ref_models.A_DATATYPES{}
 	__GongStructShape__000006_Content_A_DATATYPES.ShowNbInstances = false
 	__GongStructShape__000006_Content_A_DATATYPES.NbInstances = 0
@@ -183,9 +162,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.Name = `Content-DATATYPE_DEFINITION_BOOLEAN`
 	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.X = 907.800000
 	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.Y = 471.800000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_BOOLEAN] comment added to overcome the problem with the comment map association
-	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.Identifier = `ref_models.DATATYPE_DEFINITION_BOOLEAN`
 	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.IdentifierMeta = ref_models.DATATYPE_DEFINITION_BOOLEAN{}
 	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.ShowNbInstances = false
 	__GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN.NbInstances = 0
@@ -196,9 +172,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.Name = `Content-DATATYPE_DEFINITION_DATE`
 	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.X = 906.799939
 	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.Y = 288.800000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_DATE] comment added to overcome the problem with the comment map association
-	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.Identifier = `ref_models.DATATYPE_DEFINITION_DATE`
 	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.IdentifierMeta = ref_models.DATATYPE_DEFINITION_DATE{}
 	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.ShowNbInstances = false
 	__GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE.NbInstances = 0
@@ -209,9 +182,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.Name = `Content-DATATYPE_DEFINITION_ENUMERATION`
 	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.X = 908.600000
 	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.Y = 378.600000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_ENUMERATION] comment added to overcome the problem with the comment map association
-	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.Identifier = `ref_models.DATATYPE_DEFINITION_ENUMERATION`
 	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.IdentifierMeta = ref_models.DATATYPE_DEFINITION_ENUMERATION{}
 	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.ShowNbInstances = false
 	__GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION.NbInstances = 0
@@ -222,9 +192,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.Name = `Content-DATATYPE_DEFINITION_INTEGER`
 	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.X = 909.599939
 	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.Y = 568.400000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_INTEGER] comment added to overcome the problem with the comment map association
-	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.Identifier = `ref_models.DATATYPE_DEFINITION_INTEGER`
 	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.IdentifierMeta = ref_models.DATATYPE_DEFINITION_INTEGER{}
 	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.ShowNbInstances = false
 	__GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER.NbInstances = 0
@@ -235,9 +202,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.Name = `Content-DATATYPE_DEFINITION_REAL`
 	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.X = 904.400000
 	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.Y = 201.800000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_REAL] comment added to overcome the problem with the comment map association
-	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.Identifier = `ref_models.DATATYPE_DEFINITION_REAL`
 	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.IdentifierMeta = ref_models.DATATYPE_DEFINITION_REAL{}
 	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.ShowNbInstances = false
 	__GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL.NbInstances = 0
@@ -248,9 +212,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.Name = `Content-DATATYPE_DEFINITION_STRING`
 	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.X = 901.400000
 	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.Y = 111.600000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_STRING] comment added to overcome the problem with the comment map association
-	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.Identifier = `ref_models.DATATYPE_DEFINITION_STRING`
 	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.IdentifierMeta = ref_models.DATATYPE_DEFINITION_STRING{}
 	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.ShowNbInstances = false
 	__GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING.NbInstances = 0
@@ -261,9 +222,6 @@ func _(stage *models.Stage) {
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.Name = `Content-DATATYPE_DEFINITION_XHTML`
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.X = 901.400000
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.Y = 24.600000
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_XHTML] comment added to overcome the problem with the comment map association
-	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.Identifier = `ref_models.DATATYPE_DEFINITION_XHTML`
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.IdentifierMeta = ref_models.DATATYPE_DEFINITION_XHTML{}
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.ShowNbInstances = false
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.NbInstances = 0
@@ -272,13 +230,7 @@ func _(stage *models.Stage) {
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.IsSelected = false
 
 	__LinkShape__000000_CORE_CONTENT.Name = `CORE_CONTENT`
-
-	//gong:ident [ref_models.REQ_IF.CORE_CONTENT] comment added to overcome the problem with the comment map association
-	__LinkShape__000000_CORE_CONTENT.Identifier = `ref_models.REQ_IF.CORE_CONTENT`
 	__LinkShape__000000_CORE_CONTENT.IdentifierMeta = ref_models.REQ_IF{}.CORE_CONTENT
-
-	//gong:ident [ref_models.A_CORE_CONTENT] comment added to overcome the problem with the comment map association
-	__LinkShape__000000_CORE_CONTENT.Fieldtypename = `ref_models.A_CORE_CONTENT`
 	__LinkShape__000000_CORE_CONTENT.FieldOffsetX = 0.000000
 	__LinkShape__000000_CORE_CONTENT.FieldOffsetY = 0.000000
 	__LinkShape__000000_CORE_CONTENT.TargetMultiplicity = models.ZERO_ONE
@@ -296,13 +248,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000000_CORE_CONTENT.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000001_THE_HEADER.Name = `THE_HEADER`
-
-	//gong:ident [ref_models.REQ_IF.THE_HEADER] comment added to overcome the problem with the comment map association
-	__LinkShape__000001_THE_HEADER.Identifier = `ref_models.REQ_IF.THE_HEADER`
 	__LinkShape__000001_THE_HEADER.IdentifierMeta = ref_models.REQ_IF{}.THE_HEADER
-
-	//gong:ident [ref_models.A_THE_HEADER] comment added to overcome the problem with the comment map association
-	__LinkShape__000001_THE_HEADER.Fieldtypename = `ref_models.A_THE_HEADER`
 	__LinkShape__000001_THE_HEADER.FieldOffsetX = 0.000000
 	__LinkShape__000001_THE_HEADER.FieldOffsetY = 0.000000
 	__LinkShape__000001_THE_HEADER.TargetMultiplicity = models.ZERO_ONE
@@ -320,13 +266,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000001_THE_HEADER.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000002_REQ_IF_HEADER.Name = `REQ_IF_HEADER`
-
-	//gong:ident [ref_models.A_THE_HEADER.REQ_IF_HEADER] comment added to overcome the problem with the comment map association
-	__LinkShape__000002_REQ_IF_HEADER.Identifier = `ref_models.A_THE_HEADER.REQ_IF_HEADER`
 	__LinkShape__000002_REQ_IF_HEADER.IdentifierMeta = ref_models.A_THE_HEADER{}.REQ_IF_HEADER
-
-	//gong:ident [ref_models.REQ_IF_HEADER] comment added to overcome the problem with the comment map association
-	__LinkShape__000002_REQ_IF_HEADER.Fieldtypename = `ref_models.REQ_IF_HEADER`
 	__LinkShape__000002_REQ_IF_HEADER.FieldOffsetX = 0.000000
 	__LinkShape__000002_REQ_IF_HEADER.FieldOffsetY = 0.000000
 	__LinkShape__000002_REQ_IF_HEADER.TargetMultiplicity = models.ZERO_ONE
@@ -344,13 +284,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000002_REQ_IF_HEADER.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000003_REQ_IF_CONTENT.Name = `REQ_IF_CONTENT`
-
-	//gong:ident [ref_models.A_CORE_CONTENT.REQ_IF_CONTENT] comment added to overcome the problem with the comment map association
-	__LinkShape__000003_REQ_IF_CONTENT.Identifier = `ref_models.A_CORE_CONTENT.REQ_IF_CONTENT`
 	__LinkShape__000003_REQ_IF_CONTENT.IdentifierMeta = ref_models.A_CORE_CONTENT{}.REQ_IF_CONTENT
-
-	//gong:ident [ref_models.REQ_IF_CONTENT] comment added to overcome the problem with the comment map association
-	__LinkShape__000003_REQ_IF_CONTENT.Fieldtypename = `ref_models.REQ_IF_CONTENT`
 	__LinkShape__000003_REQ_IF_CONTENT.FieldOffsetX = 0.000000
 	__LinkShape__000003_REQ_IF_CONTENT.FieldOffsetY = 0.000000
 	__LinkShape__000003_REQ_IF_CONTENT.TargetMultiplicity = models.ZERO_ONE
@@ -368,13 +302,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000003_REQ_IF_CONTENT.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000004_DATATYPES.Name = `DATATYPES`
-
-	//gong:ident [ref_models.REQ_IF_CONTENT.DATATYPES] comment added to overcome the problem with the comment map association
-	__LinkShape__000004_DATATYPES.Identifier = `ref_models.REQ_IF_CONTENT.DATATYPES`
 	__LinkShape__000004_DATATYPES.IdentifierMeta = ref_models.REQ_IF_CONTENT{}.DATATYPES
-
-	//gong:ident [ref_models.A_DATATYPES] comment added to overcome the problem with the comment map association
-	__LinkShape__000004_DATATYPES.Fieldtypename = `ref_models.A_DATATYPES`
 	__LinkShape__000004_DATATYPES.FieldTypeIdentifierMeta = ref_models.A_DATATYPES{}
 	__LinkShape__000004_DATATYPES.FieldOffsetX = 0.000000
 	__LinkShape__000004_DATATYPES.FieldOffsetY = 0.000000
@@ -393,13 +321,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000004_DATATYPES.CornerOffsetRatio = 2.162698
 
 	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.Name = `DATATYPE_DEFINITION_BOOLEAN`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_BOOLEAN] comment added to overcome the problem with the comment map association
-	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_BOOLEAN`
 	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_BOOLEAN
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_BOOLEAN] comment added to overcome the problem with the comment map association
-	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.Fieldtypename = `ref_models.DATATYPE_DEFINITION_BOOLEAN`
 	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_BOOLEAN{}
 	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.FieldOffsetX = 0.000000
 	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.FieldOffsetY = 0.000000
@@ -418,13 +340,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000005_DATATYPE_DEFINITION_BOOLEAN.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000006_DATATYPE_DEFINITION_DATE.Name = `DATATYPE_DEFINITION_DATE`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_DATE] comment added to overcome the problem with the comment map association
-	__LinkShape__000006_DATATYPE_DEFINITION_DATE.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_DATE`
 	__LinkShape__000006_DATATYPE_DEFINITION_DATE.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_DATE
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_DATE] comment added to overcome the problem with the comment map association
-	__LinkShape__000006_DATATYPE_DEFINITION_DATE.Fieldtypename = `ref_models.DATATYPE_DEFINITION_DATE`
 	__LinkShape__000006_DATATYPE_DEFINITION_DATE.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_DATE{}
 	__LinkShape__000006_DATATYPE_DEFINITION_DATE.FieldOffsetX = 0.000000
 	__LinkShape__000006_DATATYPE_DEFINITION_DATE.FieldOffsetY = 0.000000
@@ -443,13 +359,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000006_DATATYPE_DEFINITION_DATE.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.Name = `DATATYPE_DEFINITION_ENUMERATION`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_ENUMERATION] comment added to overcome the problem with the comment map association
-	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_ENUMERATION`
 	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_ENUMERATION
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_ENUMERATION] comment added to overcome the problem with the comment map association
-	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.Fieldtypename = `ref_models.DATATYPE_DEFINITION_ENUMERATION`
 	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_ENUMERATION{}
 	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.FieldOffsetX = 0.000000
 	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.FieldOffsetY = 0.000000
@@ -468,13 +378,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000007_DATATYPE_DEFINITION_ENUMERATION.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.Name = `DATATYPE_DEFINITION_INTEGER`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_INTEGER] comment added to overcome the problem with the comment map association
-	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_INTEGER`
 	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_INTEGER
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_INTEGER] comment added to overcome the problem with the comment map association
-	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.Fieldtypename = `ref_models.DATATYPE_DEFINITION_INTEGER`
 	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_INTEGER{}
 	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.FieldOffsetX = 0.000000
 	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.FieldOffsetY = 0.000000
@@ -493,13 +397,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000008_DATATYPE_DEFINITION_INTEGER.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000009_DATATYPE_DEFINITION_REAL.Name = `DATATYPE_DEFINITION_REAL`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_REAL] comment added to overcome the problem with the comment map association
-	__LinkShape__000009_DATATYPE_DEFINITION_REAL.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_REAL`
 	__LinkShape__000009_DATATYPE_DEFINITION_REAL.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_REAL
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_REAL] comment added to overcome the problem with the comment map association
-	__LinkShape__000009_DATATYPE_DEFINITION_REAL.Fieldtypename = `ref_models.DATATYPE_DEFINITION_REAL`
 	__LinkShape__000009_DATATYPE_DEFINITION_REAL.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_REAL{}
 	__LinkShape__000009_DATATYPE_DEFINITION_REAL.FieldOffsetX = 0.000000
 	__LinkShape__000009_DATATYPE_DEFINITION_REAL.FieldOffsetY = 0.000000
@@ -518,13 +416,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000009_DATATYPE_DEFINITION_REAL.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000010_DATATYPE_DEFINITION_STRING.Name = `DATATYPE_DEFINITION_STRING`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_STRING] comment added to overcome the problem with the comment map association
-	__LinkShape__000010_DATATYPE_DEFINITION_STRING.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_STRING`
 	__LinkShape__000010_DATATYPE_DEFINITION_STRING.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_STRING
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_STRING] comment added to overcome the problem with the comment map association
-	__LinkShape__000010_DATATYPE_DEFINITION_STRING.Fieldtypename = `ref_models.DATATYPE_DEFINITION_STRING`
 	__LinkShape__000010_DATATYPE_DEFINITION_STRING.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_STRING{}
 	__LinkShape__000010_DATATYPE_DEFINITION_STRING.FieldOffsetX = 0.000000
 	__LinkShape__000010_DATATYPE_DEFINITION_STRING.FieldOffsetY = 0.000000
@@ -543,13 +435,7 @@ func _(stage *models.Stage) {
 	__LinkShape__000010_DATATYPE_DEFINITION_STRING.CornerOffsetRatio = 1.380000
 
 	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.Name = `DATATYPE_DEFINITION_XHTML`
-
-	//gong:ident [ref_models.A_DATATYPES.DATATYPE_DEFINITION_XHTML] comment added to overcome the problem with the comment map association
-	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.Identifier = `ref_models.A_DATATYPES.DATATYPE_DEFINITION_XHTML`
 	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.IdentifierMeta = ref_models.A_DATATYPES{}.DATATYPE_DEFINITION_XHTML
-
-	//gong:ident [ref_models.DATATYPE_DEFINITION_XHTML] comment added to overcome the problem with the comment map association
-	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.Fieldtypename = `ref_models.DATATYPE_DEFINITION_XHTML`
 	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.FieldTypeIdentifierMeta = ref_models.DATATYPE_DEFINITION_XHTML{}
 	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.FieldOffsetX = 0.000000
 	__LinkShape__000011_DATATYPE_DEFINITION_XHTML.FieldOffsetY = 0.000000

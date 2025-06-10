@@ -28,6 +28,22 @@ func IdentifierToFieldName(fieldIdentifier string) (fieldName string) {
 	return
 }
 
+// IdentifierMetaToFieldName take an ident in the forms
+// "ref_models.Foo{}.Name" and returns "Name"
+func IdentifierMetaToFieldName(fieldMetaIdentifier any) (fieldName string) {
+
+	var fieldMetaIdentifierString string
+	var ok bool
+	if fieldMetaIdentifierString, ok = fieldMetaIdentifier.(string); !ok {
+		return ""
+	}
+
+	fielddentifier := strings.ReplaceAll(fieldMetaIdentifierString, "{}", "")
+
+	fieldName = IdentifierToFieldName(fielddentifier)
+	return
+}
+
 // IdentifierToFieldName take an ident in the forms
 // ref_models.Foo{}.Name and returns "Name"
 func GongEnumValueShapeIdentifierMetaToValueName(identifierMeta any) (valueName string) {
@@ -109,11 +125,27 @@ func IdentifierMetaToGongStructName(structIdentifierMeta any) (structName string
 
 func GongStructNameToIdentifier(structName string) (identifier string) {
 
-	identifier = RefPrefixReferencedPackage + "models." + structName
+	identifier = RefPrefixReferencedPackage + RefPackagePlusPeriod + structName
 	return
 }
 
 func GongNoteNameToIdentifier(gongNoteName string) (identifier string) {
 
 	return GongStructNameToIdentifier(gongNoteName)
+}
+
+// turns new(ref_models.AEnumType2) into ref_models.AEnumType2
+func GongEnumIdentifierMetaToGongEnumName(gongEnumIdentifierMeta any) (gongStructName string) {
+
+	var gongEnumIdentifier string
+	var ok bool
+	if gongEnumIdentifier, ok = gongEnumIdentifierMeta.(string); !ok {
+		return ""
+	}
+
+	gongStructName = strings.TrimPrefix(gongEnumIdentifier, "new("+RefPrefixReferencedPackage+RefPackagePlusPeriod)
+
+	gongStructName = strings.TrimSuffix(gongStructName, ")")
+
+	return
 }
