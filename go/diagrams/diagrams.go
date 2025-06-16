@@ -23,10 +23,10 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
-	const __write__local_time = "2025-06-16 17:17:40.445420 CEST"
-	const __write__utc_time__ = "2025-06-16 15:17:40.445420 UTC"
+	const __write__local_time = "2025-06-16 17:21:35.407087 CEST"
+	const __write__utc_time__ = "2025-06-16 15:21:35.407087 UTC"
 
-	const __commitId__ = "0000000015"
+	const __commitId__ = "0000000019"
 
 	// Declaration of instances to stage
 
@@ -69,7 +69,7 @@ func _(stage *models.Stage) {
 	__Classdiagram__000000_Top_Level.Description = ``
 	__Classdiagram__000000_Top_Level.IsIncludedInStaticWebSite = false
 	__Classdiagram__000000_Top_Level.IsInRenameMode = false
-	__Classdiagram__000000_Top_Level.IsExpanded = true
+	__Classdiagram__000000_Top_Level.IsExpanded = false
 	__Classdiagram__000000_Top_Level.NodeGongStructsIsExpanded = true
 	__Classdiagram__000000_Top_Level.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
 	__Classdiagram__000000_Top_Level.NodeGongEnumsIsExpanded = false
@@ -81,7 +81,7 @@ func _(stage *models.Stage) {
 	__Classdiagram__000001_Datatypes.Description = ``
 	__Classdiagram__000001_Datatypes.IsIncludedInStaticWebSite = false
 	__Classdiagram__000001_Datatypes.IsInRenameMode = false
-	__Classdiagram__000001_Datatypes.IsExpanded = false
+	__Classdiagram__000001_Datatypes.IsExpanded = true
 	__Classdiagram__000001_Datatypes.NodeGongStructsIsExpanded = true
 	__Classdiagram__000001_Datatypes.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
 	__Classdiagram__000001_Datatypes.NodeGongEnumsIsExpanded = false
@@ -145,8 +145,8 @@ func _(stage *models.Stage) {
 	__GongStructShape__000004_Default_A_CORE_CONTENT.IsSelected = false
 
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.Name = `Content-REQ_IF_CONTENT`
-	__GongStructShape__000005_Content_REQ_IF_CONTENT.X = 71.000000
-	__GongStructShape__000005_Content_REQ_IF_CONTENT.Y = 21.000000
+	__GongStructShape__000005_Content_REQ_IF_CONTENT.X = 66.000000
+	__GongStructShape__000005_Content_REQ_IF_CONTENT.Y = 70.000000
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.IdentifierMeta = ref_models.REQ_IF_CONTENT{}
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.ShowNbInstances = false
 	__GongStructShape__000005_Content_REQ_IF_CONTENT.NbInstances = 0
@@ -481,7 +481,7 @@ func _(stage *models.Stage) {
 	// setup of DiagramPackage instances pointers
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000000_Top_Level)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000001_Datatypes)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000000_Top_Level
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000001_Datatypes
 	// setup of GongStructShape instances pointers
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000008_THE_HEADER)
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000009_CORE_CONTENT)

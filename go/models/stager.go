@@ -507,6 +507,6 @@ func (stager *Stager) processReqifData(reqifData []byte, pathToReqifFile string)
 	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
 	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
 
-	stager.UpdateAndCommitButtonStage()
+	// stager.UpdateAndCommitButtonStage()
 
 }
