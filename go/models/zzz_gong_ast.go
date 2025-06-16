@@ -46,6 +46,15 @@ func ParseAstFile(stage *Stage, pathToFile string) error {
 		return errors.New("Path does not exist %s ;" + fileOfInterest)
 	}
 
+	// Read the file content using os.ReadFile
+	content, err := os.ReadFile(fileOfInterest)
+	if err != nil {
+		return errors.New("Unable to read file " + err.Error())
+	}
+
+	// Assign the content to stage.contentWhenParsed
+	stage.contentWhenParsed = string(content)
+
 	fset := token.NewFileSet()
 	// startParser := time.Now()
 	inFile, errParser := parser.ParseFile(fset, fileOfInterest, nil, parser.ParseComments)
@@ -79,7 +88,7 @@ func ParseAstEmbeddedFile(stage *Stage, directory embed.FS, pathToFile string) e
 	fileContentBytes, err := directory.ReadFile(pathToFile)
 	if err != nil {
 		// Return a specific error if the file can't be read from the embed.FS
-		return errors.New("Unable to read embedded file '" + pathToFile + "': " + err.Error())
+		return errors.New(stage.GetName() + "; Unable to read embedded file " + err.Error())
 	}
 
 	// 2. Create a FileSet to manage position information.
@@ -139,6 +148,29 @@ func ParseAstFileFromAst(stage *Stage, inFile *ast.File, fset *token.FileSet) er
 				// astCoordinate := // astCoordinate + "\tBody: "
 				for _, stmt := range body.List {
 					switch stmt := stmt.(type) {
+					case *ast.DeclStmt:
+						if genDecl, ok := stmt.Decl.(*ast.GenDecl); ok && genDecl.Tok == token.CONST {
+							for _, spec := range genDecl.Specs {
+								if valueSpec, ok := spec.(*ast.ValueSpec); ok {
+									for i, name := range valueSpec.Names {
+										if i < len(valueSpec.Values) {
+											if basicLit, ok := valueSpec.Values[i].(*ast.BasicLit); ok && basicLit.Kind == token.STRING {
+												// Remove quotes from string literal
+												value := strings.Trim(basicLit.Value, `"`)
+
+												switch name.Name {
+												case "__commitId__":
+													if parsedUint, err := strconv.ParseUint(value, 10, 64); err == nil {
+														stage.commitId = uint(parsedUint)
+														stage.commitIdWhenParsed = stage.commitId
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 					case *ast.ExprStmt:
 						exprStmt := stmt
 						// astCoordinate := // astCoordinate + "\tExprStmt: "
@@ -1578,7 +1610,8 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				_ = basicLit.Value
 				_ = basicLit
 			}
-			for _, arg := range callExpr.Args {
+			for argNb, arg := range callExpr.Args {
+				_ = argNb
 				// astCoordinate := astCoordinate + "\tArg"
 				switch arg := arg.(type) {
 				case *ast.Ident, *ast.SelectorExpr:
@@ -1700,186 +1733,186 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_BOOLEAN":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN = append(A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN, ATTRIBUTE_VALUE_BOOLEAN instance )
-							// the map will not find the ATTRIBUTE_VALUE_BOOLEAN instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN =
-									append(__gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier].ATTRIBUTE_VALUE_BOOLEAN, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_DATE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_DATE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE = append(A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE, ATTRIBUTE_VALUE_DATE instance )
-							// the map will not find the ATTRIBUTE_VALUE_DATE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_DATE[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE =
-									append(__gong__map_A_ATTRIBUTE_VALUE_DATE[identifier].ATTRIBUTE_VALUE_DATE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_DATE[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_ENUMERATION":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_ENUMERATION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION = append(A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION, ATTRIBUTE_VALUE_ENUMERATION instance )
-							// the map will not find the ATTRIBUTE_VALUE_ENUMERATION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION =
-									append(__gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier].ATTRIBUTE_VALUE_ENUMERATION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_INTEGER":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_INTEGER":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER = append(A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER, ATTRIBUTE_VALUE_INTEGER instance )
-							// the map will not find the ATTRIBUTE_VALUE_INTEGER instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER =
-									append(__gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier].ATTRIBUTE_VALUE_INTEGER, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_REAL":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_REAL":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL = append(A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL, ATTRIBUTE_VALUE_REAL instance )
-							// the map will not find the ATTRIBUTE_VALUE_REAL instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_REAL[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL =
-									append(__gong__map_A_ATTRIBUTE_VALUE_REAL[identifier].ATTRIBUTE_VALUE_REAL, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_REAL[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_STRING":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_STRING":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING = append(A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING, ATTRIBUTE_VALUE_STRING instance )
-							// the map will not find the ATTRIBUTE_VALUE_STRING instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_STRING[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING =
-									append(__gong__map_A_ATTRIBUTE_VALUE_STRING[identifier].ATTRIBUTE_VALUE_STRING, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_STRING[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_XHTML":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_XHTML":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML = append(A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML, ATTRIBUTE_VALUE_XHTML instance )
-							// the map will not find the ATTRIBUTE_VALUE_XHTML instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier].ATTRIBUTE_VALUE_XHTML, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, instanceToAppend)
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_XHTML_1":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_BOOLEAN":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN, ATTRIBUTE_VALUE_BOOLEAN instance )
-							// the map will not find the ATTRIBUTE_VALUE_BOOLEAN instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_BOOLEAN, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, instanceToAppend)
 							}
 						case "ATTRIBUTE_VALUE_DATE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE, ATTRIBUTE_VALUE_DATE instance )
-							// the map will not find the ATTRIBUTE_VALUE_DATE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_DATE[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_DATE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, instanceToAppend)
 							}
 						case "ATTRIBUTE_VALUE_ENUMERATION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION, ATTRIBUTE_VALUE_ENUMERATION instance )
-							// the map will not find the ATTRIBUTE_VALUE_ENUMERATION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_ENUMERATION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, instanceToAppend)
 							}
 						case "ATTRIBUTE_VALUE_INTEGER":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER, ATTRIBUTE_VALUE_INTEGER instance )
-							// the map will not find the ATTRIBUTE_VALUE_INTEGER instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_INTEGER, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, instanceToAppend)
 							}
 						case "ATTRIBUTE_VALUE_REAL":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL, ATTRIBUTE_VALUE_REAL instance )
-							// the map will not find the ATTRIBUTE_VALUE_REAL instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_REAL[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_REAL, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, instanceToAppend)
 							}
 						case "ATTRIBUTE_VALUE_STRING":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING, ATTRIBUTE_VALUE_STRING instance )
-							// the map will not find the ATTRIBUTE_VALUE_STRING instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_STRING[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_STRING, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, instanceToAppend)
 							}
 						case "ATTRIBUTE_VALUE_XHTML":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML = append(A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML, ATTRIBUTE_VALUE_XHTML instance )
-							// the map will not find the ATTRIBUTE_VALUE_XHTML instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[targetIdentifier]; ok {
-								__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML =
-									append(__gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier].ATTRIBUTE_VALUE_XHTML, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, instanceToAppend)
 							}
 						}
 					case "A_CHILDREN":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPEC_HIERARCHY":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_CHILDREN[identifier].SPEC_HIERARCHY = append(A_CHILDREN[identifier].SPEC_HIERARCHY, SPEC_HIERARCHY instance )
-							// the map will not find the SPEC_HIERARCHY instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPEC_HIERARCHY[targetIdentifier]; ok {
-								__gong__map_A_CHILDREN[identifier].SPEC_HIERARCHY =
-									append(__gong__map_A_CHILDREN[identifier].SPEC_HIERARCHY, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPEC_HIERARCHY[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_CHILDREN[identifier]
+								instanceWhoseFieldIsAppended.SPEC_HIERARCHY = append(instanceWhoseFieldIsAppended.SPEC_HIERARCHY, instanceToAppend)
 							}
 						}
 					case "A_CORE_CONTENT":
@@ -1890,74 +1923,74 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "DATATYPE_DEFINITION_BOOLEAN":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN, DATATYPE_DEFINITION_BOOLEAN instance )
-							// the map will not find the DATATYPE_DEFINITION_BOOLEAN instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_BOOLEAN[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_BOOLEAN, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN, instanceToAppend)
 							}
 						case "DATATYPE_DEFINITION_DATE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE, DATATYPE_DEFINITION_DATE instance )
-							// the map will not find the DATATYPE_DEFINITION_DATE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_DATE[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_DATE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE, instanceToAppend)
 							}
 						case "DATATYPE_DEFINITION_ENUMERATION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION, DATATYPE_DEFINITION_ENUMERATION instance )
-							// the map will not find the DATATYPE_DEFINITION_ENUMERATION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_ENUMERATION[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_ENUMERATION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION, instanceToAppend)
 							}
 						case "DATATYPE_DEFINITION_INTEGER":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER, DATATYPE_DEFINITION_INTEGER instance )
-							// the map will not find the DATATYPE_DEFINITION_INTEGER instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_INTEGER[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_INTEGER, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER, instanceToAppend)
 							}
 						case "DATATYPE_DEFINITION_REAL":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL, DATATYPE_DEFINITION_REAL instance )
-							// the map will not find the DATATYPE_DEFINITION_REAL instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_REAL[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_REAL, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL, instanceToAppend)
 							}
 						case "DATATYPE_DEFINITION_STRING":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING, DATATYPE_DEFINITION_STRING instance )
-							// the map will not find the DATATYPE_DEFINITION_STRING instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_STRING[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_STRING, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING, instanceToAppend)
 							}
 						case "DATATYPE_DEFINITION_XHTML":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML = append(A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML, DATATYPE_DEFINITION_XHTML instance )
-							// the map will not find the DATATYPE_DEFINITION_XHTML instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_DATATYPE_DEFINITION_XHTML[targetIdentifier]; ok {
-								__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML =
-									append(__gong__map_A_DATATYPES[identifier].DATATYPE_DEFINITION_XHTML, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML, instanceToAppend)
 							}
 						}
 					case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
@@ -2020,14 +2053,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPECIFICATION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPECIFICATIONS[identifier].SPECIFICATION = append(A_SPECIFICATIONS[identifier].SPECIFICATION, SPECIFICATION instance )
-							// the map will not find the SPECIFICATION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPECIFICATION[targetIdentifier]; ok {
-								__gong__map_A_SPECIFICATIONS[identifier].SPECIFICATION =
-									append(__gong__map_A_SPECIFICATIONS[identifier].SPECIFICATION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPECIFICATION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPECIFICATIONS[identifier]
+								instanceWhoseFieldIsAppended.SPECIFICATION = append(instanceWhoseFieldIsAppended.SPECIFICATION, instanceToAppend)
 							}
 						}
 					case "A_SPECIFICATION_TYPE_REF":
@@ -2038,102 +2071,102 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ENUM_VALUE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPECIFIED_VALUES[identifier].ENUM_VALUE = append(A_SPECIFIED_VALUES[identifier].ENUM_VALUE, ENUM_VALUE instance )
-							// the map will not find the ENUM_VALUE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ENUM_VALUE[targetIdentifier]; ok {
-								__gong__map_A_SPECIFIED_VALUES[identifier].ENUM_VALUE =
-									append(__gong__map_A_SPECIFIED_VALUES[identifier].ENUM_VALUE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ENUM_VALUE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPECIFIED_VALUES[identifier]
+								instanceWhoseFieldIsAppended.ENUM_VALUE = append(instanceWhoseFieldIsAppended.ENUM_VALUE, instanceToAppend)
 							}
 						}
 					case "A_SPEC_ATTRIBUTES":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_DEFINITION_BOOLEAN":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN, ATTRIBUTE_DEFINITION_BOOLEAN instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_BOOLEAN instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_BOOLEAN, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN, instanceToAppend)
 							}
 						case "ATTRIBUTE_DEFINITION_DATE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE, ATTRIBUTE_DEFINITION_DATE instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_DATE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_DATE[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_DATE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE, instanceToAppend)
 							}
 						case "ATTRIBUTE_DEFINITION_ENUMERATION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION, ATTRIBUTE_DEFINITION_ENUMERATION instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_ENUMERATION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_ENUMERATION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION, instanceToAppend)
 							}
 						case "ATTRIBUTE_DEFINITION_INTEGER":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER, ATTRIBUTE_DEFINITION_INTEGER instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_INTEGER instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_INTEGER, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER, instanceToAppend)
 							}
 						case "ATTRIBUTE_DEFINITION_REAL":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL, ATTRIBUTE_DEFINITION_REAL instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_REAL instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_REAL[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_REAL, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL, instanceToAppend)
 							}
 						case "ATTRIBUTE_DEFINITION_STRING":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING, ATTRIBUTE_DEFINITION_STRING instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_STRING instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_STRING[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_STRING, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING, instanceToAppend)
 							}
 						case "ATTRIBUTE_DEFINITION_XHTML":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML = append(A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML, ATTRIBUTE_DEFINITION_XHTML instance )
-							// the map will not find the ATTRIBUTE_DEFINITION_XHTML instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_ATTRIBUTE_DEFINITION_XHTML[targetIdentifier]; ok {
-								__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML =
-									append(__gong__map_A_SPEC_ATTRIBUTES[identifier].ATTRIBUTE_DEFINITION_XHTML, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML, instanceToAppend)
 							}
 						}
 					case "A_SPEC_OBJECTS":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPEC_OBJECT":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_OBJECTS[identifier].SPEC_OBJECT = append(A_SPEC_OBJECTS[identifier].SPEC_OBJECT, SPEC_OBJECT instance )
-							// the map will not find the SPEC_OBJECT instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPEC_OBJECT[targetIdentifier]; ok {
-								__gong__map_A_SPEC_OBJECTS[identifier].SPEC_OBJECT =
-									append(__gong__map_A_SPEC_OBJECTS[identifier].SPEC_OBJECT, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPEC_OBJECT[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_OBJECTS[identifier]
+								instanceWhoseFieldIsAppended.SPEC_OBJECT = append(instanceWhoseFieldIsAppended.SPEC_OBJECT, instanceToAppend)
 							}
 						}
 					case "A_SPEC_OBJECT_TYPE_REF":
@@ -2144,28 +2177,28 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPEC_RELATION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_RELATIONS[identifier].SPEC_RELATION = append(A_SPEC_RELATIONS[identifier].SPEC_RELATION, SPEC_RELATION instance )
-							// the map will not find the SPEC_RELATION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPEC_RELATION[targetIdentifier]; ok {
-								__gong__map_A_SPEC_RELATIONS[identifier].SPEC_RELATION =
-									append(__gong__map_A_SPEC_RELATIONS[identifier].SPEC_RELATION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPEC_RELATION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATIONS[identifier]
+								instanceWhoseFieldIsAppended.SPEC_RELATION = append(instanceWhoseFieldIsAppended.SPEC_RELATION, instanceToAppend)
 							}
 						}
 					case "A_SPEC_RELATION_GROUPS":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "RELATION_GROUP":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP = append(A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP, RELATION_GROUP instance )
-							// the map will not find the RELATION_GROUP instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_RELATION_GROUP[targetIdentifier]; ok {
-								__gong__map_A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP =
-									append(__gong__map_A_SPEC_RELATION_GROUPS[identifier].RELATION_GROUP, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_RELATION_GROUP[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATION_GROUPS[identifier]
+								instanceWhoseFieldIsAppended.RELATION_GROUP = append(instanceWhoseFieldIsAppended.RELATION_GROUP, instanceToAppend)
 							}
 						}
 					case "A_SPEC_RELATION_REF":
@@ -2180,44 +2213,44 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "RELATION_GROUP_TYPE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE = append(A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE, RELATION_GROUP_TYPE instance )
-							// the map will not find the RELATION_GROUP_TYPE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_RELATION_GROUP_TYPE[targetIdentifier]; ok {
-								__gong__map_A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE =
-									append(__gong__map_A_SPEC_TYPES[identifier].RELATION_GROUP_TYPE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_RELATION_GROUP_TYPE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+								instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE = append(instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE, instanceToAppend)
 							}
 						case "SPEC_OBJECT_TYPE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE = append(A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE, SPEC_OBJECT_TYPE instance )
-							// the map will not find the SPEC_OBJECT_TYPE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPEC_OBJECT_TYPE[targetIdentifier]; ok {
-								__gong__map_A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE =
-									append(__gong__map_A_SPEC_TYPES[identifier].SPEC_OBJECT_TYPE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPEC_OBJECT_TYPE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+								instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE = append(instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE, instanceToAppend)
 							}
 						case "SPEC_RELATION_TYPE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE = append(A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE, SPEC_RELATION_TYPE instance )
-							// the map will not find the SPEC_RELATION_TYPE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPEC_RELATION_TYPE[targetIdentifier]; ok {
-								__gong__map_A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE =
-									append(__gong__map_A_SPEC_TYPES[identifier].SPEC_RELATION_TYPE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPEC_RELATION_TYPE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+								instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE = append(instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE, instanceToAppend)
 							}
 						case "SPECIFICATION_TYPE":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_SPEC_TYPES[identifier].SPECIFICATION_TYPE = append(A_SPEC_TYPES[identifier].SPECIFICATION_TYPE, SPECIFICATION_TYPE instance )
-							// the map will not find the SPECIFICATION_TYPE instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_SPECIFICATION_TYPE[targetIdentifier]; ok {
-								__gong__map_A_SPEC_TYPES[identifier].SPECIFICATION_TYPE =
-									append(__gong__map_A_SPEC_TYPES[identifier].SPECIFICATION_TYPE, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_SPECIFICATION_TYPE[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+								instanceWhoseFieldIsAppended.SPECIFICATION_TYPE = append(instanceWhoseFieldIsAppended.SPECIFICATION_TYPE, instanceToAppend)
 							}
 						}
 					case "A_THE_HEADER":
@@ -2228,14 +2261,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "REQ_IF_TOOL_EXTENSION":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION = append(A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION, REQ_IF_TOOL_EXTENSION instance )
-							// the map will not find the REQ_IF_TOOL_EXTENSION instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_REQ_IF_TOOL_EXTENSION[targetIdentifier]; ok {
-								__gong__map_A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION =
-									append(__gong__map_A_TOOL_EXTENSIONS[identifier].REQ_IF_TOOL_EXTENSION, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_REQ_IF_TOOL_EXTENSION[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_A_TOOL_EXTENSIONS[identifier]
+								instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION = append(instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION, instanceToAppend)
 							}
 						}
 					case "DATATYPE_DEFINITION_BOOLEAN":
@@ -2342,28 +2375,28 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "Chapters":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing StaticWebSite[identifier].Chapters = append(StaticWebSite[identifier].Chapters, StaticWebSiteChapter instance )
-							// the map will not find the StaticWebSiteChapter instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_StaticWebSiteChapter[targetIdentifier]; ok {
-								__gong__map_StaticWebSite[identifier].Chapters =
-									append(__gong__map_StaticWebSite[identifier].Chapters, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_StaticWebSiteChapter[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_StaticWebSite[identifier]
+								instanceWhoseFieldIsAppended.Chapters = append(instanceWhoseFieldIsAppended.Chapters, instanceToAppend)
 							}
 						}
 					case "StaticWebSiteChapter":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "Paragraphs":
-							// remove first and last char
-							targetIdentifier := ident.Name
-							// when parsing StaticWebSiteChapter[identifier].Paragraphs = append(StaticWebSiteChapter[identifier].Paragraphs, Paragraph instance )
-							// the map will not find the Paragraph instance, when parsing the first arg
-							// therefore, the condition is necessary
-							if target, ok := __gong__map_Paragraph[targetIdentifier]; ok {
-								__gong__map_StaticWebSiteChapter[identifier].Paragraphs =
-									append(__gong__map_StaticWebSiteChapter[identifier].Paragraphs, target)
+							// perform the append only when the loop is processing the second argument
+							if argNb == 0 {
+								break
+							}
+							identifierOfInstanceToAppend := ident.Name
+							if instanceToAppend, ok := __gong__map_Paragraph[identifierOfInstanceToAppend]; ok {
+								instanceWhoseFieldIsAppended := __gong__map_StaticWebSiteChapter[identifier]
+								instanceWhoseFieldIsAppended.Paragraphs = append(instanceWhoseFieldIsAppended.Paragraphs, instanceToAppend)
 							}
 						}
 					case "XHTML_CONTENT":

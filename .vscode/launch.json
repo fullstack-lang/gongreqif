@@ -23,6 +23,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-unmarshallFromCode=data/stage.go",
                 "-marshallOnCommit=data/stage"
             ]
@@ -35,6 +36,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
             ]
         },
         {
@@ -45,6 +47,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 1.reqif",
                 "-marshallOnCommit=data/doors_sample_1.go"
@@ -58,6 +61,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 2.reqif",
                 "-marshallOnCommit=data/doors_sample_2.go"
@@ -71,6 +75,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 3.reqif",
                 "-marshallOnCommit=data/doors_sample_3.go"
@@ -84,6 +89,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/DOORS export sample 4.reqif",
                 "-marshallOnCommit=data/doors_sample_4.go"
@@ -97,6 +103,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/Unknown tool export sample 1.reqif",
                 "-marshallOnCommit=data/Unknown tool export sample 1.go"
@@ -110,6 +117,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "../../../../../../../../foo v2.reqif",
                 "-pathToGoModelFile",
@@ -126,6 +134,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "../../../../../../../../foo v3.reqif",
                 "-pathToGoModelFile",
@@ -142,6 +151,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "../../../../../../../../foo v4.reqif",
                 "-pathToGoModelFile",
@@ -158,6 +168,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "../../../../../../../../foo v5.reqif",
                 "-pathToGoModelFile",
@@ -174,6 +185,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "../../../../../../../../foo v6.reqif",
                 "-pathToGoModelFile",

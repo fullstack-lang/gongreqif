@@ -69,7 +69,10 @@ func updateAndCommitTree(
 		name := gongStruct.Name + " (" +
 			fmt.Sprintf("%d", probe.stageOfInterest.Map_GongStructName_InstancesNb[gongStruct.Name]) + ")"
 
-		nodeGongstruct := (&tree.Node{Name: name}).Stage(probe.treeStage)
+		nodeGongstruct := &tree.Node{Name: name}
+		nodeGongstruct.HasToolTip = true
+		nodeGongstruct.ToolTipText = "Display table of all " + name + " instances"
+		nodeGongstruct.ToolTipPosition = tree.Right
 
 		nodeGongstruct.IsExpanded = false
 		if _, ok := expandedNodesSet[strings.Fields(name)[0]]; ok {
@@ -128,6 +131,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "FavIcon":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.FavIcon](probe.stageOfInterest)
+			for _favicon := range set {
+				nodeInstance := &tree.Node{Name: _favicon.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_favicon, "FavIcon", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "Form":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.Form](probe.stageOfInterest)
@@ -145,6 +158,26 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _load.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_load, "Load", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "LogoOnTheLeft":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.LogoOnTheLeft](probe.stageOfInterest)
+			for _logoontheleft := range set {
+				nodeInstance := &tree.Node{Name: _logoontheleft.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_logoontheleft, "LogoOnTheLeft", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "LogoOnTheRight":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.LogoOnTheRight](probe.stageOfInterest)
+			for _logoontheright := range set {
+				nodeInstance := &tree.Node{Name: _logoontheright.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_logoontheright, "LogoOnTheRight", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
@@ -185,6 +218,16 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _table.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_table, "Table", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "Title":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.Title](probe.stageOfInterest)
+			for _title := range set {
+				nodeInstance := &tree.Node{Name: _title.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_title, "Title", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
@@ -234,9 +277,13 @@ func updateAndCommitTree(
 		nodeGongstruct.Impl = NewTreeNodeImplGongstruct(gongStruct, probe)
 
 		// add add button
-		addButton := (&tree.Button{
-			Name: gongStruct.Name + " " + string(gongtree_buttons.BUTTON_add),
-			Icon: string(gongtree_buttons.BUTTON_add)}).Stage(probe.treeStage)
+		addButton := &tree.Button{
+			Name:            gongStruct.Name + " " + string(gongtree_buttons.BUTTON_add),
+			Icon:            string(gongtree_buttons.BUTTON_add),
+			HasToolTip:      true,
+			ToolTipText:     "Add an instance of " + gongStruct.GetName(),
+			ToolTipPosition: tree.Right,
+		}
 		nodeGongstruct.Buttons = append(nodeGongstruct.Buttons, addButton)
 		addButton.Impl = NewButtonImplGongstruct(
 			gongStruct,
