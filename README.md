@@ -6,6 +6,6 @@ you need go 1.24 installed
 
 # use
 
-![screenshot](screenshot.png)
+![screenshot](docs/screenshot.png)
 
 Drop or browse your reqif / reqifz file for analysis.
