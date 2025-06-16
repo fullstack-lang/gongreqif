@@ -3,7 +3,7 @@ module github.com/fullstack-lang/gongreqif
 go 1.24.3
 
 require (
-	github.com/fullstack-lang/gong v0.0.0-20250614165357-5bc29e642521
+	github.com/fullstack-lang/gong v0.0.0-20250616160751-fad4001aadf5
 	github.com/fullstack-lang/maticons v0.0.0-20240913013021-27a7b8fd9369
 	github.com/gin-contrib/cors v1.7.5
 	github.com/gin-contrib/static v1.1.5
@@ -53,7 +53,7 @@ require (
 	github.com/shabbyrobe/xmlwriter v0.0.0-20230525083848-85336ec334fa // indirect
 	github.com/tiendc/go-deepcopy v1.6.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
-	github.com/ugorji/go/codec v1.2.14 // indirect
+	github.com/ugorji/go/codec v1.3.0 // indirect
 	github.com/xuri/efp v0.0.1 // indirect
 	github.com/xuri/nfp v0.0.1 // indirect
 	github.com/yuin/goldmark v1.7.12 // indirect
