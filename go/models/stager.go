@@ -263,25 +263,25 @@ func NewStager(
 	stager.ssgStage = ssg_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 	stager.loadStage = load_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
-	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", false, true).Stage
+	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 	stager.summaryTableName = "Summary Table Name"
 
-	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"data types", "", "", "", false, true).Stage
+	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"data types", "", "", "", true, true).Stage
 	stager.dataTypeTreeName = "Data Type Tree Name"
 
-	stager.specTypesTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec types", "", "", "", false, true).Stage
+	stager.specTypesTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec types", "", "", "", true, true).Stage
 	stager.specTypesTreeName = "Spec Object Type Tree Name"
 
 	// instancess
 	//
 
-	stager.specObjectsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec objects", "", "", "", false, true).Stage
+	stager.specObjectsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec objects", "", "", "", true, true).Stage
 	stager.specTypesTreeName = "Object Tree Name"
 
-	stager.specRelationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec relations", "", "", "", false, true).Stage
+	stager.specRelationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"spec relations", "", "", "", true, true).Stage
 	stager.specRelationsTreeName = "Spec Relations Tree Name"
 
-	stager.specificationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"specifications", "", "", "", false, true).Stage
+	stager.specificationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"specifications", "", "", "", true, true).Stage
 	stager.specificationsTreeName = "Specifications Tree Name"
 
 	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
