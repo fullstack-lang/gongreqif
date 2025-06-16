@@ -5,9 +5,12 @@
 
 GongReqif is a command-line tool for analyzing and inspecting OMG ReqIF (Requirements Interchange Format) files. You can easily browse or drop your `.reqif` or `.reqifz` files to get a structured view of the requirements data.
 
-![Datatypes and Spec Types](docs/screenshot.png)
+![Datatypes and Spec Types from a loaded ReqIF file](docs/screenshot.png)
+*GongReqif displaying the Data Types and Specification Types from a loaded ReqIF file.*
 
-![Spec Objects, Spec Relations and Specifications](docs/screenshot2.png)
+![A view of the specific objects, relations, and specification hierarchies within the file.](docs/screenshot2.png)
+*A view of the specific objects, relations, and specification hierarchies within the file.*
+
 
 ## About the Project
 
@@ -41,19 +44,5 @@ Once the application is running, it will open a window where you can interact wi
 2.  **Browse for a file:** Alternatively, you can click the "Browse" button to open a file dialog and select your desired ReqIF file.
 
 The application will then process the file and display its contents for analysis.
-
-## Contributing
-
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
-
-## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
