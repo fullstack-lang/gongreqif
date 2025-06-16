@@ -3,6 +3,8 @@ package models
 import (
 	"fmt"
 	"log"
+	"regexp"
+	"strings"
 
 	svg_models "github.com/fullstack-lang/gong/lib/svg/go/models"
 )
@@ -448,11 +450,27 @@ func (docSVGMapper *DocSVGMapper) GenerateSvg(
 		rect.CanHaveTopHandle = true
 		rect.CanHaveRightHandle = true
 
+		// Split the body into title and the rest of the content
+		bodyLines := strings.SplitN(noteShape.Body, "\n", 2)
+		noteTitle := ""
+		noteContent := ""
+		if len(bodyLines) > 0 {
+			noteTitle = bodyLines[0]
+		}
+		if len(bodyLines) > 1 {
+			// Trim leading/trailing whitespace and newlines from the rest of the content
+			noteContent = strings.TrimSpace(bodyLines[1])
+
+			// remove [models. prefix and ] suffix
+			re := regexp.MustCompile(`\[models\.([^\]]+)\]`)
+			noteContent = re.ReplaceAllString(noteContent, "$1")
+		}
+
 		//
 		// Title
 		//
 		title := new(svg_models.RectAnchoredText)
-		title.Name = IdentifierToGongStructName(noteShape.Identifier)
+		title.Name = noteTitle
 		title.Content = title.Name
 		title.X_Offset = 0
 		title.Y_Offset = 20
@@ -465,10 +483,10 @@ func (docSVGMapper *DocSVGMapper) GenerateSvg(
 		rect.RectAnchoredTexts = append(rect.RectAnchoredTexts, title)
 
 		//
-		// Title
+		// Content
 		//
 		content := new(svg_models.RectAnchoredText)
-		content.Name = noteShape.Body
+		content.Name = noteContent
 		content.Content = content.Name
 		content.X_Offset = 0
 		content.Y_Offset = 40
