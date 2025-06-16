@@ -21,6 +21,11 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
+	const __write__local_time = "2025-06-16 17:43:17.512329 CEST"
+	const __write__utc_time__ = "2025-06-16 15:43:17.512329 UTC"
+
+	const __commitId__ = "0000000001"
+
 	// Declaration of instances to stage
 
 	__ATTRIBUTE_DEFINITION_ENUMERATION__000000_IE_Object_Type := (&models.ATTRIBUTE_DEFINITION_ENUMERATION{}).Stage(stage)
@@ -419,3 +424,4 @@ func _(stage *models.Stage) {
 	__SPEC_OBJECT_TYPE__000000_Requirement_Type.SPEC_ATTRIBUTES = __A_SPEC_ATTRIBUTES__000000_
 	// setup of XHTML_CONTENT instances pointers
 }
+
