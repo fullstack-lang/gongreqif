@@ -33,7 +33,7 @@ You need to have Go version 1.24 or higher installed on your system. You can fin
 You can run the application directly from the source using the `go run` command. This command will fetch the package and its dependencies and execute the main command.
 
 ```sh
-go run https://github.com/fullstack-lang/gongreqif/go/cmd/gongreqif@main
+go run github.com/fullstack-lang/gongreqif/go/cmd/gongreqif@main
 ```
 
 ## Usage
