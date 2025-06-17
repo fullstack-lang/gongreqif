@@ -38,7 +38,7 @@ go run github.com/fullstack-lang/gongreqif/go/cmd/gongreqif@main
 
 ## Usage
 
-Once the application is running, it will open a window where you can interact with your ReqIF files.
+Once the application is running, launch a browser on http://localhost:8080/ where you can interact with your ReqIF files.
 
 1.  **Open a file:** You can either drag and drop a `.reqif` or `.reqifz` file directly onto the application window.
 2.  **Browse for a file:** Alternatively, you can click the "Browse" button to open a file dialog and select your desired ReqIF file.
