@@ -398,7 +398,7 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "REQIF Probe",
+		Name: "(Dev) REQIF Probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
@@ -409,7 +409,7 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "summary table probe",
+		Name: "(Dev) summary table probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
@@ -420,7 +420,7 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "data type tree probe",
+		Name: "(Dev) data type tree probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
@@ -431,7 +431,7 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "spec type tree probe",
+		Name: "(Dev) spec type tree probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
@@ -442,7 +442,7 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "specifications tree probe",
+		Name: "(Dev) specifications tree probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
