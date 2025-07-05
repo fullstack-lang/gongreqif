@@ -4,9 +4,9 @@
     <REQ-IF-HEADER IDENTIFIER="reqif-header-1">
       <CREATION-TIME>2025-07-06T10:00:00Z</CREATION-TIME>
       <REQ-IF-TOOL-ID>Gemini AI</REQ-IF-TOOL-ID>
-      <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
+      <REQ-IF-VERSION>1.0.1</REQ-IF-VERSION>
       <SOURCE-TOOL-ID>Manual</SOURCE-TOOL-ID>
-      <TITLE>ReqIF for Wheeled Tennis Ball Drone</TITLE>
+      <TITLE>ReqIF for Wheeled Tennis Ball Drone (Corrected)</TITLE>
     </REQ-IF-HEADER>
   </THE-HEADER>
   <CORE-CONTENT>
@@ -34,9 +34,18 @@
             </ATTRIBUTE-DEFINITION-STRING>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
+        
         <SPEC-RELATION-TYPE IDENTIFIER="srt-satisfy" LONG-NAME="Satisfy">
           <SPEC-ATTRIBUTES />
         </SPEC-RELATION-TYPE>
+        
+        <SPECIFICATION-TYPE IDENTIFIER="spectype-stakeholder-doc" LONG-NAME="Stakeholder Specification Document Type">
+          <SPEC-ATTRIBUTES/>
+        </SPECIFICATION-TYPE>
+        <SPECIFICATION-TYPE IDENTIFIER="spectype-system-doc" LONG-NAME="System Specification Document Type">
+          <SPEC-ATTRIBUTES/>
+        </SPECIFICATION-TYPE>
+        
       </SPEC-TYPES>
       <SPEC-OBJECTS>
         <SPEC-OBJECT IDENTIFIER="SHR_001" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Drone shall collect tennis balls">
@@ -825,181 +834,181 @@
 			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall comply with all relevant electronics and safety regulations (e.g., CE, FCC).">
 			  <DEFINITION>
 				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_047" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Recyclability">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="At least 80% of the drone's components by weight shall be recyclable.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_048" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Packaging">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be packaged in recyclable materials.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_049" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Warranty">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall come with a one-year limited warranty.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_050" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Customer support">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="Customer support shall be available via email and phone during business hours.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_051" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Spare parts availability">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="Spare parts shall be available for purchase for at least five years after the product launch.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_052" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Operational temperature range">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall operate in ambient temperatures from 5°C to 40°C.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_053" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Storage temperature range">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be storable in temperatures from -10°C to 50°C.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_054" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Firmware rollback">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone's firmware update mechanism shall support rolling back to the previous version in case of failure.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_055" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Home base alignment">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall align itself with the charging contacts on the home base with a tolerance of +/- 5mm.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_056" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Collection speed">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be able to collect up to 10 balls per minute.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_057" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Error code display">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The LCD screen shall display specific error codes to aid in troubleshooting.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_058" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Power consumption">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall consume less than 100 watts during normal operation.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_059" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Turning radius">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall have a zero-degree turning radius.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
-		<SPEC-OBJECT IDENTIFIER="SYS_060" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Fail-safe mechanism">
-		  <VALUES>
-			<ATTRIBUTE-VALUE-STRING THE-VALUE="In case of a critical system failure, the drone shall immediately stop all motors.">
-			  <DEFINITION>
-				<ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
-			  </DEFINITION>
-			</ATTRIBUTE-VALUE-STRING>
-		  </VALUES>
-		  <TYPE>
-			<SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
-		  </TYPE>
-		</SPEC-OBJECT>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_047" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Recyclability">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="At least 80% of the drone's components by weight shall be recyclable.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_048" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Packaging">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be packaged in recyclable materials.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_049" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Warranty">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall come with a one-year limited warranty.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_050" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Customer support">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Customer support shall be available via email and phone during business hours.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_051" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Spare parts availability">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Spare parts shall be available for purchase for at least five years after the product launch.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_052" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Operational temperature range">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall operate in ambient temperatures from 5°C to 40°C.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_053" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Storage temperature range">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be storable in temperatures from -10°C to 50°C.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_054" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Firmware rollback">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone's firmware update mechanism shall support rolling back to the previous version in case of failure.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_055" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Home base alignment">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall align itself with the charging contacts on the home base with a tolerance of +/- 5mm.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_056" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Collection speed">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be able to collect up to 10 balls per minute.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_057" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Error code display">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The LCD screen shall display specific error codes to aid in troubleshooting.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_058" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Power consumption">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall consume less than 100 watts during normal operation.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_059" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Turning radius">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall have a zero-degree turning radius.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_060" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Fail-safe mechanism">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="In case of a critical system failure, the drone shall immediately stop all motors.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-system-req-text</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPEC-RELATIONS>
         <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS001" LAST-CHANGE="2025-07-06T10:00:00Z">
@@ -1336,416 +1345,94 @@
       <SPECIFICATIONS>
         <SPECIFICATION IDENTIFIER="spec-stakeholder" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Stakeholder Requirements Specification">
           <TYPE>
-            <SPECIFICATION-TYPE-REF>st-stakeholder-req</SPECIFICATION-TYPE-REF>
-          </TYPE>
+            <SPECIFICATION-TYPE-REF>spectype-stakeholder-doc</SPECIFICATION-TYPE-REF> </TYPE>
           <CHILDREN>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_001</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_002</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_003</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_004</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_006</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_007</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_008</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_009</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_010</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_011</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_012</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_013</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_014</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_015</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_016</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_017</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_018</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_019</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SHR_020</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_001</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_002</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_003</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_004</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_006</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_007</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_008</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_009</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_010</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_011</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_012</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_013</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_014</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_015</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_016</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_017</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_018</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_019</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SHR_020</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
           </CHILDREN>
         </SPECIFICATION>
         <SPECIFICATION IDENTIFIER="spec-system" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="System Requirements Specification">
           <TYPE>
-            <SPECIFICATION-TYPE-REF>st-system-req</SPECIFICATION-TYPE-REF>
-          </TYPE>
+            <SPECIFICATION-TYPE-REF>spectype-system-doc</SPECIFICATION-TYPE-REF> </TYPE>
           <CHILDREN>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_001</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_002</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_003</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_004</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_005</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_006</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_007</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_008</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_009</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_010</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_011</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_014</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_016</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_017</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_018</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_019</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_020</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_021</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_024</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_025</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_027</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_028</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_029</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_030</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_031</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_032</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_033</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_034</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_035</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_036</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_037</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_038</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_039</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_040</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_041</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_042</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_043</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_044</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_045</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_046</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_047</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_048</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_049</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_050</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_051</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_052</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_053</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_054</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_055</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_056</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_057</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_058</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_059</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
-            <SPEC-HIERARCHY>
-              <OBJECT>
-                <SPEC-OBJECT-REF>SYS_060</SPEC-OBJECT-REF>
-              </OBJECT>
-            </SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_001</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_002</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_003</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_004</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_005</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_006</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_007</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_008</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_009</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_010</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_011</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_014</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_016</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_017</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_018</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_019</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_020</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_021</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_024</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_025</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_027</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_028</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_029</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_030</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_031</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_032</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_033</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_034</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_035</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_036</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_037</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_038</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_039</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_040</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_041</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_042</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_043</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_044</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_045</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_046</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_047</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_048</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_049</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_050</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_051</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_052</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_053</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_054</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_055</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_056</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_057</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_058</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_059</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
+            <SPEC-HIERARCHY><OBJECT><SPEC-OBJECT-REF>SYS_060</SPEC-OBJECT-REF></OBJECT></SPEC-HIERARCHY>
           </CHILDREN>
         </SPECIFICATION>
       </SPECIFICATIONS>

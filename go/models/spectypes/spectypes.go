@@ -36,12 +36,11 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 		map_specType_nbInstance := make(map[*m.SPEC_OBJECT_TYPE]int)
 		for x := range *m.GetGongstructInstancesSet[m.A_SPEC_OBJECT_TYPE_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_SPEC_OBJECT_TYPE[x.SPEC_OBJECT_TYPE_REF]
+			specObjecType, ok := stager.Map_id_SPEC_OBJECT_TYPE[x.SPEC_OBJECT_TYPE_REF]
 			if !ok {
-				log.Panic("x.SPEC_OBJECT_TYPE_REF", x.SPEC_OBJECT_TYPE_REF,
-					"unknown ref")
+				log.Panicf("Object %s has a x.SPEC_OBJECT_TYPE_REF %s which is not known", x.Name, x.SPEC_OBJECT_TYPE_REF)
 			} else {
-				map_specType_nbInstance[datatypeDefinition]++
+				map_specType_nbInstance[specObjecType]++
 			}
 		}
 
@@ -105,12 +104,12 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 		map_specType_nbInstance := make(map[*m.SPECIFICATION_TYPE]int)
 		for x := range *m.GetGongstructInstancesSet[m.A_SPECIFICATION_TYPE_REF](stager.GetStage()) {
 
-			datatypeDefinition, ok := stager.Map_id_SPECIFICATION_TYPE[x.SPECIFICATION_TYPE_REF]
+			specificationType, ok := stager.Map_id_SPECIFICATION_TYPE[x.SPECIFICATION_TYPE_REF]
 			if !ok {
-				log.Panic("x.SPECIFICATION_TYPE_REF", x.SPECIFICATION_TYPE_REF,
-					"unknown ref")
+				log.Panic("x.SPECIFICATION_TYPE_REF: x: ", x.Name, " ,Type Ref: ", x.SPECIFICATION_TYPE_REF,
+					", unknown ref")
 			} else {
-				map_specType_nbInstance[datatypeDefinition]++
+				map_specType_nbInstance[specificationType]++
 			}
 		}
 
