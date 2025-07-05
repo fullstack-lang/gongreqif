@@ -23,10 +23,10 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
-	const __write__local_time = "2025-06-22 18:46:12.053561 CEST"
-	const __write__utc_time__ = "2025-06-22 16:46:12.053561 UTC"
+	const __write__local_time = "2025-07-05 17:58:12.527124 CEST"
+	const __write__utc_time__ = "2025-07-05 15:58:12.527124 UTC"
 
-	const __commitId__ = "0000000081"
+	const __commitId__ = "0000000253"
 
 	// Declaration of instances to stage
 
@@ -53,6 +53,15 @@ func _(stage *models.Stage) {
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT := (&models.GongStructShape{}).Stage(stage)
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS := (&models.GongStructShape{}).Stage(stage)
 	__GongStructShape__000016_Specs_SPEC_OBJECT := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1 := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML := (&models.GongStructShape{}).Stage(stage)
 
 	__LinkShape__000000_DATATYPES := (&models.LinkShape{}).Stage(stage)
 	__LinkShape__000001_DATATYPE_DEFINITION_BOOLEAN := (&models.LinkShape{}).Stage(stage)
@@ -68,6 +77,15 @@ func _(stage *models.Stage) {
 	__LinkShape__000011_REQ_IF_CONTENT := (&models.LinkShape{}).Stage(stage)
 	__LinkShape__000012_SPEC_OBJECTS := (&models.LinkShape{}).Stage(stage)
 	__LinkShape__000013_SPEC_OBJECT := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000014_TYPE := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000015_VALUES := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML := (&models.LinkShape{}).Stage(stage)
 
 	// Setup of values
 
@@ -75,7 +93,7 @@ func _(stage *models.Stage) {
 	__Classdiagram__000000_Top_Level.Description = `fsdfqksdjhfdskfsqd`
 	__Classdiagram__000000_Top_Level.IsIncludedInStaticWebSite = false
 	__Classdiagram__000000_Top_Level.IsInRenameMode = false
-	__Classdiagram__000000_Top_Level.IsExpanded = true
+	__Classdiagram__000000_Top_Level.IsExpanded = false
 	__Classdiagram__000000_Top_Level.NodeGongStructsIsExpanded = true
 	__Classdiagram__000000_Top_Level.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
 	__Classdiagram__000000_Top_Level.NodeGongEnumsIsExpanded = false
@@ -87,7 +105,7 @@ func _(stage *models.Stage) {
 	__Classdiagram__000001_Datatypes.Description = ``
 	__Classdiagram__000001_Datatypes.IsIncludedInStaticWebSite = false
 	__Classdiagram__000001_Datatypes.IsInRenameMode = false
-	__Classdiagram__000001_Datatypes.IsExpanded = true
+	__Classdiagram__000001_Datatypes.IsExpanded = false
 	__Classdiagram__000001_Datatypes.NodeGongStructsIsExpanded = true
 	__Classdiagram__000001_Datatypes.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
 	__Classdiagram__000001_Datatypes.NodeGongEnumsIsExpanded = false
@@ -99,9 +117,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000002_Specs.Description = `DEscription du package Specs`
 	__Classdiagram__000002_Specs.IsIncludedInStaticWebSite = false
 	__Classdiagram__000002_Specs.IsInRenameMode = false
-	__Classdiagram__000002_Specs.IsExpanded = false
-	__Classdiagram__000002_Specs.NodeGongStructsIsExpanded = false
-	__Classdiagram__000002_Specs.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
+	__Classdiagram__000002_Specs.IsExpanded = true
+	__Classdiagram__000002_Specs.NodeGongStructsIsExpanded = true
+	__Classdiagram__000002_Specs.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
 	__Classdiagram__000002_Specs.NodeGongEnumsIsExpanded = false
 	__Classdiagram__000002_Specs.NodeGongEnumNodeExpansion = ``
 	__Classdiagram__000002_Specs.NodeGongNotesIsExpanded = false
@@ -225,28 +243,100 @@ func _(stage *models.Stage) {
 	__GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML.IsSelected = false
 
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT.Name = `Specs-REQ_IF_CONTENT`
-	__GongStructShape__000014_Specs_REQ_IF_CONTENT.X = 23.000000
-	__GongStructShape__000014_Specs_REQ_IF_CONTENT.Y = 32.000000
+	__GongStructShape__000014_Specs_REQ_IF_CONTENT.X = 15.000000
+	__GongStructShape__000014_Specs_REQ_IF_CONTENT.Y = 18.000000
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT.IdentifierMeta = ref_models.REQ_IF_CONTENT{}
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT.Width = 240.000000
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT.Height = 63.000000
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT.IsSelected = false
 
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.Name = `Specs-A_SPEC_OBJECTS`
-	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.X = 30.000000
-	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.Y = 233.000000
+	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.X = 33.000000
+	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.Y = 201.000000
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.IdentifierMeta = ref_models.A_SPEC_OBJECTS{}
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.Width = 240.000000
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.Height = 63.000000
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.IsSelected = false
 
 	__GongStructShape__000016_Specs_SPEC_OBJECT.Name = `Specs-SPEC_OBJECT`
-	__GongStructShape__000016_Specs_SPEC_OBJECT.X = 33.000000
-	__GongStructShape__000016_Specs_SPEC_OBJECT.Y = 430.000000
+	__GongStructShape__000016_Specs_SPEC_OBJECT.X = 26.000000
+	__GongStructShape__000016_Specs_SPEC_OBJECT.Y = 392.000000
 	__GongStructShape__000016_Specs_SPEC_OBJECT.IdentifierMeta = ref_models.SPEC_OBJECT{}
 	__GongStructShape__000016_Specs_SPEC_OBJECT.Width = 240.000000
 	__GongStructShape__000016_Specs_SPEC_OBJECT.Height = 63.000000
 	__GongStructShape__000016_Specs_SPEC_OBJECT.IsSelected = false
+
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.Name = `Specs-A_SPEC_OBJECT_TYPE_REF`
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.X = 7.000000
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.Y = 557.000000
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.IdentifierMeta = ref_models.A_SPEC_OBJECT_TYPE_REF{}
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.Width = 358.000000
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.Height = 63.000000
+	__GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF.IsSelected = false
+
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.Name = `Specs-A_ATTRIBUTE_VALUE_XHTML_1`
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.X = 344.000000
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.Y = 399.000000
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.Width = 355.000000
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.Height = 63.000000
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.IsSelected = false
+
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.Name = `Specs-ATTRIBUTE_VALUE_BOOLEAN`
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.X = 1001.000000
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.Y = 680.000000
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_BOOLEAN{}
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.Width = 335.000000
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.Height = 63.000000
+	__GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN.IsSelected = false
+
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.Name = `Specs-ATTRIBUTE_VALUE_DATE`
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.X = 992.000000
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.Y = 391.000000
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_DATE{}
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.Width = 339.000000
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.Height = 63.000000
+	__GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE.IsSelected = false
+
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.Name = `Specs-ATTRIBUTE_VALUE_ENUMERATION`
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.X = 993.000000
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.Y = 112.000000
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_ENUMERATION{}
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.Width = 340.000000
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.Height = 63.000000
+	__GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION.IsSelected = false
+
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.Name = `Specs-ATTRIBUTE_VALUE_INTEGER`
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.X = 991.000000
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.Y = 305.000000
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_INTEGER{}
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.Width = 339.000000
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.Height = 63.000000
+	__GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER.IsSelected = false
+
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.Name = `Specs-ATTRIBUTE_VALUE_REAL`
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.X = 1000.000000
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.Y = 581.000000
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_REAL{}
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.Width = 333.000000
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.Height = 63.000000
+	__GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL.IsSelected = false
+
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.Name = `Specs-ATTRIBUTE_VALUE_STRING`
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.X = 1001.000000
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.Y = 488.000000
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_STRING{}
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.Width = 328.000000
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.Height = 63.000000
+	__GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING.IsSelected = false
+
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.Name = `Specs-ATTRIBUTE_VALUE_XHTML`
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.X = 990.000000
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.Y = 206.000000
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_XHTML{}
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.Width = 341.000000
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.Height = 63.000000
+	__GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML.IsSelected = false
 
 	__LinkShape__000000_DATATYPES.Name = `DATATYPES`
 	__LinkShape__000000_DATATYPES.IdentifierMeta = ref_models.REQ_IF_CONTENT{}.DATATYPES
@@ -509,10 +599,181 @@ func _(stage *models.Stage) {
 	__LinkShape__000013_SPEC_OBJECT.X = 397.000000
 	__LinkShape__000013_SPEC_OBJECT.Y = 359.500000
 	__LinkShape__000013_SPEC_OBJECT.StartOrientation = models.ORIENTATION_VERTICAL
-	__LinkShape__000013_SPEC_OBJECT.StartRatio = 0.689714
+	__LinkShape__000013_SPEC_OBJECT.StartRatio = 0.603125
 	__LinkShape__000013_SPEC_OBJECT.EndOrientation = models.ORIENTATION_VERTICAL
-	__LinkShape__000013_SPEC_OBJECT.EndRatio = 0.660547
+	__LinkShape__000013_SPEC_OBJECT.EndRatio = 0.569792
 	__LinkShape__000013_SPEC_OBJECT.CornerOffsetRatio = 1.751460
+
+	__LinkShape__000014_TYPE.Name = `TYPE`
+	__LinkShape__000014_TYPE.IdentifierMeta = ref_models.SPEC_OBJECT{}.TYPE
+	__LinkShape__000014_TYPE.FieldTypeIdentifierMeta = ref_models.A_SPEC_OBJECT_TYPE_REF{}
+	__LinkShape__000014_TYPE.FieldOffsetX = 0.000000
+	__LinkShape__000014_TYPE.FieldOffsetY = 0.000000
+	__LinkShape__000014_TYPE.TargetMultiplicity = models.ZERO_ONE
+	__LinkShape__000014_TYPE.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000014_TYPE.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000014_TYPE.SourceMultiplicity = models.MANY
+	__LinkShape__000014_TYPE.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000014_TYPE.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000014_TYPE.X = 591.000000
+	__LinkShape__000014_TYPE.Y = 424.500000
+	__LinkShape__000014_TYPE.StartOrientation = models.ORIENTATION_VERTICAL
+	__LinkShape__000014_TYPE.StartRatio = 0.657292
+	__LinkShape__000014_TYPE.EndOrientation = models.ORIENTATION_VERTICAL
+	__LinkShape__000014_TYPE.EndRatio = 0.490922
+	__LinkShape__000014_TYPE.CornerOffsetRatio = 1.571429
+
+	__LinkShape__000015_VALUES.Name = `VALUES`
+	__LinkShape__000015_VALUES.IdentifierMeta = ref_models.SPEC_OBJECT{}.VALUES
+	__LinkShape__000015_VALUES.FieldTypeIdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}
+	__LinkShape__000015_VALUES.FieldOffsetX = 0.000000
+	__LinkShape__000015_VALUES.FieldOffsetY = 0.000000
+	__LinkShape__000015_VALUES.TargetMultiplicity = models.ZERO_ONE
+	__LinkShape__000015_VALUES.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000015_VALUES.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000015_VALUES.SourceMultiplicity = models.MANY
+	__LinkShape__000015_VALUES.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000015_VALUES.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000015_VALUES.X = 608.500000
+	__LinkShape__000015_VALUES.Y = 368.000000
+	__LinkShape__000015_VALUES.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000015_VALUES.StartRatio = 0.460317
+	__LinkShape__000015_VALUES.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000015_VALUES.EndRatio = 0.396825
+	__LinkShape__000015_VALUES.CornerOffsetRatio = 1.157292
+
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.Name = `ATTRIBUTE_VALUE_BOOLEAN`
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_BOOLEAN
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_BOOLEAN{}
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.FieldOffsetX = 0.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.FieldOffsetY = 0.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.TargetMultiplicity = models.MANY
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.SourceMultiplicity = models.MANY
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.X = 1261.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.Y = 569.000000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.StartRatio = 0.500000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.EndRatio = 0.500000
+	__LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN.CornerOffsetRatio = 1.075352
+
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.Name = `ATTRIBUTE_VALUE_DATE`
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_DATE
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_DATE{}
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.FieldOffsetX = 0.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.FieldOffsetY = 0.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.TargetMultiplicity = models.MANY
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.SourceMultiplicity = models.MANY
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.X = 1255.000000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.Y = 422.500000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.StartRatio = 0.500000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.EndRatio = 0.500000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.CornerOffsetRatio = 1.380000
+
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.Name = `ATTRIBUTE_VALUE_ENUMERATION`
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_ENUMERATION
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_ENUMERATION{}
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.FieldOffsetX = 0.000000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.FieldOffsetY = 0.000000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.TargetMultiplicity = models.MANY
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.SourceMultiplicity = models.MANY
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.X = 1252.500000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.Y = 368.500000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.StartRatio = 0.500000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.EndRatio = 0.500000
+	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.CornerOffsetRatio = 1.075352
+
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.Name = `ATTRIBUTE_VALUE_INTEGER`
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_INTEGER
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_INTEGER{}
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.FieldOffsetX = 0.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.FieldOffsetY = 0.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.TargetMultiplicity = models.MANY
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.SourceMultiplicity = models.MANY
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.X = 1250.500000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.Y = 318.000000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.StartRatio = 0.500000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.EndRatio = 0.500000
+	__LinkShape__000019_ATTRIBUTE_VALUE_INTEGER.CornerOffsetRatio = 1.075352
+
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.Name = `ATTRIBUTE_VALUE_REAL`
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_REAL
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_REAL{}
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.FieldOffsetX = 0.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.FieldOffsetY = 0.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.TargetMultiplicity = models.MANY
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.SourceMultiplicity = models.MANY
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.X = 1259.000000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.Y = 517.500000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.StartRatio = 0.500000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.EndRatio = 0.500000
+	__LinkShape__000020_ATTRIBUTE_VALUE_REAL.CornerOffsetRatio = 1.075352
+
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.Name = `ATTRIBUTE_VALUE_STRING`
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_STRING
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_STRING{}
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.FieldOffsetX = 0.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.FieldOffsetY = 0.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.TargetMultiplicity = models.MANY
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.SourceMultiplicity = models.MANY
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.X = 1259.500000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.Y = 471.000000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.StartRatio = 0.500000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.EndRatio = 0.500000
+	__LinkShape__000021_ATTRIBUTE_VALUE_STRING.CornerOffsetRatio = 1.075352
+
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.Name = `ATTRIBUTE_VALUE_XHTML`
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_XHTML_1{}.ATTRIBUTE_VALUE_XHTML
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_XHTML{}
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.FieldOffsetX = 0.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.FieldOffsetY = 0.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.TargetMultiplicity = models.MANY
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.SourceMultiplicity = models.MANY
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.X = 1250.000000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.Y = 262.500000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.StartRatio = 0.500000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.EndRatio = 0.500000
+	__LinkShape__000022_ATTRIBUTE_VALUE_XHTML.CornerOffsetRatio = 1.072535
 
 	// Setup of pointers
 	// setup of Classdiagram instances pointers
@@ -533,6 +794,15 @@ func _(stage *models.Stage) {
 	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000014_Specs_REQ_IF_CONTENT)
 	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000015_Specs_A_SPEC_OBJECTS)
 	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000016_Specs_SPEC_OBJECT)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING)
+	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML)
 	// setup of DiagramPackage instances pointers
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000000_Top_Level)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000001_Datatypes)
@@ -553,6 +823,15 @@ func _(stage *models.Stage) {
 	__GongStructShape__000006_Content_A_DATATYPES.LinkShapes = append(__GongStructShape__000006_Content_A_DATATYPES.LinkShapes, __LinkShape__000007_DATATYPE_DEFINITION_XHTML)
 	__GongStructShape__000014_Specs_REQ_IF_CONTENT.LinkShapes = append(__GongStructShape__000014_Specs_REQ_IF_CONTENT.LinkShapes, __LinkShape__000012_SPEC_OBJECTS)
 	__GongStructShape__000015_Specs_A_SPEC_OBJECTS.LinkShapes = append(__GongStructShape__000015_Specs_A_SPEC_OBJECTS.LinkShapes, __LinkShape__000013_SPEC_OBJECT)
+	__GongStructShape__000016_Specs_SPEC_OBJECT.LinkShapes = append(__GongStructShape__000016_Specs_SPEC_OBJECT.LinkShapes, __LinkShape__000014_TYPE)
+	__GongStructShape__000016_Specs_SPEC_OBJECT.LinkShapes = append(__GongStructShape__000016_Specs_SPEC_OBJECT.LinkShapes, __LinkShape__000015_VALUES)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000016_ATTRIBUTE_VALUE_BOOLEAN)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000017_ATTRIBUTE_VALUE_DATE)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000019_ATTRIBUTE_VALUE_INTEGER)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000020_ATTRIBUTE_VALUE_REAL)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000021_ATTRIBUTE_VALUE_STRING)
+	__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000022_ATTRIBUTE_VALUE_XHTML)
 	// setup of LinkShape instances pointers
 }
 
