@@ -218,6 +218,71 @@ func GetNamedStructInstances[T PointerToGongstruct](set map[T]any, order map[T]u
 	return
 }
 
+func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T) {
+	var t T
+	switch any(t).(type) {
+		// insertion point for case
+	case *Button:
+		tmp := GetStructInstancesByOrder(stage.Buttons, stage.ButtonMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *Button implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *Node:
+		tmp := GetStructInstancesByOrder(stage.Nodes, stage.NodeMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *Node implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *SVGIcon:
+		tmp := GetStructInstancesByOrder(stage.SVGIcons, stage.SVGIconMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *SVGIcon implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *Tree:
+		tmp := GetStructInstancesByOrder(stage.Trees, stage.TreeMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *Tree implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+
+	}
+	return
+}
+
 func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]any, order map[T]uint) (res []T) {
 
 	orderedSet := []T{}
@@ -1152,7 +1217,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case Button:
 		res = []string{"Name", "Icon", "SVGIcon", "IsDisabled", "HasToolTip", "ToolTipText", "ToolTipPosition"}
 	case Node:
-		res = []string{"Name", "FontStyle", "BackgroundColor", "IsExpanded", "HasCheckboxButton", "IsChecked", "IsCheckboxDisabled", "CheckboxHasToolTip", "CheckboxToolTipText", "CheckboxToolTipPosition", "HasSecondCheckboxButton", "IsSecondCheckboxChecked", "IsSecondCheckboxDisabled", "TextAfterSecondCheckbox", "HasToolTip", "ToolTipText", "ToolTipPosition", "IsInEditMode", "IsNodeClickable", "IsWithPreceedingIcon", "PreceedingIcon", "PreceedingSVGIcon", "Children", "Buttons"}
+		res = []string{"Name", "FontStyle", "BackgroundColor", "IsExpanded", "HasCheckboxButton", "IsChecked", "IsCheckboxDisabled", "CheckboxHasToolTip", "CheckboxToolTipText", "CheckboxToolTipPosition", "HasSecondCheckboxButton", "IsSecondCheckboxChecked", "IsSecondCheckboxDisabled", "SecondCheckboxHasToolTip", "SecondCheckboxToolTipText", "SecondCheckboxToolTipPosition", "TextAfterSecondCheckbox", "HasToolTip", "ToolTipText", "ToolTipPosition", "IsInEditMode", "IsNodeClickable", "IsWithPreceedingIcon", "PreceedingIcon", "PreceedingSVGIcon", "Children", "Buttons"}
 	case SVGIcon:
 		res = []string{"Name", "SVG"}
 	case Tree:
@@ -1210,7 +1275,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *Button:
 		res = []string{"Name", "Icon", "SVGIcon", "IsDisabled", "HasToolTip", "ToolTipText", "ToolTipPosition"}
 	case *Node:
-		res = []string{"Name", "FontStyle", "BackgroundColor", "IsExpanded", "HasCheckboxButton", "IsChecked", "IsCheckboxDisabled", "CheckboxHasToolTip", "CheckboxToolTipText", "CheckboxToolTipPosition", "HasSecondCheckboxButton", "IsSecondCheckboxChecked", "IsSecondCheckboxDisabled", "TextAfterSecondCheckbox", "HasToolTip", "ToolTipText", "ToolTipPosition", "IsInEditMode", "IsNodeClickable", "IsWithPreceedingIcon", "PreceedingIcon", "PreceedingSVGIcon", "Children", "Buttons"}
+		res = []string{"Name", "FontStyle", "BackgroundColor", "IsExpanded", "HasCheckboxButton", "IsChecked", "IsCheckboxDisabled", "CheckboxHasToolTip", "CheckboxToolTipText", "CheckboxToolTipPosition", "HasSecondCheckboxButton", "IsSecondCheckboxChecked", "IsSecondCheckboxDisabled", "SecondCheckboxHasToolTip", "SecondCheckboxToolTipText", "SecondCheckboxToolTipPosition", "TextAfterSecondCheckbox", "HasToolTip", "ToolTipText", "ToolTipPosition", "IsInEditMode", "IsNodeClickable", "IsWithPreceedingIcon", "PreceedingIcon", "PreceedingSVGIcon", "Children", "Buttons"}
 	case *SVGIcon:
 		res = []string{"Name", "SVG"}
 	case *Tree:
@@ -1328,6 +1393,15 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			res.valueString = fmt.Sprintf("%t", inferedInstance.IsSecondCheckboxDisabled)
 			res.valueBool = inferedInstance.IsSecondCheckboxDisabled
 			res.GongFieldValueType = GongFieldValueTypeBool
+		case "SecondCheckboxHasToolTip":
+			res.valueString = fmt.Sprintf("%t", inferedInstance.SecondCheckboxHasToolTip)
+			res.valueBool = inferedInstance.SecondCheckboxHasToolTip
+			res.GongFieldValueType = GongFieldValueTypeBool
+		case "SecondCheckboxToolTipText":
+			res.valueString = inferedInstance.SecondCheckboxToolTipText
+		case "SecondCheckboxToolTipPosition":
+			enum := inferedInstance.SecondCheckboxToolTipPosition
+			res.valueString = enum.ToCodeString()
 		case "TextAfterSecondCheckbox":
 			res.valueString = inferedInstance.TextAfterSecondCheckbox
 		case "HasToolTip":
@@ -1475,6 +1549,15 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			res.valueString = fmt.Sprintf("%t", inferedInstance.IsSecondCheckboxDisabled)
 			res.valueBool = inferedInstance.IsSecondCheckboxDisabled
 			res.GongFieldValueType = GongFieldValueTypeBool
+		case "SecondCheckboxHasToolTip":
+			res.valueString = fmt.Sprintf("%t", inferedInstance.SecondCheckboxHasToolTip)
+			res.valueBool = inferedInstance.SecondCheckboxHasToolTip
+			res.GongFieldValueType = GongFieldValueTypeBool
+		case "SecondCheckboxToolTipText":
+			res.valueString = inferedInstance.SecondCheckboxToolTipText
+		case "SecondCheckboxToolTipPosition":
+			enum := inferedInstance.SecondCheckboxToolTipPosition
+			res.valueString = enum.ToCodeString()
 		case "TextAfterSecondCheckbox":
 			res.valueString = inferedInstance.TextAfterSecondCheckbox
 		case "HasToolTip":

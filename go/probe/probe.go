@@ -92,6 +92,7 @@ func NewProbe(
 		gongreqif_go.GoModelsDir,
 		gongreqif_go.GoDiagramsDir,
 		probe.diagramEditor,
+		stageOfInterest.Map_GongStructName_InstancesNb,
 	)
 
 	probe.dataEditor = &split.AsSplit{
