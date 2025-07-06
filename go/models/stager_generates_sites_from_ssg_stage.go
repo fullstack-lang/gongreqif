@@ -46,7 +46,7 @@ func (stager *Stager) generatesSiteFromSSGStage() {
 	}
 
 	// serialize the stage into a XL file
-	filename := filepath.Join(stager.rootPathToImageInputs, siteWeb.InputImagesDir, "snoboubou.xlsx")
+	filename := filepath.Join(stager.rootPathToImageInputs, siteWeb.InputImagesDir, "reqif.xlsx")
 	SerializeStage(stager.stage, filename)
 
 	stager.ssgStage.Generation()

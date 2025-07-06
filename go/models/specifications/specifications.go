@@ -9,10 +9,27 @@ import (
 
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 
+	ssg "github.com/fullstack-lang/gong/lib/ssg/go/models"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )
 
 type SpecificationsTreeStageUpdater struct {
+}
+
+// UpdateAndCommitSpecificationsSsgStage implements models.SpecificationsTreeUpdaterInterface.
+func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsSsgStage(stager *m.Stager) {
+
+	ssgStage := stager.GetSsgStage()
+	ssgStage.Reset()
+
+	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
+	for _, specification := range specifications.SPECIFICATION {
+		chapter := &ssg.Chapter{Name: specification.GetName()}
+
+		ssg.StageBranch(ssgStage, chapter)
+	}
+
+	ssgStage.Commit()
 }
 
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(stager *m.Stager) {
@@ -47,11 +64,12 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				"unknown relation type")
 		}
 
-		relationNode := &tree.Node{
+		node := &tree.Node{
 			Name: specification.Name,
 		}
+		markDownContent := "# " + specification.Name
 		map_specificationType_node[specificationType].Children =
-			append(map_specificationType_node[specificationType].Children, relationNode)
+			append(map_specificationType_node[specificationType].Children, node)
 		map_specificationType_nbInstances[specificationType] = map_specificationType_nbInstances[specificationType] + 1
 
 		{
@@ -61,7 +79,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				IsExpanded: true,
 				FontStyle:  tree.ITALIC,
 			}
-			relationNode.Children = append(relationNode.Children, specificationAttributeCategoryXHTML)
+			node.Children = append(node.Children, specificationAttributeCategoryXHTML)
 			if specification.VALUES != nil {
 				for _, attribute := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
 					// provide the type
@@ -93,15 +111,21 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				IsExpanded: true,
 				FontStyle:  tree.ITALIC,
 			}
-			relationNode.Children = append(relationNode.Children, hierarchyParentNode)
+			node.Children = append(node.Children, hierarchyParentNode)
+
+			depth := 2 // depth of chapters
 
 			for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 
 				processSpecHierarchy(
 					stager,
 					specHierarchy,
-					hierarchyParentNode)
+					hierarchyParentNode,
+					depth,
+					&markDownContent)
 			}
+
+			log.Println(markDownContent)
 		}
 
 	}
@@ -126,7 +150,9 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 func processSpecHierarchy(
 	stager *m.Stager,
 	specHierarchy *m.SPEC_HIERARCHY,
-	hierarchyParentNode *tree.Node) {
+	hierarchyParentNode *tree.Node,
+	depth int,
+	markDownContent *string) {
 
 	specObject, ok := stager.Map_id_SPEC_OBJECT[specHierarchy.OBJECT.SPEC_OBJECT_REF]
 	if !ok {
@@ -139,6 +165,15 @@ func processSpecHierarchy(
 		log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 			"unknown ref")
 	}
+
+	if specHierarchy.CHILDREN != nil && len(specHierarchy.CHILDREN.SPEC_HIERARCHY) > 0 {
+		for range depth {
+			*markDownContent += "#"
+		}
+		*markDownContent += " "
+	}
+
+	*markDownContent += fmt.Sprintf("%s\n\n", specObject.Name)
 
 	hierarchyNode := &tree.Node{
 		Name: specObject.Name + " : " + specObjectType.Name,
@@ -154,7 +189,9 @@ func processSpecHierarchy(
 			processSpecHierarchy(
 				stager,
 				specHierarchyChildren,
-				hierarchyNode)
+				hierarchyNode,
+				depth+1,
+				markDownContent)
 		}
 	}
 }

@@ -56,6 +56,7 @@ type SpecRelationsTreeUpdaterInterface interface {
 
 type SpecificationsTreeUpdaterInterface interface {
 	UpdateAndCommitSpecificationsTreeStage(stager *Stager)
+	UpdateAndCommitSpecificationsSsgStage(stager *Stager)
 }
 
 type ObjectNamerInterface interface {
@@ -210,6 +211,11 @@ func (stager *Stager) GetSpecRelationsTreeName() (s string) {
 
 func (stager *Stager) GetSpecificationsTreeStage() (s *tree.Stage) {
 	s = stager.specificationsTreeStage
+	return
+}
+
+func (stager *Stager) GetSsgStage() (s *ssg.Stage) {
+	s = stager.ssgStage
 	return
 }
 
@@ -442,11 +448,11 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "(Dev) specifications tree probe",
+		Name: "(Dev) ssgStage",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
-					StackName: stager.specificationsTreeStage.GetProbeSplitStageName(),
+					StackName: stager.ssgStage.GetProbeSplitStageName(),
 				}),
 			}),
 		},
@@ -506,6 +512,7 @@ func (stager *Stager) processReqifData(reqifData []byte, pathToReqifFile string)
 	stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(stager)
 	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
 	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
+	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsSsgStage(stager)
 
 	// stager.UpdateAndCommitButtonStage()
 
