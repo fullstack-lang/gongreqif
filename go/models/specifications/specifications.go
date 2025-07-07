@@ -9,27 +9,36 @@ import (
 
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 
-	ssg "github.com/fullstack-lang/gong/lib/ssg/go/models"
+	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )
 
 type SpecificationsTreeStageUpdater struct {
 }
 
-// UpdateAndCommitSpecificationsSsgStage implements models.SpecificationsTreeUpdaterInterface.
-func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsSsgStage(stager *m.Stager) {
+// UpdateAndCommitSpecificationsMarkdownStage implements models.SpecificationsTreeUpdaterInterface.
+func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownStage(stager *m.Stager) {
 
-	ssgStage := stager.GetSsgStage()
-	ssgStage.Reset()
+	markdownStage := stager.GetMarkdownStage()
+	markdownStage.Reset()
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
 	for _, specification := range specifications.SPECIFICATION {
-		chapter := &ssg.Chapter{Name: specification.GetName()}
 
-		ssg.StageBranch(ssgStage, chapter)
+		if stager.GetSelectedSpecification() == nil {
+			continue
+		}
+
+		if stager.GetSelectedSpecification() != specification {
+			continue
+		}
+
+		content := &markdown.Content{Name: specification.GetName()}
+
+		markdown.StageBranch(markdownStage, content)
 	}
 
-	ssgStage.Commit()
+	markdownStage.Commit()
 }
 
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(stager *m.Stager) {
@@ -65,7 +74,12 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		}
 
 		node := &tree.Node{
-			Name: specification.Name,
+			Name:              specification.Name,
+			HasCheckboxButton: true,
+			Impl: &ProxySpecification{
+				stager:        stager,
+				specification: specification,
+			},
 		}
 		markDownContent := "# " + specification.Name
 		map_specificationType_node[specificationType].Children =
@@ -194,4 +208,17 @@ func processSpecHierarchy(
 				markDownContent)
 		}
 	}
+}
+
+type ProxySpecification struct {
+	stager        *m.Stager
+	specification *m.SPECIFICATION
+}
+
+func (proxy *ProxySpecification) OnAfterUpdate(_ *tree.Stage, _, _ *tree.Node) {
+
+	log.Println("Specification", proxy.specification.Name, "selected")
+	proxy.stager.SetSelectedSpecification(proxy.specification)
+
+	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 }
