@@ -444,7 +444,7 @@ func NewStager(
 						},
 						{
 							Size: 61.8,
-							Tree: &split.Tree{
+							Markdown: &split.Markdown{
 								StackName: stager.markdownStage.GetName(),
 							},
 						},
@@ -505,11 +505,11 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "(Dev) ssgStage",
+		Name: "(Dev) markdownStage",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
-					StackName: stager.ssgStage.GetProbeSplitStageName(),
+					StackName: stager.markdownStage.GetProbeSplitStageName(),
 				}),
 			}),
 		},

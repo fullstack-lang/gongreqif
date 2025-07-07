@@ -5,6 +5,7 @@ import (
 	"log"
 	"strings"
 
+	// Corrected path
 	m "github.com/fullstack-lang/gongreqif/go/models"
 
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
@@ -22,8 +23,8 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 	markdownStage := stager.GetMarkdownStage()
 	markdownStage.Reset()
 
-	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
-	for _, specification := range specifications.SPECIFICATION {
+	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
+	for _, specification := range specifications {
 
 		if stager.GetSelectedSpecification() == nil {
 			continue
@@ -33,7 +34,31 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 			continue
 		}
 
-		content := &markdown.Content{Name: specification.GetName()}
+		// --- updated logic to generate and assign markdown content ---
+
+		// 1. Initialize markdown content string
+		markDownContent := "# " + specification.Name + "\n\n"
+
+		// 2. A dummy parent node is created because processSpecHierarchy expects a parent
+		// to append children to. This node is temporary and will be discarded.
+		hierarchyParentNode := &tree.Node{}
+		depth := 2 // initial depth for chapters
+
+		// 3. Recursively process spec hierarchies to build the markdown string
+		for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
+			processSpecHierarchy(
+				stager,
+				specHierarchy,
+				hierarchyParentNode,
+				depth,
+				&markDownContent)
+		}
+		// --- end of update ---
+
+		content := &markdown.Content{
+			Name:    specification.GetName(),
+			Content: markDownContent, // Assign the generated markdown
+		}
 
 		markdown.StageBranch(markdownStage, content)
 	}
@@ -59,7 +84,8 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 	map_specificationType_nbInstances := make(map[*m.SPECIFICATION_TYPE]int)
 	for _, specificationType := range spectypes.SPECIFICATION_TYPE {
 		nodeSpecificationType := &tree.Node{
-			Name: specificationType.Name,
+			Name:       specificationType.Name,
+			IsExpanded: true,
 		}
 		sliceOfSpecificationNodes = append(sliceOfSpecificationNodes, nodeSpecificationType)
 		map_specificationType_node[specificationType] = nodeSpecificationType
@@ -215,10 +241,20 @@ type ProxySpecification struct {
 	specification *m.SPECIFICATION
 }
 
-func (proxy *ProxySpecification) OnAfterUpdate(_ *tree.Stage, _, _ *tree.Node) {
+func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, frontNode *tree.Node) {
 
-	log.Println("Specification", proxy.specification.Name, "selected")
-	proxy.stager.SetSelectedSpecification(proxy.specification)
+	if frontNode.IsChecked && !stageNode.IsChecked {
+		frontNode.IsChecked = stageNode.IsChecked
+		treeStage.Commit()
 
-	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+		log.Println("Specification", proxy.specification.Name, "selected")
+		proxy.stager.SetSelectedSpecification(proxy.specification)
+
+		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+	}
+
+	if !frontNode.IsChecked && stageNode.IsChecked {
+		frontNode.IsChecked = stageNode.IsChecked
+		treeStage.Commit()
+	}
 }
