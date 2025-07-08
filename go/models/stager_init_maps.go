@@ -140,5 +140,11 @@ func (stager *Stager) initMaps() {
 		}
 	}
 
-	stager.Map_SpecificationNodes_exapanded = make(map[*SPECIFICATION]bool)
+	stager.Map_SpecificationNodes_expanded = make(map[*SPECIFICATION]bool)
+	stager.Map_SpecificationNodes_showIdentifier = make(map[*SPECIFICATION]bool)
+	specifications := *GetGongstructInstancesSet[SPECIFICATION](stager.GetStage())
+	for specification := range specifications {
+		stager.Map_SpecificationNodes_expanded[specification] = false
+		stager.Map_SpecificationNodes_showIdentifier[specification] = true
+	}
 }
