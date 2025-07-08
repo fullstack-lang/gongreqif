@@ -99,9 +99,13 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				"unknown relation type")
 		}
 
+		isSelectedSpecification := stager.GetSelectedSpecification() == specification
+
 		node := &tree.Node{
 			Name:              specification.Name,
 			HasCheckboxButton: true,
+			IsChecked:         isSelectedSpecification,
+			IsExpanded:        stager.Map_SpecificationNodes_exapanded[specification],
 			Impl: &ProxySpecification{
 				stager:        stager,
 				specification: specification,
@@ -221,6 +225,7 @@ func processSpecHierarchy(
 	hierarchyParentNode.Children = append(hierarchyParentNode.Children, hierarchyNode)
 
 	specobjects.AddAttributeNodes(stager, hierarchyNode, specObject)
+	specobjects.AppendAttributesToMarkdown(stager, specObject, markDownContent)
 
 	m.AddIconForEditabilityOfAttribute(specHierarchy.IS_EDITABLE, specObject.Name, hierarchyNode)
 
@@ -245,16 +250,23 @@ func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode,
 
 	if frontNode.IsChecked && !stageNode.IsChecked {
 		frontNode.IsChecked = stageNode.IsChecked
-		treeStage.Commit()
 
-		log.Println("Specification", proxy.specification.Name, "selected")
+		// log.Println("Specification", proxy.specification.Name, "selected")
 		proxy.stager.SetSelectedSpecification(proxy.specification)
 
 		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
 	}
 
 	if !frontNode.IsChecked && stageNode.IsChecked {
 		frontNode.IsChecked = stageNode.IsChecked
-		treeStage.Commit()
+	}
+
+	if frontNode.IsExpanded && !stageNode.IsExpanded {
+		proxy.stager.Map_SpecificationNodes_exapanded[proxy.specification] = true
+	}
+
+	if !frontNode.IsExpanded && stageNode.IsExpanded {
+		proxy.stager.Map_SpecificationNodes_exapanded[proxy.specification] = false
 	}
 }

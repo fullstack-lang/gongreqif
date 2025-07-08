@@ -139,4 +139,6 @@ func (stager *Stager) initMaps() {
 			stager.Map_id_SPEC_RELATION_TYPE[specRelationType.IDENTIFIER] = specRelationType
 		}
 	}
+
+	stager.Map_SpecificationNodes_exapanded = make(map[*SPECIFICATION]bool)
 }

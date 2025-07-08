@@ -160,7 +160,8 @@ type Stager struct {
 
 	loadStage *load.Stage
 
-	selectedSpecification *SPECIFICATION
+	selectedSpecification            *SPECIFICATION
+	Map_SpecificationNodes_exapanded map[*SPECIFICATION]bool
 }
 
 func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {
