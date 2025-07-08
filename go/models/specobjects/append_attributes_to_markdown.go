@@ -3,9 +3,18 @@ package specobjects
 import (
 	"fmt"
 	"log"
+	"regexp"
 	"strings"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
+)
+
+// Pre-compile regexes for efficiency.
+var (
+	// tagRegex matches any XML/XHTML-style tag.
+	tagRegex = regexp.MustCompile(`<[^>]*>`)
+	// spaceRegex matches one or more whitespace characters.
+	spaceRegex = regexp.MustCompile(`\s+`)
 )
 
 // sanitizeForMarkdownTable escapes characters that can break a markdown table's structure.
@@ -32,7 +41,7 @@ func AppendAttributesToMarkdown(stager *m.Stager, specObject *m.SPEC_OBJECT, mar
 
 	// If any attributes were found, create the table.
 	if tableRows.Len() > 0 {
-		*markdownContent += fmt.Sprintf("\n| |  |\n")
+		*markdownContent += "\n|  |  |\n"
 		*markdownContent += "|---|---|\n"
 		*markdownContent += tableRows.String()
 	}
@@ -48,16 +57,21 @@ func appendAttributeXHTMLRows(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 			log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF, "unknown ref")
 		}
 
-		// Clean up XHTML tags for markdown readability
+		// Clean up XHTML content for markdown readability
 		enclosedText := attribute.THE_VALUE.EnclosedText
-		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:div>", "")
-		enclosedText = strings.ReplaceAll(enclosedText, "</reqif-xhtml:div>", "")
-		enclosedText = strings.ReplaceAll(enclosedText, "<reqif-xhtml:br />", " ")
-		enclosedText = strings.TrimSpace(enclosedText)
+
+		// 1. Remove all tags using a regular expression.
+		textWithoutTags := tagRegex.ReplaceAllString(enclosedText, "")
+
+		// 2. Normalize whitespace: replace newlines, tabs, and multiple spaces with a single space.
+		normalizedText := spaceRegex.ReplaceAllString(textWithoutTags, " ")
+
+		// 3. Trim leading/trailing space from the final string.
+		finalText := strings.TrimSpace(normalizedText)
 
 		tableRows.WriteString(fmt.Sprintf("| %s | %s |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
-			sanitizeForMarkdownTable(enclosedText)))
+			sanitizeForMarkdownTable(finalText)))
 	}
 }
 
