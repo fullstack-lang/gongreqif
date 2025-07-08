@@ -169,7 +169,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 					&markDownContent)
 			}
 
-			log.Println(markDownContent)
+			// log.Println(markDownContent)
 		}
 
 	}
@@ -210,7 +210,10 @@ func processSpecHierarchy(
 			"unknown ref")
 	}
 
-	if specHierarchy.CHILDREN != nil && len(specHierarchy.CHILDREN.SPEC_HIERARCHY) > 0 {
+	if specHierarchy.CHILDREN == nil || len(specHierarchy.CHILDREN.SPEC_HIERARCHY) == 0 {
+		*markDownContent += "#"
+	}
+	if true {
 		for range depth {
 			*markDownContent += "#"
 		}
