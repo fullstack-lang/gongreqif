@@ -91,6 +91,14 @@ github.com/fullstack-lang/gong/lib/load/go/orm
 github.com/fullstack-lang/gong/lib/load/go/probe
 github.com/fullstack-lang/gong/lib/load/go/stack
 github.com/fullstack-lang/gong/lib/load/ng-github.com-fullstack-lang-gong-lib-load
+github.com/fullstack-lang/gong/lib/markdown/go
+github.com/fullstack-lang/gong/lib/markdown/go/controllers
+github.com/fullstack-lang/gong/lib/markdown/go/db
+github.com/fullstack-lang/gong/lib/markdown/go/fullstack
+github.com/fullstack-lang/gong/lib/markdown/go/models
+github.com/fullstack-lang/gong/lib/markdown/go/orm
+github.com/fullstack-lang/gong/lib/markdown/go/probe
+github.com/fullstack-lang/gong/lib/markdown/go/stack
 github.com/fullstack-lang/gong/lib/markdown/ng-github.com-fullstack-lang-gong-lib-markdown
 github.com/fullstack-lang/gong/lib/sim/ng-github.com-fullstack-lang-gong-lib-sim
 github.com/fullstack-lang/gong/lib/slider/ng-github.com-fullstack-lang-gong-lib-slider

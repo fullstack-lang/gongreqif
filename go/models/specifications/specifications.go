@@ -5,31 +5,65 @@ import (
 	"log"
 	"strings"
 
+	// Corrected path
 	m "github.com/fullstack-lang/gongreqif/go/models"
 
 	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
 
-	ssg "github.com/fullstack-lang/gong/lib/ssg/go/models"
+	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )
 
 type SpecificationsTreeStageUpdater struct {
 }
 
-// UpdateAndCommitSpecificationsSsgStage implements models.SpecificationsTreeUpdaterInterface.
-func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsSsgStage(stager *m.Stager) {
+// UpdateAndCommitSpecificationsMarkdownStage implements models.SpecificationsTreeUpdaterInterface.
+func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownStage(stager *m.Stager) {
 
-	ssgStage := stager.GetSsgStage()
-	ssgStage.Reset()
+	markdownStage := stager.GetMarkdownStage()
+	markdownStage.Reset()
 
-	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
-	for _, specification := range specifications.SPECIFICATION {
-		chapter := &ssg.Chapter{Name: specification.GetName()}
+	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
+	for _, specification := range specifications {
 
-		ssg.StageBranch(ssgStage, chapter)
+		if stager.GetSelectedSpecification() == nil {
+			continue
+		}
+
+		if stager.GetSelectedSpecification() != specification {
+			continue
+		}
+
+		// --- updated logic to generate and assign markdown content ---
+
+		// 1. Initialize markdown content string
+		markDownContent := "# " + specification.Name + "\n\n"
+
+		// 2. A dummy parent node is created because processSpecHierarchy expects a parent
+		// to append children to. This node is temporary and will be discarded.
+		hierarchyParentNode := &tree.Node{}
+		depth := 2 // initial depth for chapters
+
+		// 3. Recursively process spec hierarchies to build the markdown string
+		for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
+			processSpecHierarchy(
+				stager,
+				specHierarchy,
+				hierarchyParentNode,
+				depth,
+				&markDownContent)
+		}
+		// --- end of update ---
+
+		content := &markdown.Content{
+			Name:    specification.GetName(),
+			Content: markDownContent, // Assign the generated markdown
+		}
+
+		markdown.StageBranch(markdownStage, content)
 	}
 
-	ssgStage.Commit()
+	markdownStage.Commit()
 }
 
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(stager *m.Stager) {
@@ -50,7 +84,8 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 	map_specificationType_nbInstances := make(map[*m.SPECIFICATION_TYPE]int)
 	for _, specificationType := range spectypes.SPECIFICATION_TYPE {
 		nodeSpecificationType := &tree.Node{
-			Name: specificationType.Name,
+			Name:       specificationType.Name,
+			IsExpanded: true,
 		}
 		sliceOfSpecificationNodes = append(sliceOfSpecificationNodes, nodeSpecificationType)
 		map_specificationType_node[specificationType] = nodeSpecificationType
@@ -64,8 +99,17 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				"unknown relation type")
 		}
 
+		isSelectedSpecification := stager.GetSelectedSpecification() == specification
+
 		node := &tree.Node{
-			Name: specification.Name,
+			Name:              specification.Name,
+			HasCheckboxButton: true,
+			IsChecked:         isSelectedSpecification,
+			IsExpanded:        stager.Map_SpecificationNodes_exapanded[specification],
+			Impl: &ProxySpecification{
+				stager:        stager,
+				specification: specification,
+			},
 		}
 		markDownContent := "# " + specification.Name
 		map_specificationType_node[specificationType].Children =
@@ -125,7 +169,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 					&markDownContent)
 			}
 
-			log.Println(markDownContent)
+			// log.Println(markDownContent)
 		}
 
 	}
@@ -166,7 +210,10 @@ func processSpecHierarchy(
 			"unknown ref")
 	}
 
-	if specHierarchy.CHILDREN != nil && len(specHierarchy.CHILDREN.SPEC_HIERARCHY) > 0 {
+	if specHierarchy.CHILDREN == nil || len(specHierarchy.CHILDREN.SPEC_HIERARCHY) == 0 {
+		*markDownContent += "#"
+	}
+	if true {
 		for range depth {
 			*markDownContent += "#"
 		}
@@ -181,6 +228,7 @@ func processSpecHierarchy(
 	hierarchyParentNode.Children = append(hierarchyParentNode.Children, hierarchyNode)
 
 	specobjects.AddAttributeNodes(stager, hierarchyNode, specObject)
+	specobjects.AppendAttributesToMarkdown(stager, specObject, markDownContent)
 
 	m.AddIconForEditabilityOfAttribute(specHierarchy.IS_EDITABLE, specObject.Name, hierarchyNode)
 
@@ -193,5 +241,35 @@ func processSpecHierarchy(
 				depth+1,
 				markDownContent)
 		}
+	}
+}
+
+type ProxySpecification struct {
+	stager        *m.Stager
+	specification *m.SPECIFICATION
+}
+
+func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, frontNode *tree.Node) {
+
+	if frontNode.IsChecked && !stageNode.IsChecked {
+		frontNode.IsChecked = stageNode.IsChecked
+
+		// log.Println("Specification", proxy.specification.Name, "selected")
+		proxy.stager.SetSelectedSpecification(proxy.specification)
+
+		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
+	}
+
+	if !frontNode.IsChecked && stageNode.IsChecked {
+		frontNode.IsChecked = stageNode.IsChecked
+	}
+
+	if frontNode.IsExpanded && !stageNode.IsExpanded {
+		proxy.stager.Map_SpecificationNodes_exapanded[proxy.specification] = true
+	}
+
+	if !frontNode.IsExpanded && stageNode.IsExpanded {
+		proxy.stager.Map_SpecificationNodes_exapanded[proxy.specification] = false
 	}
 }

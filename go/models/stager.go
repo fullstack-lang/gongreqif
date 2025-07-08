@@ -26,6 +26,9 @@ import (
 
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 	load_stack "github.com/fullstack-lang/gong/lib/load/go/stack"
+
+	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
+	markdown_stack "github.com/fullstack-lang/gong/lib/markdown/go/stack"
 )
 
 type ModelGeneratorInterface interface {
@@ -56,7 +59,7 @@ type SpecRelationsTreeUpdaterInterface interface {
 
 type SpecificationsTreeUpdaterInterface interface {
 	UpdateAndCommitSpecificationsTreeStage(stager *Stager)
-	UpdateAndCommitSpecificationsSsgStage(stager *Stager)
+	UpdateAndCommitSpecificationsMarkdownStage(stager *Stager)
 }
 
 type ObjectNamerInterface interface {
@@ -90,6 +93,8 @@ type Stager struct {
 
 	specificationsTreeStage *tree.Stage
 	specificationsTreeName  string
+
+	markdownStage *markdown.Stage
 
 	rootReqif       *REQ_IF
 	pathToReqifFile string
@@ -154,6 +159,17 @@ type Stager struct {
 	rootPathToStaticOutputs string
 
 	loadStage *load.Stage
+
+	selectedSpecification            *SPECIFICATION
+	Map_SpecificationNodes_exapanded map[*SPECIFICATION]bool
+}
+
+func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {
+	stager.selectedSpecification = selectedSpecification
+}
+
+func (stager *Stager) GetSelectedSpecification() (selectedSpecification *SPECIFICATION) {
+	return stager.selectedSpecification
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
@@ -214,6 +230,11 @@ func (stager *Stager) GetSpecificationsTreeStage() (s *tree.Stage) {
 	return
 }
 
+func (stager *Stager) GetMarkdownStage() (s *markdown.Stage) {
+	s = stager.markdownStage
+	return
+}
+
 func (stager *Stager) GetSsgStage() (s *ssg.Stage) {
 	s = stager.ssgStage
 	return
@@ -268,6 +289,7 @@ func NewStager(
 
 	stager.ssgStage = ssg_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 	stager.loadStage = load_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
+	stager.markdownStage = markdown_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 	stager.summaryTableName = "Summary Table Name"
@@ -404,6 +426,42 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
+		Name: "REQIF Render",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			{
+				Name:             "room for tree",
+				ShowNameInHeader: false,
+				Size:             100,
+				AsSplit: (&split.AsSplit{
+					Direction: split.Horizontal,
+					AsSplitAreas: []*split.AsSplitArea{
+
+						{
+							Size: 38.2,
+							Tree: &split.Tree{
+								StackName: stager.specificationsTreeStage.GetName(),
+								TreeName:  stager.specificationsTreeName,
+							},
+						},
+						{
+							Size: 61.8,
+							Markdown: &split.Markdown{
+								StackName: stager.markdownStage.GetName(),
+							},
+						},
+						// {
+						// 	Name:             "To be completed",
+						// 	ShowNameInHeader: false,
+
+						// 	Size: 15,
+						// },
+					},
+				}),
+			},
+		},
+	})
+
+	split.StageBranch(stager.splitStage, &split.View{
 		Name: "(Dev) REQIF Probe",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
@@ -448,11 +506,11 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "(Dev) ssgStage",
+		Name: "(Dev) markdownStage",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
-					StackName: stager.ssgStage.GetProbeSplitStageName(),
+					StackName: stager.markdownStage.GetProbeSplitStageName(),
 				}),
 			}),
 		},
@@ -512,8 +570,12 @@ func (stager *Stager) processReqifData(reqifData []byte, pathToReqifFile string)
 	stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(stager)
 	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
 	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
-	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsSsgStage(stager)
+	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsMarkdownStage(stager)
 
 	// stager.UpdateAndCommitButtonStage()
 
+}
+
+func (stager *Stager) GetSpecificationsTreeUpdater() (specificationsTreeUpdater SpecificationsTreeUpdaterInterface) {
+	return stager.specificationsTreeUpdater
 }
