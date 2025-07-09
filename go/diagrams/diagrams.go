@@ -23,16 +23,17 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
-	const __write__local_time = "2025-07-05 18:00:07.425927 CEST"
-	const __write__utc_time__ = "2025-07-05 16:00:07.425927 UTC"
+	const __write__local_time = "2025-07-09 10:30:36.609209 CEST"
+	const __write__utc_time__ = "2025-07-09 08:30:36.609209 UTC"
 
-	const __commitId__ = "0000000258"
+	const __commitId__ = "0000000289"
 
 	// Declaration of instances to stage
 
-	__Classdiagram__000000_Top_Level := (&models.Classdiagram{}).Stage(stage)
-	__Classdiagram__000001_Datatypes := (&models.Classdiagram{}).Stage(stage)
-	__Classdiagram__000002_Specs := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000000_1_Top_Level := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000001_2_Datatypes := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000002_3_Spectype := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000003_4_Specs := (&models.Classdiagram{}).Stage(stage)
 
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z := (&models.DiagramPackage{}).Stage(stage)
 
@@ -89,41 +90,53 @@ func _(stage *models.Stage) {
 
 	// Setup of values
 
-	__Classdiagram__000000_Top_Level.Name = `Top Level`
-	__Classdiagram__000000_Top_Level.Description = `fsdfqksdjhfdskfsqd`
-	__Classdiagram__000000_Top_Level.IsIncludedInStaticWebSite = false
-	__Classdiagram__000000_Top_Level.IsInRenameMode = false
-	__Classdiagram__000000_Top_Level.IsExpanded = false
-	__Classdiagram__000000_Top_Level.NodeGongStructsIsExpanded = true
-	__Classdiagram__000000_Top_Level.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
-	__Classdiagram__000000_Top_Level.NodeGongEnumsIsExpanded = false
-	__Classdiagram__000000_Top_Level.NodeGongEnumNodeExpansion = ``
-	__Classdiagram__000000_Top_Level.NodeGongNotesIsExpanded = false
-	__Classdiagram__000000_Top_Level.NodeGongNoteNodeExpansion = ``
+	__Classdiagram__000000_1_Top_Level.Name = `1. Top Level`
+	__Classdiagram__000000_1_Top_Level.Description = `fsdfqksdjhfdskfsqd`
+	__Classdiagram__000000_1_Top_Level.IsIncludedInStaticWebSite = false
+	__Classdiagram__000000_1_Top_Level.IsInRenameMode = false
+	__Classdiagram__000000_1_Top_Level.IsExpanded = false
+	__Classdiagram__000000_1_Top_Level.NodeGongStructsIsExpanded = true
+	__Classdiagram__000000_1_Top_Level.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
+	__Classdiagram__000000_1_Top_Level.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000000_1_Top_Level.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000000_1_Top_Level.NodeGongNotesIsExpanded = false
+	__Classdiagram__000000_1_Top_Level.NodeGongNoteNodeExpansion = ``
 
-	__Classdiagram__000001_Datatypes.Name = `Datatypes`
-	__Classdiagram__000001_Datatypes.Description = ``
-	__Classdiagram__000001_Datatypes.IsIncludedInStaticWebSite = false
-	__Classdiagram__000001_Datatypes.IsInRenameMode = false
-	__Classdiagram__000001_Datatypes.IsExpanded = false
-	__Classdiagram__000001_Datatypes.NodeGongStructsIsExpanded = true
-	__Classdiagram__000001_Datatypes.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
-	__Classdiagram__000001_Datatypes.NodeGongEnumsIsExpanded = false
-	__Classdiagram__000001_Datatypes.NodeGongEnumNodeExpansion = ``
-	__Classdiagram__000001_Datatypes.NodeGongNotesIsExpanded = false
-	__Classdiagram__000001_Datatypes.NodeGongNoteNodeExpansion = ``
+	__Classdiagram__000001_2_Datatypes.Name = `2. Datatypes`
+	__Classdiagram__000001_2_Datatypes.Description = ``
+	__Classdiagram__000001_2_Datatypes.IsIncludedInStaticWebSite = false
+	__Classdiagram__000001_2_Datatypes.IsInRenameMode = false
+	__Classdiagram__000001_2_Datatypes.IsExpanded = false
+	__Classdiagram__000001_2_Datatypes.NodeGongStructsIsExpanded = false
+	__Classdiagram__000001_2_Datatypes.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
+	__Classdiagram__000001_2_Datatypes.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000001_2_Datatypes.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000001_2_Datatypes.NodeGongNotesIsExpanded = false
+	__Classdiagram__000001_2_Datatypes.NodeGongNoteNodeExpansion = ``
 
-	__Classdiagram__000002_Specs.Name = `Specs`
-	__Classdiagram__000002_Specs.Description = `DEscription du package Specs`
-	__Classdiagram__000002_Specs.IsIncludedInStaticWebSite = false
-	__Classdiagram__000002_Specs.IsInRenameMode = false
-	__Classdiagram__000002_Specs.IsExpanded = true
-	__Classdiagram__000002_Specs.NodeGongStructsIsExpanded = true
-	__Classdiagram__000002_Specs.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
-	__Classdiagram__000002_Specs.NodeGongEnumsIsExpanded = false
-	__Classdiagram__000002_Specs.NodeGongEnumNodeExpansion = ``
-	__Classdiagram__000002_Specs.NodeGongNotesIsExpanded = false
-	__Classdiagram__000002_Specs.NodeGongNoteNodeExpansion = ``
+	__Classdiagram__000002_3_Spectype.Name = `3. Spectype`
+	__Classdiagram__000002_3_Spectype.Description = ``
+	__Classdiagram__000002_3_Spectype.IsIncludedInStaticWebSite = false
+	__Classdiagram__000002_3_Spectype.IsInRenameMode = false
+	__Classdiagram__000002_3_Spectype.IsExpanded = false
+	__Classdiagram__000002_3_Spectype.NodeGongStructsIsExpanded = false
+	__Classdiagram__000002_3_Spectype.NodeGongStructNodeExpansion = ``
+	__Classdiagram__000002_3_Spectype.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000002_3_Spectype.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000002_3_Spectype.NodeGongNotesIsExpanded = false
+	__Classdiagram__000002_3_Spectype.NodeGongNoteNodeExpansion = ``
+
+	__Classdiagram__000003_4_Specs.Name = `4. Specs`
+	__Classdiagram__000003_4_Specs.Description = `DEscription du package Specs`
+	__Classdiagram__000003_4_Specs.IsIncludedInStaticWebSite = false
+	__Classdiagram__000003_4_Specs.IsInRenameMode = false
+	__Classdiagram__000003_4_Specs.IsExpanded = false
+	__Classdiagram__000003_4_Specs.NodeGongStructsIsExpanded = true
+	__Classdiagram__000003_4_Specs.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
+	__Classdiagram__000003_4_Specs.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000003_4_Specs.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000003_4_Specs.NodeGongNotesIsExpanded = false
+	__Classdiagram__000003_4_Specs.NodeGongNoteNodeExpansion = ``
 
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Name = `Diagram Package created the 2025-05-07T07:33:18Z`
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Path = ``
@@ -777,37 +790,38 @@ func _(stage *models.Stage) {
 
 	// Setup of pointers
 	// setup of Classdiagram instances pointers
-	__Classdiagram__000000_Top_Level.GongStructShapes = append(__Classdiagram__000000_Top_Level.GongStructShapes, __GongStructShape__000000_Default_REQ_IF)
-	__Classdiagram__000000_Top_Level.GongStructShapes = append(__Classdiagram__000000_Top_Level.GongStructShapes, __GongStructShape__000001_Default_REQ_IF_CONTENT)
-	__Classdiagram__000000_Top_Level.GongStructShapes = append(__Classdiagram__000000_Top_Level.GongStructShapes, __GongStructShape__000002_Default_REQ_IF_HEADER)
-	__Classdiagram__000000_Top_Level.GongStructShapes = append(__Classdiagram__000000_Top_Level.GongStructShapes, __GongStructShape__000003_Default_A_THE_HEADER)
-	__Classdiagram__000000_Top_Level.GongStructShapes = append(__Classdiagram__000000_Top_Level.GongStructShapes, __GongStructShape__000004_Default_A_CORE_CONTENT)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000005_Content_REQ_IF_CONTENT)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000006_Content_A_DATATYPES)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING)
-	__Classdiagram__000001_Datatypes.GongStructShapes = append(__Classdiagram__000001_Datatypes.GongStructShapes, __GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000014_Specs_REQ_IF_CONTENT)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000015_Specs_A_SPEC_OBJECTS)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000016_Specs_SPEC_OBJECT)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING)
-	__Classdiagram__000002_Specs.GongStructShapes = append(__Classdiagram__000002_Specs.GongStructShapes, __GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML)
+	__Classdiagram__000000_1_Top_Level.GongStructShapes = append(__Classdiagram__000000_1_Top_Level.GongStructShapes, __GongStructShape__000000_Default_REQ_IF)
+	__Classdiagram__000000_1_Top_Level.GongStructShapes = append(__Classdiagram__000000_1_Top_Level.GongStructShapes, __GongStructShape__000001_Default_REQ_IF_CONTENT)
+	__Classdiagram__000000_1_Top_Level.GongStructShapes = append(__Classdiagram__000000_1_Top_Level.GongStructShapes, __GongStructShape__000002_Default_REQ_IF_HEADER)
+	__Classdiagram__000000_1_Top_Level.GongStructShapes = append(__Classdiagram__000000_1_Top_Level.GongStructShapes, __GongStructShape__000003_Default_A_THE_HEADER)
+	__Classdiagram__000000_1_Top_Level.GongStructShapes = append(__Classdiagram__000000_1_Top_Level.GongStructShapes, __GongStructShape__000004_Default_A_CORE_CONTENT)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000005_Content_REQ_IF_CONTENT)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000006_Content_A_DATATYPES)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000007_Content_DATATYPE_DEFINITION_BOOLEAN)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000008_Content_DATATYPE_DEFINITION_DATE)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000009_Content_DATATYPE_DEFINITION_ENUMERATION)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000010_Content_DATATYPE_DEFINITION_INTEGER)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000011_Content_DATATYPE_DEFINITION_REAL)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000012_Content_DATATYPE_DEFINITION_STRING)
+	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000014_Specs_REQ_IF_CONTENT)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000015_Specs_A_SPEC_OBJECTS)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000016_Specs_SPEC_OBJECT)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING)
+	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML)
 	// setup of DiagramPackage instances pointers
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000000_Top_Level)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000001_Datatypes)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000002_Specs)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000001_Datatypes
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000000_1_Top_Level)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000001_2_Datatypes)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000002_3_Spectype)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000003_4_Specs)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000002_3_Spectype
 	// setup of GongStructShape instances pointers
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000008_THE_HEADER)
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000009_CORE_CONTENT)
