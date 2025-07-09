@@ -54,6 +54,8 @@ func UpdateAttributeDefinitionNbRecursice(
 
 	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[specObjectType]++
 
+	log.Println("Spec Object Name", specObject.Name)
+
 	appendAttributeXHTML(stager, specObject)
 	appendAttributeString(stager, specObject)
 	appendAttributeBoolean(stager, specObject)
@@ -61,6 +63,12 @@ func UpdateAttributeDefinitionNbRecursice(
 	appendAttributeReal(stager, specObject)
 	appendAttributeDate(stager, specObject)
 	appendAttributeEnum(stager, specObject)
+
+	if specHierarchy.CHILDREN != nil {
+		for _, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
+			UpdateAttributeDefinitionNbRecursice(stager, specHierarchyChildren)
+		}
+	}
 
 }
 
