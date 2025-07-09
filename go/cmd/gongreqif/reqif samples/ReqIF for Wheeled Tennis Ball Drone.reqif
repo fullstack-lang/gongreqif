@@ -2,12 +2,12 @@
 <REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <THE-HEADER>
-    <REQ-IF-HEADER IDENTIFIER="reqif-header-4">
-      <CREATION-TIME>2025-07-05T18:01:20+02:00</CREATION-TIME>
+    <REQ-IF-HEADER IDENTIFIER="reqif-header-6">
+      <CREATION-TIME>2025-07-08T11:15:00+02:00</CREATION-TIME>
       <REQ-IF-TOOL-ID>Gemini AI</REQ-IF-TOOL-ID>
-      <REQ-IF-VERSION>1.3.0</REQ-IF-VERSION>
+      <REQ-IF-VERSION>1.4.0</REQ-IF-VERSION>
       <SOURCE-TOOL-ID>Manual</SOURCE-TOOL-ID>
-      <TITLE>ReqIF for Wheeled Tennis Ball Drone (with new Datatypes)</TITLE>
+      <TITLE>ReqIF for Wheeled Tennis Ball Drone (with Timestamps)</TITLE>
     </REQ-IF-HEADER>
   </THE-HEADER>
   <CORE-CONTENT>
@@ -109,11 +109,9 @@
             </ATTRIBUTE-DEFINITION-ENUMERATION>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
-
         <SPEC-RELATION-TYPE IDENTIFIER="srt-satisfy" LONG-NAME="Satisfy">
           <SPEC-ATTRIBUTES />
         </SPEC-RELATION-TYPE>
-
         <SPECIFICATION-TYPE IDENTIFIER="spectype-doc"
           LONG-NAME="Generic Specification Document Type">
           <SPEC-ATTRIBUTES />
@@ -122,10 +120,10 @@
           LONG-NAME="Traceability Document Type">
           <SPEC-ATTRIBUTES />
         </SPECIFICATION-TYPE>
-
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_STAKEHOLDER" LONG-NAME="Stakeholder Spec Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_STAKEHOLDER" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="Stakeholder Spec Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -143,7 +141,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYSTEM" LONG-NAME="System Spec Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYSTEM" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="System Spec Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -162,7 +161,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_TRACE" LONG-NAME="Traceability Matrix Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_TRACE" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="Traceability Matrix Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -180,7 +180,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP1" LONG-NAME="System Chapter 1 Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP1" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Chapter 1 Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -196,7 +197,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP2" LONG-NAME="System Chapter 2 Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP2" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Chapter 2 Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -213,7 +215,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP3" LONG-NAME="System Chapter 3 Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP3" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Chapter 3 Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -230,7 +233,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP4" LONG-NAME="System Chapter 4 Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP4" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Chapter 4 Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -247,7 +251,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP5" LONG-NAME="System Chapter 5 Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP5" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Chapter 5 Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -263,7 +268,8 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP6" LONG-NAME="System Chapter 6 Intro">
+        <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP6" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Chapter 6 Intro">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
@@ -280,7 +286,7 @@
           </TYPE>
         </SPEC-OBJECT>
 
-        <SPEC-OBJECT IDENTIFIER="SHR_001" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_001" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall collect tennis balls">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -294,7 +300,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_002" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_002" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall operate autonomously">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -308,7 +314,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_003" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_003" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall have a sufficient ball capacity">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -322,7 +328,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_004" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_004" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall be safe to operate">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -336,7 +342,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_005" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_005" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall have a long operational time">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -350,7 +356,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_006" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_006" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Drone shall be easily transportable">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -364,7 +370,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_007" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_007" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Drone shall be easy to start and stop">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -378,7 +384,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_008" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_008" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Drone shall be weather-resistant">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -392,7 +398,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_009" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_009" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Drone shall have a clear status indicator">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -406,7 +412,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_010" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_010" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Drone shall avoid obstacles">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -420,7 +426,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_011" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_011" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Drone shall be quiet">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -434,7 +440,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_012" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_012" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Drone shall have a manual override">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -448,7 +454,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_013" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_013" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Drone shall be easy to empty">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -462,7 +468,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_014" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_014" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Drone shall have a durable chassis">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -476,7 +482,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_015" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_015" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Drone shall have good traction">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -490,7 +496,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_016" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_016" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall have an emergency stop">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -504,7 +510,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_017" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_017" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall be affordable">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -518,7 +524,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_018" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_018" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall have replaceable parts">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -532,7 +538,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_019" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_019" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall provide collection statistics">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -546,7 +552,7 @@
             <SPEC-OBJECT-TYPE-REF>st-stakeholder-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SHR_020" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SHR_020" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Drone shall return to a home base">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -561,7 +567,7 @@
           </TYPE>
         </SPEC-OBJECT>
 
-        <SPEC-OBJECT IDENTIFIER="SYS_001" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_001" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Ball collection mechanism">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -603,7 +609,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_002" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_002" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Ball detection sensor">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -645,7 +651,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_003" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_003" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Pathfinding algorithm">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -664,7 +670,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_004" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_004" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Court boundary detection">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -678,7 +684,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_005" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_005" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Storage bin material">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -692,7 +698,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_006" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_006" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Bin full sensor">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -706,7 +712,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_007" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_007" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Ultrasonic obstacle sensors">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -720,7 +726,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_008" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_008" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Collision avoidance logic">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -734,7 +740,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_009" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_009" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Battery type">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -748,7 +754,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_010" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_010" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Battery management system">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -762,7 +768,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_011" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_011" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Low battery behavior">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -776,7 +782,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_012" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_012" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Drone weight">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -790,7 +796,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_013" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_013" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Carrying handles">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -804,7 +810,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_014" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_014" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Start/stop button">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -818,7 +824,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_015" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_015" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Waterproof rating">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -832,7 +838,8 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_016" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Status LEDs">
+        <SPEC-OBJECT IDENTIFIER="SYS_016" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="Status LEDs">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
               THE-VALUE="The drone shall have a set of LEDs to indicate its status: green for operating, yellow for full, and red for error.">
@@ -845,7 +852,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_017" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_017" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Net detection">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -859,7 +866,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_018" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_018" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Person detection">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -873,7 +880,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_019" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_019" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Motor noise level">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -887,7 +894,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_020" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_020" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Remote control">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -901,7 +908,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_021" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_021" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Bin release mechanism">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -915,7 +922,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_022" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_022" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Chassis material">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -929,7 +936,8 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_023" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Wheel type">
+        <SPEC-OBJECT IDENTIFIER="SYS_023" LAST-CHANGE="2025-07-02T09:00:00+02:00"
+          LONG-NAME="Wheel type">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
               THE-VALUE="The drone shall use non-marking rubber wheels with a tread pattern suitable for hard courts.">
@@ -942,7 +950,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_024" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_024" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Emergency stop button placement">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -956,7 +964,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_025" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_025" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Bill of materials cost">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -970,7 +978,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_026" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_026" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Modular wheel assembly">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -984,7 +992,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_027" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_027" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Modular collection mechanism">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -998,7 +1006,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_028" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_028" LAST-CHANGE="2025-07-02T09:00:00+02:00"
           LONG-NAME="Ball counter">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1012,7 +1020,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_029" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_029" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Statistics display">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1026,7 +1034,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_030" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_030" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Home base beacon">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1040,7 +1048,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_031" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_031" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Collection efficiency">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1054,7 +1062,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_032" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_032" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Maximum speed">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1068,7 +1076,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_033" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_033" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Charging time">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1082,7 +1090,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_034" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_034" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Software updates">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1096,7 +1104,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_035" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_035" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Motor torque">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1110,7 +1118,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_036" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_036" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Onboard diagnostics">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1124,7 +1132,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_037" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_037" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Data logging">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1138,7 +1146,8 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_038" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Sleep mode">
+        <SPEC-OBJECT IDENTIFIER="SYS_038" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Sleep mode">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
               THE-VALUE="The drone shall enter a low-power sleep mode after 30 minutes of inactivity.">
@@ -1151,7 +1160,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_039" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_039" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Audible alerts">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1165,7 +1174,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_040" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_040" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="UV resistance">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1179,7 +1188,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_041" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_041" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Remote control range">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1193,7 +1202,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_042" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_042" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Manual control responsiveness">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1207,7 +1216,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_043" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_043" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Manufacturing tolerances">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1221,7 +1230,8 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_044" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="User manual">
+        <SPEC-OBJECT IDENTIFIER="SYS_044" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="User manual">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
               THE-VALUE="A comprehensive user manual shall be provided with the drone.">
@@ -1234,7 +1244,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_045" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_045" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Maintenance schedule">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1248,7 +1258,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_046" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_046" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Regulatory compliance">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1262,7 +1272,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_047" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_047" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Recyclability">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1276,7 +1286,8 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_048" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Packaging">
+        <SPEC-OBJECT IDENTIFIER="SYS_048" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="Packaging">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall be packaged in recyclable materials.">
               <DEFINITION>
@@ -1288,7 +1299,8 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_049" LAST-CHANGE="2025-07-06T10:00:00Z" LONG-NAME="Warranty">
+        <SPEC-OBJECT IDENTIFIER="SYS_049" LAST-CHANGE="2025-06-10T10:00:00+02:00"
+          LONG-NAME="Warranty">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
               THE-VALUE="The drone shall come with a one-year limited warranty.">
@@ -1301,7 +1313,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_050" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_050" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Customer support">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1315,7 +1327,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_051" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_051" LAST-CHANGE="2025-06-10T10:00:00+02:00"
           LONG-NAME="Spare parts availability">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1329,7 +1341,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_052" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_052" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Operational temperature range">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1343,7 +1355,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_053" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_053" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Storage temperature range">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1357,7 +1369,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_054" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_054" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Firmware rollback">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1371,7 +1383,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_055" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_055" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Home base alignment">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1385,7 +1397,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_056" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_056" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Collection speed">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1399,7 +1411,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_057" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_057" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Error code display">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1413,7 +1425,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_058" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_058" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Power consumption">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1427,7 +1439,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_059" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_059" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Turning radius">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="The drone shall have a zero-degree turning radius.">
@@ -1440,7 +1452,7 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_060" LAST-CHANGE="2025-07-06T10:00:00Z"
+        <SPEC-OBJECT IDENTIFIER="SYS_060" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Fail-safe mechanism">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING
@@ -1455,7 +1467,8 @@
           </TYPE>
         </SPEC-OBJECT>
 
-        <SPEC-OBJECT IDENTIFIER="SYS_HD_1" LONG-NAME="Hardware and Mechanical Design">
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_1" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Hardware and Mechanical Design">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="1. Hardware and Mechanical Design">
               <DEFINITION>
@@ -1467,7 +1480,8 @@
             <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_HD_2" LONG-NAME="Power and Battery System">
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_2" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Power and Battery System">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="2. Power and Battery System">
               <DEFINITION>
@@ -1479,7 +1493,8 @@
             <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_HD_3" LONG-NAME="Ball Collection System">
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_3" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Ball Collection System">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="3. Ball Collection System">
               <DEFINITION>
@@ -1491,7 +1506,8 @@
             <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_HD_4" LONG-NAME="Navigation and Safety">
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_4" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Navigation and Safety">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="4. Navigation and Safety">
               <DEFINITION>
@@ -1503,7 +1519,8 @@
             <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_HD_5" LONG-NAME="Software, Control, and UI">
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_5" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Software, Control, and UI">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="5. Software, Control, and UI">
               <DEFINITION>
@@ -1515,7 +1532,8 @@
             <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT IDENTIFIER="SYS_HD_6" LONG-NAME="Lifecycle and Non-Functional Requirements">
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_6" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="Lifecycle and Non-Functional Requirements">
           <VALUES>
             <ATTRIBUTE-VALUE-STRING THE-VALUE="6. Lifecycle and Non-Functional Requirements">
               <DEFINITION>
@@ -1530,7 +1548,7 @@
 
       </SPEC-OBJECTS>
       <SPEC-RELATIONS>
-        <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS001">
+        <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS001" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_001</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1541,7 +1559,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS002">
+        <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS002" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_002</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1552,7 +1570,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS003">
+        <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS003" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_003</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1563,7 +1581,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS004">
+        <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS004" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_004</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1574,7 +1592,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS005">
+        <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS005" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_005</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1585,7 +1603,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS006">
+        <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS006" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_006</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1596,7 +1614,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS007">
+        <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS007" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_007</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1607,7 +1625,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS008">
+        <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS008" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_008</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1618,7 +1636,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS009">
+        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS009" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_009</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1629,7 +1647,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS010">
+        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS010" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_010</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1640,7 +1658,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS011">
+        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS011" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_011</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1651,7 +1669,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS012">
+        <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS012" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1662,7 +1680,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS013">
+        <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS013" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1673,7 +1691,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR007_SYS014">
+        <SPEC-RELATION IDENTIFIER="SR_SHR007_SYS014" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_014</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1684,7 +1702,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR008_SYS015">
+        <SPEC-RELATION IDENTIFIER="SR_SHR008_SYS015" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1695,7 +1713,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR009_SYS016">
+        <SPEC-RELATION IDENTIFIER="SR_SHR009_SYS016" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_016</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1706,7 +1724,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS017">
+        <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS017" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_017</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1717,7 +1735,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS018">
+        <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS018" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_018</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1728,7 +1746,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR011_SYS019">
+        <SPEC-RELATION IDENTIFIER="SR_SHR011_SYS019" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_019</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1739,7 +1757,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR012_SYS020">
+        <SPEC-RELATION IDENTIFIER="SR_SHR012_SYS020" LAST-CHANGE="2025-07-02T09:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_020</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1750,7 +1768,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR013_SYS021">
+        <SPEC-RELATION IDENTIFIER="SR_SHR013_SYS021" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_021</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1761,7 +1779,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR014_SYS022">
+        <SPEC-RELATION IDENTIFIER="SR_SHR014_SYS022" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1772,7 +1790,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR015_SYS023">
+        <SPEC-RELATION IDENTIFIER="SR_SHR015_SYS023" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1783,7 +1801,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR016_SYS024">
+        <SPEC-RELATION IDENTIFIER="SR_SHR016_SYS024" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_024</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1794,7 +1812,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR017_SYS025">
+        <SPEC-RELATION IDENTIFIER="SR_SHR017_SYS025" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_025</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1805,7 +1823,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS026">
+        <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS026" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1816,7 +1834,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS027">
+        <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS027" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_027</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1827,7 +1845,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS028">
+        <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS028" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_028</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1838,7 +1856,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS029">
+        <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS029" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_029</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1849,7 +1867,7 @@
             <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
           </TYPE>
         </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR020_SYS030">
+        <SPEC-RELATION IDENTIFIER="SR_SHR020_SYS030" LAST-CHANGE="2025-07-08T11:00:00+02:00">
           <SOURCE>
             <SPEC-OBJECT-REF>SYS_030</SPEC-OBJECT-REF>
           </SOURCE>
@@ -1862,8 +1880,7 @@
         </SPEC-RELATION>
       </SPEC-RELATIONS>
       <SPECIFICATIONS>
-
-        <SPECIFICATION IDENTIFIER="spec-stakeholder"
+        <SPECIFICATION IDENTIFIER="spec-stakeholder" LAST-CHANGE="2025-07-08T11:00:00+02:00"
           LONG-NAME="Stakeholder Requirements Specification">
           <TYPE>
             <SPECIFICATION-TYPE-REF>spectype-doc</SPECIFICATION-TYPE-REF>
@@ -1977,7 +1994,8 @@
           </CHILDREN>
         </SPECIFICATION>
 
-        <SPECIFICATION IDENTIFIER="spec-system" LONG-NAME="System Requirements Specification">
+        <SPECIFICATION IDENTIFIER="spec-system" LAST-CHANGE="2025-07-08T11:00:00+02:00"
+          LONG-NAME="System Requirements Specification">
           <TYPE>
             <SPECIFICATION-TYPE-REF>spectype-doc</SPECIFICATION-TYPE-REF>
           </TYPE>
@@ -2362,7 +2380,8 @@
           </CHILDREN>
         </SPECIFICATION>
 
-        <SPECIFICATION IDENTIFIER="spec-traceability-matrix" LONG-NAME="Traceability Matrix">
+        <SPECIFICATION IDENTIFIER="spec-traceability-matrix" LAST-CHANGE="2025-07-08T11:00:00+02:00"
+          LONG-NAME="Traceability Matrix">
           <TYPE>
             <SPECIFICATION-TYPE-REF>spectype-traceability-doc</SPECIFICATION-TYPE-REF>
           </TYPE>
@@ -2664,7 +2683,6 @@
             </SPEC-HIERARCHY>
           </CHILDREN>
         </SPECIFICATION>
-
       </SPECIFICATIONS>
     </REQ-IF-CONTENT>
   </CORE-CONTENT>

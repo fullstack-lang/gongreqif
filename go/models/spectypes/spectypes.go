@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/fullstack-lang/gong/lib/tree/go/buttons"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
@@ -46,7 +47,8 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 		for _, spectype := range spectypes.SPEC_OBJECT_TYPE {
 			node := &tree.Node{
-				Name: spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				Name:       spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				IsExpanded: true,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -154,12 +156,12 @@ func addAttibutesNodes(
 
 	// XHTML Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_XHTML) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "XHTML",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "XHTML",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_XHTML]int)
@@ -186,19 +188,19 @@ func addAttibutesNodes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
 	// String Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "String",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "String",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_STRING]int)
@@ -213,31 +215,39 @@ func addAttibutesNodes(
 			}
 		}
 
-		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_STRING {
+		for _, attributeDefinition := range specAttributes.ATTRIBUTE_DEFINITION_STRING {
 			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_STRING[attribute.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_STRING[attributeDefinition.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
 				attributeType = datatype.LONG_NAME
 			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_STRING_REF", attribute.TYPE.DATATYPE_DEFINITION_STRING_REF,
+				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_STRING_REF", attributeDefinition.TYPE.DATATYPE_DEFINITION_STRING_REF,
 					"unknown ref")
 			}
 
+			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance[attributeDefinition]
+
 			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
+				Name: attributeDefinition.LONG_NAME + ":" + attributeType +
+					fmt.Sprintf(" (%d/%d)", nbInstances,
+						map_attributeDefinition_nbInstance[attributeDefinition]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			if nbInstances > 0 {
+				nodeAttribute.IsWithPreceedingIcon = true
+				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
+			}
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
+			m.AddIconForEditabilityOfAttribute(attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME, nodeAttribute)
 		}
 	}
 
 	// Boolean Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "Boolean",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "Boolean",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_BOOLEAN]int)
@@ -264,19 +274,19 @@ func addAttibutesNodes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
 	// Integer Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_INTEGER) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "Integer",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "Integer",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_INTEGER]int)
@@ -303,19 +313,19 @@ func addAttibutesNodes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
 	// Real Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_REAL) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "Real",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "Real",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_REAL]int)
@@ -342,19 +352,19 @@ func addAttibutesNodes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
 	// Date Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_DATE) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "Date",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "Date",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_DATE]int)
@@ -381,19 +391,19 @@ func addAttibutesNodes(
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType + fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}
 
 	// ENUMERATION Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 0 {
-		nodeSpecTypeAttributeCategory := &tree.Node{
-			Name:       "ENUMERATION",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
+		// nodeSpecTypeAttributeCategory := &tree.Node{
+		// 	Name:       "ENUMERATION",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
 
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_ENUMERATION]int)
@@ -421,7 +431,8 @@ func addAttibutesNodes(
 				Name: attribute.LONG_NAME + " : " + attributeType +
 					fmt.Sprintf(" (%d)", map_attributeDefinition_nbInstance[attribute]),
 			}
-			nodeSpecTypeAttributeCategory.Children = append(nodeSpecTypeAttributeCategory.Children, nodeAttribute)
+
+			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
 		}
 	}

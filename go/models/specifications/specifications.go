@@ -287,6 +287,8 @@ func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode,
 
 		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
+		proxy.stager.GetSpecificationsTreeUpdater().UpdateAttributeDefinitionNb(proxy.stager)
+		proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 	}
 
 	if !frontNode.IsChecked && stageNode.IsChecked {

@@ -60,6 +60,9 @@ type SpecRelationsTreeUpdaterInterface interface {
 type SpecificationsTreeUpdaterInterface interface {
 	UpdateAndCommitSpecificationsTreeStage(stager *Stager)
 	UpdateAndCommitSpecificationsMarkdownStage(stager *Stager)
+	UpdateAttributeDefinitionNb(
+		stager *Stager,
+	)
 }
 
 type ObjectNamerInterface interface {
@@ -134,6 +137,16 @@ type Stager struct {
 	Map_id_ATTRIBUTE_DEFINITION_DATE        map[string]*ATTRIBUTE_DEFINITION_DATE
 	Map_id_ATTRIBUTE_DEFINITION_REAL        map[string]*ATTRIBUTE_DEFINITION_REAL
 	Map_id_ATTRIBUTE_DEFINITION_ENUMERATION map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
+
+	Map_SPEC_OBJECT_TYPE_Spec_nbInstance                 map[*SPEC_OBJECT_TYPE]int
+	Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance       map[*ATTRIBUTE_DEFINITION_XHTML]int
+	Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance      map[*ATTRIBUTE_DEFINITION_STRING]int
+	Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance     map[*ATTRIBUTE_DEFINITION_BOOLEAN]int
+	Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance     map[*ATTRIBUTE_DEFINITION_INTEGER]int
+	Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance        map[*ATTRIBUTE_DEFINITION_DATE]int
+	Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance        map[*ATTRIBUTE_DEFINITION_REAL]int
+	Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance map[*ATTRIBUTE_DEFINITION_ENUMERATION]int
+	Map_ENUM_VALUE_Spec_nbInstance                       map[*ENUM_VALUE]int
 
 	Map_id_ENUM_VALUE map[string]*ENUM_VALUE
 
@@ -438,10 +451,17 @@ func NewStager(
 					AsSplitAreas: []*split.AsSplitArea{
 
 						{
-							Size: 38.2,
+							Size: 19.1,
 							Tree: &split.Tree{
 								StackName: stager.specificationsTreeStage.GetName(),
 								TreeName:  stager.specificationsTreeName,
+							},
+						},
+						{
+							Size: 19.1,
+							Tree: &split.Tree{
+								StackName: stager.specTypesTreeStage.GetName(),
+								TreeName:  stager.specTypesTreeName,
 							},
 						},
 						{
@@ -579,4 +599,8 @@ func (stager *Stager) processReqifData(reqifData []byte, pathToReqifFile string)
 
 func (stager *Stager) GetSpecificationsTreeUpdater() (specificationsTreeUpdater SpecificationsTreeUpdaterInterface) {
 	return stager.specificationsTreeUpdater
+}
+
+func (stager *Stager) GetSpecTypesTreeUpdater() (specTypesTreeUpdater SpecTypesTreeUpdaterInterface) {
+	return stager.specTypesTreeUpdater
 }
