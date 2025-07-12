@@ -54,8 +54,6 @@ func UpdateAttributeDefinitionNbRecursice(
 
 	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[specObjectType]++
 
-	log.Println("Spec Object Name", specObject.Name)
-
 	appendAttributeXHTML(stager, specObject)
 	appendAttributeString(stager, specObject)
 	appendAttributeBoolean(stager, specObject)

@@ -8,7 +8,7 @@ import (
 	// Corrected path
 	m "github.com/fullstack-lang/gongreqif/go/models"
 
-	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
+	"github.com/fullstack-lang/gongreqif/go/specobjects"
 
 	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"

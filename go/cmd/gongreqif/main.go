@@ -8,14 +8,14 @@ import (
 
 	// insertion point for models import
 
+	"github.com/fullstack-lang/gongreqif/go/datatypes"
 	"github.com/fullstack-lang/gongreqif/go/generator"
-	"github.com/fullstack-lang/gongreqif/go/models/datatypes"
-	"github.com/fullstack-lang/gongreqif/go/models/namer"
-	"github.com/fullstack-lang/gongreqif/go/models/specifications"
-	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
-	"github.com/fullstack-lang/gongreqif/go/models/specrelations"
-	"github.com/fullstack-lang/gongreqif/go/models/spectypes"
+	"github.com/fullstack-lang/gongreqif/go/namer"
 	"github.com/fullstack-lang/gongreqif/go/reqifz"
+	"github.com/fullstack-lang/gongreqif/go/specifications"
+	"github.com/fullstack-lang/gongreqif/go/specobjects"
+	"github.com/fullstack-lang/gongreqif/go/specrelations"
+	"github.com/fullstack-lang/gongreqif/go/spectypes"
 
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"

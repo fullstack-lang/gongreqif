@@ -5,7 +5,7 @@ import (
 	"log"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
-	"github.com/fullstack-lang/gongreqif/go/models/specobjects"
+	"github.com/fullstack-lang/gongreqif/go/specobjects"
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 )

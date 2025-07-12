@@ -23,7 +23,7 @@ const titleOffSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        id="swatch1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
+         style="stop-color:green;stop-opacity:1;"
          offset="0"
          id="stop1" />
     </linearGradient>
@@ -39,7 +39,7 @@ const titleOffSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
   </defs>
   <sodipodi:namedview
      id="namedview1"
-     pagecolor="#ffffff"
+     pagecolor="green"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:showpageshadow="2"
@@ -76,7 +76,7 @@ const titleOffSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      stroke="#1f1f1f"
      stroke-width="40"
      id="line1-0"
-     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:74.8884;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#000000;fill-opacity:1;stroke:green;stroke-width:74.8884;stroke-dasharray:none;stroke-opacity:1" />
 </svg>
 `
 
