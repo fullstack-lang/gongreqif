@@ -26,7 +26,7 @@ const badgeOffSVG = `<svg
      id="defs1" />
   <sodipodi:namedview
      id="namedview1"
-     pagecolor="#ffffff"
+     pagecolor="gray"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:showpageshadow="2"
@@ -54,7 +54,7 @@ const badgeOffSVG = `<svg
        y1="-803.46503"
        x2="832.70605"
        y2="-27.829906"
-       stroke="#1f1f1f"
+       stroke="gray"
        stroke-width="40"
        id="line1"
        style="stroke-width:78.1392;stroke-dasharray:none" />
@@ -63,10 +63,10 @@ const badgeOffSVG = `<svg
        y1="-858.27179"
        x2="887.83337"
        y2="-82.636665"
-       stroke="#1f1f1f"
+       stroke="white"
        stroke-width="40"
        id="line1-0"
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:78.1392;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#000000;fill-opacity:1;stroke:white;stroke-width:78.1392;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
 `
@@ -97,7 +97,7 @@ const titleOffSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
        id="swatch1"
        inkscape:swatch="solid">
       <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
+         style="stop-color:gray;stop-opacity:1;"
          offset="0"
          id="stop1" />
     </linearGradient>
@@ -113,7 +113,7 @@ const titleOffSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
   </defs>
   <sodipodi:namedview
      id="namedview1"
-     pagecolor="#ffffff"
+     pagecolor="gray"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:showpageshadow="2"
@@ -150,7 +150,7 @@ const titleOffSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
      stroke="#1f1f1f"
      stroke-width="40"
      id="line1-0"
-     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:74.8884;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#000000;fill-opacity:1;stroke:gray;stroke-width:74.8884;stroke-dasharray:none;stroke-opacity:1" />
 </svg>
 `
 

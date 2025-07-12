@@ -8,6 +8,11 @@ import (
 
 	// insertion point for models import
 
+	// the location of the following go package is important
+	// They are NOT within the "github.com/fullstack-lang/gongreqif/go/models"
+	// because this package is within the "//go:embed models" directive in
+	// the "github.com/fullstack-lang/gongreqif/go" package
+	// Therefore any change to those packge would pro
 	"github.com/fullstack-lang/gongreqif/go/datatypes"
 	"github.com/fullstack-lang/gongreqif/go/generator"
 	"github.com/fullstack-lang/gongreqif/go/namer"
