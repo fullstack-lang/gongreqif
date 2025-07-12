@@ -156,13 +156,6 @@ func addAttibutesNodes(
 
 	// XHTML Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_XHTML) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "XHTML",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_XHTML]int)
 		var attributeDefinition *m.ATTRIBUTE_DEFINITION_XHTML
@@ -178,8 +171,6 @@ func addAttibutesNodes(
 			}
 		}
 
-		nbInstances := stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance[attributeDefinition]
-
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_XHTML {
 			var attributeType string
 			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_XHTML[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
@@ -189,28 +180,17 @@ func addAttibutesNodes(
 					"unknown ref")
 			}
 
+			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance[attribute]
 			nodeAttribute := &tree.Node{
-				Name: attributeDefinition.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition]),
+				Name: attribute.LONG_NAME + ":" + attributeType +
+					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
-			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
 		}
 	}
 
 	// String Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "String",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_STRING]int)
 		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()) {
@@ -234,29 +214,16 @@ func addAttibutesNodes(
 			}
 
 			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance[attributeDefinition]
-
 			nodeAttribute := &tree.Node{
 				Name: attributeDefinition.LONG_NAME + ":" + attributeType +
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition]),
 			}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
-			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME)
 		}
 	}
 
 	// Boolean Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "Boolean",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_BOOLEAN]int)
 		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()) {
@@ -280,28 +247,16 @@ func addAttibutesNodes(
 			}
 
 			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance[attributeDefinition]
-
 			nodeAttribute := &tree.Node{
 				Name: attributeDefinition.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition])}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
+					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition]),
 			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME)
 		}
 	}
 
 	// Integer Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_INTEGER) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "Integer",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_INTEGER]int)
 		var attributeDefinition *m.ATTRIBUTE_DEFINITION_INTEGER
@@ -317,8 +272,6 @@ func addAttibutesNodes(
 			}
 		}
 
-		nbInstances := stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance[attributeDefinition]
-
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_INTEGER {
 			var attributeType string
 			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_INTEGER[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
@@ -328,28 +281,17 @@ func addAttibutesNodes(
 					"unknown ref")
 			}
 
+			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance[attribute]
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType +
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
-			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
 		}
 	}
 
 	// Real Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_REAL) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "Real",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_REAL]int)
 		var attributeDefinition *m.ATTRIBUTE_DEFINITION_REAL
@@ -365,8 +307,6 @@ func addAttibutesNodes(
 			}
 		}
 
-		nbInstances := stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance[attributeDefinition]
-
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_REAL {
 			var attributeType string
 			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_REAL[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
@@ -376,28 +316,17 @@ func addAttibutesNodes(
 					"unknown ref")
 			}
 
+			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance[attribute]
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType +
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
-			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
 		}
 	}
 
 	// Date Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_DATE) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "Date",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_DATE]int)
 		var attributeDefinition *m.ATTRIBUTE_DEFINITION_DATE
@@ -413,8 +342,6 @@ func addAttibutesNodes(
 			}
 		}
 
-		nbInstances := stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance[attributeDefinition]
-
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_DATE {
 			var attributeType string
 			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_DATE[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
@@ -424,28 +351,17 @@ func addAttibutesNodes(
 					"unknown ref")
 			}
 
+			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance[attribute]
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + ":" + attributeType +
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
-			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
 		}
 	}
 
 	// ENUMERATION Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 0 {
-		// nodeSpecTypeAttributeCategory := &tree.Node{
-		// 	Name:       "ENUMERATION",
-		// 	IsExpanded: true,
-		// 	FontStyle:  tree.ITALIC,
-		// }
-		// nodeSpecType.Children = append(nodeSpecType.Children, nodeSpecTypeAttributeCategory)
-
 		// compute the number of time this attribute is used
 		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_ENUMERATION]int)
 		var attributeDefinition *m.ATTRIBUTE_DEFINITION_ENUMERATION
@@ -461,8 +377,6 @@ func addAttibutesNodes(
 			}
 		}
 
-		nbInstances := stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance[attributeDefinition]
-
 		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION {
 			var attributeType string
 			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
@@ -472,16 +386,35 @@ func addAttibutesNodes(
 					"unknown ref")
 			}
 
+			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance[attribute]
 			nodeAttribute := &tree.Node{
 				Name: attribute.LONG_NAME + " : " + attributeType +
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
-			if nbInstances > 0 {
-				nodeAttribute.IsWithPreceedingIcon = true
-				nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
-			}
-			nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
-			m.AddIconForEditabilityOfAttribute(attribute.IS_EDITABLE, attribute.LONG_NAME, nodeAttribute)
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
 		}
 	}
+}
+
+// configureAndAddAttributeNode configures a new attribute node, sets its icon,
+// and adds it to the parent node in the tree.
+func configureAndAddAttributeNode(
+	nodeSpecType *tree.Node,
+	nodeAttribute *tree.Node,
+	nbInstances int,
+	isEditable bool,
+	longName string,
+) {
+	if nbInstances > 0 {
+		nodeAttribute.IsWithPreceedingIcon = true
+		nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
+	}
+	nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
+	m.AddIconForEditabilityOfAttribute(isEditable, longName, nodeAttribute)
+
+	nodeAttribute.Buttons = append(nodeAttribute.Buttons,
+		&tree.Button{
+			SVGIcon: svgIconTitle,
+		},
+	)
 }

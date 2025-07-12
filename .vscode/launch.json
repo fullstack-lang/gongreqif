@@ -47,8 +47,7 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "cwd": "C:\\Users\\tpeugeot\\AppData\\Local\\Temp",
-            "args": [
-            ]
+            "args": []
         },
         {
             "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 1.reqif`",
@@ -64,7 +63,7 @@
                 "-marshallOnCommit=data/doors_sample_1.go"
             ]
         },
-                {
+        {
             "name": "go server -pathToReqifFile=`reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif`",
             "type": "go",
             "request": "launch",
@@ -72,6 +71,20 @@
             "program": "${workspaceFolder}/go/cmd/gongreqif",
             "buildFlags": "-v",
             "args": [
+                "-embeddedDiagrams=false",
+                "-pathToReqifFile",
+                "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
+            ]
+        },
+        {
+            "name": "go server -port=8081 -pathToReqifFile=`reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif`",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
+            "args": [
+                "-port=8081",
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif",

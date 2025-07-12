@@ -12,8 +12,6 @@ import (
 
 	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
-
-	"github.com/fullstack-lang/gong/lib/tree/go/buttons"
 )
 
 type SpecificationsTreeStageUpdater struct {
@@ -123,12 +121,13 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
+
 		if !stager.Map_SpecificationNodes_showIdentifier[specification] {
 			button.ToolTipText = "Show identifier"
-			button.Icon = string(buttons.BUTTON_badge)
+			button.SVGIcon = svgIconBadge
 		} else {
 			button.ToolTipText = "Hide identifier"
-			button.Icon = string(buttons.BUTTON_hide_source)
+			button.SVGIcon = svgIconBadgeOff
 		}
 		specificationNode.Buttons = append(specificationNode.Buttons, button)
 

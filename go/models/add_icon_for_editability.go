@@ -8,22 +8,10 @@ import (
 
 func AddIconForEditabilityOfAttribute(attributeIS_EDITABLE bool, attributeLONG_NAME string, nodeAttribute *tree.Node) {
 	if attributeIS_EDITABLE {
-		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
-			&tree.Button{
-				Name:            attributeLONG_NAME + " " + string(buttons.BUTTON_edit),
-				Icon:            string(buttons.BUTTON_edit),
-				HasToolTip:      true,
-				ToolTipText:     "REQIF specifies that this element can be modified in a receiving requirements management tool after a data exchange",
-				ToolTipPosition: tree.Above,
-			})
+		nodeAttribute.IsWithPreceedingIcon = true
+		nodeAttribute.PreceedingIcon = string(buttons.BUTTON_edit)
 	} else {
-		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
-			&tree.Button{
-				Name:            attributeLONG_NAME + " " + string(buttons.BUTTON_edit_off),
-				Icon:            string(buttons.BUTTON_edit_off),
-				HasToolTip:      true,
-				ToolTipText:     "REQIF specifies that this element cannot be modified in a receiving requirements management tool after a data exchange",
-				ToolTipPosition: tree.Above,
-			})
+		nodeAttribute.IsWithPreceedingIcon = true
+		nodeAttribute.PreceedingIcon = string(buttons.BUTTON_edit_off)
 	}
 }
