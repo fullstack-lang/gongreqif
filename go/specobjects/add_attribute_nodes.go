@@ -23,12 +23,12 @@ func AddAttributeNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SP
 // For completeness and to ensure the pattern is clear, here's how it would look fully:
 func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
 	if len(specObject.VALUES.ATTRIBUTE_VALUE_XHTML) > 0 {
-		objectNodeAttributeCategoryXHTML := &tree.Node{
-			Name:       "XHTML",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
+		// objectNodeAttributeCategoryXHTML := &tree.Node{
+		// 	Name:       "XHTML",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
 
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
 			var attributeDefinition string
@@ -49,19 +49,19 @@ func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject 
 			nodeXHTMLAttribute := &tree.Node{
 				Name: attributeDefinition + " : " + enclosedText,
 			}
-			objectNodeAttributeCategoryXHTML.Children = append(objectNodeAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
+			objectNode.Children = append(objectNode.Children, nodeXHTMLAttribute)
 		}
 	}
 }
 
 func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
 	if len(specObject.VALUES.ATTRIBUTE_VALUE_STRING) > 0 {
-		objectNodeAttributeCategoryString := &tree.Node{
-			Name:       "STRING",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryString)
+		// objectNodeAttributeCategoryString := &tree.Node{
+		// 	Name:       "STRING",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryString)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
@@ -74,19 +74,19 @@ func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject
 			nodeAttribute := &tree.Node{
 				Name: attributeDefinition + " : " + attribute.THE_VALUE,
 			}
-			objectNodeAttributeCategoryString.Children = append(objectNodeAttributeCategoryString.Children, nodeAttribute)
+			objectNode.Children = append(objectNode.Children, nodeAttribute)
 		}
 	}
 }
 
 func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
 	if len(specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN) > 0 {
-		objectNodeAttributeCategoryBoolean := &tree.Node{
-			Name:       "BOOLEAN",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryBoolean)
+		// objectNodeAttributeCategoryBoolean := &tree.Node{
+		// 	Name:       "BOOLEAN",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryBoolean)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
@@ -103,19 +103,19 @@ func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 			nodeAttribute := &tree.Node{
 				Name: attributeDefinition + " : " + value,
 			}
-			objectNodeAttributeCategoryBoolean.Children = append(objectNodeAttributeCategoryBoolean.Children, nodeAttribute)
+			objectNode.Children = append(objectNode.Children, nodeAttribute)
 		}
 	}
 }
 
 func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
 	if len(specObject.VALUES.ATTRIBUTE_VALUE_INTEGER) > 0 {
-		objectNodeAttributeCategoryInteger := &tree.Node{
-			Name:       "Integer",
-			IsExpanded: true,
-			FontStyle:  tree.ITALIC,
-		}
-		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryInteger)
+		// objectNodeAttributeCategoryInteger := &tree.Node{
+		// 	Name:       "Integer",
+		// 	IsExpanded: true,
+		// 	FontStyle:  tree.ITALIC,
+		// }
+		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryInteger)
 		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_INTEGER {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
@@ -128,7 +128,7 @@ func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 			nodeAttribute := &tree.Node{
 				Name: attributeDefinition + " : " + fmt.Sprintf("%d", attribute.THE_VALUE),
 			}
-			objectNodeAttributeCategoryInteger.Children = append(objectNodeAttributeCategoryInteger.Children, nodeAttribute)
+			objectNode.Children = append(objectNode.Children, nodeAttribute)
 		}
 	}
 }

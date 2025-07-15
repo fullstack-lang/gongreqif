@@ -138,12 +138,12 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 		{
 
-			specificationAttributeCategoryXHTML := &tree.Node{
-				Name:       "XHTML",
-				IsExpanded: true,
-				FontStyle:  tree.ITALIC,
-			}
-			specificationNode.Children = append(specificationNode.Children, specificationAttributeCategoryXHTML)
+			// specificationAttributeCategoryXHTML := &tree.Node{
+			// 	Name:       "XHTML",
+			// 	IsExpanded: true,
+			// 	FontStyle:  tree.ITALIC,
+			// }
+			// specificationNode.Children = append(specificationNode.Children, specificationAttributeCategoryXHTML)
 			if specification.VALUES != nil {
 				for _, attribute := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
 					// provide the type
@@ -165,7 +165,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 					nodeXHTMLAttribute := &tree.Node{
 						Name: attributeDefinition + " : " + enclosedText,
 					}
-					specificationAttributeCategoryXHTML.Children = append(specificationAttributeCategoryXHTML.Children, nodeXHTMLAttribute)
+					specificationNode.Children = append(specificationNode.Children, nodeXHTMLAttribute)
 				}
 			}
 		}
