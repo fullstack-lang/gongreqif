@@ -2,171 +2,31 @@ package models
 
 func (stager *Stager) initMaps() {
 
-	datatypes_xhtml := *GetGongstructInstancesSet[DATATYPE_DEFINITION_XHTML](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_XHTML = make(map[string]*DATATYPE_DEFINITION_XHTML)
-	for datatype_xhtml := range datatypes_xhtml {
-		stager.Map_id_DATATYPE_DEFINITION_XHTML[datatype_xhtml.IDENTIFIER] = datatype_xhtml
-	}
+	stager.Map_id_DATATYPE_DEFINITION_XHTML = populateIdMap[*DATATYPE_DEFINITION_XHTML](stager)
+	stager.Map_id_DATATYPE_DEFINITION_STRING = populateIdMap[*DATATYPE_DEFINITION_STRING](stager)
+	stager.Map_id_DATATYPE_DEFINITION_BOOLEAN = populateIdMap[*DATATYPE_DEFINITION_BOOLEAN](stager)
+	stager.Map_id_DATATYPE_DEFINITION_INTEGER = populateIdMap[*DATATYPE_DEFINITION_INTEGER](stager)
+	stager.Map_id_DATATYPE_DEFINITION_REAL = populateIdMap[*DATATYPE_DEFINITION_REAL](stager)
+	stager.Map_id_DATATYPE_DEFINITION_DATE = populateIdMap[*DATATYPE_DEFINITION_DATE](stager)
+	stager.Map_id_DATATYPE_DEFINITION_ENUMERATION = populateIdMap[*DATATYPE_DEFINITION_ENUMERATION](stager)
 
-	datatypes_string := *GetGongstructInstancesSet[DATATYPE_DEFINITION_STRING](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_STRING = make(map[string]*DATATYPE_DEFINITION_STRING)
-	for datatype_string := range datatypes_string {
-		stager.Map_id_DATATYPE_DEFINITION_STRING[datatype_string.IDENTIFIER] = datatype_string
-	}
+	stager.Map_id_SPEC_OBJECT_TYPE = populateIdMap[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_id_SPECIFICATION_TYPE = populateIdMap[*SPECIFICATION_TYPE](stager)
+	stager.Map_id_SPEC_OBJECT = populateIdMap[*SPEC_OBJECT](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_XHTML = populateIdMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_STRING = populateIdMap[*ATTRIBUTE_DEFINITION_STRING](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN = populateIdMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER = populateIdMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_DATE = populateIdMap[*ATTRIBUTE_DEFINITION_DATE](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_REAL = populateIdMap[*ATTRIBUTE_DEFINITION_REAL](stager)
+	stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION = populateIdMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
 
-	datatypes_boolean := *GetGongstructInstancesSet[DATATYPE_DEFINITION_BOOLEAN](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_BOOLEAN = make(map[string]*DATATYPE_DEFINITION_BOOLEAN)
-	for datatype_boolean := range datatypes_boolean {
-		stager.Map_id_DATATYPE_DEFINITION_BOOLEAN[datatype_boolean.IDENTIFIER] = datatype_boolean
-	}
+	stager.Map_id_ENUM_VALUE = populateIdMap[*ENUM_VALUE](stager)
+	stager.Map_id_SPEC_RELATION_TYPE = populateIdMap[*SPEC_RELATION_TYPE](stager)
 
-	datatypes_integer := *GetGongstructInstancesSet[DATATYPE_DEFINITION_INTEGER](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_INTEGER = make(map[string]*DATATYPE_DEFINITION_INTEGER)
-	for datatype_integer := range datatypes_integer {
-		stager.Map_id_DATATYPE_DEFINITION_INTEGER[datatype_integer.IDENTIFIER] = datatype_integer
-	}
+	stager.Map_SPECIFICATION_Nodes_expanded = populateBoolMap[*SPECIFICATION](stager)
+	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
-	datatypes_real := *GetGongstructInstancesSet[DATATYPE_DEFINITION_REAL](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_REAL = make(map[string]*DATATYPE_DEFINITION_REAL)
-	for datatype_real := range datatypes_real {
-		stager.Map_id_DATATYPE_DEFINITION_REAL[datatype_real.IDENTIFIER] = datatype_real
-	}
-
-	datatypes_date := *GetGongstructInstancesSet[DATATYPE_DEFINITION_DATE](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_DATE = make(map[string]*DATATYPE_DEFINITION_DATE)
-	for datatype_date := range datatypes_date {
-		stager.Map_id_DATATYPE_DEFINITION_DATE[datatype_date.IDENTIFIER] = datatype_date
-	}
-
-	datatypes_enumeration := *GetGongstructInstancesSet[DATATYPE_DEFINITION_ENUMERATION](stager.GetStage())
-	stager.Map_id_DATATYPE_DEFINITION_ENUMERATION = make(map[string]*DATATYPE_DEFINITION_ENUMERATION)
-	for datatype_enumeration := range datatypes_enumeration {
-		stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[datatype_enumeration.IDENTIFIER] = datatype_enumeration
-	}
-
-	stager.Map_id_SPEC_OBJECT_TYPE = make(map[string]*SPEC_OBJECT_TYPE)
-	{
-		specObjectTypes := *GetGongstructInstancesSet[SPEC_OBJECT_TYPE](stager.GetStage())
-		for specObjectType := range specObjectTypes {
-			stager.Map_id_SPEC_OBJECT_TYPE[specObjectType.IDENTIFIER] = specObjectType
-		}
-	}
-
-	stager.Map_id_SPECIFICATION_TYPE = make(map[string]*SPECIFICATION_TYPE)
-	{
-		types := *GetGongstructInstancesSet[SPECIFICATION_TYPE](stager.GetStage())
-		for type_ := range types {
-			stager.Map_id_SPECIFICATION_TYPE[type_.IDENTIFIER] = type_
-		}
-	}
-
-	stager.Map_id_SPEC_OBJECT = make(map[string]*SPEC_OBJECT)
-	{
-		specObjects := *GetGongstructInstancesSet[SPEC_OBJECT](stager.GetStage())
-		for specObject := range specObjects {
-			stager.Map_id_SPEC_OBJECT[specObject.IDENTIFIER] = specObject
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_XHTML = make(map[string]*ATTRIBUTE_DEFINITION_XHTML)
-	{
-		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_XHTML](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_STRING = make(map[string]*ATTRIBUTE_DEFINITION_STRING)
-	{
-		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_STRING](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN = make(map[string]*ATTRIBUTE_DEFINITION_BOOLEAN)
-	{
-		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_BOOLEAN](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER = make(map[string]*ATTRIBUTE_DEFINITION_INTEGER)
-	{
-		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_INTEGER](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_DATE = make(map[string]*ATTRIBUTE_DEFINITION_DATE)
-	{
-		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_DATE](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_DATE[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_REAL = make(map[string]*ATTRIBUTE_DEFINITION_REAL)
-	{
-		attributeDefinitionXHTMLs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_REAL](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionXHTMLs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_REAL[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION = make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION)
-	{
-		attributeDefinitionENUMs := *GetGongstructInstancesSet[ATTRIBUTE_DEFINITION_ENUMERATION](stager.GetStage())
-		for attributeDefinition := range attributeDefinitionENUMs {
-			stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[attributeDefinition.IDENTIFIER] = attributeDefinition
-		}
-	}
-
-	stager.Map_id_ENUM_VALUE = make(map[string]*ENUM_VALUE)
-	{
-		enumValuess := *GetGongstructInstancesSet[ENUM_VALUE](stager.GetStage())
-		for enumValue := range enumValuess {
-			stager.Map_id_ENUM_VALUE[enumValue.IDENTIFIER] = enumValue
-		}
-	}
-
-	stager.Map_id_SPEC_RELATION_TYPE = make(map[string]*SPEC_RELATION_TYPE)
-	{
-		specRelationTypes := *GetGongstructInstancesSet[SPEC_RELATION_TYPE](stager.GetStage())
-		for specRelationType := range specRelationTypes {
-			stager.Map_id_SPEC_RELATION_TYPE[specRelationType.IDENTIFIER] = specRelationType
-		}
-	}
-
-	stager.Map_SPECIFICATION_Nodes_expanded = make(map[*SPECIFICATION]bool)
-
-	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = make(map[*SPEC_OBJECT_TYPE]bool)
-
-	for specification := range *GetGongstructInstancesSet[SPECIFICATION](stager.GetStage()) {
-		stager.Map_SPECIFICATION_Nodes_expanded[specification] = false
-	}
-
-	for specObjectType := range *GetGongstructInstancesSet[SPEC_OBJECT_TYPE](stager.GetStage()) {
-		stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] = false
-	}
-
-	stager.initStagerMaps()
-
-}
-
-// Generic function to initialize a map with *T as key and int as value
-func initializeNbInstanceMap[T any]() map[*T]int {
-	return make(map[*T]int)
-}
-
-// Generic function to initialize a map with *T as key and bool as value
-func initializeShowIdentifierMap[T any]() map[*T]bool {
-	return make(map[*T]bool)
-}
-
-func (stager *Stager) initStagerMaps() {
 	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance = initializeNbInstanceMap[SPEC_OBJECT_TYPE]()
 	stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_XHTML]()
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_STRING]()
@@ -184,4 +44,43 @@ func (stager *Stager) initStagerMaps() {
 	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_DATE]()
 	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_REAL]()
 	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_ENUMERATION]()
+}
+
+// Generic function to initialize a map with *T as key and int as value
+func initializeNbInstanceMap[T any]() map[*T]int {
+	return make(map[*T]int)
+}
+
+// Generic function to initialize a map with *T as key and bool as value
+func initializeShowIdentifierMap[T any]() map[*T]bool {
+	return make(map[*T]bool)
+}
+
+// Identifiable is a constraint for types that can provide a string identifier.
+type Identifiable interface {
+	PointerToGongstruct
+	GetIdentifier() string
+}
+
+// populateIdMap fetches instances of a Gongstruct type T and populates a map
+// where keys are string identifiers and values are pointers to the instances.
+// T must satisfy the Identifiable interface.
+func populateIdMap[T Identifiable](stager *Stager) map[string]T {
+	instances := *GetGongstructInstancesSetFromPointerType[T](stager.GetStage())
+	resultMap := make(map[string]T)
+	for instance := range instances {
+		resultMap[instance.GetIdentifier()] = instance // Correctly calls the method
+	}
+	return resultMap
+}
+
+// populateBoolMap fetches instances of a Gongstruct type T and populates a map
+// where keys are pointers to instances and values are booleans (initialized to false).
+func populateBoolMap[T Identifiable](stager *Stager) map[T]bool {
+	resultMap := make(map[T]bool)
+	instances := *GetGongstructInstancesSetFromPointerType[T](stager.GetStage())
+	for instance := range instances {
+		resultMap[instance] = false // Initialize with false
+	}
+	return resultMap
 }
