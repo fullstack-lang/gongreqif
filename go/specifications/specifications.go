@@ -51,8 +51,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 				specHierarchy,
 				hierarchyParentNode,
 				depth,
-				&markDownContent,
-				stager.Map_SpecificationNodes_showIdentifier[specification])
+				&markDownContent)
 		}
 		// --- end of update ---
 
@@ -106,30 +105,12 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			Name:              specification.Name,
 			HasCheckboxButton: true,
 			IsChecked:         isSelectedSpecification,
-			IsExpanded:        stager.Map_SpecificationNodes_expanded[specification],
+			IsExpanded:        stager.Map_SPECIFICATION_Nodes_expanded[specification],
 			Impl: &ProxySpecification{
 				stager:        stager,
 				specification: specification,
 			},
 		}
-		button := &tree.Button{
-			Name: "Show/Unshow identifier",
-			Impl: &ButtonToggleShowIdentifierProxy{
-				stager:        stager,
-				specification: specification,
-			},
-			HasToolTip:      true,
-			ToolTipPosition: tree.Right,
-		}
-
-		if !stager.Map_SpecificationNodes_showIdentifier[specification] {
-			button.ToolTipText = "Show identifier"
-			button.SVGIcon = svgIconBadge
-		} else {
-			button.ToolTipText = "Hide identifier"
-			button.SVGIcon = svgIconBadgeOff
-		}
-		specificationNode.Buttons = append(specificationNode.Buttons, button)
 
 		markDownContent := "# " + specification.Name
 		map_specificationType_node[specificationType].Children =
@@ -186,8 +167,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 					specHierarchy,
 					hierarchyParentNode,
 					depth,
-					&markDownContent,
-					stager.Map_SpecificationNodes_showIdentifier[specification])
+					&markDownContent)
 			}
 
 			// log.Println(markDownContent)
@@ -217,8 +197,7 @@ func processSpecHierarchy(
 	specHierarchy *m.SPEC_HIERARCHY,
 	hierarchyParentNode *tree.Node,
 	depth int,
-	markDownContent *string,
-	showIdentifier bool) {
+	markDownContent *string) {
 
 	specObject, ok := stager.Map_id_SPEC_OBJECT[specHierarchy.OBJECT.SPEC_OBJECT_REF]
 	if !ok {
@@ -242,7 +221,7 @@ func processSpecHierarchy(
 		*markDownContent += " "
 	}
 
-	if showIdentifier {
+	if stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
 		*markDownContent += fmt.Sprintf("%s - %s\n\n", specObject.IDENTIFIER, specObject.Name)
 	} else {
 		*markDownContent += fmt.Sprintf("%s\n\n", specObject.Name)
@@ -265,8 +244,7 @@ func processSpecHierarchy(
 				specHierarchyChildren,
 				specObjectNode,
 				depth+1,
-				markDownContent,
-				showIdentifier)
+				markDownContent)
 		}
 	}
 }
@@ -295,31 +273,10 @@ func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode,
 	}
 
 	if frontNode.IsExpanded && !stageNode.IsExpanded {
-		proxy.stager.Map_SpecificationNodes_expanded[proxy.specification] = true
+		proxy.stager.Map_SPECIFICATION_Nodes_expanded[proxy.specification] = true
 	}
 
 	if !frontNode.IsExpanded && stageNode.IsExpanded {
-		proxy.stager.Map_SpecificationNodes_expanded[proxy.specification] = false
+		proxy.stager.Map_SPECIFICATION_Nodes_expanded[proxy.specification] = false
 	}
-}
-
-type ButtonToggleShowIdentifierProxy struct {
-	stager        *m.Stager
-	specification *m.SPECIFICATION
-}
-
-func (proxy *ButtonToggleShowIdentifierProxy) ButtonUpdated(
-	treeStage *tree.Stage,
-	staged, front *tree.Button) {
-
-	showIdentifier, ok := proxy.stager.Map_SpecificationNodes_showIdentifier[proxy.specification]
-
-	if !ok {
-		log.Fatalln("Unknown specificiation in map", proxy.specification.Name)
-	}
-
-	proxy.stager.Map_SpecificationNodes_showIdentifier[proxy.specification] = !showIdentifier
-
-	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
-	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
 }

@@ -45,19 +45,38 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			}
 		}
 
-		for _, spectype := range spectypes.SPEC_OBJECT_TYPE {
-			node := &tree.Node{
-				Name: spectype.Name + fmt.Sprintf(" (%d/%d)",
-					stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[spectype],
-					map_specType_nbInstance[spectype]),
+		for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
+			specObjectTypeNode := &tree.Node{
+				Name: specObjectType.Name + fmt.Sprintf(" (%d/%d)",
+					stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[specObjectType],
+					map_specType_nbInstance[specObjectType]),
 				IsExpanded: true,
 			}
-			spectypeCategory.Children = append(spectypeCategory.Children, node)
+			spectypeCategory.Children = append(spectypeCategory.Children, specObjectTypeNode)
+
+			button := &tree.Button{
+				Name: "Show/Unshow identifier",
+				Impl: &ButtonToggleShowIdentifierProxy{
+					stager:         stager,
+					specObjectType: specObjectType,
+				},
+				HasToolTip:      true,
+				ToolTipPosition: tree.Right,
+			}
+
+			if !stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
+				button.ToolTipText = "Show identifier in title"
+				button.SVGIcon = svgIconBadge
+			} else {
+				button.ToolTipText = "Hide identifier in title"
+				button.SVGIcon = svgIconBadgeOff
+			}
+			specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 
 			addAttibutesNodes(
 				stager,
-				node,
-				spectype.SPEC_ATTRIBUTES)
+				specObjectTypeNode,
+				specObjectType.SPEC_ATTRIBUTES)
 
 		}
 	}

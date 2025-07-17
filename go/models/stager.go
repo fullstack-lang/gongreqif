@@ -173,9 +173,9 @@ type Stager struct {
 
 	loadStage *load.Stage
 
-	selectedSpecification                 *SPECIFICATION
-	Map_SpecificationNodes_expanded       map[*SPECIFICATION]bool
-	Map_SpecificationNodes_showIdentifier map[*SPECIFICATION]bool
+	selectedSpecification               *SPECIFICATION
+	Map_SPECIFICATION_Nodes_expanded    map[*SPECIFICATION]bool
+	Map_SPEC_OBJECT_TYPE_showIdentifier map[*SPEC_OBJECT_TYPE]bool
 }
 
 func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {

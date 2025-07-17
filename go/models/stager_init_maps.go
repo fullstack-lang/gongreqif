@@ -140,12 +140,16 @@ func (stager *Stager) initMaps() {
 		}
 	}
 
-	stager.Map_SpecificationNodes_expanded = make(map[*SPECIFICATION]bool)
-	stager.Map_SpecificationNodes_showIdentifier = make(map[*SPECIFICATION]bool)
-	specifications := *GetGongstructInstancesSet[SPECIFICATION](stager.GetStage())
-	for specification := range specifications {
-		stager.Map_SpecificationNodes_expanded[specification] = false
-		stager.Map_SpecificationNodes_showIdentifier[specification] = true
+	stager.Map_SPECIFICATION_Nodes_expanded = make(map[*SPECIFICATION]bool)
+
+	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = make(map[*SPEC_OBJECT_TYPE]bool)
+
+	for specification := range *GetGongstructInstancesSet[SPECIFICATION](stager.GetStage()) {
+		stager.Map_SPECIFICATION_Nodes_expanded[specification] = false
+	}
+
+	for specObjectType := range *GetGongstructInstancesSet[SPEC_OBJECT_TYPE](stager.GetStage()) {
+		stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] = false
 	}
 
 	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance = make(map[*SPEC_OBJECT_TYPE]int)
