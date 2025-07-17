@@ -47,7 +47,9 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 		for _, spectype := range spectypes.SPEC_OBJECT_TYPE {
 			node := &tree.Node{
-				Name:       spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				Name: spectype.Name + fmt.Sprintf(" (%d/%d)",
+					stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[spectype],
+					map_specType_nbInstance[spectype]),
 				IsExpanded: true,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
