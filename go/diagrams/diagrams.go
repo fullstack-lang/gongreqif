@@ -23,10 +23,10 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
-	const __write__local_time = "2025-07-13 12:36:01.494167 CEST"
-	const __write__utc_time__ = "2025-07-13 10:36:01.494167 UTC"
+	const __write__local_time = "2025-07-17 15:57:44.488645 CEST"
+	const __write__utc_time__ = "2025-07-17 13:57:44.488645 UTC"
 
-	const __commitId__ = "0000000855"
+	const __commitId__ = "0000001169"
 
 	// Declaration of instances to stage
 
@@ -34,13 +34,18 @@ func _(stage *models.Stage) {
 	__AttributeShape__000001_IDENTIFIER := (&models.AttributeShape{}).Stage(stage)
 	__AttributeShape__000002_LONG_NAME := (&models.AttributeShape{}).Stage(stage)
 	__AttributeShape__000003_SPEC_OBJECT_REF := (&models.AttributeShape{}).Stage(stage)
+	__AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF := (&models.AttributeShape{}).Stage(stage)
+	__AttributeShape__000005_Name := (&models.AttributeShape{}).Stage(stage)
+	__AttributeShape__000006_IDENTIFIER := (&models.AttributeShape{}).Stage(stage)
+	__AttributeShape__000007_THE_VALUE := (&models.AttributeShape{}).Stage(stage)
 
 	__Classdiagram__000000_1_Top_Level := (&models.Classdiagram{}).Stage(stage)
 	__Classdiagram__000001_2_Datatypes := (&models.Classdiagram{}).Stage(stage)
-	__Classdiagram__000002_3_Spectype := (&models.Classdiagram{}).Stage(stage)
-	__Classdiagram__000003_4_Specs := (&models.Classdiagram{}).Stage(stage)
-	__Classdiagram__000004_4_Specs_Values := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000002_3_Spectype_1 := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000003_4_Spec_Objects_1 := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000004_4_Specs_Objects_2 := (&models.Classdiagram{}).Stage(stage)
 	__Classdiagram__000005_5_Specifications := (&models.Classdiagram{}).Stage(stage)
+	__Classdiagram__000006_3_Spectype_2 := (&models.Classdiagram{}).Stage(stage)
 
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z := (&models.DiagramPackage{}).Stage(stage)
 
@@ -96,6 +101,22 @@ func _(stage *models.Stage) {
 	__GongStructShape__000047_5_Specifications_A_CHILDREN := (&models.GongStructShape{}).Stage(stage)
 	__GongStructShape__000048_5_Specifications_SPEC_HIERARCHY := (&models.GongStructShape{}).Stage(stage)
 	__GongStructShape__000049_5_Specifications_A_OBJECT := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN := (&models.GongStructShape{}).Stage(stage)
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE := (&models.GongStructShape{}).Stage(stage)
 
 	__LinkShape__000000_DATATYPES := (&models.LinkShape{}).Stage(stage)
 	__LinkShape__000001_DATATYPE_DEFINITION_BOOLEAN := (&models.LinkShape{}).Stage(stage)
@@ -141,6 +162,8 @@ func _(stage *models.Stage) {
 	__LinkShape__000041_SPEC_HIERARCHY := (&models.LinkShape{}).Stage(stage)
 	__LinkShape__000042_CHILDREN := (&models.LinkShape{}).Stage(stage)
 	__LinkShape__000043_OBJECT := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000044_TYPE := (&models.LinkShape{}).Stage(stage)
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE := (&models.LinkShape{}).Stage(stage)
 
 	// Setup of values
 
@@ -168,6 +191,30 @@ func _(stage *models.Stage) {
 	__AttributeShape__000003_SPEC_OBJECT_REF.Structname = `A_OBJECT`
 	__AttributeShape__000003_SPEC_OBJECT_REF.Fieldtypename = `string`
 
+	__AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Name = `ATTRIBUTE_DEFINITION_BOOLEAN_REF`
+	__AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF{}.ATTRIBUTE_DEFINITION_BOOLEAN_REF
+	__AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF.FieldTypeAsString = ``
+	__AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Structname = `A_ATTRIBUTE_DEFINITION_BOOLEAN_REF`
+	__AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Fieldtypename = `string`
+
+	__AttributeShape__000005_Name.Name = `Name`
+	__AttributeShape__000005_Name.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_BOOLEAN{}.Name
+	__AttributeShape__000005_Name.FieldTypeAsString = ``
+	__AttributeShape__000005_Name.Structname = `ATTRIBUTE_DEFINITION_BOOLEAN`
+	__AttributeShape__000005_Name.Fieldtypename = `string`
+
+	__AttributeShape__000006_IDENTIFIER.Name = `IDENTIFIER`
+	__AttributeShape__000006_IDENTIFIER.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_BOOLEAN{}.IDENTIFIER
+	__AttributeShape__000006_IDENTIFIER.FieldTypeAsString = ``
+	__AttributeShape__000006_IDENTIFIER.Structname = `ATTRIBUTE_DEFINITION_BOOLEAN`
+	__AttributeShape__000006_IDENTIFIER.Fieldtypename = `string`
+
+	__AttributeShape__000007_THE_VALUE.Name = `THE_VALUE`
+	__AttributeShape__000007_THE_VALUE.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_DATE{}.THE_VALUE
+	__AttributeShape__000007_THE_VALUE.FieldTypeAsString = ``
+	__AttributeShape__000007_THE_VALUE.Structname = `ATTRIBUTE_VALUE_DATE`
+	__AttributeShape__000007_THE_VALUE.Fieldtypename = `string`
+
 	__Classdiagram__000000_1_Top_Level.Name = `1. Top Level`
 	__Classdiagram__000000_1_Top_Level.Description = `fsdfqksdjhfdskfsqd`
 	__Classdiagram__000000_1_Top_Level.IsIncludedInStaticWebSite = false
@@ -192,53 +239,65 @@ func _(stage *models.Stage) {
 	__Classdiagram__000001_2_Datatypes.NodeGongNotesIsExpanded = false
 	__Classdiagram__000001_2_Datatypes.NodeGongNoteNodeExpansion = ``
 
-	__Classdiagram__000002_3_Spectype.Name = `3. Spectype`
-	__Classdiagram__000002_3_Spectype.Description = ``
-	__Classdiagram__000002_3_Spectype.IsIncludedInStaticWebSite = false
-	__Classdiagram__000002_3_Spectype.IsInRenameMode = false
-	__Classdiagram__000002_3_Spectype.IsExpanded = false
-	__Classdiagram__000002_3_Spectype.NodeGongStructsIsExpanded = true
-	__Classdiagram__000002_3_Spectype.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
-	__Classdiagram__000002_3_Spectype.NodeGongEnumsIsExpanded = false
-	__Classdiagram__000002_3_Spectype.NodeGongEnumNodeExpansion = ``
-	__Classdiagram__000002_3_Spectype.NodeGongNotesIsExpanded = false
-	__Classdiagram__000002_3_Spectype.NodeGongNoteNodeExpansion = ``
+	__Classdiagram__000002_3_Spectype_1.Name = `3. Spectype 1`
+	__Classdiagram__000002_3_Spectype_1.Description = ``
+	__Classdiagram__000002_3_Spectype_1.IsIncludedInStaticWebSite = false
+	__Classdiagram__000002_3_Spectype_1.IsInRenameMode = false
+	__Classdiagram__000002_3_Spectype_1.IsExpanded = false
+	__Classdiagram__000002_3_Spectype_1.NodeGongStructsIsExpanded = true
+	__Classdiagram__000002_3_Spectype_1.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
+	__Classdiagram__000002_3_Spectype_1.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000002_3_Spectype_1.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000002_3_Spectype_1.NodeGongNotesIsExpanded = false
+	__Classdiagram__000002_3_Spectype_1.NodeGongNoteNodeExpansion = ``
 
-	__Classdiagram__000003_4_Specs.Name = `4. Specs`
-	__Classdiagram__000003_4_Specs.Description = `DEscription du package Specs`
-	__Classdiagram__000003_4_Specs.IsIncludedInStaticWebSite = false
-	__Classdiagram__000003_4_Specs.IsInRenameMode = false
-	__Classdiagram__000003_4_Specs.IsExpanded = false
-	__Classdiagram__000003_4_Specs.NodeGongStructsIsExpanded = true
-	__Classdiagram__000003_4_Specs.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
-	__Classdiagram__000003_4_Specs.NodeGongEnumsIsExpanded = false
-	__Classdiagram__000003_4_Specs.NodeGongEnumNodeExpansion = ``
-	__Classdiagram__000003_4_Specs.NodeGongNotesIsExpanded = false
-	__Classdiagram__000003_4_Specs.NodeGongNoteNodeExpansion = ``
+	__Classdiagram__000003_4_Spec_Objects_1.Name = `4. Spec Objects 1`
+	__Classdiagram__000003_4_Spec_Objects_1.Description = `DEscription du package Specs`
+	__Classdiagram__000003_4_Spec_Objects_1.IsIncludedInStaticWebSite = false
+	__Classdiagram__000003_4_Spec_Objects_1.IsInRenameMode = false
+	__Classdiagram__000003_4_Spec_Objects_1.IsExpanded = true
+	__Classdiagram__000003_4_Spec_Objects_1.NodeGongStructsIsExpanded = true
+	__Classdiagram__000003_4_Spec_Objects_1.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
+	__Classdiagram__000003_4_Spec_Objects_1.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000003_4_Spec_Objects_1.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000003_4_Spec_Objects_1.NodeGongNotesIsExpanded = false
+	__Classdiagram__000003_4_Spec_Objects_1.NodeGongNoteNodeExpansion = ``
 
-	__Classdiagram__000004_4_Specs_Values.Name = `4. Specs Values`
-	__Classdiagram__000004_4_Specs_Values.Description = `DEscription du package Specs`
-	__Classdiagram__000004_4_Specs_Values.IsIncludedInStaticWebSite = false
-	__Classdiagram__000004_4_Specs_Values.IsInRenameMode = false
-	__Classdiagram__000004_4_Specs_Values.IsExpanded = false
-	__Classdiagram__000004_4_Specs_Values.NodeGongStructsIsExpanded = false
-	__Classdiagram__000004_4_Specs_Values.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
-	__Classdiagram__000004_4_Specs_Values.NodeGongEnumsIsExpanded = false
-	__Classdiagram__000004_4_Specs_Values.NodeGongEnumNodeExpansion = ``
-	__Classdiagram__000004_4_Specs_Values.NodeGongNotesIsExpanded = true
-	__Classdiagram__000004_4_Specs_Values.NodeGongNoteNodeExpansion = `[true]`
+	__Classdiagram__000004_4_Specs_Objects_2.Name = `4. Specs Objects 2`
+	__Classdiagram__000004_4_Specs_Objects_2.Description = `DEscription du package Specs`
+	__Classdiagram__000004_4_Specs_Objects_2.IsIncludedInStaticWebSite = false
+	__Classdiagram__000004_4_Specs_Objects_2.IsInRenameMode = false
+	__Classdiagram__000004_4_Specs_Objects_2.IsExpanded = true
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongStructsIsExpanded = false
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongNotesIsExpanded = true
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongNoteNodeExpansion = `[true]`
 
 	__Classdiagram__000005_5_Specifications.Name = `5. Specifications`
 	__Classdiagram__000005_5_Specifications.Description = ``
 	__Classdiagram__000005_5_Specifications.IsIncludedInStaticWebSite = false
 	__Classdiagram__000005_5_Specifications.IsInRenameMode = false
-	__Classdiagram__000005_5_Specifications.IsExpanded = true
+	__Classdiagram__000005_5_Specifications.IsExpanded = false
 	__Classdiagram__000005_5_Specifications.NodeGongStructsIsExpanded = true
 	__Classdiagram__000005_5_Specifications.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,true,false,true]`
 	__Classdiagram__000005_5_Specifications.NodeGongEnumsIsExpanded = false
 	__Classdiagram__000005_5_Specifications.NodeGongEnumNodeExpansion = ``
 	__Classdiagram__000005_5_Specifications.NodeGongNotesIsExpanded = false
 	__Classdiagram__000005_5_Specifications.NodeGongNoteNodeExpansion = ``
+
+	__Classdiagram__000006_3_Spectype_2.Name = `3. Spectype 2`
+	__Classdiagram__000006_3_Spectype_2.Description = ``
+	__Classdiagram__000006_3_Spectype_2.IsIncludedInStaticWebSite = false
+	__Classdiagram__000006_3_Spectype_2.IsInRenameMode = false
+	__Classdiagram__000006_3_Spectype_2.IsExpanded = false
+	__Classdiagram__000006_3_Spectype_2.NodeGongStructsIsExpanded = true
+	__Classdiagram__000006_3_Spectype_2.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]`
+	__Classdiagram__000006_3_Spectype_2.NodeGongEnumsIsExpanded = false
+	__Classdiagram__000006_3_Spectype_2.NodeGongEnumNodeExpansion = ``
+	__Classdiagram__000006_3_Spectype_2.NodeGongNotesIsExpanded = false
+	__Classdiagram__000006_3_Spectype_2.NodeGongNoteNodeExpansion = ``
 
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Name = `Diagram Package created the 2025-05-07T07:33:18Z`
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Path = ``
@@ -496,10 +555,10 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 
 	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.Name = `Specs-ATTRIBUTE_VALUE_DATE`
 	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.X = 360.000000
-	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.Y = 386.000000
+	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.Y = 374.000000
 	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.IdentifierMeta = ref_models.ATTRIBUTE_VALUE_DATE{}
 	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.Width = 339.000000
-	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.Height = 63.000000
+	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.Height = 83.000000
 	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.IsSelected = false
 
 	__GongStructShape__000029_Specs_ATTRIBUTE_VALUE_ENUMERATION.Name = `Specs-ATTRIBUTE_VALUE_ENUMERATION`
@@ -567,8 +626,8 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__GongStructShape__000036_2_Datatypes_ENUM_VALUE.IsSelected = false
 
 	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.Name = `4. Specs Values-ENUM_VALUE`
-	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.X = 820.000000
-	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.Y = 404.000000
+	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.X = 1066.000061
+	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.Y = 54.000000
 	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.IdentifierMeta = ref_models.ENUM_VALUE{}
 	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.Width = 240.000000
 	__GongStructShape__000037_4_Specs_Values_ENUM_VALUE.Height = 63.000000
@@ -669,6 +728,134 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__GongStructShape__000049_5_Specifications_A_OBJECT.Width = 240.000000
 	__GongStructShape__000049_5_Specifications_A_OBJECT.Height = 83.000000
 	__GongStructShape__000049_5_Specifications_A_OBJECT.IsSelected = false
+
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_DATE`
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.X = 644.000000
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.Y = 112.000000
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_DATE{}
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.Width = 375.000000
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.Height = 63.000000
+	__GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE.IsSelected = false
+
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_ENUMERATION`
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.X = 637.999969
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.Y = 190.000000
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_ENUMERATION{}
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.Width = 389.000000
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.Height = 63.000000
+	__GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION.IsSelected = false
+
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_INTEGER`
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.X = 643.000000
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.Y = 267.000000
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_INTEGER{}
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.Width = 383.000000
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.Height = 63.000000
+	__GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER.IsSelected = false
+
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_REAL`
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.X = 642.000000
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.Y = 350.000000
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_REAL{}
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.Width = 390.000000
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.Height = 63.000000
+	__GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL.IsSelected = false
+
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_STRING`
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.X = 648.000031
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.Y = 441.000031
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_STRING{}
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.Width = 382.000000
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.Height = 63.000000
+	__GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING.IsSelected = false
+
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_XHTML`
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.X = 655.000000
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.Y = 521.000000
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_XHTML{}
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.Width = 376.999969
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.Height = 63.000000
+	__GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML.IsSelected = false
+
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_BOOLEAN_REF`
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.X = 34.000000
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Y = 36.000000
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF{}
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Width = 459.000000
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.Height = 83.000000
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.IsSelected = false
+
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_DATE_REF`
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.X = 38.000000
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.Y = 111.000000
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_DATE_REF{}
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.Width = 459.000000
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.Height = 63.000000
+	__GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF.IsSelected = false
+
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_ENUMERATION_REF`
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.X = 46.000000
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Y = 187.000000
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF{}
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Width = 455.000000
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.Height = 63.000000
+	__GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF.IsSelected = false
+
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_INTEGER_REF`
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.X = 50.000000
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.Y = 262.000000
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_INTEGER_REF{}
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.Width = 448.000000
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.Height = 63.000000
+	__GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF.IsSelected = false
+
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_REAL_REF`
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.X = 56.000000
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.Y = 348.000000
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_REAL_REF{}
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.Width = 448.000000
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.Height = 63.000000
+	__GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF.IsSelected = false
+
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_STRING_REF`
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.X = 85.000000
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.Y = 438.000000
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_STRING_REF{}
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.Width = 412.000000
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.Height = 63.000000
+	__GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF.IsSelected = false
+
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.Name = `3. Spectype 2-A_ATTRIBUTE_DEFINITION_XHTML_REF`
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.X = 91.000000
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.Y = 523.999969
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.IdentifierMeta = ref_models.A_ATTRIBUTE_DEFINITION_XHTML_REF{}
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.Width = 406.000000
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.Height = 63.000000
+	__GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF.IsSelected = false
+
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.Name = `3. Spectype 2-A_DATATYPE_DEFINITION_BOOLEAN_REF`
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.X = 1211.000031
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.Y = 27.000000
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.IdentifierMeta = ref_models.A_DATATYPE_DEFINITION_BOOLEAN_REF{}
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.Width = 392.999878
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.Height = 63.000000
+	__GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF.IsSelected = false
+
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.Name = `3. Spectype 2-ATTRIBUTE_DEFINITION_BOOLEAN`
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.X = 632.999969
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.Y = 25.000000
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_BOOLEAN{}
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.Width = 384.000000
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.Height = 81.000000
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.IsSelected = false
+
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.Name = `4. Spec Objects 1-A_ATTRIBUTE_VALUE_DATE`
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.X = 870.000031
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.Y = 771.000000
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_DATE{}
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.Width = 312.000000
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.Height = 63.000000
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.IsSelected = false
 
 	__LinkShape__000000_DATATYPES.Name = `DATATYPES`
 	__LinkShape__000000_DATATYPES.IdentifierMeta = ref_models.REQ_IF_CONTENT{}.DATATYPES
@@ -1009,7 +1196,7 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.StartOrientation = models.ORIENTATION_HORIZONTAL
 	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.StartRatio = 0.500000
 	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.EndOrientation = models.ORIENTATION_HORIZONTAL
-	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.EndRatio = 0.500000
+	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.EndRatio = 0.270034
 	__LinkShape__000017_ATTRIBUTE_VALUE_DATE.CornerOffsetRatio = 1.078732
 
 	__LinkShape__000018_ATTRIBUTE_VALUE_ENUMERATION.Name = `ATTRIBUTE_VALUE_ENUMERATION`
@@ -1506,6 +1693,44 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__LinkShape__000043_OBJECT.EndRatio = 0.444792
 	__LinkShape__000043_OBJECT.CornerOffsetRatio = -1.332543
 
+	__LinkShape__000044_TYPE.Name = `TYPE`
+	__LinkShape__000044_TYPE.IdentifierMeta = ref_models.ATTRIBUTE_DEFINITION_BOOLEAN{}.TYPE
+	__LinkShape__000044_TYPE.FieldTypeIdentifierMeta = ref_models.A_DATATYPE_DEFINITION_BOOLEAN_REF{}
+	__LinkShape__000044_TYPE.FieldOffsetX = 0.000000
+	__LinkShape__000044_TYPE.FieldOffsetY = 0.000000
+	__LinkShape__000044_TYPE.TargetMultiplicity = models.ZERO_ONE
+	__LinkShape__000044_TYPE.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000044_TYPE.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000044_TYPE.SourceMultiplicity = models.MANY
+	__LinkShape__000044_TYPE.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000044_TYPE.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000044_TYPE.X = 1426.000000
+	__LinkShape__000044_TYPE.Y = 60.500000
+	__LinkShape__000044_TYPE.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000044_TYPE.StartRatio = 0.500000
+	__LinkShape__000044_TYPE.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000044_TYPE.EndRatio = 0.500000
+	__LinkShape__000044_TYPE.CornerOffsetRatio = 1.380000
+
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.Name = `ATTRIBUTE_VALUE_DATE`
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.IdentifierMeta = ref_models.A_ATTRIBUTE_VALUE_DATE{}.ATTRIBUTE_VALUE_DATE
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.FieldTypeIdentifierMeta = ref_models.ATTRIBUTE_VALUE_DATE{}
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.FieldOffsetX = 0.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.FieldOffsetY = 0.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.TargetMultiplicity = models.MANY
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.TargetMultiplicityOffsetX = 0.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.TargetMultiplicityOffsetY = 0.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.SourceMultiplicity = models.MANY
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.SourceMultiplicityOffsetX = 0.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.SourceMultiplicityOffsetY = 0.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.X = 949.000046
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.Y = 796.500000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.StartOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.StartRatio = 0.500000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.EndOrientation = models.ORIENTATION_HORIZONTAL
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.EndRatio = 1.000000
+	__LinkShape__000045_ATTRIBUTE_VALUE_DATE.CornerOffsetRatio = -0.407129
+
 	// Setup of pointers
 	// setup of AttributeShape instances pointers
 	// setup of Classdiagram instances pointers
@@ -1525,49 +1750,66 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000013_Content_DATATYPE_DEFINITION_XHTML)
 	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000035_2_Datatypes_A_SPECIFIED_VALUES)
 	__Classdiagram__000001_2_Datatypes.GongStructShapes = append(__Classdiagram__000001_2_Datatypes.GongStructShapes, __GongStructShape__000036_2_Datatypes_ENUM_VALUE)
-	__Classdiagram__000002_3_Spectype.GongStructShapes = append(__Classdiagram__000002_3_Spectype.GongStructShapes, __GongStructShape__000038_3_Spectype_REQ_IF_CONTENT)
-	__Classdiagram__000002_3_Spectype.GongStructShapes = append(__Classdiagram__000002_3_Spectype.GongStructShapes, __GongStructShape__000039_3_Spectype_A_SPEC_TYPES)
-	__Classdiagram__000002_3_Spectype.GongStructShapes = append(__Classdiagram__000002_3_Spectype.GongStructShapes, __GongStructShape__000040_3_Spectype_SPEC_OBJECT_TYPE)
-	__Classdiagram__000002_3_Spectype.GongStructShapes = append(__Classdiagram__000002_3_Spectype.GongStructShapes, __GongStructShape__000041_3_Spectype_SPEC_RELATION_TYPE)
-	__Classdiagram__000002_3_Spectype.GongStructShapes = append(__Classdiagram__000002_3_Spectype.GongStructShapes, __GongStructShape__000042_3_Spectype_SPECIFICATION_TYPE)
-	__Classdiagram__000002_3_Spectype.GongStructShapes = append(__Classdiagram__000002_3_Spectype.GongStructShapes, __GongStructShape__000043_3_Spectype_RELATION_GROUP_TYPE)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000014_Specs_REQ_IF_CONTENT)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000015_Specs_A_SPEC_OBJECTS)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000016_Specs_SPEC_OBJECT)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING)
-	__Classdiagram__000003_4_Specs.GongStructShapes = append(__Classdiagram__000003_4_Specs.GongStructShapes, __GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000027_Specs_ATTRIBUTE_VALUE_BOOLEAN)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000029_Specs_ATTRIBUTE_VALUE_ENUMERATION)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000030_Specs_ATTRIBUTE_VALUE_INTEGER)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000031_Specs_ATTRIBUTE_VALUE_REAL)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000032_Specs_ATTRIBUTE_VALUE_STRING)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000033_Specs_ATTRIBUTE_VALUE_XHTML)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000034_4_Specs_Values_A_ENUM_VALUE_REF)
-	__Classdiagram__000004_4_Specs_Values.GongStructShapes = append(__Classdiagram__000004_4_Specs_Values.GongStructShapes, __GongStructShape__000037_4_Specs_Values_ENUM_VALUE)
-	__Classdiagram__000004_4_Specs_Values.GongNoteShapes = append(__Classdiagram__000004_4_Specs_Values.GongNoteShapes, __GongNoteShape__000000_4_Specs_Values_NoteOnEnumValues)
+	__Classdiagram__000002_3_Spectype_1.GongStructShapes = append(__Classdiagram__000002_3_Spectype_1.GongStructShapes, __GongStructShape__000038_3_Spectype_REQ_IF_CONTENT)
+	__Classdiagram__000002_3_Spectype_1.GongStructShapes = append(__Classdiagram__000002_3_Spectype_1.GongStructShapes, __GongStructShape__000039_3_Spectype_A_SPEC_TYPES)
+	__Classdiagram__000002_3_Spectype_1.GongStructShapes = append(__Classdiagram__000002_3_Spectype_1.GongStructShapes, __GongStructShape__000040_3_Spectype_SPEC_OBJECT_TYPE)
+	__Classdiagram__000002_3_Spectype_1.GongStructShapes = append(__Classdiagram__000002_3_Spectype_1.GongStructShapes, __GongStructShape__000041_3_Spectype_SPEC_RELATION_TYPE)
+	__Classdiagram__000002_3_Spectype_1.GongStructShapes = append(__Classdiagram__000002_3_Spectype_1.GongStructShapes, __GongStructShape__000042_3_Spectype_SPECIFICATION_TYPE)
+	__Classdiagram__000002_3_Spectype_1.GongStructShapes = append(__Classdiagram__000002_3_Spectype_1.GongStructShapes, __GongStructShape__000043_3_Spectype_RELATION_GROUP_TYPE)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000014_Specs_REQ_IF_CONTENT)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000015_Specs_A_SPEC_OBJECTS)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000016_Specs_SPEC_OBJECT)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000017_Specs_A_SPEC_OBJECT_TYPE_REF)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000018_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000019_Specs_ATTRIBUTE_VALUE_BOOLEAN)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000020_Specs_ATTRIBUTE_VALUE_DATE)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000021_Specs_ATTRIBUTE_VALUE_ENUMERATION)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000022_Specs_ATTRIBUTE_VALUE_INTEGER)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000023_Specs_ATTRIBUTE_VALUE_REAL)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000024_Specs_ATTRIBUTE_VALUE_STRING)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000025_Specs_ATTRIBUTE_VALUE_XHTML)
+	__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes = append(__Classdiagram__000003_4_Spec_Objects_1.GongStructShapes, __GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000027_Specs_ATTRIBUTE_VALUE_BOOLEAN)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000029_Specs_ATTRIBUTE_VALUE_ENUMERATION)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000030_Specs_ATTRIBUTE_VALUE_INTEGER)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000031_Specs_ATTRIBUTE_VALUE_REAL)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000032_Specs_ATTRIBUTE_VALUE_STRING)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000033_Specs_ATTRIBUTE_VALUE_XHTML)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000034_4_Specs_Values_A_ENUM_VALUE_REF)
+	__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongStructShapes, __GongStructShape__000037_4_Specs_Values_ENUM_VALUE)
+	__Classdiagram__000004_4_Specs_Objects_2.GongNoteShapes = append(__Classdiagram__000004_4_Specs_Objects_2.GongNoteShapes, __GongNoteShape__000000_4_Specs_Values_NoteOnEnumValues)
 	__Classdiagram__000005_5_Specifications.GongStructShapes = append(__Classdiagram__000005_5_Specifications.GongStructShapes, __GongStructShape__000044_5_Specifications_SPECIFICATION)
 	__Classdiagram__000005_5_Specifications.GongStructShapes = append(__Classdiagram__000005_5_Specifications.GongStructShapes, __GongStructShape__000045_5_Specifications_REQ_IF_CONTENT)
 	__Classdiagram__000005_5_Specifications.GongStructShapes = append(__Classdiagram__000005_5_Specifications.GongStructShapes, __GongStructShape__000046_5_Specifications_A_SPECIFICATIONS)
 	__Classdiagram__000005_5_Specifications.GongStructShapes = append(__Classdiagram__000005_5_Specifications.GongStructShapes, __GongStructShape__000047_5_Specifications_A_CHILDREN)
 	__Classdiagram__000005_5_Specifications.GongStructShapes = append(__Classdiagram__000005_5_Specifications.GongStructShapes, __GongStructShape__000048_5_Specifications_SPEC_HIERARCHY)
 	__Classdiagram__000005_5_Specifications.GongStructShapes = append(__Classdiagram__000005_5_Specifications.GongStructShapes, __GongStructShape__000049_5_Specifications_A_OBJECT)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000050_3_Spectype_2_ATTRIBUTE_DEFINITION_DATE)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000051_3_Spectype_2_ATTRIBUTE_DEFINITION_ENUMERATION)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000052_3_Spectype_2_ATTRIBUTE_DEFINITION_INTEGER)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000053_3_Spectype_2_ATTRIBUTE_DEFINITION_REAL)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000054_3_Spectype_2_ATTRIBUTE_DEFINITION_STRING)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000055_3_Spectype_2_ATTRIBUTE_DEFINITION_XHTML)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000057_3_Spectype_2_A_ATTRIBUTE_DEFINITION_DATE_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000058_3_Spectype_2_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000059_3_Spectype_2_A_ATTRIBUTE_DEFINITION_INTEGER_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000060_3_Spectype_2_A_ATTRIBUTE_DEFINITION_REAL_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000061_3_Spectype_2_A_ATTRIBUTE_DEFINITION_STRING_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000062_3_Spectype_2_A_ATTRIBUTE_DEFINITION_XHTML_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000063_3_Spectype_2_A_DATATYPE_DEFINITION_BOOLEAN_REF)
+	__Classdiagram__000006_3_Spectype_2.GongStructShapes = append(__Classdiagram__000006_3_Spectype_2.GongStructShapes, __GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN)
 	// setup of DiagramPackage instances pointers
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000000_1_Top_Level)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000001_2_Datatypes)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000002_3_Spectype)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000003_4_Specs)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000004_4_Specs_Values)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000002_3_Spectype_1)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000003_4_Spec_Objects_1)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000004_4_Specs_Objects_2)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000005_5_Specifications)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000003_4_Specs
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000006_3_Spectype_2)
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000003_4_Spec_Objects_1
 	// setup of GongNoteShape instances pointers
 	// setup of GongStructShape instances pointers
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000008_THE_HEADER)
@@ -1601,6 +1843,7 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000027_ATTRIBUTE_VALUE_REAL)
 	__GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000028_ATTRIBUTE_VALUE_STRING)
 	__GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes = append(__GongStructShape__000026_Specs_A_ATTRIBUTE_VALUE_XHTML_1.LinkShapes, __LinkShape__000029_ATTRIBUTE_VALUE_XHTML)
+	__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.AttributeShapes = append(__GongStructShape__000028_Specs_ATTRIBUTE_VALUE_DATE.AttributeShapes, __AttributeShape__000007_THE_VALUE)
 	__GongStructShape__000029_Specs_ATTRIBUTE_VALUE_ENUMERATION.LinkShapes = append(__GongStructShape__000029_Specs_ATTRIBUTE_VALUE_ENUMERATION.LinkShapes, __LinkShape__000030_VALUES)
 	__GongStructShape__000034_4_Specs_Values_A_ENUM_VALUE_REF.AttributeShapes = append(__GongStructShape__000034_4_Specs_Values_A_ENUM_VALUE_REF.AttributeShapes, __AttributeShape__000000_ENUM_VALUE_REF)
 	__GongStructShape__000035_2_Datatypes_A_SPECIFIED_VALUES.LinkShapes = append(__GongStructShape__000035_2_Datatypes_A_SPECIFIED_VALUES.LinkShapes, __LinkShape__000032_ENUM_VALUE)
@@ -1618,6 +1861,11 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__GongStructShape__000048_5_Specifications_SPEC_HIERARCHY.LinkShapes = append(__GongStructShape__000048_5_Specifications_SPEC_HIERARCHY.LinkShapes, __LinkShape__000042_CHILDREN)
 	__GongStructShape__000048_5_Specifications_SPEC_HIERARCHY.LinkShapes = append(__GongStructShape__000048_5_Specifications_SPEC_HIERARCHY.LinkShapes, __LinkShape__000043_OBJECT)
 	__GongStructShape__000049_5_Specifications_A_OBJECT.AttributeShapes = append(__GongStructShape__000049_5_Specifications_A_OBJECT.AttributeShapes, __AttributeShape__000003_SPEC_OBJECT_REF)
+	__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.AttributeShapes = append(__GongStructShape__000056_3_Spectype_2_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF.AttributeShapes, __AttributeShape__000004_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.AttributeShapes = append(__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.AttributeShapes, __AttributeShape__000005_Name)
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.AttributeShapes = append(__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.AttributeShapes, __AttributeShape__000006_IDENTIFIER)
+	__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.LinkShapes = append(__GongStructShape__000064_3_Spectype_2_ATTRIBUTE_DEFINITION_BOOLEAN.LinkShapes, __LinkShape__000044_TYPE)
+	__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.LinkShapes = append(__GongStructShape__000065_4_Spec_Objects_1_A_ATTRIBUTE_VALUE_DATE.LinkShapes, __LinkShape__000045_ATTRIBUTE_VALUE_DATE)
 	// setup of LinkShape instances pointers
 }
 

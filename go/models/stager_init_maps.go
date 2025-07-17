@@ -27,16 +27,6 @@ func (stager *Stager) initMaps() {
 	stager.Map_SPECIFICATION_Nodes_expanded = populateBoolMap[*SPECIFICATION](stager)
 	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
-	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance = initializeNbInstanceMap[SPEC_OBJECT_TYPE]()
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_XHTML]()
-	stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_STRING]()
-	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_BOOLEAN]()
-	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_INTEGER]()
-	stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_DATE]()
-	stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_REAL]()
-	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance = initializeNbInstanceMap[ATTRIBUTE_DEFINITION_ENUMERATION]()
-	stager.Map_ENUM_VALUE_Spec_nbInstance = initializeNbInstanceMap[ENUM_VALUE]()
-
 	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_XHTML]()
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_STRING]()
 	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_BOOLEAN]()
@@ -46,20 +36,9 @@ func (stager *Stager) initMaps() {
 	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_ENUMERATION]()
 }
 
-// Generic function to initialize a map with *T as key and int as value
-func initializeNbInstanceMap[T any]() map[*T]int {
-	return make(map[*T]int)
-}
-
 // Generic function to initialize a map with *T as key and bool as value
 func initializeShowIdentifierMap[T any]() map[*T]bool {
 	return make(map[*T]bool)
-}
-
-// Identifiable is a constraint for types that can provide a string identifier.
-type Identifiable interface {
-	PointerToGongstruct
-	GetIdentifier() string
 }
 
 // populateIdMap fetches instances of a Gongstruct type T and populates a map

@@ -17,15 +17,15 @@ func (o *SpecificationsTreeStageUpdater) UpdateAttributeDefinitionNb(
 		return
 	}
 
-	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance = make(map[*m.SPEC_OBJECT_TYPE]int)
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_XHTML]int)
-	stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_STRING]int)
-	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_BOOLEAN]int)
-	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_INTEGER]int)
-	stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_DATE]int)
-	stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_REAL]int)
-	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance = make(map[*m.ATTRIBUTE_DEFINITION_ENUMERATION]int)
-	stager.Map_ENUM_VALUE_Spec_nbInstance = make(map[*m.ENUM_VALUE]int)
+	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_OBJECT_TYPE]()
+	stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_XHTML]()
+	stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_STRING]()
+	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_BOOLEAN]()
+	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_INTEGER]()
+	stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_DATE]()
+	stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_REAL]()
+	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_ENUMERATION]()
+	stager.Map_ENUM_VALUE_Spec_nbInstance = initializeNbInstanceMap[m.ENUM_VALUE]()
 
 	for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 		UpdateAttributeDefinitionNbRecursice(
@@ -166,4 +166,9 @@ func appendAttributeEnum(stager *m.Stager, specObject *m.SPEC_OBJECT) {
 			}
 		}
 	}
+}
+
+// Generic function to initialize a map with *T as key and int as value
+func initializeNbInstanceMap[T any]() map[*T]int {
+	return make(map[*T]int)
 }

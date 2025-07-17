@@ -175,40 +175,12 @@ func addAttibutesNodes(
 		return
 	}
 
-	// XHTML Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_XHTML) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_XHTML]int)
-		var attributeDefinition *m.ATTRIBUTE_DEFINITION_XHTML
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()) {
-
-			var ok bool
-			attributeDefinition, ok = stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[x.ATTRIBUTE_DEFINITION_XHTML_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_XHTML_REF", x.ATTRIBUTE_DEFINITION_XHTML_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_XHTML {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_XHTML[attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF", attribute.TYPE.DATATYPE_DEFINITION_XHTML_REF,
-					"unknown ref")
-			}
-
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance[attribute]
-			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
-		}
-	}
+	addAttributeNodeExperimental(
+		specAttributes.ATTRIBUTE_DEFINITION_XHTML,
+		stager.Map_id_ATTRIBUTE_DEFINITION_XHTML,
+		stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance,
+		stager,
+		nodeSpecType)
 
 	// String Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 0 {
@@ -413,6 +385,46 @@ func addAttibutesNodes(
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
 			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
+		}
+	}
+}
+
+func addAttributeNodeExperimental[T m.Attribute](
+	attributes []T,
+	map_Id_Attribute map[string]T,
+	map_Atttribute_nbInstance map[T]int,
+	stager *m.Stager, nodeSpecType *tree.Node) {
+	if len(attributes) > 0 {
+		// compute the number of time this attribute is used
+		map_attributeDefinition_nbInstance := make(map[T]int)
+		var attributeDefinition T
+		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()) {
+
+			var ok bool
+			attributeDefinition, ok = map_Id_Attribute[x.ATTRIBUTE_DEFINITION_XHTML_REF]
+			if !ok {
+				log.Panic("x.ATTRIBUTE_DEFINITION_XHTML_REF", x.ATTRIBUTE_DEFINITION_XHTML_REF,
+					"unknown ref")
+			} else {
+				map_attributeDefinition_nbInstance[attributeDefinition]++
+			}
+		}
+
+		for _, attribute := range attributes {
+			var attributeType string
+			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_XHTML[attribute.GetTypeRef()]; ok {
+				attributeType = datatype.LONG_NAME
+			} else {
+				log.Panic("attribute.GetTypeRef()", attribute.GetTypeRef(),
+					"unknown ref")
+			}
+
+			nbInstances := map_Atttribute_nbInstance[attribute]
+			nodeAttribute := &tree.Node{
+				Name: attribute.GetLongName() + ":" + attributeType +
+					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
+			}
+			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.GetIsEditable(), attribute.GetLongName())
 		}
 	}
 }
