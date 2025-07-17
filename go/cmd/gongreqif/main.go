@@ -72,7 +72,7 @@ func main() {
 	splitStage := split_stack.NewStack(r, "", "", "", "", false, false).Stage
 
 	// setup model stack with its probe
-	stack := gongreqif_stack.NewStack(r, "gongreqif", *unmarshallFromCode, *marshallOnCommit, "", *embeddedDiagrams, true)
+	stack := gongreqif_stack.NewStack(r, "reqif", *unmarshallFromCode, *marshallOnCommit, "", *embeddedDiagrams, true)
 	stack.Probe.Refresh()
 
 	// insertion point for call to stager
