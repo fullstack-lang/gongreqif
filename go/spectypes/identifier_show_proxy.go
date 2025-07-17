@@ -8,12 +8,12 @@ import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-type ButtonToggleShowIdentifierProxy struct {
+type ButtonToggleShowSpecObjectTypeIdentifierProxy struct {
 	stager         *m.Stager
 	specObjectType *m.SPEC_OBJECT_TYPE
 }
 
-func (proxy *ButtonToggleShowIdentifierProxy) ButtonUpdated(
+func (proxy *ButtonToggleShowSpecObjectTypeIdentifierProxy) ButtonUpdated(
 	treeStage *tree.Stage,
 	staged, front *tree.Button) {
 

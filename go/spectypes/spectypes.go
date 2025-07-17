@@ -56,7 +56,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 			button := &tree.Button{
 				Name: "Show/Unshow identifier",
-				Impl: &ButtonToggleShowIdentifierProxy{
+				Impl: &ButtonToggleShowSpecObjectTypeIdentifierProxy{
 					stager:         stager,
 					specObjectType: specObjectType,
 				},
