@@ -6,9 +6,27 @@ type Identifiable interface {
 	GetIdentifier() string
 }
 
+type AttributeDefinition interface {
+	Identifiable
+	GetDatatypeDefinitionRef() string
+	GetIsEditable() bool
+	GetLongName() string
+}
+
+// Things like A_ATTRIBUTE_DEFINITION_XHTML_REF
+type AttributeDefinitionRef interface {
+	PointerToGongstruct
+
+	GetRef() string
+}
+
 type Attribute interface {
 	Identifiable
-	GetTypeRef() string
-	GetIsEditable() bool
+	GetLongName() string
+}
+
+type DatatypeDefinition interface {
+	PointerToGongstruct
+
 	GetLongName() string
 }

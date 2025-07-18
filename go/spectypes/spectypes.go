@@ -175,183 +175,59 @@ func addAttibutesNodes(
 		return
 	}
 
-	addAttributeNodeExperimental(
+	addAttributeNode(
 		specAttributes.ATTRIBUTE_DEFINITION_XHTML,
 		stager.Map_id_ATTRIBUTE_DEFINITION_XHTML,
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_XHTML,
 		stager,
 		nodeSpecType)
 
-	// String Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_STRING) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_STRING]int)
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()) {
+	addAttributeNode(
+		specAttributes.ATTRIBUTE_DEFINITION_STRING,
+		stager.Map_id_ATTRIBUTE_DEFINITION_STRING,
+		stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_STRING,
+		stager,
+		nodeSpecType)
 
-			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[x.ATTRIBUTE_DEFINITION_STRING_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_STRING_REF", x.ATTRIBUTE_DEFINITION_STRING_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
+	addAttributeNode(
+		specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN,
+		stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN,
+		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_BOOLEAN,
+		stager,
+		nodeSpecType)
 
-		for _, attributeDefinition := range specAttributes.ATTRIBUTE_DEFINITION_STRING {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_STRING[attributeDefinition.TYPE.DATATYPE_DEFINITION_STRING_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_STRING_REF", attributeDefinition.TYPE.DATATYPE_DEFINITION_STRING_REF,
-					"unknown ref")
-			}
+	addAttributeNode(
+		specAttributes.ATTRIBUTE_DEFINITION_INTEGER,
+		stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER,
+		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_INTEGER_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_INTEGER,
+		stager,
+		nodeSpecType)
 
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance[attributeDefinition]
-			nodeAttribute := &tree.Node{
-				Name: attributeDefinition.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME)
-		}
-	}
+	addAttributeNode(
+		specAttributes.ATTRIBUTE_DEFINITION_REAL,
+		stager.Map_id_ATTRIBUTE_DEFINITION_REAL,
+		stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_REAL_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_REAL,
+		stager,
+		nodeSpecType)
 
-	// Boolean Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_BOOLEAN]int)
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()) {
-
-			attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[x.ATTRIBUTE_DEFINITION_BOOLEAN_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_BOOLEAN_REF", x.ATTRIBUTE_DEFINITION_BOOLEAN_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attributeDefinition := range specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_BOOLEAN[attributeDefinition.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF", attributeDefinition.TYPE.DATATYPE_DEFINITION_BOOLEAN_REF,
-					"unknown ref")
-			}
-
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance[attributeDefinition]
-			nodeAttribute := &tree.Node{
-				Name: attributeDefinition.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attributeDefinition.IS_EDITABLE, attributeDefinition.LONG_NAME)
-		}
-	}
-
-	// Integer Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_INTEGER) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_INTEGER]int)
-		var attributeDefinition *m.ATTRIBUTE_DEFINITION_INTEGER
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_INTEGER_REF](stager.GetStage()) {
-
-			var ok bool
-			attributeDefinition, ok = stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[x.ATTRIBUTE_DEFINITION_INTEGER_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_INTEGER_REF", x.ATTRIBUTE_DEFINITION_INTEGER_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_INTEGER {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_INTEGER[attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF", attribute.TYPE.DATATYPE_DEFINITION_INTEGER_REF,
-					"unknown ref")
-			}
-
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance[attribute]
-			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
-		}
-	}
-
-	// Real Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_REAL) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_REAL]int)
-		var attributeDefinition *m.ATTRIBUTE_DEFINITION_REAL
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_REAL_REF](stager.GetStage()) {
-
-			var ok bool
-			attributeDefinition, ok = stager.Map_id_ATTRIBUTE_DEFINITION_REAL[x.ATTRIBUTE_DEFINITION_REAL_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_REAL_REF", x.ATTRIBUTE_DEFINITION_REAL_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_REAL {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_REAL[attribute.TYPE.DATATYPE_DEFINITION_REAL_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_REAL_REF", attribute.TYPE.DATATYPE_DEFINITION_REAL_REF,
-					"unknown ref")
-			}
-
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance[attribute]
-			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
-		}
-	}
-
-	// Date Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_DATE) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_DATE]int)
-		var attributeDefinition *m.ATTRIBUTE_DEFINITION_DATE
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_DATE_REF](stager.GetStage()) {
-
-			var ok bool
-			attributeDefinition, ok = stager.Map_id_ATTRIBUTE_DEFINITION_DATE[x.ATTRIBUTE_DEFINITION_DATE_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_DATE_REF", x.ATTRIBUTE_DEFINITION_DATE_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_DATE {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_DATE[attribute.TYPE.DATATYPE_DEFINITION_DATE_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_DATE_REF", attribute.TYPE.DATATYPE_DEFINITION_DATE_REF,
-					"unknown ref")
-			}
-
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance[attribute]
-			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
-		}
-	}
+	addAttributeNode(
+		specAttributes.ATTRIBUTE_DEFINITION_DATE,
+		stager.Map_id_ATTRIBUTE_DEFINITION_DATE,
+		stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_DATE_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_DATE,
+		stager,
+		nodeSpecType)
 
 	// ENUMERATION Attributes
 	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 0 {
@@ -385,46 +261,6 @@ func addAttibutesNodes(
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
 			}
 			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.IS_EDITABLE, attribute.LONG_NAME)
-		}
-	}
-}
-
-func addAttributeNodeExperimental[T m.Attribute](
-	attributes []T,
-	map_Id_Attribute map[string]T,
-	map_Atttribute_nbInstance map[T]int,
-	stager *m.Stager, nodeSpecType *tree.Node) {
-	if len(attributes) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[T]int)
-		var attributeDefinition T
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()) {
-
-			var ok bool
-			attributeDefinition, ok = map_Id_Attribute[x.ATTRIBUTE_DEFINITION_XHTML_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_XHTML_REF", x.ATTRIBUTE_DEFINITION_XHTML_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attribute := range attributes {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_XHTML[attribute.GetTypeRef()]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.GetTypeRef()", attribute.GetTypeRef(),
-					"unknown ref")
-			}
-
-			nbInstances := map_Atttribute_nbInstance[attribute]
-			nodeAttribute := &tree.Node{
-				Name: attribute.GetLongName() + ":" + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
-			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attribute.GetIsEditable(), attribute.GetLongName())
 		}
 	}
 }
