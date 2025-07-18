@@ -104,7 +104,8 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 		for _, spectype := range spectypes.SPEC_RELATION_TYPE {
 			node := &tree.Node{
-				Name: spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				Name:       spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				IsExpanded: true,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -138,7 +139,8 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 		for _, spectype := range spectypes.SPECIFICATION_TYPE {
 			node := &tree.Node{
-				Name: spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				Name:       spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
+				IsExpanded: true,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
