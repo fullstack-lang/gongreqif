@@ -18,6 +18,16 @@ func (o *SpecificationsTreeStageUpdater) UpdateAttributeDefinitionNb(
 	}
 
 	stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_OBJECT_TYPE]()
+	stager.Map_SPECIFICATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPECIFICATION_TYPE]()
+	stager.Map_SPEC_RELATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_RELATION_TYPE]()
+
+	specificationType, ok := stager.Map_id_SPECIFICATION_TYPE[specification.TYPE.SPECIFICATION_TYPE_REF]
+	if !ok {
+		log.Panic("specRelation.TYPE.SPECIFICATION_TYPE_REF", specification.TYPE.SPECIFICATION_TYPE_REF,
+			"unknown relation type")
+	}
+	stager.Map_SPECIFICATION_TYPE_Spec_nbInstance[specificationType]++
+
 	stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_XHTML]()
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_STRING]()
 	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance = initializeNbInstanceMap[m.ATTRIBUTE_DEFINITION_BOOLEAN]()
