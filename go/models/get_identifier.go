@@ -158,3 +158,15 @@ func (a *DATATYPE_DEFINITION_REAL) GetLongName() string {
 func (a *DATATYPE_DEFINITION_ENUMERATION) GetLongName() string {
 	return a.LONG_NAME
 }
+
+func (o *SPEC_OBJECT) GetValues() *A_ATTRIBUTE_VALUE_XHTML_1 {
+	return o.VALUES
+}
+
+func (o *SPEC_RELATION) GetValues() *A_ATTRIBUTE_VALUE_XHTML_1 {
+	return o.VALUES
+}
+
+func (o *SPECIFICATION) GetValues() *A_ATTRIBUTE_VALUE_XHTML_1 {
+	return o.VALUES
+}

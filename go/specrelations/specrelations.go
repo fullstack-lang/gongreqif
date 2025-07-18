@@ -108,6 +108,8 @@ func (o *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(st
 			}
 		}
 
+		specobjects.AddAttributeNodes(stager, relationNode, specRelation)
+
 	}
 
 	// update the node with the number of instances

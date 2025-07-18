@@ -173,6 +173,8 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			// log.Println(markDownContent)
 		}
 
+		specobjects.AddAttributeNodes(stager, specificationNode, specification)
+
 	}
 
 	// update the node with the number of instances

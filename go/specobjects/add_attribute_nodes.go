@@ -9,20 +9,20 @@ import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-func AddAttributeNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	AddAttributeXHTMLNodes(stager, objectNode, specObject)
-	AddAttributeStringNodes(stager, objectNode, specObject)
-	AddAttributeBooleanNodes(stager, objectNode, specObject)
-	AddAttributeIntegerNodes(stager, objectNode, specObject)
-	AddAttributeRealNodes(stager, objectNode, specObject)
-	AddAttributeDateNodes(stager, objectNode, specObject)
-	AddAttributeEnumNodes(stager, objectNode, specObject)
+func AddAttributeNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	AddAttributeXHTMLNodes(stager, objectNode, objectWithValues)
+	AddAttributeStringNodes(stager, objectNode, objectWithValues)
+	AddAttributeBooleanNodes(stager, objectNode, objectWithValues)
+	AddAttributeIntegerNodes(stager, objectNode, objectWithValues)
+	AddAttributeRealNodes(stager, objectNode, objectWithValues)
+	AddAttributeDateNodes(stager, objectNode, objectWithValues)
+	AddAttributeEnumNodes(stager, objectNode, objectWithValues)
 }
 
 // AddAttributeXHTMLNodes - This is the function you provided as an example for the change.
 // For completeness and to ensure the pattern is clear, here's how it would look fully:
-func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_XHTML) > 0 {
+func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_XHTML) > 0 {
 		// objectNodeAttributeCategoryXHTML := &tree.Node{
 		// 	Name:       "XHTML",
 		// 	IsExpanded: true,
@@ -30,7 +30,7 @@ func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject 
 		// }
 		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryXHTML)
 
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_XHTML {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
@@ -54,15 +54,15 @@ func AddAttributeXHTMLNodes(stager *m.Stager, objectNode *tree.Node, specObject 
 	}
 }
 
-func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_STRING) > 0 {
+func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_STRING) > 0 {
 		// objectNodeAttributeCategoryString := &tree.Node{
 		// 	Name:       "STRING",
 		// 	IsExpanded: true,
 		// 	FontStyle:  tree.ITALIC,
 		// }
 		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryString)
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_STRING {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
@@ -79,15 +79,15 @@ func AddAttributeStringNodes(stager *m.Stager, objectNode *tree.Node, specObject
 	}
 }
 
-func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN) > 0 {
+func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_BOOLEAN) > 0 {
 		// objectNodeAttributeCategoryBoolean := &tree.Node{
 		// 	Name:       "BOOLEAN",
 		// 	IsExpanded: true,
 		// 	FontStyle:  tree.ITALIC,
 		// }
 		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryBoolean)
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_BOOLEAN {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
@@ -108,15 +108,15 @@ func AddAttributeBooleanNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 	}
 }
 
-func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_INTEGER) > 0 {
+func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_INTEGER) > 0 {
 		// objectNodeAttributeCategoryInteger := &tree.Node{
 		// 	Name:       "Integer",
 		// 	IsExpanded: true,
 		// 	FontStyle:  tree.ITALIC,
 		// }
 		// objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryInteger)
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_INTEGER {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_INTEGER {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
@@ -133,15 +133,15 @@ func AddAttributeIntegerNodes(stager *m.Stager, objectNode *tree.Node, specObjec
 	}
 }
 
-func AddAttributeDateNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_DATE) > 0 {
+func AddAttributeDateNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_DATE) > 0 {
 		objectNodeAttributeCategoryDate := &tree.Node{
 			Name:       "Date",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryDate)
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_DATE {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_DATE {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_DATE[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
@@ -158,15 +158,15 @@ func AddAttributeDateNodes(stager *m.Stager, objectNode *tree.Node, specObject *
 	}
 }
 
-func AddAttributeRealNodes(stager *m.Stager, objectNode *tree.Node, specObject *m.SPEC_OBJECT) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_REAL) > 0 {
+func AddAttributeRealNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_REAL) > 0 {
 		objectNodeAttributeCategoryReal := &tree.Node{
 			Name:       "Real",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategoryReal)
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_REAL {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_REAL {
 			var attributeDefinition string
 			if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_REAL[attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF]; ok {
 				attributeDefinition = datatype.LONG_NAME
@@ -186,16 +186,16 @@ func AddAttributeRealNodes(stager *m.Stager, objectNode *tree.Node, specObject *
 func AddAttributeEnumNodes(
 	stager *m.Stager,
 	objectNode *tree.Node,
-	specObject *m.SPEC_OBJECT,
+	objectWithValues m.ObjectWithValues,
 ) {
-	if len(specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION) > 0 {
+	if len(objectWithValues.GetValues().ATTRIBUTE_VALUE_ENUMERATION) > 0 {
 		objectNodeAttributeCategory := &tree.Node{
 			Name:       "Enums",
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
 		objectNode.Children = append(objectNode.Children, objectNodeAttributeCategory)
-		for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
+		for _, attribute := range objectWithValues.GetValues().ATTRIBUTE_VALUE_ENUMERATION {
 			var enumTypeString string
 			if enumType, ok := stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
 				enumTypeString = enumType.LONG_NAME

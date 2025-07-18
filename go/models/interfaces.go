@@ -30,3 +30,8 @@ type DatatypeDefinition interface {
 
 	GetLongName() string
 }
+
+// for SPEC OBJECTS and SPEC RELATIONS
+type ObjectWithValues interface {
+	GetValues() *A_ATTRIBUTE_VALUE_XHTML_1
+}
