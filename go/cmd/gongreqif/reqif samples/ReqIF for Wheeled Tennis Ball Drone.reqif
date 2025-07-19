@@ -2,12 +2,12 @@
 <REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <THE-HEADER>
-    <REQ-IF-HEADER IDENTIFIER="reqif-header-7">
-      <CREATION-TIME>2025-07-18T09:30:00+02:00</CREATION-TIME>
+    <REQ-IF-HEADER IDENTIFIER="reqif-header-8">
+      <CREATION-TIME>2025-07-19T09:32:00+02:00</CREATION-TIME>
       <REQ-IF-TOOL-ID>Gemini AI</REQ-IF-TOOL-ID>
-      <REQ-IF-VERSION>1.5.0</REQ-IF-VERSION>
+      <REQ-IF-VERSION>1.6.0</REQ-IF-VERSION>
       <SOURCE-TOOL-ID>Manual</SOURCE-TOOL-ID>
-      <TITLE>ReqIF for Wheeled Tennis Ball Drone (with Relation and Spec Attributes)</TITLE>
+      <TITLE>ReqIF for Wheeled Tennis Ball Drone (with Relation Group)</TITLE>
     </REQ-IF-HEADER>
   </THE-HEADER>
   <CORE-CONTENT>
@@ -1608,786 +1608,791 @@
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPEC-RELATIONS>
-        <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS001" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_001</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_001</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+        <SPEC-RELATION-GROUP IDENTIFIER="SRG_SATISFY_LINKS" LAST-CHANGE="2025-07-19T09:30:00+02:00"
+          LONG-NAME="Satisfy Traceability Links">
+          <SPEC-RELATIONS>
+            <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS001" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_001</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_001</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS002" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_002</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_001</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR001_SYS002" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_002</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_001</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS003" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_003</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_002</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS003" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_003</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_002</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS004" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_004</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_002</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR002_SYS004" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_004</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_002</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS005" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_005</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_003</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS005" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_005</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_003</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS006" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_006</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_003</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR003_SYS006" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_006</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_003</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS007" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_007</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_004</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS007" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_007</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_004</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS008" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_008</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_004</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR004_SYS008" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_008</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_004</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS009" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_009</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS009" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_009</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS010" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_010</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS010" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_010</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS011" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_011</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR005_SYS011" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_011</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_005</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS012" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_006</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS012" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_006</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS013" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_006</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR006_SYS013" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_006</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR007_SYS014" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_014</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_007</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR007_SYS014" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_014</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_007</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-proposed</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR008_SYS015" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_008</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR008_SYS015" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_008</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR009_SYS016" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_016</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_009</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR009_SYS016" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_016</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_009</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS017" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_017</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_010</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS017" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_017</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_010</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS018" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_018</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_010</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR010_SYS018" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_018</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_010</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR011_SYS019" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_019</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_011</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR011_SYS019" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_019</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_011</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR012_SYS020" LAST-CHANGE="2025-07-02T09:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_020</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_012</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR012_SYS020" LAST-CHANGE="2025-07-02T09:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_020</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_012</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR013_SYS021" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_021</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_013</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR013_SYS021" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_021</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_013</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR014_SYS022" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_014</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR014_SYS022" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_014</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR015_SYS023" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_015</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR015_SYS023" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_015</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR016_SYS024" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_024</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_016</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR016_SYS024" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_024</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_016</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Test">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR017_SYS025" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_025</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_017</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR017_SYS025" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_025</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_017</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS026" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_018</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS026" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_018</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS027" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_027</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_018</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR018_SYS027" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_027</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_018</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS028" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_028</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_019</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS028" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_028</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_019</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS029" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_029</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_019</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR019_SYS029" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_029</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_019</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
-        <SPEC-RELATION IDENTIFIER="SR_SHR020_SYS030" LAST-CHANGE="2025-07-08T11:00:00+02:00">
-          <SOURCE>
-            <SPEC-OBJECT-REF>SYS_030</SPEC-OBJECT-REF>
-          </SOURCE>
-          <TARGET>
-            <SPEC-OBJECT-REF>SHR_020</SPEC-OBJECT-REF>
-          </TARGET>
-          <TYPE>
-            <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
-          </TYPE>
-          <VALUES>
-            <ATTRIBUTE-VALUE-ENUMERATION>
+            </SPEC-RELATION>
+            <SPEC-RELATION IDENTIFIER="SR_SHR020_SYS030" LAST-CHANGE="2025-07-08T11:00:00+02:00">
+              <SOURCE>
+                <SPEC-OBJECT-REF>SYS_030</SPEC-OBJECT-REF>
+              </SOURCE>
+              <TARGET>
+                <SPEC-OBJECT-REF>SHR_020</SPEC-OBJECT-REF>
+              </TARGET>
+              <TYPE>
+                <SPEC-RELATION-TYPE-REF>srt-satisfy</SPEC-RELATION-TYPE-REF>
+              </TYPE>
               <VALUES>
-                <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                <ATTRIBUTE-VALUE-ENUMERATION>
+                  <VALUES>
+                    <ENUM-VALUE-REF>enum-relation-accepted</ENUM-VALUE-REF>
+                  </VALUES>
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-ENUMERATION>
+                <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
+                  <DEFINITION>
+                    <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
+                  </DEFINITION>
+                </ATTRIBUTE-VALUE-STRING>
               </VALUES>
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>ats-relation-status</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-ENUMERATION>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="Review">
-              <DEFINITION>
-                <ATTRIBUTE-DEFINITION-STRING-REF>ats-relation-validation</ATTRIBUTE-DEFINITION-STRING-REF>
-              </DEFINITION>
-            </ATTRIBUTE-VALUE-STRING>
-          </VALUES>
-        </SPEC-RELATION>
+            </SPEC-RELATION>
+          </SPEC-RELATIONS>
+        </SPEC-RELATION-GROUP>
       </SPEC-RELATIONS>
       <SPECIFICATIONS>
         <SPECIFICATION IDENTIFIER="spec-stakeholder" LAST-CHANGE="2025-07-08T11:00:00+02:00"
