@@ -10,6 +10,12 @@ import (
 )
 
 func AddAttributeNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
+
+	if objectWithValues.GetValues() == nil {
+		log.Println("No values")
+		return
+	}
+
 	AddAttributeXHTMLNodes(stager, objectNode, objectWithValues)
 	AddAttributeStringNodes(stager, objectNode, objectWithValues)
 	AddAttributeBooleanNodes(stager, objectNode, objectWithValues)
