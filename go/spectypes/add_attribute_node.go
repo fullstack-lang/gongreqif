@@ -13,14 +13,16 @@ func addAttributeNode[
 	AttrDefRef m.AttributeDefinitionRef,
 	DatatypeDef m.DatatypeDefinition](
 
+	stager *m.Stager,
+
 	attributeDefinitions []AttrDef, // the attributes definitions to display
 	map_Id_AttributeDefinition map[string]AttrDef, // map to find attribute def from the ref
 	map_AtttributeDefinition_Spec_nbInstance map[AttrDef]int, // number of use in the selected specification
+	map_AtttributeDefinition_showInTitle map[AttrDef]bool,
 
 	attributesDefinitionRefs map[AttrDefRef]any, // the set of all reference to this kind of attribute definition
 	map_Id_DatatypeDefinition map[string]DatatypeDef,
 
-	stager *m.Stager,
 	nodeSpecType *tree.Node) {
 	if len(attributeDefinitions) > 0 {
 
@@ -55,7 +57,15 @@ func addAttributeNode[
 				Name: attributeDefinition.GetLongName() + ":" + attributeType +
 					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attributeDefinition]),
 			}
-			configureAndAddAttributeNode(nodeSpecType, nodeAttribute, nbInstances, attributeDefinition.GetIsEditable(), attributeDefinition.GetLongName())
+			configureAndAddAttributeNode(
+				stager,
+				nodeSpecType,
+				nodeAttribute,
+				nbInstances,
+				attributeDefinition.GetIsEditable(),
+				attributeDefinition.GetLongName(),
+				attributeDefinition,
+				map_AtttributeDefinition_showInTitle)
 		}
 	}
 }
