@@ -54,24 +54,47 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, specObjectTypeNode)
 
-			button := &tree.Button{
-				Name: "Show/Unshow identifier",
-				Impl: &ButtonToggleShowSpecObjectTypeIdentifierProxy{
-					stager:         stager,
-					specObjectType: specObjectType,
-				},
-				HasToolTip:      true,
-				ToolTipPosition: tree.Right,
+			{
+				button := &tree.Button{
+					Name: "Show/Unshow identifier",
+					Impl: &ButtonToggleShowSpecObjectTypeIdentifierProxy{
+						stager:         stager,
+						specObjectType: specObjectType,
+					},
+					HasToolTip:      true,
+					ToolTipPosition: tree.Right,
+				}
+
+				if !stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
+					button.ToolTipText = "Show identifier in title"
+					button.SVGIcon = svgIconBadge
+				} else {
+					button.ToolTipText = "Hide identifier in title"
+					button.SVGIcon = svgIconBadgeOff
+				}
+				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 			}
 
-			if !stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
-				button.ToolTipText = "Show identifier in title"
-				button.SVGIcon = svgIconBadge
-			} else {
-				button.ToolTipText = "Hide identifier in title"
-				button.SVGIcon = svgIconBadgeOff
+			{
+				button := &tree.Button{
+					Name: "Show/Unshow long name",
+					Impl: &ButtonToggleShowSpecObjectTypeLongNameProxy{
+						stager:         stager,
+						specObjectType: specObjectType,
+					},
+					HasToolTip:      true,
+					ToolTipPosition: tree.Right,
+				}
+
+				if !stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
+					button.ToolTipText = "Show name in title"
+					button.SVGIcon = svgIconBadge
+				} else {
+					button.ToolTipText = "Hide name in title"
+					button.SVGIcon = svgIconBadgeOff
+				}
+				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 			}
-			specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 
 			addAttibutesNodes(
 				stager,

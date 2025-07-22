@@ -224,9 +224,16 @@ func processSpecHierarchy(
 	}
 
 	if stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
-		*markDownContent += fmt.Sprintf("%s - %s\n\n", specObject.IDENTIFIER, specObject.Name)
-	} else {
-		*markDownContent += fmt.Sprintf("%s\n\n", specObject.Name)
+		*markDownContent += fmt.Sprintf("%s", specObject.IDENTIFIER)
+	}
+
+	if stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] &&
+		stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
+		*markDownContent += " - "
+	}
+
+	if stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
+		*markDownContent += fmt.Sprintf("%s", specObject.Name)
 	}
 
 	specObjectNode := &tree.Node{

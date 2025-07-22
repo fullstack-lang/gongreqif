@@ -26,6 +26,7 @@ func (stager *Stager) initMaps() {
 
 	stager.Map_SPECIFICATION_Nodes_expanded = populateBoolMap[*SPECIFICATION](stager)
 	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMapTrue[*SPEC_OBJECT_TYPE](stager)
 
 	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_XHTML]()
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowIdentifier = initializeShowIdentifierMap[ATTRIBUTE_DEFINITION_STRING]()
@@ -60,6 +61,17 @@ func populateBoolMap[T Identifiable](stager *Stager) map[T]bool {
 	instances := *GetGongstructInstancesSetFromPointerType[T](stager.GetStage())
 	for instance := range instances {
 		resultMap[instance] = false // Initialize with false
+	}
+	return resultMap
+}
+
+// populateBoolMap fetches instances of a Gongstruct type T and populates a map
+// where keys are pointers to instances and values are booleans (initialized to false).
+func populateBoolMapTrue[T Identifiable](stager *Stager) map[T]bool {
+	resultMap := make(map[T]bool)
+	instances := *GetGongstructInstancesSetFromPointerType[T](stager.GetStage())
+	for instance := range instances {
+		resultMap[instance] = true // Initialize with false
 	}
 	return resultMap
 }

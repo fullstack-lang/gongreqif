@@ -69,7 +69,7 @@ func appendAttributeXHTMLRows(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 		// 3. Trim leading/trailing space from the final string.
 		finalText := strings.TrimSpace(normalizedText)
 
-		tableRows.WriteString(fmt.Sprintf("| %s: | %s |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
 			sanitizeForMarkdownTable(finalText)))
 	}
@@ -84,7 +84,7 @@ func appendAttributeStringRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tabl
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_STRING_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF, "unknown ref")
 		}
-		tableRows.WriteString(fmt.Sprintf("| %s: | %s |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
 			sanitizeForMarkdownTable(attribute.THE_VALUE)))
 	}
@@ -99,7 +99,7 @@ func appendAttributeBooleanRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tab
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_BOOLEAN_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF, "unknown ref")
 		}
-		tableRows.WriteString(fmt.Sprintf("| %s: | %t |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %t |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
 			attribute.THE_VALUE))
 	}
@@ -114,7 +114,7 @@ func appendAttributeIntegerRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tab
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_INTEGER_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF, "unknown ref")
 		}
-		tableRows.WriteString(fmt.Sprintf("| %s: | %d |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %d |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
 			attribute.THE_VALUE))
 	}
@@ -129,7 +129,7 @@ func appendAttributeDateRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_DATE_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF, "unknown ref")
 		}
-		tableRows.WriteString(fmt.Sprintf("| %s: | %s |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
 			sanitizeForMarkdownTable(attribute.THE_VALUE)))
 	}
@@ -144,7 +144,7 @@ func appendAttributeRealRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_REAL_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF, "unknown ref")
 		}
-		tableRows.WriteString(fmt.Sprintf("| %s: | %f |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %f |\n",
 			sanitizeForMarkdownTable(attributeDefinition),
 			attribute.THE_VALUE))
 	}
@@ -170,7 +170,7 @@ func appendAttributeEnumRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 			}
 		}
 
-		tableRows.WriteString(fmt.Sprintf("| %s: | %s |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
 			sanitizeForMarkdownTable(enumTypeString),
 			sanitizeForMarkdownTable(enumValueString)))
 	}

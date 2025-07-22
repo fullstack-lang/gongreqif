@@ -187,6 +187,7 @@ type Stager struct {
 	selectedSpecification               *SPECIFICATION
 	Map_SPECIFICATION_Nodes_expanded    map[*SPECIFICATION]bool
 	Map_SPEC_OBJECT_TYPE_showIdentifier map[*SPEC_OBJECT_TYPE]bool
+	Map_SPEC_OBJECT_TYPE_showName       map[*SPEC_OBJECT_TYPE]bool
 }
 
 func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {
