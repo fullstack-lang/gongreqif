@@ -236,6 +236,8 @@ func processSpecHierarchy(
 		*markDownContent += fmt.Sprintf("%s", specObject.Name)
 	}
 
+	grabTitle(specObjectType, specObject)
+
 	specObjectNode := &tree.Node{
 		Name: specObject.Name + " : " + specObjectType.Name,
 	}
