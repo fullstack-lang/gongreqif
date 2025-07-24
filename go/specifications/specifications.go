@@ -236,7 +236,12 @@ func processSpecHierarchy(
 		*markDownContent += fmt.Sprintf("%s", specObject.Name)
 	}
 
-	grabTitle(specObjectType, specObject)
+	titleComplement := fillUpTitleWithAttributes(stager, specObjectType, specObject)
+	if *markDownContent != "" && titleComplement != "" {
+		*markDownContent += " - "
+	}
+
+	*markDownContent += titleComplement
 
 	specObjectNode := &tree.Node{
 		Name: specObject.Name + " : " + specObjectType.Name,

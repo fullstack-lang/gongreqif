@@ -1,6 +1,12 @@
 package models
 
 // Identifiable is a constraint for types that can provide a string identifier.
+// This is for type that are referenced by others
+// for instance
+//
+// DATATYPE_DEFINITION...
+// ATTRIBUTE_DEFINITION...
+//
 type Identifiable interface {
 	PointerToGongstruct
 	GetIdentifier() string
@@ -21,8 +27,8 @@ type AttributeDefinitionRef interface {
 }
 
 type Attribute interface {
-	Identifiable
-	GetLongName() string
+	GetValue() string
+	GetAttributeDefinitionRef() string
 }
 
 type DatatypeDefinition interface {
