@@ -30,7 +30,7 @@ func (stager *Stager) initMaps() {
 
 	stager.Map_SPEC_OBJECT_TYPE_isHeading = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
 
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTile = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)

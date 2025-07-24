@@ -228,7 +228,7 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_XHTML,
 		stager.Map_id_ATTRIBUTE_DEFINITION_XHTML,
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTile,
+		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_XHTML,
 		nodeSpecType)
