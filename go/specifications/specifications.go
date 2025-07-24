@@ -221,6 +221,11 @@ func processSpecHierarchy(
 `
 
 	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+
+		*markDownContent += `
+
+`
+
 		if specHierarchy.CHILDREN == nil || len(specHierarchy.CHILDREN.SPEC_HIERARCHY) == 0 {
 			*markDownContent += "#"
 		}
@@ -256,7 +261,10 @@ func processSpecHierarchy(
 
 	*markDownContent += titleComplement
 
-	if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+		*markDownContent += `
+		`
+	} else {
 		// ending mark for bold
 		*markDownContent += markdownBoldEndingMark
 	}

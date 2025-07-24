@@ -50,9 +50,12 @@ func AppendAttributesToMarkdown(stager *m.Stager, specObject *m.SPEC_OBJECT, mar
 // appendAttributeXHTMLRows formats and appends XHTML attributes as markdown table rows.
 func appendAttributeXHTMLRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_XHTML_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF, "unknown ref")
 		}
@@ -70,7 +73,7 @@ func appendAttributeXHTMLRows(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 		finalText := strings.TrimSpace(normalizedText)
 
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
-			sanitizeForMarkdownTable(attributeDefinition),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			sanitizeForMarkdownTable(finalText)))
 	}
 }
@@ -78,14 +81,17 @@ func appendAttributeXHTMLRows(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 // appendAttributeStringRows formats and appends String attributes as markdown table rows.
 func appendAttributeStringRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_STRING_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF, "unknown ref")
 		}
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
-			sanitizeForMarkdownTable(attributeDefinition),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			sanitizeForMarkdownTable(attribute.THE_VALUE)))
 	}
 }
@@ -93,14 +99,17 @@ func appendAttributeStringRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tabl
 // appendAttributeBooleanRows formats and appends Boolean attributes as markdown table rows.
 func appendAttributeBooleanRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_BOOLEAN {
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_BOOLEAN_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF, "unknown ref")
 		}
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %t |\n",
-			sanitizeForMarkdownTable(attributeDefinition),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			attribute.THE_VALUE))
 	}
 }
@@ -108,14 +117,17 @@ func appendAttributeBooleanRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tab
 // appendAttributeIntegerRows formats and appends Integer attributes as markdown table rows.
 func appendAttributeIntegerRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_INTEGER {
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_INTEGER_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF, "unknown ref")
 		}
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %d |\n",
-			sanitizeForMarkdownTable(attributeDefinition),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			attribute.THE_VALUE))
 	}
 }
@@ -123,14 +135,17 @@ func appendAttributeIntegerRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tab
 // appendAttributeDateRows formats and appends Date attributes as markdown table rows.
 func appendAttributeDateRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_DATE {
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_DATE[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_DATE[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_DATE_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF, "unknown ref")
 		}
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
-			sanitizeForMarkdownTable(attributeDefinition),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			sanitizeForMarkdownTable(attribute.THE_VALUE)))
 	}
 }
@@ -138,14 +153,17 @@ func appendAttributeDateRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 // appendAttributeRealRows formats and appends Real attributes as markdown table rows.
 func appendAttributeRealRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_REAL {
-		var attributeDefinition string
-		if datatype, ok := stager.Map_id_ATTRIBUTE_DEFINITION_REAL[attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF]; ok {
-			attributeDefinition = datatype.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_REAL[attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_REAL_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF, "unknown ref")
 		}
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %f |\n",
-			sanitizeForMarkdownTable(attributeDefinition),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			attribute.THE_VALUE))
 	}
 }
@@ -153,9 +171,12 @@ func appendAttributeRealRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 // appendAttributeEnumRows formats and appends Enumeration attributes as markdown table rows.
 func appendAttributeEnumRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 	for _, attribute := range specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION {
-		var enumTypeString string
-		if enumType, ok := stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
-			enumTypeString = enumType.LONG_NAME
+		var attributeDefinitionName string
+		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
+			attributeDefinitionName = attributeDefinition.LONG_NAME
+			if !stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable[attributeDefinition] {
+				continue
+			}
 		} else {
 			log.Panic("ATTRIBUTE_DEFINITION_ENUMERATION_REF", attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF, "unknown ref")
 		}
@@ -171,7 +192,7 @@ func appendAttributeEnumRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		}
 
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
-			sanitizeForMarkdownTable(enumTypeString),
+			sanitizeForMarkdownTable(attributeDefinitionName),
 			sanitizeForMarkdownTable(enumValueString)))
 	}
 }
