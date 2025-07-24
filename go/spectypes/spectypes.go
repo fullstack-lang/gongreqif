@@ -96,6 +96,27 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 			}
 
+			{
+				button := &tree.Button{
+					Name: "Is Spec Object Type Heading",
+					Impl: &ButtonToggleShowSpecObjectTypeIsHeadingProxy{
+						stager:         stager,
+						specObjectType: specObjectType,
+					},
+					HasToolTip:      true,
+					ToolTipPosition: tree.Right,
+				}
+
+				if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+					button.ToolTipText = "Treat as heading"
+					button.SVGIcon = svgIconTitle
+				} else {
+					button.ToolTipText = "Treat as no heading"
+					button.SVGIcon = svgIconTitleOff
+				}
+				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
+			}
+
 			addAttibutesNodes(
 				stager,
 				specObjectTypeNode,

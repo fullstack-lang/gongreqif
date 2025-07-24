@@ -28,17 +28,19 @@ func (stager *Stager) initMaps() {
 	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTile = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_STRING](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_DATE](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_REAL](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
+	stager.Map_SPEC_OBJECT_TYPE_isHeading = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
+
+	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTile = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
 }
 
 // Generic function to initialize a map with *T as key and bool as value
-func initializeShowIdentifierMap[T PointerToGongstruct](stager *Stager) map[T]bool {
+func initializePointerToGongstructMap[T PointerToGongstruct](stager *Stager) map[T]bool {
 	resultMap := make(map[T]bool)
 
 	instances := *GetGongstructInstancesSetFromPointerType[T](stager.GetStage())
