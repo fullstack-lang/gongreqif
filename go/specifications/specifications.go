@@ -213,24 +213,27 @@ func processSpecHierarchy(
 			"unknown ref")
 	}
 
-	// if specHierarchy.CHILDREN == nil || len(specHierarchy.CHILDREN.SPEC_HIERARCHY) == 0 {
-	// 	*markDownContent += "#"
-	// }
-
-	// if true {
-	// 	for range depth {
-	// 		*markDownContent += "#"
-	// 	}
-	// 	*markDownContent += " "
-	// }
-
 	// starting makr bold
 
 	markdownBoldStartingMark := `
 **`
 	markdownBoldEndingMark := `**
 `
-	*markDownContent += markdownBoldStartingMark
+
+	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+		if specHierarchy.CHILDREN == nil || len(specHierarchy.CHILDREN.SPEC_HIERARCHY) == 0 {
+			*markDownContent += "#"
+		}
+
+		if true {
+			for range depth {
+				*markDownContent += "#"
+			}
+			*markDownContent += " "
+		}
+	} else {
+		*markDownContent += markdownBoldStartingMark
+	}
 
 	if stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
 		*markDownContent += fmt.Sprintf("%s", specObject.IDENTIFIER)
@@ -246,13 +249,17 @@ func processSpecHierarchy(
 	}
 
 	titleComplement := fillUpTitleWithAttributes(stager, specObject)
-	if !strings.HasSuffix(*markDownContent, "**") && titleComplement != "" {
+
+	if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] && !strings.HasSuffix(*markDownContent, "**") && titleComplement != "" {
 		*markDownContent += " - "
 	}
 
 	*markDownContent += titleComplement
-	// ending mark for bold
-	*markDownContent += markdownBoldEndingMark
+
+	if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+		// ending mark for bold
+		*markDownContent += markdownBoldEndingMark
+	}
 
 	// remove "****" if no title is present
 	if strings.HasSuffix(*markDownContent, markdownBoldStartingMark+markdownBoldEndingMark) {
