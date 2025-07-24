@@ -6,9 +6,9 @@ import (
 )
 
 // fillUpTitleWithAttributes
-func fillUpTitleWithAttributes(stager *m.Stager, specObjectType *m.SPEC_OBJECT_TYPE, specObject *m.SPEC_OBJECT) (titleComplement string) {
+func fillUpTitleWithAttributes(stager *m.Stager, specObject *m.SPEC_OBJECT) (titleComplement string) {
 
-	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_STRING)
+	titleComplement = parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_STRING)
 
 	return
 }
@@ -23,6 +23,10 @@ func parseAttributes[Attr m.Attribute](stager *m.Stager, attributes []Attr) (tit
 		isInTitle := m.GetAttributeDefinitionIsDisplayed(stager, attr)
 
 		if isInTitle {
+			if titleComplement != "" {
+				titleComplement += " - "
+			}
+
 			titleComplement += attr.GetValue()
 		}
 	}

@@ -25,8 +25,8 @@ func (stager *Stager) initMaps() {
 	stager.Map_id_SPEC_RELATION_TYPE = populateIdMap[*SPEC_RELATION_TYPE](stager)
 
 	stager.Map_SPECIFICATION_Nodes_expanded = populateBoolMap[*SPECIFICATION](stager)
-	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMapTrue[*SPEC_OBJECT_TYPE](stager)
-	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMapTrue[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
 	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTile = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle = initializeShowIdentifierMap[*ATTRIBUTE_DEFINITION_STRING](stager)
