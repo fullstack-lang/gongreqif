@@ -10,8 +10,6 @@ import (
 	ssg "github.com/fullstack-lang/gong/lib/ssg/go/models"
 )
 
-const SchemaPP_BA_Librables string = "PP_BA_Livrables.svg"
-const SnoboubouXL string = "snoboubou.xlsx"
 const logo string = "logo.svg"
 
 func (stager *Stager) generatesSiteFromSSGStage() {
@@ -95,18 +93,11 @@ func (stager *Stager) copyImagesToDirectoryForSsgGeneration() (error, bool) {
 	}
 	// log.Printf("Root content directory created or already exists: %s\n", pathToGeneratedSVG)
 
-	/* copy necessary images for the genenration */
-	ssg.CopyFile(
-		filepath.Join(stager.rootPathToImageInputs, siteWeb.InputImagesDir, SchemaPP_BA_Librables),
-		filepath.Join(pathToGeneratedImages, SchemaPP_BA_Librables))
-	ssg.CopyFile(
-		filepath.Join(stager.rootPathToImageInputs, siteWeb.InputImagesDir, SnoboubouXL),
-		filepath.Join(pathToGeneratedImages, SnoboubouXL))
 	ssg.CopyFile(
 		filepath.Join(stager.rootPathToImageInputs, siteWeb.InputImagesDir, logo),
 		filepath.Join(pathToGeneratedImages, logo))
 
-	images := *GetGongstructInstancesSet[Image](stager.stage)
+	images := *GetGongstructInstancesSet[StaticWebSiteImage](stager.stage)
 	for image := range images {
 		ssg.CopyFile(filepath.Join(image.SourceDirectoryPath, siteWeb.InputImagesDir, image.Name), filepath.Join(pathToGeneratedImages, image.Name))
 	}

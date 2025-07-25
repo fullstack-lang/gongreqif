@@ -86,9 +86,6 @@ func SerializeStage(stage *Stage, filename string) {
 		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_XHTML](stage, f)
 		SerializeExcelizePointerToGongstruct[*EMBEDDED_VALUE](stage, f)
 		SerializeExcelizePointerToGongstruct[*ENUM_VALUE](stage, f)
-		SerializeExcelizePointerToGongstruct[*GeneratedImageMetamodel](stage, f)
-		SerializeExcelizePointerToGongstruct[*Image](stage, f)
-		SerializeExcelizePointerToGongstruct[*Paragraph](stage, f)
 		SerializeExcelizePointerToGongstruct[*RELATION_GROUP](stage, f)
 		SerializeExcelizePointerToGongstruct[*RELATION_GROUP_TYPE](stage, f)
 		SerializeExcelizePointerToGongstruct[*REQ_IF](stage, f)
@@ -104,6 +101,9 @@ func SerializeStage(stage *Stage, filename string) {
 		SerializeExcelizePointerToGongstruct[*SPEC_RELATION_TYPE](stage, f)
 		SerializeExcelizePointerToGongstruct[*StaticWebSite](stage, f)
 		SerializeExcelizePointerToGongstruct[*StaticWebSiteChapter](stage, f)
+		SerializeExcelizePointerToGongstruct[*StaticWebSiteGeneratedImage](stage, f)
+		SerializeExcelizePointerToGongstruct[*StaticWebSiteImage](stage, f)
+		SerializeExcelizePointerToGongstruct[*StaticWebSiteParagraph](stage, f)
 		SerializeExcelizePointerToGongstruct[*XHTML_CONTENT](stage, f)
 	}
 

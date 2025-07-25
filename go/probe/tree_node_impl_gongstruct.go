@@ -260,15 +260,6 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ENUM_VALUE" {
 		updateAndCommitTable[models.ENUM_VALUE](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "GeneratedImageMetamodel" {
-		updateAndCommitTable[models.GeneratedImageMetamodel](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Image" {
-		updateAndCommitTable[models.Image](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "Paragraph" {
-		updateAndCommitTable[models.Paragraph](nodeImplGongstruct.probe)
-	}
 	if nodeImplGongstruct.gongStruct.GetName() == "RELATION_GROUP" {
 		updateAndCommitTable[models.RELATION_GROUP](nodeImplGongstruct.probe)
 	}
@@ -313,6 +304,15 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "StaticWebSiteChapter" {
 		updateAndCommitTable[models.StaticWebSiteChapter](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "StaticWebSiteGeneratedImage" {
+		updateAndCommitTable[models.StaticWebSiteGeneratedImage](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "StaticWebSiteImage" {
+		updateAndCommitTable[models.StaticWebSiteImage](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "StaticWebSiteParagraph" {
+		updateAndCommitTable[models.StaticWebSiteParagraph](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "XHTML_CONTENT" {
 		updateAndCommitTable[models.XHTML_CONTENT](nodeImplGongstruct.probe)

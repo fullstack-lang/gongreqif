@@ -69,4 +69,7 @@ func (e *ExportStaticSiteButtonProxy) GetButtonsStage() *button.Stage {
 
 // OnAfterUpdateButton implements models.Target.
 func (e *ExportStaticSiteButtonProxy) OnAfterUpdateButton() {
+
+	e.stager.UpdateAndCommitSsgStage()
+	e.stager.generatesSiteFromSSGStage()
 }

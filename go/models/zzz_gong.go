@@ -795,33 +795,6 @@ type Stage struct {
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
-	GeneratedImageMetamodels           map[*GeneratedImageMetamodel]any
-	GeneratedImageMetamodels_mapString map[string]*GeneratedImageMetamodel
-
-	// insertion point for slice of pointers maps
-	OnAfterGeneratedImageMetamodelCreateCallback OnAfterCreateInterface[GeneratedImageMetamodel]
-	OnAfterGeneratedImageMetamodelUpdateCallback OnAfterUpdateInterface[GeneratedImageMetamodel]
-	OnAfterGeneratedImageMetamodelDeleteCallback OnAfterDeleteInterface[GeneratedImageMetamodel]
-	OnAfterGeneratedImageMetamodelReadCallback   OnAfterReadInterface[GeneratedImageMetamodel]
-
-	Images           map[*Image]any
-	Images_mapString map[string]*Image
-
-	// insertion point for slice of pointers maps
-	OnAfterImageCreateCallback OnAfterCreateInterface[Image]
-	OnAfterImageUpdateCallback OnAfterUpdateInterface[Image]
-	OnAfterImageDeleteCallback OnAfterDeleteInterface[Image]
-	OnAfterImageReadCallback   OnAfterReadInterface[Image]
-
-	Paragraphs           map[*Paragraph]any
-	Paragraphs_mapString map[string]*Paragraph
-
-	// insertion point for slice of pointers maps
-	OnAfterParagraphCreateCallback OnAfterCreateInterface[Paragraph]
-	OnAfterParagraphUpdateCallback OnAfterUpdateInterface[Paragraph]
-	OnAfterParagraphDeleteCallback OnAfterDeleteInterface[Paragraph]
-	OnAfterParagraphReadCallback   OnAfterReadInterface[Paragraph]
-
 	RELATION_GROUPs           map[*RELATION_GROUP]any
 	RELATION_GROUPs_mapString map[string]*RELATION_GROUP
 
@@ -954,12 +927,39 @@ type Stage struct {
 	StaticWebSiteChapters_mapString map[string]*StaticWebSiteChapter
 
 	// insertion point for slice of pointers maps
-	StaticWebSiteChapter_Paragraphs_reverseMap map[*Paragraph]*StaticWebSiteChapter
+	StaticWebSiteChapter_Paragraphs_reverseMap map[*StaticWebSiteParagraph]*StaticWebSiteChapter
 
 	OnAfterStaticWebSiteChapterCreateCallback OnAfterCreateInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterUpdateCallback OnAfterUpdateInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterDeleteCallback OnAfterDeleteInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterReadCallback   OnAfterReadInterface[StaticWebSiteChapter]
+
+	StaticWebSiteGeneratedImages           map[*StaticWebSiteGeneratedImage]any
+	StaticWebSiteGeneratedImages_mapString map[string]*StaticWebSiteGeneratedImage
+
+	// insertion point for slice of pointers maps
+	OnAfterStaticWebSiteGeneratedImageCreateCallback OnAfterCreateInterface[StaticWebSiteGeneratedImage]
+	OnAfterStaticWebSiteGeneratedImageUpdateCallback OnAfterUpdateInterface[StaticWebSiteGeneratedImage]
+	OnAfterStaticWebSiteGeneratedImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteGeneratedImage]
+	OnAfterStaticWebSiteGeneratedImageReadCallback   OnAfterReadInterface[StaticWebSiteGeneratedImage]
+
+	StaticWebSiteImages           map[*StaticWebSiteImage]any
+	StaticWebSiteImages_mapString map[string]*StaticWebSiteImage
+
+	// insertion point for slice of pointers maps
+	OnAfterStaticWebSiteImageCreateCallback OnAfterCreateInterface[StaticWebSiteImage]
+	OnAfterStaticWebSiteImageUpdateCallback OnAfterUpdateInterface[StaticWebSiteImage]
+	OnAfterStaticWebSiteImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteImage]
+	OnAfterStaticWebSiteImageReadCallback   OnAfterReadInterface[StaticWebSiteImage]
+
+	StaticWebSiteParagraphs           map[*StaticWebSiteParagraph]any
+	StaticWebSiteParagraphs_mapString map[string]*StaticWebSiteParagraph
+
+	// insertion point for slice of pointers maps
+	OnAfterStaticWebSiteParagraphCreateCallback OnAfterCreateInterface[StaticWebSiteParagraph]
+	OnAfterStaticWebSiteParagraphUpdateCallback OnAfterUpdateInterface[StaticWebSiteParagraph]
+	OnAfterStaticWebSiteParagraphDeleteCallback OnAfterDeleteInterface[StaticWebSiteParagraph]
+	OnAfterStaticWebSiteParagraphReadCallback   OnAfterReadInterface[StaticWebSiteParagraph]
 
 	XHTML_CONTENTs           map[*XHTML_CONTENT]any
 	XHTML_CONTENTs_mapString map[string]*XHTML_CONTENT
@@ -1206,15 +1206,6 @@ type Stage struct {
 	ENUM_VALUEOrder            uint
 	ENUM_VALUEMap_Staged_Order map[*ENUM_VALUE]uint
 
-	GeneratedImageMetamodelOrder            uint
-	GeneratedImageMetamodelMap_Staged_Order map[*GeneratedImageMetamodel]uint
-
-	ImageOrder            uint
-	ImageMap_Staged_Order map[*Image]uint
-
-	ParagraphOrder            uint
-	ParagraphMap_Staged_Order map[*Paragraph]uint
-
 	RELATION_GROUPOrder            uint
 	RELATION_GROUPMap_Staged_Order map[*RELATION_GROUP]uint
 
@@ -1259,6 +1250,15 @@ type Stage struct {
 
 	StaticWebSiteChapterOrder            uint
 	StaticWebSiteChapterMap_Staged_Order map[*StaticWebSiteChapter]uint
+
+	StaticWebSiteGeneratedImageOrder            uint
+	StaticWebSiteGeneratedImageMap_Staged_Order map[*StaticWebSiteGeneratedImage]uint
+
+	StaticWebSiteImageOrder            uint
+	StaticWebSiteImageMap_Staged_Order map[*StaticWebSiteImage]uint
+
+	StaticWebSiteParagraphOrder            uint
+	StaticWebSiteParagraphMap_Staged_Order map[*StaticWebSiteParagraph]uint
 
 	XHTML_CONTENTOrder            uint
 	XHTML_CONTENTMap_Staged_Order map[*XHTML_CONTENT]uint
@@ -2298,48 +2298,6 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
-	case *GeneratedImageMetamodel:
-		tmp := GetStructInstancesByOrder(stage.GeneratedImageMetamodels, stage.GeneratedImageMetamodelMap_Staged_Order)
-
-		// Create a new slice of the generic type T with the same capacity.
-		res = make([]T, 0, len(tmp))
-
-		// Iterate over the source slice and perform a type assertion on each element.
-		for _, v := range tmp {
-			// Assert that the element 'v' can be treated as type 'T'.
-			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *GeneratedImageMetamodel implements.
-			res = append(res, any(v).(T))
-		}
-		return res
-	case *Image:
-		tmp := GetStructInstancesByOrder(stage.Images, stage.ImageMap_Staged_Order)
-
-		// Create a new slice of the generic type T with the same capacity.
-		res = make([]T, 0, len(tmp))
-
-		// Iterate over the source slice and perform a type assertion on each element.
-		for _, v := range tmp {
-			// Assert that the element 'v' can be treated as type 'T'.
-			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *Image implements.
-			res = append(res, any(v).(T))
-		}
-		return res
-	case *Paragraph:
-		tmp := GetStructInstancesByOrder(stage.Paragraphs, stage.ParagraphMap_Staged_Order)
-
-		// Create a new slice of the generic type T with the same capacity.
-		res = make([]T, 0, len(tmp))
-
-		// Iterate over the source slice and perform a type assertion on each element.
-		for _, v := range tmp {
-			// Assert that the element 'v' can be treated as type 'T'.
-			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *Paragraph implements.
-			res = append(res, any(v).(T))
-		}
-		return res
 	case *RELATION_GROUP:
 		tmp := GetStructInstancesByOrder(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
 
@@ -2550,6 +2508,48 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
+	case *StaticWebSiteGeneratedImage:
+		tmp := GetStructInstancesByOrder(stage.StaticWebSiteGeneratedImages, stage.StaticWebSiteGeneratedImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *StaticWebSiteGeneratedImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *StaticWebSiteImage:
+		tmp := GetStructInstancesByOrder(stage.StaticWebSiteImages, stage.StaticWebSiteImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *StaticWebSiteImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *StaticWebSiteParagraph:
+		tmp := GetStructInstancesByOrder(stage.StaticWebSiteParagraphs, stage.StaticWebSiteParagraphMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *StaticWebSiteParagraph implements.
+			res = append(res, any(v).(T))
+		}
+		return res
 	case *XHTML_CONTENT:
 		tmp := GetStructInstancesByOrder(stage.XHTML_CONTENTs, stage.XHTML_CONTENTMap_Staged_Order)
 
@@ -2737,12 +2737,6 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.EMBEDDED_VALUEs, stage.EMBEDDED_VALUEMap_Staged_Order)
 	case "ENUM_VALUE":
 		res = GetNamedStructInstances(stage.ENUM_VALUEs, stage.ENUM_VALUEMap_Staged_Order)
-	case "GeneratedImageMetamodel":
-		res = GetNamedStructInstances(stage.GeneratedImageMetamodels, stage.GeneratedImageMetamodelMap_Staged_Order)
-	case "Image":
-		res = GetNamedStructInstances(stage.Images, stage.ImageMap_Staged_Order)
-	case "Paragraph":
-		res = GetNamedStructInstances(stage.Paragraphs, stage.ParagraphMap_Staged_Order)
 	case "RELATION_GROUP":
 		res = GetNamedStructInstances(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
 	case "RELATION_GROUP_TYPE":
@@ -2773,6 +2767,12 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.StaticWebSites, stage.StaticWebSiteMap_Staged_Order)
 	case "StaticWebSiteChapter":
 		res = GetNamedStructInstances(stage.StaticWebSiteChapters, stage.StaticWebSiteChapterMap_Staged_Order)
+	case "StaticWebSiteGeneratedImage":
+		res = GetNamedStructInstances(stage.StaticWebSiteGeneratedImages, stage.StaticWebSiteGeneratedImageMap_Staged_Order)
+	case "StaticWebSiteImage":
+		res = GetNamedStructInstances(stage.StaticWebSiteImages, stage.StaticWebSiteImageMap_Staged_Order)
+	case "StaticWebSiteParagraph":
+		res = GetNamedStructInstances(stage.StaticWebSiteParagraphs, stage.StaticWebSiteParagraphMap_Staged_Order)
 	case "XHTML_CONTENT":
 		res = GetNamedStructInstances(stage.XHTML_CONTENTs, stage.XHTML_CONTENTMap_Staged_Order)
 	}
@@ -2984,12 +2984,6 @@ type BackRepoInterface interface {
 	CheckoutEMBEDDED_VALUE(embedded_value *EMBEDDED_VALUE)
 	CommitENUM_VALUE(enum_value *ENUM_VALUE)
 	CheckoutENUM_VALUE(enum_value *ENUM_VALUE)
-	CommitGeneratedImageMetamodel(generatedimagemetamodel *GeneratedImageMetamodel)
-	CheckoutGeneratedImageMetamodel(generatedimagemetamodel *GeneratedImageMetamodel)
-	CommitImage(image *Image)
-	CheckoutImage(image *Image)
-	CommitParagraph(paragraph *Paragraph)
-	CheckoutParagraph(paragraph *Paragraph)
 	CommitRELATION_GROUP(relation_group *RELATION_GROUP)
 	CheckoutRELATION_GROUP(relation_group *RELATION_GROUP)
 	CommitRELATION_GROUP_TYPE(relation_group_type *RELATION_GROUP_TYPE)
@@ -3020,6 +3014,12 @@ type BackRepoInterface interface {
 	CheckoutStaticWebSite(staticwebsite *StaticWebSite)
 	CommitStaticWebSiteChapter(staticwebsitechapter *StaticWebSiteChapter)
 	CheckoutStaticWebSiteChapter(staticwebsitechapter *StaticWebSiteChapter)
+	CommitStaticWebSiteGeneratedImage(staticwebsitegeneratedimage *StaticWebSiteGeneratedImage)
+	CheckoutStaticWebSiteGeneratedImage(staticwebsitegeneratedimage *StaticWebSiteGeneratedImage)
+	CommitStaticWebSiteImage(staticwebsiteimage *StaticWebSiteImage)
+	CheckoutStaticWebSiteImage(staticwebsiteimage *StaticWebSiteImage)
+	CommitStaticWebSiteParagraph(staticwebsiteparagraph *StaticWebSiteParagraph)
+	CheckoutStaticWebSiteParagraph(staticwebsiteparagraph *StaticWebSiteParagraph)
 	CommitXHTML_CONTENT(xhtml_content *XHTML_CONTENT)
 	CheckoutXHTML_CONTENT(xhtml_content *XHTML_CONTENT)
 	GetLastCommitFromBackNb() uint
@@ -3239,15 +3239,6 @@ func NewStage(name string) (stage *Stage) {
 		ENUM_VALUEs:           make(map[*ENUM_VALUE]any),
 		ENUM_VALUEs_mapString: make(map[string]*ENUM_VALUE),
 
-		GeneratedImageMetamodels:           make(map[*GeneratedImageMetamodel]any),
-		GeneratedImageMetamodels_mapString: make(map[string]*GeneratedImageMetamodel),
-
-		Images:           make(map[*Image]any),
-		Images_mapString: make(map[string]*Image),
-
-		Paragraphs:           make(map[*Paragraph]any),
-		Paragraphs_mapString: make(map[string]*Paragraph),
-
 		RELATION_GROUPs:           make(map[*RELATION_GROUP]any),
 		RELATION_GROUPs_mapString: make(map[string]*RELATION_GROUP),
 
@@ -3292,6 +3283,15 @@ func NewStage(name string) (stage *Stage) {
 
 		StaticWebSiteChapters:           make(map[*StaticWebSiteChapter]any),
 		StaticWebSiteChapters_mapString: make(map[string]*StaticWebSiteChapter),
+
+		StaticWebSiteGeneratedImages:           make(map[*StaticWebSiteGeneratedImage]any),
+		StaticWebSiteGeneratedImages_mapString: make(map[string]*StaticWebSiteGeneratedImage),
+
+		StaticWebSiteImages:           make(map[*StaticWebSiteImage]any),
+		StaticWebSiteImages_mapString: make(map[string]*StaticWebSiteImage),
+
+		StaticWebSiteParagraphs:           make(map[*StaticWebSiteParagraph]any),
+		StaticWebSiteParagraphs_mapString: make(map[string]*StaticWebSiteParagraph),
 
 		XHTML_CONTENTs:           make(map[*XHTML_CONTENT]any),
 		XHTML_CONTENTs_mapString: make(map[string]*XHTML_CONTENT),
@@ -3446,12 +3446,6 @@ func NewStage(name string) (stage *Stage) {
 
 		ENUM_VALUEMap_Staged_Order: make(map[*ENUM_VALUE]uint),
 
-		GeneratedImageMetamodelMap_Staged_Order: make(map[*GeneratedImageMetamodel]uint),
-
-		ImageMap_Staged_Order: make(map[*Image]uint),
-
-		ParagraphMap_Staged_Order: make(map[*Paragraph]uint),
-
 		RELATION_GROUPMap_Staged_Order: make(map[*RELATION_GROUP]uint),
 
 		RELATION_GROUP_TYPEMap_Staged_Order: make(map[*RELATION_GROUP_TYPE]uint),
@@ -3481,6 +3475,12 @@ func NewStage(name string) (stage *Stage) {
 		StaticWebSiteMap_Staged_Order: make(map[*StaticWebSite]uint),
 
 		StaticWebSiteChapterMap_Staged_Order: make(map[*StaticWebSiteChapter]uint),
+
+		StaticWebSiteGeneratedImageMap_Staged_Order: make(map[*StaticWebSiteGeneratedImage]uint),
+
+		StaticWebSiteImageMap_Staged_Order: make(map[*StaticWebSiteImage]uint),
+
+		StaticWebSiteParagraphMap_Staged_Order: make(map[*StaticWebSiteParagraph]uint),
 
 		XHTML_CONTENTMap_Staged_Order: make(map[*XHTML_CONTENT]uint),
 
@@ -3557,9 +3557,6 @@ func NewStage(name string) (stage *Stage) {
 			{name: "DATATYPE_DEFINITION_XHTML"},
 			{name: "EMBEDDED_VALUE"},
 			{name: "ENUM_VALUE"},
-			{name: "GeneratedImageMetamodel"},
-			{name: "Image"},
-			{name: "Paragraph"},
 			{name: "RELATION_GROUP"},
 			{name: "RELATION_GROUP_TYPE"},
 			{name: "REQ_IF"},
@@ -3575,6 +3572,9 @@ func NewStage(name string) (stage *Stage) {
 			{name: "SPEC_RELATION_TYPE"},
 			{name: "StaticWebSite"},
 			{name: "StaticWebSiteChapter"},
+			{name: "StaticWebSiteGeneratedImage"},
+			{name: "StaticWebSiteImage"},
+			{name: "StaticWebSiteParagraph"},
 			{name: "XHTML_CONTENT"},
 		}, // end of insertion point
 	}
@@ -3726,12 +3726,6 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
-	case *GeneratedImageMetamodel:
-		return stage.GeneratedImageMetamodelMap_Staged_Order[instance]
-	case *Image:
-		return stage.ImageMap_Staged_Order[instance]
-	case *Paragraph:
-		return stage.ParagraphMap_Staged_Order[instance]
 	case *RELATION_GROUP:
 		return stage.RELATION_GROUPMap_Staged_Order[instance]
 	case *RELATION_GROUP_TYPE:
@@ -3762,6 +3756,12 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.StaticWebSiteMap_Staged_Order[instance]
 	case *StaticWebSiteChapter:
 		return stage.StaticWebSiteChapterMap_Staged_Order[instance]
+	case *StaticWebSiteGeneratedImage:
+		return stage.StaticWebSiteGeneratedImageMap_Staged_Order[instance]
+	case *StaticWebSiteImage:
+		return stage.StaticWebSiteImageMap_Staged_Order[instance]
+	case *StaticWebSiteParagraph:
+		return stage.StaticWebSiteParagraphMap_Staged_Order[instance]
 	case *XHTML_CONTENT:
 		return stage.XHTML_CONTENTMap_Staged_Order[instance]
 	default:
@@ -3913,12 +3913,6 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
-	case *GeneratedImageMetamodel:
-		return stage.GeneratedImageMetamodelMap_Staged_Order[instance]
-	case *Image:
-		return stage.ImageMap_Staged_Order[instance]
-	case *Paragraph:
-		return stage.ParagraphMap_Staged_Order[instance]
 	case *RELATION_GROUP:
 		return stage.RELATION_GROUPMap_Staged_Order[instance]
 	case *RELATION_GROUP_TYPE:
@@ -3949,6 +3943,12 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.StaticWebSiteMap_Staged_Order[instance]
 	case *StaticWebSiteChapter:
 		return stage.StaticWebSiteChapterMap_Staged_Order[instance]
+	case *StaticWebSiteGeneratedImage:
+		return stage.StaticWebSiteGeneratedImageMap_Staged_Order[instance]
+	case *StaticWebSiteImage:
+		return stage.StaticWebSiteImageMap_Staged_Order[instance]
+	case *StaticWebSiteParagraph:
+		return stage.StaticWebSiteParagraphMap_Staged_Order[instance]
 	case *XHTML_CONTENT:
 		return stage.XHTML_CONTENTMap_Staged_Order[instance]
 	default:
@@ -4048,9 +4048,6 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
-	stage.Map_GongStructName_InstancesNb["GeneratedImageMetamodel"] = len(stage.GeneratedImageMetamodels)
-	stage.Map_GongStructName_InstancesNb["Image"] = len(stage.Images)
-	stage.Map_GongStructName_InstancesNb["Paragraph"] = len(stage.Paragraphs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP"] = len(stage.RELATION_GROUPs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP_TYPE"] = len(stage.RELATION_GROUP_TYPEs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF"] = len(stage.REQ_IFs)
@@ -4066,6 +4063,9 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["SPEC_RELATION_TYPE"] = len(stage.SPEC_RELATION_TYPEs)
 	stage.Map_GongStructName_InstancesNb["StaticWebSite"] = len(stage.StaticWebSites)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteChapter"] = len(stage.StaticWebSiteChapters)
+	stage.Map_GongStructName_InstancesNb["StaticWebSiteGeneratedImage"] = len(stage.StaticWebSiteGeneratedImages)
+	stage.Map_GongStructName_InstancesNb["StaticWebSiteImage"] = len(stage.StaticWebSiteImages)
+	stage.Map_GongStructName_InstancesNb["StaticWebSiteParagraph"] = len(stage.StaticWebSiteParagraphs)
 	stage.Map_GongStructName_InstancesNb["XHTML_CONTENT"] = len(stage.XHTML_CONTENTs)
 
 }
@@ -4147,9 +4147,6 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
-	stage.Map_GongStructName_InstancesNb["GeneratedImageMetamodel"] = len(stage.GeneratedImageMetamodels)
-	stage.Map_GongStructName_InstancesNb["Image"] = len(stage.Images)
-	stage.Map_GongStructName_InstancesNb["Paragraph"] = len(stage.Paragraphs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP"] = len(stage.RELATION_GROUPs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP_TYPE"] = len(stage.RELATION_GROUP_TYPEs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF"] = len(stage.REQ_IFs)
@@ -4165,6 +4162,9 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["SPEC_RELATION_TYPE"] = len(stage.SPEC_RELATION_TYPEs)
 	stage.Map_GongStructName_InstancesNb["StaticWebSite"] = len(stage.StaticWebSites)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteChapter"] = len(stage.StaticWebSiteChapters)
+	stage.Map_GongStructName_InstancesNb["StaticWebSiteGeneratedImage"] = len(stage.StaticWebSiteGeneratedImages)
+	stage.Map_GongStructName_InstancesNb["StaticWebSiteImage"] = len(stage.StaticWebSiteImages)
+	stage.Map_GongStructName_InstancesNb["StaticWebSiteParagraph"] = len(stage.StaticWebSiteParagraphs)
 	stage.Map_GongStructName_InstancesNb["XHTML_CONTENT"] = len(stage.XHTML_CONTENTs)
 
 }
@@ -8048,171 +8048,6 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 	return enum_value.Name
 }
 
-// Stage puts generatedimagemetamodel to the model stage
-func (generatedimagemetamodel *GeneratedImageMetamodel) Stage(stage *Stage) *GeneratedImageMetamodel {
-
-	if _, ok := stage.GeneratedImageMetamodels[generatedimagemetamodel]; !ok {
-		stage.GeneratedImageMetamodels[generatedimagemetamodel] = __member
-		stage.GeneratedImageMetamodelMap_Staged_Order[generatedimagemetamodel] = stage.GeneratedImageMetamodelOrder
-		stage.GeneratedImageMetamodelOrder++
-	}
-	stage.GeneratedImageMetamodels_mapString[generatedimagemetamodel.Name] = generatedimagemetamodel
-
-	return generatedimagemetamodel
-}
-
-// Unstage removes generatedimagemetamodel off the model stage
-func (generatedimagemetamodel *GeneratedImageMetamodel) Unstage(stage *Stage) *GeneratedImageMetamodel {
-	delete(stage.GeneratedImageMetamodels, generatedimagemetamodel)
-	delete(stage.GeneratedImageMetamodels_mapString, generatedimagemetamodel.Name)
-	return generatedimagemetamodel
-}
-
-// UnstageVoid removes generatedimagemetamodel off the model stage
-func (generatedimagemetamodel *GeneratedImageMetamodel) UnstageVoid(stage *Stage) {
-	delete(stage.GeneratedImageMetamodels, generatedimagemetamodel)
-	delete(stage.GeneratedImageMetamodels_mapString, generatedimagemetamodel.Name)
-}
-
-// commit generatedimagemetamodel to the back repo (if it is already staged)
-func (generatedimagemetamodel *GeneratedImageMetamodel) Commit(stage *Stage) *GeneratedImageMetamodel {
-	if _, ok := stage.GeneratedImageMetamodels[generatedimagemetamodel]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitGeneratedImageMetamodel(generatedimagemetamodel)
-		}
-	}
-	return generatedimagemetamodel
-}
-
-func (generatedimagemetamodel *GeneratedImageMetamodel) CommitVoid(stage *Stage) {
-	generatedimagemetamodel.Commit(stage)
-}
-
-// Checkout generatedimagemetamodel to the back repo (if it is already staged)
-func (generatedimagemetamodel *GeneratedImageMetamodel) Checkout(stage *Stage) *GeneratedImageMetamodel {
-	if _, ok := stage.GeneratedImageMetamodels[generatedimagemetamodel]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutGeneratedImageMetamodel(generatedimagemetamodel)
-		}
-	}
-	return generatedimagemetamodel
-}
-
-// for satisfaction of GongStruct interface
-func (generatedimagemetamodel *GeneratedImageMetamodel) GetName() (res string) {
-	return generatedimagemetamodel.Name
-}
-
-// Stage puts image to the model stage
-func (image *Image) Stage(stage *Stage) *Image {
-
-	if _, ok := stage.Images[image]; !ok {
-		stage.Images[image] = __member
-		stage.ImageMap_Staged_Order[image] = stage.ImageOrder
-		stage.ImageOrder++
-	}
-	stage.Images_mapString[image.Name] = image
-
-	return image
-}
-
-// Unstage removes image off the model stage
-func (image *Image) Unstage(stage *Stage) *Image {
-	delete(stage.Images, image)
-	delete(stage.Images_mapString, image.Name)
-	return image
-}
-
-// UnstageVoid removes image off the model stage
-func (image *Image) UnstageVoid(stage *Stage) {
-	delete(stage.Images, image)
-	delete(stage.Images_mapString, image.Name)
-}
-
-// commit image to the back repo (if it is already staged)
-func (image *Image) Commit(stage *Stage) *Image {
-	if _, ok := stage.Images[image]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitImage(image)
-		}
-	}
-	return image
-}
-
-func (image *Image) CommitVoid(stage *Stage) {
-	image.Commit(stage)
-}
-
-// Checkout image to the back repo (if it is already staged)
-func (image *Image) Checkout(stage *Stage) *Image {
-	if _, ok := stage.Images[image]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutImage(image)
-		}
-	}
-	return image
-}
-
-// for satisfaction of GongStruct interface
-func (image *Image) GetName() (res string) {
-	return image.Name
-}
-
-// Stage puts paragraph to the model stage
-func (paragraph *Paragraph) Stage(stage *Stage) *Paragraph {
-
-	if _, ok := stage.Paragraphs[paragraph]; !ok {
-		stage.Paragraphs[paragraph] = __member
-		stage.ParagraphMap_Staged_Order[paragraph] = stage.ParagraphOrder
-		stage.ParagraphOrder++
-	}
-	stage.Paragraphs_mapString[paragraph.Name] = paragraph
-
-	return paragraph
-}
-
-// Unstage removes paragraph off the model stage
-func (paragraph *Paragraph) Unstage(stage *Stage) *Paragraph {
-	delete(stage.Paragraphs, paragraph)
-	delete(stage.Paragraphs_mapString, paragraph.Name)
-	return paragraph
-}
-
-// UnstageVoid removes paragraph off the model stage
-func (paragraph *Paragraph) UnstageVoid(stage *Stage) {
-	delete(stage.Paragraphs, paragraph)
-	delete(stage.Paragraphs_mapString, paragraph.Name)
-}
-
-// commit paragraph to the back repo (if it is already staged)
-func (paragraph *Paragraph) Commit(stage *Stage) *Paragraph {
-	if _, ok := stage.Paragraphs[paragraph]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitParagraph(paragraph)
-		}
-	}
-	return paragraph
-}
-
-func (paragraph *Paragraph) CommitVoid(stage *Stage) {
-	paragraph.Commit(stage)
-}
-
-// Checkout paragraph to the back repo (if it is already staged)
-func (paragraph *Paragraph) Checkout(stage *Stage) *Paragraph {
-	if _, ok := stage.Paragraphs[paragraph]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutParagraph(paragraph)
-		}
-	}
-	return paragraph
-}
-
-// for satisfaction of GongStruct interface
-func (paragraph *Paragraph) GetName() (res string) {
-	return paragraph.Name
-}
-
 // Stage puts relation_group to the model stage
 func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 
@@ -9038,6 +8873,171 @@ func (staticwebsitechapter *StaticWebSiteChapter) GetName() (res string) {
 	return staticwebsitechapter.Name
 }
 
+// Stage puts staticwebsitegeneratedimage to the model stage
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Stage) *StaticWebSiteGeneratedImage {
+
+	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; !ok {
+		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = __member
+		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
+		stage.StaticWebSiteGeneratedImageOrder++
+	}
+	stage.StaticWebSiteGeneratedImages_mapString[staticwebsitegeneratedimage.Name] = staticwebsitegeneratedimage
+
+	return staticwebsitegeneratedimage
+}
+
+// Unstage removes staticwebsitegeneratedimage off the model stage
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Unstage(stage *Stage) *StaticWebSiteGeneratedImage {
+	delete(stage.StaticWebSiteGeneratedImages, staticwebsitegeneratedimage)
+	delete(stage.StaticWebSiteGeneratedImages_mapString, staticwebsitegeneratedimage.Name)
+	return staticwebsitegeneratedimage
+}
+
+// UnstageVoid removes staticwebsitegeneratedimage off the model stage
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) UnstageVoid(stage *Stage) {
+	delete(stage.StaticWebSiteGeneratedImages, staticwebsitegeneratedimage)
+	delete(stage.StaticWebSiteGeneratedImages_mapString, staticwebsitegeneratedimage.Name)
+}
+
+// commit staticwebsitegeneratedimage to the back repo (if it is already staged)
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Commit(stage *Stage) *StaticWebSiteGeneratedImage {
+	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitStaticWebSiteGeneratedImage(staticwebsitegeneratedimage)
+		}
+	}
+	return staticwebsitegeneratedimage
+}
+
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) CommitVoid(stage *Stage) {
+	staticwebsitegeneratedimage.Commit(stage)
+}
+
+// Checkout staticwebsitegeneratedimage to the back repo (if it is already staged)
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Checkout(stage *Stage) *StaticWebSiteGeneratedImage {
+	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutStaticWebSiteGeneratedImage(staticwebsitegeneratedimage)
+		}
+	}
+	return staticwebsitegeneratedimage
+}
+
+// for satisfaction of GongStruct interface
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GetName() (res string) {
+	return staticwebsitegeneratedimage.Name
+}
+
+// Stage puts staticwebsiteimage to the model stage
+func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSiteImage {
+
+	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; !ok {
+		stage.StaticWebSiteImages[staticwebsiteimage] = __member
+		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
+		stage.StaticWebSiteImageOrder++
+	}
+	stage.StaticWebSiteImages_mapString[staticwebsiteimage.Name] = staticwebsiteimage
+
+	return staticwebsiteimage
+}
+
+// Unstage removes staticwebsiteimage off the model stage
+func (staticwebsiteimage *StaticWebSiteImage) Unstage(stage *Stage) *StaticWebSiteImage {
+	delete(stage.StaticWebSiteImages, staticwebsiteimage)
+	delete(stage.StaticWebSiteImages_mapString, staticwebsiteimage.Name)
+	return staticwebsiteimage
+}
+
+// UnstageVoid removes staticwebsiteimage off the model stage
+func (staticwebsiteimage *StaticWebSiteImage) UnstageVoid(stage *Stage) {
+	delete(stage.StaticWebSiteImages, staticwebsiteimage)
+	delete(stage.StaticWebSiteImages_mapString, staticwebsiteimage.Name)
+}
+
+// commit staticwebsiteimage to the back repo (if it is already staged)
+func (staticwebsiteimage *StaticWebSiteImage) Commit(stage *Stage) *StaticWebSiteImage {
+	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitStaticWebSiteImage(staticwebsiteimage)
+		}
+	}
+	return staticwebsiteimage
+}
+
+func (staticwebsiteimage *StaticWebSiteImage) CommitVoid(stage *Stage) {
+	staticwebsiteimage.Commit(stage)
+}
+
+// Checkout staticwebsiteimage to the back repo (if it is already staged)
+func (staticwebsiteimage *StaticWebSiteImage) Checkout(stage *Stage) *StaticWebSiteImage {
+	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutStaticWebSiteImage(staticwebsiteimage)
+		}
+	}
+	return staticwebsiteimage
+}
+
+// for satisfaction of GongStruct interface
+func (staticwebsiteimage *StaticWebSiteImage) GetName() (res string) {
+	return staticwebsiteimage.Name
+}
+
+// Stage puts staticwebsiteparagraph to the model stage
+func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *StaticWebSiteParagraph {
+
+	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; !ok {
+		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = __member
+		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
+		stage.StaticWebSiteParagraphOrder++
+	}
+	stage.StaticWebSiteParagraphs_mapString[staticwebsiteparagraph.Name] = staticwebsiteparagraph
+
+	return staticwebsiteparagraph
+}
+
+// Unstage removes staticwebsiteparagraph off the model stage
+func (staticwebsiteparagraph *StaticWebSiteParagraph) Unstage(stage *Stage) *StaticWebSiteParagraph {
+	delete(stage.StaticWebSiteParagraphs, staticwebsiteparagraph)
+	delete(stage.StaticWebSiteParagraphs_mapString, staticwebsiteparagraph.Name)
+	return staticwebsiteparagraph
+}
+
+// UnstageVoid removes staticwebsiteparagraph off the model stage
+func (staticwebsiteparagraph *StaticWebSiteParagraph) UnstageVoid(stage *Stage) {
+	delete(stage.StaticWebSiteParagraphs, staticwebsiteparagraph)
+	delete(stage.StaticWebSiteParagraphs_mapString, staticwebsiteparagraph.Name)
+}
+
+// commit staticwebsiteparagraph to the back repo (if it is already staged)
+func (staticwebsiteparagraph *StaticWebSiteParagraph) Commit(stage *Stage) *StaticWebSiteParagraph {
+	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitStaticWebSiteParagraph(staticwebsiteparagraph)
+		}
+	}
+	return staticwebsiteparagraph
+}
+
+func (staticwebsiteparagraph *StaticWebSiteParagraph) CommitVoid(stage *Stage) {
+	staticwebsiteparagraph.Commit(stage)
+}
+
+// Checkout staticwebsiteparagraph to the back repo (if it is already staged)
+func (staticwebsiteparagraph *StaticWebSiteParagraph) Checkout(stage *Stage) *StaticWebSiteParagraph {
+	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutStaticWebSiteParagraph(staticwebsiteparagraph)
+		}
+	}
+	return staticwebsiteparagraph
+}
+
+// for satisfaction of GongStruct interface
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GetName() (res string) {
+	return staticwebsiteparagraph.Name
+}
+
 // Stage puts xhtml_content to the model stage
 func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 
@@ -9165,9 +9165,6 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	CreateORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	CreateORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
-	CreateORMGeneratedImageMetamodel(GeneratedImageMetamodel *GeneratedImageMetamodel)
-	CreateORMImage(Image *Image)
-	CreateORMParagraph(Paragraph *Paragraph)
 	CreateORMRELATION_GROUP(RELATION_GROUP *RELATION_GROUP)
 	CreateORMRELATION_GROUP_TYPE(RELATION_GROUP_TYPE *RELATION_GROUP_TYPE)
 	CreateORMREQ_IF(REQ_IF *REQ_IF)
@@ -9183,6 +9180,9 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMSPEC_RELATION_TYPE(SPEC_RELATION_TYPE *SPEC_RELATION_TYPE)
 	CreateORMStaticWebSite(StaticWebSite *StaticWebSite)
 	CreateORMStaticWebSiteChapter(StaticWebSiteChapter *StaticWebSiteChapter)
+	CreateORMStaticWebSiteGeneratedImage(StaticWebSiteGeneratedImage *StaticWebSiteGeneratedImage)
+	CreateORMStaticWebSiteImage(StaticWebSiteImage *StaticWebSiteImage)
+	CreateORMStaticWebSiteParagraph(StaticWebSiteParagraph *StaticWebSiteParagraph)
 	CreateORMXHTML_CONTENT(XHTML_CONTENT *XHTML_CONTENT)
 }
 
@@ -9257,9 +9257,6 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	DeleteORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	DeleteORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
-	DeleteORMGeneratedImageMetamodel(GeneratedImageMetamodel *GeneratedImageMetamodel)
-	DeleteORMImage(Image *Image)
-	DeleteORMParagraph(Paragraph *Paragraph)
 	DeleteORMRELATION_GROUP(RELATION_GROUP *RELATION_GROUP)
 	DeleteORMRELATION_GROUP_TYPE(RELATION_GROUP_TYPE *RELATION_GROUP_TYPE)
 	DeleteORMREQ_IF(REQ_IF *REQ_IF)
@@ -9275,6 +9272,9 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMSPEC_RELATION_TYPE(SPEC_RELATION_TYPE *SPEC_RELATION_TYPE)
 	DeleteORMStaticWebSite(StaticWebSite *StaticWebSite)
 	DeleteORMStaticWebSiteChapter(StaticWebSiteChapter *StaticWebSiteChapter)
+	DeleteORMStaticWebSiteGeneratedImage(StaticWebSiteGeneratedImage *StaticWebSiteGeneratedImage)
+	DeleteORMStaticWebSiteImage(StaticWebSiteImage *StaticWebSiteImage)
+	DeleteORMStaticWebSiteParagraph(StaticWebSiteParagraph *StaticWebSiteParagraph)
 	DeleteORMXHTML_CONTENT(XHTML_CONTENT *XHTML_CONTENT)
 }
 
@@ -9629,21 +9629,6 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.ENUM_VALUEMap_Staged_Order = make(map[*ENUM_VALUE]uint)
 	stage.ENUM_VALUEOrder = 0
 
-	stage.GeneratedImageMetamodels = make(map[*GeneratedImageMetamodel]any)
-	stage.GeneratedImageMetamodels_mapString = make(map[string]*GeneratedImageMetamodel)
-	stage.GeneratedImageMetamodelMap_Staged_Order = make(map[*GeneratedImageMetamodel]uint)
-	stage.GeneratedImageMetamodelOrder = 0
-
-	stage.Images = make(map[*Image]any)
-	stage.Images_mapString = make(map[string]*Image)
-	stage.ImageMap_Staged_Order = make(map[*Image]uint)
-	stage.ImageOrder = 0
-
-	stage.Paragraphs = make(map[*Paragraph]any)
-	stage.Paragraphs_mapString = make(map[string]*Paragraph)
-	stage.ParagraphMap_Staged_Order = make(map[*Paragraph]uint)
-	stage.ParagraphOrder = 0
-
 	stage.RELATION_GROUPs = make(map[*RELATION_GROUP]any)
 	stage.RELATION_GROUPs_mapString = make(map[string]*RELATION_GROUP)
 	stage.RELATION_GROUPMap_Staged_Order = make(map[*RELATION_GROUP]uint)
@@ -9718,6 +9703,21 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.StaticWebSiteChapters_mapString = make(map[string]*StaticWebSiteChapter)
 	stage.StaticWebSiteChapterMap_Staged_Order = make(map[*StaticWebSiteChapter]uint)
 	stage.StaticWebSiteChapterOrder = 0
+
+	stage.StaticWebSiteGeneratedImages = make(map[*StaticWebSiteGeneratedImage]any)
+	stage.StaticWebSiteGeneratedImages_mapString = make(map[string]*StaticWebSiteGeneratedImage)
+	stage.StaticWebSiteGeneratedImageMap_Staged_Order = make(map[*StaticWebSiteGeneratedImage]uint)
+	stage.StaticWebSiteGeneratedImageOrder = 0
+
+	stage.StaticWebSiteImages = make(map[*StaticWebSiteImage]any)
+	stage.StaticWebSiteImages_mapString = make(map[string]*StaticWebSiteImage)
+	stage.StaticWebSiteImageMap_Staged_Order = make(map[*StaticWebSiteImage]uint)
+	stage.StaticWebSiteImageOrder = 0
+
+	stage.StaticWebSiteParagraphs = make(map[*StaticWebSiteParagraph]any)
+	stage.StaticWebSiteParagraphs_mapString = make(map[string]*StaticWebSiteParagraph)
+	stage.StaticWebSiteParagraphMap_Staged_Order = make(map[*StaticWebSiteParagraph]uint)
+	stage.StaticWebSiteParagraphOrder = 0
 
 	stage.XHTML_CONTENTs = make(map[*XHTML_CONTENT]any)
 	stage.XHTML_CONTENTs_mapString = make(map[string]*XHTML_CONTENT)
@@ -9937,15 +9937,6 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.ENUM_VALUEs = nil
 	stage.ENUM_VALUEs_mapString = nil
 
-	stage.GeneratedImageMetamodels = nil
-	stage.GeneratedImageMetamodels_mapString = nil
-
-	stage.Images = nil
-	stage.Images_mapString = nil
-
-	stage.Paragraphs = nil
-	stage.Paragraphs_mapString = nil
-
 	stage.RELATION_GROUPs = nil
 	stage.RELATION_GROUPs_mapString = nil
 
@@ -9990,6 +9981,15 @@ func (stage *Stage) Nil() { // insertion point for array nil
 
 	stage.StaticWebSiteChapters = nil
 	stage.StaticWebSiteChapters_mapString = nil
+
+	stage.StaticWebSiteGeneratedImages = nil
+	stage.StaticWebSiteGeneratedImages_mapString = nil
+
+	stage.StaticWebSiteImages = nil
+	stage.StaticWebSiteImages_mapString = nil
+
+	stage.StaticWebSiteParagraphs = nil
+	stage.StaticWebSiteParagraphs_mapString = nil
 
 	stage.XHTML_CONTENTs = nil
 	stage.XHTML_CONTENTs_mapString = nil
@@ -10277,18 +10277,6 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		enum_value.Unstage(stage)
 	}
 
-	for generatedimagemetamodel := range stage.GeneratedImageMetamodels {
-		generatedimagemetamodel.Unstage(stage)
-	}
-
-	for image := range stage.Images {
-		image.Unstage(stage)
-	}
-
-	for paragraph := range stage.Paragraphs {
-		paragraph.Unstage(stage)
-	}
-
 	for relation_group := range stage.RELATION_GROUPs {
 		relation_group.Unstage(stage)
 	}
@@ -10347,6 +10335,18 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 
 	for staticwebsitechapter := range stage.StaticWebSiteChapters {
 		staticwebsitechapter.Unstage(stage)
+	}
+
+	for staticwebsitegeneratedimage := range stage.StaticWebSiteGeneratedImages {
+		staticwebsitegeneratedimage.Unstage(stage)
+	}
+
+	for staticwebsiteimage := range stage.StaticWebSiteImages {
+		staticwebsiteimage.Unstage(stage)
+	}
+
+	for staticwebsiteparagraph := range stage.StaticWebSiteParagraphs {
+		staticwebsiteparagraph.Unstage(stage)
 	}
 
 	for xhtml_content := range stage.XHTML_CONTENTs {
@@ -10554,12 +10554,6 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs).(*Type)
 	case map[*ENUM_VALUE]any:
 		return any(&stage.ENUM_VALUEs).(*Type)
-	case map[*GeneratedImageMetamodel]any:
-		return any(&stage.GeneratedImageMetamodels).(*Type)
-	case map[*Image]any:
-		return any(&stage.Images).(*Type)
-	case map[*Paragraph]any:
-		return any(&stage.Paragraphs).(*Type)
 	case map[*RELATION_GROUP]any:
 		return any(&stage.RELATION_GROUPs).(*Type)
 	case map[*RELATION_GROUP_TYPE]any:
@@ -10590,6 +10584,12 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.StaticWebSites).(*Type)
 	case map[*StaticWebSiteChapter]any:
 		return any(&stage.StaticWebSiteChapters).(*Type)
+	case map[*StaticWebSiteGeneratedImage]any:
+		return any(&stage.StaticWebSiteGeneratedImages).(*Type)
+	case map[*StaticWebSiteImage]any:
+		return any(&stage.StaticWebSiteImages).(*Type)
+	case map[*StaticWebSiteParagraph]any:
+		return any(&stage.StaticWebSiteParagraphs).(*Type)
 	case map[*XHTML_CONTENT]any:
 		return any(&stage.XHTML_CONTENTs).(*Type)
 	default:
@@ -10744,12 +10744,6 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*Type)
 	case map[string]*ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*Type)
-	case map[string]*GeneratedImageMetamodel:
-		return any(&stage.GeneratedImageMetamodels_mapString).(*Type)
-	case map[string]*Image:
-		return any(&stage.Images_mapString).(*Type)
-	case map[string]*Paragraph:
-		return any(&stage.Paragraphs_mapString).(*Type)
 	case map[string]*RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs_mapString).(*Type)
 	case map[string]*RELATION_GROUP_TYPE:
@@ -10780,6 +10774,12 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.StaticWebSites_mapString).(*Type)
 	case map[string]*StaticWebSiteChapter:
 		return any(&stage.StaticWebSiteChapters_mapString).(*Type)
+	case map[string]*StaticWebSiteGeneratedImage:
+		return any(&stage.StaticWebSiteGeneratedImages_mapString).(*Type)
+	case map[string]*StaticWebSiteImage:
+		return any(&stage.StaticWebSiteImages_mapString).(*Type)
+	case map[string]*StaticWebSiteParagraph:
+		return any(&stage.StaticWebSiteParagraphs_mapString).(*Type)
 	case map[string]*XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs_mapString).(*Type)
 	default:
@@ -10934,12 +10934,6 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.EMBEDDED_VALUEs).(*map[*Type]any)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[*Type]any)
-	case GeneratedImageMetamodel:
-		return any(&stage.GeneratedImageMetamodels).(*map[*Type]any)
-	case Image:
-		return any(&stage.Images).(*map[*Type]any)
-	case Paragraph:
-		return any(&stage.Paragraphs).(*map[*Type]any)
 	case RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs).(*map[*Type]any)
 	case RELATION_GROUP_TYPE:
@@ -10970,6 +10964,12 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.StaticWebSites).(*map[*Type]any)
 	case StaticWebSiteChapter:
 		return any(&stage.StaticWebSiteChapters).(*map[*Type]any)
+	case StaticWebSiteGeneratedImage:
+		return any(&stage.StaticWebSiteGeneratedImages).(*map[*Type]any)
+	case StaticWebSiteImage:
+		return any(&stage.StaticWebSiteImages).(*map[*Type]any)
+	case StaticWebSiteParagraph:
+		return any(&stage.StaticWebSiteParagraphs).(*map[*Type]any)
 	case XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs).(*map[*Type]any)
 	default:
@@ -11124,12 +11124,6 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.EMBEDDED_VALUEs).(*map[Type]any)
 	case *ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[Type]any)
-	case *GeneratedImageMetamodel:
-		return any(&stage.GeneratedImageMetamodels).(*map[Type]any)
-	case *Image:
-		return any(&stage.Images).(*map[Type]any)
-	case *Paragraph:
-		return any(&stage.Paragraphs).(*map[Type]any)
 	case *RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs).(*map[Type]any)
 	case *RELATION_GROUP_TYPE:
@@ -11160,6 +11154,12 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.StaticWebSites).(*map[Type]any)
 	case *StaticWebSiteChapter:
 		return any(&stage.StaticWebSiteChapters).(*map[Type]any)
+	case *StaticWebSiteGeneratedImage:
+		return any(&stage.StaticWebSiteGeneratedImages).(*map[Type]any)
+	case *StaticWebSiteImage:
+		return any(&stage.StaticWebSiteImages).(*map[Type]any)
+	case *StaticWebSiteParagraph:
+		return any(&stage.StaticWebSiteParagraphs).(*map[Type]any)
 	case *XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs).(*map[Type]any)
 	default:
@@ -11314,12 +11314,6 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*map[string]*Type)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*map[string]*Type)
-	case GeneratedImageMetamodel:
-		return any(&stage.GeneratedImageMetamodels_mapString).(*map[string]*Type)
-	case Image:
-		return any(&stage.Images_mapString).(*map[string]*Type)
-	case Paragraph:
-		return any(&stage.Paragraphs_mapString).(*map[string]*Type)
 	case RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs_mapString).(*map[string]*Type)
 	case RELATION_GROUP_TYPE:
@@ -11350,6 +11344,12 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.StaticWebSites_mapString).(*map[string]*Type)
 	case StaticWebSiteChapter:
 		return any(&stage.StaticWebSiteChapters_mapString).(*map[string]*Type)
+	case StaticWebSiteGeneratedImage:
+		return any(&stage.StaticWebSiteGeneratedImages_mapString).(*map[string]*Type)
+	case StaticWebSiteImage:
+		return any(&stage.StaticWebSiteImages_mapString).(*map[string]*Type)
+	case StaticWebSiteParagraph:
+		return any(&stage.StaticWebSiteParagraphs_mapString).(*map[string]*Type)
 	case XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs_mapString).(*map[string]*Type)
 	default:
@@ -11814,20 +11814,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// field is initialized with an instance of A_PROPERTIES with the name of the field
 			PROPERTIES: &A_PROPERTIES{Name: "PROPERTIES"},
 		}).(*Type)
-	case GeneratedImageMetamodel:
-		return any(&GeneratedImageMetamodel{
-			// Initialisation of associations
-		}).(*Type)
-	case Image:
-		return any(&Image{
-			// Initialisation of associations
-		}).(*Type)
-	case Paragraph:
-		return any(&Paragraph{
-			// Initialisation of associations
-			// field is initialized with an instance of Image with the name of the field
-			Image: &Image{Name: "Image"},
-		}).(*Type)
 	case RELATION_GROUP:
 		return any(&RELATION_GROUP{
 			// Initialisation of associations
@@ -11965,8 +11951,22 @@ func GetAssociationName[Type Gongstruct]() *Type {
 	case StaticWebSiteChapter:
 		return any(&StaticWebSiteChapter{
 			// Initialisation of associations
-			// field is initialized with an instance of Paragraph with the name of the field
-			Paragraphs: []*Paragraph{{Name: "Paragraphs"}},
+			// field is initialized with an instance of StaticWebSiteParagraph with the name of the field
+			Paragraphs: []*StaticWebSiteParagraph{{Name: "Paragraphs"}},
+		}).(*Type)
+	case StaticWebSiteGeneratedImage:
+		return any(&StaticWebSiteGeneratedImage{
+			// Initialisation of associations
+		}).(*Type)
+	case StaticWebSiteImage:
+		return any(&StaticWebSiteImage{
+			// Initialisation of associations
+		}).(*Type)
+	case StaticWebSiteParagraph:
+		return any(&StaticWebSiteParagraph{
+			// Initialisation of associations
+			// field is initialized with an instance of StaticWebSiteImage with the name of the field
+			Image: &StaticWebSiteImage{Name: "Image"},
 		}).(*Type)
 	case XHTML_CONTENT:
 		return any(&XHTML_CONTENT{
@@ -13105,38 +13105,6 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 			}
 			return any(res).(map[*End][]*Start)
 		}
-	// reverse maps of direct associations of GeneratedImageMetamodel
-	case GeneratedImageMetamodel:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
-	// reverse maps of direct associations of Image
-	case Image:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
-	// reverse maps of direct associations of Paragraph
-	case Paragraph:
-		switch fieldname {
-		// insertion point for per direct association field
-		case "Image":
-			res := make(map[*Image][]*Paragraph)
-			for paragraph := range stage.Paragraphs {
-				if paragraph.Image != nil {
-					image_ := paragraph.Image
-					var paragraphs []*Paragraph
-					_, ok := res[image_]
-					if ok {
-						paragraphs = res[image_]
-					} else {
-						paragraphs = make([]*Paragraph, 0)
-					}
-					paragraphs = append(paragraphs, paragraph)
-					res[image_] = paragraphs
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		}
 	// reverse maps of direct associations of RELATION_GROUP
 	case RELATION_GROUP:
 		switch fieldname {
@@ -13858,6 +13826,38 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of StaticWebSiteGeneratedImage
+	case StaticWebSiteGeneratedImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of StaticWebSiteImage
+	case StaticWebSiteImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of StaticWebSiteParagraph
+	case StaticWebSiteParagraph:
+		switch fieldname {
+		// insertion point for per direct association field
+		case "Image":
+			res := make(map[*StaticWebSiteImage][]*StaticWebSiteParagraph)
+			for staticwebsiteparagraph := range stage.StaticWebSiteParagraphs {
+				if staticwebsiteparagraph.Image != nil {
+					staticwebsiteimage_ := staticwebsiteparagraph.Image
+					var staticwebsiteparagraphs []*StaticWebSiteParagraph
+					_, ok := res[staticwebsiteimage_]
+					if ok {
+						staticwebsiteparagraphs = res[staticwebsiteimage_]
+					} else {
+						staticwebsiteparagraphs = make([]*StaticWebSiteParagraph, 0)
+					}
+					staticwebsiteparagraphs = append(staticwebsiteparagraphs, staticwebsiteparagraph)
+					res[staticwebsiteimage_] = staticwebsiteparagraphs
+				}
+			}
+			return any(res).(map[*End][]*Start)
+		}
 	// reverse maps of direct associations of XHTML_CONTENT
 	case XHTML_CONTENT:
 		switch fieldname {
@@ -14541,21 +14541,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of GeneratedImageMetamodel
-	case GeneratedImageMetamodel:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
-	// reverse maps of direct associations of Image
-	case Image:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
-	// reverse maps of direct associations of Paragraph
-	case Paragraph:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
 	// reverse maps of direct associations of RELATION_GROUP
 	case RELATION_GROUP:
 		switch fieldname {
@@ -14639,13 +14624,28 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		case "Paragraphs":
-			res := make(map[*Paragraph][]*StaticWebSiteChapter)
+			res := make(map[*StaticWebSiteParagraph][]*StaticWebSiteChapter)
 			for staticwebsitechapter := range stage.StaticWebSiteChapters {
-				for _, paragraph_ := range staticwebsitechapter.Paragraphs {
-					res[paragraph_] = append(res[paragraph_], staticwebsitechapter)
+				for _, staticwebsiteparagraph_ := range staticwebsitechapter.Paragraphs {
+					res[staticwebsiteparagraph_] = append(res[staticwebsiteparagraph_], staticwebsitechapter)
 				}
 			}
 			return any(res).(map[*End][]*Start)
+		}
+	// reverse maps of direct associations of StaticWebSiteGeneratedImage
+	case StaticWebSiteGeneratedImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of StaticWebSiteImage
+	case StaticWebSiteImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of StaticWebSiteParagraph
+	case StaticWebSiteParagraph:
+		switch fieldname {
+		// insertion point for per direct association field
 		}
 	// reverse maps of direct associations of XHTML_CONTENT
 	case XHTML_CONTENT:
@@ -14804,12 +14804,6 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case ENUM_VALUE:
 		res = "ENUM_VALUE"
-	case GeneratedImageMetamodel:
-		res = "GeneratedImageMetamodel"
-	case Image:
-		res = "Image"
-	case Paragraph:
-		res = "Paragraph"
 	case RELATION_GROUP:
 		res = "RELATION_GROUP"
 	case RELATION_GROUP_TYPE:
@@ -14840,6 +14834,12 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "StaticWebSite"
 	case StaticWebSiteChapter:
 		res = "StaticWebSiteChapter"
+	case StaticWebSiteGeneratedImage:
+		res = "StaticWebSiteGeneratedImage"
+	case StaticWebSiteImage:
+		res = "StaticWebSiteImage"
+	case StaticWebSiteParagraph:
+		res = "StaticWebSiteParagraph"
 	case XHTML_CONTENT:
 		res = "XHTML_CONTENT"
 	}
@@ -14994,12 +14994,6 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case *ENUM_VALUE:
 		res = "ENUM_VALUE"
-	case *GeneratedImageMetamodel:
-		res = "GeneratedImageMetamodel"
-	case *Image:
-		res = "Image"
-	case *Paragraph:
-		res = "Paragraph"
 	case *RELATION_GROUP:
 		res = "RELATION_GROUP"
 	case *RELATION_GROUP_TYPE:
@@ -15030,6 +15024,12 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "StaticWebSite"
 	case *StaticWebSiteChapter:
 		res = "StaticWebSiteChapter"
+	case *StaticWebSiteGeneratedImage:
+		res = "StaticWebSiteGeneratedImage"
+	case *StaticWebSiteImage:
+		res = "StaticWebSiteImage"
+	case *StaticWebSiteParagraph:
+		res = "StaticWebSiteParagraph"
 	case *XHTML_CONTENT:
 		res = "XHTML_CONTENT"
 	}
@@ -15183,12 +15183,6 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
-	case GeneratedImageMetamodel:
-		res = []string{"Name", "ImageName", "IsMetamodel", "LegendMarkdownContent"}
-	case Image:
-		res = []string{"Name", "SourceDirectoryPath", "Height"}
-	case Paragraph:
-		res = []string{"Name", "LegendMarkdownContent", "Image"}
 	case RELATION_GROUP:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SOURCE_SPECIFICATION", "SPEC_RELATIONS", "TARGET_SPECIFICATION", "TYPE"}
 	case RELATION_GROUP_TYPE:
@@ -15216,9 +15210,15 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case SPEC_RELATION_TYPE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
 	case StaticWebSite:
-		res = []string{"Name", "MarkdownContent", "Chapters", "InputImagesDir", "OutputStaticWebDir"}
+		res = []string{"Name", "MarkdownContent", "Chapters", "InputImagesDir", "OutputStaticWebDir", "VersionInfo"}
 	case StaticWebSiteChapter:
 		res = []string{"Name", "MarkdownContent", "Paragraphs"}
+	case StaticWebSiteGeneratedImage:
+		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
+	case StaticWebSiteImage:
+		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
+	case StaticWebSiteParagraph:
+		res = []string{"Name", "LegendMarkdownContent", "Image"}
 	case XHTML_CONTENT:
 		res = []string{"Name", "EnclosedText", "PureText"}
 	}
@@ -15536,18 +15536,6 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPECIFIED_VALUES"
 		rf.Fieldname = "ENUM_VALUE"
 		res = append(res, rf)
-	case GeneratedImageMetamodel:
-		var rf ReverseField
-		_ = rf
-	case Image:
-		var rf ReverseField
-		_ = rf
-	case Paragraph:
-		var rf ReverseField
-		_ = rf
-		rf.GongstructName = "StaticWebSiteChapter"
-		rf.Fieldname = "Paragraphs"
-		res = append(res, rf)
 	case RELATION_GROUP:
 		var rf ReverseField
 		_ = rf
@@ -15625,6 +15613,18 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		_ = rf
 		rf.GongstructName = "StaticWebSite"
 		rf.Fieldname = "Chapters"
+		res = append(res, rf)
+	case StaticWebSiteGeneratedImage:
+		var rf ReverseField
+		_ = rf
+	case StaticWebSiteImage:
+		var rf ReverseField
+		_ = rf
+	case StaticWebSiteParagraph:
+		var rf ReverseField
+		_ = rf
+		rf.GongstructName = "StaticWebSiteChapter"
+		rf.Fieldname = "Paragraphs"
 		res = append(res, rf)
 	case XHTML_CONTENT:
 		var rf ReverseField
@@ -15780,12 +15780,6 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case *ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
-	case *GeneratedImageMetamodel:
-		res = []string{"Name", "ImageName", "IsMetamodel", "LegendMarkdownContent"}
-	case *Image:
-		res = []string{"Name", "SourceDirectoryPath", "Height"}
-	case *Paragraph:
-		res = []string{"Name", "LegendMarkdownContent", "Image"}
 	case *RELATION_GROUP:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SOURCE_SPECIFICATION", "SPEC_RELATIONS", "TARGET_SPECIFICATION", "TYPE"}
 	case *RELATION_GROUP_TYPE:
@@ -15813,9 +15807,15 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *SPEC_RELATION_TYPE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
 	case *StaticWebSite:
-		res = []string{"Name", "MarkdownContent", "Chapters", "InputImagesDir", "OutputStaticWebDir"}
+		res = []string{"Name", "MarkdownContent", "Chapters", "InputImagesDir", "OutputStaticWebDir", "VersionInfo"}
 	case *StaticWebSiteChapter:
 		res = []string{"Name", "MarkdownContent", "Paragraphs"}
+	case *StaticWebSiteGeneratedImage:
+		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
+	case *StaticWebSiteImage:
+		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
+	case *StaticWebSiteParagraph:
+		res = []string{"Name", "LegendMarkdownContent", "Image"}
 	case *XHTML_CONTENT:
 		res = []string{"Name", "EnclosedText", "PureText"}
 	}
@@ -16997,44 +16997,6 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
 		}
-	case *GeneratedImageMetamodel:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ImageName":
-			res.valueString = inferedInstance.ImageName
-		case "IsMetamodel":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IsMetamodel)
-			res.valueBool = inferedInstance.IsMetamodel
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LegendMarkdownContent":
-			res.valueString = inferedInstance.LegendMarkdownContent
-		}
-	case *Image:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SourceDirectoryPath":
-			res.valueString = inferedInstance.SourceDirectoryPath
-		case "Height":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
-			res.valueInt = inferedInstance.Height
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case *Paragraph:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "LegendMarkdownContent":
-			res.valueString = inferedInstance.LegendMarkdownContent
-		case "Image":
-			if inferedInstance.Image != nil {
-				res.valueString = inferedInstance.Image.Name
-			}
-		}
 	case *RELATION_GROUP:
 		switch fieldName {
 		// string value of fields
@@ -17381,6 +17343,8 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			res.valueString = inferedInstance.InputImagesDir
 		case "OutputStaticWebDir":
 			res.valueString = inferedInstance.OutputStaticWebDir
+		case "VersionInfo":
+			res.valueString = inferedInstance.VersionInfo
 		}
 	case *StaticWebSiteChapter:
 		switch fieldName {
@@ -17395,6 +17359,50 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 					res.valueString += "\n"
 				}
 				res.valueString += __instance__.Name
+			}
+		}
+	case *StaticWebSiteGeneratedImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "SourceDirectoryPath":
+			res.valueString = inferedInstance.SourceDirectoryPath
+		case "Width":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
+			res.valueInt = inferedInstance.Width
+			res.GongFieldValueType = GongFieldValueTypeInt
+		case "Height":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
+			res.valueInt = inferedInstance.Height
+			res.GongFieldValueType = GongFieldValueTypeInt
+		}
+	case *StaticWebSiteImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "SourceDirectoryPath":
+			res.valueString = inferedInstance.SourceDirectoryPath
+		case "Width":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
+			res.valueInt = inferedInstance.Width
+			res.GongFieldValueType = GongFieldValueTypeInt
+		case "Height":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
+			res.valueInt = inferedInstance.Height
+			res.GongFieldValueType = GongFieldValueTypeInt
+		}
+	case *StaticWebSiteParagraph:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "LegendMarkdownContent":
+			res.valueString = inferedInstance.LegendMarkdownContent
+		case "Image":
+			if inferedInstance.Image != nil {
+				res.valueString = inferedInstance.Image.Name
 			}
 		}
 	case *XHTML_CONTENT:
@@ -18555,44 +18563,6 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
 		}
-	case GeneratedImageMetamodel:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ImageName":
-			res.valueString = inferedInstance.ImageName
-		case "IsMetamodel":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IsMetamodel)
-			res.valueBool = inferedInstance.IsMetamodel
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LegendMarkdownContent":
-			res.valueString = inferedInstance.LegendMarkdownContent
-		}
-	case Image:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SourceDirectoryPath":
-			res.valueString = inferedInstance.SourceDirectoryPath
-		case "Height":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
-			res.valueInt = inferedInstance.Height
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case Paragraph:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "LegendMarkdownContent":
-			res.valueString = inferedInstance.LegendMarkdownContent
-		case "Image":
-			if inferedInstance.Image != nil {
-				res.valueString = inferedInstance.Image.Name
-			}
-		}
 	case RELATION_GROUP:
 		switch fieldName {
 		// string value of fields
@@ -18939,6 +18909,8 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			res.valueString = inferedInstance.InputImagesDir
 		case "OutputStaticWebDir":
 			res.valueString = inferedInstance.OutputStaticWebDir
+		case "VersionInfo":
+			res.valueString = inferedInstance.VersionInfo
 		}
 	case StaticWebSiteChapter:
 		switch fieldName {
@@ -18953,6 +18925,50 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 					res.valueString += "\n"
 				}
 				res.valueString += __instance__.Name
+			}
+		}
+	case StaticWebSiteGeneratedImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "SourceDirectoryPath":
+			res.valueString = inferedInstance.SourceDirectoryPath
+		case "Width":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
+			res.valueInt = inferedInstance.Width
+			res.GongFieldValueType = GongFieldValueTypeInt
+		case "Height":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
+			res.valueInt = inferedInstance.Height
+			res.GongFieldValueType = GongFieldValueTypeInt
+		}
+	case StaticWebSiteImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "SourceDirectoryPath":
+			res.valueString = inferedInstance.SourceDirectoryPath
+		case "Width":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
+			res.valueInt = inferedInstance.Width
+			res.GongFieldValueType = GongFieldValueTypeInt
+		case "Height":
+			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
+			res.valueInt = inferedInstance.Height
+			res.GongFieldValueType = GongFieldValueTypeInt
+		}
+	case StaticWebSiteParagraph:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "LegendMarkdownContent":
+			res.valueString = inferedInstance.LegendMarkdownContent
+		case "Image":
+			if inferedInstance.Image != nil {
+				res.valueString = inferedInstance.Image.Name
 			}
 		}
 	case XHTML_CONTENT:

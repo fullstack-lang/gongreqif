@@ -562,28 +562,6 @@ func GetReverseFieldOwnerName(
 			}
 		}
 
-	case *GeneratedImageMetamodel:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Image:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Paragraph:
-		switch reverseField.GongstructName {
-		// insertion point
-		case "StaticWebSiteChapter":
-			switch reverseField.Fieldname {
-			case "Paragraphs":
-				if _staticwebsitechapter, ok := stage.StaticWebSiteChapter_Paragraphs_reverseMap[inst]; ok {
-					res = _staticwebsitechapter.Name
-				}
-			}
-		}
-
 	case *RELATION_GROUP:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -732,6 +710,28 @@ func GetReverseFieldOwnerName(
 			case "Chapters":
 				if _staticwebsite, ok := stage.StaticWebSite_Chapters_reverseMap[inst]; ok {
 					res = _staticwebsite.Name
+				}
+			}
+		}
+
+	case *StaticWebSiteGeneratedImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *StaticWebSiteImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *StaticWebSiteParagraph:
+		switch reverseField.GongstructName {
+		// insertion point
+		case "StaticWebSiteChapter":
+			switch reverseField.Fieldname {
+			case "Paragraphs":
+				if _staticwebsitechapter, ok := stage.StaticWebSiteChapter_Paragraphs_reverseMap[inst]; ok {
+					res = _staticwebsitechapter.Name
 				}
 			}
 		}
@@ -1250,26 +1250,6 @@ func GetReverseFieldOwner[T Gongstruct](
 			}
 		}
 
-	case *GeneratedImageMetamodel:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Image:
-		switch reverseField.GongstructName {
-		// insertion point
-		}
-
-	case *Paragraph:
-		switch reverseField.GongstructName {
-		// insertion point
-		case "StaticWebSiteChapter":
-			switch reverseField.Fieldname {
-			case "Paragraphs":
-				res = stage.StaticWebSiteChapter_Paragraphs_reverseMap[inst]
-			}
-		}
-
 	case *RELATION_GROUP:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -1397,6 +1377,26 @@ func GetReverseFieldOwner[T Gongstruct](
 			switch reverseField.Fieldname {
 			case "Chapters":
 				res = stage.StaticWebSite_Chapters_reverseMap[inst]
+			}
+		}
+
+	case *StaticWebSiteGeneratedImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *StaticWebSiteImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *StaticWebSiteParagraph:
+		switch reverseField.GongstructName {
+		// insertion point
+		case "StaticWebSiteChapter":
+			switch reverseField.Fieldname {
+			case "Paragraphs":
+				res = stage.StaticWebSiteChapter_Paragraphs_reverseMap[inst]
 			}
 		}
 

@@ -235,19 +235,19 @@ func (backRepoStaticWebSiteChapter *BackRepoStaticWebSiteChapterStruct) CommitPh
 		// 1. reset
 		staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding.Paragraphs = make([]int, 0)
 		// 2. encode
-		for _, paragraphAssocEnd := range staticwebsitechapter.Paragraphs {
-			paragraphAssocEnd_DB :=
-				backRepo.BackRepoParagraph.GetParagraphDBFromParagraphPtr(paragraphAssocEnd)
+		for _, staticwebsiteparagraphAssocEnd := range staticwebsitechapter.Paragraphs {
+			staticwebsiteparagraphAssocEnd_DB :=
+				backRepo.BackRepoStaticWebSiteParagraph.GetStaticWebSiteParagraphDBFromStaticWebSiteParagraphPtr(staticwebsiteparagraphAssocEnd)
 			
-			// the stage might be inconsistant, meaning that the paragraphAssocEnd_DB might
+			// the stage might be inconsistant, meaning that the staticwebsiteparagraphAssocEnd_DB might
 			// be missing from the stage. In this case, the commit operation is robust
 			// An alternative would be to crash here to reveal the missing element.
-			if paragraphAssocEnd_DB == nil {
+			if staticwebsiteparagraphAssocEnd_DB == nil {
 				continue
 			}
 			
 			staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding.Paragraphs =
-				append(staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding.Paragraphs, int(paragraphAssocEnd_DB.ID))
+				append(staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding.Paragraphs, int(staticwebsiteparagraphAssocEnd_DB.ID))
 		}
 
 		_, err := backRepoStaticWebSiteChapter.db.Save(staticwebsitechapterDB)
@@ -364,12 +364,12 @@ func (staticwebsitechapterDB *StaticWebSiteChapterDB) DecodePointers(backRepo *B
 
 	// insertion point for checkout of pointer encoding
 	// This loop redeem staticwebsitechapter.Paragraphs in the stage from the encode in the back repo
-	// It parses all ParagraphDB in the back repo and if the reverse pointer encoding matches the back repo ID
+	// It parses all StaticWebSiteParagraphDB in the back repo and if the reverse pointer encoding matches the back repo ID
 	// it appends the stage instance
 	// 1. reset the slice
 	staticwebsitechapter.Paragraphs = staticwebsitechapter.Paragraphs[:0]
-	for _, _Paragraphid := range staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding.Paragraphs {
-		staticwebsitechapter.Paragraphs = append(staticwebsitechapter.Paragraphs, backRepo.BackRepoParagraph.Map_ParagraphDBID_ParagraphPtr[uint(_Paragraphid)])
+	for _, _StaticWebSiteParagraphid := range staticwebsitechapterDB.StaticWebSiteChapterPointersEncoding.Paragraphs {
+		staticwebsitechapter.Paragraphs = append(staticwebsitechapter.Paragraphs, backRepo.BackRepoStaticWebSiteParagraph.Map_StaticWebSiteParagraphDBID_StaticWebSiteParagraphPtr[uint(_StaticWebSiteParagraphid)])
 	}
 
 	return

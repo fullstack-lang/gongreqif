@@ -112,9 +112,6 @@ func NewStackInstance(
 	models.SetOrchestratorOnAfterUpdate[models.DATATYPE_DEFINITION_XHTML](stage)
 	models.SetOrchestratorOnAfterUpdate[models.EMBEDDED_VALUE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.ENUM_VALUE](stage)
-	models.SetOrchestratorOnAfterUpdate[models.GeneratedImageMetamodel](stage)
-	models.SetOrchestratorOnAfterUpdate[models.Image](stage)
-	models.SetOrchestratorOnAfterUpdate[models.Paragraph](stage)
 	models.SetOrchestratorOnAfterUpdate[models.RELATION_GROUP](stage)
 	models.SetOrchestratorOnAfterUpdate[models.RELATION_GROUP_TYPE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.REQ_IF](stage)
@@ -130,6 +127,9 @@ func NewStackInstance(
 	models.SetOrchestratorOnAfterUpdate[models.SPEC_RELATION_TYPE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.StaticWebSite](stage)
 	models.SetOrchestratorOnAfterUpdate[models.StaticWebSiteChapter](stage)
+	models.SetOrchestratorOnAfterUpdate[models.StaticWebSiteGeneratedImage](stage)
+	models.SetOrchestratorOnAfterUpdate[models.StaticWebSiteImage](stage)
+	models.SetOrchestratorOnAfterUpdate[models.StaticWebSiteParagraph](stage)
 	models.SetOrchestratorOnAfterUpdate[models.XHTML_CONTENT](stage)
 
 	return

@@ -164,12 +164,6 @@ type BackRepoStruct struct {
 
 	BackRepoENUM_VALUE BackRepoENUM_VALUEStruct
 
-	BackRepoGeneratedImageMetamodel BackRepoGeneratedImageMetamodelStruct
-
-	BackRepoImage BackRepoImageStruct
-
-	BackRepoParagraph BackRepoParagraphStruct
-
 	BackRepoRELATION_GROUP BackRepoRELATION_GROUPStruct
 
 	BackRepoRELATION_GROUP_TYPE BackRepoRELATION_GROUP_TYPEStruct
@@ -199,6 +193,12 @@ type BackRepoStruct struct {
 	BackRepoStaticWebSite BackRepoStaticWebSiteStruct
 
 	BackRepoStaticWebSiteChapter BackRepoStaticWebSiteChapterStruct
+
+	BackRepoStaticWebSiteGeneratedImage BackRepoStaticWebSiteGeneratedImageStruct
+
+	BackRepoStaticWebSiteImage BackRepoStaticWebSiteImageStruct
+
+	BackRepoStaticWebSiteParagraph BackRepoStaticWebSiteParagraphStruct
 
 	BackRepoXHTML_CONTENT BackRepoXHTML_CONTENTStruct
 
@@ -293,9 +293,6 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&DATATYPE_DEFINITION_XHTMLDB{},
 		&EMBEDDED_VALUEDB{},
 		&ENUM_VALUEDB{},
-		&GeneratedImageMetamodelDB{},
-		&ImageDB{},
-		&ParagraphDB{},
 		&RELATION_GROUPDB{},
 		&RELATION_GROUP_TYPEDB{},
 		&REQ_IFDB{},
@@ -311,6 +308,9 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&SPEC_RELATION_TYPEDB{},
 		&StaticWebSiteDB{},
 		&StaticWebSiteChapterDB{},
+		&StaticWebSiteGeneratedImageDB{},
+		&StaticWebSiteImageDB{},
+		&StaticWebSiteParagraphDB{},
 		&XHTML_CONTENTDB{},
 	)
 	THIS IS REMOVED BY GONG COMPILER IF TARGET IS gorm */
@@ -878,30 +878,6 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		db:    db,
 		stage: stage,
 	}
-	backRepo.BackRepoGeneratedImageMetamodel = BackRepoGeneratedImageMetamodelStruct{
-		Map_GeneratedImageMetamodelDBID_GeneratedImageMetamodelPtr: make(map[uint]*models.GeneratedImageMetamodel, 0),
-		Map_GeneratedImageMetamodelDBID_GeneratedImageMetamodelDB:  make(map[uint]*GeneratedImageMetamodelDB, 0),
-		Map_GeneratedImageMetamodelPtr_GeneratedImageMetamodelDBID: make(map[*models.GeneratedImageMetamodel]uint, 0),
-
-		db:    db,
-		stage: stage,
-	}
-	backRepo.BackRepoImage = BackRepoImageStruct{
-		Map_ImageDBID_ImagePtr: make(map[uint]*models.Image, 0),
-		Map_ImageDBID_ImageDB:  make(map[uint]*ImageDB, 0),
-		Map_ImagePtr_ImageDBID: make(map[*models.Image]uint, 0),
-
-		db:    db,
-		stage: stage,
-	}
-	backRepo.BackRepoParagraph = BackRepoParagraphStruct{
-		Map_ParagraphDBID_ParagraphPtr: make(map[uint]*models.Paragraph, 0),
-		Map_ParagraphDBID_ParagraphDB:  make(map[uint]*ParagraphDB, 0),
-		Map_ParagraphPtr_ParagraphDBID: make(map[*models.Paragraph]uint, 0),
-
-		db:    db,
-		stage: stage,
-	}
 	backRepo.BackRepoRELATION_GROUP = BackRepoRELATION_GROUPStruct{
 		Map_RELATION_GROUPDBID_RELATION_GROUPPtr: make(map[uint]*models.RELATION_GROUP, 0),
 		Map_RELATION_GROUPDBID_RELATION_GROUPDB:  make(map[uint]*RELATION_GROUPDB, 0),
@@ -1018,6 +994,30 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		Map_StaticWebSiteChapterDBID_StaticWebSiteChapterPtr: make(map[uint]*models.StaticWebSiteChapter, 0),
 		Map_StaticWebSiteChapterDBID_StaticWebSiteChapterDB:  make(map[uint]*StaticWebSiteChapterDB, 0),
 		Map_StaticWebSiteChapterPtr_StaticWebSiteChapterDBID: make(map[*models.StaticWebSiteChapter]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoStaticWebSiteGeneratedImage = BackRepoStaticWebSiteGeneratedImageStruct{
+		Map_StaticWebSiteGeneratedImageDBID_StaticWebSiteGeneratedImagePtr: make(map[uint]*models.StaticWebSiteGeneratedImage, 0),
+		Map_StaticWebSiteGeneratedImageDBID_StaticWebSiteGeneratedImageDB:  make(map[uint]*StaticWebSiteGeneratedImageDB, 0),
+		Map_StaticWebSiteGeneratedImagePtr_StaticWebSiteGeneratedImageDBID: make(map[*models.StaticWebSiteGeneratedImage]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoStaticWebSiteImage = BackRepoStaticWebSiteImageStruct{
+		Map_StaticWebSiteImageDBID_StaticWebSiteImagePtr: make(map[uint]*models.StaticWebSiteImage, 0),
+		Map_StaticWebSiteImageDBID_StaticWebSiteImageDB:  make(map[uint]*StaticWebSiteImageDB, 0),
+		Map_StaticWebSiteImagePtr_StaticWebSiteImageDBID: make(map[*models.StaticWebSiteImage]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoStaticWebSiteParagraph = BackRepoStaticWebSiteParagraphStruct{
+		Map_StaticWebSiteParagraphDBID_StaticWebSiteParagraphPtr: make(map[uint]*models.StaticWebSiteParagraph, 0),
+		Map_StaticWebSiteParagraphDBID_StaticWebSiteParagraphDB:  make(map[uint]*StaticWebSiteParagraphDB, 0),
+		Map_StaticWebSiteParagraphPtr_StaticWebSiteParagraphDBID: make(map[*models.StaticWebSiteParagraph]uint, 0),
 
 		db:    db,
 		stage: stage,
@@ -1152,9 +1152,6 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseOne(stage)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseOne(stage)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseOne(stage)
-	backRepo.BackRepoGeneratedImageMetamodel.CommitPhaseOne(stage)
-	backRepo.BackRepoImage.CommitPhaseOne(stage)
-	backRepo.BackRepoParagraph.CommitPhaseOne(stage)
 	backRepo.BackRepoRELATION_GROUP.CommitPhaseOne(stage)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF.CommitPhaseOne(stage)
@@ -1170,6 +1167,9 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoStaticWebSite.CommitPhaseOne(stage)
 	backRepo.BackRepoStaticWebSiteChapter.CommitPhaseOne(stage)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.CommitPhaseOne(stage)
+	backRepo.BackRepoStaticWebSiteImage.CommitPhaseOne(stage)
+	backRepo.BackRepoStaticWebSiteParagraph.CommitPhaseOne(stage)
 	backRepo.BackRepoXHTML_CONTENT.CommitPhaseOne(stage)
 
 	// insertion point for per struct back repo phase two commit
@@ -1243,9 +1243,6 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseTwo(backRepo)
-	backRepo.BackRepoGeneratedImageMetamodel.CommitPhaseTwo(backRepo)
-	backRepo.BackRepoImage.CommitPhaseTwo(backRepo)
-	backRepo.BackRepoParagraph.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF.CommitPhaseTwo(backRepo)
@@ -1261,6 +1258,9 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSite.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSiteChapter.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoStaticWebSiteImage.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoStaticWebSiteParagraph.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoXHTML_CONTENT.CommitPhaseTwo(backRepo)
 
 	// important to release the mutex before calls to IncrementCommitFromBackNb
@@ -1346,9 +1346,6 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseOne()
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseOne()
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseOne()
-	backRepo.BackRepoGeneratedImageMetamodel.CheckoutPhaseOne()
-	backRepo.BackRepoImage.CheckoutPhaseOne()
-	backRepo.BackRepoParagraph.CheckoutPhaseOne()
 	backRepo.BackRepoRELATION_GROUP.CheckoutPhaseOne()
 	backRepo.BackRepoRELATION_GROUP_TYPE.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF.CheckoutPhaseOne()
@@ -1364,6 +1361,9 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.CheckoutPhaseOne()
 	backRepo.BackRepoStaticWebSite.CheckoutPhaseOne()
 	backRepo.BackRepoStaticWebSiteChapter.CheckoutPhaseOne()
+	backRepo.BackRepoStaticWebSiteGeneratedImage.CheckoutPhaseOne()
+	backRepo.BackRepoStaticWebSiteImage.CheckoutPhaseOne()
+	backRepo.BackRepoStaticWebSiteParagraph.CheckoutPhaseOne()
 	backRepo.BackRepoXHTML_CONTENT.CheckoutPhaseOne()
 
 	// insertion point for per struct back repo phase two commit
@@ -1437,9 +1437,6 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseTwo(backRepo)
-	backRepo.BackRepoGeneratedImageMetamodel.CheckoutPhaseTwo(backRepo)
-	backRepo.BackRepoImage.CheckoutPhaseTwo(backRepo)
-	backRepo.BackRepoParagraph.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF.CheckoutPhaseTwo(backRepo)
@@ -1455,6 +1452,9 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSite.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSiteChapter.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoStaticWebSiteImage.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoStaticWebSiteParagraph.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoXHTML_CONTENT.CheckoutPhaseTwo(backRepo)
 }
 
@@ -1533,9 +1533,6 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.Backup(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.Backup(dirPath)
 	backRepo.BackRepoENUM_VALUE.Backup(dirPath)
-	backRepo.BackRepoGeneratedImageMetamodel.Backup(dirPath)
-	backRepo.BackRepoImage.Backup(dirPath)
-	backRepo.BackRepoParagraph.Backup(dirPath)
 	backRepo.BackRepoRELATION_GROUP.Backup(dirPath)
 	backRepo.BackRepoRELATION_GROUP_TYPE.Backup(dirPath)
 	backRepo.BackRepoREQ_IF.Backup(dirPath)
@@ -1551,6 +1548,9 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.Backup(dirPath)
 	backRepo.BackRepoStaticWebSite.Backup(dirPath)
 	backRepo.BackRepoStaticWebSiteChapter.Backup(dirPath)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.Backup(dirPath)
+	backRepo.BackRepoStaticWebSiteImage.Backup(dirPath)
+	backRepo.BackRepoStaticWebSiteParagraph.Backup(dirPath)
 	backRepo.BackRepoXHTML_CONTENT.Backup(dirPath)
 }
 
@@ -1632,9 +1632,6 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.BackupXL(file)
 	backRepo.BackRepoEMBEDDED_VALUE.BackupXL(file)
 	backRepo.BackRepoENUM_VALUE.BackupXL(file)
-	backRepo.BackRepoGeneratedImageMetamodel.BackupXL(file)
-	backRepo.BackRepoImage.BackupXL(file)
-	backRepo.BackRepoParagraph.BackupXL(file)
 	backRepo.BackRepoRELATION_GROUP.BackupXL(file)
 	backRepo.BackRepoRELATION_GROUP_TYPE.BackupXL(file)
 	backRepo.BackRepoREQ_IF.BackupXL(file)
@@ -1650,6 +1647,9 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.BackupXL(file)
 	backRepo.BackRepoStaticWebSite.BackupXL(file)
 	backRepo.BackRepoStaticWebSiteChapter.BackupXL(file)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.BackupXL(file)
+	backRepo.BackRepoStaticWebSiteImage.BackupXL(file)
+	backRepo.BackRepoStaticWebSiteParagraph.BackupXL(file)
 	backRepo.BackRepoXHTML_CONTENT.BackupXL(file)
 
 	var b bytes.Buffer
@@ -1745,9 +1745,6 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseOne(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoENUM_VALUE.RestorePhaseOne(dirPath)
-	backRepo.BackRepoGeneratedImageMetamodel.RestorePhaseOne(dirPath)
-	backRepo.BackRepoImage.RestorePhaseOne(dirPath)
-	backRepo.BackRepoParagraph.RestorePhaseOne(dirPath)
 	backRepo.BackRepoRELATION_GROUP.RestorePhaseOne(dirPath)
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF.RestorePhaseOne(dirPath)
@@ -1763,6 +1760,9 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoStaticWebSite.RestorePhaseOne(dirPath)
 	backRepo.BackRepoStaticWebSiteChapter.RestorePhaseOne(dirPath)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.RestorePhaseOne(dirPath)
+	backRepo.BackRepoStaticWebSiteImage.RestorePhaseOne(dirPath)
+	backRepo.BackRepoStaticWebSiteParagraph.RestorePhaseOne(dirPath)
 	backRepo.BackRepoXHTML_CONTENT.RestorePhaseOne(dirPath)
 
 	//
@@ -1840,9 +1840,6 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseTwo()
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseTwo()
 	backRepo.BackRepoENUM_VALUE.RestorePhaseTwo()
-	backRepo.BackRepoGeneratedImageMetamodel.RestorePhaseTwo()
-	backRepo.BackRepoImage.RestorePhaseTwo()
-	backRepo.BackRepoParagraph.RestorePhaseTwo()
 	backRepo.BackRepoRELATION_GROUP.RestorePhaseTwo()
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF.RestorePhaseTwo()
@@ -1858,6 +1855,9 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.RestorePhaseTwo()
 	backRepo.BackRepoStaticWebSite.RestorePhaseTwo()
 	backRepo.BackRepoStaticWebSiteChapter.RestorePhaseTwo()
+	backRepo.BackRepoStaticWebSiteGeneratedImage.RestorePhaseTwo()
+	backRepo.BackRepoStaticWebSiteImage.RestorePhaseTwo()
+	backRepo.BackRepoStaticWebSiteParagraph.RestorePhaseTwo()
 	backRepo.BackRepoXHTML_CONTENT.RestorePhaseTwo()
 
 	backRepo.stage.Checkout()
@@ -1956,9 +1956,6 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestoreXLPhaseOne(file)
 	backRepo.BackRepoEMBEDDED_VALUE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoENUM_VALUE.RestoreXLPhaseOne(file)
-	backRepo.BackRepoGeneratedImageMetamodel.RestoreXLPhaseOne(file)
-	backRepo.BackRepoImage.RestoreXLPhaseOne(file)
-	backRepo.BackRepoParagraph.RestoreXLPhaseOne(file)
 	backRepo.BackRepoRELATION_GROUP.RestoreXLPhaseOne(file)
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF.RestoreXLPhaseOne(file)
@@ -1974,6 +1971,9 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoSPEC_RELATION_TYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoStaticWebSite.RestoreXLPhaseOne(file)
 	backRepo.BackRepoStaticWebSiteChapter.RestoreXLPhaseOne(file)
+	backRepo.BackRepoStaticWebSiteGeneratedImage.RestoreXLPhaseOne(file)
+	backRepo.BackRepoStaticWebSiteImage.RestoreXLPhaseOne(file)
+	backRepo.BackRepoStaticWebSiteParagraph.RestoreXLPhaseOne(file)
 	backRepo.BackRepoXHTML_CONTENT.RestoreXLPhaseOne(file)
 
 	// commit the restored stage

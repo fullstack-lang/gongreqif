@@ -11,6 +11,8 @@ type StaticWebSite struct {
 
 	InputImagesDir     string
 	OutputStaticWebDir string
+
+	VersionInfo string
 }
 
 type StaticWebSiteChapter struct {
@@ -20,33 +22,43 @@ type StaticWebSiteChapter struct {
 	//gong:width 900 gong:height 600
 	MarkdownContent string
 
-	Paragraphs []*Paragraph
+	Paragraphs []*StaticWebSiteParagraph
 }
 
-type Paragraph struct {
+type StaticWebSiteParagraph struct {
 	Name string
 
 	//gong:text
 	//gong:width 300 gong:height 300
 	LegendMarkdownContent string
 
-	Image *Image
+	Image *StaticWebSiteImage
 }
 
 // Iamge needs to be copied to "/static/images"
-type Image struct {
+type StaticWebSiteImage struct {
 	Name                string
 	SourceDirectoryPath string // for instance "../../../images/logo.svg"
+
+	Width  int
+	Height int
+}
+
+// the generated image will be unstaged at the end
+type StaticWebSiteGeneratedImage struct {
+	Name                string
+	SourceDirectoryPath string // for instance "../../../images/logo.svg"
+	Width               int
 	Height              int
 }
 
-type GeneratedImageMetamodel struct {
-	Name string
+// type GeneratedImageMetamodel struct {
+// 	Name string
 
-	ImageName   string
-	IsMetamodel bool
+// 	ImageName   string
+// 	IsMetamodel bool
 
-	//gong:text
-	//gong:width 300 gong:height 300
-	LegendMarkdownContent string
-}
+// 	//gong:text
+// 	//gong:width 300 gong:height 300
+// 	LegendMarkdownContent string
+// }

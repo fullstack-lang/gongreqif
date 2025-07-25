@@ -1314,56 +1314,6 @@ func FillUpForm(
 			}
 		}
 
-	case *models.GeneratedImageMetamodel:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("ImageName", instanceWithInferedType.ImageName, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("IsMetamodel", instanceWithInferedType.IsMetamodel, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("LegendMarkdownContent", instanceWithInferedType.LegendMarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
-			true, true, 300, true, 300)
-
-	case *models.Image:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("SourceDirectoryPath", instanceWithInferedType.SourceDirectoryPath, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Height", instanceWithInferedType.Height, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-
-	case *models.Paragraph:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("LegendMarkdownContent", instanceWithInferedType.LegendMarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
-			true, true, 300, true, 300)
-		AssociationFieldToForm("Image", instanceWithInferedType.Image, formGroup, probe)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "StaticWebSiteChapter"
-			rf.Fieldname = "Paragraphs"
-			reverseFieldOwner := models.GetReverseFieldOwner(probe.stageOfInterest, instanceWithInferedType, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.StaticWebSiteChapter),
-					"Paragraphs",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.StaticWebSiteChapter](
-					nil,
-					"Paragraphs",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
 	case *models.RELATION_GROUP:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
@@ -1792,6 +1742,8 @@ func FillUpForm(
 			false, false, 0, false, 0)
 		BasicFieldtoForm("OutputStaticWebDir", instanceWithInferedType.OutputStaticWebDir, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		BasicFieldtoForm("VersionInfo", instanceWithInferedType.VersionInfo, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.StaticWebSiteChapter:
 		// insertion point
@@ -1817,6 +1769,58 @@ func FillUpForm(
 				AssociationReverseFieldToForm[*models.StaticWebSite](
 					nil,
 					"Chapters",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+
+	case *models.StaticWebSiteGeneratedImage:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("SourceDirectoryPath", instanceWithInferedType.SourceDirectoryPath, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Width", instanceWithInferedType.Width, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Height", instanceWithInferedType.Height, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+
+	case *models.StaticWebSiteImage:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("SourceDirectoryPath", instanceWithInferedType.SourceDirectoryPath, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Width", instanceWithInferedType.Width, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Height", instanceWithInferedType.Height, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+
+	case *models.StaticWebSiteParagraph:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("LegendMarkdownContent", instanceWithInferedType.LegendMarkdownContent, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 300, true, 300)
+		AssociationFieldToForm("Image", instanceWithInferedType.Image, formGroup, probe)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "StaticWebSiteChapter"
+			rf.Fieldname = "Paragraphs"
+			reverseFieldOwner := models.GetReverseFieldOwner(probe.stageOfInterest, instanceWithInferedType, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.StaticWebSiteChapter),
+					"Paragraphs",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.StaticWebSiteChapter](
+					nil,
+					"Paragraphs",
 					instanceWithInferedType,
 					formGroup,
 					probe)

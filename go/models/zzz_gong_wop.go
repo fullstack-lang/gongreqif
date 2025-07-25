@@ -1118,57 +1118,6 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
-type GeneratedImageMetamodel_WOP struct {
-	// insertion point
-
-	Name string
-
-	ImageName string
-
-	IsMetamodel bool
-
-	LegendMarkdownContent string
-}
-
-func (from *GeneratedImageMetamodel) CopyBasicFields(to *GeneratedImageMetamodel) {
-	// insertion point
-	to.Name = from.Name
-	to.ImageName = from.ImageName
-	to.IsMetamodel = from.IsMetamodel
-	to.LegendMarkdownContent = from.LegendMarkdownContent
-}
-
-type Image_WOP struct {
-	// insertion point
-
-	Name string
-
-	SourceDirectoryPath string
-
-	Height int
-}
-
-func (from *Image) CopyBasicFields(to *Image) {
-	// insertion point
-	to.Name = from.Name
-	to.SourceDirectoryPath = from.SourceDirectoryPath
-	to.Height = from.Height
-}
-
-type Paragraph_WOP struct {
-	// insertion point
-
-	Name string
-
-	LegendMarkdownContent string
-}
-
-func (from *Paragraph) CopyBasicFields(to *Paragraph) {
-	// insertion point
-	to.Name = from.Name
-	to.LegendMarkdownContent = from.LegendMarkdownContent
-}
-
 type RELATION_GROUP_WOP struct {
 	// insertion point
 
@@ -1463,6 +1412,8 @@ type StaticWebSite_WOP struct {
 	InputImagesDir string
 
 	OutputStaticWebDir string
+
+	VersionInfo string
 }
 
 func (from *StaticWebSite) CopyBasicFields(to *StaticWebSite) {
@@ -1471,6 +1422,7 @@ func (from *StaticWebSite) CopyBasicFields(to *StaticWebSite) {
 	to.MarkdownContent = from.MarkdownContent
 	to.InputImagesDir = from.InputImagesDir
 	to.OutputStaticWebDir = from.OutputStaticWebDir
+	to.VersionInfo = from.VersionInfo
 }
 
 type StaticWebSiteChapter_WOP struct {
@@ -1485,6 +1437,60 @@ func (from *StaticWebSiteChapter) CopyBasicFields(to *StaticWebSiteChapter) {
 	// insertion point
 	to.Name = from.Name
 	to.MarkdownContent = from.MarkdownContent
+}
+
+type StaticWebSiteGeneratedImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	SourceDirectoryPath string
+
+	Width int
+
+	Height int
+}
+
+func (from *StaticWebSiteGeneratedImage) CopyBasicFields(to *StaticWebSiteGeneratedImage) {
+	// insertion point
+	to.Name = from.Name
+	to.SourceDirectoryPath = from.SourceDirectoryPath
+	to.Width = from.Width
+	to.Height = from.Height
+}
+
+type StaticWebSiteImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	SourceDirectoryPath string
+
+	Width int
+
+	Height int
+}
+
+func (from *StaticWebSiteImage) CopyBasicFields(to *StaticWebSiteImage) {
+	// insertion point
+	to.Name = from.Name
+	to.SourceDirectoryPath = from.SourceDirectoryPath
+	to.Width = from.Width
+	to.Height = from.Height
+}
+
+type StaticWebSiteParagraph_WOP struct {
+	// insertion point
+
+	Name string
+
+	LegendMarkdownContent string
+}
+
+func (from *StaticWebSiteParagraph) CopyBasicFields(to *StaticWebSiteParagraph) {
+	// insertion point
+	to.Name = from.Name
+	to.LegendMarkdownContent = from.LegendMarkdownContent
 }
 
 type XHTML_CONTENT_WOP struct {

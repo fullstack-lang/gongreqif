@@ -75,6 +75,9 @@ type StaticWebSiteDB struct {
 	// Declation for basic field staticwebsiteDB.OutputStaticWebDir
 	OutputStaticWebDir_Data sql.NullString
 
+	// Declation for basic field staticwebsiteDB.VersionInfo
+	VersionInfo_Data sql.NullString
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	StaticWebSitePointersEncoding
@@ -104,6 +107,8 @@ type StaticWebSiteWOP struct {
 	InputImagesDir string `xlsx:"3"`
 
 	OutputStaticWebDir string `xlsx:"4"`
+
+	VersionInfo string `xlsx:"5"`
 	// insertion for WOP pointer fields
 }
 
@@ -114,6 +119,7 @@ var StaticWebSite_Fields = []string{
 	"MarkdownContent",
 	"InputImagesDir",
 	"OutputStaticWebDir",
+	"VersionInfo",
 }
 
 type BackRepoStaticWebSiteStruct struct {
@@ -429,6 +435,9 @@ func (staticwebsiteDB *StaticWebSiteDB) CopyBasicFieldsFromStaticWebSite(staticw
 
 	staticwebsiteDB.OutputStaticWebDir_Data.String = staticwebsite.OutputStaticWebDir
 	staticwebsiteDB.OutputStaticWebDir_Data.Valid = true
+
+	staticwebsiteDB.VersionInfo_Data.String = staticwebsite.VersionInfo
+	staticwebsiteDB.VersionInfo_Data.Valid = true
 }
 
 // CopyBasicFieldsFromStaticWebSite_WOP
@@ -446,6 +455,9 @@ func (staticwebsiteDB *StaticWebSiteDB) CopyBasicFieldsFromStaticWebSite_WOP(sta
 
 	staticwebsiteDB.OutputStaticWebDir_Data.String = staticwebsite.OutputStaticWebDir
 	staticwebsiteDB.OutputStaticWebDir_Data.Valid = true
+
+	staticwebsiteDB.VersionInfo_Data.String = staticwebsite.VersionInfo
+	staticwebsiteDB.VersionInfo_Data.Valid = true
 }
 
 // CopyBasicFieldsFromStaticWebSiteWOP
@@ -463,6 +475,9 @@ func (staticwebsiteDB *StaticWebSiteDB) CopyBasicFieldsFromStaticWebSiteWOP(stat
 
 	staticwebsiteDB.OutputStaticWebDir_Data.String = staticwebsite.OutputStaticWebDir
 	staticwebsiteDB.OutputStaticWebDir_Data.Valid = true
+
+	staticwebsiteDB.VersionInfo_Data.String = staticwebsite.VersionInfo
+	staticwebsiteDB.VersionInfo_Data.Valid = true
 }
 
 // CopyBasicFieldsToStaticWebSite
@@ -472,6 +487,7 @@ func (staticwebsiteDB *StaticWebSiteDB) CopyBasicFieldsToStaticWebSite(staticweb
 	staticwebsite.MarkdownContent = staticwebsiteDB.MarkdownContent_Data.String
 	staticwebsite.InputImagesDir = staticwebsiteDB.InputImagesDir_Data.String
 	staticwebsite.OutputStaticWebDir = staticwebsiteDB.OutputStaticWebDir_Data.String
+	staticwebsite.VersionInfo = staticwebsiteDB.VersionInfo_Data.String
 }
 
 // CopyBasicFieldsToStaticWebSite_WOP
@@ -481,6 +497,7 @@ func (staticwebsiteDB *StaticWebSiteDB) CopyBasicFieldsToStaticWebSite_WOP(stati
 	staticwebsite.MarkdownContent = staticwebsiteDB.MarkdownContent_Data.String
 	staticwebsite.InputImagesDir = staticwebsiteDB.InputImagesDir_Data.String
 	staticwebsite.OutputStaticWebDir = staticwebsiteDB.OutputStaticWebDir_Data.String
+	staticwebsite.VersionInfo = staticwebsiteDB.VersionInfo_Data.String
 }
 
 // CopyBasicFieldsToStaticWebSiteWOP
@@ -491,6 +508,7 @@ func (staticwebsiteDB *StaticWebSiteDB) CopyBasicFieldsToStaticWebSiteWOP(static
 	staticwebsite.MarkdownContent = staticwebsiteDB.MarkdownContent_Data.String
 	staticwebsite.InputImagesDir = staticwebsiteDB.InputImagesDir_Data.String
 	staticwebsite.OutputStaticWebDir = staticwebsiteDB.OutputStaticWebDir_Data.String
+	staticwebsite.VersionInfo = staticwebsiteDB.VersionInfo_Data.String
 }
 
 // Backup generates a json file from a slice of all StaticWebSiteDB instances in the backrepo

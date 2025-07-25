@@ -97,6 +97,8 @@ type Stager struct {
 	specificationsTreeStage *tree.Stage
 	specificationsTreeName  string
 
+	// rendering
+
 	markdownStage *markdown.Stage
 
 	rootReqif       *REQ_IF
@@ -581,6 +583,7 @@ func NewStager(
 	}
 
 	stager.updateAndCommitSummaryLoadStage()
+	stager.UpdateAndCommitButtonStage()
 
 	return
 }

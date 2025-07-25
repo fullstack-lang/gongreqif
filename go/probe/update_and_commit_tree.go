@@ -784,36 +784,6 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
-		case "GeneratedImageMetamodel":
-			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.GeneratedImageMetamodel](probe.stageOfInterest)
-			for _generatedimagemetamodel := range set {
-				nodeInstance := &tree.Node{Name: _generatedimagemetamodel.GetName()}
-				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_generatedimagemetamodel, "GeneratedImageMetamodel", probe)
-
-				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
-			}
-		case "Image":
-			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.Image](probe.stageOfInterest)
-			for _image := range set {
-				nodeInstance := &tree.Node{Name: _image.GetName()}
-				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_image, "Image", probe)
-
-				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
-			}
-		case "Paragraph":
-			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.Paragraph](probe.stageOfInterest)
-			for _paragraph := range set {
-				nodeInstance := &tree.Node{Name: _paragraph.GetName()}
-				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_paragraph, "Paragraph", probe)
-
-				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
-			}
 		case "RELATION_GROUP":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.RELATION_GROUP](probe.stageOfInterest)
@@ -961,6 +931,36 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _staticwebsitechapter.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsitechapter, "StaticWebSiteChapter", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "StaticWebSiteGeneratedImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.StaticWebSiteGeneratedImage](probe.stageOfInterest)
+			for _staticwebsitegeneratedimage := range set {
+				nodeInstance := &tree.Node{Name: _staticwebsitegeneratedimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsitegeneratedimage, "StaticWebSiteGeneratedImage", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "StaticWebSiteImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.StaticWebSiteImage](probe.stageOfInterest)
+			for _staticwebsiteimage := range set {
+				nodeInstance := &tree.Node{Name: _staticwebsiteimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsiteimage, "StaticWebSiteImage", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "StaticWebSiteParagraph":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.StaticWebSiteParagraph](probe.stageOfInterest)
+			for _staticwebsiteparagraph := range set {
+				nodeInstance := &tree.Node{Name: _staticwebsiteparagraph.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsiteparagraph, "StaticWebSiteParagraph", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}

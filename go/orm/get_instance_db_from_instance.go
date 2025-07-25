@@ -295,18 +295,6 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		enum_valueInstance := any(concreteInstance).(*models.ENUM_VALUE)
 		ret2 := backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueInstance)
 		ret = any(ret2).(*T2)
-	case *models.GeneratedImageMetamodel:
-		generatedimagemetamodelInstance := any(concreteInstance).(*models.GeneratedImageMetamodel)
-		ret2 := backRepo.BackRepoGeneratedImageMetamodel.GetGeneratedImageMetamodelDBFromGeneratedImageMetamodelPtr(generatedimagemetamodelInstance)
-		ret = any(ret2).(*T2)
-	case *models.Image:
-		imageInstance := any(concreteInstance).(*models.Image)
-		ret2 := backRepo.BackRepoImage.GetImageDBFromImagePtr(imageInstance)
-		ret = any(ret2).(*T2)
-	case *models.Paragraph:
-		paragraphInstance := any(concreteInstance).(*models.Paragraph)
-		ret2 := backRepo.BackRepoParagraph.GetParagraphDBFromParagraphPtr(paragraphInstance)
-		ret = any(ret2).(*T2)
 	case *models.RELATION_GROUP:
 		relation_groupInstance := any(concreteInstance).(*models.RELATION_GROUP)
 		ret2 := backRepo.BackRepoRELATION_GROUP.GetRELATION_GROUPDBFromRELATION_GROUPPtr(relation_groupInstance)
@@ -366,6 +354,18 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 	case *models.StaticWebSiteChapter:
 		staticwebsitechapterInstance := any(concreteInstance).(*models.StaticWebSiteChapter)
 		ret2 := backRepo.BackRepoStaticWebSiteChapter.GetStaticWebSiteChapterDBFromStaticWebSiteChapterPtr(staticwebsitechapterInstance)
+		ret = any(ret2).(*T2)
+	case *models.StaticWebSiteGeneratedImage:
+		staticwebsitegeneratedimageInstance := any(concreteInstance).(*models.StaticWebSiteGeneratedImage)
+		ret2 := backRepo.BackRepoStaticWebSiteGeneratedImage.GetStaticWebSiteGeneratedImageDBFromStaticWebSiteGeneratedImagePtr(staticwebsitegeneratedimageInstance)
+		ret = any(ret2).(*T2)
+	case *models.StaticWebSiteImage:
+		staticwebsiteimageInstance := any(concreteInstance).(*models.StaticWebSiteImage)
+		ret2 := backRepo.BackRepoStaticWebSiteImage.GetStaticWebSiteImageDBFromStaticWebSiteImagePtr(staticwebsiteimageInstance)
+		ret = any(ret2).(*T2)
+	case *models.StaticWebSiteParagraph:
+		staticwebsiteparagraphInstance := any(concreteInstance).(*models.StaticWebSiteParagraph)
+		ret2 := backRepo.BackRepoStaticWebSiteParagraph.GetStaticWebSiteParagraphDBFromStaticWebSiteParagraphPtr(staticwebsiteparagraphInstance)
 		ret = any(ret2).(*T2)
 	case *models.XHTML_CONTENT:
 		xhtml_contentInstance := any(concreteInstance).(*models.XHTML_CONTENT)
@@ -734,21 +734,6 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
-	case *models.GeneratedImageMetamodel:
-		tmp := GetInstanceDBFromInstance[models.GeneratedImageMetamodel, GeneratedImageMetamodelDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Image:
-		tmp := GetInstanceDBFromInstance[models.Image, ImageDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Paragraph:
-		tmp := GetInstanceDBFromInstance[models.Paragraph, ParagraphDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -821,6 +806,21 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.StaticWebSiteChapter:
 		tmp := GetInstanceDBFromInstance[models.StaticWebSiteChapter, StaticWebSiteChapterDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteGeneratedImage:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteGeneratedImage, StaticWebSiteGeneratedImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteImage:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteImage, StaticWebSiteImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteParagraph:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteParagraph, StaticWebSiteParagraphDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1192,21 +1192,6 @@ func GetIDPointer[T models.PointerToGongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
-	case *models.GeneratedImageMetamodel:
-		tmp := GetInstanceDBFromInstance[models.GeneratedImageMetamodel, GeneratedImageMetamodelDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Image:
-		tmp := GetInstanceDBFromInstance[models.Image, ImageDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
-	case *models.Paragraph:
-		tmp := GetInstanceDBFromInstance[models.Paragraph, ParagraphDB](
-			stage, backRepo, inst,
-		)
-		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -1279,6 +1264,21 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.StaticWebSiteChapter:
 		tmp := GetInstanceDBFromInstance[models.StaticWebSiteChapter, StaticWebSiteChapterDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteGeneratedImage:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteGeneratedImage, StaticWebSiteGeneratedImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteImage:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteImage, StaticWebSiteImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.StaticWebSiteParagraph:
+		tmp := GetInstanceDBFromInstance[models.StaticWebSiteParagraph, StaticWebSiteParagraphDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

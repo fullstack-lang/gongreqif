@@ -935,45 +935,6 @@ func FillUpFormFromGongstructName(
 		enum_value := new(models.ENUM_VALUE)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(enum_value, formGroup, probe)
-	case "GeneratedImageMetamodel":
-		formGroup := (&form.FormGroup{
-			Name:  FormName,
-			Label: prefix + "GeneratedImageMetamodel Form",
-		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__GeneratedImageMetamodelFormCallback(
-			nil,
-			probe,
-			formGroup,
-		)
-		generatedimagemetamodel := new(models.GeneratedImageMetamodel)
-		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(generatedimagemetamodel, formGroup, probe)
-	case "Image":
-		formGroup := (&form.FormGroup{
-			Name:  FormName,
-			Label: prefix + "Image Form",
-		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__ImageFormCallback(
-			nil,
-			probe,
-			formGroup,
-		)
-		image := new(models.Image)
-		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(image, formGroup, probe)
-	case "Paragraph":
-		formGroup := (&form.FormGroup{
-			Name:  FormName,
-			Label: prefix + "Paragraph Form",
-		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__ParagraphFormCallback(
-			nil,
-			probe,
-			formGroup,
-		)
-		paragraph := new(models.Paragraph)
-		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(paragraph, formGroup, probe)
 	case "RELATION_GROUP":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
@@ -1169,6 +1130,45 @@ func FillUpFormFromGongstructName(
 		staticwebsitechapter := new(models.StaticWebSiteChapter)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(staticwebsitechapter, formGroup, probe)
+	case "StaticWebSiteGeneratedImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "StaticWebSiteGeneratedImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__StaticWebSiteGeneratedImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		staticwebsitegeneratedimage := new(models.StaticWebSiteGeneratedImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(staticwebsitegeneratedimage, formGroup, probe)
+	case "StaticWebSiteImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "StaticWebSiteImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__StaticWebSiteImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		staticwebsiteimage := new(models.StaticWebSiteImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(staticwebsiteimage, formGroup, probe)
+	case "StaticWebSiteParagraph":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "StaticWebSiteParagraph Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__StaticWebSiteParagraphFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		staticwebsiteparagraph := new(models.StaticWebSiteParagraph)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(staticwebsiteparagraph, formGroup, probe)
 	case "XHTML_CONTENT":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
