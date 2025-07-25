@@ -51,7 +51,11 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 				Name: specObjectType.Name + fmt.Sprintf(" (%d/%d)",
 					stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[specObjectType],
 					map_specType_nbInstance[specObjectType]),
-				IsExpanded: true,
+				IsExpanded: stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded[specObjectType],
+				Impl: &SpecObjectTypeNodeProxy{
+					stager:         stager,
+					specObjectType: specObjectType,
+				},
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, specObjectTypeNode)
 
@@ -150,7 +154,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 		for _, spectype := range spectypes.SPEC_RELATION_TYPE {
 			node := &tree.Node{
 				Name:       spectype.Name + fmt.Sprintf(" (%d)", map_specType_nbInstance[spectype]),
-				IsExpanded: true,
+				IsExpanded: false,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 
@@ -187,7 +191,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 				Name: spectype.Name + fmt.Sprintf(" (%d/%d)",
 					stager.Map_SPECIFICATION_TYPE_Spec_nbInstance[spectype],
 					map_specType_nbInstance[spectype]),
-				IsExpanded: true,
+				IsExpanded: false,
 			}
 			spectypeCategory.Children = append(spectypeCategory.Children, node)
 

@@ -142,7 +142,8 @@ type Stager struct {
 	Map_SPECIFICATION_TYPE_Spec_nbInstance map[*SPECIFICATION_TYPE]int
 	Map_SPEC_RELATION_TYPE_Spec_nbInstance map[*SPEC_RELATION_TYPE]int
 
-	Map_SPEC_OBJECT_TYPE_isHeading map[*SPEC_OBJECT_TYPE]bool
+	Map_SPEC_OBJECT_TYPE_isHeading      map[*SPEC_OBJECT_TYPE]bool
+	Map_SPEC_OBJECT_TYPE_isNodeExpanded map[*SPEC_OBJECT_TYPE]bool // is the tree node expanded in the UX
 
 	Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance       map[*ATTRIBUTE_DEFINITION_XHTML]int
 	Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance      map[*ATTRIBUTE_DEFINITION_STRING]int

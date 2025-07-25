@@ -29,6 +29,7 @@ func (stager *Stager) initMaps() {
 	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
 	stager.Map_SPEC_OBJECT_TYPE_isHeading = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
 
 	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
