@@ -296,51 +296,17 @@ func addAttibutesNodes(
 		stager.Map_id_DATATYPE_DEFINITION_DATE,
 		nodeSpecType)
 
-	// ENUMERATION Attributes
-	if len(specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION) > 0 {
-		// compute the number of time this attribute is used
-		map_attributeDefinition_nbInstance := make(map[*m.ATTRIBUTE_DEFINITION_ENUMERATION]int)
-		var attributeDefinition *m.ATTRIBUTE_DEFINITION_ENUMERATION
-		for x := range *m.GetGongstructInstancesSet[m.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stager.GetStage()) {
-
-			var ok bool
-			attributeDefinition, ok = stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[x.ATTRIBUTE_DEFINITION_ENUMERATION_REF]
-			if !ok {
-				log.Panic("x.ATTRIBUTE_DEFINITION_ENUMERATION_REF", x.ATTRIBUTE_DEFINITION_ENUMERATION_REF,
-					"unknown ref")
-			} else {
-				map_attributeDefinition_nbInstance[attributeDefinition]++
-			}
-		}
-
-		for _, attribute := range specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION {
-			var attributeType string
-			if datatype, ok := stager.Map_id_DATATYPE_DEFINITION_ENUMERATION[attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF]; ok {
-				attributeType = datatype.LONG_NAME
-			} else {
-				log.Panic("attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF", attribute.TYPE.DATATYPE_DEFINITION_ENUMERATION_REF,
-					"unknown ref")
-			}
-
-			nbInstances := stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance[attribute]
-			nodeAttribute := &tree.Node{
-				Name: attribute.LONG_NAME + " : " + attributeType +
-					fmt.Sprintf(" (%d/%d)", nbInstances, map_attributeDefinition_nbInstance[attribute]),
-			}
-			configureAndAddAttributeNode(
-				stager,
-				nodeSpecType,
-				nodeAttribute,
-				nbInstances,
-				attribute.IS_EDITABLE,
-				attribute.LONG_NAME,
-				attributeDefinition,
-				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle,
-				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable,
-				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject,
-			)
-		}
-	}
+	addAttributeNode(
+		stager,
+		specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION,
+		stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION,
+		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance,
+		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle,
+		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject,
+		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stager.GetStage()),
+		stager.Map_id_DATATYPE_DEFINITION_ENUMERATION,
+		nodeSpecType)
 }
 
 // configureAndAddAttributeNode configures a new attribute node, sets its icon,
