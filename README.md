@@ -11,6 +11,9 @@ GongReqif is a command-line tool for analyzing and inspecting OMG ReqIF (Require
 ![A view of the specific objects, relations, and specification hierarchies within the file.](docs/screenshot2.png)
 *A view of the specific objects, relations, and specification hierarchies within the file.*
 
+![A view of the rendering of a specification.](docs/screenshot3.png)
+*A view of the rendering of a specification.*
+
 
 ## About the Project
 
