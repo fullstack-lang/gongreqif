@@ -7,6 +7,7 @@ import (
 	"github.com/fullstack-lang/gong/lib/tree/go/buttons"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 
+	"github.com/fullstack-lang/gongreqif/go/icons"
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
@@ -67,10 +68,10 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 				if !stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
 					button.ToolTipText = "Show identifier in title"
-					button.SVGIcon = svgIconBadge
+					button.SVGIcon = icons.SvgIconBadge
 				} else {
 					button.ToolTipText = "Hide identifier in title"
-					button.SVGIcon = svgIconBadgeOff
+					button.SVGIcon = icons.SvgIconBadgeOff
 				}
 				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 			}
@@ -88,10 +89,10 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 				if !stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
 					button.ToolTipText = "Show name in title"
-					button.SVGIcon = svgIconBadge
+					button.SVGIcon = icons.SvgIconBadge
 				} else {
 					button.ToolTipText = "Hide name in title"
-					button.SVGIcon = svgIconBadgeOff
+					button.SVGIcon = icons.SvgIconBadgeOff
 				}
 				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 			}
@@ -109,10 +110,10 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 				if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
 					button.ToolTipText = "Treat as heading"
-					button.SVGIcon = svgIconTitle
+					button.SVGIcon = icons.SvgIconTitle
 				} else {
 					button.ToolTipText = "Treat as no heading"
-					button.SVGIcon = svgIconTitleOff
+					button.SVGIcon = icons.SvgIconTitleOff
 				}
 				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
 			}
@@ -356,18 +357,22 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 
 	{
 		button := &tree.Button{
-			Name: "button for showing off in title",
+			Name: longName + ": show attribute on/off in title",
 			Impl: &ButtonToggleShowAttributeFieldInTitleProxy[AttrDef]{
 				stager:                               stager,
 				attributeDefinition:                  attributeDefinition,
 				map_AtttributeDefinition_showInTitle: map_AtttributeDefinition_showInTitle,
 			},
+			HasToolTip:      true,
+			ToolTipPosition: tree.Right,
 		}
 
 		if map_AtttributeDefinition_showInTitle[attributeDefinition] {
-			button.SVGIcon = svgIconTitleOff
+			button.SVGIcon = icons.SvgIconTitleOff
+			button.ToolTipText = "Click to remove attributes from the title"
 		} else {
-			button.SVGIcon = svgIconTitle
+			button.SVGIcon = icons.SvgIconTitle
+			button.ToolTipText = "Click to add attribute to the title"
 		}
 		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
 			button,
@@ -376,18 +381,22 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 
 	{
 		button := &tree.Button{
-			Name: "button for showing off in table",
+			Name: longName + ": show attribute on/off in table",
 			Impl: &ButtonToggleShowAttributeFieldInTableProxy[AttrDef]{
 				stager:                               stager,
 				attributeDefinition:                  attributeDefinition,
 				map_AtttributeDefinition_showInTable: map_AtttributeDefinition_showInTable,
 			},
+			HasToolTip:      true,
+			ToolTipPosition: tree.Right,
 		}
 
 		if map_AtttributeDefinition_showInTable[attributeDefinition] {
-			button.SVGIcon = svgIconTableOff
+			button.SVGIcon = icons.SvgIconTableOff
+			button.ToolTipText = "Click to remove attributes from the table"
 		} else {
-			button.SVGIcon = svgIconTable
+			button.SVGIcon = icons.SvgIconTable
+			button.ToolTipText = "Click to have attributes in the table"
 		}
 		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
 			button,
