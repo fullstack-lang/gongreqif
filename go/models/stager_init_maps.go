@@ -45,6 +45,14 @@ func (stager *Stager) initMaps() {
 	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
+
+	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
+	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
 }
 
 // Generic function to initialize a map with *T as key and bool as value

@@ -20,6 +20,7 @@ func addAttributeNode[
 	map_AtttributeDefinition_Spec_nbInstance map[AttrDef]int, // number of use in the selected specification
 	map_AtttributeDefinition_showInTitle map[AttrDef]bool,
 	map_AtttributeDefinition_showInTable map[AttrDef]bool,
+	map_AtttributeDefinition_showInSubject map[AttrDef]bool,
 
 	attributesDefinitionRefs map[AttrDefRef]any, // the set of all reference to this kind of attribute definition
 	map_Id_DatatypeDefinition map[string]DatatypeDef,
@@ -67,7 +68,9 @@ func addAttributeNode[
 				attributeDefinition.GetLongName(),
 				attributeDefinition,
 				map_AtttributeDefinition_showInTitle,
-				map_AtttributeDefinition_showInTable)
+				map_AtttributeDefinition_showInTable,
+				map_AtttributeDefinition_showInSubject,
+			)
 		}
 	}
 }

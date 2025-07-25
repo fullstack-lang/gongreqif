@@ -231,6 +231,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance,
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle,
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_XHTML,
 		nodeSpecType)
@@ -242,6 +243,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance,
 		stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle,
 		stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_STRING,
 		nodeSpecType)
@@ -253,6 +255,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance,
 		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle,
 		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_BOOLEAN,
 		nodeSpecType)
@@ -264,6 +267,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance,
 		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle,
 		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_INTEGER_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_INTEGER,
 		nodeSpecType)
@@ -275,6 +279,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance,
 		stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle,
 		stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_REAL_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_REAL,
 		nodeSpecType)
@@ -286,6 +291,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance,
 		stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle,
 		stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable,
+		stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_DATE_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_DATE,
 		nodeSpecType)
@@ -330,7 +336,9 @@ func addAttibutesNodes(
 				attribute.LONG_NAME,
 				attributeDefinition,
 				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle,
-				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable)
+				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable,
+				stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject,
+			)
 		}
 	}
 }
@@ -347,6 +355,7 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 	attributeDefinition AttrDef,
 	map_AtttributeDefinition_showInTitle map[AttrDef]bool,
 	map_AtttributeDefinition_showInTable map[AttrDef]bool,
+	map_AtttributeDefinition_showInSubject map[AttrDef]bool,
 ) {
 	if nbInstances > 0 {
 		nodeAttribute.IsWithPreceedingIcon = true
@@ -402,6 +411,30 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 			button,
 		)
 	}
+
+	{
+		button := &tree.Button{
+			Name: longName + ": show attribute on/off in subject",
+			Impl: &ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef]{
+				stager:                                 stager,
+				attributeDefinition:                    attributeDefinition,
+				map_AtttributeDefinition_showInSubject: map_AtttributeDefinition_showInSubject,
+			},
+			HasToolTip:      true,
+			ToolTipPosition: tree.Right,
+		}
+
+		if map_AtttributeDefinition_showInSubject[attributeDefinition] {
+			button.SVGIcon = icons.SvgIconSubjectOff
+			button.ToolTipText = "Click to remove attributes from the subject"
+		} else {
+			button.SVGIcon = icons.SvgIconSubject
+			button.ToolTipText = "Click to have attributes in the subject"
+		}
+		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
+			button,
+		)
+	}
 }
 
 type ButtonToggleShowAttributeFieldInTitleProxy[AttrDef m.AttributeDefinition] struct {
@@ -443,6 +476,28 @@ func (proxy *ButtonToggleShowAttributeFieldInTableProxy[AttrDef]) ButtonUpdated(
 	}
 
 	proxy.map_AtttributeDefinition_showInTable[proxy.attributeDefinition] = !showInTable
+
+	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
+}
+
+type ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef m.AttributeDefinition] struct {
+	stager                                 *m.Stager
+	attributeDefinition                    AttrDef
+	map_AtttributeDefinition_showInSubject map[AttrDef]bool
+}
+
+func (proxy *ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef]) ButtonUpdated(
+	treeStage *tree.Stage,
+	staged, front *tree.Button) {
+
+	showInSubject, ok := proxy.map_AtttributeDefinition_showInSubject[proxy.attributeDefinition]
+
+	if !ok {
+		log.Fatalln("Unknown specificiation in map", proxy.attributeDefinition.GetName())
+	}
+
+	proxy.map_AtttributeDefinition_showInSubject[proxy.attributeDefinition] = !showInSubject
 
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
