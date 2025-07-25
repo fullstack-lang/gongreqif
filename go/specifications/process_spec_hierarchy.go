@@ -39,7 +39,6 @@ func processSpecHierarchy(
 	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
 
 		*markDownContent += `
-
 `
 
 		if specHierarchy.CHILDREN == nil || len(specHierarchy.CHILDREN.SPEC_HIERARCHY) == 0 {
@@ -69,7 +68,9 @@ func processSpecHierarchy(
 		*markDownContent += fmt.Sprintf("%s", specObject.Name)
 	}
 
-	titleComplement := fillUpTitleWithAttributes(stager, specObject)
+	titleComplement := fillUpStringWithAttributes(stager, specObject, Title)
+
+	subjectComplement := fillUpStringWithAttributes(stager, specObject, Subject)
 
 	if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] && !strings.HasSuffix(*markDownContent, "**") && titleComplement != "" {
 		*markDownContent += " - "
@@ -79,7 +80,7 @@ func processSpecHierarchy(
 
 	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
 		*markDownContent += `
-		`
+`
 	} else {
 		// ending mark for bold
 		*markDownContent += markdownBoldEndingMark
@@ -88,6 +89,13 @@ func processSpecHierarchy(
 	// remove "****" if no title is present
 	if strings.HasSuffix(*markDownContent, markdownBoldStartingMark+markdownBoldEndingMark) {
 		*markDownContent = strings.TrimSuffix(*markDownContent, markdownBoldStartingMark+markdownBoldEndingMark)
+	}
+
+	// add the subject after the title
+	if subjectComplement != "" {
+		*markDownContent += `
+` + subjectComplement + `
+`
 	}
 
 	specObjectNode := &tree.Node{
