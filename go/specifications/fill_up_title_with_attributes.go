@@ -8,7 +8,12 @@ import (
 // fillUpTitleWithAttributes
 func fillUpTitleWithAttributes(stager *m.Stager, specObject *m.SPEC_OBJECT) (titleComplement string) {
 
-	titleComplement = parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_STRING)
+	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_STRING)
+	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_XHTML)
+	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_INTEGER)
+	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_REAL)
+	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_DATE)
+	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_ENUMERATION)
 
 	return
 }
