@@ -79,7 +79,6 @@ func (specRelationsTreeUpdater *SpecRelationsTreeStageUpdater) UpdateAndCommitSp
 
 	tree.StageBranch(treeStage,
 		&tree.Tree{
-			Name:      stager.GetSpecRelationsTreeName(),
 			RootNodes: sliceOfSpecRelationNodes,
 		},
 	)

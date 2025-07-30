@@ -76,26 +76,12 @@ type Stager struct {
 	buttonStage *button.Stage
 
 	summaryTableStage *table.Stage
-	summaryTableName  string
 
-	// types
-
-	dataTypeTreeStage *tree.Stage
-	dataTypeTreeName  string
-
-	specTypesTreeStage *tree.Stage
-	specTypesTreeName  string
-
-	// instances
-
-	specObjectsTreeStage *tree.Stage
-	specObjectsTreeName  string
-
-	specRelationsTreeStage *tree.Stage
-	specRelationsTreeName  string
-
+	dataTypeTreeStage       *tree.Stage
+	specTypesTreeStage      *tree.Stage
+	specObjectsTreeStage    *tree.Stage
+	specRelationsTreeStage  *tree.Stage
 	specificationsTreeStage *tree.Stage
-	specificationsTreeName  string
 
 	// rendering
 
@@ -232,19 +218,10 @@ func (stager *Stager) GetDataTypeTreeStage() (dataTypeTreeStage *tree.Stage) {
 	return
 }
 
-func (stager *Stager) GetDataTypeTreeName() string {
-	return stager.dataTypeTreeName
-}
-
 // Tree for spec types
 
 func (stager *Stager) GetSpecTypesTreeStage() (s *tree.Stage) {
 	s = stager.specTypesTreeStage
-	return
-}
-
-func (stager *Stager) GetSpecTypesTreeName() (s string) {
-	s = stager.specTypesTreeName
 	return
 }
 
@@ -255,19 +232,10 @@ func (stager *Stager) GetSpecObjectsTreeStage() (s *tree.Stage) {
 	return
 }
 
-func (stager *Stager) GetSpecObjectsTreeName() string {
-	return stager.specObjectsTreeName
-}
-
 // Tree for spec relations
 
 func (stager *Stager) GetSpecRelationsTreeStage() (s *tree.Stage) {
 	s = stager.specRelationsTreeStage
-	return
-}
-
-func (stager *Stager) GetSpecRelationsTreeName() (s string) {
-	s = stager.specRelationsTreeName
 	return
 }
 
@@ -285,11 +253,6 @@ func (stager *Stager) GetMarkdownStage() (s *markdown.Stage) {
 
 func (stager *Stager) GetSsgStage() (s *ssg.Stage) {
 	s = stager.ssgStage
-	return
-}
-
-func (stager *Stager) GetSpecificationsTreeName() (s string) {
-	s = stager.specificationsTreeName
 	return
 }
 
@@ -340,26 +303,12 @@ func NewStager(
 	stager.markdownStage = markdown_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
-	stager.summaryTableName = "Summary Table Name"
-
 	stager.dataTypeTreeStage = tree_stack.NewStack(r, stage.GetName()+"-data types", "", "", "", true, true).Stage
-	stager.dataTypeTreeName = "Data Type Tree Name"
-
 	stager.specTypesTreeStage = tree_stack.NewStack(r, stage.GetName()+"-spec types", "", "", "", true, true).Stage
-	stager.specTypesTreeName = "Spec Object Type Tree Name"
-
-	// instancess
-	//
 
 	stager.specObjectsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-spec objects", "", "", "", true, true).Stage
-	stager.specTypesTreeName = "Object Tree Name"
-
 	stager.specRelationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-spec relations", "", "", "", true, true).Stage
-	stager.specRelationsTreeName = "Spec Relations Tree Name"
-
 	stager.specificationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-specifications", "", "", "", true, true).Stage
-	stager.specificationsTreeName = "Specifications Tree Name"
-
 	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	// StageBranch will stage on the the first argument
@@ -386,7 +335,6 @@ func NewStager(
 										Size:             50,
 										Table: &split.Table{
 											StackName: stager.summaryTableStage.GetName(),
-											TableName: stager.summaryTableName,
 										},
 									},
 									(&split.AsSplitArea{
@@ -414,14 +362,12 @@ func NewStager(
 							Size: 40,
 							Tree: &split.Tree{
 								StackName: stager.dataTypeTreeStage.GetName(),
-								TreeName:  stager.dataTypeTreeName,
 							},
 						},
 						{
 							Size: 40,
 							Tree: &split.Tree{
 								StackName: stager.specTypesTreeStage.GetName(),
-								TreeName:  stager.specTypesTreeName,
 							},
 						},
 					},
@@ -444,21 +390,18 @@ func NewStager(
 							Size: 33,
 							Tree: &split.Tree{
 								StackName: stager.specObjectsTreeStage.GetName(),
-								TreeName:  stager.specObjectsTreeName,
 							},
 						},
 						{
 							Size: 33,
 							Tree: &split.Tree{
 								StackName: stager.specRelationsTreeStage.GetName(),
-								TreeName:  stager.specRelationsTreeName,
 							},
 						},
 						{
 							Size: 34,
 							Tree: &split.Tree{
 								StackName: stager.specificationsTreeStage.GetName(),
-								TreeName:  stager.specificationsTreeName,
 							},
 						},
 						// {
@@ -488,14 +431,12 @@ func NewStager(
 							Size: 19.1,
 							Tree: &split.Tree{
 								StackName: stager.specificationsTreeStage.GetName(),
-								TreeName:  stager.specificationsTreeName,
 							},
 						},
 						{
 							Size: 19.1,
 							Tree: &split.Tree{
 								StackName: stager.specTypesTreeStage.GetName(),
-								TreeName:  stager.specTypesTreeName,
 							},
 						},
 						{

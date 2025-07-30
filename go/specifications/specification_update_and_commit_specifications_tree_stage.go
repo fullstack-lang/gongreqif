@@ -130,7 +130,6 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 	tree.StageBranch(treeStage,
 		&tree.Tree{
-			Name:      stager.GetSpecificationsTreeName(),
 			RootNodes: sliceOfSpecificationNodes,
 		},
 	)

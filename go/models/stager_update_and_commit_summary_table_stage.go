@@ -10,7 +10,7 @@ func (stager *Stager) updateAndCommitSummaryTableStage() {
 
 	table.StageBranch(stager.summaryTableStage,
 		&table.Table{
-			Name: stager.summaryTableName,
+			Name: "Summary",
 			DisplayedColumns: []*table.DisplayedColumn{
 				{
 					Name: "Property",

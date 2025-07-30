@@ -3,7 +3,7 @@ module github.com/fullstack-lang/gongreqif
 go 1.24.3
 
 require (
-	github.com/fullstack-lang/gong v0.0.0-20250725070820-9d62bdaed028
+	github.com/fullstack-lang/gong v0.0.0-20250730104708-ea31bc9f3ddd
 	github.com/fullstack-lang/maticons v0.0.0-20240913013021-27a7b8fd9369
 	github.com/gin-contrib/cors v1.7.5
 	github.com/gin-contrib/static v1.1.5
@@ -13,6 +13,7 @@ require (
 	github.com/sergi/go-diff v1.4.0
 	github.com/tealeg/xlsx/v3 v3.3.13
 	github.com/xuri/excelize/v2 v2.9.1
+	golang.org/x/text v0.26.0
 	gorm.io/gorm v1.30.0
 )
 
@@ -64,7 +65,6 @@ require (
 	golang.org/x/mod v0.25.0 // indirect
 	golang.org/x/net v0.41.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

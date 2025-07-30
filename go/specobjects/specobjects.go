@@ -65,7 +65,6 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 
 	tree.StageBranch(treeStage,
 		&tree.Tree{
-			Name:      stager.GetSpecObjectsTreeName(),
 			RootNodes: sliceOfSpecObjectNodes,
 		},
 	)
