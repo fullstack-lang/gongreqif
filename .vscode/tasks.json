@@ -67,7 +67,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "01 - gongc gongreqif -skipNg",
+			"label": "01 - gongc gongreqif -level1",
 			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/go/models"
@@ -75,11 +75,11 @@
 			"command": "gongc",
 			"group": "build",
 			"args": [
-				"-skipNg"
+				"-level1"
 			]
 		},
 		{
-			"label": "01 - gongc gongreqif -skipNg -skipGoModCommands",
+			"label": "01 - gongc gongreqif -level1 -skipGoModCommands",
 			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/go/models"
@@ -87,7 +87,7 @@
 			"command": "gongc",
 			"group": "build",
 			"args": [
-				"-skipNg",
+				"-level1",
 				"-skipGoModCommands"
 			]
 		},
