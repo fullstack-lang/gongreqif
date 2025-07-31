@@ -24,9 +24,9 @@ import (
 
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
 	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
-	gongreqif_static "github.com/fullstack-lang/gongreqif/go/static"
 
 	split_stack "github.com/fullstack-lang/gong/lib/split/go/stack"
+	split_static "github.com/fullstack-lang/gong/lib/split/go/static"
 )
 
 var (
@@ -65,7 +65,7 @@ func main() {
 	}
 
 	// setup the static file server and get the controller
-	r := gongreqif_static.ServeStaticFiles(*logGINFlag)
+	r := split_static.ServeStaticFiles(*logGINFlag)
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
