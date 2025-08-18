@@ -12,7 +12,6 @@ import (
 
 // ToMarkdown converts a given XHTML string to its Markdown equivalent.
 func ToMarkdown(xhtmlString string) (string, error) {
-	// The parser works better without the namespace prefixes.
 	sanitizedXHTML := strings.ReplaceAll(xhtmlString, "xhtml:", "")
 
 	doc, err := html.Parse(strings.NewReader(sanitizedXHTML))
@@ -27,10 +26,10 @@ func ToMarkdown(xhtmlString string) (string, error) {
 
 	var mdBuilder strings.Builder
 	for c := bodyNode.FirstChild; c != nil; c = c.NextSibling {
-		mdBuilder.WriteString(renderNode(c))
+		// Pass the parent node to renderNode for context (important for lists)
+		mdBuilder.WriteString(renderNode(c, c.Parent))
 	}
 
-	// Final cleanup: trim leading/trailing space and ensure no more than two consecutive newlines.
 	finalOutput := strings.TrimSpace(mdBuilder.String())
 	re := regexp.MustCompile(`\n{3,}`)
 	finalOutput = re.ReplaceAllString(finalOutput, "\n\n")
@@ -38,26 +37,26 @@ func ToMarkdown(xhtmlString string) (string, error) {
 	return finalOutput, nil
 }
 
-// renderNode is a recursive function that processes a node and its children into a Markdown string.
-func renderNode(n *html.Node) string {
+// renderNode is the main recursive function for processing nodes.
+// It now takes a parent node for context.
+func renderNode(n *html.Node, parent *html.Node) string {
 	switch n.Type {
 	case html.TextNode:
-		// If a text node is only whitespace, it's for formatting.
-		// Return a single space to be safe; the parent's normalization will handle it.
-		if strings.TrimSpace(n.Data) == "" {
-			return " "
+		// Discard text nodes that are just formatting whitespace between block elements.
+		if parent != nil && (parent.Data == "body" || parent.Data == "blockquote" || parent.Data == "div") {
+			if strings.TrimSpace(n.Data) == "" {
+				return ""
+			}
 		}
 		return n.Data
 
 	case html.ElementNode:
-		// Recursively process all children and concatenate their results into raw content.
 		var contentBuilder strings.Builder
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			contentBuilder.WriteString(renderNode(c))
+			contentBuilder.WriteString(renderNode(c, n))
 		}
 		content := contentBuilder.String()
 
-		// Apply Markdown formatting based on the element type.
 		switch n.Data {
 		// BLOCK-LEVEL ELEMENTS
 		case "p":
@@ -71,7 +70,6 @@ func renderNode(n *html.Node) string {
 		case "h4":
 			return "\n\n#### " + normalizeWhitespace(content)
 		case "blockquote":
-			// Indent each line of the blockquote content.
 			lines := strings.Split(normalizeWhitespace(content), "\n")
 			for i, line := range lines {
 				lines[i] = "> " + line
@@ -82,7 +80,7 @@ func renderNode(n *html.Node) string {
 			result.WriteString("\n")
 			for c := n.FirstChild; c != nil; c = c.NextSibling {
 				if c.Type == html.ElementNode && c.Data == "li" {
-					result.WriteString("- " + renderNode(c) + "\n")
+					result.WriteString("- " + renderNode(c, n) + "\n")
 				}
 			}
 			return result.String()
@@ -92,15 +90,17 @@ func renderNode(n *html.Node) string {
 			itemCounter := 1
 			for c := n.FirstChild; c != nil; c = c.NextSibling {
 				if c.Type == html.ElementNode && c.Data == "li" {
-					result.WriteString(fmt.Sprintf("%d. %s\n", itemCounter, renderNode(c)))
+					result.WriteString(fmt.Sprintf("%d. %s\n", itemCounter, renderNode(c, n)))
 					itemCounter++
 				}
 			}
 			return result.String()
 		case "li":
-			// For list items, we just return the cleaned content.
-			// The parent <ol> or <ul> is responsible for the bullet/number.
 			return normalizeWhitespace(content)
+
+		// TABLE-SPECIFIC LOGIC
+		case "table":
+			return "\n\n" + renderTable(n) + "\n\n"
 
 		// INLINE-LEVEL ELEMENTS
 		case "strong", "b":
@@ -112,18 +112,75 @@ func renderNode(n *html.Node) string {
 			text := normalizeWhitespace(content)
 			return fmt.Sprintf("[%s](%s)", text, href)
 		case "br":
-			return "  \n" // Markdown for a hard line break
-
+			return "  \n"
 		default:
-			// For unknown tags, just return their processed content.
 			return content
 		}
 	}
 	return ""
 }
 
-// normalizeWhitespace collapses all forms of whitespace (spaces, tabs, newlines)
-// into a single space and trims the leading/trailing space.
+// renderTable specifically handles the logic for converting a <table> node.
+func renderTable(tableNode *html.Node) string {
+	var b strings.Builder
+	var headerRows [][]string
+	var bodyRows [][]string
+
+	// Find thead and tbody
+	for child := tableNode.FirstChild; child != nil; child = child.NextSibling {
+		if child.Type != html.ElementNode {
+			continue
+		}
+		switch child.Data {
+		case "thead":
+			headerRows = parseTableRows(child, "th")
+		case "tbody":
+			bodyRows = parseTableRows(child, "td")
+		}
+	}
+
+	// If no thead/tbody, parse directly from table
+	if len(headerRows) == 0 && len(bodyRows) == 0 {
+		bodyRows = parseTableRows(tableNode, "td")
+	}
+
+	// Write header
+	if len(headerRows) > 0 {
+		b.WriteString("| " + strings.Join(headerRows[0], " | ") + " |\n")
+		// Write separator
+		var separator []string
+		for range headerRows[0] {
+			separator = append(separator, "---")
+		}
+		b.WriteString("| " + strings.Join(separator, " | ") + " |\n")
+	}
+
+	// Write body
+	for _, row := range bodyRows {
+		b.WriteString("| " + strings.Join(row, " | ") + " |\n")
+	}
+
+	return b.String()
+}
+
+// parseTableRows is a helper to extract cell content from a <tr>.
+func parseTableRows(node *html.Node, cellTag string) [][]string {
+	var rows [][]string
+	for tr := node.FirstChild; tr != nil; tr = tr.NextSibling {
+		if tr.Type == html.ElementNode && tr.Data == "tr" {
+			var row []string
+			for cell := tr.FirstChild; cell != nil; cell = cell.NextSibling {
+				if cell.Type == html.ElementNode && (cell.Data == cellTag || cell.Data == "td" || cell.Data == "th") {
+					row = append(row, normalizeWhitespace(renderNode(cell, tr)))
+				}
+			}
+			rows = append(rows, row)
+		}
+	}
+	return rows
+}
+
+// normalizeWhitespace collapses all forms of whitespace into a single space.
 func normalizeWhitespace(s string) string {
 	re := regexp.MustCompile(`\s+`)
 	return strings.TrimSpace(re.ReplaceAllString(s, " "))

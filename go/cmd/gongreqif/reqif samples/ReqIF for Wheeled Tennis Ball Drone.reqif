@@ -240,6 +240,34 @@
                       across all user roles.</xhtml:p>
                   </xhtml:blockquote>
 
+                  <xhtml:h3>2. Performance Requirements</xhtml:h3>
+                  <xhtml:table>
+                    <xhtml:thead>
+                      <xhtml:tr>
+                        <xhtml:th>Requirement ID</xhtml:th>
+                        <xhtml:th>Description</xhtml:th>
+                        <xhtml:th>Metric</xhtml:th>
+                      </xhtml:tr>
+                    </xhtml:thead>
+                    <xhtml:tbody>
+                      <xhtml:tr>
+                        <xhtml:td>PERF-001</xhtml:td>
+                        <xhtml:td>API Response Time</xhtml:td>
+                        <xhtml:td>&lt; 200ms (p95)</xhtml:td>
+                      </xhtml:tr>
+                      <xhtml:tr>
+                        <xhtml:td>PERF-002</xhtml:td>
+                        <xhtml:td>Page Load Time</xhtml:td>
+                        <xhtml:td>&lt; 1.5s (LCP)</xhtml:td>
+                      </xhtml:tr>
+                      <xhtml:tr>
+                        <xhtml:td>PERF-003</xhtml:td>
+                        <xhtml:td>Concurrent Users</xhtml:td>
+                        <xhtml:td>500</xhtml:td>
+                      </xhtml:tr>
+                    </xhtml:tbody>
+                  </xhtml:table>
+
                   <xhtml:p>For further architectural guidelines, please consult the official <xhtml:a
                       href="https://example.com/architecture-guide">Architecture Guide</xhtml:a>. <xhtml:br />
                     This document is considered the single source of truth.</xhtml:p>
