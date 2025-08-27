@@ -98,7 +98,7 @@ func (e *ExportModifiedReqifButtonProxy) GetButtonsStage() *button.Stage {
 // OnAfterUpdateButton implements models.Target.
 func (e *ExportModifiedReqifButtonProxy) OnAfterUpdateButton() {
 
-	e.stager.generatesReqifFile()
+	e.stager.reqifExporter.ExportReqif(e.stager)
 
 	return
 }

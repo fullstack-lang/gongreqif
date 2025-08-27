@@ -65,6 +65,10 @@ type SpecificationsTreeUpdaterInterface interface {
 	)
 }
 
+type ReqifExporter interface {
+	ExportReqif(stager *Stager)
+}
+
 type ObjectNamerInterface interface {
 	SetNamesToElements(stage *Stage, reqif *REQ_IF)
 }
@@ -104,6 +108,7 @@ type Stager struct {
 	specObjectsTreeUpdater    SpecObjectsTreeUpdaterInterface
 	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
+	reqifExporter             ReqifExporter
 	objectNamer               ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
@@ -257,6 +262,15 @@ func (stager *Stager) GetSsgStage() (s *ssg.Stage) {
 	return
 }
 
+func (stager *Stager) GetLoadStage() (s *load.Stage) {
+	s = stager.loadStage
+	return
+}
+
+func (stager *Stager) GetPathToOutputReqifFile() string {
+	return stager.pathToOutputReqifFile
+}
+
 // OTHERS
 
 func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
@@ -282,6 +296,8 @@ func NewStager(
 	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface,
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface,
 
+	reqifExporter ReqifExporter,
+
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
 ) {
@@ -298,6 +314,8 @@ func NewStager(
 	stager.specObjectsTreeUpdater = specObjectsTreeUpdater
 	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
 	stager.specificationsTreeUpdater = specificationsTreeUpdater
+
+	stager.reqifExporter = reqifExporter
 
 	stager.objectNamer = objectNamer
 

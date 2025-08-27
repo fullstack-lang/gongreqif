@@ -14,6 +14,7 @@ import (
 	// the "github.com/fullstack-lang/gongreqif/go" package
 	// Therefore any change to those packge would pro
 	"github.com/fullstack-lang/gongreqif/go/datatypes"
+	"github.com/fullstack-lang/gongreqif/go/exporter"
 	"github.com/fullstack-lang/gongreqif/go/generator"
 	"github.com/fullstack-lang/gongreqif/go/namer"
 	"github.com/fullstack-lang/gongreqif/go/reqifz"
@@ -88,6 +89,7 @@ func main() {
 		&specobjects.SpecObjectsTreeStageUpdater{},
 		&specrelations.SpecRelationsTreeStageUpdater{},
 		&specifications.SpecificationsTreeStageUpdater{},
+		&exporter.ReqifExporter{},
 		&namer.ObjectNamer{})
 
 	if *pathToGoModelFile != "" {
