@@ -50,6 +50,7 @@ func (reqifExport *ReqifExporter) ExportReqif(stager *models.Stager) {
 		return
 	}
 
+	suffixNewObjectType := "-Text"
 	specTypes = specTypesInstances[0]
 	_ = specTypes
 
@@ -62,9 +63,111 @@ func (reqifExport *ReqifExporter) ExportReqif(stager *models.Stager) {
 	// add a spec object type
 	newSpecObjectType := new(models.SPEC_OBJECT_TYPE)
 	specTypes.SPEC_OBJECT_TYPE = append(specTypes.SPEC_OBJECT_TYPE, newSpecObjectType)
-	newSpecObjectType.Name = legacyDoorsObjectType.Name + "-Text"
-	newSpecObjectType.IDENTIFIER = legacyDoorsObjectType.IDENTIFIER + "-Text"
-	newSpecObjectType.SPEC_ATTRIBUTES = legacyDoorsObjectType.SPEC_ATTRIBUTES
+	newSpecObjectType.Name = legacyDoorsObjectType.Name + suffixNewObjectType
+	newSpecObjectType.IDENTIFIER = legacyDoorsObjectType.IDENTIFIER + suffixNewObjectType
+
+	// one needs to duplicate all the attribute definition for the type
+	newSpecObjectType.SPEC_ATTRIBUTES = new(models.A_SPEC_ATTRIBUTES)
+	for _, _attributeDefinitionXHTML := range legacyDoorsObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+		attributeDefinitionXHTML := new(models.ATTRIBUTE_DEFINITION_XHTML)
+		attributeDefinitionXHTML.Name = _attributeDefinitionXHTML.Name + suffixNewObjectType
+		attributeDefinitionXHTML.IDENTIFIER = _attributeDefinitionXHTML.IDENTIFIER + suffixNewObjectType
+		attributeDefinitionXHTML.IS_EDITABLE = _attributeDefinitionXHTML.IS_EDITABLE
+		attributeDefinitionXHTML.LONG_NAME = _attributeDefinitionXHTML.LONG_NAME + suffixNewObjectType
+		attributeDefinitionXHTML.TYPE = _attributeDefinitionXHTML.TYPE
+
+		newSpecObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML =
+			append(newSpecObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML, attributeDefinitionXHTML)
+	}
+
+	// get the attribute definition that match "chapter name"
+	var chapterNameAttributeDefinitionXHTML *models.ATTRIBUTE_DEFINITION_XHTML
+	chapterNameAttributeName := "ReqIF.ChapterName"
+	for _, _attributeDefinitionXHTML := range legacyDoorsObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+		if _attributeDefinitionXHTML.Name == chapterNameAttributeName {
+			chapterNameAttributeDefinitionXHTML = _attributeDefinitionXHTML
+		}
+	}
+	if chapterNameAttributeDefinitionXHTML == nil {
+		log.Println("Found no XHTML attribute definition with name ", chapterNameAttributeName, ". Returning")
+		return
+	}
+
+	var textAttributeDefinitionXHTML *models.ATTRIBUTE_DEFINITION_XHTML
+	textAttributeName := "ReqIF.Text"
+	for _, _attributeDefinitionXHTML := range legacyDoorsObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+		if _attributeDefinitionXHTML.Name == textAttributeName {
+			textAttributeDefinitionXHTML = _attributeDefinitionXHTML
+		}
+	}
+	if textAttributeDefinitionXHTML == nil {
+		log.Println("Found no XHTML attribute definition with name ", textAttributeName, ". Returning")
+		return
+	}
+
+	var PUIDAttributeDefinitionXHTML *models.ATTRIBUTE_DEFINITION_XHTML
+	pUIDAttributeName := "IE PUID"
+	for _, _attributeDefinitionXHTML := range legacyDoorsObjectType.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+		if _attributeDefinitionXHTML.Name == pUIDAttributeName {
+			PUIDAttributeDefinitionXHTML = _attributeDefinitionXHTML
+		}
+	}
+	if PUIDAttributeDefinitionXHTML == nil {
+		log.Println("Found no XHTML attribute definition with name ", pUIDAttributeName, ". Returning")
+		return
+	}
+
+	specObjectsInstances := models.GetGongstrucsSorted[*models.A_SPEC_OBJECTS](stager.GetStage())
+
+	if len(specObjectsInstances) != 1 {
+		log.Println("Problem, there should be one models.A_SPEC_OBJECTS instance")
+		return
+	}
+
+	nbTextObjects := 0
+	for _, specObject := range (specObjectsInstances[0]).SPEC_OBJECT {
+
+		var isHeading bool
+		var isRequirement bool
+		var hasText bool
+
+		// get the value to gather wether it has a chapter name attribute
+		for _, attributeValueXHTML := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
+			if attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF == chapterNameAttributeDefinitionXHTML.IDENTIFIER {
+				isHeading = true
+			}
+			if attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF == PUIDAttributeDefinitionXHTML.IDENTIFIER {
+				isRequirement = true
+			}
+			if attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF == textAttributeDefinitionXHTML.IDENTIFIER {
+				hasText = true
+			}
+
+		}
+		if isHeading || isRequirement {
+			continue
+		}
+
+		nbTextObjects++
+		specObject.TYPE.SPEC_OBJECT_TYPE_REF = newSpecObjectType.IDENTIFIER
+
+		if !hasText {
+			log.Println("Problem, item is not heading / requirement but has no text field")
+		}
+
+		// one needs to weed all its attributes but the XHTML attributes that have to be typed
+		// with the attribute definition of the new Text object type
+		clear(specObject.VALUES.ATTRIBUTE_VALUE_DATE)
+		for _, attributeValueXHTML := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
+			attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF =
+				attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF + suffixNewObjectType
+		}
+
+	}
+	log.Println("Found ", nbTextObjects, "Text Objects")
+
+	// parse all spec objects and if the spec object has a chapter name field, then
+	// change the type of the object
 
 	// Marshal the struct into an indented XML byte slice.
 	// Using MarshalIndent makes the output file human-readable.

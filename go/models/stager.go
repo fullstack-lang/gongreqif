@@ -533,6 +533,17 @@ func NewStager(
 		},
 	})
 
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "(Dev) loadStage",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			(&split.AsSplitArea{
+				Split: (&split.Split{
+					StackName: stager.loadStage.GetProbeSplitStageName(),
+				}),
+			}),
+		},
+	})
+
 	stager.splitStage.Commit()
 
 	if pathToReqifFile != "" {
