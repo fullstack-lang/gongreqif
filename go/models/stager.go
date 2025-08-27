@@ -87,8 +87,9 @@ type Stager struct {
 
 	markdownStage *markdown.Stage
 
-	rootReqif       *REQ_IF
-	pathToReqifFile string
+	rootReqif             *REQ_IF
+	pathToReqifFile       string
+	pathToOutputReqifFile string
 
 	// those interface allows for processing outside the models
 	// package. This is for compilation time sake
@@ -272,6 +273,7 @@ func NewStager(
 	splitStage *split.Stage,
 	stage *Stage,
 	pathToReqifFile string,
+	pathToOutputReqifFile string,
 
 	dataTypesTreeUpdater DataTypesTreeUpdaterInterface,
 	specTypesTreeUpdater SpecTypesTreeUpdaterInterface,
@@ -289,6 +291,7 @@ func NewStager(
 	stager.stage = stage
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
+	stager.pathToOutputReqifFile = pathToOutputReqifFile
 
 	stager.dataTypesTreeUpdater = dataTypesTreeUpdater
 	stager.specTypesTreeUpdater = specTypesTreeUpdater

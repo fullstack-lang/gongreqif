@@ -39,7 +39,19 @@ func (stager *Stager) UpdateAndCommitButtonStage() {
 
 	group1.Buttons = append(group1.Buttons, buttonExportStaticSite)
 
-	stager.buttonStage.Commit()
+	if stager.pathToOutputReqifFile != "" {
+		buttonExportModifiedReqif := button.NewButton(
+			// stager is the target of the button. stager implements interface method OnAfterUpdateButton()
+			&ExportModifiedReqifButtonProxy{
+				stager: stager,
+			},
+			"Export Modified ReqIF",
+			string(buttons.BUTTON_fact_check),
+			"Export Modified ReqIF",
+		)
+
+		group1.Buttons = append(group1.Buttons, buttonExportModifiedReqif)
+	}
 
 	stager.buttonStage.Commit()
 }
@@ -72,4 +84,21 @@ func (e *ExportStaticSiteButtonProxy) OnAfterUpdateButton() {
 
 	e.stager.UpdateAndCommitSsgStage()
 	e.stager.generatesSiteFromSSGStage()
+}
+
+type ExportModifiedReqifButtonProxy struct {
+	stager *Stager
+}
+
+// GetButtonsStage implements models.Target.
+func (e *ExportModifiedReqifButtonProxy) GetButtonsStage() *button.Stage {
+	return e.stager.buttonStage
+}
+
+// OnAfterUpdateButton implements models.Target.
+func (e *ExportModifiedReqifButtonProxy) OnAfterUpdateButton() {
+
+	e.stager.generatesReqifFile()
+
+	return
 }

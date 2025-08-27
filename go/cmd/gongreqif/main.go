@@ -42,6 +42,8 @@ var (
 	pathToReqifFile   = flag.String("pathToReqifFile", "", "Path to the reqif file")
 	pathToGoModelFile = flag.String("pathToGoModelFile", "", "Path to the go model file")
 	pathToXLFile      = flag.String("pathToXLFile", "", "Path to the go model file")
+
+	pathToOutputReqifFile = flag.String("pathToOutputReqifFile", "", "Path to the output reqif file")
 )
 
 func main() {
@@ -80,6 +82,7 @@ func main() {
 		splitStage,
 		stack.Stage,
 		*pathToReqifFile,
+		*pathToOutputReqifFile,
 		&datatypes.DataTypeTreeStageUpdater{},
 		&spectypes.SpecTypesTreeStageUpdater{},
 		&specobjects.SpecObjectsTreeStageUpdater{},

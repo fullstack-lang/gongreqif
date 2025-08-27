@@ -40,6 +40,18 @@
             ]
         },
         {
+            "name": "go server with upload with output reqif",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/go/cmd/gongreqif",
+            "buildFlags": "-v",
+            "args": [
+                "-embeddedDiagrams=false",
+                "-pathToOutputReqifFile=output.reqif"
+            ]
+        },
+        {
             "name": "go server from /tmp on windows",
             "type": "go",
             "request": "launch",
@@ -74,6 +86,7 @@
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
+                "-pathToOutputReqifFile=output.reqif",
             ]
         },
         {
@@ -88,6 +101,7 @@
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
+
             ]
         },
         {
