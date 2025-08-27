@@ -48,4 +48,10 @@ Once the application is running, launch a browser on http://localhost:8080/ wher
 
 The application will then process the file and display its contents for analysis.
 
+You can download the sample file, `ReqIF for Wheeled Tennis Ball Drone.reqif`, directly using the link below.
+
+* **[Download Sample File](https://raw.githubusercontent.com/fullstack-lang/gongreqif/main/reqif_models/ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone.reqif)**
+
+Once downloaded, you can open it in the application using the drag-and-drop or browse method described above.
+
 Distributed under the MIT License. See `LICENSE` for more information.
