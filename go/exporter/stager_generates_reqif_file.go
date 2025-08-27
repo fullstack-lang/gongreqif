@@ -158,6 +158,10 @@ func (reqifExport *ReqifExporter) ExportReqif(stager *models.Stager) {
 		// one needs to weed all its attributes but the XHTML attributes that have to be typed
 		// with the attribute definition of the new Text object type
 		clear(specObject.VALUES.ATTRIBUTE_VALUE_DATE)
+		clear(specObject.VALUES.ATTRIBUTE_VALUE_INTEGER)
+		clear(specObject.VALUES.ATTRIBUTE_VALUE_ENUMERATION)
+		clear(specObject.VALUES.ATTRIBUTE_VALUE_REAL)
+		clear(specObject.VALUES.ATTRIBUTE_VALUE_STRING)
 		for _, attributeValueXHTML := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
 			attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF =
 				attributeValueXHTML.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF + suffixNewObjectType
