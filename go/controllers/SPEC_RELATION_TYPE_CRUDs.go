@@ -260,13 +260,24 @@ func (controller *Controller) UpdateSPEC_RELATION_TYPE(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(_values) == 1 {
-		value := _values["Name"]
-		if len(value) == 1 {
-			stackPath = value[0]
-			// log.Println("UpdateSPEC_RELATION_TYPE", "Name", stackPath)
+	hasMouseEvent := false
+	shiftKey := false
+	_ = shiftKey
+	if len(_values) >= 1 {
+		_nameValues := _values["Name"]
+		if len(_nameValues) == 1 {
+			stackPath = _nameValues[0]
 		}
 	}
+
+	if len(_values) >= 2 {
+		hasMouseEvent = true
+		_shiftKeyValues := _values["shiftKey"]
+		if len(_shiftKeyValues) == 1 {
+			shiftKey = _shiftKeyValues[0] == "true"
+		}
+	}
+
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		message := "PATCH Stack github.com/fullstack-lang/gongreqif/go, Unkown stack: \"" + stackPath + "\"\n"
@@ -328,7 +339,15 @@ func (controller *Controller) UpdateSPEC_RELATION_TYPE(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	spec_relation_typeOld := backRepo.BackRepoSPEC_RELATION_TYPE.Map_SPEC_RELATION_TYPEDBID_SPEC_RELATION_TYPEPtr[spec_relation_typeDB.ID]
 	if spec_relation_typeOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), spec_relation_typeOld, spec_relation_typeNew)
+		if !hasMouseEvent {
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), spec_relation_typeOld, spec_relation_typeNew, nil)
+		} else {
+			mouseEvent := &models.Gong__MouseEvent{
+				ShiftKey: shiftKey,
+			}
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), spec_relation_typeOld, spec_relation_typeNew, mouseEvent)
+
+		}
 	}
 
 	// an UPDATE generates a back repo commit increase

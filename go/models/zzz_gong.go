@@ -93,6 +93,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterALTERNATIVE_IDCreateCallback OnAfterCreateInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDUpdateCallback OnAfterUpdateInterface[ALTERNATIVE_ID]
+	OnAfterALTERNATIVE_IDUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDReadCallback   OnAfterReadInterface[ALTERNATIVE_ID]
 
@@ -102,6 +103,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
+	OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 
@@ -111,6 +113,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_DATECreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_DATE]
 	OnAfterATTRIBUTE_DEFINITION_DATEUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_DATE]
+	OnAfterATTRIBUTE_DEFINITION_DATEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_DATE]
 	OnAfterATTRIBUTE_DEFINITION_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_DATE]
 	OnAfterATTRIBUTE_DEFINITION_DATEReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_DATE]
 
@@ -120,6 +123,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
+	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 
@@ -129,6 +133,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_INTEGERCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_INTEGER]
 	OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_INTEGER]
+	OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_INTEGER]
 	OnAfterATTRIBUTE_DEFINITION_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_INTEGER]
 	OnAfterATTRIBUTE_DEFINITION_INTEGERReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_INTEGER]
 
@@ -138,6 +143,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_REALCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL]
 	OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_REAL]
+	OnAfterATTRIBUTE_DEFINITION_REALUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_REAL]
 	OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL]
 	OnAfterATTRIBUTE_DEFINITION_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL]
 
@@ -147,6 +153,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING]
 	OnAfterATTRIBUTE_DEFINITION_STRINGUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_STRING]
+	OnAfterATTRIBUTE_DEFINITION_STRINGUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_STRING]
 	OnAfterATTRIBUTE_DEFINITION_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING]
 	OnAfterATTRIBUTE_DEFINITION_STRINGReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING]
 
@@ -156,6 +163,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_XHTMLCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_XHTML]
 	OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_XHTML]
+	OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_DEFINITION_XHTML]
 	OnAfterATTRIBUTE_DEFINITION_XHTMLDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_XHTML]
 	OnAfterATTRIBUTE_DEFINITION_XHTMLReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_XHTML]
 
@@ -165,6 +173,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_BOOLEANCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_BOOLEAN]
+	OnAfterATTRIBUTE_VALUE_BOOLEANUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_BOOLEAN]
 
@@ -174,6 +183,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_DATECreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_DATE]
+	OnAfterATTRIBUTE_VALUE_DATEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_DATE]
 
@@ -183,6 +193,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_ENUMERATION]
+	OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_ENUMERATION]
 
@@ -192,6 +203,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_INTEGERCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_INTEGER]
+	OnAfterATTRIBUTE_VALUE_INTEGERUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_INTEGER]
 
@@ -201,6 +213,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_REALCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_REAL]
+	OnAfterATTRIBUTE_VALUE_REALUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_REAL]
 
@@ -210,6 +223,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_STRINGCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_STRING]
+	OnAfterATTRIBUTE_VALUE_STRINGUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_STRING]
 
@@ -219,6 +233,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_XHTMLCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_XHTML]
 	OnAfterATTRIBUTE_VALUE_XHTMLUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_VALUE_XHTML]
+	OnAfterATTRIBUTE_VALUE_XHTMLUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ATTRIBUTE_VALUE_XHTML]
 	OnAfterATTRIBUTE_VALUE_XHTMLDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_XHTML]
 	OnAfterATTRIBUTE_VALUE_XHTMLReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_XHTML]
 
@@ -228,6 +243,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ALTERNATIVE_IDCreateCallback OnAfterCreateInterface[A_ALTERNATIVE_ID]
 	OnAfterA_ALTERNATIVE_IDUpdateCallback OnAfterUpdateInterface[A_ALTERNATIVE_ID]
+	OnAfterA_ALTERNATIVE_IDUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ALTERNATIVE_ID]
 	OnAfterA_ALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[A_ALTERNATIVE_ID]
 	OnAfterA_ALTERNATIVE_IDReadCallback   OnAfterReadInterface[A_ALTERNATIVE_ID]
 
@@ -237,6 +253,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 
@@ -246,6 +263,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 
@@ -255,6 +273,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 
@@ -264,6 +283,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 
@@ -273,6 +293,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 
@@ -282,6 +303,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 
@@ -291,6 +313,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
+	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 
@@ -302,6 +325,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
+	OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 
@@ -313,6 +337,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_DATECreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_DATE]
 	OnAfterA_ATTRIBUTE_VALUE_DATEUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_DATE]
+	OnAfterA_ATTRIBUTE_VALUE_DATEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_DATE]
 	OnAfterA_ATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_DATE]
 	OnAfterA_ATTRIBUTE_VALUE_DATEReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_DATE]
 
@@ -324,6 +349,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
+	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 
@@ -335,6 +361,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_INTEGER]
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_INTEGER]
+	OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_INTEGER]
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_INTEGER]
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_INTEGER]
 
@@ -346,6 +373,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_REALCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_REAL]
 	OnAfterA_ATTRIBUTE_VALUE_REALUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_REAL]
+	OnAfterA_ATTRIBUTE_VALUE_REALUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_REAL]
 	OnAfterA_ATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_REAL]
 	OnAfterA_ATTRIBUTE_VALUE_REALReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_REAL]
 
@@ -357,6 +385,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_STRINGCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_STRING]
 	OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_STRING]
+	OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_STRING]
 	OnAfterA_ATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_STRING]
 	OnAfterA_ATTRIBUTE_VALUE_STRINGReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_STRING]
 
@@ -368,6 +397,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_XHTML]
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_XHTML]
+	OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_XHTML]
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML]
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML]
 
@@ -391,6 +421,7 @@ type Stage struct {
 
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1CreateCallback OnAfterCreateInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateCallback OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_XHTML_1]
+	OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1DeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1ReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 
@@ -402,6 +433,7 @@ type Stage struct {
 
 	OnAfterA_CHILDRENCreateCallback OnAfterCreateInterface[A_CHILDREN]
 	OnAfterA_CHILDRENUpdateCallback OnAfterUpdateInterface[A_CHILDREN]
+	OnAfterA_CHILDRENUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_CHILDREN]
 	OnAfterA_CHILDRENDeleteCallback OnAfterDeleteInterface[A_CHILDREN]
 	OnAfterA_CHILDRENReadCallback   OnAfterReadInterface[A_CHILDREN]
 
@@ -411,6 +443,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_CORE_CONTENTCreateCallback OnAfterCreateInterface[A_CORE_CONTENT]
 	OnAfterA_CORE_CONTENTUpdateCallback OnAfterUpdateInterface[A_CORE_CONTENT]
+	OnAfterA_CORE_CONTENTUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_CORE_CONTENT]
 	OnAfterA_CORE_CONTENTDeleteCallback OnAfterDeleteInterface[A_CORE_CONTENT]
 	OnAfterA_CORE_CONTENTReadCallback   OnAfterReadInterface[A_CORE_CONTENT]
 
@@ -434,6 +467,7 @@ type Stage struct {
 
 	OnAfterA_DATATYPESCreateCallback OnAfterCreateInterface[A_DATATYPES]
 	OnAfterA_DATATYPESUpdateCallback OnAfterUpdateInterface[A_DATATYPES]
+	OnAfterA_DATATYPESUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPES]
 	OnAfterA_DATATYPESDeleteCallback OnAfterDeleteInterface[A_DATATYPES]
 	OnAfterA_DATATYPESReadCallback   OnAfterReadInterface[A_DATATYPES]
 
@@ -443,6 +477,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
+	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 
@@ -452,6 +487,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_DATE_REF]
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_DATE_REF]
+	OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_DATE_REF]
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_DATE_REF]
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_DATE_REF]
 
@@ -461,6 +497,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
+	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 
@@ -470,6 +507,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
+	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 
@@ -479,6 +517,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_REAL_REF]
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_REAL_REF]
+	OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_REAL_REF]
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_REAL_REF]
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_REAL_REF]
 
@@ -488,6 +527,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_STRING_REF]
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_STRING_REF]
+	OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_STRING_REF]
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_STRING_REF]
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_STRING_REF]
 
@@ -497,6 +537,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateCallback OnAfterUpdateInterface[A_DATATYPE_DEFINITION_XHTML_REF]
+	OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 
@@ -506,6 +547,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_EDITABLE_ATTSCreateCallback OnAfterCreateInterface[A_EDITABLE_ATTS]
 	OnAfterA_EDITABLE_ATTSUpdateCallback OnAfterUpdateInterface[A_EDITABLE_ATTS]
+	OnAfterA_EDITABLE_ATTSUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_EDITABLE_ATTS]
 	OnAfterA_EDITABLE_ATTSDeleteCallback OnAfterDeleteInterface[A_EDITABLE_ATTS]
 	OnAfterA_EDITABLE_ATTSReadCallback   OnAfterReadInterface[A_EDITABLE_ATTS]
 
@@ -515,6 +557,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_ENUM_VALUE_REFCreateCallback OnAfterCreateInterface[A_ENUM_VALUE_REF]
 	OnAfterA_ENUM_VALUE_REFUpdateCallback OnAfterUpdateInterface[A_ENUM_VALUE_REF]
+	OnAfterA_ENUM_VALUE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_ENUM_VALUE_REF]
 	OnAfterA_ENUM_VALUE_REFDeleteCallback OnAfterDeleteInterface[A_ENUM_VALUE_REF]
 	OnAfterA_ENUM_VALUE_REFReadCallback   OnAfterReadInterface[A_ENUM_VALUE_REF]
 
@@ -524,6 +567,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_OBJECTCreateCallback OnAfterCreateInterface[A_OBJECT]
 	OnAfterA_OBJECTUpdateCallback OnAfterUpdateInterface[A_OBJECT]
+	OnAfterA_OBJECTUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_OBJECT]
 	OnAfterA_OBJECTDeleteCallback OnAfterDeleteInterface[A_OBJECT]
 	OnAfterA_OBJECTReadCallback   OnAfterReadInterface[A_OBJECT]
 
@@ -533,6 +577,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_PROPERTIESCreateCallback OnAfterCreateInterface[A_PROPERTIES]
 	OnAfterA_PROPERTIESUpdateCallback OnAfterUpdateInterface[A_PROPERTIES]
+	OnAfterA_PROPERTIESUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_PROPERTIES]
 	OnAfterA_PROPERTIESDeleteCallback OnAfterDeleteInterface[A_PROPERTIES]
 	OnAfterA_PROPERTIESReadCallback   OnAfterReadInterface[A_PROPERTIES]
 
@@ -542,6 +587,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_RELATION_GROUP_TYPE_REFCreateCallback OnAfterCreateInterface[A_RELATION_GROUP_TYPE_REF]
 	OnAfterA_RELATION_GROUP_TYPE_REFUpdateCallback OnAfterUpdateInterface[A_RELATION_GROUP_TYPE_REF]
+	OnAfterA_RELATION_GROUP_TYPE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_RELATION_GROUP_TYPE_REF]
 	OnAfterA_RELATION_GROUP_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_RELATION_GROUP_TYPE_REF]
 	OnAfterA_RELATION_GROUP_TYPE_REFReadCallback   OnAfterReadInterface[A_RELATION_GROUP_TYPE_REF]
 
@@ -551,6 +597,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_SOURCE_1CreateCallback OnAfterCreateInterface[A_SOURCE_1]
 	OnAfterA_SOURCE_1UpdateCallback OnAfterUpdateInterface[A_SOURCE_1]
+	OnAfterA_SOURCE_1UpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SOURCE_1]
 	OnAfterA_SOURCE_1DeleteCallback OnAfterDeleteInterface[A_SOURCE_1]
 	OnAfterA_SOURCE_1ReadCallback   OnAfterReadInterface[A_SOURCE_1]
 
@@ -560,6 +607,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_SOURCE_SPECIFICATION_1CreateCallback OnAfterCreateInterface[A_SOURCE_SPECIFICATION_1]
 	OnAfterA_SOURCE_SPECIFICATION_1UpdateCallback OnAfterUpdateInterface[A_SOURCE_SPECIFICATION_1]
+	OnAfterA_SOURCE_SPECIFICATION_1UpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SOURCE_SPECIFICATION_1]
 	OnAfterA_SOURCE_SPECIFICATION_1DeleteCallback OnAfterDeleteInterface[A_SOURCE_SPECIFICATION_1]
 	OnAfterA_SOURCE_SPECIFICATION_1ReadCallback   OnAfterReadInterface[A_SOURCE_SPECIFICATION_1]
 
@@ -571,6 +619,7 @@ type Stage struct {
 
 	OnAfterA_SPECIFICATIONSCreateCallback OnAfterCreateInterface[A_SPECIFICATIONS]
 	OnAfterA_SPECIFICATIONSUpdateCallback OnAfterUpdateInterface[A_SPECIFICATIONS]
+	OnAfterA_SPECIFICATIONSUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPECIFICATIONS]
 	OnAfterA_SPECIFICATIONSDeleteCallback OnAfterDeleteInterface[A_SPECIFICATIONS]
 	OnAfterA_SPECIFICATIONSReadCallback   OnAfterReadInterface[A_SPECIFICATIONS]
 
@@ -580,6 +629,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_SPECIFICATION_TYPE_REFCreateCallback OnAfterCreateInterface[A_SPECIFICATION_TYPE_REF]
 	OnAfterA_SPECIFICATION_TYPE_REFUpdateCallback OnAfterUpdateInterface[A_SPECIFICATION_TYPE_REF]
+	OnAfterA_SPECIFICATION_TYPE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPECIFICATION_TYPE_REF]
 	OnAfterA_SPECIFICATION_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPECIFICATION_TYPE_REF]
 	OnAfterA_SPECIFICATION_TYPE_REFReadCallback   OnAfterReadInterface[A_SPECIFICATION_TYPE_REF]
 
@@ -591,6 +641,7 @@ type Stage struct {
 
 	OnAfterA_SPECIFIED_VALUESCreateCallback OnAfterCreateInterface[A_SPECIFIED_VALUES]
 	OnAfterA_SPECIFIED_VALUESUpdateCallback OnAfterUpdateInterface[A_SPECIFIED_VALUES]
+	OnAfterA_SPECIFIED_VALUESUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPECIFIED_VALUES]
 	OnAfterA_SPECIFIED_VALUESDeleteCallback OnAfterDeleteInterface[A_SPECIFIED_VALUES]
 	OnAfterA_SPECIFIED_VALUESReadCallback   OnAfterReadInterface[A_SPECIFIED_VALUES]
 
@@ -614,6 +665,7 @@ type Stage struct {
 
 	OnAfterA_SPEC_ATTRIBUTESCreateCallback OnAfterCreateInterface[A_SPEC_ATTRIBUTES]
 	OnAfterA_SPEC_ATTRIBUTESUpdateCallback OnAfterUpdateInterface[A_SPEC_ATTRIBUTES]
+	OnAfterA_SPEC_ATTRIBUTESUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_ATTRIBUTES]
 	OnAfterA_SPEC_ATTRIBUTESDeleteCallback OnAfterDeleteInterface[A_SPEC_ATTRIBUTES]
 	OnAfterA_SPEC_ATTRIBUTESReadCallback   OnAfterReadInterface[A_SPEC_ATTRIBUTES]
 
@@ -625,6 +677,7 @@ type Stage struct {
 
 	OnAfterA_SPEC_OBJECTSCreateCallback OnAfterCreateInterface[A_SPEC_OBJECTS]
 	OnAfterA_SPEC_OBJECTSUpdateCallback OnAfterUpdateInterface[A_SPEC_OBJECTS]
+	OnAfterA_SPEC_OBJECTSUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_OBJECTS]
 	OnAfterA_SPEC_OBJECTSDeleteCallback OnAfterDeleteInterface[A_SPEC_OBJECTS]
 	OnAfterA_SPEC_OBJECTSReadCallback   OnAfterReadInterface[A_SPEC_OBJECTS]
 
@@ -634,6 +687,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_SPEC_OBJECT_TYPE_REFCreateCallback OnAfterCreateInterface[A_SPEC_OBJECT_TYPE_REF]
 	OnAfterA_SPEC_OBJECT_TYPE_REFUpdateCallback OnAfterUpdateInterface[A_SPEC_OBJECT_TYPE_REF]
+	OnAfterA_SPEC_OBJECT_TYPE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_OBJECT_TYPE_REF]
 	OnAfterA_SPEC_OBJECT_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_OBJECT_TYPE_REF]
 	OnAfterA_SPEC_OBJECT_TYPE_REFReadCallback   OnAfterReadInterface[A_SPEC_OBJECT_TYPE_REF]
 
@@ -645,6 +699,7 @@ type Stage struct {
 
 	OnAfterA_SPEC_RELATIONSCreateCallback OnAfterCreateInterface[A_SPEC_RELATIONS]
 	OnAfterA_SPEC_RELATIONSUpdateCallback OnAfterUpdateInterface[A_SPEC_RELATIONS]
+	OnAfterA_SPEC_RELATIONSUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_RELATIONS]
 	OnAfterA_SPEC_RELATIONSDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATIONS]
 	OnAfterA_SPEC_RELATIONSReadCallback   OnAfterReadInterface[A_SPEC_RELATIONS]
 
@@ -656,6 +711,7 @@ type Stage struct {
 
 	OnAfterA_SPEC_RELATION_GROUPSCreateCallback OnAfterCreateInterface[A_SPEC_RELATION_GROUPS]
 	OnAfterA_SPEC_RELATION_GROUPSUpdateCallback OnAfterUpdateInterface[A_SPEC_RELATION_GROUPS]
+	OnAfterA_SPEC_RELATION_GROUPSUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_RELATION_GROUPS]
 	OnAfterA_SPEC_RELATION_GROUPSDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_GROUPS]
 	OnAfterA_SPEC_RELATION_GROUPSReadCallback   OnAfterReadInterface[A_SPEC_RELATION_GROUPS]
 
@@ -665,6 +721,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_SPEC_RELATION_REFCreateCallback OnAfterCreateInterface[A_SPEC_RELATION_REF]
 	OnAfterA_SPEC_RELATION_REFUpdateCallback OnAfterUpdateInterface[A_SPEC_RELATION_REF]
+	OnAfterA_SPEC_RELATION_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_RELATION_REF]
 	OnAfterA_SPEC_RELATION_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_REF]
 	OnAfterA_SPEC_RELATION_REFReadCallback   OnAfterReadInterface[A_SPEC_RELATION_REF]
 
@@ -674,6 +731,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_SPEC_RELATION_TYPE_REFCreateCallback OnAfterCreateInterface[A_SPEC_RELATION_TYPE_REF]
 	OnAfterA_SPEC_RELATION_TYPE_REFUpdateCallback OnAfterUpdateInterface[A_SPEC_RELATION_TYPE_REF]
+	OnAfterA_SPEC_RELATION_TYPE_REFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_RELATION_TYPE_REF]
 	OnAfterA_SPEC_RELATION_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_TYPE_REF]
 	OnAfterA_SPEC_RELATION_TYPE_REFReadCallback   OnAfterReadInterface[A_SPEC_RELATION_TYPE_REF]
 
@@ -691,6 +749,7 @@ type Stage struct {
 
 	OnAfterA_SPEC_TYPESCreateCallback OnAfterCreateInterface[A_SPEC_TYPES]
 	OnAfterA_SPEC_TYPESUpdateCallback OnAfterUpdateInterface[A_SPEC_TYPES]
+	OnAfterA_SPEC_TYPESUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_SPEC_TYPES]
 	OnAfterA_SPEC_TYPESDeleteCallback OnAfterDeleteInterface[A_SPEC_TYPES]
 	OnAfterA_SPEC_TYPESReadCallback   OnAfterReadInterface[A_SPEC_TYPES]
 
@@ -700,6 +759,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterA_THE_HEADERCreateCallback OnAfterCreateInterface[A_THE_HEADER]
 	OnAfterA_THE_HEADERUpdateCallback OnAfterUpdateInterface[A_THE_HEADER]
+	OnAfterA_THE_HEADERUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_THE_HEADER]
 	OnAfterA_THE_HEADERDeleteCallback OnAfterDeleteInterface[A_THE_HEADER]
 	OnAfterA_THE_HEADERReadCallback   OnAfterReadInterface[A_THE_HEADER]
 
@@ -711,6 +771,7 @@ type Stage struct {
 
 	OnAfterA_TOOL_EXTENSIONSCreateCallback OnAfterCreateInterface[A_TOOL_EXTENSIONS]
 	OnAfterA_TOOL_EXTENSIONSUpdateCallback OnAfterUpdateInterface[A_TOOL_EXTENSIONS]
+	OnAfterA_TOOL_EXTENSIONSUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[A_TOOL_EXTENSIONS]
 	OnAfterA_TOOL_EXTENSIONSDeleteCallback OnAfterDeleteInterface[A_TOOL_EXTENSIONS]
 	OnAfterA_TOOL_EXTENSIONSReadCallback   OnAfterReadInterface[A_TOOL_EXTENSIONS]
 
@@ -720,6 +781,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_BOOLEANCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_BOOLEAN]
 	OnAfterDATATYPE_DEFINITION_BOOLEANUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_BOOLEAN]
+	OnAfterDATATYPE_DEFINITION_BOOLEANUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_BOOLEAN]
 	OnAfterDATATYPE_DEFINITION_BOOLEANDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_BOOLEAN]
 	OnAfterDATATYPE_DEFINITION_BOOLEANReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_BOOLEAN]
 
@@ -729,6 +791,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_DATECreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_DATE]
 	OnAfterDATATYPE_DEFINITION_DATEUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_DATE]
+	OnAfterDATATYPE_DEFINITION_DATEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_DATE]
 	OnAfterDATATYPE_DEFINITION_DATEDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_DATE]
 	OnAfterDATATYPE_DEFINITION_DATEReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_DATE]
 
@@ -738,6 +801,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_ENUMERATION]
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_ENUMERATION]
+	OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_ENUMERATION]
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_ENUMERATION]
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_ENUMERATION]
 
@@ -747,6 +811,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_INTEGERCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_INTEGER]
 	OnAfterDATATYPE_DEFINITION_INTEGERUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_INTEGER]
+	OnAfterDATATYPE_DEFINITION_INTEGERUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_INTEGER]
 	OnAfterDATATYPE_DEFINITION_INTEGERDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_INTEGER]
 	OnAfterDATATYPE_DEFINITION_INTEGERReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_INTEGER]
 
@@ -756,6 +821,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_REALCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_REAL]
 	OnAfterDATATYPE_DEFINITION_REALUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_REAL]
+	OnAfterDATATYPE_DEFINITION_REALUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_REAL]
 	OnAfterDATATYPE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_REAL]
 	OnAfterDATATYPE_DEFINITION_REALReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_REAL]
 
@@ -765,6 +831,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_STRINGCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_STRING]
 	OnAfterDATATYPE_DEFINITION_STRINGUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_STRING]
+	OnAfterDATATYPE_DEFINITION_STRINGUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_STRING]
 	OnAfterDATATYPE_DEFINITION_STRINGDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_STRING]
 	OnAfterDATATYPE_DEFINITION_STRINGReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_STRING]
 
@@ -774,6 +841,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_XHTMLCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_XHTML]
 	OnAfterDATATYPE_DEFINITION_XHTMLUpdateCallback OnAfterUpdateInterface[DATATYPE_DEFINITION_XHTML]
+	OnAfterDATATYPE_DEFINITION_XHTMLUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[DATATYPE_DEFINITION_XHTML]
 	OnAfterDATATYPE_DEFINITION_XHTMLDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_XHTML]
 	OnAfterDATATYPE_DEFINITION_XHTMLReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_XHTML]
 
@@ -783,6 +851,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterEMBEDDED_VALUECreateCallback OnAfterCreateInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEUpdateCallback OnAfterUpdateInterface[EMBEDDED_VALUE]
+	OnAfterEMBEDDED_VALUEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEDeleteCallback OnAfterDeleteInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEReadCallback   OnAfterReadInterface[EMBEDDED_VALUE]
 
@@ -792,6 +861,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterENUM_VALUECreateCallback OnAfterCreateInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEUpdateCallback OnAfterUpdateInterface[ENUM_VALUE]
+	OnAfterENUM_VALUEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
@@ -801,6 +871,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterRELATION_GROUPCreateCallback OnAfterCreateInterface[RELATION_GROUP]
 	OnAfterRELATION_GROUPUpdateCallback OnAfterUpdateInterface[RELATION_GROUP]
+	OnAfterRELATION_GROUPUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[RELATION_GROUP]
 	OnAfterRELATION_GROUPDeleteCallback OnAfterDeleteInterface[RELATION_GROUP]
 	OnAfterRELATION_GROUPReadCallback   OnAfterReadInterface[RELATION_GROUP]
 
@@ -810,6 +881,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterRELATION_GROUP_TYPECreateCallback OnAfterCreateInterface[RELATION_GROUP_TYPE]
 	OnAfterRELATION_GROUP_TYPEUpdateCallback OnAfterUpdateInterface[RELATION_GROUP_TYPE]
+	OnAfterRELATION_GROUP_TYPEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[RELATION_GROUP_TYPE]
 	OnAfterRELATION_GROUP_TYPEDeleteCallback OnAfterDeleteInterface[RELATION_GROUP_TYPE]
 	OnAfterRELATION_GROUP_TYPEReadCallback   OnAfterReadInterface[RELATION_GROUP_TYPE]
 
@@ -819,6 +891,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IFCreateCallback OnAfterCreateInterface[REQ_IF]
 	OnAfterREQ_IFUpdateCallback OnAfterUpdateInterface[REQ_IF]
+	OnAfterREQ_IFUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[REQ_IF]
 	OnAfterREQ_IFDeleteCallback OnAfterDeleteInterface[REQ_IF]
 	OnAfterREQ_IFReadCallback   OnAfterReadInterface[REQ_IF]
 
@@ -828,6 +901,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IF_CONTENTCreateCallback OnAfterCreateInterface[REQ_IF_CONTENT]
 	OnAfterREQ_IF_CONTENTUpdateCallback OnAfterUpdateInterface[REQ_IF_CONTENT]
+	OnAfterREQ_IF_CONTENTUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[REQ_IF_CONTENT]
 	OnAfterREQ_IF_CONTENTDeleteCallback OnAfterDeleteInterface[REQ_IF_CONTENT]
 	OnAfterREQ_IF_CONTENTReadCallback   OnAfterReadInterface[REQ_IF_CONTENT]
 
@@ -837,6 +911,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IF_HEADERCreateCallback OnAfterCreateInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERUpdateCallback OnAfterUpdateInterface[REQ_IF_HEADER]
+	OnAfterREQ_IF_HEADERUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERDeleteCallback OnAfterDeleteInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERReadCallback   OnAfterReadInterface[REQ_IF_HEADER]
 
@@ -846,6 +921,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback OnAfterCreateInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback OnAfterUpdateInterface[REQ_IF_TOOL_EXTENSION]
+	OnAfterREQ_IF_TOOL_EXTENSIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONReadCallback   OnAfterReadInterface[REQ_IF_TOOL_EXTENSION]
 
@@ -855,6 +931,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPECIFICATIONCreateCallback OnAfterCreateInterface[SPECIFICATION]
 	OnAfterSPECIFICATIONUpdateCallback OnAfterUpdateInterface[SPECIFICATION]
+	OnAfterSPECIFICATIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPECIFICATION]
 	OnAfterSPECIFICATIONDeleteCallback OnAfterDeleteInterface[SPECIFICATION]
 	OnAfterSPECIFICATIONReadCallback   OnAfterReadInterface[SPECIFICATION]
 
@@ -864,6 +941,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPECIFICATION_TYPECreateCallback OnAfterCreateInterface[SPECIFICATION_TYPE]
 	OnAfterSPECIFICATION_TYPEUpdateCallback OnAfterUpdateInterface[SPECIFICATION_TYPE]
+	OnAfterSPECIFICATION_TYPEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPECIFICATION_TYPE]
 	OnAfterSPECIFICATION_TYPEDeleteCallback OnAfterDeleteInterface[SPECIFICATION_TYPE]
 	OnAfterSPECIFICATION_TYPEReadCallback   OnAfterReadInterface[SPECIFICATION_TYPE]
 
@@ -873,6 +951,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_HIERARCHYCreateCallback OnAfterCreateInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYUpdateCallback OnAfterUpdateInterface[SPEC_HIERARCHY]
+	OnAfterSPEC_HIERARCHYUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYDeleteCallback OnAfterDeleteInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYReadCallback   OnAfterReadInterface[SPEC_HIERARCHY]
 
@@ -882,6 +961,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_OBJECTCreateCallback OnAfterCreateInterface[SPEC_OBJECT]
 	OnAfterSPEC_OBJECTUpdateCallback OnAfterUpdateInterface[SPEC_OBJECT]
+	OnAfterSPEC_OBJECTUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPEC_OBJECT]
 	OnAfterSPEC_OBJECTDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT]
 	OnAfterSPEC_OBJECTReadCallback   OnAfterReadInterface[SPEC_OBJECT]
 
@@ -891,6 +971,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_OBJECT_TYPECreateCallback OnAfterCreateInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEUpdateCallback OnAfterUpdateInterface[SPEC_OBJECT_TYPE]
+	OnAfterSPEC_OBJECT_TYPEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE]
 
@@ -900,6 +981,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_RELATIONCreateCallback OnAfterCreateInterface[SPEC_RELATION]
 	OnAfterSPEC_RELATIONUpdateCallback OnAfterUpdateInterface[SPEC_RELATION]
+	OnAfterSPEC_RELATIONUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPEC_RELATION]
 	OnAfterSPEC_RELATIONDeleteCallback OnAfterDeleteInterface[SPEC_RELATION]
 	OnAfterSPEC_RELATIONReadCallback   OnAfterReadInterface[SPEC_RELATION]
 
@@ -909,6 +991,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_RELATION_TYPECreateCallback OnAfterCreateInterface[SPEC_RELATION_TYPE]
 	OnAfterSPEC_RELATION_TYPEUpdateCallback OnAfterUpdateInterface[SPEC_RELATION_TYPE]
+	OnAfterSPEC_RELATION_TYPEUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SPEC_RELATION_TYPE]
 	OnAfterSPEC_RELATION_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_RELATION_TYPE]
 	OnAfterSPEC_RELATION_TYPEReadCallback   OnAfterReadInterface[SPEC_RELATION_TYPE]
 
@@ -920,6 +1003,7 @@ type Stage struct {
 
 	OnAfterStaticWebSiteCreateCallback OnAfterCreateInterface[StaticWebSite]
 	OnAfterStaticWebSiteUpdateCallback OnAfterUpdateInterface[StaticWebSite]
+	OnAfterStaticWebSiteUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[StaticWebSite]
 	OnAfterStaticWebSiteDeleteCallback OnAfterDeleteInterface[StaticWebSite]
 	OnAfterStaticWebSiteReadCallback   OnAfterReadInterface[StaticWebSite]
 
@@ -931,6 +1015,7 @@ type Stage struct {
 
 	OnAfterStaticWebSiteChapterCreateCallback OnAfterCreateInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterUpdateCallback OnAfterUpdateInterface[StaticWebSiteChapter]
+	OnAfterStaticWebSiteChapterUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterDeleteCallback OnAfterDeleteInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterReadCallback   OnAfterReadInterface[StaticWebSiteChapter]
 
@@ -940,6 +1025,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterStaticWebSiteGeneratedImageCreateCallback OnAfterCreateInterface[StaticWebSiteGeneratedImage]
 	OnAfterStaticWebSiteGeneratedImageUpdateCallback OnAfterUpdateInterface[StaticWebSiteGeneratedImage]
+	OnAfterStaticWebSiteGeneratedImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[StaticWebSiteGeneratedImage]
 	OnAfterStaticWebSiteGeneratedImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteGeneratedImage]
 	OnAfterStaticWebSiteGeneratedImageReadCallback   OnAfterReadInterface[StaticWebSiteGeneratedImage]
 
@@ -949,6 +1035,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterStaticWebSiteImageCreateCallback OnAfterCreateInterface[StaticWebSiteImage]
 	OnAfterStaticWebSiteImageUpdateCallback OnAfterUpdateInterface[StaticWebSiteImage]
+	OnAfterStaticWebSiteImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[StaticWebSiteImage]
 	OnAfterStaticWebSiteImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteImage]
 	OnAfterStaticWebSiteImageReadCallback   OnAfterReadInterface[StaticWebSiteImage]
 
@@ -958,6 +1045,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterStaticWebSiteParagraphCreateCallback OnAfterCreateInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphUpdateCallback OnAfterUpdateInterface[StaticWebSiteParagraph]
+	OnAfterStaticWebSiteParagraphUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphDeleteCallback OnAfterDeleteInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphReadCallback   OnAfterReadInterface[StaticWebSiteParagraph]
 
@@ -967,6 +1055,7 @@ type Stage struct {
 	// insertion point for slice of pointers maps
 	OnAfterXHTML_CONTENTCreateCallback OnAfterCreateInterface[XHTML_CONTENT]
 	OnAfterXHTML_CONTENTUpdateCallback OnAfterUpdateInterface[XHTML_CONTENT]
+	OnAfterXHTML_CONTENTUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[XHTML_CONTENT]
 	OnAfterXHTML_CONTENTDeleteCallback OnAfterDeleteInterface[XHTML_CONTENT]
 	OnAfterXHTML_CONTENTReadCallback   OnAfterReadInterface[XHTML_CONTENT]
 
@@ -2596,7 +2685,7 @@ func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]any, order map[T
 func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []string) {
 
 	switch namedStructName {
-	// insertion point for case
+		// insertion point for case
 	case "ALTERNATIVE_ID":
 		res = GetNamedStructInstances(stage.ALTERNATIVE_IDs, stage.ALTERNATIVE_IDMap_Staged_Order)
 	case "ATTRIBUTE_DEFINITION_BOOLEAN":
@@ -2828,6 +2917,11 @@ type OnAfterReadInterface[Type Gongstruct] interface {
 // OnAfterUpdateInterface callback when an instance is updated from the front
 type OnAfterUpdateInterface[Type Gongstruct] interface {
 	OnAfterUpdate(stage *Stage, old, new *Type)
+}
+
+// OnAfterUpdateWithMouseEventInterface callback when an instance is updated from the front
+type OnAfterUpdateWithMouseEventInterface[Type Gongstruct] interface {
+	OnAfterUpdateWithMouseEvent(stage *Stage, old, new *Type, mouseEvent *Gong__MouseEvent)
 }
 
 // OnAfterDeleteInterface callback when an instance is updated from the front

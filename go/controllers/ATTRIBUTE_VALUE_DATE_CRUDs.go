@@ -260,13 +260,24 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_DATE(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(_values) == 1 {
-		value := _values["Name"]
-		if len(value) == 1 {
-			stackPath = value[0]
-			// log.Println("UpdateATTRIBUTE_VALUE_DATE", "Name", stackPath)
+	hasMouseEvent := false
+	shiftKey := false
+	_ = shiftKey
+	if len(_values) >= 1 {
+		_nameValues := _values["Name"]
+		if len(_nameValues) == 1 {
+			stackPath = _nameValues[0]
 		}
 	}
+
+	if len(_values) >= 2 {
+		hasMouseEvent = true
+		_shiftKeyValues := _values["shiftKey"]
+		if len(_shiftKeyValues) == 1 {
+			shiftKey = _shiftKeyValues[0] == "true"
+		}
+	}
+
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		message := "PATCH Stack github.com/fullstack-lang/gongreqif/go, Unkown stack: \"" + stackPath + "\"\n"
@@ -328,7 +339,15 @@ func (controller *Controller) UpdateATTRIBUTE_VALUE_DATE(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	attribute_value_dateOld := backRepo.BackRepoATTRIBUTE_VALUE_DATE.Map_ATTRIBUTE_VALUE_DATEDBID_ATTRIBUTE_VALUE_DATEPtr[attribute_value_dateDB.ID]
 	if attribute_value_dateOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), attribute_value_dateOld, attribute_value_dateNew)
+		if !hasMouseEvent {
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), attribute_value_dateOld, attribute_value_dateNew, nil)
+		} else {
+			mouseEvent := &models.Gong__MouseEvent{
+				ShiftKey: shiftKey,
+			}
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), attribute_value_dateOld, attribute_value_dateNew, mouseEvent)
+
+		}
 	}
 
 	// an UPDATE generates a back repo commit increase

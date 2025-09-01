@@ -260,13 +260,24 @@ func (controller *Controller) UpdateA_SPEC_ATTRIBUTES(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	if len(_values) == 1 {
-		value := _values["Name"]
-		if len(value) == 1 {
-			stackPath = value[0]
-			// log.Println("UpdateA_SPEC_ATTRIBUTES", "Name", stackPath)
+	hasMouseEvent := false
+	shiftKey := false
+	_ = shiftKey
+	if len(_values) >= 1 {
+		_nameValues := _values["Name"]
+		if len(_nameValues) == 1 {
+			stackPath = _nameValues[0]
 		}
 	}
+
+	if len(_values) >= 2 {
+		hasMouseEvent = true
+		_shiftKeyValues := _values["shiftKey"]
+		if len(_shiftKeyValues) == 1 {
+			shiftKey = _shiftKeyValues[0] == "true"
+		}
+	}
+
 	backRepo := controller.Map_BackRepos[stackPath]
 	if backRepo == nil {
 		message := "PATCH Stack github.com/fullstack-lang/gongreqif/go, Unkown stack: \"" + stackPath + "\"\n"
@@ -328,7 +339,15 @@ func (controller *Controller) UpdateA_SPEC_ATTRIBUTES(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	a_spec_attributesOld := backRepo.BackRepoA_SPEC_ATTRIBUTES.Map_A_SPEC_ATTRIBUTESDBID_A_SPEC_ATTRIBUTESPtr[a_spec_attributesDB.ID]
 	if a_spec_attributesOld != nil {
-		models.AfterUpdateFromFront(backRepo.GetStage(), a_spec_attributesOld, a_spec_attributesNew)
+		if !hasMouseEvent {
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_spec_attributesOld, a_spec_attributesNew, nil)
+		} else {
+			mouseEvent := &models.Gong__MouseEvent{
+				ShiftKey: shiftKey,
+			}
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_spec_attributesOld, a_spec_attributesNew, mouseEvent)
+
+		}
 	}
 
 	// an UPDATE generates a back repo commit increase
