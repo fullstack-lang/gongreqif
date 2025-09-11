@@ -161,11 +161,13 @@ func (objectNamer *ObjectNamer) SetNamesToElements(stage *m.Stage, reqif *m.REQ_
 	}
 
 	relations := reqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS
-	for idx, x := range relations.SPEC_RELATION {
-		x.Name = x.LONG_NAME
-		if x.LONG_NAME == "" {
-			x.Name = fmt.Sprintf("Spec_relation_%.4d", idx)
-			idx++
+	if relations != nil {
+		for idx, x := range relations.SPEC_RELATION {
+			x.Name = x.LONG_NAME
+			if x.LONG_NAME == "" {
+				x.Name = fmt.Sprintf("Spec_relation_%.4d", idx)
+				idx++
+			}
 		}
 	}
 
