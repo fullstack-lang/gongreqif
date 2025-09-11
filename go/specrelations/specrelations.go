@@ -37,11 +37,11 @@ func (specRelationsTreeUpdater *SpecRelationsTreeStageUpdater) UpdateAndCommitSp
 		map_specRelationType_node[specRelationType] = nodeSpecRelationType
 	}
 
-	for _, specRelation := range relations.SPEC_RELATION {
-
-		relationNode := specRelationsTreeUpdater.addRelationNode(stager, specRelation, map_specRelationType_node, map_specRelationType_nbInstances)
-
-		specobjects.AddAttributeNodes(stager, relationNode, specRelation)
+	if relations != nil {
+		for _, specRelation := range relations.SPEC_RELATION {
+			relationNode := specRelationsTreeUpdater.addRelationNode(stager, specRelation, map_specRelationType_node, map_specRelationType_nbInstances)
+			specobjects.AddAttributeNodes(stager, relationNode, specRelation)
+		}
 	}
 
 	// update the node with the number of instances
