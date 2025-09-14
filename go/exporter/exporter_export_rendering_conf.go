@@ -3,6 +3,7 @@ package exporter
 import (
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
@@ -18,14 +19,16 @@ func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingCon
 
 	fileToDownload := new(load.FileToDownload).Stage(stager.GetLoadStage())
 
-	fileToDownload.Name = strings.TrimSuffix(renderingConf.Name, ".reqif") + ".go"
+	fileToDownload.Name = strings.TrimSuffix(renderingConf.Name, ".reqif") + "-renderingConf.go"
 
 	// 0. we create a new stage for just the marshall of the rendering configuration
 	stageForRenderinfConf := models.NewStage("renderingConf")
 
 	models.StageBranch(stageForRenderinfConf, renderingConf)
 
-	tempFile, err := os.CreateTemp(fileToDownload.Name, "stage-*.txt")
+	fileName := filepath.Base(fileToDownload.Name)
+
+	tempFile, err := os.CreateTemp("", fileName)
 	if err != nil {
 		log.Fatalf("Failed to create temporary file: %v", err)
 	}
@@ -35,9 +38,6 @@ func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingCon
 
 	// 3. Marshall the data into the temporary file.
 	stageForRenderinfConf.Marshall(tempFile, "github.com/fullstack-lang/gongreqif/go/models", "main")
-	// Even if marshalling fails, we need to close the file.
-	tempFile.Close()
-	log.Fatalf("Failed to marshall to temp file: %v", err)
 
 	// 4. Read the content back from the file.
 	// os.ReadFile needs a file path, so we use the name.
@@ -57,6 +57,6 @@ func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingCon
 
 	stager.GetLoadStage().Commit()
 
-	log.Println("Finished exporting the rendering configuration file", stager.GetPathToOutputReqifFile())
+	log.Println("Finished exporting the rendering configuration file", tempFile.Name())
 
 }
