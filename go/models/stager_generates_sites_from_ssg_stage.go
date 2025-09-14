@@ -20,7 +20,7 @@ func (stager *Stager) generatesSiteFromSSGStage() {
 		if len(*siteWebs) != 1 {
 			log.Fatalln("There should be one siteWeb")
 		}
-		for k, _ := range *siteWebs {
+		for k := range *siteWebs {
 			siteWeb = k
 		}
 		_ = siteWeb
@@ -62,7 +62,7 @@ func (stager *Stager) copyImagesToDirectoryForSsgGeneration() (error, bool) {
 		if len(*siteWebs) != 1 {
 			log.Fatalln("There should be one siteWeb")
 		}
-		for k, _ := range *siteWebs {
+		for k := range *siteWebs {
 			siteWeb = k
 		}
 		_ = siteWeb

@@ -12,9 +12,9 @@ package models
 //
 // This version omits explicit length checks on the maps, as a 'for...range' loop
 // over a nil or empty map is a safe no-op in Go. This results in cleaner, more concise code.
-func (s *Stager) ToRenderingConfiguration(name string) *RenderingConfiguration {
+func (s *Stager) ToRenderingConfiguration(pathToReqifFile string) *RenderingConfiguration {
 	config := &RenderingConfiguration{
-		Name: name,
+		Name: pathToReqifFile,
 	}
 
 	for key, value := range s.Map_SPEC_OBJECT_TYPE_isNodeExpanded {

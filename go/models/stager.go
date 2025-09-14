@@ -65,8 +65,9 @@ type SpecificationsTreeUpdaterInterface interface {
 	)
 }
 
-type ReqifExporter interface {
+type Exporter interface {
 	ExportReqif(stager *Stager)
+	ExportRenderingConf(renderingConf *RenderingConfiguration, stager *Stager)
 }
 
 type ObjectNamerInterface interface {
@@ -108,7 +109,7 @@ type Stager struct {
 	specObjectsTreeUpdater    SpecObjectsTreeUpdaterInterface
 	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
-	reqifExporter             ReqifExporter
+	reqifExporter             Exporter
 	objectNamer               ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
@@ -296,7 +297,7 @@ func NewStager(
 	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface,
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface,
 
-	reqifExporter ReqifExporter,
+	exporter Exporter,
 
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
@@ -315,7 +316,7 @@ func NewStager(
 	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
 	stager.specificationsTreeUpdater = specificationsTreeUpdater
 
-	stager.reqifExporter = reqifExporter
+	stager.reqifExporter = exporter
 
 	stager.objectNamer = objectNamer
 

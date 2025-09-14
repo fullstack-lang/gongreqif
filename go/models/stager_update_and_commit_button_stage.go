@@ -110,8 +110,6 @@ func (e *ExportModifiedReqifButtonProxy) GetButtonsStage() *button.Stage {
 func (e *ExportModifiedReqifButtonProxy) OnAfterUpdateButton() {
 
 	e.stager.reqifExporter.ExportReqif(e.stager)
-
-	return
 }
 
 type ExportRenderingConfButtonProxy struct {
@@ -128,5 +126,7 @@ func (e *ExportRenderingConfButtonProxy) OnAfterUpdateButton() {
 
 	conf := e.stager.ToRenderingConfiguration(e.stager.pathToReqifFile)
 	_ = conf
-	return
+
+	e.stager.reqifExporter.ExportRenderingConf(conf, e.stager)
+
 }
