@@ -935,6 +935,331 @@ func FillUpFormFromGongstructName(
 		enum_value := new(models.ENUM_VALUE)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(enum_value, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_boolean_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_boolean_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_boolean_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_boolean_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_boolean_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_boolean_showintitleentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_date_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_date_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_date_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_date_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_date_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_date_showintitleentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_enumeration_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_enumeration_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_enumeration_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_enumeration_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_enumeration_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_enumeration_showintitleentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_integer_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_integer_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_integer_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_integer_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_integer_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_integer_showintitleentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_real_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_real_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_real_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_real_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_real_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_real_showintitleentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_string_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_string_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_string_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_string_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_string_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_string_showintitleentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_xhtml_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_xhtml_showinsubjectentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_xhtml_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_xhtml_showintableentry, formGroup, probe)
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_attribute_definition_xhtml_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_attribute_definition_xhtml_showintitleentry, formGroup, probe)
+	case "Map_SPECIFICATION_Nodes_expandedEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_SPECIFICATION_Nodes_expandedEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_SPECIFICATION_Nodes_expandedEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_specification_nodes_expandedentry := new(models.Map_SPECIFICATION_Nodes_expandedEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_specification_nodes_expandedentry, formGroup, probe)
+	case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_spec_object_type_isnodeexpandedentry := new(models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_spec_object_type_isnodeexpandedentry, formGroup, probe)
+	case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_SPEC_OBJECT_TYPE_showIdentifierEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_spec_object_type_showidentifierentry := new(models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_spec_object_type_showidentifierentry, formGroup, probe)
+	case "Map_SPEC_OBJECT_TYPE_showNameEntry":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_SPEC_OBJECT_TYPE_showNameEntry Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_spec_object_type_shownameentry := new(models.Map_SPEC_OBJECT_TYPE_showNameEntry)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_spec_object_type_shownameentry, formGroup, probe)
 	case "RELATION_GROUP":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
@@ -1013,6 +1338,19 @@ func FillUpFormFromGongstructName(
 		req_if_tool_extension := new(models.REQ_IF_TOOL_EXTENSION)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(req_if_tool_extension, formGroup, probe)
+	case "RenderingConfiguration":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "RenderingConfiguration Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__RenderingConfigurationFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		renderingconfiguration := new(models.RenderingConfiguration)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(renderingconfiguration, formGroup, probe)
 	case "SPECIFICATION":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,

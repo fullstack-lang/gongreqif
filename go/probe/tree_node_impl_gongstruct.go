@@ -260,6 +260,81 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ENUM_VALUE" {
 		updateAndCommitTable[models.ENUM_VALUE](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry" {
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPECIFICATION_Nodes_expandedEntry" {
+		updateAndCommitTable[models.Map_SPECIFICATION_Nodes_expandedEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry" {
+		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPEC_OBJECT_TYPE_showIdentifierEntry" {
+		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPEC_OBJECT_TYPE_showNameEntry" {
+		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "RELATION_GROUP" {
 		updateAndCommitTable[models.RELATION_GROUP](nodeImplGongstruct.probe)
 	}
@@ -277,6 +352,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "REQ_IF_TOOL_EXTENSION" {
 		updateAndCommitTable[models.REQ_IF_TOOL_EXTENSION](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "RenderingConfiguration" {
+		updateAndCommitTable[models.RenderingConfiguration](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION" {
 		updateAndCommitTable[models.SPECIFICATION](nodeImplGongstruct.probe)

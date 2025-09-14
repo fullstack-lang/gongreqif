@@ -215,6 +215,81 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ENUM_VALUE:
 		ok = stage.IsStagedENUM_VALUE(target)
 
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(target)
+
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		ok = stage.IsStagedMap_SPECIFICATION_Nodes_expandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showIdentifierEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
 	case *RELATION_GROUP:
 		ok = stage.IsStagedRELATION_GROUP(target)
 
@@ -232,6 +307,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		ok = stage.IsStagedREQ_IF_TOOL_EXTENSION(target)
+
+	case *RenderingConfiguration:
+		ok = stage.IsStagedRenderingConfiguration(target)
 
 	case *SPECIFICATION:
 		ok = stage.IsStagedSPECIFICATION(target)
@@ -769,6 +847,181 @@ func (stage *Stage) IsStagedENUM_VALUE(enum_value *ENUM_VALUE) (ok bool) {
 	return
 }
 
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys[map_attribute_definition_boolean_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys[map_attribute_definition_boolean_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys[map_attribute_definition_boolean_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys[map_attribute_definition_date_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys[map_attribute_definition_date_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys[map_attribute_definition_date_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys[map_attribute_definition_enumeration_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys[map_attribute_definition_enumeration_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys[map_attribute_definition_enumeration_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys[map_attribute_definition_integer_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys[map_attribute_definition_integer_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys[map_attribute_definition_integer_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys[map_attribute_definition_real_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys[map_attribute_definition_real_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys[map_attribute_definition_real_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys[map_attribute_definition_string_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys[map_attribute_definition_string_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys[map_attribute_definition_string_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys[map_attribute_definition_xhtml_showinsubjectentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys[map_attribute_definition_xhtml_showintableentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) (ok bool) {
+
+	_, ok = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys[map_attribute_definition_xhtml_showintitleentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_SPECIFICATION_Nodes_expandedEntry(map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) (ok bool) {
+
+	_, ok = stage.Map_SPECIFICATION_Nodes_expandedEntrys[map_specification_nodes_expandedentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) (ok bool) {
+
+	_, ok = stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys[map_spec_object_type_isnodeexpandedentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_SPEC_OBJECT_TYPE_showIdentifierEntry(map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) (ok bool) {
+
+	_, ok = stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys[map_spec_object_type_showidentifierentry]
+
+	return
+}
+
+func (stage *Stage) IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) (ok bool) {
+
+	_, ok = stage.Map_SPEC_OBJECT_TYPE_showNameEntrys[map_spec_object_type_shownameentry]
+
+	return
+}
+
 func (stage *Stage) IsStagedRELATION_GROUP(relation_group *RELATION_GROUP) (ok bool) {
 
 	_, ok = stage.RELATION_GROUPs[relation_group]
@@ -807,6 +1060,13 @@ func (stage *Stage) IsStagedREQ_IF_HEADER(req_if_header *REQ_IF_HEADER) (ok bool
 func (stage *Stage) IsStagedREQ_IF_TOOL_EXTENSION(req_if_tool_extension *REQ_IF_TOOL_EXTENSION) (ok bool) {
 
 	_, ok = stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension]
+
+	return
+}
+
+func (stage *Stage) IsStagedRenderingConfiguration(renderingconfiguration *RenderingConfiguration) (ok bool) {
+
+	_, ok = stage.RenderingConfigurations[renderingconfiguration]
 
 	return
 }
@@ -1120,6 +1380,81 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ENUM_VALUE:
 		stage.StageBranchENUM_VALUE(target)
 
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		stage.StageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(target)
+
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		stage.StageBranchMap_SPECIFICATION_Nodes_expandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		stage.StageBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		stage.StageBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		stage.StageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
 	case *RELATION_GROUP:
 		stage.StageBranchRELATION_GROUP(target)
 
@@ -1137,6 +1472,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.StageBranchREQ_IF_TOOL_EXTENSION(target)
+
+	case *RenderingConfiguration:
+		stage.StageBranchRenderingConfiguration(target)
 
 	case *SPECIFICATION:
 		stage.StageBranchSPECIFICATION(target)
@@ -2485,6 +2823,381 @@ func (stage *Stage) StageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_boolean_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_boolean_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_boolean_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_boolean_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_boolean_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_boolean_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_date_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_date_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_date_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_date_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_date_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_date_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_enumeration_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_enumeration_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_enumeration_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_enumeration_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_enumeration_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_enumeration_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_integer_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_integer_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_integer_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_integer_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_integer_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_integer_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_real_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_real_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_real_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_real_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_real_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_real_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_string_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_string_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_string_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_string_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_string_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_string_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_xhtml_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_xhtml_showinsubjectentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_xhtml_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_xhtml_showintableentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_attribute_definition_xhtml_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_xhtml_showintitleentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_SPECIFICATION_Nodes_expandedEntry(map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_specification_nodes_expandedentry) {
+		return
+	}
+
+	map_specification_nodes_expandedentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_spec_object_type_isnodeexpandedentry) {
+		return
+	}
+
+	map_spec_object_type_isnodeexpandedentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_spec_object_type_showidentifierentry) {
+		return
+	}
+
+	map_spec_object_type_showidentifierentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_spec_object_type_shownameentry) {
+		return
+	}
+
+	map_spec_object_type_shownameentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchRELATION_GROUP(relation_group *RELATION_GROUP) {
 
 	// check if instance is already staged
@@ -2620,6 +3333,96 @@ func (stage *Stage) StageBranchREQ_IF_TOOL_EXTENSION(req_if_tool_extension *REQ_
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchRenderingConfiguration(renderingconfiguration *RenderingConfiguration) {
+
+	// check if instance is already staged
+	if IsStaged(stage, renderingconfiguration) {
+		return
+	}
+
+	renderingconfiguration.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _map_spec_object_type_isnodeexpandedentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
+		StageBranch(stage, _map_spec_object_type_isnodeexpandedentry)
+	}
+	for _, _map_attribute_definition_xhtml_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_xhtml_showintitleentry)
+	}
+	for _, _map_attribute_definition_string_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_string_showintitleentry)
+	}
+	for _, _map_attribute_definition_boolean_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_boolean_showintitleentry)
+	}
+	for _, _map_attribute_definition_integer_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_integer_showintitleentry)
+	}
+	for _, _map_attribute_definition_date_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_date_showintitleentry)
+	}
+	for _, _map_attribute_definition_real_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_real_showintitleentry)
+	}
+	for _, _map_attribute_definition_enumeration_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
+		StageBranch(stage, _map_attribute_definition_enumeration_showintitleentry)
+	}
+	for _, _map_attribute_definition_xhtml_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_xhtml_showintableentry)
+	}
+	for _, _map_attribute_definition_string_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_string_showintableentry)
+	}
+	for _, _map_attribute_definition_boolean_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_boolean_showintableentry)
+	}
+	for _, _map_attribute_definition_integer_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_integer_showintableentry)
+	}
+	for _, _map_attribute_definition_date_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_date_showintableentry)
+	}
+	for _, _map_attribute_definition_real_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_real_showintableentry)
+	}
+	for _, _map_attribute_definition_enumeration_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
+		StageBranch(stage, _map_attribute_definition_enumeration_showintableentry)
+	}
+	for _, _map_attribute_definition_xhtml_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_xhtml_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_string_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_string_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_boolean_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_boolean_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_integer_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_integer_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_date_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_date_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_real_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_real_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_enumeration_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
+		StageBranch(stage, _map_attribute_definition_enumeration_showinsubjectentry)
+	}
+	for _, _map_specification_nodes_expandedentry := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
+		StageBranch(stage, _map_specification_nodes_expandedentry)
+	}
+	for _, _map_spec_object_type_showidentifierentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
+		StageBranch(stage, _map_spec_object_type_showidentifierentry)
+	}
+	for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
+		StageBranch(stage, _map_spec_object_type_shownameentry)
+	}
 
 }
 
@@ -3184,6 +3987,106 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchENUM_VALUE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		toT := CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		toT := CopyBranchMap_SPECIFICATION_Nodes_expandedEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		toT := CopyBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		toT := CopyBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		toT := CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *RELATION_GROUP:
 		toT := CopyBranchRELATION_GROUP(mapOrigCopy, fromT)
 		return any(toT).(*Type)
@@ -3206,6 +4109,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		toT := CopyBranchREQ_IF_TOOL_EXTENSION(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *RenderingConfiguration:
+		toT := CopyBranchRenderingConfiguration(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *SPECIFICATION:
@@ -4849,6 +5756,481 @@ func CopyBranchENUM_VALUE(mapOrigCopy map[any]any, enum_valueFrom *ENUM_VALUE) (
 	return
 }
 
+func CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_boolean_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) (map_attribute_definition_boolean_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) {
+
+	// map_attribute_definition_boolean_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_boolean_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_boolean_showinsubjectentryFrom]; ok {
+		map_attribute_definition_boolean_showinsubjectentryTo = _map_attribute_definition_boolean_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_boolean_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_boolean_showinsubjectentryFrom] = map_attribute_definition_boolean_showinsubjectentryTo
+	map_attribute_definition_boolean_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_boolean_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_boolean_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) (map_attribute_definition_boolean_showintableentryTo *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) {
+
+	// map_attribute_definition_boolean_showintableentryFrom has already been copied
+	if _map_attribute_definition_boolean_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_boolean_showintableentryFrom]; ok {
+		map_attribute_definition_boolean_showintableentryTo = _map_attribute_definition_boolean_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_boolean_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_boolean_showintableentryFrom] = map_attribute_definition_boolean_showintableentryTo
+	map_attribute_definition_boolean_showintableentryFrom.CopyBasicFields(map_attribute_definition_boolean_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_boolean_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) (map_attribute_definition_boolean_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) {
+
+	// map_attribute_definition_boolean_showintitleentryFrom has already been copied
+	if _map_attribute_definition_boolean_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_boolean_showintitleentryFrom]; ok {
+		map_attribute_definition_boolean_showintitleentryTo = _map_attribute_definition_boolean_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_boolean_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_boolean_showintitleentryFrom] = map_attribute_definition_boolean_showintitleentryTo
+	map_attribute_definition_boolean_showintitleentryFrom.CopyBasicFields(map_attribute_definition_boolean_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_date_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) (map_attribute_definition_date_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) {
+
+	// map_attribute_definition_date_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_date_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_date_showinsubjectentryFrom]; ok {
+		map_attribute_definition_date_showinsubjectentryTo = _map_attribute_definition_date_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_date_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_date_showinsubjectentryFrom] = map_attribute_definition_date_showinsubjectentryTo
+	map_attribute_definition_date_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_date_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_date_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) (map_attribute_definition_date_showintableentryTo *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) {
+
+	// map_attribute_definition_date_showintableentryFrom has already been copied
+	if _map_attribute_definition_date_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_date_showintableentryFrom]; ok {
+		map_attribute_definition_date_showintableentryTo = _map_attribute_definition_date_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_date_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_date_showintableentryFrom] = map_attribute_definition_date_showintableentryTo
+	map_attribute_definition_date_showintableentryFrom.CopyBasicFields(map_attribute_definition_date_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_date_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) (map_attribute_definition_date_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) {
+
+	// map_attribute_definition_date_showintitleentryFrom has already been copied
+	if _map_attribute_definition_date_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_date_showintitleentryFrom]; ok {
+		map_attribute_definition_date_showintitleentryTo = _map_attribute_definition_date_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_date_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_date_showintitleentryFrom] = map_attribute_definition_date_showintitleentryTo
+	map_attribute_definition_date_showintitleentryFrom.CopyBasicFields(map_attribute_definition_date_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_enumeration_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) (map_attribute_definition_enumeration_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) {
+
+	// map_attribute_definition_enumeration_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_enumeration_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_enumeration_showinsubjectentryFrom]; ok {
+		map_attribute_definition_enumeration_showinsubjectentryTo = _map_attribute_definition_enumeration_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_enumeration_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_enumeration_showinsubjectentryFrom] = map_attribute_definition_enumeration_showinsubjectentryTo
+	map_attribute_definition_enumeration_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_enumeration_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_enumeration_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) (map_attribute_definition_enumeration_showintableentryTo *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) {
+
+	// map_attribute_definition_enumeration_showintableentryFrom has already been copied
+	if _map_attribute_definition_enumeration_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_enumeration_showintableentryFrom]; ok {
+		map_attribute_definition_enumeration_showintableentryTo = _map_attribute_definition_enumeration_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_enumeration_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_enumeration_showintableentryFrom] = map_attribute_definition_enumeration_showintableentryTo
+	map_attribute_definition_enumeration_showintableentryFrom.CopyBasicFields(map_attribute_definition_enumeration_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_enumeration_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) (map_attribute_definition_enumeration_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) {
+
+	// map_attribute_definition_enumeration_showintitleentryFrom has already been copied
+	if _map_attribute_definition_enumeration_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_enumeration_showintitleentryFrom]; ok {
+		map_attribute_definition_enumeration_showintitleentryTo = _map_attribute_definition_enumeration_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_enumeration_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_enumeration_showintitleentryFrom] = map_attribute_definition_enumeration_showintitleentryTo
+	map_attribute_definition_enumeration_showintitleentryFrom.CopyBasicFields(map_attribute_definition_enumeration_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_integer_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) (map_attribute_definition_integer_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) {
+
+	// map_attribute_definition_integer_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_integer_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_integer_showinsubjectentryFrom]; ok {
+		map_attribute_definition_integer_showinsubjectentryTo = _map_attribute_definition_integer_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_integer_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_integer_showinsubjectentryFrom] = map_attribute_definition_integer_showinsubjectentryTo
+	map_attribute_definition_integer_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_integer_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_integer_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) (map_attribute_definition_integer_showintableentryTo *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) {
+
+	// map_attribute_definition_integer_showintableentryFrom has already been copied
+	if _map_attribute_definition_integer_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_integer_showintableentryFrom]; ok {
+		map_attribute_definition_integer_showintableentryTo = _map_attribute_definition_integer_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_integer_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_integer_showintableentryFrom] = map_attribute_definition_integer_showintableentryTo
+	map_attribute_definition_integer_showintableentryFrom.CopyBasicFields(map_attribute_definition_integer_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_integer_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) (map_attribute_definition_integer_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) {
+
+	// map_attribute_definition_integer_showintitleentryFrom has already been copied
+	if _map_attribute_definition_integer_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_integer_showintitleentryFrom]; ok {
+		map_attribute_definition_integer_showintitleentryTo = _map_attribute_definition_integer_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_integer_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_integer_showintitleentryFrom] = map_attribute_definition_integer_showintitleentryTo
+	map_attribute_definition_integer_showintitleentryFrom.CopyBasicFields(map_attribute_definition_integer_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_real_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) (map_attribute_definition_real_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) {
+
+	// map_attribute_definition_real_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_real_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_real_showinsubjectentryFrom]; ok {
+		map_attribute_definition_real_showinsubjectentryTo = _map_attribute_definition_real_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_real_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_real_showinsubjectentryFrom] = map_attribute_definition_real_showinsubjectentryTo
+	map_attribute_definition_real_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_real_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_real_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) (map_attribute_definition_real_showintableentryTo *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) {
+
+	// map_attribute_definition_real_showintableentryFrom has already been copied
+	if _map_attribute_definition_real_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_real_showintableentryFrom]; ok {
+		map_attribute_definition_real_showintableentryTo = _map_attribute_definition_real_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_real_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_real_showintableentryFrom] = map_attribute_definition_real_showintableentryTo
+	map_attribute_definition_real_showintableentryFrom.CopyBasicFields(map_attribute_definition_real_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_real_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) (map_attribute_definition_real_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) {
+
+	// map_attribute_definition_real_showintitleentryFrom has already been copied
+	if _map_attribute_definition_real_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_real_showintitleentryFrom]; ok {
+		map_attribute_definition_real_showintitleentryTo = _map_attribute_definition_real_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_real_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_real_showintitleentryFrom] = map_attribute_definition_real_showintitleentryTo
+	map_attribute_definition_real_showintitleentryFrom.CopyBasicFields(map_attribute_definition_real_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_string_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) (map_attribute_definition_string_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) {
+
+	// map_attribute_definition_string_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_string_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_string_showinsubjectentryFrom]; ok {
+		map_attribute_definition_string_showinsubjectentryTo = _map_attribute_definition_string_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_string_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_string_showinsubjectentryFrom] = map_attribute_definition_string_showinsubjectentryTo
+	map_attribute_definition_string_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_string_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_string_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) (map_attribute_definition_string_showintableentryTo *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) {
+
+	// map_attribute_definition_string_showintableentryFrom has already been copied
+	if _map_attribute_definition_string_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_string_showintableentryFrom]; ok {
+		map_attribute_definition_string_showintableentryTo = _map_attribute_definition_string_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_string_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_string_showintableentryFrom] = map_attribute_definition_string_showintableentryTo
+	map_attribute_definition_string_showintableentryFrom.CopyBasicFields(map_attribute_definition_string_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_string_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) (map_attribute_definition_string_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) {
+
+	// map_attribute_definition_string_showintitleentryFrom has already been copied
+	if _map_attribute_definition_string_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_string_showintitleentryFrom]; ok {
+		map_attribute_definition_string_showintitleentryTo = _map_attribute_definition_string_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_string_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_string_showintitleentryFrom] = map_attribute_definition_string_showintitleentryTo
+	map_attribute_definition_string_showintitleentryFrom.CopyBasicFields(map_attribute_definition_string_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_xhtml_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) (map_attribute_definition_xhtml_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) {
+
+	// map_attribute_definition_xhtml_showinsubjectentryFrom has already been copied
+	if _map_attribute_definition_xhtml_showinsubjectentryTo, ok := mapOrigCopy[map_attribute_definition_xhtml_showinsubjectentryFrom]; ok {
+		map_attribute_definition_xhtml_showinsubjectentryTo = _map_attribute_definition_xhtml_showinsubjectentryTo.(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+		return
+	}
+
+	map_attribute_definition_xhtml_showinsubjectentryTo = new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+	mapOrigCopy[map_attribute_definition_xhtml_showinsubjectentryFrom] = map_attribute_definition_xhtml_showinsubjectentryTo
+	map_attribute_definition_xhtml_showinsubjectentryFrom.CopyBasicFields(map_attribute_definition_xhtml_showinsubjectentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(mapOrigCopy map[any]any, map_attribute_definition_xhtml_showintableentryFrom *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) (map_attribute_definition_xhtml_showintableentryTo *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) {
+
+	// map_attribute_definition_xhtml_showintableentryFrom has already been copied
+	if _map_attribute_definition_xhtml_showintableentryTo, ok := mapOrigCopy[map_attribute_definition_xhtml_showintableentryFrom]; ok {
+		map_attribute_definition_xhtml_showintableentryTo = _map_attribute_definition_xhtml_showintableentryTo.(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+		return
+	}
+
+	map_attribute_definition_xhtml_showintableentryTo = new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+	mapOrigCopy[map_attribute_definition_xhtml_showintableentryFrom] = map_attribute_definition_xhtml_showintableentryTo
+	map_attribute_definition_xhtml_showintableentryFrom.CopyBasicFields(map_attribute_definition_xhtml_showintableentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(mapOrigCopy map[any]any, map_attribute_definition_xhtml_showintitleentryFrom *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) (map_attribute_definition_xhtml_showintitleentryTo *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) {
+
+	// map_attribute_definition_xhtml_showintitleentryFrom has already been copied
+	if _map_attribute_definition_xhtml_showintitleentryTo, ok := mapOrigCopy[map_attribute_definition_xhtml_showintitleentryFrom]; ok {
+		map_attribute_definition_xhtml_showintitleentryTo = _map_attribute_definition_xhtml_showintitleentryTo.(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+		return
+	}
+
+	map_attribute_definition_xhtml_showintitleentryTo = new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+	mapOrigCopy[map_attribute_definition_xhtml_showintitleentryFrom] = map_attribute_definition_xhtml_showintitleentryTo
+	map_attribute_definition_xhtml_showintitleentryFrom.CopyBasicFields(map_attribute_definition_xhtml_showintitleentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_SPECIFICATION_Nodes_expandedEntry(mapOrigCopy map[any]any, map_specification_nodes_expandedentryFrom *Map_SPECIFICATION_Nodes_expandedEntry) (map_specification_nodes_expandedentryTo *Map_SPECIFICATION_Nodes_expandedEntry) {
+
+	// map_specification_nodes_expandedentryFrom has already been copied
+	if _map_specification_nodes_expandedentryTo, ok := mapOrigCopy[map_specification_nodes_expandedentryFrom]; ok {
+		map_specification_nodes_expandedentryTo = _map_specification_nodes_expandedentryTo.(*Map_SPECIFICATION_Nodes_expandedEntry)
+		return
+	}
+
+	map_specification_nodes_expandedentryTo = new(Map_SPECIFICATION_Nodes_expandedEntry)
+	mapOrigCopy[map_specification_nodes_expandedentryFrom] = map_specification_nodes_expandedentryTo
+	map_specification_nodes_expandedentryFrom.CopyBasicFields(map_specification_nodes_expandedentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(mapOrigCopy map[any]any, map_spec_object_type_isnodeexpandedentryFrom *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) (map_spec_object_type_isnodeexpandedentryTo *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) {
+
+	// map_spec_object_type_isnodeexpandedentryFrom has already been copied
+	if _map_spec_object_type_isnodeexpandedentryTo, ok := mapOrigCopy[map_spec_object_type_isnodeexpandedentryFrom]; ok {
+		map_spec_object_type_isnodeexpandedentryTo = _map_spec_object_type_isnodeexpandedentryTo.(*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+		return
+	}
+
+	map_spec_object_type_isnodeexpandedentryTo = new(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+	mapOrigCopy[map_spec_object_type_isnodeexpandedentryFrom] = map_spec_object_type_isnodeexpandedentryTo
+	map_spec_object_type_isnodeexpandedentryFrom.CopyBasicFields(map_spec_object_type_isnodeexpandedentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(mapOrigCopy map[any]any, map_spec_object_type_showidentifierentryFrom *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) (map_spec_object_type_showidentifierentryTo *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) {
+
+	// map_spec_object_type_showidentifierentryFrom has already been copied
+	if _map_spec_object_type_showidentifierentryTo, ok := mapOrigCopy[map_spec_object_type_showidentifierentryFrom]; ok {
+		map_spec_object_type_showidentifierentryTo = _map_spec_object_type_showidentifierentryTo.(*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+		return
+	}
+
+	map_spec_object_type_showidentifierentryTo = new(Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+	mapOrigCopy[map_spec_object_type_showidentifierentryFrom] = map_spec_object_type_showidentifierentryTo
+	map_spec_object_type_showidentifierentryFrom.CopyBasicFields(map_spec_object_type_showidentifierentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy map[any]any, map_spec_object_type_shownameentryFrom *Map_SPEC_OBJECT_TYPE_showNameEntry) (map_spec_object_type_shownameentryTo *Map_SPEC_OBJECT_TYPE_showNameEntry) {
+
+	// map_spec_object_type_shownameentryFrom has already been copied
+	if _map_spec_object_type_shownameentryTo, ok := mapOrigCopy[map_spec_object_type_shownameentryFrom]; ok {
+		map_spec_object_type_shownameentryTo = _map_spec_object_type_shownameentryTo.(*Map_SPEC_OBJECT_TYPE_showNameEntry)
+		return
+	}
+
+	map_spec_object_type_shownameentryTo = new(Map_SPEC_OBJECT_TYPE_showNameEntry)
+	mapOrigCopy[map_spec_object_type_shownameentryFrom] = map_spec_object_type_shownameentryTo
+	map_spec_object_type_shownameentryFrom.CopyBasicFields(map_spec_object_type_shownameentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchRELATION_GROUP(mapOrigCopy map[any]any, relation_groupFrom *RELATION_GROUP) (relation_groupTo *RELATION_GROUP) {
 
 	// relation_groupFrom has already been copied
@@ -5007,6 +6389,100 @@ func CopyBranchREQ_IF_TOOL_EXTENSION(mapOrigCopy map[any]any, req_if_tool_extens
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchRenderingConfiguration(mapOrigCopy map[any]any, renderingconfigurationFrom *RenderingConfiguration) (renderingconfigurationTo *RenderingConfiguration) {
+
+	// renderingconfigurationFrom has already been copied
+	if _renderingconfigurationTo, ok := mapOrigCopy[renderingconfigurationFrom]; ok {
+		renderingconfigurationTo = _renderingconfigurationTo.(*RenderingConfiguration)
+		return
+	}
+
+	renderingconfigurationTo = new(RenderingConfiguration)
+	mapOrigCopy[renderingconfigurationFrom] = renderingconfigurationTo
+	renderingconfigurationFrom.CopyBasicFields(renderingconfigurationTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _map_spec_object_type_isnodeexpandedentry := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
+		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, CopyBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(mapOrigCopy, _map_spec_object_type_isnodeexpandedentry))
+	}
+	for _, _map_attribute_definition_xhtml_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_xhtml_showintitleentry))
+	}
+	for _, _map_attribute_definition_string_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_string_showintitleentry))
+	}
+	for _, _map_attribute_definition_boolean_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_boolean_showintitleentry))
+	}
+	for _, _map_attribute_definition_integer_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_integer_showintitleentry))
+	}
+	for _, _map_attribute_definition_date_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_date_showintitleentry))
+	}
+	for _, _map_attribute_definition_real_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_real_showintitleentry))
+	}
+	for _, _map_attribute_definition_enumeration_showintitleentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(mapOrigCopy, _map_attribute_definition_enumeration_showintitleentry))
+	}
+	for _, _map_attribute_definition_xhtml_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_xhtml_showintableentry))
+	}
+	for _, _map_attribute_definition_string_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_string_showintableentry))
+	}
+	for _, _map_attribute_definition_boolean_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_boolean_showintableentry))
+	}
+	for _, _map_attribute_definition_integer_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_integer_showintableentry))
+	}
+	for _, _map_attribute_definition_date_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_date_showintableentry))
+	}
+	for _, _map_attribute_definition_real_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_real_showintableentry))
+	}
+	for _, _map_attribute_definition_enumeration_showintableentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(mapOrigCopy, _map_attribute_definition_enumeration_showintableentry))
+	}
+	for _, _map_attribute_definition_xhtml_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_xhtml_showinsubjectentry))
+	}
+	for _, _map_attribute_definition_string_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_string_showinsubjectentry))
+	}
+	for _, _map_attribute_definition_boolean_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_boolean_showinsubjectentry))
+	}
+	for _, _map_attribute_definition_integer_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_integer_showinsubjectentry))
+	}
+	for _, _map_attribute_definition_date_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_date_showinsubjectentry))
+	}
+	for _, _map_attribute_definition_real_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_real_showinsubjectentry))
+	}
+	for _, _map_attribute_definition_enumeration_showinsubjectentry := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
+		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, CopyBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(mapOrigCopy, _map_attribute_definition_enumeration_showinsubjectentry))
+	}
+	for _, _map_specification_nodes_expandedentry := range renderingconfigurationFrom.Map_SPECIFICATION_Nodes_expandedEntries {
+		renderingconfigurationTo.Map_SPECIFICATION_Nodes_expandedEntries = append(renderingconfigurationTo.Map_SPECIFICATION_Nodes_expandedEntries, CopyBranchMap_SPECIFICATION_Nodes_expandedEntry(mapOrigCopy, _map_specification_nodes_expandedentry))
+	}
+	for _, _map_spec_object_type_showidentifierentry := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
+		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, CopyBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(mapOrigCopy, _map_spec_object_type_showidentifierentry))
+	}
+	for _, _map_spec_object_type_shownameentry := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showNameEntries {
+		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showNameEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showNameEntries, CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy, _map_spec_object_type_shownameentry))
+	}
 
 	return
 }
@@ -5551,6 +7027,81 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ENUM_VALUE:
 		stage.UnstageBranchENUM_VALUE(target)
 
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(target)
+
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		stage.UnstageBranchMap_SPECIFICATION_Nodes_expandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		stage.UnstageBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		stage.UnstageBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		stage.UnstageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
 	case *RELATION_GROUP:
 		stage.UnstageBranchRELATION_GROUP(target)
 
@@ -5568,6 +7119,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.UnstageBranchREQ_IF_TOOL_EXTENSION(target)
+
+	case *RenderingConfiguration:
+		stage.UnstageBranchRenderingConfiguration(target)
 
 	case *SPECIFICATION:
 		stage.UnstageBranchSPECIFICATION(target)
@@ -6916,6 +8470,381 @@ func (stage *Stage) UnstageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_boolean_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_boolean_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_boolean_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_boolean_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_boolean_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_boolean_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_date_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_date_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_date_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_date_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_date_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_date_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_enumeration_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_enumeration_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_enumeration_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_enumeration_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_enumeration_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_enumeration_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_integer_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_integer_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_integer_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_integer_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_integer_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_integer_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_real_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_real_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_real_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_real_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_real_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_real_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_string_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_string_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_string_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_string_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_string_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_string_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_xhtml_showinsubjectentry) {
+		return
+	}
+
+	map_attribute_definition_xhtml_showinsubjectentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_xhtml_showintableentry) {
+		return
+	}
+
+	map_attribute_definition_xhtml_showintableentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_attribute_definition_xhtml_showintitleentry) {
+		return
+	}
+
+	map_attribute_definition_xhtml_showintitleentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_SPECIFICATION_Nodes_expandedEntry(map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_specification_nodes_expandedentry) {
+		return
+	}
+
+	map_specification_nodes_expandedentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_spec_object_type_isnodeexpandedentry) {
+		return
+	}
+
+	map_spec_object_type_isnodeexpandedentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_SPEC_OBJECT_TYPE_showIdentifierEntry(map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_spec_object_type_showidentifierentry) {
+		return
+	}
+
+	map_spec_object_type_showidentifierentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_spec_object_type_shownameentry) {
+		return
+	}
+
+	map_spec_object_type_shownameentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchRELATION_GROUP(relation_group *RELATION_GROUP) {
 
 	// check if instance is already staged
@@ -7051,6 +8980,96 @@ func (stage *Stage) UnstageBranchREQ_IF_TOOL_EXTENSION(req_if_tool_extension *RE
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchRenderingConfiguration(renderingconfiguration *RenderingConfiguration) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, renderingconfiguration) {
+		return
+	}
+
+	renderingconfiguration.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+	for _, _map_spec_object_type_isnodeexpandedentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
+		UnstageBranch(stage, _map_spec_object_type_isnodeexpandedentry)
+	}
+	for _, _map_attribute_definition_xhtml_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_xhtml_showintitleentry)
+	}
+	for _, _map_attribute_definition_string_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_string_showintitleentry)
+	}
+	for _, _map_attribute_definition_boolean_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_boolean_showintitleentry)
+	}
+	for _, _map_attribute_definition_integer_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_integer_showintitleentry)
+	}
+	for _, _map_attribute_definition_date_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_date_showintitleentry)
+	}
+	for _, _map_attribute_definition_real_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_real_showintitleentry)
+	}
+	for _, _map_attribute_definition_enumeration_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
+		UnstageBranch(stage, _map_attribute_definition_enumeration_showintitleentry)
+	}
+	for _, _map_attribute_definition_xhtml_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_xhtml_showintableentry)
+	}
+	for _, _map_attribute_definition_string_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_string_showintableentry)
+	}
+	for _, _map_attribute_definition_boolean_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_boolean_showintableentry)
+	}
+	for _, _map_attribute_definition_integer_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_integer_showintableentry)
+	}
+	for _, _map_attribute_definition_date_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_date_showintableentry)
+	}
+	for _, _map_attribute_definition_real_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_real_showintableentry)
+	}
+	for _, _map_attribute_definition_enumeration_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
+		UnstageBranch(stage, _map_attribute_definition_enumeration_showintableentry)
+	}
+	for _, _map_attribute_definition_xhtml_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_xhtml_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_string_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_string_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_boolean_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_boolean_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_integer_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_integer_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_date_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_date_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_real_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_real_showinsubjectentry)
+	}
+	for _, _map_attribute_definition_enumeration_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
+		UnstageBranch(stage, _map_attribute_definition_enumeration_showinsubjectentry)
+	}
+	for _, _map_specification_nodes_expandedentry := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
+		UnstageBranch(stage, _map_specification_nodes_expandedentry)
+	}
+	for _, _map_spec_object_type_showidentifierentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
+		UnstageBranch(stage, _map_spec_object_type_showidentifierentry)
+	}
+	for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
+		UnstageBranch(stage, _map_spec_object_type_shownameentry)
+	}
 
 }
 

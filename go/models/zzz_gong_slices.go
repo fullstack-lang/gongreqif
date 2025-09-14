@@ -527,6 +527,81 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ENUM_VALUE
 	// insertion point per field
 
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_SPECIFICATION_Nodes_expandedEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_SPEC_OBJECT_TYPE_showIdentifierEntry
+	// insertion point per field
+
+	// Compute reverse map for named struct Map_SPEC_OBJECT_TYPE_showNameEntry
+	// insertion point per field
+
 	// Compute reverse map for named struct RELATION_GROUP
 	// insertion point per field
 
@@ -544,6 +619,209 @@ func (stage *Stage) ComputeReverseMaps() {
 
 	// Compute reverse map for named struct REQ_IF_TOOL_EXTENSION
 	// insertion point per field
+
+	// Compute reverse map for named struct RenderingConfiguration
+	// insertion point per field
+	clear(stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap)
+	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap = make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_spec_object_type_isnodeexpandedentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
+			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap[_map_spec_object_type_isnodeexpandedentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_xhtml_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[_map_attribute_definition_xhtml_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_string_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap[_map_attribute_definition_string_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_boolean_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap[_map_attribute_definition_boolean_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_integer_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap[_map_attribute_definition_integer_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_date_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap[_map_attribute_definition_date_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_real_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap[_map_attribute_definition_real_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_enumeration_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap[_map_attribute_definition_enumeration_showintitleentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_xhtml_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap[_map_attribute_definition_xhtml_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_string_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap[_map_attribute_definition_string_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_boolean_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap[_map_attribute_definition_boolean_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_integer_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap[_map_attribute_definition_integer_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_date_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap[_map_attribute_definition_date_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_real_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap[_map_attribute_definition_real_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_enumeration_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap[_map_attribute_definition_enumeration_showintableentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_xhtml_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap[_map_attribute_definition_xhtml_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_string_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap[_map_attribute_definition_string_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_boolean_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap[_map_attribute_definition_boolean_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_integer_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap[_map_attribute_definition_integer_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_date_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap[_map_attribute_definition_date_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_real_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[_map_attribute_definition_real_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap)
+	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_attribute_definition_enumeration_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
+			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[_map_attribute_definition_enumeration_showinsubjectentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap)
+	stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap = make(map[*Map_SPECIFICATION_Nodes_expandedEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_specification_nodes_expandedentry := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
+			stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[_map_specification_nodes_expandedentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap)
+	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap = make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_spec_object_type_showidentifierentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
+			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap[_map_spec_object_type_showidentifierentry] = renderingconfiguration
+		}
+	}
+	clear(stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap)
+	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap = make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
+			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[_map_spec_object_type_shownameentry] = renderingconfiguration
+		}
+	}
 
 	// Compute reverse map for named struct SPECIFICATION
 	// insertion point per field

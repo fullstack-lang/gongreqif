@@ -300,6 +300,106 @@ type DBLite struct {
 
 	nextIDENUM_VALUEDB uint
 
+	map_attribute_definition_boolean_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_boolean_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB uint
+
+	map_attribute_definition_boolean_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB uint
+
+	map_attribute_definition_date_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_date_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB uint
+
+	map_attribute_definition_date_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB uint
+
+	map_attribute_definition_enumeration_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_enumeration_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB uint
+
+	map_attribute_definition_enumeration_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB uint
+
+	map_attribute_definition_integer_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_integer_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB uint
+
+	map_attribute_definition_integer_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB uint
+
+	map_attribute_definition_real_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_real_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB uint
+
+	map_attribute_definition_real_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB uint
+
+	map_attribute_definition_string_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_string_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB uint
+
+	map_attribute_definition_string_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB uint
+
+	map_attribute_definition_xhtml_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB uint
+
+	map_attribute_definition_xhtml_showintableentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB uint
+
+	map_attribute_definition_xhtml_showintitleentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB
+
+	nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB uint
+
+	map_specification_nodes_expandedentryDBs map[uint]*Map_SPECIFICATION_Nodes_expandedEntryDB
+
+	nextIDMap_SPECIFICATION_Nodes_expandedEntryDB uint
+
+	map_spec_object_type_isnodeexpandedentryDBs map[uint]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB
+
+	nextIDMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB uint
+
+	map_spec_object_type_showidentifierentryDBs map[uint]*Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB
+
+	nextIDMap_SPEC_OBJECT_TYPE_showIdentifierEntryDB uint
+
+	map_spec_object_type_shownameentryDBs map[uint]*Map_SPEC_OBJECT_TYPE_showNameEntryDB
+
+	nextIDMap_SPEC_OBJECT_TYPE_showNameEntryDB uint
+
 	relation_groupDBs map[uint]*RELATION_GROUPDB
 
 	nextIDRELATION_GROUPDB uint
@@ -323,6 +423,10 @@ type DBLite struct {
 	req_if_tool_extensionDBs map[uint]*REQ_IF_TOOL_EXTENSIONDB
 
 	nextIDREQ_IF_TOOL_EXTENSIONDB uint
+
+	renderingconfigurationDBs map[uint]*RenderingConfigurationDB
+
+	nextIDRenderingConfigurationDB uint
 
 	specificationDBs map[uint]*SPECIFICATIONDB
 
@@ -522,6 +626,56 @@ func NewDBLite() *DBLite {
 
 		enum_valueDBs: make(map[uint]*ENUM_VALUEDB),
 
+		map_attribute_definition_boolean_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB),
+
+		map_attribute_definition_boolean_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB),
+
+		map_attribute_definition_boolean_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB),
+
+		map_attribute_definition_date_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB),
+
+		map_attribute_definition_date_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB),
+
+		map_attribute_definition_date_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB),
+
+		map_attribute_definition_enumeration_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB),
+
+		map_attribute_definition_enumeration_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB),
+
+		map_attribute_definition_enumeration_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB),
+
+		map_attribute_definition_integer_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB),
+
+		map_attribute_definition_integer_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB),
+
+		map_attribute_definition_integer_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB),
+
+		map_attribute_definition_real_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB),
+
+		map_attribute_definition_real_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB),
+
+		map_attribute_definition_real_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB),
+
+		map_attribute_definition_string_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB),
+
+		map_attribute_definition_string_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB),
+
+		map_attribute_definition_string_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB),
+
+		map_attribute_definition_xhtml_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB),
+
+		map_attribute_definition_xhtml_showintableentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB),
+
+		map_attribute_definition_xhtml_showintitleentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB),
+
+		map_specification_nodes_expandedentryDBs: make(map[uint]*Map_SPECIFICATION_Nodes_expandedEntryDB),
+
+		map_spec_object_type_isnodeexpandedentryDBs: make(map[uint]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB),
+
+		map_spec_object_type_showidentifierentryDBs: make(map[uint]*Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB),
+
+		map_spec_object_type_shownameentryDBs: make(map[uint]*Map_SPEC_OBJECT_TYPE_showNameEntryDB),
+
 		relation_groupDBs: make(map[uint]*RELATION_GROUPDB),
 
 		relation_group_typeDBs: make(map[uint]*RELATION_GROUP_TYPEDB),
@@ -533,6 +687,8 @@ func NewDBLite() *DBLite {
 		req_if_headerDBs: make(map[uint]*REQ_IF_HEADERDB),
 
 		req_if_tool_extensionDBs: make(map[uint]*REQ_IF_TOOL_EXTENSIONDB),
+
+		renderingconfigurationDBs: make(map[uint]*RenderingConfigurationDB),
 
 		specificationDBs: make(map[uint]*SPECIFICATIONDB),
 
@@ -853,6 +1009,106 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDENUM_VALUEDB++
 		v.ID = db.nextIDENUM_VALUEDB
 		db.enum_valueDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB
+		db.map_attribute_definition_boolean_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB
+		db.map_attribute_definition_boolean_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB
+		db.map_attribute_definition_boolean_showintitleentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB
+		db.map_attribute_definition_date_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB
+		db.map_attribute_definition_date_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB
+		db.map_attribute_definition_date_showintitleentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB
+		db.map_attribute_definition_enumeration_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB
+		db.map_attribute_definition_enumeration_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB
+		db.map_attribute_definition_enumeration_showintitleentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB
+		db.map_attribute_definition_integer_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB
+		db.map_attribute_definition_integer_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB
+		db.map_attribute_definition_integer_showintitleentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB
+		db.map_attribute_definition_real_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB
+		db.map_attribute_definition_real_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB
+		db.map_attribute_definition_real_showintitleentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB
+		db.map_attribute_definition_string_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB
+		db.map_attribute_definition_string_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB
+		db.map_attribute_definition_string_showintitleentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB
+		db.map_attribute_definition_xhtml_showinsubjectentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB
+		db.map_attribute_definition_xhtml_showintableentryDBs[v.ID] = v
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:
+		db.nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB++
+		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB
+		db.map_attribute_definition_xhtml_showintitleentryDBs[v.ID] = v
+	case *Map_SPECIFICATION_Nodes_expandedEntryDB:
+		db.nextIDMap_SPECIFICATION_Nodes_expandedEntryDB++
+		v.ID = db.nextIDMap_SPECIFICATION_Nodes_expandedEntryDB
+		db.map_specification_nodes_expandedentryDBs[v.ID] = v
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:
+		db.nextIDMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB++
+		v.ID = db.nextIDMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB
+		db.map_spec_object_type_isnodeexpandedentryDBs[v.ID] = v
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:
+		db.nextIDMap_SPEC_OBJECT_TYPE_showIdentifierEntryDB++
+		v.ID = db.nextIDMap_SPEC_OBJECT_TYPE_showIdentifierEntryDB
+		db.map_spec_object_type_showidentifierentryDBs[v.ID] = v
+	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
+		db.nextIDMap_SPEC_OBJECT_TYPE_showNameEntryDB++
+		v.ID = db.nextIDMap_SPEC_OBJECT_TYPE_showNameEntryDB
+		db.map_spec_object_type_shownameentryDBs[v.ID] = v
 	case *RELATION_GROUPDB:
 		db.nextIDRELATION_GROUPDB++
 		v.ID = db.nextIDRELATION_GROUPDB
@@ -877,6 +1133,10 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDREQ_IF_TOOL_EXTENSIONDB++
 		v.ID = db.nextIDREQ_IF_TOOL_EXTENSIONDB
 		db.req_if_tool_extensionDBs[v.ID] = v
+	case *RenderingConfigurationDB:
+		db.nextIDRenderingConfigurationDB++
+		v.ID = db.nextIDRenderingConfigurationDB
+		db.renderingconfigurationDBs[v.ID] = v
 	case *SPECIFICATIONDB:
 		db.nextIDSPECIFICATIONDB++
 		v.ID = db.nextIDSPECIFICATIONDB
@@ -1097,6 +1357,56 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.embedded_valueDBs, v.ID)
 	case *ENUM_VALUEDB:
 		delete(db.enum_valueDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_boolean_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_boolean_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_boolean_showintitleentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_date_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_date_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_date_showintitleentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_enumeration_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_enumeration_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_enumeration_showintitleentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_integer_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_integer_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_integer_showintitleentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_real_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_real_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_real_showintitleentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_string_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_string_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_string_showintitleentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:
+		delete(db.map_attribute_definition_xhtml_showinsubjectentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:
+		delete(db.map_attribute_definition_xhtml_showintableentryDBs, v.ID)
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:
+		delete(db.map_attribute_definition_xhtml_showintitleentryDBs, v.ID)
+	case *Map_SPECIFICATION_Nodes_expandedEntryDB:
+		delete(db.map_specification_nodes_expandedentryDBs, v.ID)
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:
+		delete(db.map_spec_object_type_isnodeexpandedentryDBs, v.ID)
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:
+		delete(db.map_spec_object_type_showidentifierentryDBs, v.ID)
+	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
+		delete(db.map_spec_object_type_shownameentryDBs, v.ID)
 	case *RELATION_GROUPDB:
 		delete(db.relation_groupDBs, v.ID)
 	case *RELATION_GROUP_TYPEDB:
@@ -1109,6 +1419,8 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.req_if_headerDBs, v.ID)
 	case *REQ_IF_TOOL_EXTENSIONDB:
 		delete(db.req_if_tool_extensionDBs, v.ID)
+	case *RenderingConfigurationDB:
+		delete(db.renderingconfigurationDBs, v.ID)
 	case *SPECIFICATIONDB:
 		delete(db.specificationDBs, v.ID)
 	case *SPECIFICATION_TYPEDB:
@@ -1363,6 +1675,81 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 	case *ENUM_VALUEDB:
 		db.enum_valueDBs[v.ID] = v
 		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
+		db.map_attribute_definition_boolean_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
+		db.map_attribute_definition_boolean_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:
+		db.map_attribute_definition_boolean_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:
+		db.map_attribute_definition_date_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:
+		db.map_attribute_definition_date_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:
+		db.map_attribute_definition_date_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:
+		db.map_attribute_definition_enumeration_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:
+		db.map_attribute_definition_enumeration_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:
+		db.map_attribute_definition_enumeration_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:
+		db.map_attribute_definition_integer_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:
+		db.map_attribute_definition_integer_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:
+		db.map_attribute_definition_integer_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:
+		db.map_attribute_definition_real_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:
+		db.map_attribute_definition_real_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:
+		db.map_attribute_definition_real_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:
+		db.map_attribute_definition_string_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:
+		db.map_attribute_definition_string_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:
+		db.map_attribute_definition_string_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:
+		db.map_attribute_definition_xhtml_showinsubjectentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:
+		db.map_attribute_definition_xhtml_showintableentryDBs[v.ID] = v
+		return db, nil
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:
+		db.map_attribute_definition_xhtml_showintitleentryDBs[v.ID] = v
+		return db, nil
+	case *Map_SPECIFICATION_Nodes_expandedEntryDB:
+		db.map_specification_nodes_expandedentryDBs[v.ID] = v
+		return db, nil
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:
+		db.map_spec_object_type_isnodeexpandedentryDBs[v.ID] = v
+		return db, nil
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:
+		db.map_spec_object_type_showidentifierentryDBs[v.ID] = v
+		return db, nil
+	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
+		db.map_spec_object_type_shownameentryDBs[v.ID] = v
+		return db, nil
 	case *RELATION_GROUPDB:
 		db.relation_groupDBs[v.ID] = v
 		return db, nil
@@ -1380,6 +1767,9 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 		return db, nil
 	case *REQ_IF_TOOL_EXTENSIONDB:
 		db.req_if_tool_extensionDBs[v.ID] = v
+		return db, nil
+	case *RenderingConfigurationDB:
+		db.renderingconfigurationDBs[v.ID] = v
 		return db, nil
 	case *SPECIFICATIONDB:
 		db.specificationDBs[v.ID] = v
@@ -1856,6 +2246,156 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 		} else {
 			return nil, errors.New("db ENUM_VALUE github.com/fullstack-lang/gongreqif/go, record not found")
 		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_boolean_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_boolean_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_boolean_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_date_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_date_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_date_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_enumeration_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_enumeration_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_enumeration_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_integer_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_integer_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_integer_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_real_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_real_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_real_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_string_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_string_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_string_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:
+		if existing, ok := db.map_attribute_definition_xhtml_showinsubjectentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:
+		if existing, ok := db.map_attribute_definition_xhtml_showintableentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:
+		if existing, ok := db.map_attribute_definition_xhtml_showintitleentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_SPECIFICATION_Nodes_expandedEntryDB:
+		if existing, ok := db.map_specification_nodes_expandedentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_SPECIFICATION_Nodes_expandedEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:
+		if existing, ok := db.map_spec_object_type_isnodeexpandedentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:
+		if existing, ok := db.map_spec_object_type_showidentifierentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_SPEC_OBJECT_TYPE_showIdentifierEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
+		if existing, ok := db.map_spec_object_type_shownameentryDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Map_SPEC_OBJECT_TYPE_showNameEntry github.com/fullstack-lang/gongreqif/go, record not found")
+		}
 	case *RELATION_GROUPDB:
 		if existing, ok := db.relation_groupDBs[v.ID]; ok {
 			*existing = *v
@@ -1891,6 +2431,12 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 			*existing = *v
 		} else {
 			return nil, errors.New("db REQ_IF_TOOL_EXTENSION github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *RenderingConfigurationDB:
+		if existing, ok := db.renderingconfigurationDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db RenderingConfiguration github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *SPECIFICATIONDB:
 		if existing, ok := db.specificationDBs[v.ID]; ok {
@@ -2404,6 +2950,156 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_boolean_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_boolean_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB, 0, len(db.map_attribute_definition_boolean_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_boolean_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_boolean_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_boolean_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_date_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_date_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB, 0, len(db.map_attribute_definition_date_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_date_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_date_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_date_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_enumeration_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_enumeration_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB, 0, len(db.map_attribute_definition_enumeration_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_enumeration_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_enumeration_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_enumeration_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_integer_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_integer_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB, 0, len(db.map_attribute_definition_integer_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_integer_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_integer_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_integer_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_real_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_real_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB, 0, len(db.map_attribute_definition_real_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_real_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_real_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_real_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_string_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_string_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB, 0, len(db.map_attribute_definition_string_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_string_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_string_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_string_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB, 0, len(db.map_attribute_definition_xhtml_showinsubjectentryDBs))
+		for _, v := range db.map_attribute_definition_xhtml_showinsubjectentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB, 0, len(db.map_attribute_definition_xhtml_showintableentryDBs))
+		for _, v := range db.map_attribute_definition_xhtml_showintableentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:
+		*ptr = make([]Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB, 0, len(db.map_attribute_definition_xhtml_showintitleentryDBs))
+		for _, v := range db.map_attribute_definition_xhtml_showintitleentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_SPECIFICATION_Nodes_expandedEntryDB:
+		*ptr = make([]Map_SPECIFICATION_Nodes_expandedEntryDB, 0, len(db.map_specification_nodes_expandedentryDBs))
+		for _, v := range db.map_specification_nodes_expandedentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:
+		*ptr = make([]Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB, 0, len(db.map_spec_object_type_isnodeexpandedentryDBs))
+		for _, v := range db.map_spec_object_type_isnodeexpandedentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:
+		*ptr = make([]Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB, 0, len(db.map_spec_object_type_showidentifierentryDBs))
+		for _, v := range db.map_spec_object_type_showidentifierentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]Map_SPEC_OBJECT_TYPE_showNameEntryDB:
+		*ptr = make([]Map_SPEC_OBJECT_TYPE_showNameEntryDB, 0, len(db.map_spec_object_type_shownameentryDBs))
+		for _, v := range db.map_spec_object_type_shownameentryDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
 	case *[]RELATION_GROUPDB:
 		*ptr = make([]RELATION_GROUPDB, 0, len(db.relation_groupDBs))
 		for _, v := range db.relation_groupDBs {
@@ -2437,6 +3133,12 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 	case *[]REQ_IF_TOOL_EXTENSIONDB:
 		*ptr = make([]REQ_IF_TOOL_EXTENSIONDB, 0, len(db.req_if_tool_extensionDBs))
 		for _, v := range db.req_if_tool_extensionDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]RenderingConfigurationDB:
+		*ptr = make([]RenderingConfigurationDB, 0, len(db.renderingconfigurationDBs))
+		for _, v := range db.renderingconfigurationDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -3251,6 +3953,256 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 		enum_valueDB, _ := instanceDB.(*ENUM_VALUEDB)
 		*enum_valueDB = *tmp
 		
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_boolean_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_boolean_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB)
+		*map_attribute_definition_boolean_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_boolean_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_boolean_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB)
+		*map_attribute_definition_boolean_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_boolean_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_boolean_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB)
+		*map_attribute_definition_boolean_showintitleentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_date_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_date_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB)
+		*map_attribute_definition_date_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_date_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_date_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB)
+		*map_attribute_definition_date_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_date_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_date_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB)
+		*map_attribute_definition_date_showintitleentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_enumeration_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_enumeration_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB)
+		*map_attribute_definition_enumeration_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_enumeration_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_enumeration_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB)
+		*map_attribute_definition_enumeration_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_enumeration_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_enumeration_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB)
+		*map_attribute_definition_enumeration_showintitleentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_integer_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_integer_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB)
+		*map_attribute_definition_integer_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_integer_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_integer_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB)
+		*map_attribute_definition_integer_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_integer_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_integer_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB)
+		*map_attribute_definition_integer_showintitleentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_real_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_real_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB)
+		*map_attribute_definition_real_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_real_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_real_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB)
+		*map_attribute_definition_real_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_real_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_real_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB)
+		*map_attribute_definition_real_showintitleentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_string_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_string_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB)
+		*map_attribute_definition_string_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_string_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_string_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB)
+		*map_attribute_definition_string_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_string_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_string_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB)
+		*map_attribute_definition_string_showintitleentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:
+		tmp, ok := db.map_attribute_definition_xhtml_showinsubjectentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_xhtml_showinsubjectentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB)
+		*map_attribute_definition_xhtml_showinsubjectentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:
+		tmp, ok := db.map_attribute_definition_xhtml_showintableentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_xhtml_showintableentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB)
+		*map_attribute_definition_xhtml_showintableentryDB = *tmp
+		
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:
+		tmp, ok := db.map_attribute_definition_xhtml_showintitleentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry Unkown entry %d", i))
+		}
+
+		map_attribute_definition_xhtml_showintitleentryDB, _ := instanceDB.(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB)
+		*map_attribute_definition_xhtml_showintitleentryDB = *tmp
+		
+	case *Map_SPECIFICATION_Nodes_expandedEntryDB:
+		tmp, ok := db.map_specification_nodes_expandedentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_SPECIFICATION_Nodes_expandedEntry Unkown entry %d", i))
+		}
+
+		map_specification_nodes_expandedentryDB, _ := instanceDB.(*Map_SPECIFICATION_Nodes_expandedEntryDB)
+		*map_specification_nodes_expandedentryDB = *tmp
+		
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:
+		tmp, ok := db.map_spec_object_type_isnodeexpandedentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry Unkown entry %d", i))
+		}
+
+		map_spec_object_type_isnodeexpandedentryDB, _ := instanceDB.(*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB)
+		*map_spec_object_type_isnodeexpandedentryDB = *tmp
+		
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:
+		tmp, ok := db.map_spec_object_type_showidentifierentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_SPEC_OBJECT_TYPE_showIdentifierEntry Unkown entry %d", i))
+		}
+
+		map_spec_object_type_showidentifierentryDB, _ := instanceDB.(*Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB)
+		*map_spec_object_type_showidentifierentryDB = *tmp
+		
+	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
+		tmp, ok := db.map_spec_object_type_shownameentryDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Map_SPEC_OBJECT_TYPE_showNameEntry Unkown entry %d", i))
+		}
+
+		map_spec_object_type_shownameentryDB, _ := instanceDB.(*Map_SPEC_OBJECT_TYPE_showNameEntryDB)
+		*map_spec_object_type_shownameentryDB = *tmp
+		
 	case *RELATION_GROUPDB:
 		tmp, ok := db.relation_groupDBs[uint(i)]
 
@@ -3310,6 +4262,16 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 
 		req_if_tool_extensionDB, _ := instanceDB.(*REQ_IF_TOOL_EXTENSIONDB)
 		*req_if_tool_extensionDB = *tmp
+		
+	case *RenderingConfigurationDB:
+		tmp, ok := db.renderingconfigurationDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First RenderingConfiguration Unkown entry %d", i))
+		}
+
+		renderingconfigurationDB, _ := instanceDB.(*RenderingConfigurationDB)
+		*renderingconfigurationDB = *tmp
 		
 	case *SPECIFICATIONDB:
 		tmp, ok := db.specificationDBs[uint(i)]

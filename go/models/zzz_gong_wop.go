@@ -1118,6 +1118,356 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) CopyBasicFields(to *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_SPECIFICATION_Nodes_expandedEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_SPECIFICATION_Nodes_expandedEntry) CopyBasicFields(to *Map_SPECIFICATION_Nodes_expandedEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) CopyBasicFields(to *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_SPEC_OBJECT_TYPE_showIdentifierEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) CopyBasicFields(to *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
+type Map_SPEC_OBJECT_TYPE_showNameEntry_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_SPEC_OBJECT_TYPE_showNameEntry) CopyBasicFields(to *Map_SPEC_OBJECT_TYPE_showNameEntry) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
 type RELATION_GROUP_WOP struct {
 	// insertion point
 
@@ -1231,6 +1581,17 @@ type REQ_IF_TOOL_EXTENSION_WOP struct {
 }
 
 func (from *REQ_IF_TOOL_EXTENSION) CopyBasicFields(to *REQ_IF_TOOL_EXTENSION) {
+	// insertion point
+	to.Name = from.Name
+}
+
+type RenderingConfiguration_WOP struct {
+	// insertion point
+
+	Name string
+}
+
+func (from *RenderingConfiguration) CopyBasicFields(to *RenderingConfiguration) {
 	// insertion point
 	to.Name = from.Name
 }
