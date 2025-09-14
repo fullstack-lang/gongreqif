@@ -159,6 +159,56 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.EMBEDDED_VALUE](probe)
 	case *models.ENUM_VALUE:
 		updateAndCommitTable[models.ENUM_VALUE](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](probe)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](probe)
+	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
+		updateAndCommitTable[models.Map_SPECIFICATION_Nodes_expandedEntry](probe)
+	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](probe)
+	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](probe)
+	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
+		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](probe)
 	case *models.RELATION_GROUP:
 		updateAndCommitTable[models.RELATION_GROUP](probe)
 	case *models.RELATION_GROUP_TYPE:
@@ -171,6 +221,8 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.REQ_IF_HEADER](probe)
 	case *models.REQ_IF_TOOL_EXTENSION:
 		updateAndCommitTable[models.REQ_IF_TOOL_EXTENSION](probe)
+	case *models.RenderingConfiguration:
+		updateAndCommitTable[models.RenderingConfiguration](probe)
 	case *models.SPECIFICATION:
 		updateAndCommitTable[models.SPECIFICATION](probe)
 	case *models.SPECIFICATION_TYPE:

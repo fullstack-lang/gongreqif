@@ -79,7 +79,7 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 	name := file.Name()
 
 	if !strings.HasSuffix(name, ".go") {
-		log.Fatalln(name + " is not a go filename")
+		log.Println(name + " is not a go filename")
 	}
 
 	log.Printf("Marshalling %s", name)
@@ -3654,6 +3654,1181 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
+	map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_boolean_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry{}
+	for map_attribute_definition_boolean_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys {
+		map_attribute_definition_boolean_showinsubjectentryOrdered = append(map_attribute_definition_boolean_showinsubjectentryOrdered, map_attribute_definition_boolean_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_boolean_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_boolean_showinsubjectentryi := map_attribute_definition_boolean_showinsubjectentryOrdered[i]
+		map_attribute_definition_boolean_showinsubjectentryj := map_attribute_definition_boolean_showinsubjectentryOrdered[j]
+		map_attribute_definition_boolean_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_boolean_showinsubjectentryi]
+		map_attribute_definition_boolean_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_boolean_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_boolean_showinsubjectentryi_order < map_attribute_definition_boolean_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_boolean_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_boolean_showinsubjectentry := range map_attribute_definition_boolean_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry", idx, map_attribute_definition_boolean_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers[map_attribute_definition_boolean_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_boolean_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_boolean_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_boolean_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_boolean_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry{}
+	for map_attribute_definition_boolean_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys {
+		map_attribute_definition_boolean_showintableentryOrdered = append(map_attribute_definition_boolean_showintableentryOrdered, map_attribute_definition_boolean_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_boolean_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_boolean_showintableentryi := map_attribute_definition_boolean_showintableentryOrdered[i]
+		map_attribute_definition_boolean_showintableentryj := map_attribute_definition_boolean_showintableentryOrdered[j]
+		map_attribute_definition_boolean_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order[map_attribute_definition_boolean_showintableentryi]
+		map_attribute_definition_boolean_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order[map_attribute_definition_boolean_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_boolean_showintableentryi_order < map_attribute_definition_boolean_showintableentryj_order
+	})
+	if len(map_attribute_definition_boolean_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_boolean_showintableentry := range map_attribute_definition_boolean_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry", idx, map_attribute_definition_boolean_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry_Identifiers[map_attribute_definition_boolean_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_boolean_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_boolean_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_boolean_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_boolean_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry{}
+	for map_attribute_definition_boolean_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys {
+		map_attribute_definition_boolean_showintitleentryOrdered = append(map_attribute_definition_boolean_showintitleentryOrdered, map_attribute_definition_boolean_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_boolean_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_boolean_showintitleentryi := map_attribute_definition_boolean_showintitleentryOrdered[i]
+		map_attribute_definition_boolean_showintitleentryj := map_attribute_definition_boolean_showintitleentryOrdered[j]
+		map_attribute_definition_boolean_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_boolean_showintitleentryi]
+		map_attribute_definition_boolean_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_boolean_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_boolean_showintitleentryi_order < map_attribute_definition_boolean_showintitleentryj_order
+	})
+	if len(map_attribute_definition_boolean_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_boolean_showintitleentry := range map_attribute_definition_boolean_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry", idx, map_attribute_definition_boolean_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry_Identifiers[map_attribute_definition_boolean_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_boolean_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_boolean_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_boolean_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_date_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry{}
+	for map_attribute_definition_date_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys {
+		map_attribute_definition_date_showinsubjectentryOrdered = append(map_attribute_definition_date_showinsubjectentryOrdered, map_attribute_definition_date_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_date_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_date_showinsubjectentryi := map_attribute_definition_date_showinsubjectentryOrdered[i]
+		map_attribute_definition_date_showinsubjectentryj := map_attribute_definition_date_showinsubjectentryOrdered[j]
+		map_attribute_definition_date_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_date_showinsubjectentryi]
+		map_attribute_definition_date_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_date_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_date_showinsubjectentryi_order < map_attribute_definition_date_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_date_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_date_showinsubjectentry := range map_attribute_definition_date_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry", idx, map_attribute_definition_date_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry_Identifiers[map_attribute_definition_date_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_date_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_date_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_date_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_date_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry{}
+	for map_attribute_definition_date_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys {
+		map_attribute_definition_date_showintableentryOrdered = append(map_attribute_definition_date_showintableentryOrdered, map_attribute_definition_date_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_date_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_date_showintableentryi := map_attribute_definition_date_showintableentryOrdered[i]
+		map_attribute_definition_date_showintableentryj := map_attribute_definition_date_showintableentryOrdered[j]
+		map_attribute_definition_date_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryMap_Staged_Order[map_attribute_definition_date_showintableentryi]
+		map_attribute_definition_date_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryMap_Staged_Order[map_attribute_definition_date_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_date_showintableentryi_order < map_attribute_definition_date_showintableentryj_order
+	})
+	if len(map_attribute_definition_date_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_date_showintableentry := range map_attribute_definition_date_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry", idx, map_attribute_definition_date_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry_Identifiers[map_attribute_definition_date_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_date_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_date_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_date_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_date_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry{}
+	for map_attribute_definition_date_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys {
+		map_attribute_definition_date_showintitleentryOrdered = append(map_attribute_definition_date_showintitleentryOrdered, map_attribute_definition_date_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_date_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_date_showintitleentryi := map_attribute_definition_date_showintitleentryOrdered[i]
+		map_attribute_definition_date_showintitleentryj := map_attribute_definition_date_showintitleentryOrdered[j]
+		map_attribute_definition_date_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_date_showintitleentryi]
+		map_attribute_definition_date_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_date_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_date_showintitleentryi_order < map_attribute_definition_date_showintitleentryj_order
+	})
+	if len(map_attribute_definition_date_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_date_showintitleentry := range map_attribute_definition_date_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry", idx, map_attribute_definition_date_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry_Identifiers[map_attribute_definition_date_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_date_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_date_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_date_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_enumeration_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry{}
+	for map_attribute_definition_enumeration_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys {
+		map_attribute_definition_enumeration_showinsubjectentryOrdered = append(map_attribute_definition_enumeration_showinsubjectentryOrdered, map_attribute_definition_enumeration_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_enumeration_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_enumeration_showinsubjectentryi := map_attribute_definition_enumeration_showinsubjectentryOrdered[i]
+		map_attribute_definition_enumeration_showinsubjectentryj := map_attribute_definition_enumeration_showinsubjectentryOrdered[j]
+		map_attribute_definition_enumeration_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_enumeration_showinsubjectentryi]
+		map_attribute_definition_enumeration_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_enumeration_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_enumeration_showinsubjectentryi_order < map_attribute_definition_enumeration_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_enumeration_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_enumeration_showinsubjectentry := range map_attribute_definition_enumeration_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry", idx, map_attribute_definition_enumeration_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry_Identifiers[map_attribute_definition_enumeration_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_enumeration_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_enumeration_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_enumeration_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_enumeration_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry{}
+	for map_attribute_definition_enumeration_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys {
+		map_attribute_definition_enumeration_showintableentryOrdered = append(map_attribute_definition_enumeration_showintableentryOrdered, map_attribute_definition_enumeration_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_enumeration_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_enumeration_showintableentryi := map_attribute_definition_enumeration_showintableentryOrdered[i]
+		map_attribute_definition_enumeration_showintableentryj := map_attribute_definition_enumeration_showintableentryOrdered[j]
+		map_attribute_definition_enumeration_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryMap_Staged_Order[map_attribute_definition_enumeration_showintableentryi]
+		map_attribute_definition_enumeration_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryMap_Staged_Order[map_attribute_definition_enumeration_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_enumeration_showintableentryi_order < map_attribute_definition_enumeration_showintableentryj_order
+	})
+	if len(map_attribute_definition_enumeration_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_enumeration_showintableentry := range map_attribute_definition_enumeration_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry", idx, map_attribute_definition_enumeration_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry_Identifiers[map_attribute_definition_enumeration_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_enumeration_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_enumeration_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_enumeration_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_enumeration_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry{}
+	for map_attribute_definition_enumeration_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys {
+		map_attribute_definition_enumeration_showintitleentryOrdered = append(map_attribute_definition_enumeration_showintitleentryOrdered, map_attribute_definition_enumeration_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_enumeration_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_enumeration_showintitleentryi := map_attribute_definition_enumeration_showintitleentryOrdered[i]
+		map_attribute_definition_enumeration_showintitleentryj := map_attribute_definition_enumeration_showintitleentryOrdered[j]
+		map_attribute_definition_enumeration_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_enumeration_showintitleentryi]
+		map_attribute_definition_enumeration_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_enumeration_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_enumeration_showintitleentryi_order < map_attribute_definition_enumeration_showintitleentryj_order
+	})
+	if len(map_attribute_definition_enumeration_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_enumeration_showintitleentry := range map_attribute_definition_enumeration_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry", idx, map_attribute_definition_enumeration_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry_Identifiers[map_attribute_definition_enumeration_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_enumeration_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_enumeration_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_enumeration_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_integer_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry{}
+	for map_attribute_definition_integer_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys {
+		map_attribute_definition_integer_showinsubjectentryOrdered = append(map_attribute_definition_integer_showinsubjectentryOrdered, map_attribute_definition_integer_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_integer_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_integer_showinsubjectentryi := map_attribute_definition_integer_showinsubjectentryOrdered[i]
+		map_attribute_definition_integer_showinsubjectentryj := map_attribute_definition_integer_showinsubjectentryOrdered[j]
+		map_attribute_definition_integer_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_integer_showinsubjectentryi]
+		map_attribute_definition_integer_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_integer_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_integer_showinsubjectentryi_order < map_attribute_definition_integer_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_integer_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_integer_showinsubjectentry := range map_attribute_definition_integer_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry", idx, map_attribute_definition_integer_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry_Identifiers[map_attribute_definition_integer_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_integer_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_integer_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_integer_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_integer_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry{}
+	for map_attribute_definition_integer_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys {
+		map_attribute_definition_integer_showintableentryOrdered = append(map_attribute_definition_integer_showintableentryOrdered, map_attribute_definition_integer_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_integer_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_integer_showintableentryi := map_attribute_definition_integer_showintableentryOrdered[i]
+		map_attribute_definition_integer_showintableentryj := map_attribute_definition_integer_showintableentryOrdered[j]
+		map_attribute_definition_integer_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryMap_Staged_Order[map_attribute_definition_integer_showintableentryi]
+		map_attribute_definition_integer_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryMap_Staged_Order[map_attribute_definition_integer_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_integer_showintableentryi_order < map_attribute_definition_integer_showintableentryj_order
+	})
+	if len(map_attribute_definition_integer_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_integer_showintableentry := range map_attribute_definition_integer_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry", idx, map_attribute_definition_integer_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry_Identifiers[map_attribute_definition_integer_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_integer_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_integer_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_integer_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_integer_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry{}
+	for map_attribute_definition_integer_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys {
+		map_attribute_definition_integer_showintitleentryOrdered = append(map_attribute_definition_integer_showintitleentryOrdered, map_attribute_definition_integer_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_integer_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_integer_showintitleentryi := map_attribute_definition_integer_showintitleentryOrdered[i]
+		map_attribute_definition_integer_showintitleentryj := map_attribute_definition_integer_showintitleentryOrdered[j]
+		map_attribute_definition_integer_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_integer_showintitleentryi]
+		map_attribute_definition_integer_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_integer_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_integer_showintitleentryi_order < map_attribute_definition_integer_showintitleentryj_order
+	})
+	if len(map_attribute_definition_integer_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_integer_showintitleentry := range map_attribute_definition_integer_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry", idx, map_attribute_definition_integer_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry_Identifiers[map_attribute_definition_integer_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_integer_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_integer_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_integer_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_real_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry{}
+	for map_attribute_definition_real_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys {
+		map_attribute_definition_real_showinsubjectentryOrdered = append(map_attribute_definition_real_showinsubjectentryOrdered, map_attribute_definition_real_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_real_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_real_showinsubjectentryi := map_attribute_definition_real_showinsubjectentryOrdered[i]
+		map_attribute_definition_real_showinsubjectentryj := map_attribute_definition_real_showinsubjectentryOrdered[j]
+		map_attribute_definition_real_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_real_showinsubjectentryi]
+		map_attribute_definition_real_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_real_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_real_showinsubjectentryi_order < map_attribute_definition_real_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_real_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_real_showinsubjectentry := range map_attribute_definition_real_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry", idx, map_attribute_definition_real_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry_Identifiers[map_attribute_definition_real_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_real_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_real_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_real_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_real_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry{}
+	for map_attribute_definition_real_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys {
+		map_attribute_definition_real_showintableentryOrdered = append(map_attribute_definition_real_showintableentryOrdered, map_attribute_definition_real_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_real_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_real_showintableentryi := map_attribute_definition_real_showintableentryOrdered[i]
+		map_attribute_definition_real_showintableentryj := map_attribute_definition_real_showintableentryOrdered[j]
+		map_attribute_definition_real_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryMap_Staged_Order[map_attribute_definition_real_showintableentryi]
+		map_attribute_definition_real_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryMap_Staged_Order[map_attribute_definition_real_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_real_showintableentryi_order < map_attribute_definition_real_showintableentryj_order
+	})
+	if len(map_attribute_definition_real_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_real_showintableentry := range map_attribute_definition_real_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry", idx, map_attribute_definition_real_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry_Identifiers[map_attribute_definition_real_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_real_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_real_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_real_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_real_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry{}
+	for map_attribute_definition_real_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys {
+		map_attribute_definition_real_showintitleentryOrdered = append(map_attribute_definition_real_showintitleentryOrdered, map_attribute_definition_real_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_real_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_real_showintitleentryi := map_attribute_definition_real_showintitleentryOrdered[i]
+		map_attribute_definition_real_showintitleentryj := map_attribute_definition_real_showintitleentryOrdered[j]
+		map_attribute_definition_real_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_real_showintitleentryi]
+		map_attribute_definition_real_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_real_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_real_showintitleentryi_order < map_attribute_definition_real_showintitleentryj_order
+	})
+	if len(map_attribute_definition_real_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_real_showintitleentry := range map_attribute_definition_real_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry", idx, map_attribute_definition_real_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry_Identifiers[map_attribute_definition_real_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_real_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_real_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_real_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_string_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}
+	for map_attribute_definition_string_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys {
+		map_attribute_definition_string_showinsubjectentryOrdered = append(map_attribute_definition_string_showinsubjectentryOrdered, map_attribute_definition_string_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_string_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_string_showinsubjectentryi := map_attribute_definition_string_showinsubjectentryOrdered[i]
+		map_attribute_definition_string_showinsubjectentryj := map_attribute_definition_string_showinsubjectentryOrdered[j]
+		map_attribute_definition_string_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_string_showinsubjectentryi]
+		map_attribute_definition_string_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_string_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_string_showinsubjectentryi_order < map_attribute_definition_string_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_string_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_string_showinsubjectentry := range map_attribute_definition_string_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry", idx, map_attribute_definition_string_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry_Identifiers[map_attribute_definition_string_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_string_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_string_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_string_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_string_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}
+	for map_attribute_definition_string_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys {
+		map_attribute_definition_string_showintableentryOrdered = append(map_attribute_definition_string_showintableentryOrdered, map_attribute_definition_string_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_string_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_string_showintableentryi := map_attribute_definition_string_showintableentryOrdered[i]
+		map_attribute_definition_string_showintableentryj := map_attribute_definition_string_showintableentryOrdered[j]
+		map_attribute_definition_string_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryMap_Staged_Order[map_attribute_definition_string_showintableentryi]
+		map_attribute_definition_string_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryMap_Staged_Order[map_attribute_definition_string_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_string_showintableentryi_order < map_attribute_definition_string_showintableentryj_order
+	})
+	if len(map_attribute_definition_string_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_string_showintableentry := range map_attribute_definition_string_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry", idx, map_attribute_definition_string_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry_Identifiers[map_attribute_definition_string_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_string_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_string_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_string_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_string_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}
+	for map_attribute_definition_string_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys {
+		map_attribute_definition_string_showintitleentryOrdered = append(map_attribute_definition_string_showintitleentryOrdered, map_attribute_definition_string_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_string_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_string_showintitleentryi := map_attribute_definition_string_showintitleentryOrdered[i]
+		map_attribute_definition_string_showintitleentryj := map_attribute_definition_string_showintitleentryOrdered[j]
+		map_attribute_definition_string_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_string_showintitleentryi]
+		map_attribute_definition_string_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_string_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_string_showintitleentryi_order < map_attribute_definition_string_showintitleentryj_order
+	})
+	if len(map_attribute_definition_string_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_string_showintitleentry := range map_attribute_definition_string_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry", idx, map_attribute_definition_string_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry_Identifiers[map_attribute_definition_string_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_string_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_string_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_string_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry_Identifiers
+
+	map_attribute_definition_xhtml_showinsubjectentryOrdered := []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry{}
+	for map_attribute_definition_xhtml_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys {
+		map_attribute_definition_xhtml_showinsubjectentryOrdered = append(map_attribute_definition_xhtml_showinsubjectentryOrdered, map_attribute_definition_xhtml_showinsubjectentry)
+	}
+	sort.Slice(map_attribute_definition_xhtml_showinsubjectentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_xhtml_showinsubjectentryi := map_attribute_definition_xhtml_showinsubjectentryOrdered[i]
+		map_attribute_definition_xhtml_showinsubjectentryj := map_attribute_definition_xhtml_showinsubjectentryOrdered[j]
+		map_attribute_definition_xhtml_showinsubjectentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_xhtml_showinsubjectentryi]
+		map_attribute_definition_xhtml_showinsubjectentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_xhtml_showinsubjectentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_xhtml_showinsubjectentryi_order < map_attribute_definition_xhtml_showinsubjectentryj_order
+	})
+	if len(map_attribute_definition_xhtml_showinsubjectentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_xhtml_showinsubjectentry := range map_attribute_definition_xhtml_showinsubjectentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry", idx, map_attribute_definition_xhtml_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry_Identifiers[map_attribute_definition_xhtml_showinsubjectentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_xhtml_showinsubjectentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_xhtml_showinsubjectentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_xhtml_showinsubjectentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry_Identifiers
+
+	map_attribute_definition_xhtml_showintableentryOrdered := []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry{}
+	for map_attribute_definition_xhtml_showintableentry := range stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys {
+		map_attribute_definition_xhtml_showintableentryOrdered = append(map_attribute_definition_xhtml_showintableentryOrdered, map_attribute_definition_xhtml_showintableentry)
+	}
+	sort.Slice(map_attribute_definition_xhtml_showintableentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_xhtml_showintableentryi := map_attribute_definition_xhtml_showintableentryOrdered[i]
+		map_attribute_definition_xhtml_showintableentryj := map_attribute_definition_xhtml_showintableentryOrdered[j]
+		map_attribute_definition_xhtml_showintableentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryMap_Staged_Order[map_attribute_definition_xhtml_showintableentryi]
+		map_attribute_definition_xhtml_showintableentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryMap_Staged_Order[map_attribute_definition_xhtml_showintableentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_xhtml_showintableentryi_order < map_attribute_definition_xhtml_showintableentryj_order
+	})
+	if len(map_attribute_definition_xhtml_showintableentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_xhtml_showintableentry := range map_attribute_definition_xhtml_showintableentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry", idx, map_attribute_definition_xhtml_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry_Identifiers[map_attribute_definition_xhtml_showintableentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_xhtml_showintableentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_xhtml_showintableentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_xhtml_showintableentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]string)
+	_ = map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry_Identifiers
+
+	map_attribute_definition_xhtml_showintitleentryOrdered := []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry{}
+	for map_attribute_definition_xhtml_showintitleentry := range stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys {
+		map_attribute_definition_xhtml_showintitleentryOrdered = append(map_attribute_definition_xhtml_showintitleentryOrdered, map_attribute_definition_xhtml_showintitleentry)
+	}
+	sort.Slice(map_attribute_definition_xhtml_showintitleentryOrdered[:], func(i, j int) bool {
+		map_attribute_definition_xhtml_showintitleentryi := map_attribute_definition_xhtml_showintitleentryOrdered[i]
+		map_attribute_definition_xhtml_showintitleentryj := map_attribute_definition_xhtml_showintitleentryOrdered[j]
+		map_attribute_definition_xhtml_showintitleentryi_order, oki := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_xhtml_showintitleentryi]
+		map_attribute_definition_xhtml_showintitleentryj_order, okj := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_xhtml_showintitleentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_attribute_definition_xhtml_showintitleentryi_order < map_attribute_definition_xhtml_showintitleentryj_order
+	})
+	if len(map_attribute_definition_xhtml_showintitleentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_attribute_definition_xhtml_showintitleentry := range map_attribute_definition_xhtml_showintitleentryOrdered {
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry", idx, map_attribute_definition_xhtml_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry_Identifiers[map_attribute_definition_xhtml_showintitleentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_attribute_definition_xhtml_showintitleentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_attribute_definition_xhtml_showintitleentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_attribute_definition_xhtml_showintitleentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_SPECIFICATION_Nodes_expandedEntry_Identifiers := make(map[*Map_SPECIFICATION_Nodes_expandedEntry]string)
+	_ = map_Map_SPECIFICATION_Nodes_expandedEntry_Identifiers
+
+	map_specification_nodes_expandedentryOrdered := []*Map_SPECIFICATION_Nodes_expandedEntry{}
+	for map_specification_nodes_expandedentry := range stage.Map_SPECIFICATION_Nodes_expandedEntrys {
+		map_specification_nodes_expandedentryOrdered = append(map_specification_nodes_expandedentryOrdered, map_specification_nodes_expandedentry)
+	}
+	sort.Slice(map_specification_nodes_expandedentryOrdered[:], func(i, j int) bool {
+		map_specification_nodes_expandedentryi := map_specification_nodes_expandedentryOrdered[i]
+		map_specification_nodes_expandedentryj := map_specification_nodes_expandedentryOrdered[j]
+		map_specification_nodes_expandedentryi_order, oki := stage.Map_SPECIFICATION_Nodes_expandedEntryMap_Staged_Order[map_specification_nodes_expandedentryi]
+		map_specification_nodes_expandedentryj_order, okj := stage.Map_SPECIFICATION_Nodes_expandedEntryMap_Staged_Order[map_specification_nodes_expandedentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_specification_nodes_expandedentryi_order < map_specification_nodes_expandedentryj_order
+	})
+	if len(map_specification_nodes_expandedentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_specification_nodes_expandedentry := range map_specification_nodes_expandedentryOrdered {
+
+		id = generatesIdentifier("Map_SPECIFICATION_Nodes_expandedEntry", idx, map_specification_nodes_expandedentry.Name)
+		map_Map_SPECIFICATION_Nodes_expandedEntry_Identifiers[map_specification_nodes_expandedentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_SPECIFICATION_Nodes_expandedEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_specification_nodes_expandedentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_specification_nodes_expandedentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_specification_nodes_expandedentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry_Identifiers := make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]string)
+	_ = map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry_Identifiers
+
+	map_spec_object_type_isnodeexpandedentryOrdered := []*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry{}
+	for map_spec_object_type_isnodeexpandedentry := range stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys {
+		map_spec_object_type_isnodeexpandedentryOrdered = append(map_spec_object_type_isnodeexpandedentryOrdered, map_spec_object_type_isnodeexpandedentry)
+	}
+	sort.Slice(map_spec_object_type_isnodeexpandedentryOrdered[:], func(i, j int) bool {
+		map_spec_object_type_isnodeexpandedentryi := map_spec_object_type_isnodeexpandedentryOrdered[i]
+		map_spec_object_type_isnodeexpandedentryj := map_spec_object_type_isnodeexpandedentryOrdered[j]
+		map_spec_object_type_isnodeexpandedentryi_order, oki := stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryMap_Staged_Order[map_spec_object_type_isnodeexpandedentryi]
+		map_spec_object_type_isnodeexpandedentryj_order, okj := stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryMap_Staged_Order[map_spec_object_type_isnodeexpandedentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_spec_object_type_isnodeexpandedentryi_order < map_spec_object_type_isnodeexpandedentryj_order
+	})
+	if len(map_spec_object_type_isnodeexpandedentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_spec_object_type_isnodeexpandedentry := range map_spec_object_type_isnodeexpandedentryOrdered {
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry", idx, map_spec_object_type_isnodeexpandedentry.Name)
+		map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry_Identifiers[map_spec_object_type_isnodeexpandedentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_spec_object_type_isnodeexpandedentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_spec_object_type_isnodeexpandedentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_spec_object_type_isnodeexpandedentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry_Identifiers := make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]string)
+	_ = map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry_Identifiers
+
+	map_spec_object_type_showidentifierentryOrdered := []*Map_SPEC_OBJECT_TYPE_showIdentifierEntry{}
+	for map_spec_object_type_showidentifierentry := range stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys {
+		map_spec_object_type_showidentifierentryOrdered = append(map_spec_object_type_showidentifierentryOrdered, map_spec_object_type_showidentifierentry)
+	}
+	sort.Slice(map_spec_object_type_showidentifierentryOrdered[:], func(i, j int) bool {
+		map_spec_object_type_showidentifierentryi := map_spec_object_type_showidentifierentryOrdered[i]
+		map_spec_object_type_showidentifierentryj := map_spec_object_type_showidentifierentryOrdered[j]
+		map_spec_object_type_showidentifierentryi_order, oki := stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[map_spec_object_type_showidentifierentryi]
+		map_spec_object_type_showidentifierentryj_order, okj := stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[map_spec_object_type_showidentifierentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_spec_object_type_showidentifierentryi_order < map_spec_object_type_showidentifierentryj_order
+	})
+	if len(map_spec_object_type_showidentifierentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_spec_object_type_showidentifierentry := range map_spec_object_type_showidentifierentryOrdered {
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showIdentifierEntry", idx, map_spec_object_type_showidentifierentry.Name)
+		map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry_Identifiers[map_spec_object_type_showidentifierentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_SPEC_OBJECT_TYPE_showIdentifierEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_spec_object_type_showidentifierentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_spec_object_type_showidentifierentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_spec_object_type_showidentifierentry.Value))
+		initializerStatements += setValueField
+
+	}
+
+	map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers := make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]string)
+	_ = map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers
+
+	map_spec_object_type_shownameentryOrdered := []*Map_SPEC_OBJECT_TYPE_showNameEntry{}
+	for map_spec_object_type_shownameentry := range stage.Map_SPEC_OBJECT_TYPE_showNameEntrys {
+		map_spec_object_type_shownameentryOrdered = append(map_spec_object_type_shownameentryOrdered, map_spec_object_type_shownameentry)
+	}
+	sort.Slice(map_spec_object_type_shownameentryOrdered[:], func(i, j int) bool {
+		map_spec_object_type_shownameentryi := map_spec_object_type_shownameentryOrdered[i]
+		map_spec_object_type_shownameentryj := map_spec_object_type_shownameentryOrdered[j]
+		map_spec_object_type_shownameentryi_order, oki := stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[map_spec_object_type_shownameentryi]
+		map_spec_object_type_shownameentryj_order, okj := stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[map_spec_object_type_shownameentryj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_spec_object_type_shownameentryi_order < map_spec_object_type_shownameentryj_order
+	})
+	if len(map_spec_object_type_shownameentryOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_spec_object_type_shownameentry := range map_spec_object_type_shownameentryOrdered {
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showNameEntry", idx, map_spec_object_type_shownameentry.Name)
+		map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers[map_spec_object_type_shownameentry] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_SPEC_OBJECT_TYPE_showNameEntry")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_spec_object_type_shownameentry.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_spec_object_type_shownameentry.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_spec_object_type_shownameentry.Value))
+		initializerStatements += setValueField
+
+	}
+
 	map_RELATION_GROUP_Identifiers := make(map[*RELATION_GROUP]string)
 	_ = map_RELATION_GROUP_Identifiers
 
@@ -3998,6 +5173,47 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_tool_extension.Name))
+		initializerStatements += setValueField
+
+	}
+
+	map_RenderingConfiguration_Identifiers := make(map[*RenderingConfiguration]string)
+	_ = map_RenderingConfiguration_Identifiers
+
+	renderingconfigurationOrdered := []*RenderingConfiguration{}
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		renderingconfigurationOrdered = append(renderingconfigurationOrdered, renderingconfiguration)
+	}
+	sort.Slice(renderingconfigurationOrdered[:], func(i, j int) bool {
+		renderingconfigurationi := renderingconfigurationOrdered[i]
+		renderingconfigurationj := renderingconfigurationOrdered[j]
+		renderingconfigurationi_order, oki := stage.RenderingConfigurationMap_Staged_Order[renderingconfigurationi]
+		renderingconfigurationj_order, okj := stage.RenderingConfigurationMap_Staged_Order[renderingconfigurationj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return renderingconfigurationi_order < renderingconfigurationj_order
+	})
+	if len(renderingconfigurationOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, renderingconfiguration := range renderingconfigurationOrdered {
+
+		id = generatesIdentifier("RenderingConfiguration", idx, renderingconfiguration.Name)
+		map_RenderingConfiguration_Identifiers[renderingconfiguration] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "RenderingConfiguration")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", renderingconfiguration.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(renderingconfiguration.Name))
 		initializerStatements += setValueField
 
 	}
@@ -6382,6 +7598,331 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
+	if len(map_attribute_definition_boolean_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_boolean_showinsubjectentry := range map_attribute_definition_boolean_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry", idx, map_attribute_definition_boolean_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers[map_attribute_definition_boolean_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_boolean_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_boolean_showintableentry := range map_attribute_definition_boolean_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry", idx, map_attribute_definition_boolean_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry_Identifiers[map_attribute_definition_boolean_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_boolean_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_boolean_showintitleentry := range map_attribute_definition_boolean_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry", idx, map_attribute_definition_boolean_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry_Identifiers[map_attribute_definition_boolean_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_date_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_date_showinsubjectentry := range map_attribute_definition_date_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry", idx, map_attribute_definition_date_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry_Identifiers[map_attribute_definition_date_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_date_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_date_showintableentry := range map_attribute_definition_date_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry", idx, map_attribute_definition_date_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry_Identifiers[map_attribute_definition_date_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_date_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_date_showintitleentry := range map_attribute_definition_date_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry", idx, map_attribute_definition_date_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry_Identifiers[map_attribute_definition_date_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_enumeration_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_enumeration_showinsubjectentry := range map_attribute_definition_enumeration_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry", idx, map_attribute_definition_enumeration_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry_Identifiers[map_attribute_definition_enumeration_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_enumeration_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_enumeration_showintableentry := range map_attribute_definition_enumeration_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry", idx, map_attribute_definition_enumeration_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry_Identifiers[map_attribute_definition_enumeration_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_enumeration_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_enumeration_showintitleentry := range map_attribute_definition_enumeration_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry", idx, map_attribute_definition_enumeration_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry_Identifiers[map_attribute_definition_enumeration_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_integer_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_integer_showinsubjectentry := range map_attribute_definition_integer_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry", idx, map_attribute_definition_integer_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry_Identifiers[map_attribute_definition_integer_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_integer_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_integer_showintableentry := range map_attribute_definition_integer_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry", idx, map_attribute_definition_integer_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry_Identifiers[map_attribute_definition_integer_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_integer_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_integer_showintitleentry := range map_attribute_definition_integer_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry", idx, map_attribute_definition_integer_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry_Identifiers[map_attribute_definition_integer_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_real_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_real_showinsubjectentry := range map_attribute_definition_real_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry", idx, map_attribute_definition_real_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry_Identifiers[map_attribute_definition_real_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_real_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_real_showintableentry := range map_attribute_definition_real_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry", idx, map_attribute_definition_real_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry_Identifiers[map_attribute_definition_real_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_real_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_real_showintitleentry := range map_attribute_definition_real_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry", idx, map_attribute_definition_real_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry_Identifiers[map_attribute_definition_real_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_string_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_string_showinsubjectentry := range map_attribute_definition_string_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry", idx, map_attribute_definition_string_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry_Identifiers[map_attribute_definition_string_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_string_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_string_showintableentry := range map_attribute_definition_string_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry", idx, map_attribute_definition_string_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry_Identifiers[map_attribute_definition_string_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_string_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_string_showintitleentry := range map_attribute_definition_string_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry", idx, map_attribute_definition_string_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry_Identifiers[map_attribute_definition_string_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_xhtml_showinsubjectentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry instances pointers"
+	}
+	for idx, map_attribute_definition_xhtml_showinsubjectentry := range map_attribute_definition_xhtml_showinsubjectentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry", idx, map_attribute_definition_xhtml_showinsubjectentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry_Identifiers[map_attribute_definition_xhtml_showinsubjectentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_xhtml_showintableentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry instances pointers"
+	}
+	for idx, map_attribute_definition_xhtml_showintableentry := range map_attribute_definition_xhtml_showintableentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry", idx, map_attribute_definition_xhtml_showintableentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry_Identifiers[map_attribute_definition_xhtml_showintableentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_attribute_definition_xhtml_showintitleentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry instances pointers"
+	}
+	for idx, map_attribute_definition_xhtml_showintitleentry := range map_attribute_definition_xhtml_showintitleentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry", idx, map_attribute_definition_xhtml_showintitleentry.Name)
+		map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry_Identifiers[map_attribute_definition_xhtml_showintitleentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_specification_nodes_expandedentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_SPECIFICATION_Nodes_expandedEntry instances pointers"
+	}
+	for idx, map_specification_nodes_expandedentry := range map_specification_nodes_expandedentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_SPECIFICATION_Nodes_expandedEntry", idx, map_specification_nodes_expandedentry.Name)
+		map_Map_SPECIFICATION_Nodes_expandedEntry_Identifiers[map_specification_nodes_expandedentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_spec_object_type_isnodeexpandedentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry instances pointers"
+	}
+	for idx, map_spec_object_type_isnodeexpandedentry := range map_spec_object_type_isnodeexpandedentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry", idx, map_spec_object_type_isnodeexpandedentry.Name)
+		map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry_Identifiers[map_spec_object_type_isnodeexpandedentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_spec_object_type_showidentifierentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_SPEC_OBJECT_TYPE_showIdentifierEntry instances pointers"
+	}
+	for idx, map_spec_object_type_showidentifierentry := range map_spec_object_type_showidentifierentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showIdentifierEntry", idx, map_spec_object_type_showidentifierentry.Name)
+		map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry_Identifiers[map_spec_object_type_showidentifierentry] = id
+
+		// Initialisation of values
+	}
+
+	if len(map_spec_object_type_shownameentryOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_SPEC_OBJECT_TYPE_showNameEntry instances pointers"
+	}
+	for idx, map_spec_object_type_shownameentry := range map_spec_object_type_shownameentryOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showNameEntry", idx, map_spec_object_type_shownameentry.Name)
+		map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers[map_spec_object_type_shownameentry] = id
+
+		// Initialisation of values
+	}
+
 	if len(relation_groupOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP instances pointers"
 	}
@@ -6586,6 +8127,219 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 		map_REQ_IF_TOOL_EXTENSION_Identifiers[req_if_tool_extension] = id
 
 		// Initialisation of values
+	}
+
+	if len(renderingconfigurationOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of RenderingConfiguration instances pointers"
+	}
+	for idx, renderingconfiguration := range renderingconfigurationOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("RenderingConfiguration", idx, renderingconfiguration.Name)
+		map_RenderingConfiguration_Identifiers[renderingconfiguration] = id
+
+		// Initialisation of values
+		for _, _map_spec_object_type_isnodeexpandedentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry_Identifiers[_map_spec_object_type_isnodeexpandedentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_xhtml_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry_Identifiers[_map_attribute_definition_xhtml_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_string_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry_Identifiers[_map_attribute_definition_string_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_boolean_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry_Identifiers[_map_attribute_definition_boolean_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_integer_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry_Identifiers[_map_attribute_definition_integer_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_date_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry_Identifiers[_map_attribute_definition_date_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_real_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry_Identifiers[_map_attribute_definition_real_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_enumeration_showintitleentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry_Identifiers[_map_attribute_definition_enumeration_showintitleentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_xhtml_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry_Identifiers[_map_attribute_definition_xhtml_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_string_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry_Identifiers[_map_attribute_definition_string_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_boolean_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry_Identifiers[_map_attribute_definition_boolean_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_integer_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry_Identifiers[_map_attribute_definition_integer_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_date_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry_Identifiers[_map_attribute_definition_date_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_real_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry_Identifiers[_map_attribute_definition_real_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_enumeration_showintableentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry_Identifiers[_map_attribute_definition_enumeration_showintableentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_xhtml_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry_Identifiers[_map_attribute_definition_xhtml_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_string_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry_Identifiers[_map_attribute_definition_string_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_boolean_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers[_map_attribute_definition_boolean_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_integer_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry_Identifiers[_map_attribute_definition_integer_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_date_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry_Identifiers[_map_attribute_definition_date_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_real_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry_Identifiers[_map_attribute_definition_real_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_attribute_definition_enumeration_showinsubjectentry := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry_Identifiers[_map_attribute_definition_enumeration_showinsubjectentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_specification_nodes_expandedentry := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPECIFICATION_Nodes_expandedEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_SPECIFICATION_Nodes_expandedEntry_Identifiers[_map_specification_nodes_expandedentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_spec_object_type_showidentifierentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry_Identifiers[_map_spec_object_type_showidentifierentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showNameEntries")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers[_map_spec_object_type_shownameentry])
+			pointersInitializesStatements += setPointerField
+		}
+
 	}
 
 	if len(specificationOrdered) > 0 {

@@ -286,6 +286,106 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUECreateCallback != nil {
 			stage.OnAfterENUM_VALUECreateCallback.OnAfterCreate(stage, target)
 		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryCreateCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryCreateCallback != nil {
+			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryCreateCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryCreateCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPCreateCallback != nil {
 			stage.OnAfterRELATION_GROUPCreateCallback.OnAfterCreate(stage, target)
@@ -309,6 +409,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *REQ_IF_TOOL_EXTENSION:
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *RenderingConfiguration:
+		if stage.OnAfterRenderingConfigurationCreateCallback != nil {
+			stage.OnAfterRenderingConfigurationCreateCallback.OnAfterCreate(stage, target)
 		}
 	case *SPECIFICATION:
 		if stage.OnAfterSPECIFICATIONCreateCallback != nil {
@@ -936,6 +1040,206 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		if stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		newTarget := any(new).(*Map_SPECIFICATION_Nodes_expandedEntry)
+		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_showNameEntry)
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
 	case *RELATION_GROUP:
 		newTarget := any(new).(*RELATION_GROUP)
 		if stage.OnAfterRELATION_GROUPUpdateCallback != nil && mouseEvent == nil {
@@ -983,6 +1287,14 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		}
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *RenderingConfiguration:
+		newTarget := any(new).(*RenderingConfiguration)
+		if stage.OnAfterRenderingConfigurationUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterRenderingConfigurationUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterRenderingConfigurationUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterRenderingConfigurationUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPECIFICATION:
 		newTarget := any(new).(*SPECIFICATION)
@@ -1448,6 +1760,131 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*ENUM_VALUE)
 			stage.OnAfterENUM_VALUEDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_SPECIFICATION_Nodes_expandedEntry)
+			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback != nil {
+			staged := any(staged).(*Map_SPEC_OBJECT_TYPE_showNameEntry)
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPDeleteCallback != nil {
 			staged := any(staged).(*RELATION_GROUP)
@@ -1477,6 +1914,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback != nil {
 			staged := any(staged).(*REQ_IF_TOOL_EXTENSION)
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *RenderingConfiguration:
+		if stage.OnAfterRenderingConfigurationDeleteCallback != nil {
+			staged := any(staged).(*RenderingConfiguration)
+			stage.OnAfterRenderingConfigurationDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
 	case *SPECIFICATION:
 		if stage.OnAfterSPECIFICATIONDeleteCallback != nil {
@@ -1833,6 +2275,106 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUEReadCallback != nil {
 			stage.OnAfterENUM_VALUEReadCallback.OnAfterRead(stage, target)
 		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryReadCallback != nil {
+			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryReadCallback != nil {
+			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryReadCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryReadCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryReadCallback.OnAfterRead(stage, target)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback.OnAfterRead(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPReadCallback != nil {
 			stage.OnAfterRELATION_GROUPReadCallback.OnAfterRead(stage, target)
@@ -1856,6 +2398,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *REQ_IF_TOOL_EXTENSION:
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback.OnAfterRead(stage, target)
+		}
+	case *RenderingConfiguration:
+		if stage.OnAfterRenderingConfigurationReadCallback != nil {
+			stage.OnAfterRenderingConfigurationReadCallback.OnAfterRead(stage, target)
 		}
 	case *SPECIFICATION:
 		if stage.OnAfterSPECIFICATIONReadCallback != nil {
@@ -2130,6 +2676,81 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[ENUM_VALUE])
 	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry])
+	
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPECIFICATION_Nodes_expandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_showIdentifierEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPUpdateCallback = any(callback).(OnAfterUpdateInterface[RELATION_GROUP])
 	
@@ -2147,6 +2768,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_TOOL_EXTENSION])
+	
+	case *RenderingConfiguration:
+		stage.OnAfterRenderingConfigurationUpdateCallback = any(callback).(OnAfterUpdateInterface[RenderingConfiguration])
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION])
@@ -2404,6 +3028,81 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUECreateCallback = any(callback).(OnAfterCreateInterface[ENUM_VALUE])
 	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry])
+	
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPECIFICATION_Nodes_expandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_showIdentifierEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPCreateCallback = any(callback).(OnAfterCreateInterface[RELATION_GROUP])
 	
@@ -2421,6 +3120,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_TOOL_EXTENSION])
+	
+	case *RenderingConfiguration:
+		stage.OnAfterRenderingConfigurationCreateCallback = any(callback).(OnAfterCreateInterface[RenderingConfiguration])
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION])
@@ -2678,6 +3380,81 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[ENUM_VALUE])
 	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry])
+	
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPECIFICATION_Nodes_expandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showIdentifierEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPDeleteCallback = any(callback).(OnAfterDeleteInterface[RELATION_GROUP])
 	
@@ -2695,6 +3472,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION])
+	
+	case *RenderingConfiguration:
+		stage.OnAfterRenderingConfigurationDeleteCallback = any(callback).(OnAfterDeleteInterface[RenderingConfiguration])
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION])
@@ -2952,6 +3732,81 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEReadCallback = any(callback).(OnAfterReadInterface[ENUM_VALUE])
 	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry])
+	
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry])
+	
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryReadCallback = any(callback).(OnAfterReadInterface[Map_SPECIFICATION_Nodes_expandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryReadCallback = any(callback).(OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryReadCallback = any(callback).(OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showIdentifierEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback = any(callback).(OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPReadCallback = any(callback).(OnAfterReadInterface[RELATION_GROUP])
 	
@@ -2969,6 +3824,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_TOOL_EXTENSION])
+	
+	case *RenderingConfiguration:
+		stage.OnAfterRenderingConfigurationReadCallback = any(callback).(OnAfterReadInterface[RenderingConfiguration])
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION])

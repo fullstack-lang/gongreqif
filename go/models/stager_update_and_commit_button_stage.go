@@ -53,6 +53,17 @@ func (stager *Stager) UpdateAndCommitButtonStage() {
 		group1.Buttons = append(group1.Buttons, buttonExportModifiedReqif)
 	}
 
+	buttonExportRenderingCong := button.NewButton(
+		&ExportRenderingConfButtonProxy{
+			stager: stager,
+		},
+		"Export Rendering Configuration",
+		string(buttons.BUTTON_fact_check),
+		"Export Rendering Configuration",
+	)
+
+	group1.Buttons = append(group1.Buttons, buttonExportRenderingCong)
+
 	stager.buttonStage.Commit()
 }
 
@@ -99,6 +110,23 @@ func (e *ExportModifiedReqifButtonProxy) GetButtonsStage() *button.Stage {
 func (e *ExportModifiedReqifButtonProxy) OnAfterUpdateButton() {
 
 	e.stager.reqifExporter.ExportReqif(e.stager)
+}
 
-	return
+type ExportRenderingConfButtonProxy struct {
+	stager *Stager
+}
+
+// GetButtonsStage implements models.Target.
+func (e *ExportRenderingConfButtonProxy) GetButtonsStage() *button.Stage {
+	return e.stager.buttonStage
+}
+
+// OnAfterUpdateButton implements models.Target.
+func (e *ExportRenderingConfButtonProxy) OnAfterUpdateButton() {
+
+	conf := e.stager.ToRenderingConfiguration(e.stager.pathToReqifFile)
+	_ = conf
+
+	e.stager.reqifExporter.ExportRenderingConf(conf, e.stager)
+
 }

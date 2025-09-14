@@ -295,6 +295,106 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		enum_valueInstance := any(concreteInstance).(*models.ENUM_VALUE)
 		ret2 := backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueInstance)
 		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		map_attribute_definition_boolean_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryPtr(map_attribute_definition_boolean_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		map_attribute_definition_boolean_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryPtr(map_attribute_definition_boolean_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		map_attribute_definition_boolean_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryPtr(map_attribute_definition_boolean_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		map_attribute_definition_date_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryPtr(map_attribute_definition_date_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		map_attribute_definition_date_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryPtr(map_attribute_definition_date_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		map_attribute_definition_date_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryPtr(map_attribute_definition_date_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		map_attribute_definition_enumeration_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryPtr(map_attribute_definition_enumeration_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		map_attribute_definition_enumeration_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryPtr(map_attribute_definition_enumeration_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		map_attribute_definition_enumeration_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryPtr(map_attribute_definition_enumeration_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		map_attribute_definition_integer_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryPtr(map_attribute_definition_integer_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		map_attribute_definition_integer_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryPtr(map_attribute_definition_integer_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		map_attribute_definition_integer_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryPtr(map_attribute_definition_integer_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		map_attribute_definition_real_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryPtr(map_attribute_definition_real_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		map_attribute_definition_real_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryPtr(map_attribute_definition_real_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		map_attribute_definition_real_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryPtr(map_attribute_definition_real_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		map_attribute_definition_string_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryPtr(map_attribute_definition_string_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		map_attribute_definition_string_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryPtr(map_attribute_definition_string_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		map_attribute_definition_string_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryPtr(map_attribute_definition_string_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		map_attribute_definition_xhtml_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryPtr(map_attribute_definition_xhtml_showinsubjectentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		map_attribute_definition_xhtml_showintableentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.GetMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDBFromMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryPtr(map_attribute_definition_xhtml_showintableentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		map_attribute_definition_xhtml_showintitleentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.GetMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDBFromMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryPtr(map_attribute_definition_xhtml_showintitleentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
+		map_specification_nodes_expandedentryInstance := any(concreteInstance).(*models.Map_SPECIFICATION_Nodes_expandedEntry)
+		ret2 := backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.GetMap_SPECIFICATION_Nodes_expandedEntryDBFromMap_SPECIFICATION_Nodes_expandedEntryPtr(map_specification_nodes_expandedentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		map_spec_object_type_isnodeexpandedentryInstance := any(concreteInstance).(*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+		ret2 := backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.GetMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDBFromMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryPtr(map_spec_object_type_isnodeexpandedentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		map_spec_object_type_showidentifierentryInstance := any(concreteInstance).(*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+		ret2 := backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.GetMap_SPEC_OBJECT_TYPE_showIdentifierEntryDBFromMap_SPEC_OBJECT_TYPE_showIdentifierEntryPtr(map_spec_object_type_showidentifierentryInstance)
+		ret = any(ret2).(*T2)
+	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
+		map_spec_object_type_shownameentryInstance := any(concreteInstance).(*models.Map_SPEC_OBJECT_TYPE_showNameEntry)
+		ret2 := backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.GetMap_SPEC_OBJECT_TYPE_showNameEntryDBFromMap_SPEC_OBJECT_TYPE_showNameEntryPtr(map_spec_object_type_shownameentryInstance)
+		ret = any(ret2).(*T2)
 	case *models.RELATION_GROUP:
 		relation_groupInstance := any(concreteInstance).(*models.RELATION_GROUP)
 		ret2 := backRepo.BackRepoRELATION_GROUP.GetRELATION_GROUPDBFromRELATION_GROUPPtr(relation_groupInstance)
@@ -318,6 +418,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 	case *models.REQ_IF_TOOL_EXTENSION:
 		req_if_tool_extensionInstance := any(concreteInstance).(*models.REQ_IF_TOOL_EXTENSION)
 		ret2 := backRepo.BackRepoREQ_IF_TOOL_EXTENSION.GetREQ_IF_TOOL_EXTENSIONDBFromREQ_IF_TOOL_EXTENSIONPtr(req_if_tool_extensionInstance)
+		ret = any(ret2).(*T2)
+	case *models.RenderingConfiguration:
+		renderingconfigurationInstance := any(concreteInstance).(*models.RenderingConfiguration)
+		ret2 := backRepo.BackRepoRenderingConfiguration.GetRenderingConfigurationDBFromRenderingConfigurationPtr(renderingconfigurationInstance)
 		ret = any(ret2).(*T2)
 	case *models.SPECIFICATION:
 		specificationInstance := any(concreteInstance).(*models.SPECIFICATION)
@@ -734,6 +838,131 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPECIFICATION_Nodes_expandedEntry, Map_SPECIFICATION_Nodes_expandedEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry, Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPEC_OBJECT_TYPE_showNameEntry, Map_SPEC_OBJECT_TYPE_showNameEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -761,6 +990,11 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.REQ_IF_TOOL_EXTENSION:
 		tmp := GetInstanceDBFromInstance[models.REQ_IF_TOOL_EXTENSION, REQ_IF_TOOL_EXTENSIONDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.RenderingConfiguration:
+		tmp := GetInstanceDBFromInstance[models.RenderingConfiguration, RenderingConfigurationDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1192,6 +1426,131 @@ func GetIDPointer[T models.PointerToGongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPECIFICATION_Nodes_expandedEntry, Map_SPECIFICATION_Nodes_expandedEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry, Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
+		tmp := GetInstanceDBFromInstance[models.Map_SPEC_OBJECT_TYPE_showNameEntry, Map_SPEC_OBJECT_TYPE_showNameEntryDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -1219,6 +1578,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.REQ_IF_TOOL_EXTENSION:
 		tmp := GetInstanceDBFromInstance[models.REQ_IF_TOOL_EXTENSION, REQ_IF_TOOL_EXTENSIONDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.RenderingConfiguration:
+		tmp := GetInstanceDBFromInstance[models.RenderingConfiguration, RenderingConfigurationDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

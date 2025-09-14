@@ -164,6 +164,56 @@ type BackRepoStruct struct {
 
 	BackRepoENUM_VALUE BackRepoENUM_VALUEStruct
 
+	BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryStruct
+
+	BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryStruct
+
+	BackRepoMap_SPECIFICATION_Nodes_expandedEntry BackRepoMap_SPECIFICATION_Nodes_expandedEntryStruct
+
+	BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryStruct
+
+	BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntryStruct
+
+	BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry BackRepoMap_SPEC_OBJECT_TYPE_showNameEntryStruct
+
 	BackRepoRELATION_GROUP BackRepoRELATION_GROUPStruct
 
 	BackRepoRELATION_GROUP_TYPE BackRepoRELATION_GROUP_TYPEStruct
@@ -175,6 +225,8 @@ type BackRepoStruct struct {
 	BackRepoREQ_IF_HEADER BackRepoREQ_IF_HEADERStruct
 
 	BackRepoREQ_IF_TOOL_EXTENSION BackRepoREQ_IF_TOOL_EXTENSIONStruct
+
+	BackRepoRenderingConfiguration BackRepoRenderingConfigurationStruct
 
 	BackRepoSPECIFICATION BackRepoSPECIFICATIONStruct
 
@@ -293,12 +345,38 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&DATATYPE_DEFINITION_XHTMLDB{},
 		&EMBEDDED_VALUEDB{},
 		&ENUM_VALUEDB{},
+		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB{},
+		&Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB{},
+		&Map_SPECIFICATION_Nodes_expandedEntryDB{},
+		&Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB{},
+		&Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB{},
+		&Map_SPEC_OBJECT_TYPE_showNameEntryDB{},
 		&RELATION_GROUPDB{},
 		&RELATION_GROUP_TYPEDB{},
 		&REQ_IFDB{},
 		&REQ_IF_CONTENTDB{},
 		&REQ_IF_HEADERDB{},
 		&REQ_IF_TOOL_EXTENSIONDB{},
+		&RenderingConfigurationDB{},
 		&SPECIFICATIONDB{},
 		&SPECIFICATION_TYPEDB{},
 		&SPEC_HIERARCHYDB{},
@@ -878,6 +956,206 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		db:    db,
 		stage: stage,
 	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryPtr_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry = BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryPtr_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry = BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryStruct{
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDB, 0),
+		Map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryPtr_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDBID: make(map[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry = BackRepoMap_SPECIFICATION_Nodes_expandedEntryStruct{
+		Map_Map_SPECIFICATION_Nodes_expandedEntryDBID_Map_SPECIFICATION_Nodes_expandedEntryPtr: make(map[uint]*models.Map_SPECIFICATION_Nodes_expandedEntry, 0),
+		Map_Map_SPECIFICATION_Nodes_expandedEntryDBID_Map_SPECIFICATION_Nodes_expandedEntryDB:  make(map[uint]*Map_SPECIFICATION_Nodes_expandedEntryDB, 0),
+		Map_Map_SPECIFICATION_Nodes_expandedEntryPtr_Map_SPECIFICATION_Nodes_expandedEntryDBID: make(map[*models.Map_SPECIFICATION_Nodes_expandedEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry = BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryStruct{
+		Map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDBID_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryPtr: make(map[uint]*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, 0),
+		Map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDBID_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB:  make(map[uint]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB, 0),
+		Map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryPtr_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDBID: make(map[*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry = BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntryStruct{
+		Map_Map_SPEC_OBJECT_TYPE_showIdentifierEntryDBID_Map_SPEC_OBJECT_TYPE_showIdentifierEntryPtr: make(map[uint]*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry, 0),
+		Map_Map_SPEC_OBJECT_TYPE_showIdentifierEntryDBID_Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB:  make(map[uint]*Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB, 0),
+		Map_Map_SPEC_OBJECT_TYPE_showIdentifierEntryPtr_Map_SPEC_OBJECT_TYPE_showIdentifierEntryDBID: make(map[*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry = BackRepoMap_SPEC_OBJECT_TYPE_showNameEntryStruct{
+		Map_Map_SPEC_OBJECT_TYPE_showNameEntryDBID_Map_SPEC_OBJECT_TYPE_showNameEntryPtr: make(map[uint]*models.Map_SPEC_OBJECT_TYPE_showNameEntry, 0),
+		Map_Map_SPEC_OBJECT_TYPE_showNameEntryDBID_Map_SPEC_OBJECT_TYPE_showNameEntryDB:  make(map[uint]*Map_SPEC_OBJECT_TYPE_showNameEntryDB, 0),
+		Map_Map_SPEC_OBJECT_TYPE_showNameEntryPtr_Map_SPEC_OBJECT_TYPE_showNameEntryDBID: make(map[*models.Map_SPEC_OBJECT_TYPE_showNameEntry]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
 	backRepo.BackRepoRELATION_GROUP = BackRepoRELATION_GROUPStruct{
 		Map_RELATION_GROUPDBID_RELATION_GROUPPtr: make(map[uint]*models.RELATION_GROUP, 0),
 		Map_RELATION_GROUPDBID_RELATION_GROUPDB:  make(map[uint]*RELATION_GROUPDB, 0),
@@ -922,6 +1200,14 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		Map_REQ_IF_TOOL_EXTENSIONDBID_REQ_IF_TOOL_EXTENSIONPtr: make(map[uint]*models.REQ_IF_TOOL_EXTENSION, 0),
 		Map_REQ_IF_TOOL_EXTENSIONDBID_REQ_IF_TOOL_EXTENSIONDB:  make(map[uint]*REQ_IF_TOOL_EXTENSIONDB, 0),
 		Map_REQ_IF_TOOL_EXTENSIONPtr_REQ_IF_TOOL_EXTENSIONDBID: make(map[*models.REQ_IF_TOOL_EXTENSION]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
+	backRepo.BackRepoRenderingConfiguration = BackRepoRenderingConfigurationStruct{
+		Map_RenderingConfigurationDBID_RenderingConfigurationPtr: make(map[uint]*models.RenderingConfiguration, 0),
+		Map_RenderingConfigurationDBID_RenderingConfigurationDB:  make(map[uint]*RenderingConfigurationDB, 0),
+		Map_RenderingConfigurationPtr_RenderingConfigurationDBID: make(map[*models.RenderingConfiguration]uint, 0),
 
 		db:    db,
 		stage: stage,
@@ -1152,12 +1438,38 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseOne(stage)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseOne(stage)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CommitPhaseOne(stage)
 	backRepo.BackRepoRELATION_GROUP.CommitPhaseOne(stage)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF_CONTENT.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF_HEADER.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.CommitPhaseOne(stage)
+	backRepo.BackRepoRenderingConfiguration.CommitPhaseOne(stage)
 	backRepo.BackRepoSPECIFICATION.CommitPhaseOne(stage)
 	backRepo.BackRepoSPECIFICATION_TYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoSPEC_HIERARCHY.CommitPhaseOne(stage)
@@ -1243,12 +1555,38 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_CONTENT.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_HEADER.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoRenderingConfiguration.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSPECIFICATION.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSPECIFICATION_TYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoSPEC_HIERARCHY.CommitPhaseTwo(backRepo)
@@ -1346,12 +1684,38 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseOne()
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseOne()
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CheckoutPhaseOne()
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CheckoutPhaseOne()
 	backRepo.BackRepoRELATION_GROUP.CheckoutPhaseOne()
 	backRepo.BackRepoRELATION_GROUP_TYPE.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.CheckoutPhaseOne()
+	backRepo.BackRepoRenderingConfiguration.CheckoutPhaseOne()
 	backRepo.BackRepoSPECIFICATION.CheckoutPhaseOne()
 	backRepo.BackRepoSPECIFICATION_TYPE.CheckoutPhaseOne()
 	backRepo.BackRepoSPEC_HIERARCHY.CheckoutPhaseOne()
@@ -1437,12 +1801,38 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_CONTENT.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_HEADER.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoRenderingConfiguration.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSPECIFICATION.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSPECIFICATION_TYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoSPEC_HIERARCHY.CheckoutPhaseTwo(backRepo)
@@ -1533,12 +1923,38 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.Backup(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.Backup(dirPath)
 	backRepo.BackRepoENUM_VALUE.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.Backup(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.Backup(dirPath)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.Backup(dirPath)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.Backup(dirPath)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.Backup(dirPath)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.Backup(dirPath)
 	backRepo.BackRepoRELATION_GROUP.Backup(dirPath)
 	backRepo.BackRepoRELATION_GROUP_TYPE.Backup(dirPath)
 	backRepo.BackRepoREQ_IF.Backup(dirPath)
 	backRepo.BackRepoREQ_IF_CONTENT.Backup(dirPath)
 	backRepo.BackRepoREQ_IF_HEADER.Backup(dirPath)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.Backup(dirPath)
+	backRepo.BackRepoRenderingConfiguration.Backup(dirPath)
 	backRepo.BackRepoSPECIFICATION.Backup(dirPath)
 	backRepo.BackRepoSPECIFICATION_TYPE.Backup(dirPath)
 	backRepo.BackRepoSPEC_HIERARCHY.Backup(dirPath)
@@ -1632,12 +2048,38 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.BackupXL(file)
 	backRepo.BackRepoEMBEDDED_VALUE.BackupXL(file)
 	backRepo.BackRepoENUM_VALUE.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.BackupXL(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.BackupXL(file)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.BackupXL(file)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.BackupXL(file)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.BackupXL(file)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.BackupXL(file)
 	backRepo.BackRepoRELATION_GROUP.BackupXL(file)
 	backRepo.BackRepoRELATION_GROUP_TYPE.BackupXL(file)
 	backRepo.BackRepoREQ_IF.BackupXL(file)
 	backRepo.BackRepoREQ_IF_CONTENT.BackupXL(file)
 	backRepo.BackRepoREQ_IF_HEADER.BackupXL(file)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.BackupXL(file)
+	backRepo.BackRepoRenderingConfiguration.BackupXL(file)
 	backRepo.BackRepoSPECIFICATION.BackupXL(file)
 	backRepo.BackRepoSPECIFICATION_TYPE.BackupXL(file)
 	backRepo.BackRepoSPEC_HIERARCHY.BackupXL(file)
@@ -1745,12 +2187,38 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseOne(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoENUM_VALUE.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.RestorePhaseOne(dirPath)
 	backRepo.BackRepoRELATION_GROUP.RestorePhaseOne(dirPath)
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF_CONTENT.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF_HEADER.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.RestorePhaseOne(dirPath)
+	backRepo.BackRepoRenderingConfiguration.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSPECIFICATION.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSPECIFICATION_TYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoSPEC_HIERARCHY.RestorePhaseOne(dirPath)
@@ -1840,12 +2308,38 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseTwo()
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseTwo()
 	backRepo.BackRepoENUM_VALUE.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.RestorePhaseTwo()
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.RestorePhaseTwo()
 	backRepo.BackRepoRELATION_GROUP.RestorePhaseTwo()
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF_CONTENT.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF_HEADER.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.RestorePhaseTwo()
+	backRepo.BackRepoRenderingConfiguration.RestorePhaseTwo()
 	backRepo.BackRepoSPECIFICATION.RestorePhaseTwo()
 	backRepo.BackRepoSPECIFICATION_TYPE.RestorePhaseTwo()
 	backRepo.BackRepoSPEC_HIERARCHY.RestorePhaseTwo()
@@ -1956,12 +2450,38 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestoreXLPhaseOne(file)
 	backRepo.BackRepoEMBEDDED_VALUE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoENUM_VALUE.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_SPECIFICATION_Nodes_expandedEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.RestoreXLPhaseOne(file)
 	backRepo.BackRepoRELATION_GROUP.RestoreXLPhaseOne(file)
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF_CONTENT.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF_HEADER.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF_TOOL_EXTENSION.RestoreXLPhaseOne(file)
+	backRepo.BackRepoRenderingConfiguration.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSPECIFICATION.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSPECIFICATION_TYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoSPEC_HIERARCHY.RestoreXLPhaseOne(file)

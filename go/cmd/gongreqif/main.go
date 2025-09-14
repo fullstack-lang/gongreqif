@@ -89,7 +89,7 @@ func main() {
 		&specobjects.SpecObjectsTreeStageUpdater{},
 		&specrelations.SpecRelationsTreeStageUpdater{},
 		&specifications.SpecificationsTreeStageUpdater{},
-		&exporter.ReqifExporter{},
+		&exporter.Exporter{},
 		&namer.ObjectNamer{})
 
 	if *pathToGoModelFile != "" {

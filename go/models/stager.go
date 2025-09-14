@@ -65,8 +65,9 @@ type SpecificationsTreeUpdaterInterface interface {
 	)
 }
 
-type ReqifExporter interface {
+type Exporter interface {
 	ExportReqif(stager *Stager)
+	ExportRenderingConf(renderingConf *RenderingConfiguration, stager *Stager)
 }
 
 type ObjectNamerInterface interface {
@@ -108,7 +109,7 @@ type Stager struct {
 	specObjectsTreeUpdater    SpecObjectsTreeUpdaterInterface
 	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
-	reqifExporter             ReqifExporter
+	reqifExporter             Exporter
 	objectNamer               ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
@@ -196,7 +197,8 @@ type Stager struct {
 	// (4) that will be used for the path to the ssg site
 	rootPathToStaticOutputs string
 
-	loadStage *load.Stage
+	loadReqifStage         *load.Stage // load the reqif file
+	loadRenderingConfStage *load.Stage // load the rendering conf file
 
 	selectedSpecification               *SPECIFICATION
 	Map_SPECIFICATION_Nodes_expanded    map[*SPECIFICATION]bool
@@ -263,7 +265,7 @@ func (stager *Stager) GetSsgStage() (s *ssg.Stage) {
 }
 
 func (stager *Stager) GetLoadStage() (s *load.Stage) {
-	s = stager.loadStage
+	s = stager.loadReqifStage
 	return
 }
 
@@ -296,7 +298,7 @@ func NewStager(
 	specRelationsTreeUpdater SpecRelationsTreeUpdaterInterface,
 	specificationsTreeUpdater SpecificationsTreeUpdaterInterface,
 
-	reqifExporter ReqifExporter,
+	exporter Exporter,
 
 	objectNamer ObjectNamerInterface) (
 	stager *Stager,
@@ -315,12 +317,13 @@ func NewStager(
 	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
 	stager.specificationsTreeUpdater = specificationsTreeUpdater
 
-	stager.reqifExporter = reqifExporter
+	stager.reqifExporter = exporter
 
 	stager.objectNamer = objectNamer
 
 	stager.ssgStage = ssg_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
-	stager.loadStage = load_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
+	stager.loadReqifStage = load_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
+	stager.loadRenderingConfStage = load_stack.NewStack(r, stage.GetName()+"-rendering", "", "", "", true, true).Stage
 	stager.markdownStage = markdown_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 
 	stager.summaryTableStage = table_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
@@ -353,18 +356,27 @@ func NewStager(
 									{
 										Name:             "Summary table",
 										ShowNameInHeader: false,
-										Size:             50,
+										Size:             25,
 										Table: &split.Table{
 											StackName: stager.summaryTableStage.GetName(),
 										},
 									},
 									(&split.AsSplitArea{
-										Name: "Upload",
+										Name: "Upload Reqif File",
 										Size: 25,
 										AsSplit: (&split.AsSplit{
 											Direction: split.Horizontal,
 											AsSplitAreas: []*split.AsSplitArea{
-												load.NewStager(r, stager.loadStage, stager.splitStage).GetAsSplitArea()},
+												load.NewStager(r, stager.loadReqifStage, stager.splitStage).GetAsSplitArea()},
+										}),
+									}),
+									(&split.AsSplitArea{
+										Name: "Upload Rendering Configuration",
+										Size: 25,
+										AsSplit: (&split.AsSplit{
+											Direction: split.Horizontal,
+											AsSplitAreas: []*split.AsSplitArea{
+												load.NewStager(r, stager.loadRenderingConfStage, stager.splitStage).GetAsSplitArea()},
 										}),
 									}),
 									{
@@ -534,11 +546,21 @@ func NewStager(
 	})
 
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "(Dev) loadStage",
+		Name: "(Dev) load Reqif Stage",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			(&split.AsSplitArea{
 				Split: (&split.Split{
-					StackName: stager.loadStage.GetProbeSplitStageName(),
+					StackName: stager.loadReqifStage.GetProbeSplitStageName(),
+				}),
+			}),
+		},
+	})
+	split.StageBranch(stager.splitStage, &split.View{
+		Name: "(Dev) load Rendering Conf Stage",
+		RootAsSplitAreas: []*split.AsSplitArea{
+			(&split.AsSplitArea{
+				Split: (&split.Split{
+					StackName: stager.loadRenderingConfStage.GetProbeSplitStageName(),
 				}),
 			}),
 		},
@@ -555,7 +577,8 @@ func NewStager(
 		stager.processReqifData(reqifData, pathToReqifFile)
 	}
 
-	stager.updateAndCommitSummaryLoadStage()
+	stager.updateAndCommitLoadReqifStage()
+	stager.updateAndCommitLoadRenderingConfStage()
 	stager.UpdateAndCommitButtonStage()
 
 	return

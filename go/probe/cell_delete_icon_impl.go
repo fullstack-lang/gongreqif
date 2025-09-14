@@ -169,6 +169,56 @@ func (cellDeleteIconImpl *CellDeleteIconImpl[T]) CellIconUpdated(stage *gongtabl
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.ENUM_VALUE:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.RELATION_GROUP:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.RELATION_GROUP_TYPE:
@@ -180,6 +230,8 @@ func (cellDeleteIconImpl *CellDeleteIconImpl[T]) CellIconUpdated(stage *gongtabl
 	case *models.REQ_IF_HEADER:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.REQ_IF_TOOL_EXTENSION:
+		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
+	case *models.RenderingConfiguration:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)
 	case *models.SPECIFICATION:
 		instancesTyped.Unstage(cellDeleteIconImpl.probe.stageOfInterest)

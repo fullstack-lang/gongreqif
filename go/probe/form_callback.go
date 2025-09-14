@@ -8643,6 +8643,3656 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 
 	updateAndCommitTree(enum_valueFormCallback.probe)
 }
+func __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_boolean_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_boolean_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_boolean_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.map_attribute_definition_boolean_showinsubjectentry = map_attribute_definition_boolean_showinsubjectentry
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_boolean_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_boolean_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_boolean_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_boolean_showinsubjectentryFormCallback.map_attribute_definition_boolean_showinsubjectentry == nil {
+		map_attribute_definition_boolean_showinsubjectentryFormCallback.map_attribute_definition_boolean_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry).Stage(map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_boolean_showinsubjectentry_ := map_attribute_definition_boolean_showinsubjectentryFormCallback.map_attribute_definition_boolean_showinsubjectentry
+	_ = map_attribute_definition_boolean_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_boolean_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_boolean_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_boolean_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_boolean_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, map_attribute_definition_boolean_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, map_attribute_definition_boolean_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_boolean_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_boolean_showinsubjectentry_.Unstage(map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](
+		map_attribute_definition_boolean_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_boolean_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_boolean_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_boolean_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_boolean_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_boolean_showinsubjectentry, newFormGroup, map_attribute_definition_boolean_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_boolean_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback(
+	map_attribute_definition_boolean_showintableentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_boolean_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback) {
+	map_attribute_definition_boolean_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback)
+	map_attribute_definition_boolean_showintableentryFormCallback.probe = probe
+	map_attribute_definition_boolean_showintableentryFormCallback.map_attribute_definition_boolean_showintableentry = map_attribute_definition_boolean_showintableentry
+	map_attribute_definition_boolean_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_boolean_showintableentryFormCallback.CreationMode = (map_attribute_definition_boolean_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_boolean_showintableentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_boolean_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_boolean_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_boolean_showintableentryFormCallback.map_attribute_definition_boolean_showintableentry == nil {
+		map_attribute_definition_boolean_showintableentryFormCallback.map_attribute_definition_boolean_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry).Stage(map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_boolean_showintableentry_ := map_attribute_definition_boolean_showintableentryFormCallback.map_attribute_definition_boolean_showintableentry
+	_ = map_attribute_definition_boolean_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_boolean_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_boolean_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_boolean_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_boolean_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, map_attribute_definition_boolean_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, map_attribute_definition_boolean_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_boolean_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_boolean_showintableentry_.Unstage(map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](
+		map_attribute_definition_boolean_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_boolean_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_boolean_showintableentryFormCallback.CreationMode || map_attribute_definition_boolean_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_boolean_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_boolean_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_boolean_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_boolean_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_boolean_showintableentry, newFormGroup, map_attribute_definition_boolean_showintableentryFormCallback.probe)
+		map_attribute_definition_boolean_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_boolean_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback(
+	map_attribute_definition_boolean_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_boolean_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_boolean_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback)
+	map_attribute_definition_boolean_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_boolean_showintitleentryFormCallback.map_attribute_definition_boolean_showintitleentry = map_attribute_definition_boolean_showintitleentry
+	map_attribute_definition_boolean_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_boolean_showintitleentryFormCallback.CreationMode = (map_attribute_definition_boolean_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_boolean_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_boolean_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_boolean_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_boolean_showintitleentryFormCallback.map_attribute_definition_boolean_showintitleentry == nil {
+		map_attribute_definition_boolean_showintitleentryFormCallback.map_attribute_definition_boolean_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry).Stage(map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_boolean_showintitleentry_ := map_attribute_definition_boolean_showintitleentryFormCallback.map_attribute_definition_boolean_showintitleentry
+	_ = map_attribute_definition_boolean_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_boolean_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_boolean_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_boolean_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_boolean_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, map_attribute_definition_boolean_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, map_attribute_definition_boolean_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_boolean_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_boolean_showintitleentry_.Unstage(map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](
+		map_attribute_definition_boolean_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_boolean_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_boolean_showintitleentryFormCallback.CreationMode || map_attribute_definition_boolean_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_boolean_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_boolean_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_boolean_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_boolean_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_boolean_showintitleentry, newFormGroup, map_attribute_definition_boolean_showintitleentryFormCallback.probe)
+		map_attribute_definition_boolean_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_boolean_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_date_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_date_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_date_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_date_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_date_showinsubjectentryFormCallback.map_attribute_definition_date_showinsubjectentry = map_attribute_definition_date_showinsubjectentry
+	map_attribute_definition_date_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_date_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_date_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_date_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_date_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_date_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_date_showinsubjectentryFormCallback.map_attribute_definition_date_showinsubjectentry == nil {
+		map_attribute_definition_date_showinsubjectentryFormCallback.map_attribute_definition_date_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry).Stage(map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_date_showinsubjectentry_ := map_attribute_definition_date_showinsubjectentryFormCallback.map_attribute_definition_date_showinsubjectentry
+	_ = map_attribute_definition_date_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_date_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_date_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_date_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_date_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, map_attribute_definition_date_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, map_attribute_definition_date_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_date_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_date_showinsubjectentry_.Unstage(map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](
+		map_attribute_definition_date_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_date_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_date_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_date_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_date_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_date_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_date_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_date_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_date_showinsubjectentry, newFormGroup, map_attribute_definition_date_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_date_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_date_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback(
+	map_attribute_definition_date_showintableentry *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_date_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback) {
+	map_attribute_definition_date_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback)
+	map_attribute_definition_date_showintableentryFormCallback.probe = probe
+	map_attribute_definition_date_showintableentryFormCallback.map_attribute_definition_date_showintableentry = map_attribute_definition_date_showintableentry
+	map_attribute_definition_date_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_date_showintableentryFormCallback.CreationMode = (map_attribute_definition_date_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_date_showintableentry *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_date_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_date_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_date_showintableentryFormCallback.map_attribute_definition_date_showintableentry == nil {
+		map_attribute_definition_date_showintableentryFormCallback.map_attribute_definition_date_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry).Stage(map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_date_showintableentry_ := map_attribute_definition_date_showintableentryFormCallback.map_attribute_definition_date_showintableentry
+	_ = map_attribute_definition_date_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_date_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_date_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_date_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_date_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, map_attribute_definition_date_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, map_attribute_definition_date_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_date_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_date_showintableentry_.Unstage(map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](
+		map_attribute_definition_date_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_date_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_date_showintableentryFormCallback.CreationMode || map_attribute_definition_date_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_date_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_date_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_date_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_date_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_date_showintableentry, newFormGroup, map_attribute_definition_date_showintableentryFormCallback.probe)
+		map_attribute_definition_date_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_date_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback(
+	map_attribute_definition_date_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_date_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_date_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback)
+	map_attribute_definition_date_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_date_showintitleentryFormCallback.map_attribute_definition_date_showintitleentry = map_attribute_definition_date_showintitleentry
+	map_attribute_definition_date_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_date_showintitleentryFormCallback.CreationMode = (map_attribute_definition_date_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_date_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_date_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_date_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_date_showintitleentryFormCallback.map_attribute_definition_date_showintitleentry == nil {
+		map_attribute_definition_date_showintitleentryFormCallback.map_attribute_definition_date_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry).Stage(map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_date_showintitleentry_ := map_attribute_definition_date_showintitleentryFormCallback.map_attribute_definition_date_showintitleentry
+	_ = map_attribute_definition_date_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_date_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_date_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_date_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_date_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, map_attribute_definition_date_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, map_attribute_definition_date_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_date_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_date_showintitleentry_.Unstage(map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](
+		map_attribute_definition_date_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_date_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_date_showintitleentryFormCallback.CreationMode || map_attribute_definition_date_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_date_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_date_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_date_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_date_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_date_showintitleentry, newFormGroup, map_attribute_definition_date_showintitleentryFormCallback.probe)
+		map_attribute_definition_date_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_date_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_enumeration_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_enumeration_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.map_attribute_definition_enumeration_showinsubjectentry = map_attribute_definition_enumeration_showinsubjectentry
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_enumeration_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_enumeration_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_enumeration_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_enumeration_showinsubjectentryFormCallback.map_attribute_definition_enumeration_showinsubjectentry == nil {
+		map_attribute_definition_enumeration_showinsubjectentryFormCallback.map_attribute_definition_enumeration_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry).Stage(map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_enumeration_showinsubjectentry_ := map_attribute_definition_enumeration_showinsubjectentryFormCallback.map_attribute_definition_enumeration_showinsubjectentry
+	_ = map_attribute_definition_enumeration_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_enumeration_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_enumeration_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_enumeration_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_enumeration_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, map_attribute_definition_enumeration_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, map_attribute_definition_enumeration_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_enumeration_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_enumeration_showinsubjectentry_.Unstage(map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](
+		map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_enumeration_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_enumeration_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_enumeration_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_enumeration_showinsubjectentry, newFormGroup, map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback(
+	map_attribute_definition_enumeration_showintableentry *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_enumeration_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback) {
+	map_attribute_definition_enumeration_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback)
+	map_attribute_definition_enumeration_showintableentryFormCallback.probe = probe
+	map_attribute_definition_enumeration_showintableentryFormCallback.map_attribute_definition_enumeration_showintableentry = map_attribute_definition_enumeration_showintableentry
+	map_attribute_definition_enumeration_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_enumeration_showintableentryFormCallback.CreationMode = (map_attribute_definition_enumeration_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_enumeration_showintableentry *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_enumeration_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_enumeration_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_enumeration_showintableentryFormCallback.map_attribute_definition_enumeration_showintableentry == nil {
+		map_attribute_definition_enumeration_showintableentryFormCallback.map_attribute_definition_enumeration_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry).Stage(map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_enumeration_showintableentry_ := map_attribute_definition_enumeration_showintableentryFormCallback.map_attribute_definition_enumeration_showintableentry
+	_ = map_attribute_definition_enumeration_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_enumeration_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_enumeration_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_enumeration_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_enumeration_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, map_attribute_definition_enumeration_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, map_attribute_definition_enumeration_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_enumeration_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_enumeration_showintableentry_.Unstage(map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](
+		map_attribute_definition_enumeration_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_enumeration_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_enumeration_showintableentryFormCallback.CreationMode || map_attribute_definition_enumeration_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_enumeration_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_enumeration_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_enumeration_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_enumeration_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_enumeration_showintableentry, newFormGroup, map_attribute_definition_enumeration_showintableentryFormCallback.probe)
+		map_attribute_definition_enumeration_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_enumeration_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback(
+	map_attribute_definition_enumeration_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_enumeration_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_enumeration_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback)
+	map_attribute_definition_enumeration_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_enumeration_showintitleentryFormCallback.map_attribute_definition_enumeration_showintitleentry = map_attribute_definition_enumeration_showintitleentry
+	map_attribute_definition_enumeration_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_enumeration_showintitleentryFormCallback.CreationMode = (map_attribute_definition_enumeration_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_enumeration_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_enumeration_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_enumeration_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_enumeration_showintitleentryFormCallback.map_attribute_definition_enumeration_showintitleentry == nil {
+		map_attribute_definition_enumeration_showintitleentryFormCallback.map_attribute_definition_enumeration_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry).Stage(map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_enumeration_showintitleentry_ := map_attribute_definition_enumeration_showintitleentryFormCallback.map_attribute_definition_enumeration_showintitleentry
+	_ = map_attribute_definition_enumeration_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_enumeration_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_enumeration_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_enumeration_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_enumeration_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, map_attribute_definition_enumeration_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, map_attribute_definition_enumeration_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_enumeration_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_enumeration_showintitleentry_.Unstage(map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](
+		map_attribute_definition_enumeration_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_enumeration_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_enumeration_showintitleentryFormCallback.CreationMode || map_attribute_definition_enumeration_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_enumeration_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_enumeration_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_enumeration_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_enumeration_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_enumeration_showintitleentry, newFormGroup, map_attribute_definition_enumeration_showintitleentryFormCallback.probe)
+		map_attribute_definition_enumeration_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_enumeration_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_integer_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_integer_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_integer_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_integer_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_integer_showinsubjectentryFormCallback.map_attribute_definition_integer_showinsubjectentry = map_attribute_definition_integer_showinsubjectentry
+	map_attribute_definition_integer_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_integer_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_integer_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_integer_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_integer_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_integer_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_integer_showinsubjectentryFormCallback.map_attribute_definition_integer_showinsubjectentry == nil {
+		map_attribute_definition_integer_showinsubjectentryFormCallback.map_attribute_definition_integer_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry).Stage(map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_integer_showinsubjectentry_ := map_attribute_definition_integer_showinsubjectentryFormCallback.map_attribute_definition_integer_showinsubjectentry
+	_ = map_attribute_definition_integer_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_integer_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_integer_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_integer_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_integer_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, map_attribute_definition_integer_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, map_attribute_definition_integer_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_integer_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_integer_showinsubjectentry_.Unstage(map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](
+		map_attribute_definition_integer_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_integer_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_integer_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_integer_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_integer_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_integer_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_integer_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_integer_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_integer_showinsubjectentry, newFormGroup, map_attribute_definition_integer_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_integer_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_integer_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback(
+	map_attribute_definition_integer_showintableentry *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_integer_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback) {
+	map_attribute_definition_integer_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback)
+	map_attribute_definition_integer_showintableentryFormCallback.probe = probe
+	map_attribute_definition_integer_showintableentryFormCallback.map_attribute_definition_integer_showintableentry = map_attribute_definition_integer_showintableentry
+	map_attribute_definition_integer_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_integer_showintableentryFormCallback.CreationMode = (map_attribute_definition_integer_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_integer_showintableentry *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_integer_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_integer_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_integer_showintableentryFormCallback.map_attribute_definition_integer_showintableentry == nil {
+		map_attribute_definition_integer_showintableentryFormCallback.map_attribute_definition_integer_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry).Stage(map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_integer_showintableentry_ := map_attribute_definition_integer_showintableentryFormCallback.map_attribute_definition_integer_showintableentry
+	_ = map_attribute_definition_integer_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_integer_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_integer_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_integer_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_integer_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, map_attribute_definition_integer_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, map_attribute_definition_integer_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_integer_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_integer_showintableentry_.Unstage(map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](
+		map_attribute_definition_integer_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_integer_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_integer_showintableentryFormCallback.CreationMode || map_attribute_definition_integer_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_integer_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_integer_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_integer_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_integer_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_integer_showintableentry, newFormGroup, map_attribute_definition_integer_showintableentryFormCallback.probe)
+		map_attribute_definition_integer_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_integer_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback(
+	map_attribute_definition_integer_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_integer_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_integer_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback)
+	map_attribute_definition_integer_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_integer_showintitleentryFormCallback.map_attribute_definition_integer_showintitleentry = map_attribute_definition_integer_showintitleentry
+	map_attribute_definition_integer_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_integer_showintitleentryFormCallback.CreationMode = (map_attribute_definition_integer_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_integer_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_integer_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_integer_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_integer_showintitleentryFormCallback.map_attribute_definition_integer_showintitleentry == nil {
+		map_attribute_definition_integer_showintitleentryFormCallback.map_attribute_definition_integer_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry).Stage(map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_integer_showintitleentry_ := map_attribute_definition_integer_showintitleentryFormCallback.map_attribute_definition_integer_showintitleentry
+	_ = map_attribute_definition_integer_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_integer_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_integer_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_integer_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_integer_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, map_attribute_definition_integer_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, map_attribute_definition_integer_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_integer_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_integer_showintitleentry_.Unstage(map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](
+		map_attribute_definition_integer_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_integer_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_integer_showintitleentryFormCallback.CreationMode || map_attribute_definition_integer_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_integer_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_integer_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_integer_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_integer_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_integer_showintitleentry, newFormGroup, map_attribute_definition_integer_showintitleentryFormCallback.probe)
+		map_attribute_definition_integer_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_integer_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_real_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_real_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_real_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_real_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_real_showinsubjectentryFormCallback.map_attribute_definition_real_showinsubjectentry = map_attribute_definition_real_showinsubjectentry
+	map_attribute_definition_real_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_real_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_real_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_real_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_real_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_real_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_real_showinsubjectentryFormCallback.map_attribute_definition_real_showinsubjectentry == nil {
+		map_attribute_definition_real_showinsubjectentryFormCallback.map_attribute_definition_real_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry).Stage(map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_real_showinsubjectentry_ := map_attribute_definition_real_showinsubjectentryFormCallback.map_attribute_definition_real_showinsubjectentry
+	_ = map_attribute_definition_real_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_real_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_real_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_real_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_real_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, map_attribute_definition_real_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, map_attribute_definition_real_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_real_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_real_showinsubjectentry_.Unstage(map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](
+		map_attribute_definition_real_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_real_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_real_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_real_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_real_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_real_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_real_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_real_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_real_showinsubjectentry, newFormGroup, map_attribute_definition_real_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_real_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_real_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback(
+	map_attribute_definition_real_showintableentry *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_real_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback) {
+	map_attribute_definition_real_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback)
+	map_attribute_definition_real_showintableentryFormCallback.probe = probe
+	map_attribute_definition_real_showintableentryFormCallback.map_attribute_definition_real_showintableentry = map_attribute_definition_real_showintableentry
+	map_attribute_definition_real_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_real_showintableentryFormCallback.CreationMode = (map_attribute_definition_real_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_real_showintableentry *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_real_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_real_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_real_showintableentryFormCallback.map_attribute_definition_real_showintableentry == nil {
+		map_attribute_definition_real_showintableentryFormCallback.map_attribute_definition_real_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry).Stage(map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_real_showintableentry_ := map_attribute_definition_real_showintableentryFormCallback.map_attribute_definition_real_showintableentry
+	_ = map_attribute_definition_real_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_real_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_real_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_real_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_real_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, map_attribute_definition_real_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, map_attribute_definition_real_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_real_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_real_showintableentry_.Unstage(map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](
+		map_attribute_definition_real_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_real_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_real_showintableentryFormCallback.CreationMode || map_attribute_definition_real_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_real_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_real_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_real_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_real_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_real_showintableentry, newFormGroup, map_attribute_definition_real_showintableentryFormCallback.probe)
+		map_attribute_definition_real_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_real_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback(
+	map_attribute_definition_real_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_real_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_real_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback)
+	map_attribute_definition_real_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_real_showintitleentryFormCallback.map_attribute_definition_real_showintitleentry = map_attribute_definition_real_showintitleentry
+	map_attribute_definition_real_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_real_showintitleentryFormCallback.CreationMode = (map_attribute_definition_real_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_real_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_real_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_real_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_real_showintitleentryFormCallback.map_attribute_definition_real_showintitleentry == nil {
+		map_attribute_definition_real_showintitleentryFormCallback.map_attribute_definition_real_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry).Stage(map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_real_showintitleentry_ := map_attribute_definition_real_showintitleentryFormCallback.map_attribute_definition_real_showintitleentry
+	_ = map_attribute_definition_real_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_real_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_real_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_real_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_real_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, map_attribute_definition_real_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, map_attribute_definition_real_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_real_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_real_showintitleentry_.Unstage(map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](
+		map_attribute_definition_real_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_real_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_real_showintitleentryFormCallback.CreationMode || map_attribute_definition_real_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_real_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_real_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_real_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_real_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_real_showintitleentry, newFormGroup, map_attribute_definition_real_showintitleentryFormCallback.probe)
+		map_attribute_definition_real_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_real_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_string_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_string_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_string_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_string_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_string_showinsubjectentryFormCallback.map_attribute_definition_string_showinsubjectentry = map_attribute_definition_string_showinsubjectentry
+	map_attribute_definition_string_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_string_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_string_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_string_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_string_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_string_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_string_showinsubjectentryFormCallback.map_attribute_definition_string_showinsubjectentry == nil {
+		map_attribute_definition_string_showinsubjectentryFormCallback.map_attribute_definition_string_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry).Stage(map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_string_showinsubjectentry_ := map_attribute_definition_string_showinsubjectentryFormCallback.map_attribute_definition_string_showinsubjectentry
+	_ = map_attribute_definition_string_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_string_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_string_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_string_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_string_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, map_attribute_definition_string_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, map_attribute_definition_string_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_string_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_string_showinsubjectentry_.Unstage(map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](
+		map_attribute_definition_string_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_string_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_string_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_string_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_string_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_string_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_string_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_string_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_string_showinsubjectentry, newFormGroup, map_attribute_definition_string_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_string_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_string_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback(
+	map_attribute_definition_string_showintableentry *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_string_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback) {
+	map_attribute_definition_string_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback)
+	map_attribute_definition_string_showintableentryFormCallback.probe = probe
+	map_attribute_definition_string_showintableentryFormCallback.map_attribute_definition_string_showintableentry = map_attribute_definition_string_showintableentry
+	map_attribute_definition_string_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_string_showintableentryFormCallback.CreationMode = (map_attribute_definition_string_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_string_showintableentry *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_string_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_string_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_string_showintableentryFormCallback.map_attribute_definition_string_showintableentry == nil {
+		map_attribute_definition_string_showintableentryFormCallback.map_attribute_definition_string_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry).Stage(map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_string_showintableentry_ := map_attribute_definition_string_showintableentryFormCallback.map_attribute_definition_string_showintableentry
+	_ = map_attribute_definition_string_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_string_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_string_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_string_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_string_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, map_attribute_definition_string_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, map_attribute_definition_string_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_string_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_string_showintableentry_.Unstage(map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](
+		map_attribute_definition_string_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_string_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_string_showintableentryFormCallback.CreationMode || map_attribute_definition_string_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_string_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_string_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_string_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_string_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_string_showintableentry, newFormGroup, map_attribute_definition_string_showintableentryFormCallback.probe)
+		map_attribute_definition_string_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_string_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback(
+	map_attribute_definition_string_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_string_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_string_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback)
+	map_attribute_definition_string_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_string_showintitleentryFormCallback.map_attribute_definition_string_showintitleentry = map_attribute_definition_string_showintitleentry
+	map_attribute_definition_string_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_string_showintitleentryFormCallback.CreationMode = (map_attribute_definition_string_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_string_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_string_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_string_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_string_showintitleentryFormCallback.map_attribute_definition_string_showintitleentry == nil {
+		map_attribute_definition_string_showintitleentryFormCallback.map_attribute_definition_string_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry).Stage(map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_string_showintitleentry_ := map_attribute_definition_string_showintitleentryFormCallback.map_attribute_definition_string_showintitleentry
+	_ = map_attribute_definition_string_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_string_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_string_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_string_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_string_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, map_attribute_definition_string_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, map_attribute_definition_string_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_string_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_string_showintitleentry_.Unstage(map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](
+		map_attribute_definition_string_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_string_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_string_showintitleentryFormCallback.CreationMode || map_attribute_definition_string_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_string_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_string_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_string_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_string_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_string_showintitleentry, newFormGroup, map_attribute_definition_string_showintitleentryFormCallback.probe)
+		map_attribute_definition_string_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_string_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback(
+	map_attribute_definition_xhtml_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_xhtml_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback) {
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback)
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe = probe
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.map_attribute_definition_xhtml_showinsubjectentry = map_attribute_definition_xhtml_showinsubjectentry
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.CreationMode = (map_attribute_definition_xhtml_showinsubjectentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback struct {
+	map_attribute_definition_xhtml_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_xhtml_showinsubjectentryFormCallback *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_xhtml_showinsubjectentryFormCallback.map_attribute_definition_xhtml_showinsubjectentry == nil {
+		map_attribute_definition_xhtml_showinsubjectentryFormCallback.map_attribute_definition_xhtml_showinsubjectentry = new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry).Stage(map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_xhtml_showinsubjectentry_ := map_attribute_definition_xhtml_showinsubjectentryFormCallback.map_attribute_definition_xhtml_showinsubjectentry
+	_ = map_attribute_definition_xhtml_showinsubjectentry_
+
+	for _, formDiv := range map_attribute_definition_xhtml_showinsubjectentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_xhtml_showinsubjectentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_xhtml_showinsubjectentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_xhtml_showinsubjectentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, map_attribute_definition_xhtml_showinsubjectentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, map_attribute_definition_xhtml_showinsubjectentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_xhtml_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_xhtml_showinsubjectentry_.Unstage(map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](
+		map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe,
+	)
+	map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_xhtml_showinsubjectentryFormCallback.CreationMode || map_attribute_definition_xhtml_showinsubjectentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryFormCallback(
+			nil,
+			map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_xhtml_showinsubjectentry := new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+		FillUpForm(map_attribute_definition_xhtml_showinsubjectentry, newFormGroup, map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe)
+		map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback(
+	map_attribute_definition_xhtml_showintableentry *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_xhtml_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback) {
+	map_attribute_definition_xhtml_showintableentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback)
+	map_attribute_definition_xhtml_showintableentryFormCallback.probe = probe
+	map_attribute_definition_xhtml_showintableentryFormCallback.map_attribute_definition_xhtml_showintableentry = map_attribute_definition_xhtml_showintableentry
+	map_attribute_definition_xhtml_showintableentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_xhtml_showintableentryFormCallback.CreationMode = (map_attribute_definition_xhtml_showintableentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback struct {
+	map_attribute_definition_xhtml_showintableentry *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_xhtml_showintableentryFormCallback *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_xhtml_showintableentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_xhtml_showintableentryFormCallback.map_attribute_definition_xhtml_showintableentry == nil {
+		map_attribute_definition_xhtml_showintableentryFormCallback.map_attribute_definition_xhtml_showintableentry = new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry).Stage(map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_xhtml_showintableentry_ := map_attribute_definition_xhtml_showintableentryFormCallback.map_attribute_definition_xhtml_showintableentry
+	_ = map_attribute_definition_xhtml_showintableentry_
+
+	for _, formDiv := range map_attribute_definition_xhtml_showintableentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_xhtml_showintableentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_xhtml_showintableentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_xhtml_showintableentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, map_attribute_definition_xhtml_showintableentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, map_attribute_definition_xhtml_showintableentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_xhtml_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_xhtml_showintableentry_.Unstage(map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](
+		map_attribute_definition_xhtml_showintableentryFormCallback.probe,
+	)
+	map_attribute_definition_xhtml_showintableentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_xhtml_showintableentryFormCallback.CreationMode || map_attribute_definition_xhtml_showintableentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_xhtml_showintableentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_xhtml_showintableentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryFormCallback(
+			nil,
+			map_attribute_definition_xhtml_showintableentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_xhtml_showintableentry := new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+		FillUpForm(map_attribute_definition_xhtml_showintableentry, newFormGroup, map_attribute_definition_xhtml_showintableentryFormCallback.probe)
+		map_attribute_definition_xhtml_showintableentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_xhtml_showintableentryFormCallback.probe)
+}
+func __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback(
+	map_attribute_definition_xhtml_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_attribute_definition_xhtml_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback) {
+	map_attribute_definition_xhtml_showintitleentryFormCallback = new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback)
+	map_attribute_definition_xhtml_showintitleentryFormCallback.probe = probe
+	map_attribute_definition_xhtml_showintitleentryFormCallback.map_attribute_definition_xhtml_showintitleentry = map_attribute_definition_xhtml_showintitleentry
+	map_attribute_definition_xhtml_showintitleentryFormCallback.formGroup = formGroup
+
+	map_attribute_definition_xhtml_showintitleentryFormCallback.CreationMode = (map_attribute_definition_xhtml_showintitleentry == nil)
+
+	return
+}
+
+type Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback struct {
+	map_attribute_definition_xhtml_showintitleentry *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_attribute_definition_xhtml_showintitleentryFormCallback *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback) OnSave() {
+
+	// log.Println("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_attribute_definition_xhtml_showintitleentryFormCallback.probe.formStage.Checkout()
+
+	if map_attribute_definition_xhtml_showintitleentryFormCallback.map_attribute_definition_xhtml_showintitleentry == nil {
+		map_attribute_definition_xhtml_showintitleentryFormCallback.map_attribute_definition_xhtml_showintitleentry = new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry).Stage(map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+	map_attribute_definition_xhtml_showintitleentry_ := map_attribute_definition_xhtml_showintitleentryFormCallback.map_attribute_definition_xhtml_showintitleentry
+	_ = map_attribute_definition_xhtml_showintitleentry_
+
+	for _, formDiv := range map_attribute_definition_xhtml_showintitleentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_attribute_definition_xhtml_showintitleentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_attribute_definition_xhtml_showintitleentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest,
+					map_attribute_definition_xhtml_showintitleentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, map_attribute_definition_xhtml_showintitleentry_)
+					formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = slices.Delete(formerSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries []*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, map_attribute_definition_xhtml_showintitleentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_attribute_definition_xhtml_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_xhtml_showintitleentry_.Unstage(map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](
+		map_attribute_definition_xhtml_showintitleentryFormCallback.probe,
+	)
+	map_attribute_definition_xhtml_showintitleentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_attribute_definition_xhtml_showintitleentryFormCallback.CreationMode || map_attribute_definition_xhtml_showintitleentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_attribute_definition_xhtml_showintitleentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_attribute_definition_xhtml_showintitleentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryFormCallback(
+			nil,
+			map_attribute_definition_xhtml_showintitleentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_attribute_definition_xhtml_showintitleentry := new(models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+		FillUpForm(map_attribute_definition_xhtml_showintitleentry, newFormGroup, map_attribute_definition_xhtml_showintitleentryFormCallback.probe)
+		map_attribute_definition_xhtml_showintitleentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_attribute_definition_xhtml_showintitleentryFormCallback.probe)
+}
+func __gong__New__Map_SPECIFICATION_Nodes_expandedEntryFormCallback(
+	map_specification_nodes_expandedentry *models.Map_SPECIFICATION_Nodes_expandedEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_specification_nodes_expandedentryFormCallback *Map_SPECIFICATION_Nodes_expandedEntryFormCallback) {
+	map_specification_nodes_expandedentryFormCallback = new(Map_SPECIFICATION_Nodes_expandedEntryFormCallback)
+	map_specification_nodes_expandedentryFormCallback.probe = probe
+	map_specification_nodes_expandedentryFormCallback.map_specification_nodes_expandedentry = map_specification_nodes_expandedentry
+	map_specification_nodes_expandedentryFormCallback.formGroup = formGroup
+
+	map_specification_nodes_expandedentryFormCallback.CreationMode = (map_specification_nodes_expandedentry == nil)
+
+	return
+}
+
+type Map_SPECIFICATION_Nodes_expandedEntryFormCallback struct {
+	map_specification_nodes_expandedentry *models.Map_SPECIFICATION_Nodes_expandedEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_specification_nodes_expandedentryFormCallback *Map_SPECIFICATION_Nodes_expandedEntryFormCallback) OnSave() {
+
+	// log.Println("Map_SPECIFICATION_Nodes_expandedEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_specification_nodes_expandedentryFormCallback.probe.formStage.Checkout()
+
+	if map_specification_nodes_expandedentryFormCallback.map_specification_nodes_expandedentry == nil {
+		map_specification_nodes_expandedentryFormCallback.map_specification_nodes_expandedentry = new(models.Map_SPECIFICATION_Nodes_expandedEntry).Stage(map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest)
+	}
+	map_specification_nodes_expandedentry_ := map_specification_nodes_expandedentryFormCallback.map_specification_nodes_expandedentry
+	_ = map_specification_nodes_expandedentry_
+
+	for _, formDiv := range map_specification_nodes_expandedentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_specification_nodes_expandedentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_specification_nodes_expandedentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_SPECIFICATION_Nodes_expandedEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPECIFICATION_Nodes_expandedEntries []*Map_SPECIFICATION_Nodes_expandedEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_SPECIFICATION_Nodes_expandedEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest,
+					map_specification_nodes_expandedentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_SPECIFICATION_Nodes_expandedEntries []*Map_SPECIFICATION_Nodes_expandedEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_SPECIFICATION_Nodes_expandedEntries, map_specification_nodes_expandedentry_)
+					formerSource.Map_SPECIFICATION_Nodes_expandedEntries = slices.Delete(formerSource.Map_SPECIFICATION_Nodes_expandedEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_SPECIFICATION_Nodes_expandedEntries []*Map_SPECIFICATION_Nodes_expandedEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_SPECIFICATION_Nodes_expandedEntries = append(newSource.Map_SPECIFICATION_Nodes_expandedEntries, map_specification_nodes_expandedentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_specification_nodes_expandedentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_specification_nodes_expandedentry_.Unstage(map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_SPECIFICATION_Nodes_expandedEntry](
+		map_specification_nodes_expandedentryFormCallback.probe,
+	)
+	map_specification_nodes_expandedentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_specification_nodes_expandedentryFormCallback.CreationMode || map_specification_nodes_expandedentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_specification_nodes_expandedentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_specification_nodes_expandedentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_SPECIFICATION_Nodes_expandedEntryFormCallback(
+			nil,
+			map_specification_nodes_expandedentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_specification_nodes_expandedentry := new(models.Map_SPECIFICATION_Nodes_expandedEntry)
+		FillUpForm(map_specification_nodes_expandedentry, newFormGroup, map_specification_nodes_expandedentryFormCallback.probe)
+		map_specification_nodes_expandedentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_specification_nodes_expandedentryFormCallback.probe)
+}
+func __gong__New__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback(
+	map_spec_object_type_isnodeexpandedentry *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_spec_object_type_isnodeexpandedentryFormCallback *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback) {
+	map_spec_object_type_isnodeexpandedentryFormCallback = new(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback)
+	map_spec_object_type_isnodeexpandedentryFormCallback.probe = probe
+	map_spec_object_type_isnodeexpandedentryFormCallback.map_spec_object_type_isnodeexpandedentry = map_spec_object_type_isnodeexpandedentry
+	map_spec_object_type_isnodeexpandedentryFormCallback.formGroup = formGroup
+
+	map_spec_object_type_isnodeexpandedentryFormCallback.CreationMode = (map_spec_object_type_isnodeexpandedentry == nil)
+
+	return
+}
+
+type Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback struct {
+	map_spec_object_type_isnodeexpandedentry *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_spec_object_type_isnodeexpandedentryFormCallback *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback) OnSave() {
+
+	// log.Println("Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_spec_object_type_isnodeexpandedentryFormCallback.probe.formStage.Checkout()
+
+	if map_spec_object_type_isnodeexpandedentryFormCallback.map_spec_object_type_isnodeexpandedentry == nil {
+		map_spec_object_type_isnodeexpandedentryFormCallback.map_spec_object_type_isnodeexpandedentry = new(models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry).Stage(map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest)
+	}
+	map_spec_object_type_isnodeexpandedentry_ := map_spec_object_type_isnodeexpandedentryFormCallback.map_spec_object_type_isnodeexpandedentry
+	_ = map_spec_object_type_isnodeexpandedentry_
+
+	for _, formDiv := range map_spec_object_type_isnodeexpandedentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_spec_object_type_isnodeexpandedentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_spec_object_type_isnodeexpandedentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest,
+					map_spec_object_type_isnodeexpandedentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, map_spec_object_type_isnodeexpandedentry_)
+					formerSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = slices.Delete(formerSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(newSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, map_spec_object_type_isnodeexpandedentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_spec_object_type_isnodeexpandedentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_isnodeexpandedentry_.Unstage(map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](
+		map_spec_object_type_isnodeexpandedentryFormCallback.probe,
+	)
+	map_spec_object_type_isnodeexpandedentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_spec_object_type_isnodeexpandedentryFormCallback.CreationMode || map_spec_object_type_isnodeexpandedentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_isnodeexpandedentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_spec_object_type_isnodeexpandedentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryFormCallback(
+			nil,
+			map_spec_object_type_isnodeexpandedentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_spec_object_type_isnodeexpandedentry := new(models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+		FillUpForm(map_spec_object_type_isnodeexpandedentry, newFormGroup, map_spec_object_type_isnodeexpandedentryFormCallback.probe)
+		map_spec_object_type_isnodeexpandedentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_spec_object_type_isnodeexpandedentryFormCallback.probe)
+}
+func __gong__New__Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback(
+	map_spec_object_type_showidentifierentry *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_spec_object_type_showidentifierentryFormCallback *Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback) {
+	map_spec_object_type_showidentifierentryFormCallback = new(Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback)
+	map_spec_object_type_showidentifierentryFormCallback.probe = probe
+	map_spec_object_type_showidentifierentryFormCallback.map_spec_object_type_showidentifierentry = map_spec_object_type_showidentifierentry
+	map_spec_object_type_showidentifierentryFormCallback.formGroup = formGroup
+
+	map_spec_object_type_showidentifierentryFormCallback.CreationMode = (map_spec_object_type_showidentifierentry == nil)
+
+	return
+}
+
+type Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback struct {
+	map_spec_object_type_showidentifierentry *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_spec_object_type_showidentifierentryFormCallback *Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback) OnSave() {
+
+	// log.Println("Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_spec_object_type_showidentifierentryFormCallback.probe.formStage.Checkout()
+
+	if map_spec_object_type_showidentifierentryFormCallback.map_spec_object_type_showidentifierentry == nil {
+		map_spec_object_type_showidentifierentryFormCallback.map_spec_object_type_showidentifierentry = new(models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry).Stage(map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest)
+	}
+	map_spec_object_type_showidentifierentry_ := map_spec_object_type_showidentifierentryFormCallback.map_spec_object_type_showidentifierentry
+	_ = map_spec_object_type_showidentifierentry_
+
+	for _, formDiv := range map_spec_object_type_showidentifierentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_spec_object_type_showidentifierentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_spec_object_type_showidentifierentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries []*Map_SPEC_OBJECT_TYPE_showIdentifierEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_SPEC_OBJECT_TYPE_showIdentifierEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest,
+					map_spec_object_type_showidentifierentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries []*Map_SPEC_OBJECT_TYPE_showIdentifierEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, map_spec_object_type_showidentifierentry_)
+					formerSource.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = slices.Delete(formerSource.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries []*Map_SPEC_OBJECT_TYPE_showIdentifierEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(newSource.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, map_spec_object_type_showidentifierentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_spec_object_type_showidentifierentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_showidentifierentry_.Unstage(map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](
+		map_spec_object_type_showidentifierentryFormCallback.probe,
+	)
+	map_spec_object_type_showidentifierentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_spec_object_type_showidentifierentryFormCallback.CreationMode || map_spec_object_type_showidentifierentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_showidentifierentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_spec_object_type_showidentifierentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_showIdentifierEntryFormCallback(
+			nil,
+			map_spec_object_type_showidentifierentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_spec_object_type_showidentifierentry := new(models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+		FillUpForm(map_spec_object_type_showidentifierentry, newFormGroup, map_spec_object_type_showidentifierentryFormCallback.probe)
+		map_spec_object_type_showidentifierentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_spec_object_type_showidentifierentryFormCallback.probe)
+}
+func __gong__New__Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback(
+	map_spec_object_type_shownameentry *models.Map_SPEC_OBJECT_TYPE_showNameEntry,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_spec_object_type_shownameentryFormCallback *Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback) {
+	map_spec_object_type_shownameentryFormCallback = new(Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback)
+	map_spec_object_type_shownameentryFormCallback.probe = probe
+	map_spec_object_type_shownameentryFormCallback.map_spec_object_type_shownameentry = map_spec_object_type_shownameentry
+	map_spec_object_type_shownameentryFormCallback.formGroup = formGroup
+
+	map_spec_object_type_shownameentryFormCallback.CreationMode = (map_spec_object_type_shownameentry == nil)
+
+	return
+}
+
+type Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback struct {
+	map_spec_object_type_shownameentry *models.Map_SPEC_OBJECT_TYPE_showNameEntry
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_spec_object_type_shownameentryFormCallback *Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback) OnSave() {
+
+	// log.Println("Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_spec_object_type_shownameentryFormCallback.probe.formStage.Checkout()
+
+	if map_spec_object_type_shownameentryFormCallback.map_spec_object_type_shownameentry == nil {
+		map_spec_object_type_shownameentryFormCallback.map_spec_object_type_shownameentry = new(models.Map_SPEC_OBJECT_TYPE_showNameEntry).Stage(map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest)
+	}
+	map_spec_object_type_shownameentry_ := map_spec_object_type_shownameentryFormCallback.map_spec_object_type_shownameentry
+	_ = map_spec_object_type_shownameentry_
+
+	for _, formDiv := range map_spec_object_type_shownameentryFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_spec_object_type_shownameentry_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_spec_object_type_shownameentry_.Value), formDiv)
+		case "RenderingConfiguration:Map_SPEC_OBJECT_TYPE_showNameEntries":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries []*Map_SPEC_OBJECT_TYPE_showNameEntry" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_SPEC_OBJECT_TYPE_showNameEntry). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
+				formerAssociationSource := models.GetReverseFieldOwner(
+					map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest,
+					map_spec_object_type_shownameentry_,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries []*Map_SPEC_OBJECT_TYPE_showNameEntry, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_SPEC_OBJECT_TYPE_showNameEntries, map_spec_object_type_shownameentry_)
+					formerSource.Map_SPEC_OBJECT_TYPE_showNameEntries = slices.Delete(formerSource.Map_SPEC_OBJECT_TYPE_showNameEntries, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries []*Map_SPEC_OBJECT_TYPE_showNameEntry, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_SPEC_OBJECT_TYPE_showNameEntries = append(newSource.Map_SPEC_OBJECT_TYPE_showNameEntries, map_spec_object_type_shownameentry_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_spec_object_type_shownameentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_shownameentry_.Unstage(map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest)
+	}
+
+	map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](
+		map_spec_object_type_shownameentryFormCallback.probe,
+	)
+	map_spec_object_type_shownameentryFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_spec_object_type_shownameentryFormCallback.CreationMode || map_spec_object_type_shownameentryFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_shownameentryFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_spec_object_type_shownameentryFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_showNameEntryFormCallback(
+			nil,
+			map_spec_object_type_shownameentryFormCallback.probe,
+			newFormGroup,
+		)
+		map_spec_object_type_shownameentry := new(models.Map_SPEC_OBJECT_TYPE_showNameEntry)
+		FillUpForm(map_spec_object_type_shownameentry, newFormGroup, map_spec_object_type_shownameentryFormCallback.probe)
+		map_spec_object_type_shownameentryFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_spec_object_type_shownameentryFormCallback.probe)
+}
 func __gong__New__RELATION_GROUPFormCallback(
 	relation_group *models.RELATION_GROUP,
 	probe *Probe,
@@ -9371,6 +13021,708 @@ func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSa
 	}
 
 	updateAndCommitTree(req_if_tool_extensionFormCallback.probe)
+}
+func __gong__New__RenderingConfigurationFormCallback(
+	renderingconfiguration *models.RenderingConfiguration,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) {
+	renderingconfigurationFormCallback = new(RenderingConfigurationFormCallback)
+	renderingconfigurationFormCallback.probe = probe
+	renderingconfigurationFormCallback.renderingconfiguration = renderingconfiguration
+	renderingconfigurationFormCallback.formGroup = formGroup
+
+	renderingconfigurationFormCallback.CreationMode = (renderingconfiguration == nil)
+
+	return
+}
+
+type RenderingConfigurationFormCallback struct {
+	renderingconfiguration *models.RenderingConfiguration
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) OnSave() {
+
+	// log.Println("RenderingConfigurationFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	renderingconfigurationFormCallback.probe.formStage.Checkout()
+
+	if renderingconfigurationFormCallback.renderingconfiguration == nil {
+		renderingconfigurationFormCallback.renderingconfiguration = new(models.RenderingConfiguration).Stage(renderingconfigurationFormCallback.probe.stageOfInterest)
+	}
+	renderingconfiguration_ := renderingconfigurationFormCallback.renderingconfiguration
+	_ = renderingconfiguration_
+
+	for _, formDiv := range renderingconfigurationFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(renderingconfiguration_.Name), formDiv)
+		case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = instanceSlice
+
+		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = instanceSlice
+
+		case "Map_SPECIFICATION_Nodes_expandedEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_SPECIFICATION_Nodes_expandedEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_SPECIFICATION_Nodes_expandedEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_SPECIFICATION_Nodes_expandedEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_SPECIFICATION_Nodes_expandedEntries = instanceSlice
+
+		case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = instanceSlice
+
+		case "Map_SPEC_OBJECT_TYPE_showNameEntries":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_SPEC_OBJECT_TYPE_showNameEntry](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_SPEC_OBJECT_TYPE_showNameEntry, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_SPEC_OBJECT_TYPE_showNameEntry)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_showNameEntries = instanceSlice
+
+		}
+	}
+
+	// manage the suppress operation
+	if renderingconfigurationFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		renderingconfiguration_.Unstage(renderingconfigurationFormCallback.probe.stageOfInterest)
+	}
+
+	renderingconfigurationFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.RenderingConfiguration](
+		renderingconfigurationFormCallback.probe,
+	)
+	renderingconfigurationFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if renderingconfigurationFormCallback.CreationMode || renderingconfigurationFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		renderingconfigurationFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(renderingconfigurationFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__RenderingConfigurationFormCallback(
+			nil,
+			renderingconfigurationFormCallback.probe,
+			newFormGroup,
+		)
+		renderingconfiguration := new(models.RenderingConfiguration)
+		FillUpForm(renderingconfiguration, newFormGroup, renderingconfigurationFormCallback.probe)
+		renderingconfigurationFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(renderingconfigurationFormCallback.probe)
 }
 func __gong__New__SPECIFICATIONFormCallback(
 	specification *models.SPECIFICATION,

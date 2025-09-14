@@ -10,10 +10,7 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
-type ReqifExporter struct {
-}
-
-func (reqifExport *ReqifExporter) ExportReqif(stager *models.Stager) {
+func (exporter *Exporter) ExportReqif(stager *models.Stager) {
 
 	log.Println("Exporting the ReqIF file")
 
