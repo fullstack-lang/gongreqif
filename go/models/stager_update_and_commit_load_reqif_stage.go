@@ -80,9 +80,9 @@ func extractReqifFromZip(zipData []byte) ([]byte, error) {
 
 	return nil, fmt.Errorf("no .reqif file found in the zip archive")
 }
-func (stager *Stager) updateAndCommitSummaryLoadStage() {
+func (stager *Stager) updateAndCommitLoadReqifStage() {
 
-	stager.loadStage.Reset()
+	stager.loadReqifStage.Reset()
 
 	var fileToUpload = &load.FileToUpload{
 		Name: "Name of file",
@@ -91,7 +91,7 @@ func (stager *Stager) updateAndCommitSummaryLoadStage() {
 		},
 	}
 
-	load.StageBranch(stager.loadStage,
+	load.StageBranch(stager.loadReqifStage,
 		fileToUpload,
 	)
 
@@ -99,7 +99,7 @@ func (stager *Stager) updateAndCommitSummaryLoadStage() {
 		Name: "Drop your .reqif or .reqifz file here or ",
 	}
 
-	message.Stage(stager.loadStage)
+	message.Stage(stager.loadReqifStage)
 
-	stager.loadStage.Commit()
+	stager.loadReqifStage.Commit()
 }
