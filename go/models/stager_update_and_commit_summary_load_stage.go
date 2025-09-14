@@ -95,5 +95,11 @@ func (stager *Stager) updateAndCommitSummaryLoadStage() {
 		fileToUpload,
 	)
 
+	message := &load.Message{
+		Name: "Drop your .reqif or .reqifz file here or ",
+	}
+
+	message.Stage(stager.loadStage)
+
 	stager.loadStage.Commit()
 }
