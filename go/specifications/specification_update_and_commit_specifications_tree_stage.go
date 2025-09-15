@@ -12,6 +12,7 @@ import (
 
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(stager *m.Stager) {
 	treeStage := stager.GetSpecificationsTreeStage()
+	treeStage.Reset()
 
 	sliceOfSpecificationNodes := make([]*tree.Node, 0)
 	nameNode := &tree.Node{

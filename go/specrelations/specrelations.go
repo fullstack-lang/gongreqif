@@ -15,6 +15,7 @@ type SpecRelationsTreeStageUpdater struct {
 
 func (specRelationsTreeUpdater *SpecRelationsTreeStageUpdater) UpdateAndCommitSpecRelationsTreeStage(stager *m.Stager) {
 	treeStage := stager.GetSpecRelationsTreeStage()
+	treeStage.Reset()
 
 	sliceOfSpecRelationNodes := make([]*tree.Node, 0)
 	specRelationsNode := &tree.Node{
