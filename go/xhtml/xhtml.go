@@ -126,7 +126,7 @@ func renderTable(tableNode *html.Node) string {
 	var headerRows [][]string
 	var bodyRows [][]string
 
-	// Find thead and tbody
+	// Find thead and tbody and parse their rows
 	for child := tableNode.FirstChild; child != nil; child = child.NextSibling {
 		if child.Type != html.ElementNode {
 			continue
@@ -139,26 +139,74 @@ func renderTable(tableNode *html.Node) string {
 		}
 	}
 
-	// If no thead/tbody, parse directly from table
+	// Fallback for tables without explicit thead/tbody
 	if len(headerRows) == 0 && len(bodyRows) == 0 {
 		bodyRows = parseTableRows(tableNode, "td")
-	}
+		// Check if the first row looks like a header (contains only th)
+		if len(bodyRows) > 0 {
+			firstRowIsHeader := true
+			firstTr := tableNode.FirstChild
+			for firstTr != nil && (firstTr.Type != html.ElementNode || firstTr.Data != "tr") {
+				firstTr = firstTr.NextSibling
+			}
 
-	// Write header
-	if len(headerRows) > 0 {
-		b.WriteString("| " + strings.Join(headerRows[0], " | ") + " |\n")
-		// Write separator
-		var separator []string
-		for range headerRows[0] {
-			separator = append(separator, "---")
+			if firstTr != nil {
+				for cell := firstTr.FirstChild; cell != nil; cell = cell.NextSibling {
+					if cell.Type == html.ElementNode && cell.Data != "th" {
+						firstRowIsHeader = false
+						break
+					}
+				}
+				if firstRowIsHeader {
+					headerRows = [][]string{bodyRows[0]}
+					bodyRows = bodyRows[1:]
+				}
+			}
 		}
-		b.WriteString("| " + strings.Join(separator, " | ") + " |\n")
 	}
 
-	// Write body
+	// --- NEW LOGIC START ---
+
+	// 1. Determine the maximum number of columns in the entire table
+	maxColumns := 0
+	allRows := append(headerRows, bodyRows...)
+	for _, row := range allRows {
+		if len(row) > maxColumns {
+			maxColumns = len(row)
+		}
+	}
+
+	// If table is empty, return nothing
+	if maxColumns == 0 {
+		return ""
+	}
+
+	// 2. Render header, padded to maxColumns
+	if len(headerRows) > 0 {
+		header := headerRows[0]
+		// Pad the header row with empty strings if it's shorter than maxColumns
+		for len(header) < maxColumns {
+			header = append(header, "")
+		}
+		b.WriteString("| " + strings.Join(header, " | ") + " |\n")
+	}
+
+	// 3. Render the separator, which MUST match maxColumns
+	var separator []string
+	for i := 0; i < maxColumns; i++ {
+		separator = append(separator, "---")
+	}
+	b.WriteString("| " + strings.Join(separator, " | ") + " |\n")
+
+	// 4. Render body rows, each padded to maxColumns
 	for _, row := range bodyRows {
+		// Pad the current row with empty strings to match maxColumns
+		for len(row) < maxColumns {
+			row = append(row, "")
+		}
 		b.WriteString("| " + strings.Join(row, " | ") + " |\n")
 	}
+	// --- NEW LOGIC END ---
 
 	return b.String()
 }
