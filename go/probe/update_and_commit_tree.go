@@ -782,6 +782,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "Kill":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.Kill](probe.stageOfInterest)
+			for _kill := range set {
+				nodeInstance := &tree.Node{Name: _kill.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_kill, "Kill", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](probe.stageOfInterest)

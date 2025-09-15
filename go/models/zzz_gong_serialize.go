@@ -86,6 +86,7 @@ func SerializeStage(stage *Stage, filename string) {
 		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_XHTML](stage, f)
 		SerializeExcelizePointerToGongstruct[*EMBEDDED_VALUE](stage, f)
 		SerializeExcelizePointerToGongstruct[*ENUM_VALUE](stage, f)
+		SerializeExcelizePointerToGongstruct[*Kill](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](stage, f)

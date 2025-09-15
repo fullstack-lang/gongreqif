@@ -1118,6 +1118,17 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type Kill_WOP struct {
+	// insertion point
+
+	Name string
+}
+
+func (from *Kill) CopyBasicFields(to *Kill) {
+	// insertion point
+	to.Name = from.Name
+}
+
 type Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_WOP struct {
 	// insertion point
 

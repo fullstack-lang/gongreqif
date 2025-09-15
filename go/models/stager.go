@@ -602,6 +602,9 @@ func NewStager(
 	stager.UpdateAndCommitWelcomeTabButtonStage()
 	stager.UpdateAndCommitRenderingTabButtonStage()
 
+	// hook the stage on a kill command
+	stage.OnAfterKillCreateCallback = &OnAfterKillCreateCallback{}
+
 	return
 }
 

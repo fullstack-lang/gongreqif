@@ -527,6 +527,9 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ENUM_VALUE
 	// insertion point per field
 
+	// Compute reverse map for named struct Kill
+	// insertion point per field
+
 	// Compute reverse map for named struct Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
 	// insertion point per field
 

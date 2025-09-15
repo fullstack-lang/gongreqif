@@ -300,6 +300,10 @@ type DBLite struct {
 
 	nextIDENUM_VALUEDB uint
 
+	killDBs map[uint]*KillDB
+
+	nextIDKillDB uint
+
 	map_attribute_definition_boolean_showinsubjectentryDBs map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB
 
 	nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB uint
@@ -625,6 +629,8 @@ func NewDBLite() *DBLite {
 		embedded_valueDBs: make(map[uint]*EMBEDDED_VALUEDB),
 
 		enum_valueDBs: make(map[uint]*ENUM_VALUEDB),
+
+		killDBs: make(map[uint]*KillDB),
 
 		map_attribute_definition_boolean_showinsubjectentryDBs: make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB),
 
@@ -1009,6 +1015,10 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDENUM_VALUEDB++
 		v.ID = db.nextIDENUM_VALUEDB
 		db.enum_valueDBs[v.ID] = v
+	case *KillDB:
+		db.nextIDKillDB++
+		v.ID = db.nextIDKillDB
+		db.killDBs[v.ID] = v
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
 		db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB++
 		v.ID = db.nextIDMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB
@@ -1357,6 +1367,8 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.embedded_valueDBs, v.ID)
 	case *ENUM_VALUEDB:
 		delete(db.enum_valueDBs, v.ID)
+	case *KillDB:
+		delete(db.killDBs, v.ID)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
 		delete(db.map_attribute_definition_boolean_showinsubjectentryDBs, v.ID)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB:
@@ -1674,6 +1686,9 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 		return db, nil
 	case *ENUM_VALUEDB:
 		db.enum_valueDBs[v.ID] = v
+		return db, nil
+	case *KillDB:
+		db.killDBs[v.ID] = v
 		return db, nil
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
 		db.map_attribute_definition_boolean_showinsubjectentryDBs[v.ID] = v
@@ -2245,6 +2260,12 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 			*existing = *v
 		} else {
 			return nil, errors.New("db ENUM_VALUE github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *KillDB:
+		if existing, ok := db.killDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db Kill github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
 		if existing, ok := db.map_attribute_definition_boolean_showinsubjectentryDBs[v.ID]; ok {
@@ -2947,6 +2968,12 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 	case *[]ENUM_VALUEDB:
 		*ptr = make([]ENUM_VALUEDB, 0, len(db.enum_valueDBs))
 		for _, v := range db.enum_valueDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]KillDB:
+		*ptr = make([]KillDB, 0, len(db.killDBs))
+		for _, v := range db.killDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -3952,6 +3979,16 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 
 		enum_valueDB, _ := instanceDB.(*ENUM_VALUEDB)
 		*enum_valueDB = *tmp
+		
+	case *KillDB:
+		tmp, ok := db.killDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First Kill Unkown entry %d", i))
+		}
+
+		killDB, _ := instanceDB.(*KillDB)
+		*killDB = *tmp
 		
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
 		tmp, ok := db.map_attribute_definition_boolean_showinsubjectentryDBs[uint(i)]

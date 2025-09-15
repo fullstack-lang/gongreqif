@@ -8643,6 +8643,83 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 
 	updateAndCommitTree(enum_valueFormCallback.probe)
 }
+func __gong__New__KillFormCallback(
+	kill *models.Kill,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (killFormCallback *KillFormCallback) {
+	killFormCallback = new(KillFormCallback)
+	killFormCallback.probe = probe
+	killFormCallback.kill = kill
+	killFormCallback.formGroup = formGroup
+
+	killFormCallback.CreationMode = (kill == nil)
+
+	return
+}
+
+type KillFormCallback struct {
+	kill *models.Kill
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (killFormCallback *KillFormCallback) OnSave() {
+
+	// log.Println("KillFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	killFormCallback.probe.formStage.Checkout()
+
+	if killFormCallback.kill == nil {
+		killFormCallback.kill = new(models.Kill).Stage(killFormCallback.probe.stageOfInterest)
+	}
+	kill_ := killFormCallback.kill
+	_ = kill_
+
+	for _, formDiv := range killFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(kill_.Name), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if killFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		kill_.Unstage(killFormCallback.probe.stageOfInterest)
+	}
+
+	killFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[models.Kill](
+		killFormCallback.probe,
+	)
+	killFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if killFormCallback.CreationMode || killFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		killFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(killFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__KillFormCallback(
+			nil,
+			killFormCallback.probe,
+			newFormGroup,
+		)
+		kill := new(models.Kill)
+		FillUpForm(kill, newFormGroup, killFormCallback.probe)
+		killFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(killFormCallback.probe)
+}
 func __gong__New__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryFormCallback(
 	map_attribute_definition_boolean_showinsubjectentry *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry,
 	probe *Probe,

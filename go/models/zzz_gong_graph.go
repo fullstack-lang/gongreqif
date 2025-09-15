@@ -215,6 +215,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ENUM_VALUE:
 		ok = stage.IsStagedENUM_VALUE(target)
 
+	case *Kill:
+		ok = stage.IsStagedKill(target)
+
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
 
@@ -847,6 +850,13 @@ func (stage *Stage) IsStagedENUM_VALUE(enum_value *ENUM_VALUE) (ok bool) {
 	return
 }
 
+func (stage *Stage) IsStagedKill(kill *Kill) (ok bool) {
+
+	_, ok = stage.Kills[kill]
+
+	return
+}
+
 func (stage *Stage) IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) (ok bool) {
 
 	_, ok = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys[map_attribute_definition_boolean_showinsubjectentry]
@@ -1379,6 +1389,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *ENUM_VALUE:
 		stage.StageBranchENUM_VALUE(target)
+
+	case *Kill:
+		stage.StageBranchKill(target)
 
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		stage.StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
@@ -2823,6 +2836,21 @@ func (stage *Stage) StageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) StageBranchKill(kill *Kill) {
+
+	// check if instance is already staged
+	if IsStaged(stage, kill) {
+		return
+	}
+
+	kill.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) {
 
 	// check if instance is already staged
@@ -3985,6 +4013,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *ENUM_VALUE:
 		toT := CopyBranchENUM_VALUE(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Kill:
+		toT := CopyBranchKill(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -5756,6 +5788,25 @@ func CopyBranchENUM_VALUE(mapOrigCopy map[any]any, enum_valueFrom *ENUM_VALUE) (
 	return
 }
 
+func CopyBranchKill(mapOrigCopy map[any]any, killFrom *Kill) (killTo *Kill) {
+
+	// killFrom has already been copied
+	if _killTo, ok := mapOrigCopy[killFrom]; ok {
+		killTo = _killTo.(*Kill)
+		return
+	}
+
+	killTo = new(Kill)
+	mapOrigCopy[killFrom] = killTo
+	killFrom.CopyBasicFields(killTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(mapOrigCopy map[any]any, map_attribute_definition_boolean_showinsubjectentryFrom *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) (map_attribute_definition_boolean_showinsubjectentryTo *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) {
 
 	// map_attribute_definition_boolean_showinsubjectentryFrom has already been copied
@@ -7026,6 +7077,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *ENUM_VALUE:
 		stage.UnstageBranchENUM_VALUE(target)
+
+	case *Kill:
+		stage.UnstageBranchKill(target)
 
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		stage.UnstageBranchMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
@@ -8465,6 +8519,21 @@ func (stage *Stage) UnstageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 	if enum_value.PROPERTIES != nil {
 		UnstageBranch(stage, enum_value.PROPERTIES)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchKill(kill *Kill) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, kill) {
+		return
+	}
+
+	kill.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

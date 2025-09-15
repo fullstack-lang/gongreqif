@@ -562,6 +562,11 @@ func GetReverseFieldOwnerName(
 			}
 		}
 
+	case *Kill:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -1553,6 +1558,11 @@ func GetReverseFieldOwner[T Gongstruct](
 			case "ENUM_VALUE":
 				res = stage.A_SPECIFIED_VALUES_ENUM_VALUE_reverseMap[inst]
 			}
+		}
+
+	case *Kill:
+		switch reverseField.GongstructName {
+		// insertion point
 		}
 
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:

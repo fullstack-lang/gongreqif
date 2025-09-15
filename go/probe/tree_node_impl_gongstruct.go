@@ -260,6 +260,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ENUM_VALUE" {
 		updateAndCommitTable[models.ENUM_VALUE](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Kill" {
+		updateAndCommitTable[models.Kill](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry" {
 		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](nodeImplGongstruct.probe)
 	}

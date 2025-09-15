@@ -546,6 +546,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/enum_values/:id", GetController().UpdateENUM_VALUE)
 		v1.DELETE("/v1/enum_values/:id", GetController().DeleteENUM_VALUE)
 
+		v1.GET("/v1/kills", GetController().GetKills)
+		v1.GET("/v1/kills/:id", GetController().GetKill)
+		v1.POST("/v1/kills", GetController().PostKill)
+		v1.PATCH("/v1/kills/:id", GetController().UpdateKill)
+		v1.PUT("/v1/kills/:id", GetController().UpdateKill)
+		v1.DELETE("/v1/kills/:id", GetController().DeleteKill)
+
 		v1.GET("/v1/map_attribute_definition_boolean_showinsubjectentrys", GetController().GetMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 		v1.GET("/v1/map_attribute_definition_boolean_showinsubjectentrys/:id", GetController().GetMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 		v1.POST("/v1/map_attribute_definition_boolean_showinsubjectentrys", GetController().PostMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)

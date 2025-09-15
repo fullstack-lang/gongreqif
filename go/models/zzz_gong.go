@@ -865,6 +865,16 @@ type Stage struct {
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
+	Kills           map[*Kill]any
+	Kills_mapString map[string]*Kill
+
+	// insertion point for slice of pointers maps
+	OnAfterKillCreateCallback OnAfterCreateInterface[Kill]
+	OnAfterKillUpdateCallback OnAfterUpdateInterface[Kill]
+	OnAfterKillUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[Kill]
+	OnAfterKillDeleteCallback OnAfterDeleteInterface[Kill]
+	OnAfterKillReadCallback   OnAfterReadInterface[Kill]
+
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
 
@@ -1604,6 +1614,9 @@ type Stage struct {
 
 	ENUM_VALUEOrder            uint
 	ENUM_VALUEMap_Staged_Order map[*ENUM_VALUE]uint
+
+	KillOrder            uint
+	KillMap_Staged_Order map[*Kill]uint
 
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryOrder            uint
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]uint
@@ -2775,6 +2788,20 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
+	case *Kill:
+		tmp := GetStructInstancesByOrder(stage.Kills, stage.KillMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *Kill implements.
+			res = append(res, any(v).(T))
+		}
+		return res
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		tmp := GetStructInstancesByOrder(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys, stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order)
 
@@ -3578,6 +3605,8 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.EMBEDDED_VALUEs, stage.EMBEDDED_VALUEMap_Staged_Order)
 	case "ENUM_VALUE":
 		res = GetNamedStructInstances(stage.ENUM_VALUEs, stage.ENUM_VALUEMap_Staged_Order)
+	case "Kill":
+		res = GetNamedStructInstances(stage.Kills, stage.KillMap_Staged_Order)
 	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
 		res = GetNamedStructInstances(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys, stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order)
 	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
@@ -3882,6 +3911,8 @@ type BackRepoInterface interface {
 	CheckoutEMBEDDED_VALUE(embedded_value *EMBEDDED_VALUE)
 	CommitENUM_VALUE(enum_value *ENUM_VALUE)
 	CheckoutENUM_VALUE(enum_value *ENUM_VALUE)
+	CommitKill(kill *Kill)
+	CheckoutKill(kill *Kill)
 	CommitMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	CheckoutMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	CommitMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -4189,6 +4220,9 @@ func NewStage(name string) (stage *Stage) {
 		ENUM_VALUEs:           make(map[*ENUM_VALUE]any),
 		ENUM_VALUEs_mapString: make(map[string]*ENUM_VALUE),
 
+		Kills:           make(map[*Kill]any),
+		Kills_mapString: make(map[string]*Kill),
+
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any),
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry),
 
@@ -4474,6 +4508,8 @@ func NewStage(name string) (stage *Stage) {
 
 		ENUM_VALUEMap_Staged_Order: make(map[*ENUM_VALUE]uint),
 
+		KillMap_Staged_Order: make(map[*Kill]uint),
+
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order: make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]uint),
 
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order: make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]uint),
@@ -4637,6 +4673,7 @@ func NewStage(name string) (stage *Stage) {
 			{name: "DATATYPE_DEFINITION_XHTML"},
 			{name: "EMBEDDED_VALUE"},
 			{name: "ENUM_VALUE"},
+			{name: "Kill"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry"},
@@ -4832,6 +4869,8 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
+	case *Kill:
+		return stage.KillMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -5071,6 +5110,8 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
+	case *Kill:
+		return stage.KillMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -5258,6 +5299,7 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
+	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys)
@@ -5383,6 +5425,7 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
+	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys)
@@ -9310,6 +9353,61 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 	return enum_value.Name
 }
 
+// Stage puts kill to the model stage
+func (kill *Kill) Stage(stage *Stage) *Kill {
+
+	if _, ok := stage.Kills[kill]; !ok {
+		stage.Kills[kill] = __member
+		stage.KillMap_Staged_Order[kill] = stage.KillOrder
+		stage.KillOrder++
+	}
+	stage.Kills_mapString[kill.Name] = kill
+
+	return kill
+}
+
+// Unstage removes kill off the model stage
+func (kill *Kill) Unstage(stage *Stage) *Kill {
+	delete(stage.Kills, kill)
+	delete(stage.Kills_mapString, kill.Name)
+	return kill
+}
+
+// UnstageVoid removes kill off the model stage
+func (kill *Kill) UnstageVoid(stage *Stage) {
+	delete(stage.Kills, kill)
+	delete(stage.Kills_mapString, kill.Name)
+}
+
+// commit kill to the back repo (if it is already staged)
+func (kill *Kill) Commit(stage *Stage) *Kill {
+	if _, ok := stage.Kills[kill]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitKill(kill)
+		}
+	}
+	return kill
+}
+
+func (kill *Kill) CommitVoid(stage *Stage) {
+	kill.Commit(stage)
+}
+
+// Checkout kill to the back repo (if it is already staged)
+func (kill *Kill) Checkout(stage *Stage) *Kill {
+	if _, ok := stage.Kills[kill]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutKill(kill)
+		}
+	}
+	return kill
+}
+
+// for satisfaction of GongStruct interface
+func (kill *Kill) GetName() (res string) {
+	return kill.Name
+}
+
 // Stage puts map_attribute_definition_boolean_showinsubjectentry to the model stage
 func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry {
 
@@ -11857,6 +11955,7 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	CreateORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	CreateORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
+	CreateORMKill(Kill *Kill)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
@@ -11975,6 +12074,7 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	DeleteORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	DeleteORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
+	DeleteORMKill(Kill *Kill)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
@@ -12372,6 +12472,11 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.ENUM_VALUEs_mapString = make(map[string]*ENUM_VALUE)
 	stage.ENUM_VALUEMap_Staged_Order = make(map[*ENUM_VALUE]uint)
 	stage.ENUM_VALUEOrder = 0
+
+	stage.Kills = make(map[*Kill]any)
+	stage.Kills_mapString = make(map[string]*Kill)
+	stage.KillMap_Staged_Order = make(map[*Kill]uint)
+	stage.KillOrder = 0
 
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
@@ -12811,6 +12916,9 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.ENUM_VALUEs = nil
 	stage.ENUM_VALUEs_mapString = nil
 
+	stage.Kills = nil
+	stage.Kills_mapString = nil
+
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys = nil
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString = nil
 
@@ -13229,6 +13337,10 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		enum_value.Unstage(stage)
 	}
 
+	for kill := range stage.Kills {
+		kill.Unstage(stage)
+	}
+
 	for map_attribute_definition_boolean_showinsubjectentry := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys {
 		map_attribute_definition_boolean_showinsubjectentry.Unstage(stage)
 	}
@@ -13610,6 +13722,8 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs).(*Type)
 	case map[*ENUM_VALUE]any:
 		return any(&stage.ENUM_VALUEs).(*Type)
+	case map[*Kill]any:
+		return any(&stage.Kills).(*Type)
 	case map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any:
 		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*Type)
 	case map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]any:
@@ -13852,6 +13966,8 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*Type)
 	case map[string]*ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*Type)
+	case map[string]*Kill:
+		return any(&stage.Kills_mapString).(*Type)
 	case map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString).(*Type)
 	case map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -14094,6 +14210,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.EMBEDDED_VALUEs).(*map[*Type]any)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[*Type]any)
+	case Kill:
+		return any(&stage.Kills).(*map[*Type]any)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*map[*Type]any)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -14336,6 +14454,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.EMBEDDED_VALUEs).(*map[Type]any)
 	case *ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[Type]any)
+	case *Kill:
+		return any(&stage.Kills).(*map[Type]any)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*map[Type]any)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -14578,6 +14698,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*map[string]*Type)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*map[string]*Type)
+	case Kill:
+		return any(&stage.Kills_mapString).(*map[string]*Type)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString).(*map[string]*Type)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -15129,6 +15251,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVE_ID: &A_ALTERNATIVE_ID{Name: "ALTERNATIVE_ID"},
 			// field is initialized with an instance of A_PROPERTIES with the name of the field
 			PROPERTIES: &A_PROPERTIES{Name: "PROPERTIES"},
+		}).(*Type)
+	case Kill:
+		return any(&Kill{
+			// Initialisation of associations
 		}).(*Type)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		return any(&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry{
@@ -16574,6 +16700,11 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 				}
 			}
 			return any(res).(map[*End][]*Start)
+		}
+	// reverse maps of direct associations of Kill
+	case Kill:
+		switch fieldname {
+		// insertion point for per direct association field
 		}
 	// reverse maps of direct associations of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -18141,6 +18272,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of Kill
+	case Kill:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		switch fieldname {
@@ -18734,6 +18870,8 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case ENUM_VALUE:
 		res = "ENUM_VALUE"
+	case Kill:
+		res = "Kill"
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		res = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -18976,6 +19114,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case *ENUM_VALUE:
 		res = "ENUM_VALUE"
+	case *Kill:
+		res = "Kill"
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		res = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -19217,6 +19357,8 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
+	case Kill:
+		res = []string{"Name"}
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		res = []string{"Name", "Value"}
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -19622,6 +19764,9 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPECIFIED_VALUES"
 		rf.Fieldname = "ENUM_VALUE"
 		res = append(res, rf)
+	case Kill:
+		var rf ReverseField
+		_ = rf
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
@@ -20019,6 +20164,8 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case *ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
+	case *Kill:
+		res = []string{"Name"}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		res = []string{"Name", "Value"}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
@@ -21287,6 +21434,12 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			if inferedInstance.PROPERTIES != nil {
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
+		}
+	case *Kill:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
 		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		switch fieldName {
@@ -23284,6 +23437,12 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			if inferedInstance.PROPERTIES != nil {
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
+		}
+	case Kill:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
 		}
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		switch fieldName {

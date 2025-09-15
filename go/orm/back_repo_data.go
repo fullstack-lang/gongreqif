@@ -144,6 +144,8 @@ type BackRepoData struct {
 
 	ENUM_VALUEAPIs []*ENUM_VALUEAPI
 
+	KillAPIs []*KillAPI
+
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryAPIs []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryAPI
 
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryAPIs []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryAPI
@@ -943,6 +945,16 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		enum_valueDB.CopyBasicFieldsToENUM_VALUE_WOP(&enum_valueAPI.ENUM_VALUE_WOP)
 
 		backRepoData.ENUM_VALUEAPIs = append(backRepoData.ENUM_VALUEAPIs, &enum_valueAPI)
+	}
+
+	for _, killDB := range backRepo.BackRepoKill.Map_KillDBID_KillDB {
+
+		var killAPI KillAPI
+		killAPI.ID = killDB.ID
+		killAPI.KillPointersEncoding = killDB.KillPointersEncoding
+		killDB.CopyBasicFieldsToKill_WOP(&killAPI.Kill_WOP)
+
+		backRepoData.KillAPIs = append(backRepoData.KillAPIs, &killAPI)
 	}
 
 	for _, map_attribute_definition_boolean_showinsubjectentryDB := range backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB {

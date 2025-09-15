@@ -295,6 +295,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		enum_valueInstance := any(concreteInstance).(*models.ENUM_VALUE)
 		ret2 := backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueInstance)
 		ret = any(ret2).(*T2)
+	case *models.Kill:
+		killInstance := any(concreteInstance).(*models.Kill)
+		ret2 := backRepo.BackRepoKill.GetKillDBFromKillPtr(killInstance)
+		ret = any(ret2).(*T2)
 	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		map_attribute_definition_boolean_showinsubjectentryInstance := any(concreteInstance).(*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 		ret2 := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.GetMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBFromMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryPtr(map_attribute_definition_boolean_showinsubjectentryInstance)
@@ -835,6 +839,11 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.ENUM_VALUE:
 		tmp := GetInstanceDBFromInstance[models.ENUM_VALUE, ENUM_VALUEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Kill:
+		tmp := GetInstanceDBFromInstance[models.Kill, KillDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1423,6 +1432,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.ENUM_VALUE:
 		tmp := GetInstanceDBFromInstance[models.ENUM_VALUE, ENUM_VALUEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.Kill:
+		tmp := GetInstanceDBFromInstance[models.Kill, KillDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

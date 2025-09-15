@@ -463,6 +463,7 @@ var __gong__map_DATATYPE_DEFINITION_STRING = make(map[string]*DATATYPE_DEFINITIO
 var __gong__map_DATATYPE_DEFINITION_XHTML = make(map[string]*DATATYPE_DEFINITION_XHTML)
 var __gong__map_EMBEDDED_VALUE = make(map[string]*EMBEDDED_VALUE)
 var __gong__map_ENUM_VALUE = make(map[string]*ENUM_VALUE)
+var __gong__map_Kill = make(map[string]*Kill)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
@@ -1100,6 +1101,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceENUM_VALUE.Stage(stage)
 										instance = any(instanceENUM_VALUE)
 										__gong__map_ENUM_VALUE[identifier] = instanceENUM_VALUE
+									case "Kill":
+										instanceKill := new(Kill)
+										instanceKill.Name = instanceName
+										instanceKill.Stage(stage)
+										instance = any(instanceKill)
+										__gong__map_Kill[identifier] = instanceKill
 									case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
 										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Name = instanceName
@@ -1684,6 +1691,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "ENUM_VALUE":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "Kill":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -2591,6 +2602,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					case "ENUM_VALUE":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "Kill":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -4098,6 +4113,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ENUM_VALUE[identifier].LONG_NAME = fielValue
 				}
+			case "Kill":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_Kill[identifier].Name = fielValue
+				}
 			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -5206,6 +5229,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					targetIdentifier := ident.Name
 					__gong__map_ENUM_VALUE[identifier].PROPERTIES = __gong__map_A_PROPERTIES[targetIdentifier]
 				}
+			case "Kill":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
 			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -6034,6 +6061,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for selector expr assign code
 					}
 				case "ENUM_VALUE":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "Kill":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}

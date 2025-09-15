@@ -3654,6 +3654,47 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
+	map_Kill_Identifiers := make(map[*Kill]string)
+	_ = map_Kill_Identifiers
+
+	killOrdered := []*Kill{}
+	for kill := range stage.Kills {
+		killOrdered = append(killOrdered, kill)
+	}
+	sort.Slice(killOrdered[:], func(i, j int) bool {
+		killi := killOrdered[i]
+		killj := killOrdered[j]
+		killi_order, oki := stage.KillMap_Staged_Order[killi]
+		killj_order, okj := stage.KillMap_Staged_Order[killj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return killi_order < killj_order
+	})
+	if len(killOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, kill := range killOrdered {
+
+		id = generatesIdentifier("Kill", idx, kill.Name)
+		map_Kill_Identifiers[kill] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Kill")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", kill.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(kill.Name))
+		initializerStatements += setValueField
+
+	}
+
 	map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers := make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]string)
 	_ = map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry_Identifiers
 
@@ -7596,6 +7637,19 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 			pointersInitializesStatements += setPointerField
 		}
 
+	}
+
+	if len(killOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Kill instances pointers"
+	}
+	for idx, kill := range killOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Kill", idx, kill.Name)
+		map_Kill_Identifiers[kill] = id
+
+		// Initialisation of values
 	}
 
 	if len(map_attribute_definition_boolean_showinsubjectentryOrdered) > 0 {

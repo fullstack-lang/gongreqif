@@ -286,6 +286,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUECreateCallback != nil {
 			stage.OnAfterENUM_VALUECreateCallback.OnAfterCreate(stage, target)
 		}
+	case *Kill:
+		if stage.OnAfterKillCreateCallback != nil {
+			stage.OnAfterKillCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryCreateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryCreateCallback.OnAfterCreate(stage, target)
@@ -1040,6 +1044,14 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		if stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
+	case *Kill:
+		newTarget := any(new).(*Kill)
+		if stage.OnAfterKillUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterKillUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterKillUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterKillUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
@@ -1760,6 +1772,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*ENUM_VALUE)
 			stage.OnAfterENUM_VALUEDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *Kill:
+		if stage.OnAfterKillDeleteCallback != nil {
+			staged := any(staged).(*Kill)
+			stage.OnAfterKillDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDeleteCallback != nil {
 			staged := any(staged).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
@@ -2275,6 +2292,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUEReadCallback != nil {
 			stage.OnAfterENUM_VALUEReadCallback.OnAfterRead(stage, target)
 		}
+	case *Kill:
+		if stage.OnAfterKillReadCallback != nil {
+			stage.OnAfterKillReadCallback.OnAfterRead(stage, target)
+		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback.OnAfterRead(stage, target)
@@ -2676,6 +2697,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[ENUM_VALUE])
 	
+	case *Kill:
+		stage.OnAfterKillUpdateCallback = any(callback).(OnAfterUpdateInterface[Kill])
+	
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
 	
@@ -3027,6 +3051,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUECreateCallback = any(callback).(OnAfterCreateInterface[ENUM_VALUE])
+	
+	case *Kill:
+		stage.OnAfterKillCreateCallback = any(callback).(OnAfterCreateInterface[Kill])
 	
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
@@ -3380,6 +3407,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[ENUM_VALUE])
 	
+	case *Kill:
+		stage.OnAfterKillDeleteCallback = any(callback).(OnAfterDeleteInterface[Kill])
+	
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])
 	
@@ -3731,6 +3761,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEReadCallback = any(callback).(OnAfterReadInterface[ENUM_VALUE])
+	
+	case *Kill:
+		stage.OnAfterKillReadCallback = any(callback).(OnAfterReadInterface[Kill])
 	
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback = any(callback).(OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry])

@@ -859,6 +859,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.Kill:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "Kill Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__KillFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,

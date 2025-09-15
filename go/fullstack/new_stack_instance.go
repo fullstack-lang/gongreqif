@@ -184,6 +184,8 @@ func NewStackInstance(
 	models.SetOrchestratorOnAfterUpdateWithMouseEvent[models.EMBEDDED_VALUE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.ENUM_VALUE](stage)
 	models.SetOrchestratorOnAfterUpdateWithMouseEvent[models.ENUM_VALUE](stage)
+	models.SetOrchestratorOnAfterUpdate[models.Kill](stage)
+	models.SetOrchestratorOnAfterUpdateWithMouseEvent[models.Kill](stage)
 	models.SetOrchestratorOnAfterUpdate[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](stage)
 	models.SetOrchestratorOnAfterUpdateWithMouseEvent[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](stage)
 	models.SetOrchestratorOnAfterUpdate[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](stage)

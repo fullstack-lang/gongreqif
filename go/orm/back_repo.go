@@ -164,6 +164,8 @@ type BackRepoStruct struct {
 
 	BackRepoENUM_VALUE BackRepoENUM_VALUEStruct
 
+	BackRepoKill BackRepoKillStruct
+
 	BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryStruct
 
 	BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryStruct
@@ -345,6 +347,7 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&DATATYPE_DEFINITION_XHTMLDB{},
 		&EMBEDDED_VALUEDB{},
 		&ENUM_VALUEDB{},
+		&KillDB{},
 		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB{},
 		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB{},
 		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDB{},
@@ -956,6 +959,14 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		db:    db,
 		stage: stage,
 	}
+	backRepo.BackRepoKill = BackRepoKillStruct{
+		Map_KillDBID_KillPtr: make(map[uint]*models.Kill, 0),
+		Map_KillDBID_KillDB:  make(map[uint]*KillDB, 0),
+		Map_KillPtr_KillDBID: make(map[*models.Kill]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry = BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryStruct{
 		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryPtr: make(map[uint]*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, 0),
 		Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:  make(map[uint]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB, 0),
@@ -1438,6 +1449,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseOne(stage)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseOne(stage)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseOne(stage)
+	backRepo.BackRepoKill.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CommitPhaseOne(stage)
@@ -1555,6 +1567,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoKill.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CommitPhaseTwo(backRepo)
@@ -1684,6 +1697,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseOne()
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseOne()
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseOne()
+	backRepo.BackRepoKill.CheckoutPhaseOne()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CheckoutPhaseOne()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CheckoutPhaseOne()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CheckoutPhaseOne()
@@ -1801,6 +1815,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoKill.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.CheckoutPhaseTwo(backRepo)
@@ -1923,6 +1938,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.Backup(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.Backup(dirPath)
 	backRepo.BackRepoENUM_VALUE.Backup(dirPath)
+	backRepo.BackRepoKill.Backup(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Backup(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.Backup(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.Backup(dirPath)
@@ -2048,6 +2064,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.BackupXL(file)
 	backRepo.BackRepoEMBEDDED_VALUE.BackupXL(file)
 	backRepo.BackRepoENUM_VALUE.BackupXL(file)
+	backRepo.BackRepoKill.BackupXL(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.BackupXL(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.BackupXL(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.BackupXL(file)
@@ -2187,6 +2204,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseOne(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoENUM_VALUE.RestorePhaseOne(dirPath)
+	backRepo.BackRepoKill.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.RestorePhaseOne(dirPath)
@@ -2308,6 +2326,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseTwo()
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseTwo()
 	backRepo.BackRepoENUM_VALUE.RestorePhaseTwo()
+	backRepo.BackRepoKill.RestorePhaseTwo()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestorePhaseTwo()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestorePhaseTwo()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.RestorePhaseTwo()
@@ -2450,6 +2469,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestoreXLPhaseOne(file)
 	backRepo.BackRepoEMBEDDED_VALUE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoENUM_VALUE.RestoreXLPhaseOne(file)
+	backRepo.BackRepoKill.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.RestoreXLPhaseOne(file)
