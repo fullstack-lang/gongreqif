@@ -373,18 +373,9 @@ func NewStager(
 										}),
 									},
 									{
-										Name: "Upload Rendering Configuration",
-										Size: 25,
-										AsSplit: (&split.AsSplit{
-											Direction: split.Horizontal,
-											AsSplitAreas: []*split.AsSplitArea{
-												load.NewStager(r, stager.loadRenderingConfStage, stager.splitStage).GetAsSplitArea()},
-										}),
-									},
-									{
 										Name:             "Buttons",
 										ShowNameInHeader: false,
-										Size:             25,
+										Size:             50,
 										Button: &split.Button{
 											StackName: stager.welcomeTabButtonStage.GetName(),
 										},
@@ -451,6 +442,9 @@ func NewStager(
 		},
 	})
 
+	asSplitAreaRenderingTabButtonStage := load.NewStager(r, stager.loadRenderingConfStage, stager.splitStage).GetAsSplitArea()
+	asSplitAreaRenderingTabButtonStage.Size = 70
+
 	split.StageBranch(stager.splitStage, &split.View{
 		Name: "REQIF Render",
 		RootAsSplitAreas: []*split.AsSplitArea{
@@ -474,16 +468,26 @@ func NewStager(
 								Direction: split.Vertical,
 								AsSplitAreas: []*split.AsSplitArea{
 									{
-										Size: 90,
+										Size: 70,
 										Tree: &split.Tree{
 											StackName: stager.specTypesTreeStage.GetName(),
 										},
 									},
 									{
-										Size: 10,
-										Button: &split.Button{
-											StackName: stager.renderingTabButtonStage.GetName(),
-										},
+										Name: "Upload Rendering Configuration",
+										Size: 30,
+										AsSplit: (&split.AsSplit{
+											Direction: split.Vertical,
+											AsSplitAreas: []*split.AsSplitArea{
+												{
+													Size: 30,
+													Button: &split.Button{
+														StackName: stager.renderingTabButtonStage.GetName(),
+													},
+												},
+												asSplitAreaRenderingTabButtonStage,
+											},
+										}),
 									},
 								},
 							},
