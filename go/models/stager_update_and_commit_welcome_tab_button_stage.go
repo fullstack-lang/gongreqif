@@ -6,12 +6,13 @@ import (
 	buttons "github.com/fullstack-lang/gong/lib/tree/go/buttons"
 )
 
-func (stager *Stager) UpdateAndCommitButtonStage() {
-	stager.buttonStage.Reset()
+func (stager *Stager) UpdateAndCommitWelcomeTabButtonStage() {
+	stage := stager.welcomeTabButtonStage
+	stage.Reset()
 
-	layout := new(button.Layout).Stage(stager.buttonStage)
+	layout := new(button.Layout).Stage(stage)
 
-	group1 := new(button.Group).Stage(stager.buttonStage)
+	group1 := new(button.Group).Stage(stage)
 	group1.Percentage = 100
 	layout.Groups = append(layout.Groups, group1)
 
@@ -64,7 +65,7 @@ func (stager *Stager) UpdateAndCommitButtonStage() {
 
 	group1.Buttons = append(group1.Buttons, buttonExportRenderingCong)
 
-	stager.buttonStage.Commit()
+	stager.welcomeTabButtonStage.Commit()
 }
 
 type GenerateModelButtonProxy struct {
@@ -73,7 +74,7 @@ type GenerateModelButtonProxy struct {
 
 // GetButtonsStage implements models.Target.
 func (e *GenerateModelButtonProxy) GetButtonsStage() *button.Stage {
-	return e.stager.buttonStage
+	return e.stager.welcomeTabButtonStage
 }
 
 // OnAfterUpdateButton implements models.Target.
@@ -87,7 +88,7 @@ type ExportStaticSiteButtonProxy struct {
 
 // GetButtonsStage implements models.Target.
 func (e *ExportStaticSiteButtonProxy) GetButtonsStage() *button.Stage {
-	return e.stager.buttonStage
+	return e.stager.welcomeTabButtonStage
 }
 
 // OnAfterUpdateButton implements models.Target.
@@ -103,30 +104,11 @@ type ExportModifiedReqifButtonProxy struct {
 
 // GetButtonsStage implements models.Target.
 func (e *ExportModifiedReqifButtonProxy) GetButtonsStage() *button.Stage {
-	return e.stager.buttonStage
+	return e.stager.welcomeTabButtonStage
 }
 
 // OnAfterUpdateButton implements models.Target.
 func (e *ExportModifiedReqifButtonProxy) OnAfterUpdateButton() {
 
 	e.stager.reqifExporter.ExportReqif(e.stager)
-}
-
-type ExportRenderingConfButtonProxy struct {
-	stager *Stager
-}
-
-// GetButtonsStage implements models.Target.
-func (e *ExportRenderingConfButtonProxy) GetButtonsStage() *button.Stage {
-	return e.stager.buttonStage
-}
-
-// OnAfterUpdateButton implements models.Target.
-func (e *ExportRenderingConfButtonProxy) OnAfterUpdateButton() {
-
-	conf := e.stager.ToRenderingConfiguration(e.stager.pathToReqifFile)
-	_ = conf
-
-	e.stager.reqifExporter.ExportRenderingConf(conf, e.stager)
-
 }

@@ -78,7 +78,8 @@ type Stager struct {
 	stage      *Stage
 	splitStage *split.Stage
 
-	buttonStage *button.Stage
+	welcomeTabButtonStage   *button.Stage
+	renderingTabButtonStage *button.Stage
 
 	summaryTableStage *table.Stage
 
@@ -333,12 +334,13 @@ func NewStager(
 	stager.specObjectsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-spec objects", "", "", "", true, true).Stage
 	stager.specRelationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-spec relations", "", "", "", true, true).Stage
 	stager.specificationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-specifications", "", "", "", true, true).Stage
-	stager.buttonStage = button_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
+	stager.welcomeTabButtonStage = button_stack.NewStack(r, stage.GetName()+"-Specification Tab", "", "", "", true, true).Stage
+	stager.renderingTabButtonStage = button_stack.NewStack(r, stage.GetName()+"-Render Tab", "", "", "", true, true).Stage
 
 	// StageBranch will stage on the the first argument
 	// all instances related to the second argument
 	split.StageBranch(stager.splitStage, &split.View{
-		Name: "REQIF Specification",
+		Name: "Welcome to gongreqif",
 		RootAsSplitAreas: []*split.AsSplitArea{
 			{
 				Name:             "room for tree",
@@ -361,7 +363,7 @@ func NewStager(
 											StackName: stager.summaryTableStage.GetName(),
 										},
 									},
-									(&split.AsSplitArea{
+									{
 										Name: "Upload Reqif File",
 										Size: 25,
 										AsSplit: (&split.AsSplit{
@@ -369,8 +371,8 @@ func NewStager(
 											AsSplitAreas: []*split.AsSplitArea{
 												load.NewStager(r, stager.loadReqifStage, stager.splitStage).GetAsSplitArea()},
 										}),
-									}),
-									(&split.AsSplitArea{
+									},
+									{
 										Name: "Upload Rendering Configuration",
 										Size: 25,
 										AsSplit: (&split.AsSplit{
@@ -378,13 +380,13 @@ func NewStager(
 											AsSplitAreas: []*split.AsSplitArea{
 												load.NewStager(r, stager.loadRenderingConfStage, stager.splitStage).GetAsSplitArea()},
 										}),
-									}),
+									},
 									{
 										Name:             "Buttons",
 										ShowNameInHeader: false,
 										Size:             25,
 										Button: &split.Button{
-											StackName: stager.buttonStage.GetName(),
+											StackName: stager.welcomeTabButtonStage.GetName(),
 										},
 									},
 								},
@@ -468,8 +470,22 @@ func NewStager(
 						},
 						{
 							Size: 19.1,
-							Tree: &split.Tree{
-								StackName: stager.specTypesTreeStage.GetName(),
+							AsSplit: &split.AsSplit{
+								Direction: split.Vertical,
+								AsSplitAreas: []*split.AsSplitArea{
+									{
+										Size: 90,
+										Tree: &split.Tree{
+											StackName: stager.specTypesTreeStage.GetName(),
+										},
+									},
+									{
+										Size: 10,
+										Button: &split.Button{
+											StackName: stager.renderingTabButtonStage.GetName(),
+										},
+									},
+								},
 							},
 						},
 						{
@@ -579,7 +595,8 @@ func NewStager(
 
 	stager.updateAndCommitLoadReqifStage()
 	stager.updateAndCommitLoadRenderingConfStage()
-	stager.UpdateAndCommitButtonStage()
+	stager.UpdateAndCommitWelcomeTabButtonStage()
+	stager.UpdateAndCommitRenderingTabButtonStage()
 
 	return
 }
