@@ -5,3 +5,4 @@ go/cmd/gongreqif/gongreqif.exe
 go/cmd/gongreqif/__debug_bin*
 
 .DS_Store
+go/cmd/gongreqif/gongreqif.log

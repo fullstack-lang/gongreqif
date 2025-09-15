@@ -2,7 +2,9 @@ package main
 
 import (
 	"flag"
+	"io"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 
@@ -45,12 +47,23 @@ var (
 	pathToXLFile      = flag.String("pathToXLFile", "", "Path to the go model file")
 
 	pathToOutputReqifFile = flag.String("pathToOutputReqifFile", "", "Path to the output reqif file")
+
+	logFile = flag.String("logFile", "gongreqif.log", "path to the log file")
 )
 
 func main() {
 
 	log.SetPrefix("gongreqif: ")
-	log.SetFlags(0)
+	log.SetFlags(log.Ldate | log.Lmicroseconds)
+
+	if *logFile != "" {
+		file, err := os.OpenFile(*logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatalf("Failed to open log file: %v", err)
+		}
+		mw := io.MultiWriter(os.Stdout, file)
+		log.SetOutput(mw)
+	}
 
 	// parse program arguments
 	flag.Parse()
