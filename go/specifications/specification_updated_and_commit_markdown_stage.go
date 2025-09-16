@@ -15,6 +15,11 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 	markdownStage := stager.GetMarkdownStage()
 	markdownStage.Reset()
 
+	if stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS == nil {
+		markdownStage.Commit()
+		return
+	}
+
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
 	for _, specification := range specifications {
 

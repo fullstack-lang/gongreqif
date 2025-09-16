@@ -23,6 +23,11 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS
 
+	if specifications == nil {
+		treeStage.Commit()
+		return
+	}
+
 	// prepare one node per specification type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 	map_specificationType_node := make(map[*m.SPECIFICATION_TYPE]*tree.Node)
