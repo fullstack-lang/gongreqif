@@ -120,6 +120,29 @@ func renderNode(n *html.Node, parent *html.Node) string {
 	return ""
 }
 
+// findFirstRowNode finds the first <tr> element in a table,
+// searching within thead, tbody, or direct children.
+func findFirstRowNode(table *html.Node) *html.Node {
+	for child := table.FirstChild; child != nil; child = child.NextSibling {
+		if child.Type != html.ElementNode {
+			continue
+		}
+		// Case 1: <tr> is a direct child of <table>
+		if child.Data == "tr" {
+			return child
+		}
+		// Case 2: <tr> is inside <thead> or <tbody>
+		if child.Data == "thead" || child.Data == "tbody" {
+			for tr := child.FirstChild; tr != nil; tr = tr.NextSibling {
+				if tr.Type == html.ElementNode && tr.Data == "tr" {
+					return tr
+				}
+			}
+		}
+	}
+	return nil
+}
+
 // renderTable specifically handles the logic for converting a <table> node.
 func renderTable(tableNode *html.Node) string {
 	var b strings.Builder
@@ -165,7 +188,32 @@ func renderTable(tableNode *html.Node) string {
 		}
 	}
 
-	// --- NEW LOGIC START ---
+	// --- FIX: Handle header row inside a <tbody> ---
+	if len(headerRows) == 0 && len(bodyRows) > 0 {
+		firstTr := findFirstRowNode(tableNode)
+		if firstTr != nil {
+			isHeader := true
+			cellCount := 0
+			for cell := firstTr.FirstChild; cell != nil; cell = cell.NextSibling {
+				if cell.Type == html.ElementNode {
+					if cell.Data == "td" || cell.Data == "th" {
+						cellCount++
+						if cell.Data != "th" {
+							isHeader = false
+							break
+						}
+					}
+				}
+			}
+			// If the first row has cells and all are <th>, treat it as a header
+			if isHeader && cellCount > 0 {
+				headerRows = append(headerRows, bodyRows[0])
+				bodyRows = bodyRows[1:]
+			}
+		}
+	}
+
+	// --- RENDER LOGIC ---
 
 	// 1. Determine the maximum number of columns in the entire table
 	maxColumns := 0
@@ -189,6 +237,14 @@ func renderTable(tableNode *html.Node) string {
 			header = append(header, "")
 		}
 		b.WriteString("| " + strings.Join(header, " | ") + " |\n")
+	} else {
+		// If there's no header, we can't make a valid markdown table.
+		// For this case, we'll add an empty header row to satisfy markdown syntax.
+		var emptyHeader []string
+		for i := 0; i < maxColumns; i++ {
+			emptyHeader = append(emptyHeader, "")
+		}
+		b.WriteString("| " + strings.Join(emptyHeader, " | ") + " |\n")
 	}
 
 	// 3. Render the separator, which MUST match maxColumns
@@ -206,7 +262,6 @@ func renderTable(tableNode *html.Node) string {
 		}
 		b.WriteString("| " + strings.Join(row, " | ") + " |\n")
 	}
-	// --- NEW LOGIC END ---
 
 	return b.String()
 }
@@ -218,7 +273,7 @@ func parseTableRows(node *html.Node, cellTag string) [][]string {
 		if tr.Type == html.ElementNode && tr.Data == "tr" {
 			var row []string
 			for cell := tr.FirstChild; cell != nil; cell = cell.NextSibling {
-				if cell.Type == html.ElementNode && (cell.Data == cellTag || cell.Data == "td" || cell.Data == "th") {
+				if cell.Type == html.ElementNode && (cell.Data == "td" || cell.Data == "th") {
 					row = append(row, normalizeWhitespace(renderNode(cell, tr)))
 				}
 			}
