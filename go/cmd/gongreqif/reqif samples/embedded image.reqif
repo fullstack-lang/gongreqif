@@ -41,8 +41,8 @@
               </DEFINITION>
               <THE-VALUE>
                 <xhtml:div>
-                  <xhtml:p>This is the requirement text, and here is the embedded logo:</xhtml:p>
-                  <xhtml:object data="files/logo.png" type="image/png">Embedded Logo</xhtml:object>
+                  <xhtml:p>This is the requirement text, and here is the embedded image:</xhtml:p>
+                  <xhtml:object data="vera rubin logo.svg" type="image/svg">Embedded Image</xhtml:object>
                 </xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
