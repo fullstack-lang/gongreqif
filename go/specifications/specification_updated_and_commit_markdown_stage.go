@@ -64,6 +64,12 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 			markdownSvgImage.Name = svgImage.Name
 		}
 
+		for _, jpgImage := range models.GetGongstrucsSorted[*models.JpgImage](stager.GetStage()) {
+			markdownSvgImage := new(markdown.JpgImage).Stage(markdownStage)
+			markdownSvgImage.Base64Content = jpgImage.Base64Content
+			markdownSvgImage.Name = jpgImage.Name
+		}
+
 		markdown.StageBranch(markdownStage, content)
 	}
 
