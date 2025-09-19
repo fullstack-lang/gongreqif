@@ -546,6 +546,27 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/enum_values/:id", GetController().UpdateENUM_VALUE)
 		v1.DELETE("/v1/enum_values/:id", GetController().DeleteENUM_VALUE)
 
+		v1.GET("/v1/embeddedjpgimages", GetController().GetEmbeddedJpgImages)
+		v1.GET("/v1/embeddedjpgimages/:id", GetController().GetEmbeddedJpgImage)
+		v1.POST("/v1/embeddedjpgimages", GetController().PostEmbeddedJpgImage)
+		v1.PATCH("/v1/embeddedjpgimages/:id", GetController().UpdateEmbeddedJpgImage)
+		v1.PUT("/v1/embeddedjpgimages/:id", GetController().UpdateEmbeddedJpgImage)
+		v1.DELETE("/v1/embeddedjpgimages/:id", GetController().DeleteEmbeddedJpgImage)
+
+		v1.GET("/v1/embeddedpngimages", GetController().GetEmbeddedPngImages)
+		v1.GET("/v1/embeddedpngimages/:id", GetController().GetEmbeddedPngImage)
+		v1.POST("/v1/embeddedpngimages", GetController().PostEmbeddedPngImage)
+		v1.PATCH("/v1/embeddedpngimages/:id", GetController().UpdateEmbeddedPngImage)
+		v1.PUT("/v1/embeddedpngimages/:id", GetController().UpdateEmbeddedPngImage)
+		v1.DELETE("/v1/embeddedpngimages/:id", GetController().DeleteEmbeddedPngImage)
+
+		v1.GET("/v1/embeddedsvgimages", GetController().GetEmbeddedSvgImages)
+		v1.GET("/v1/embeddedsvgimages/:id", GetController().GetEmbeddedSvgImage)
+		v1.POST("/v1/embeddedsvgimages", GetController().PostEmbeddedSvgImage)
+		v1.PATCH("/v1/embeddedsvgimages/:id", GetController().UpdateEmbeddedSvgImage)
+		v1.PUT("/v1/embeddedsvgimages/:id", GetController().UpdateEmbeddedSvgImage)
+		v1.DELETE("/v1/embeddedsvgimages/:id", GetController().DeleteEmbeddedSvgImage)
+
 		v1.GET("/v1/kills", GetController().GetKills)
 		v1.GET("/v1/kills/:id", GetController().GetKill)
 		v1.POST("/v1/kills", GetController().PostKill)

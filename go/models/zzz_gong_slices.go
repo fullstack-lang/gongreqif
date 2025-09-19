@@ -527,6 +527,15 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ENUM_VALUE
 	// insertion point per field
 
+	// Compute reverse map for named struct EmbeddedJpgImage
+	// insertion point per field
+
+	// Compute reverse map for named struct EmbeddedPngImage
+	// insertion point per field
+
+	// Compute reverse map for named struct EmbeddedSvgImage
+	// insertion point per field
+
 	// Compute reverse map for named struct Kill
 	// insertion point per field
 

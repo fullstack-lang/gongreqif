@@ -463,6 +463,9 @@ var __gong__map_DATATYPE_DEFINITION_STRING = make(map[string]*DATATYPE_DEFINITIO
 var __gong__map_DATATYPE_DEFINITION_XHTML = make(map[string]*DATATYPE_DEFINITION_XHTML)
 var __gong__map_EMBEDDED_VALUE = make(map[string]*EMBEDDED_VALUE)
 var __gong__map_ENUM_VALUE = make(map[string]*ENUM_VALUE)
+var __gong__map_EmbeddedJpgImage = make(map[string]*EmbeddedJpgImage)
+var __gong__map_EmbeddedPngImage = make(map[string]*EmbeddedPngImage)
+var __gong__map_EmbeddedSvgImage = make(map[string]*EmbeddedSvgImage)
 var __gong__map_Kill = make(map[string]*Kill)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -1101,6 +1104,24 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceENUM_VALUE.Stage(stage)
 										instance = any(instanceENUM_VALUE)
 										__gong__map_ENUM_VALUE[identifier] = instanceENUM_VALUE
+									case "EmbeddedJpgImage":
+										instanceEmbeddedJpgImage := new(EmbeddedJpgImage)
+										instanceEmbeddedJpgImage.Name = instanceName
+										instanceEmbeddedJpgImage.Stage(stage)
+										instance = any(instanceEmbeddedJpgImage)
+										__gong__map_EmbeddedJpgImage[identifier] = instanceEmbeddedJpgImage
+									case "EmbeddedPngImage":
+										instanceEmbeddedPngImage := new(EmbeddedPngImage)
+										instanceEmbeddedPngImage.Name = instanceName
+										instanceEmbeddedPngImage.Stage(stage)
+										instance = any(instanceEmbeddedPngImage)
+										__gong__map_EmbeddedPngImage[identifier] = instanceEmbeddedPngImage
+									case "EmbeddedSvgImage":
+										instanceEmbeddedSvgImage := new(EmbeddedSvgImage)
+										instanceEmbeddedSvgImage.Name = instanceName
+										instanceEmbeddedSvgImage.Stage(stage)
+										instance = any(instanceEmbeddedSvgImage)
+										__gong__map_EmbeddedSvgImage[identifier] = instanceEmbeddedSvgImage
 									case "Kill":
 										instanceKill := new(Kill)
 										instanceKill.Name = instanceName
@@ -1691,6 +1712,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "ENUM_VALUE":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "EmbeddedJpgImage":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "EmbeddedPngImage":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "EmbeddedSvgImage":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -2602,6 +2635,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					case "ENUM_VALUE":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "EmbeddedJpgImage":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "EmbeddedPngImage":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "EmbeddedSvgImage":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -4113,6 +4158,42 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ENUM_VALUE[identifier].LONG_NAME = fielValue
 				}
+			case "EmbeddedJpgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_EmbeddedJpgImage[identifier].Name = fielValue
+				case "Base64Content":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_EmbeddedJpgImage[identifier].Base64Content = fielValue
+				}
+			case "EmbeddedPngImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_EmbeddedPngImage[identifier].Name = fielValue
+				case "Base64Content":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_EmbeddedPngImage[identifier].Base64Content = fielValue
+				}
+			case "EmbeddedSvgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_EmbeddedSvgImage[identifier].Name = fielValue
+				case "Content":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_EmbeddedSvgImage[identifier].Content = fielValue
+				}
 			case "Kill":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -5229,6 +5310,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					targetIdentifier := ident.Name
 					__gong__map_ENUM_VALUE[identifier].PROPERTIES = __gong__map_A_PROPERTIES[targetIdentifier]
 				}
+			case "EmbeddedJpgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
+			case "EmbeddedPngImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
+			case "EmbeddedSvgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
 			case "Kill":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -6061,6 +6154,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for selector expr assign code
 					}
 				case "ENUM_VALUE":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "EmbeddedJpgImage":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "EmbeddedPngImage":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "EmbeddedSvgImage":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}

@@ -865,6 +865,36 @@ type Stage struct {
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
+	EmbeddedJpgImages           map[*EmbeddedJpgImage]any
+	EmbeddedJpgImages_mapString map[string]*EmbeddedJpgImage
+
+	// insertion point for slice of pointers maps
+	OnAfterEmbeddedJpgImageCreateCallback OnAfterCreateInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageUpdateCallback OnAfterUpdateInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageDeleteCallback OnAfterDeleteInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageReadCallback   OnAfterReadInterface[EmbeddedJpgImage]
+
+	EmbeddedPngImages           map[*EmbeddedPngImage]any
+	EmbeddedPngImages_mapString map[string]*EmbeddedPngImage
+
+	// insertion point for slice of pointers maps
+	OnAfterEmbeddedPngImageCreateCallback OnAfterCreateInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageUpdateCallback OnAfterUpdateInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageDeleteCallback OnAfterDeleteInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageReadCallback   OnAfterReadInterface[EmbeddedPngImage]
+
+	EmbeddedSvgImages           map[*EmbeddedSvgImage]any
+	EmbeddedSvgImages_mapString map[string]*EmbeddedSvgImage
+
+	// insertion point for slice of pointers maps
+	OnAfterEmbeddedSvgImageCreateCallback OnAfterCreateInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageUpdateCallback OnAfterUpdateInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageDeleteCallback OnAfterDeleteInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageReadCallback   OnAfterReadInterface[EmbeddedSvgImage]
+
 	Kills           map[*Kill]any
 	Kills_mapString map[string]*Kill
 
@@ -1614,6 +1644,15 @@ type Stage struct {
 
 	ENUM_VALUEOrder            uint
 	ENUM_VALUEMap_Staged_Order map[*ENUM_VALUE]uint
+
+	EmbeddedJpgImageOrder            uint
+	EmbeddedJpgImageMap_Staged_Order map[*EmbeddedJpgImage]uint
+
+	EmbeddedPngImageOrder            uint
+	EmbeddedPngImageMap_Staged_Order map[*EmbeddedPngImage]uint
+
+	EmbeddedSvgImageOrder            uint
+	EmbeddedSvgImageMap_Staged_Order map[*EmbeddedSvgImage]uint
 
 	KillOrder            uint
 	KillMap_Staged_Order map[*Kill]uint
@@ -2788,6 +2827,48 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
+	case *EmbeddedJpgImage:
+		tmp := GetStructInstancesByOrder(stage.EmbeddedJpgImages, stage.EmbeddedJpgImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *EmbeddedJpgImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *EmbeddedPngImage:
+		tmp := GetStructInstancesByOrder(stage.EmbeddedPngImages, stage.EmbeddedPngImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *EmbeddedPngImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *EmbeddedSvgImage:
+		tmp := GetStructInstancesByOrder(stage.EmbeddedSvgImages, stage.EmbeddedSvgImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *EmbeddedSvgImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
 	case *Kill:
 		tmp := GetStructInstancesByOrder(stage.Kills, stage.KillMap_Staged_Order)
 
@@ -3605,6 +3686,12 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.EMBEDDED_VALUEs, stage.EMBEDDED_VALUEMap_Staged_Order)
 	case "ENUM_VALUE":
 		res = GetNamedStructInstances(stage.ENUM_VALUEs, stage.ENUM_VALUEMap_Staged_Order)
+	case "EmbeddedJpgImage":
+		res = GetNamedStructInstances(stage.EmbeddedJpgImages, stage.EmbeddedJpgImageMap_Staged_Order)
+	case "EmbeddedPngImage":
+		res = GetNamedStructInstances(stage.EmbeddedPngImages, stage.EmbeddedPngImageMap_Staged_Order)
+	case "EmbeddedSvgImage":
+		res = GetNamedStructInstances(stage.EmbeddedSvgImages, stage.EmbeddedSvgImageMap_Staged_Order)
 	case "Kill":
 		res = GetNamedStructInstances(stage.Kills, stage.KillMap_Staged_Order)
 	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
@@ -3911,6 +3998,12 @@ type BackRepoInterface interface {
 	CheckoutEMBEDDED_VALUE(embedded_value *EMBEDDED_VALUE)
 	CommitENUM_VALUE(enum_value *ENUM_VALUE)
 	CheckoutENUM_VALUE(enum_value *ENUM_VALUE)
+	CommitEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage)
+	CheckoutEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage)
+	CommitEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage)
+	CheckoutEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage)
+	CommitEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage)
+	CheckoutEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage)
 	CommitKill(kill *Kill)
 	CheckoutKill(kill *Kill)
 	CommitMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
@@ -4220,6 +4313,15 @@ func NewStage(name string) (stage *Stage) {
 		ENUM_VALUEs:           make(map[*ENUM_VALUE]any),
 		ENUM_VALUEs_mapString: make(map[string]*ENUM_VALUE),
 
+		EmbeddedJpgImages:           make(map[*EmbeddedJpgImage]any),
+		EmbeddedJpgImages_mapString: make(map[string]*EmbeddedJpgImage),
+
+		EmbeddedPngImages:           make(map[*EmbeddedPngImage]any),
+		EmbeddedPngImages_mapString: make(map[string]*EmbeddedPngImage),
+
+		EmbeddedSvgImages:           make(map[*EmbeddedSvgImage]any),
+		EmbeddedSvgImages_mapString: make(map[string]*EmbeddedSvgImage),
+
 		Kills:           make(map[*Kill]any),
 		Kills_mapString: make(map[string]*Kill),
 
@@ -4508,6 +4610,12 @@ func NewStage(name string) (stage *Stage) {
 
 		ENUM_VALUEMap_Staged_Order: make(map[*ENUM_VALUE]uint),
 
+		EmbeddedJpgImageMap_Staged_Order: make(map[*EmbeddedJpgImage]uint),
+
+		EmbeddedPngImageMap_Staged_Order: make(map[*EmbeddedPngImage]uint),
+
+		EmbeddedSvgImageMap_Staged_Order: make(map[*EmbeddedSvgImage]uint),
+
 		KillMap_Staged_Order: make(map[*Kill]uint),
 
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order: make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]uint),
@@ -4673,6 +4781,9 @@ func NewStage(name string) (stage *Stage) {
 			{name: "DATATYPE_DEFINITION_XHTML"},
 			{name: "EMBEDDED_VALUE"},
 			{name: "ENUM_VALUE"},
+			{name: "EmbeddedJpgImage"},
+			{name: "EmbeddedPngImage"},
+			{name: "EmbeddedSvgImage"},
 			{name: "Kill"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"},
@@ -4869,6 +4980,12 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
+	case *EmbeddedJpgImage:
+		return stage.EmbeddedJpgImageMap_Staged_Order[instance]
+	case *EmbeddedPngImage:
+		return stage.EmbeddedPngImageMap_Staged_Order[instance]
+	case *EmbeddedSvgImage:
+		return stage.EmbeddedSvgImageMap_Staged_Order[instance]
 	case *Kill:
 		return stage.KillMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -5110,6 +5227,12 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
+	case *EmbeddedJpgImage:
+		return stage.EmbeddedJpgImageMap_Staged_Order[instance]
+	case *EmbeddedPngImage:
+		return stage.EmbeddedPngImageMap_Staged_Order[instance]
+	case *EmbeddedSvgImage:
+		return stage.EmbeddedSvgImageMap_Staged_Order[instance]
 	case *Kill:
 		return stage.KillMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -5299,6 +5422,9 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
+	stage.Map_GongStructName_InstancesNb["EmbeddedJpgImage"] = len(stage.EmbeddedJpgImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedPngImage"] = len(stage.EmbeddedPngImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedSvgImage"] = len(stage.EmbeddedSvgImages)
 	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
@@ -5425,6 +5551,9 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
+	stage.Map_GongStructName_InstancesNb["EmbeddedJpgImage"] = len(stage.EmbeddedJpgImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedPngImage"] = len(stage.EmbeddedPngImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedSvgImage"] = len(stage.EmbeddedSvgImages)
 	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
@@ -9353,6 +9482,171 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 	return enum_value.Name
 }
 
+// Stage puts embeddedjpgimage to the model stage
+func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage {
+
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; !ok {
+		stage.EmbeddedJpgImages[embeddedjpgimage] = __member
+		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
+		stage.EmbeddedJpgImageOrder++
+	}
+	stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
+
+	return embeddedjpgimage
+}
+
+// Unstage removes embeddedjpgimage off the model stage
+func (embeddedjpgimage *EmbeddedJpgImage) Unstage(stage *Stage) *EmbeddedJpgImage {
+	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
+	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
+	return embeddedjpgimage
+}
+
+// UnstageVoid removes embeddedjpgimage off the model stage
+func (embeddedjpgimage *EmbeddedJpgImage) UnstageVoid(stage *Stage) {
+	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
+	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
+}
+
+// commit embeddedjpgimage to the back repo (if it is already staged)
+func (embeddedjpgimage *EmbeddedJpgImage) Commit(stage *Stage) *EmbeddedJpgImage {
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitEmbeddedJpgImage(embeddedjpgimage)
+		}
+	}
+	return embeddedjpgimage
+}
+
+func (embeddedjpgimage *EmbeddedJpgImage) CommitVoid(stage *Stage) {
+	embeddedjpgimage.Commit(stage)
+}
+
+// Checkout embeddedjpgimage to the back repo (if it is already staged)
+func (embeddedjpgimage *EmbeddedJpgImage) Checkout(stage *Stage) *EmbeddedJpgImage {
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutEmbeddedJpgImage(embeddedjpgimage)
+		}
+	}
+	return embeddedjpgimage
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedjpgimage *EmbeddedJpgImage) GetName() (res string) {
+	return embeddedjpgimage.Name
+}
+
+// Stage puts embeddedpngimage to the model stage
+func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage {
+
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; !ok {
+		stage.EmbeddedPngImages[embeddedpngimage] = __member
+		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
+		stage.EmbeddedPngImageOrder++
+	}
+	stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
+
+	return embeddedpngimage
+}
+
+// Unstage removes embeddedpngimage off the model stage
+func (embeddedpngimage *EmbeddedPngImage) Unstage(stage *Stage) *EmbeddedPngImage {
+	delete(stage.EmbeddedPngImages, embeddedpngimage)
+	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
+	return embeddedpngimage
+}
+
+// UnstageVoid removes embeddedpngimage off the model stage
+func (embeddedpngimage *EmbeddedPngImage) UnstageVoid(stage *Stage) {
+	delete(stage.EmbeddedPngImages, embeddedpngimage)
+	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
+}
+
+// commit embeddedpngimage to the back repo (if it is already staged)
+func (embeddedpngimage *EmbeddedPngImage) Commit(stage *Stage) *EmbeddedPngImage {
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitEmbeddedPngImage(embeddedpngimage)
+		}
+	}
+	return embeddedpngimage
+}
+
+func (embeddedpngimage *EmbeddedPngImage) CommitVoid(stage *Stage) {
+	embeddedpngimage.Commit(stage)
+}
+
+// Checkout embeddedpngimage to the back repo (if it is already staged)
+func (embeddedpngimage *EmbeddedPngImage) Checkout(stage *Stage) *EmbeddedPngImage {
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutEmbeddedPngImage(embeddedpngimage)
+		}
+	}
+	return embeddedpngimage
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedpngimage *EmbeddedPngImage) GetName() (res string) {
+	return embeddedpngimage.Name
+}
+
+// Stage puts embeddedsvgimage to the model stage
+func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage {
+
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; !ok {
+		stage.EmbeddedSvgImages[embeddedsvgimage] = __member
+		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
+		stage.EmbeddedSvgImageOrder++
+	}
+	stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
+
+	return embeddedsvgimage
+}
+
+// Unstage removes embeddedsvgimage off the model stage
+func (embeddedsvgimage *EmbeddedSvgImage) Unstage(stage *Stage) *EmbeddedSvgImage {
+	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
+	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
+	return embeddedsvgimage
+}
+
+// UnstageVoid removes embeddedsvgimage off the model stage
+func (embeddedsvgimage *EmbeddedSvgImage) UnstageVoid(stage *Stage) {
+	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
+	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
+}
+
+// commit embeddedsvgimage to the back repo (if it is already staged)
+func (embeddedsvgimage *EmbeddedSvgImage) Commit(stage *Stage) *EmbeddedSvgImage {
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitEmbeddedSvgImage(embeddedsvgimage)
+		}
+	}
+	return embeddedsvgimage
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) CommitVoid(stage *Stage) {
+	embeddedsvgimage.Commit(stage)
+}
+
+// Checkout embeddedsvgimage to the back repo (if it is already staged)
+func (embeddedsvgimage *EmbeddedSvgImage) Checkout(stage *Stage) *EmbeddedSvgImage {
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutEmbeddedSvgImage(embeddedsvgimage)
+		}
+	}
+	return embeddedsvgimage
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedsvgimage *EmbeddedSvgImage) GetName() (res string) {
+	return embeddedsvgimage.Name
+}
+
 // Stage puts kill to the model stage
 func (kill *Kill) Stage(stage *Stage) *Kill {
 
@@ -11955,6 +12249,9 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	CreateORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	CreateORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
+	CreateORMEmbeddedJpgImage(EmbeddedJpgImage *EmbeddedJpgImage)
+	CreateORMEmbeddedPngImage(EmbeddedPngImage *EmbeddedPngImage)
+	CreateORMEmbeddedSvgImage(EmbeddedSvgImage *EmbeddedSvgImage)
 	CreateORMKill(Kill *Kill)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -12074,6 +12371,9 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	DeleteORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	DeleteORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
+	DeleteORMEmbeddedJpgImage(EmbeddedJpgImage *EmbeddedJpgImage)
+	DeleteORMEmbeddedPngImage(EmbeddedPngImage *EmbeddedPngImage)
+	DeleteORMEmbeddedSvgImage(EmbeddedSvgImage *EmbeddedSvgImage)
 	DeleteORMKill(Kill *Kill)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -12472,6 +12772,21 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.ENUM_VALUEs_mapString = make(map[string]*ENUM_VALUE)
 	stage.ENUM_VALUEMap_Staged_Order = make(map[*ENUM_VALUE]uint)
 	stage.ENUM_VALUEOrder = 0
+
+	stage.EmbeddedJpgImages = make(map[*EmbeddedJpgImage]any)
+	stage.EmbeddedJpgImages_mapString = make(map[string]*EmbeddedJpgImage)
+	stage.EmbeddedJpgImageMap_Staged_Order = make(map[*EmbeddedJpgImage]uint)
+	stage.EmbeddedJpgImageOrder = 0
+
+	stage.EmbeddedPngImages = make(map[*EmbeddedPngImage]any)
+	stage.EmbeddedPngImages_mapString = make(map[string]*EmbeddedPngImage)
+	stage.EmbeddedPngImageMap_Staged_Order = make(map[*EmbeddedPngImage]uint)
+	stage.EmbeddedPngImageOrder = 0
+
+	stage.EmbeddedSvgImages = make(map[*EmbeddedSvgImage]any)
+	stage.EmbeddedSvgImages_mapString = make(map[string]*EmbeddedSvgImage)
+	stage.EmbeddedSvgImageMap_Staged_Order = make(map[*EmbeddedSvgImage]uint)
+	stage.EmbeddedSvgImageOrder = 0
 
 	stage.Kills = make(map[*Kill]any)
 	stage.Kills_mapString = make(map[string]*Kill)
@@ -12916,6 +13231,15 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.ENUM_VALUEs = nil
 	stage.ENUM_VALUEs_mapString = nil
 
+	stage.EmbeddedJpgImages = nil
+	stage.EmbeddedJpgImages_mapString = nil
+
+	stage.EmbeddedPngImages = nil
+	stage.EmbeddedPngImages_mapString = nil
+
+	stage.EmbeddedSvgImages = nil
+	stage.EmbeddedSvgImages_mapString = nil
+
 	stage.Kills = nil
 	stage.Kills_mapString = nil
 
@@ -13337,6 +13661,18 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		enum_value.Unstage(stage)
 	}
 
+	for embeddedjpgimage := range stage.EmbeddedJpgImages {
+		embeddedjpgimage.Unstage(stage)
+	}
+
+	for embeddedpngimage := range stage.EmbeddedPngImages {
+		embeddedpngimage.Unstage(stage)
+	}
+
+	for embeddedsvgimage := range stage.EmbeddedSvgImages {
+		embeddedsvgimage.Unstage(stage)
+	}
+
 	for kill := range stage.Kills {
 		kill.Unstage(stage)
 	}
@@ -13722,6 +14058,12 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs).(*Type)
 	case map[*ENUM_VALUE]any:
 		return any(&stage.ENUM_VALUEs).(*Type)
+	case map[*EmbeddedJpgImage]any:
+		return any(&stage.EmbeddedJpgImages).(*Type)
+	case map[*EmbeddedPngImage]any:
+		return any(&stage.EmbeddedPngImages).(*Type)
+	case map[*EmbeddedSvgImage]any:
+		return any(&stage.EmbeddedSvgImages).(*Type)
 	case map[*Kill]any:
 		return any(&stage.Kills).(*Type)
 	case map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any:
@@ -13966,6 +14308,12 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*Type)
 	case map[string]*ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*Type)
+	case map[string]*EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages_mapString).(*Type)
+	case map[string]*EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages_mapString).(*Type)
+	case map[string]*EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages_mapString).(*Type)
 	case map[string]*Kill:
 		return any(&stage.Kills_mapString).(*Type)
 	case map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -14210,6 +14558,12 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.EMBEDDED_VALUEs).(*map[*Type]any)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[*Type]any)
+	case EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages).(*map[*Type]any)
+	case EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages).(*map[*Type]any)
+	case EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages).(*map[*Type]any)
 	case Kill:
 		return any(&stage.Kills).(*map[*Type]any)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -14454,6 +14808,12 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.EMBEDDED_VALUEs).(*map[Type]any)
 	case *ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[Type]any)
+	case *EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages).(*map[Type]any)
+	case *EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages).(*map[Type]any)
+	case *EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages).(*map[Type]any)
 	case *Kill:
 		return any(&stage.Kills).(*map[Type]any)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -14698,6 +15058,12 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*map[string]*Type)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*map[string]*Type)
+	case EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages_mapString).(*map[string]*Type)
+	case EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages_mapString).(*map[string]*Type)
+	case EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages_mapString).(*map[string]*Type)
 	case Kill:
 		return any(&stage.Kills_mapString).(*map[string]*Type)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -15251,6 +15617,18 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVE_ID: &A_ALTERNATIVE_ID{Name: "ALTERNATIVE_ID"},
 			// field is initialized with an instance of A_PROPERTIES with the name of the field
 			PROPERTIES: &A_PROPERTIES{Name: "PROPERTIES"},
+		}).(*Type)
+	case EmbeddedJpgImage:
+		return any(&EmbeddedJpgImage{
+			// Initialisation of associations
+		}).(*Type)
+	case EmbeddedPngImage:
+		return any(&EmbeddedPngImage{
+			// Initialisation of associations
+		}).(*Type)
+	case EmbeddedSvgImage:
+		return any(&EmbeddedSvgImage{
+			// Initialisation of associations
 		}).(*Type)
 	case Kill:
 		return any(&Kill{
@@ -16700,6 +17078,21 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 				}
 			}
 			return any(res).(map[*End][]*Start)
+		}
+	// reverse maps of direct associations of EmbeddedJpgImage
+	case EmbeddedJpgImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedPngImage
+	case EmbeddedPngImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedSvgImage
+	case EmbeddedSvgImage:
+		switch fieldname {
+		// insertion point for per direct association field
 		}
 	// reverse maps of direct associations of Kill
 	case Kill:
@@ -18272,6 +18665,21 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of EmbeddedJpgImage
+	case EmbeddedJpgImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedPngImage
+	case EmbeddedPngImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedSvgImage
+	case EmbeddedSvgImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of Kill
 	case Kill:
 		switch fieldname {
@@ -18870,6 +19278,12 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case ENUM_VALUE:
 		res = "ENUM_VALUE"
+	case EmbeddedJpgImage:
+		res = "EmbeddedJpgImage"
+	case EmbeddedPngImage:
+		res = "EmbeddedPngImage"
+	case EmbeddedSvgImage:
+		res = "EmbeddedSvgImage"
 	case Kill:
 		res = "Kill"
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -19114,6 +19528,12 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case *ENUM_VALUE:
 		res = "ENUM_VALUE"
+	case *EmbeddedJpgImage:
+		res = "EmbeddedJpgImage"
+	case *EmbeddedPngImage:
+		res = "EmbeddedPngImage"
+	case *EmbeddedSvgImage:
+		res = "EmbeddedSvgImage"
 	case *Kill:
 		res = "Kill"
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -19357,6 +19777,12 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
+	case EmbeddedJpgImage:
+		res = []string{"Name", "Base64Content"}
+	case EmbeddedPngImage:
+		res = []string{"Name", "Base64Content"}
+	case EmbeddedSvgImage:
+		res = []string{"Name", "Content"}
 	case Kill:
 		res = []string{"Name"}
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -19764,6 +20190,15 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPECIFIED_VALUES"
 		rf.Fieldname = "ENUM_VALUE"
 		res = append(res, rf)
+	case EmbeddedJpgImage:
+		var rf ReverseField
+		_ = rf
+	case EmbeddedPngImage:
+		var rf ReverseField
+		_ = rf
+	case EmbeddedSvgImage:
+		var rf ReverseField
+		_ = rf
 	case Kill:
 		var rf ReverseField
 		_ = rf
@@ -20164,6 +20599,12 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case *ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
+	case *EmbeddedJpgImage:
+		res = []string{"Name", "Base64Content"}
+	case *EmbeddedPngImage:
+		res = []string{"Name", "Base64Content"}
+	case *EmbeddedSvgImage:
+		res = []string{"Name", "Content"}
 	case *Kill:
 		res = []string{"Name"}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -21434,6 +21875,30 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			if inferedInstance.PROPERTIES != nil {
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
+		}
+	case *EmbeddedJpgImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Base64Content":
+			res.valueString = inferedInstance.Base64Content
+		}
+	case *EmbeddedPngImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Base64Content":
+			res.valueString = inferedInstance.Base64Content
+		}
+	case *EmbeddedSvgImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Content":
+			res.valueString = inferedInstance.Content
 		}
 	case *Kill:
 		switch fieldName {
@@ -23437,6 +23902,30 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			if inferedInstance.PROPERTIES != nil {
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
+		}
+	case EmbeddedJpgImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Base64Content":
+			res.valueString = inferedInstance.Base64Content
+		}
+	case EmbeddedPngImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Base64Content":
+			res.valueString = inferedInstance.Base64Content
+		}
+	case EmbeddedSvgImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Content":
+			res.valueString = inferedInstance.Content
 		}
 	case Kill:
 		switch fieldName {

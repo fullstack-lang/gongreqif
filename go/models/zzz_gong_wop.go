@@ -1118,6 +1118,48 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type EmbeddedJpgImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	Base64Content string
+}
+
+func (from *EmbeddedJpgImage) CopyBasicFields(to *EmbeddedJpgImage) {
+	// insertion point
+	to.Name = from.Name
+	to.Base64Content = from.Base64Content
+}
+
+type EmbeddedPngImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	Base64Content string
+}
+
+func (from *EmbeddedPngImage) CopyBasicFields(to *EmbeddedPngImage) {
+	// insertion point
+	to.Name = from.Name
+	to.Base64Content = from.Base64Content
+}
+
+type EmbeddedSvgImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	Content string
+}
+
+func (from *EmbeddedSvgImage) CopyBasicFields(to *EmbeddedSvgImage) {
+	// insertion point
+	to.Name = from.Name
+	to.Content = from.Content
+}
+
 type Kill_WOP struct {
 	// insertion point
 

@@ -562,6 +562,21 @@ func GetReverseFieldOwnerName(
 			}
 		}
 
+	case *EmbeddedJpgImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *EmbeddedPngImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *EmbeddedSvgImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	case *Kill:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -1558,6 +1573,21 @@ func GetReverseFieldOwner[T Gongstruct](
 			case "ENUM_VALUE":
 				res = stage.A_SPECIFIED_VALUES_ENUM_VALUE_reverseMap[inst]
 			}
+		}
+
+	case *EmbeddedJpgImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *EmbeddedPngImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
+	case *EmbeddedSvgImage:
+		switch reverseField.GongstructName {
+		// insertion point
 		}
 
 	case *Kill:

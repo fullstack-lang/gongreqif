@@ -300,6 +300,18 @@ type DBLite struct {
 
 	nextIDENUM_VALUEDB uint
 
+	embeddedjpgimageDBs map[uint]*EmbeddedJpgImageDB
+
+	nextIDEmbeddedJpgImageDB uint
+
+	embeddedpngimageDBs map[uint]*EmbeddedPngImageDB
+
+	nextIDEmbeddedPngImageDB uint
+
+	embeddedsvgimageDBs map[uint]*EmbeddedSvgImageDB
+
+	nextIDEmbeddedSvgImageDB uint
+
 	killDBs map[uint]*KillDB
 
 	nextIDKillDB uint
@@ -629,6 +641,12 @@ func NewDBLite() *DBLite {
 		embedded_valueDBs: make(map[uint]*EMBEDDED_VALUEDB),
 
 		enum_valueDBs: make(map[uint]*ENUM_VALUEDB),
+
+		embeddedjpgimageDBs: make(map[uint]*EmbeddedJpgImageDB),
+
+		embeddedpngimageDBs: make(map[uint]*EmbeddedPngImageDB),
+
+		embeddedsvgimageDBs: make(map[uint]*EmbeddedSvgImageDB),
 
 		killDBs: make(map[uint]*KillDB),
 
@@ -1015,6 +1033,18 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDENUM_VALUEDB++
 		v.ID = db.nextIDENUM_VALUEDB
 		db.enum_valueDBs[v.ID] = v
+	case *EmbeddedJpgImageDB:
+		db.nextIDEmbeddedJpgImageDB++
+		v.ID = db.nextIDEmbeddedJpgImageDB
+		db.embeddedjpgimageDBs[v.ID] = v
+	case *EmbeddedPngImageDB:
+		db.nextIDEmbeddedPngImageDB++
+		v.ID = db.nextIDEmbeddedPngImageDB
+		db.embeddedpngimageDBs[v.ID] = v
+	case *EmbeddedSvgImageDB:
+		db.nextIDEmbeddedSvgImageDB++
+		v.ID = db.nextIDEmbeddedSvgImageDB
+		db.embeddedsvgimageDBs[v.ID] = v
 	case *KillDB:
 		db.nextIDKillDB++
 		v.ID = db.nextIDKillDB
@@ -1367,6 +1397,12 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.embedded_valueDBs, v.ID)
 	case *ENUM_VALUEDB:
 		delete(db.enum_valueDBs, v.ID)
+	case *EmbeddedJpgImageDB:
+		delete(db.embeddedjpgimageDBs, v.ID)
+	case *EmbeddedPngImageDB:
+		delete(db.embeddedpngimageDBs, v.ID)
+	case *EmbeddedSvgImageDB:
+		delete(db.embeddedsvgimageDBs, v.ID)
 	case *KillDB:
 		delete(db.killDBs, v.ID)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
@@ -1686,6 +1722,15 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 		return db, nil
 	case *ENUM_VALUEDB:
 		db.enum_valueDBs[v.ID] = v
+		return db, nil
+	case *EmbeddedJpgImageDB:
+		db.embeddedjpgimageDBs[v.ID] = v
+		return db, nil
+	case *EmbeddedPngImageDB:
+		db.embeddedpngimageDBs[v.ID] = v
+		return db, nil
+	case *EmbeddedSvgImageDB:
+		db.embeddedsvgimageDBs[v.ID] = v
 		return db, nil
 	case *KillDB:
 		db.killDBs[v.ID] = v
@@ -2260,6 +2305,24 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 			*existing = *v
 		} else {
 			return nil, errors.New("db ENUM_VALUE github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *EmbeddedJpgImageDB:
+		if existing, ok := db.embeddedjpgimageDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db EmbeddedJpgImage github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *EmbeddedPngImageDB:
+		if existing, ok := db.embeddedpngimageDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db EmbeddedPngImage github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *EmbeddedSvgImageDB:
+		if existing, ok := db.embeddedsvgimageDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db EmbeddedSvgImage github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *KillDB:
 		if existing, ok := db.killDBs[v.ID]; ok {
@@ -2968,6 +3031,24 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 	case *[]ENUM_VALUEDB:
 		*ptr = make([]ENUM_VALUEDB, 0, len(db.enum_valueDBs))
 		for _, v := range db.enum_valueDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]EmbeddedJpgImageDB:
+		*ptr = make([]EmbeddedJpgImageDB, 0, len(db.embeddedjpgimageDBs))
+		for _, v := range db.embeddedjpgimageDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]EmbeddedPngImageDB:
+		*ptr = make([]EmbeddedPngImageDB, 0, len(db.embeddedpngimageDBs))
+		for _, v := range db.embeddedpngimageDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]EmbeddedSvgImageDB:
+		*ptr = make([]EmbeddedSvgImageDB, 0, len(db.embeddedsvgimageDBs))
+		for _, v := range db.embeddedsvgimageDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -3979,6 +4060,36 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 
 		enum_valueDB, _ := instanceDB.(*ENUM_VALUEDB)
 		*enum_valueDB = *tmp
+		
+	case *EmbeddedJpgImageDB:
+		tmp, ok := db.embeddedjpgimageDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First EmbeddedJpgImage Unkown entry %d", i))
+		}
+
+		embeddedjpgimageDB, _ := instanceDB.(*EmbeddedJpgImageDB)
+		*embeddedjpgimageDB = *tmp
+		
+	case *EmbeddedPngImageDB:
+		tmp, ok := db.embeddedpngimageDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First EmbeddedPngImage Unkown entry %d", i))
+		}
+
+		embeddedpngimageDB, _ := instanceDB.(*EmbeddedPngImageDB)
+		*embeddedpngimageDB = *tmp
+		
+	case *EmbeddedSvgImageDB:
+		tmp, ok := db.embeddedsvgimageDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First EmbeddedSvgImage Unkown entry %d", i))
+		}
+
+		embeddedsvgimageDB, _ := instanceDB.(*EmbeddedSvgImageDB)
+		*embeddedsvgimageDB = *tmp
 		
 	case *KillDB:
 		tmp, ok := db.killDBs[uint(i)]

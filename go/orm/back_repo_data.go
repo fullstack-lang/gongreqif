@@ -144,6 +144,12 @@ type BackRepoData struct {
 
 	ENUM_VALUEAPIs []*ENUM_VALUEAPI
 
+	EmbeddedJpgImageAPIs []*EmbeddedJpgImageAPI
+
+	EmbeddedPngImageAPIs []*EmbeddedPngImageAPI
+
+	EmbeddedSvgImageAPIs []*EmbeddedSvgImageAPI
+
 	KillAPIs []*KillAPI
 
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryAPIs []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryAPI
@@ -945,6 +951,36 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		enum_valueDB.CopyBasicFieldsToENUM_VALUE_WOP(&enum_valueAPI.ENUM_VALUE_WOP)
 
 		backRepoData.ENUM_VALUEAPIs = append(backRepoData.ENUM_VALUEAPIs, &enum_valueAPI)
+	}
+
+	for _, embeddedjpgimageDB := range backRepo.BackRepoEmbeddedJpgImage.Map_EmbeddedJpgImageDBID_EmbeddedJpgImageDB {
+
+		var embeddedjpgimageAPI EmbeddedJpgImageAPI
+		embeddedjpgimageAPI.ID = embeddedjpgimageDB.ID
+		embeddedjpgimageAPI.EmbeddedJpgImagePointersEncoding = embeddedjpgimageDB.EmbeddedJpgImagePointersEncoding
+		embeddedjpgimageDB.CopyBasicFieldsToEmbeddedJpgImage_WOP(&embeddedjpgimageAPI.EmbeddedJpgImage_WOP)
+
+		backRepoData.EmbeddedJpgImageAPIs = append(backRepoData.EmbeddedJpgImageAPIs, &embeddedjpgimageAPI)
+	}
+
+	for _, embeddedpngimageDB := range backRepo.BackRepoEmbeddedPngImage.Map_EmbeddedPngImageDBID_EmbeddedPngImageDB {
+
+		var embeddedpngimageAPI EmbeddedPngImageAPI
+		embeddedpngimageAPI.ID = embeddedpngimageDB.ID
+		embeddedpngimageAPI.EmbeddedPngImagePointersEncoding = embeddedpngimageDB.EmbeddedPngImagePointersEncoding
+		embeddedpngimageDB.CopyBasicFieldsToEmbeddedPngImage_WOP(&embeddedpngimageAPI.EmbeddedPngImage_WOP)
+
+		backRepoData.EmbeddedPngImageAPIs = append(backRepoData.EmbeddedPngImageAPIs, &embeddedpngimageAPI)
+	}
+
+	for _, embeddedsvgimageDB := range backRepo.BackRepoEmbeddedSvgImage.Map_EmbeddedSvgImageDBID_EmbeddedSvgImageDB {
+
+		var embeddedsvgimageAPI EmbeddedSvgImageAPI
+		embeddedsvgimageAPI.ID = embeddedsvgimageDB.ID
+		embeddedsvgimageAPI.EmbeddedSvgImagePointersEncoding = embeddedsvgimageDB.EmbeddedSvgImagePointersEncoding
+		embeddedsvgimageDB.CopyBasicFieldsToEmbeddedSvgImage_WOP(&embeddedsvgimageAPI.EmbeddedSvgImage_WOP)
+
+		backRepoData.EmbeddedSvgImageAPIs = append(backRepoData.EmbeddedSvgImageAPIs, &embeddedsvgimageAPI)
 	}
 
 	for _, killDB := range backRepo.BackRepoKill.Map_KillDBID_KillDB {

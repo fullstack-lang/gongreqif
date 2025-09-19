@@ -935,6 +935,45 @@ func FillUpFormFromGongstructName(
 		enum_value := new(models.ENUM_VALUE)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(enum_value, formGroup, probe)
+	case "EmbeddedJpgImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "EmbeddedJpgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedJpgImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		embeddedjpgimage := new(models.EmbeddedJpgImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(embeddedjpgimage, formGroup, probe)
+	case "EmbeddedPngImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "EmbeddedPngImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedPngImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		embeddedpngimage := new(models.EmbeddedPngImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(embeddedpngimage, formGroup, probe)
+	case "EmbeddedSvgImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "EmbeddedSvgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedSvgImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		embeddedsvgimage := new(models.EmbeddedSvgImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(embeddedsvgimage, formGroup, probe)
 	case "Kill":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,

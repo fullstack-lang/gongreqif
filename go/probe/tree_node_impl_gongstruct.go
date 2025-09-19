@@ -260,6 +260,15 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ENUM_VALUE" {
 		updateAndCommitTable[models.ENUM_VALUE](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "EmbeddedJpgImage" {
+		updateAndCommitTable[models.EmbeddedJpgImage](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "EmbeddedPngImage" {
+		updateAndCommitTable[models.EmbeddedPngImage](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "EmbeddedSvgImage" {
+		updateAndCommitTable[models.EmbeddedSvgImage](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "Kill" {
 		updateAndCommitTable[models.Kill](nodeImplGongstruct.probe)
 	}

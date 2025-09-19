@@ -215,6 +215,15 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ENUM_VALUE:
 		ok = stage.IsStagedENUM_VALUE(target)
 
+	case *EmbeddedJpgImage:
+		ok = stage.IsStagedEmbeddedJpgImage(target)
+
+	case *EmbeddedPngImage:
+		ok = stage.IsStagedEmbeddedPngImage(target)
+
+	case *EmbeddedSvgImage:
+		ok = stage.IsStagedEmbeddedSvgImage(target)
+
 	case *Kill:
 		ok = stage.IsStagedKill(target)
 
@@ -850,6 +859,27 @@ func (stage *Stage) IsStagedENUM_VALUE(enum_value *ENUM_VALUE) (ok bool) {
 	return
 }
 
+func (stage *Stage) IsStagedEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage) (ok bool) {
+
+	_, ok = stage.EmbeddedJpgImages[embeddedjpgimage]
+
+	return
+}
+
+func (stage *Stage) IsStagedEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage) (ok bool) {
+
+	_, ok = stage.EmbeddedPngImages[embeddedpngimage]
+
+	return
+}
+
+func (stage *Stage) IsStagedEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage) (ok bool) {
+
+	_, ok = stage.EmbeddedSvgImages[embeddedsvgimage]
+
+	return
+}
+
 func (stage *Stage) IsStagedKill(kill *Kill) (ok bool) {
 
 	_, ok = stage.Kills[kill]
@@ -1389,6 +1419,15 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *ENUM_VALUE:
 		stage.StageBranchENUM_VALUE(target)
+
+	case *EmbeddedJpgImage:
+		stage.StageBranchEmbeddedJpgImage(target)
+
+	case *EmbeddedPngImage:
+		stage.StageBranchEmbeddedPngImage(target)
+
+	case *EmbeddedSvgImage:
+		stage.StageBranchEmbeddedSvgImage(target)
 
 	case *Kill:
 		stage.StageBranchKill(target)
@@ -2836,6 +2875,51 @@ func (stage *Stage) StageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) StageBranchEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage) {
+
+	// check if instance is already staged
+	if IsStaged(stage, embeddedjpgimage) {
+		return
+	}
+
+	embeddedjpgimage.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage) {
+
+	// check if instance is already staged
+	if IsStaged(stage, embeddedpngimage) {
+		return
+	}
+
+	embeddedpngimage.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage) {
+
+	// check if instance is already staged
+	if IsStaged(stage, embeddedsvgimage) {
+		return
+	}
+
+	embeddedsvgimage.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchKill(kill *Kill) {
 
 	// check if instance is already staged
@@ -4013,6 +4097,18 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *ENUM_VALUE:
 		toT := CopyBranchENUM_VALUE(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *EmbeddedJpgImage:
+		toT := CopyBranchEmbeddedJpgImage(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *EmbeddedPngImage:
+		toT := CopyBranchEmbeddedPngImage(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *EmbeddedSvgImage:
+		toT := CopyBranchEmbeddedSvgImage(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *Kill:
@@ -5788,6 +5884,63 @@ func CopyBranchENUM_VALUE(mapOrigCopy map[any]any, enum_valueFrom *ENUM_VALUE) (
 	return
 }
 
+func CopyBranchEmbeddedJpgImage(mapOrigCopy map[any]any, embeddedjpgimageFrom *EmbeddedJpgImage) (embeddedjpgimageTo *EmbeddedJpgImage) {
+
+	// embeddedjpgimageFrom has already been copied
+	if _embeddedjpgimageTo, ok := mapOrigCopy[embeddedjpgimageFrom]; ok {
+		embeddedjpgimageTo = _embeddedjpgimageTo.(*EmbeddedJpgImage)
+		return
+	}
+
+	embeddedjpgimageTo = new(EmbeddedJpgImage)
+	mapOrigCopy[embeddedjpgimageFrom] = embeddedjpgimageTo
+	embeddedjpgimageFrom.CopyBasicFields(embeddedjpgimageTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchEmbeddedPngImage(mapOrigCopy map[any]any, embeddedpngimageFrom *EmbeddedPngImage) (embeddedpngimageTo *EmbeddedPngImage) {
+
+	// embeddedpngimageFrom has already been copied
+	if _embeddedpngimageTo, ok := mapOrigCopy[embeddedpngimageFrom]; ok {
+		embeddedpngimageTo = _embeddedpngimageTo.(*EmbeddedPngImage)
+		return
+	}
+
+	embeddedpngimageTo = new(EmbeddedPngImage)
+	mapOrigCopy[embeddedpngimageFrom] = embeddedpngimageTo
+	embeddedpngimageFrom.CopyBasicFields(embeddedpngimageTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchEmbeddedSvgImage(mapOrigCopy map[any]any, embeddedsvgimageFrom *EmbeddedSvgImage) (embeddedsvgimageTo *EmbeddedSvgImage) {
+
+	// embeddedsvgimageFrom has already been copied
+	if _embeddedsvgimageTo, ok := mapOrigCopy[embeddedsvgimageFrom]; ok {
+		embeddedsvgimageTo = _embeddedsvgimageTo.(*EmbeddedSvgImage)
+		return
+	}
+
+	embeddedsvgimageTo = new(EmbeddedSvgImage)
+	mapOrigCopy[embeddedsvgimageFrom] = embeddedsvgimageTo
+	embeddedsvgimageFrom.CopyBasicFields(embeddedsvgimageTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchKill(mapOrigCopy map[any]any, killFrom *Kill) (killTo *Kill) {
 
 	// killFrom has already been copied
@@ -7077,6 +7230,15 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *ENUM_VALUE:
 		stage.UnstageBranchENUM_VALUE(target)
+
+	case *EmbeddedJpgImage:
+		stage.UnstageBranchEmbeddedJpgImage(target)
+
+	case *EmbeddedPngImage:
+		stage.UnstageBranchEmbeddedPngImage(target)
+
+	case *EmbeddedSvgImage:
+		stage.UnstageBranchEmbeddedSvgImage(target)
 
 	case *Kill:
 		stage.UnstageBranchKill(target)
@@ -8519,6 +8681,51 @@ func (stage *Stage) UnstageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 	if enum_value.PROPERTIES != nil {
 		UnstageBranch(stage, enum_value.PROPERTIES)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, embeddedjpgimage) {
+		return
+	}
+
+	embeddedjpgimage.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, embeddedpngimage) {
+		return
+	}
+
+	embeddedpngimage.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, embeddedsvgimage) {
+		return
+	}
+
+	embeddedsvgimage.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

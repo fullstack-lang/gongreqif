@@ -286,6 +286,18 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUECreateCallback != nil {
 			stage.OnAfterENUM_VALUECreateCallback.OnAfterCreate(stage, target)
 		}
+	case *EmbeddedJpgImage:
+		if stage.OnAfterEmbeddedJpgImageCreateCallback != nil {
+			stage.OnAfterEmbeddedJpgImageCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *EmbeddedPngImage:
+		if stage.OnAfterEmbeddedPngImageCreateCallback != nil {
+			stage.OnAfterEmbeddedPngImageCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *EmbeddedSvgImage:
+		if stage.OnAfterEmbeddedSvgImageCreateCallback != nil {
+			stage.OnAfterEmbeddedSvgImageCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *Kill:
 		if stage.OnAfterKillCreateCallback != nil {
 			stage.OnAfterKillCreateCallback.OnAfterCreate(stage, target)
@@ -1044,6 +1056,30 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		if stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
+	case *EmbeddedJpgImage:
+		newTarget := any(new).(*EmbeddedJpgImage)
+		if stage.OnAfterEmbeddedJpgImageUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterEmbeddedJpgImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterEmbeddedJpgImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterEmbeddedJpgImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *EmbeddedPngImage:
+		newTarget := any(new).(*EmbeddedPngImage)
+		if stage.OnAfterEmbeddedPngImageUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterEmbeddedPngImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterEmbeddedPngImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterEmbeddedPngImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *EmbeddedSvgImage:
+		newTarget := any(new).(*EmbeddedSvgImage)
+		if stage.OnAfterEmbeddedSvgImageUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterEmbeddedSvgImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterEmbeddedSvgImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterEmbeddedSvgImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
 	case *Kill:
 		newTarget := any(new).(*Kill)
 		if stage.OnAfterKillUpdateCallback != nil && mouseEvent == nil {
@@ -1772,6 +1808,21 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*ENUM_VALUE)
 			stage.OnAfterENUM_VALUEDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *EmbeddedJpgImage:
+		if stage.OnAfterEmbeddedJpgImageDeleteCallback != nil {
+			staged := any(staged).(*EmbeddedJpgImage)
+			stage.OnAfterEmbeddedJpgImageDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *EmbeddedPngImage:
+		if stage.OnAfterEmbeddedPngImageDeleteCallback != nil {
+			staged := any(staged).(*EmbeddedPngImage)
+			stage.OnAfterEmbeddedPngImageDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *EmbeddedSvgImage:
+		if stage.OnAfterEmbeddedSvgImageDeleteCallback != nil {
+			staged := any(staged).(*EmbeddedSvgImage)
+			stage.OnAfterEmbeddedSvgImageDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *Kill:
 		if stage.OnAfterKillDeleteCallback != nil {
 			staged := any(staged).(*Kill)
@@ -2292,6 +2343,18 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUEReadCallback != nil {
 			stage.OnAfterENUM_VALUEReadCallback.OnAfterRead(stage, target)
 		}
+	case *EmbeddedJpgImage:
+		if stage.OnAfterEmbeddedJpgImageReadCallback != nil {
+			stage.OnAfterEmbeddedJpgImageReadCallback.OnAfterRead(stage, target)
+		}
+	case *EmbeddedPngImage:
+		if stage.OnAfterEmbeddedPngImageReadCallback != nil {
+			stage.OnAfterEmbeddedPngImageReadCallback.OnAfterRead(stage, target)
+		}
+	case *EmbeddedSvgImage:
+		if stage.OnAfterEmbeddedSvgImageReadCallback != nil {
+			stage.OnAfterEmbeddedSvgImageReadCallback.OnAfterRead(stage, target)
+		}
 	case *Kill:
 		if stage.OnAfterKillReadCallback != nil {
 			stage.OnAfterKillReadCallback.OnAfterRead(stage, target)
@@ -2697,6 +2760,15 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[ENUM_VALUE])
 	
+	case *EmbeddedJpgImage:
+		stage.OnAfterEmbeddedJpgImageUpdateCallback = any(callback).(OnAfterUpdateInterface[EmbeddedJpgImage])
+	
+	case *EmbeddedPngImage:
+		stage.OnAfterEmbeddedPngImageUpdateCallback = any(callback).(OnAfterUpdateInterface[EmbeddedPngImage])
+	
+	case *EmbeddedSvgImage:
+		stage.OnAfterEmbeddedSvgImageUpdateCallback = any(callback).(OnAfterUpdateInterface[EmbeddedSvgImage])
+	
 	case *Kill:
 		stage.OnAfterKillUpdateCallback = any(callback).(OnAfterUpdateInterface[Kill])
 	
@@ -3051,6 +3123,15 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUECreateCallback = any(callback).(OnAfterCreateInterface[ENUM_VALUE])
+	
+	case *EmbeddedJpgImage:
+		stage.OnAfterEmbeddedJpgImageCreateCallback = any(callback).(OnAfterCreateInterface[EmbeddedJpgImage])
+	
+	case *EmbeddedPngImage:
+		stage.OnAfterEmbeddedPngImageCreateCallback = any(callback).(OnAfterCreateInterface[EmbeddedPngImage])
+	
+	case *EmbeddedSvgImage:
+		stage.OnAfterEmbeddedSvgImageCreateCallback = any(callback).(OnAfterCreateInterface[EmbeddedSvgImage])
 	
 	case *Kill:
 		stage.OnAfterKillCreateCallback = any(callback).(OnAfterCreateInterface[Kill])
@@ -3407,6 +3488,15 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[ENUM_VALUE])
 	
+	case *EmbeddedJpgImage:
+		stage.OnAfterEmbeddedJpgImageDeleteCallback = any(callback).(OnAfterDeleteInterface[EmbeddedJpgImage])
+	
+	case *EmbeddedPngImage:
+		stage.OnAfterEmbeddedPngImageDeleteCallback = any(callback).(OnAfterDeleteInterface[EmbeddedPngImage])
+	
+	case *EmbeddedSvgImage:
+		stage.OnAfterEmbeddedSvgImageDeleteCallback = any(callback).(OnAfterDeleteInterface[EmbeddedSvgImage])
+	
 	case *Kill:
 		stage.OnAfterKillDeleteCallback = any(callback).(OnAfterDeleteInterface[Kill])
 	
@@ -3761,6 +3851,15 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEReadCallback = any(callback).(OnAfterReadInterface[ENUM_VALUE])
+	
+	case *EmbeddedJpgImage:
+		stage.OnAfterEmbeddedJpgImageReadCallback = any(callback).(OnAfterReadInterface[EmbeddedJpgImage])
+	
+	case *EmbeddedPngImage:
+		stage.OnAfterEmbeddedPngImageReadCallback = any(callback).(OnAfterReadInterface[EmbeddedPngImage])
+	
+	case *EmbeddedSvgImage:
+		stage.OnAfterEmbeddedSvgImageReadCallback = any(callback).(OnAfterReadInterface[EmbeddedSvgImage])
 	
 	case *Kill:
 		stage.OnAfterKillReadCallback = any(callback).(OnAfterReadInterface[Kill])

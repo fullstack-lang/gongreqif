@@ -295,6 +295,18 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		enum_valueInstance := any(concreteInstance).(*models.ENUM_VALUE)
 		ret2 := backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueInstance)
 		ret = any(ret2).(*T2)
+	case *models.EmbeddedJpgImage:
+		embeddedjpgimageInstance := any(concreteInstance).(*models.EmbeddedJpgImage)
+		ret2 := backRepo.BackRepoEmbeddedJpgImage.GetEmbeddedJpgImageDBFromEmbeddedJpgImagePtr(embeddedjpgimageInstance)
+		ret = any(ret2).(*T2)
+	case *models.EmbeddedPngImage:
+		embeddedpngimageInstance := any(concreteInstance).(*models.EmbeddedPngImage)
+		ret2 := backRepo.BackRepoEmbeddedPngImage.GetEmbeddedPngImageDBFromEmbeddedPngImagePtr(embeddedpngimageInstance)
+		ret = any(ret2).(*T2)
+	case *models.EmbeddedSvgImage:
+		embeddedsvgimageInstance := any(concreteInstance).(*models.EmbeddedSvgImage)
+		ret2 := backRepo.BackRepoEmbeddedSvgImage.GetEmbeddedSvgImageDBFromEmbeddedSvgImagePtr(embeddedsvgimageInstance)
+		ret = any(ret2).(*T2)
 	case *models.Kill:
 		killInstance := any(concreteInstance).(*models.Kill)
 		ret2 := backRepo.BackRepoKill.GetKillDBFromKillPtr(killInstance)
@@ -839,6 +851,21 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.ENUM_VALUE:
 		tmp := GetInstanceDBFromInstance[models.ENUM_VALUE, ENUM_VALUEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.EmbeddedJpgImage:
+		tmp := GetInstanceDBFromInstance[models.EmbeddedJpgImage, EmbeddedJpgImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.EmbeddedPngImage:
+		tmp := GetInstanceDBFromInstance[models.EmbeddedPngImage, EmbeddedPngImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.EmbeddedSvgImage:
+		tmp := GetInstanceDBFromInstance[models.EmbeddedSvgImage, EmbeddedSvgImageDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1432,6 +1459,21 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.ENUM_VALUE:
 		tmp := GetInstanceDBFromInstance[models.ENUM_VALUE, ENUM_VALUEDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.EmbeddedJpgImage:
+		tmp := GetInstanceDBFromInstance[models.EmbeddedJpgImage, EmbeddedJpgImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.EmbeddedPngImage:
+		tmp := GetInstanceDBFromInstance[models.EmbeddedPngImage, EmbeddedPngImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.EmbeddedSvgImage:
+		tmp := GetInstanceDBFromInstance[models.EmbeddedSvgImage, EmbeddedSvgImageDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

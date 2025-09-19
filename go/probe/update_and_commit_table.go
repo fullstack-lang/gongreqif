@@ -159,6 +159,12 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.EMBEDDED_VALUE](probe)
 	case *models.ENUM_VALUE:
 		updateAndCommitTable[models.ENUM_VALUE](probe)
+	case *models.EmbeddedJpgImage:
+		updateAndCommitTable[models.EmbeddedJpgImage](probe)
+	case *models.EmbeddedPngImage:
+		updateAndCommitTable[models.EmbeddedPngImage](probe)
+	case *models.EmbeddedSvgImage:
+		updateAndCommitTable[models.EmbeddedSvgImage](probe)
 	case *models.Kill:
 		updateAndCommitTable[models.Kill](probe)
 	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:

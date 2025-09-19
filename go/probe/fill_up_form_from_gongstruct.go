@@ -859,6 +859,42 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.EmbeddedJpgImage:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "EmbeddedJpgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedJpgImageFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.EmbeddedPngImage:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "EmbeddedPngImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedPngImageFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.EmbeddedSvgImage:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "EmbeddedSvgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedSvgImageFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.Kill:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
