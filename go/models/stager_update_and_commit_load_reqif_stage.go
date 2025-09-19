@@ -21,6 +21,7 @@ func (fileToUploadProxy *FileToUploadProxy) OnFileUpload(uploadedFile *load.File
 	fileExt := strings.ToLower(filepath.Ext(fileName))
 
 	var contentToProcess []byte
+	var svgImages []*SvgImage
 	var err error
 
 	// Direct processing for .reqif files
@@ -36,50 +37,78 @@ func (fileToUploadProxy *FileToUploadProxy) OnFileUpload(uploadedFile *load.File
 
 	case ".reqifz":
 		// Unzip and extract .reqif content for .reqifz files
-		contentToProcess, err = extractReqifFromZip(decodedBytes)
+		contentToProcess, svgImages, err = extractReqifFromZip(decodedBytes)
 		if err != nil {
 			return fmt.Errorf("failed to extract REQIF from zip: %w", err)
 		}
-
 	default:
 		return fmt.Errorf("unsupported file extension: %s", fileExt)
 	}
 
 	// Process the content (either direct .reqif or extracted from .reqifz)
-	fileToUploadProxy.stager.processReqifData(contentToProcess, fileName)
+	fileToUploadProxy.stager.processReqifData(contentToProcess, svgImages, fileName)
 	return nil
 }
 
 // extractReqifFromZip extracts the first .reqif file found in the zip archive
-func extractReqifFromZip(zipData []byte) ([]byte, error) {
+// and all svg files.
+func extractReqifFromZip(zipData []byte) ([]byte, []*SvgImage, error) {
+
+	var svgImages []*SvgImage
+	var reqifContent []byte
+
 	// Create a reader from the zip data
 	zipReader, err := zip.NewReader(bytes.NewReader(zipData), int64(len(zipData)))
 	if err != nil {
-		return nil, fmt.Errorf("failed to create zip reader: %w", err)
+		return nil, svgImages, fmt.Errorf("failed to create zip reader: %w", err)
 	}
 
 	// Look for .reqif files in the archive
 	for _, file := range zipReader.File {
-		if strings.ToLower(filepath.Ext(file.Name)) == ".reqif" {
+		switch strings.ToLower(filepath.Ext(file.Name)) {
+		case ".reqif":
 			// Open the file
 			rc, err := file.Open()
 			if err != nil {
-				return nil, fmt.Errorf("failed to open file %s in zip: %w", file.Name, err)
+				return nil, svgImages, fmt.Errorf("failed to open file %s in zip: %w", file.Name, err)
 			}
 			defer rc.Close()
 
 			// Read the content
 			content, err := io.ReadAll(rc)
 			if err != nil {
-				return nil, fmt.Errorf("failed to read file %s from zip: %w", file.Name, err)
+				return nil, svgImages, fmt.Errorf("failed to read file %s from zip: %w", file.Name, err)
+			}
+			reqifContent = content
+		case ".svg":
+			// Open the file
+			rc, err := file.Open()
+			if err != nil {
+				return nil, svgImages, fmt.Errorf("failed to open file %s in zip: %w", file.Name, err)
+			}
+			defer rc.Close()
+
+			// Read the content
+			content, err := io.ReadAll(rc)
+			if err != nil {
+				return nil, svgImages, fmt.Errorf("failed to read file %s from zip: %w", file.Name, err)
 			}
 
-			return content, nil
+			svgImage := &SvgImage{
+				Name:    file.Name,
+				Content: string(content),
+			}
+			svgImages = append(svgImages, svgImage)
 		}
 	}
 
-	return nil, fmt.Errorf("no .reqif file found in the zip archive")
+	if reqifContent == nil {
+		return nil, svgImages, fmt.Errorf("no .reqif file found in the zip archive")
+	}
+
+	return reqifContent, svgImages, nil
 }
+
 func (stager *Stager) updateAndCommitLoadReqifStage() {
 
 	stager.loadReqifStage.Reset()

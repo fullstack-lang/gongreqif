@@ -215,6 +215,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ENUM_VALUE:
 		ok = stage.IsStagedENUM_VALUE(target)
 
+	case *JpgImage:
+		ok = stage.IsStagedJpgImage(target)
+
 	case *Kill:
 		ok = stage.IsStagedKill(target)
 
@@ -293,6 +296,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(target)
 
+	case *PngImage:
+		ok = stage.IsStagedPngImage(target)
+
 	case *RELATION_GROUP:
 		ok = stage.IsStagedRELATION_GROUP(target)
 
@@ -349,6 +355,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	case *StaticWebSiteParagraph:
 		ok = stage.IsStagedStaticWebSiteParagraph(target)
+
+	case *SvgImage:
+		ok = stage.IsStagedSvgImage(target)
 
 	case *XHTML_CONTENT:
 		ok = stage.IsStagedXHTML_CONTENT(target)
@@ -850,6 +859,13 @@ func (stage *Stage) IsStagedENUM_VALUE(enum_value *ENUM_VALUE) (ok bool) {
 	return
 }
 
+func (stage *Stage) IsStagedJpgImage(jpgimage *JpgImage) (ok bool) {
+
+	_, ok = stage.JpgImages[jpgimage]
+
+	return
+}
+
 func (stage *Stage) IsStagedKill(kill *Kill) (ok bool) {
 
 	_, ok = stage.Kills[kill]
@@ -1032,6 +1048,13 @@ func (stage *Stage) IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_t
 	return
 }
 
+func (stage *Stage) IsStagedPngImage(pngimage *PngImage) (ok bool) {
+
+	_, ok = stage.PngImages[pngimage]
+
+	return
+}
+
 func (stage *Stage) IsStagedRELATION_GROUP(relation_group *RELATION_GROUP) (ok bool) {
 
 	_, ok = stage.RELATION_GROUPs[relation_group]
@@ -1161,6 +1184,13 @@ func (stage *Stage) IsStagedStaticWebSiteImage(staticwebsiteimage *StaticWebSite
 func (stage *Stage) IsStagedStaticWebSiteParagraph(staticwebsiteparagraph *StaticWebSiteParagraph) (ok bool) {
 
 	_, ok = stage.StaticWebSiteParagraphs[staticwebsiteparagraph]
+
+	return
+}
+
+func (stage *Stage) IsStagedSvgImage(svgimage *SvgImage) (ok bool) {
+
+	_, ok = stage.SvgImages[svgimage]
 
 	return
 }
@@ -1390,6 +1420,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ENUM_VALUE:
 		stage.StageBranchENUM_VALUE(target)
 
+	case *JpgImage:
+		stage.StageBranchJpgImage(target)
+
 	case *Kill:
 		stage.StageBranchKill(target)
 
@@ -1468,6 +1501,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.StageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(target)
 
+	case *PngImage:
+		stage.StageBranchPngImage(target)
+
 	case *RELATION_GROUP:
 		stage.StageBranchRELATION_GROUP(target)
 
@@ -1524,6 +1560,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *StaticWebSiteParagraph:
 		stage.StageBranchStaticWebSiteParagraph(target)
+
+	case *SvgImage:
+		stage.StageBranchSvgImage(target)
 
 	case *XHTML_CONTENT:
 		stage.StageBranchXHTML_CONTENT(target)
@@ -2836,6 +2875,21 @@ func (stage *Stage) StageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) StageBranchJpgImage(jpgimage *JpgImage) {
+
+	// check if instance is already staged
+	if IsStaged(stage, jpgimage) {
+		return
+	}
+
+	jpgimage.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchKill(kill *Kill) {
 
 	// check if instance is already staged
@@ -3219,6 +3273,21 @@ func (stage *Stage) StageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_objec
 	}
 
 	map_spec_object_type_shownameentry.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchPngImage(pngimage *PngImage) {
+
+	// check if instance is already staged
+	if IsStaged(stage, pngimage) {
+		return
+	}
+
+	pngimage.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
 
@@ -3709,6 +3778,21 @@ func (stage *Stage) StageBranchStaticWebSiteParagraph(staticwebsiteparagraph *St
 
 }
 
+func (stage *Stage) StageBranchSvgImage(svgimage *SvgImage) {
+
+	// check if instance is already staged
+	if IsStaged(stage, svgimage) {
+		return
+	}
+
+	svgimage.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchXHTML_CONTENT(xhtml_content *XHTML_CONTENT) {
 
 	// check if instance is already staged
@@ -4015,6 +4099,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchENUM_VALUE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *JpgImage:
+		toT := CopyBranchJpgImage(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *Kill:
 		toT := CopyBranchKill(mapOrigCopy, fromT)
 		return any(toT).(*Type)
@@ -4119,6 +4207,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *PngImage:
+		toT := CopyBranchPngImage(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *RELATION_GROUP:
 		toT := CopyBranchRELATION_GROUP(mapOrigCopy, fromT)
 		return any(toT).(*Type)
@@ -4193,6 +4285,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *StaticWebSiteParagraph:
 		toT := CopyBranchStaticWebSiteParagraph(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *SvgImage:
+		toT := CopyBranchSvgImage(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *XHTML_CONTENT:
@@ -5788,6 +5884,25 @@ func CopyBranchENUM_VALUE(mapOrigCopy map[any]any, enum_valueFrom *ENUM_VALUE) (
 	return
 }
 
+func CopyBranchJpgImage(mapOrigCopy map[any]any, jpgimageFrom *JpgImage) (jpgimageTo *JpgImage) {
+
+	// jpgimageFrom has already been copied
+	if _jpgimageTo, ok := mapOrigCopy[jpgimageFrom]; ok {
+		jpgimageTo = _jpgimageTo.(*JpgImage)
+		return
+	}
+
+	jpgimageTo = new(JpgImage)
+	mapOrigCopy[jpgimageFrom] = jpgimageTo
+	jpgimageFrom.CopyBasicFields(jpgimageTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchKill(mapOrigCopy map[any]any, killFrom *Kill) (killTo *Kill) {
 
 	// killFrom has already been copied
@@ -6274,6 +6389,25 @@ func CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy map[any]any, map_s
 	map_spec_object_type_shownameentryTo = new(Map_SPEC_OBJECT_TYPE_showNameEntry)
 	mapOrigCopy[map_spec_object_type_shownameentryFrom] = map_spec_object_type_shownameentryTo
 	map_spec_object_type_shownameentryFrom.CopyBasicFields(map_spec_object_type_shownameentryTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchPngImage(mapOrigCopy map[any]any, pngimageFrom *PngImage) (pngimageTo *PngImage) {
+
+	// pngimageFrom has already been copied
+	if _pngimageTo, ok := mapOrigCopy[pngimageFrom]; ok {
+		pngimageTo = _pngimageTo.(*PngImage)
+		return
+	}
+
+	pngimageTo = new(PngImage)
+	mapOrigCopy[pngimageFrom] = pngimageTo
+	pngimageFrom.CopyBasicFields(pngimageTo)
 
 	//insertion point for the staging of instances referenced by pointers
 
@@ -6841,6 +6975,25 @@ func CopyBranchStaticWebSiteParagraph(mapOrigCopy map[any]any, staticwebsitepara
 	return
 }
 
+func CopyBranchSvgImage(mapOrigCopy map[any]any, svgimageFrom *SvgImage) (svgimageTo *SvgImage) {
+
+	// svgimageFrom has already been copied
+	if _svgimageTo, ok := mapOrigCopy[svgimageFrom]; ok {
+		svgimageTo = _svgimageTo.(*SvgImage)
+		return
+	}
+
+	svgimageTo = new(SvgImage)
+	mapOrigCopy[svgimageFrom] = svgimageTo
+	svgimageFrom.CopyBasicFields(svgimageTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchXHTML_CONTENT(mapOrigCopy map[any]any, xhtml_contentFrom *XHTML_CONTENT) (xhtml_contentTo *XHTML_CONTENT) {
 
 	// xhtml_contentFrom has already been copied
@@ -7078,6 +7231,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ENUM_VALUE:
 		stage.UnstageBranchENUM_VALUE(target)
 
+	case *JpgImage:
+		stage.UnstageBranchJpgImage(target)
+
 	case *Kill:
 		stage.UnstageBranchKill(target)
 
@@ -7156,6 +7312,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.UnstageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(target)
 
+	case *PngImage:
+		stage.UnstageBranchPngImage(target)
+
 	case *RELATION_GROUP:
 		stage.UnstageBranchRELATION_GROUP(target)
 
@@ -7212,6 +7371,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *StaticWebSiteParagraph:
 		stage.UnstageBranchStaticWebSiteParagraph(target)
+
+	case *SvgImage:
+		stage.UnstageBranchSvgImage(target)
 
 	case *XHTML_CONTENT:
 		stage.UnstageBranchXHTML_CONTENT(target)
@@ -8524,6 +8686,21 @@ func (stage *Stage) UnstageBranchENUM_VALUE(enum_value *ENUM_VALUE) {
 
 }
 
+func (stage *Stage) UnstageBranchJpgImage(jpgimage *JpgImage) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, jpgimage) {
+		return
+	}
+
+	jpgimage.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchKill(kill *Kill) {
 
 	// check if instance is already staged
@@ -8907,6 +9084,21 @@ func (stage *Stage) UnstageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_obj
 	}
 
 	map_spec_object_type_shownameentry.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchPngImage(pngimage *PngImage) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, pngimage) {
+		return
+	}
+
+	pngimage.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
 
@@ -9392,6 +9584,21 @@ func (stage *Stage) UnstageBranchStaticWebSiteParagraph(staticwebsiteparagraph *
 	if staticwebsiteparagraph.Image != nil {
 		UnstageBranch(stage, staticwebsiteparagraph.Image)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchSvgImage(svgimage *SvgImage) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, svgimage) {
+		return
+	}
+
+	svgimage.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

@@ -286,6 +286,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUECreateCallback != nil {
 			stage.OnAfterENUM_VALUECreateCallback.OnAfterCreate(stage, target)
 		}
+	case *JpgImage:
+		if stage.OnAfterJpgImageCreateCallback != nil {
+			stage.OnAfterJpgImageCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *Kill:
 		if stage.OnAfterKillCreateCallback != nil {
 			stage.OnAfterKillCreateCallback.OnAfterCreate(stage, target)
@@ -390,6 +394,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *PngImage:
+		if stage.OnAfterPngImageCreateCallback != nil {
+			stage.OnAfterPngImageCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPCreateCallback != nil {
 			stage.OnAfterRELATION_GROUPCreateCallback.OnAfterCreate(stage, target)
@@ -465,6 +473,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *StaticWebSiteParagraph:
 		if stage.OnAfterStaticWebSiteParagraphCreateCallback != nil {
 			stage.OnAfterStaticWebSiteParagraphCreateCallback.OnAfterCreate(stage, target)
+		}
+	case *SvgImage:
+		if stage.OnAfterSvgImageCreateCallback != nil {
+			stage.OnAfterSvgImageCreateCallback.OnAfterCreate(stage, target)
 		}
 	case *XHTML_CONTENT:
 		if stage.OnAfterXHTML_CONTENTCreateCallback != nil {
@@ -1044,6 +1056,14 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		if stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
+	case *JpgImage:
+		newTarget := any(new).(*JpgImage)
+		if stage.OnAfterJpgImageUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterJpgImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterJpgImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterJpgImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
 	case *Kill:
 		newTarget := any(new).(*Kill)
 		if stage.OnAfterKillUpdateCallback != nil && mouseEvent == nil {
@@ -1252,6 +1272,14 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
+	case *PngImage:
+		newTarget := any(new).(*PngImage)
+		if stage.OnAfterPngImageUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterPngImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterPngImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterPngImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
 	case *RELATION_GROUP:
 		newTarget := any(new).(*RELATION_GROUP)
 		if stage.OnAfterRELATION_GROUPUpdateCallback != nil && mouseEvent == nil {
@@ -1403,6 +1431,14 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouse
 		}
 		if stage.OnAfterStaticWebSiteParagraphUpdateWithMouseEventCallback != nil && mouseEvent != nil {
 			stage.OnAfterStaticWebSiteParagraphUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
+		}
+	case *SvgImage:
+		newTarget := any(new).(*SvgImage)
+		if stage.OnAfterSvgImageUpdateCallback != nil && mouseEvent == nil {
+			stage.OnAfterSvgImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+		if stage.OnAfterSvgImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
+			stage.OnAfterSvgImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *XHTML_CONTENT:
 		newTarget := any(new).(*XHTML_CONTENT)
@@ -1772,6 +1808,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*ENUM_VALUE)
 			stage.OnAfterENUM_VALUEDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *JpgImage:
+		if stage.OnAfterJpgImageDeleteCallback != nil {
+			staged := any(staged).(*JpgImage)
+			stage.OnAfterJpgImageDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *Kill:
 		if stage.OnAfterKillDeleteCallback != nil {
 			staged := any(staged).(*Kill)
@@ -1902,6 +1943,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*Map_SPEC_OBJECT_TYPE_showNameEntry)
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *PngImage:
+		if stage.OnAfterPngImageDeleteCallback != nil {
+			staged := any(staged).(*PngImage)
+			stage.OnAfterPngImageDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPDeleteCallback != nil {
 			staged := any(staged).(*RELATION_GROUP)
@@ -1996,6 +2042,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 		if stage.OnAfterStaticWebSiteParagraphDeleteCallback != nil {
 			staged := any(staged).(*StaticWebSiteParagraph)
 			stage.OnAfterStaticWebSiteParagraphDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *SvgImage:
+		if stage.OnAfterSvgImageDeleteCallback != nil {
+			staged := any(staged).(*SvgImage)
+			stage.OnAfterSvgImageDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
 	case *XHTML_CONTENT:
 		if stage.OnAfterXHTML_CONTENTDeleteCallback != nil {
@@ -2292,6 +2343,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterENUM_VALUEReadCallback != nil {
 			stage.OnAfterENUM_VALUEReadCallback.OnAfterRead(stage, target)
 		}
+	case *JpgImage:
+		if stage.OnAfterJpgImageReadCallback != nil {
+			stage.OnAfterJpgImageReadCallback.OnAfterRead(stage, target)
+		}
 	case *Kill:
 		if stage.OnAfterKillReadCallback != nil {
 			stage.OnAfterKillReadCallback.OnAfterRead(stage, target)
@@ -2396,6 +2451,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback.OnAfterRead(stage, target)
 		}
+	case *PngImage:
+		if stage.OnAfterPngImageReadCallback != nil {
+			stage.OnAfterPngImageReadCallback.OnAfterRead(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPReadCallback != nil {
 			stage.OnAfterRELATION_GROUPReadCallback.OnAfterRead(stage, target)
@@ -2471,6 +2530,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *StaticWebSiteParagraph:
 		if stage.OnAfterStaticWebSiteParagraphReadCallback != nil {
 			stage.OnAfterStaticWebSiteParagraphReadCallback.OnAfterRead(stage, target)
+		}
+	case *SvgImage:
+		if stage.OnAfterSvgImageReadCallback != nil {
+			stage.OnAfterSvgImageReadCallback.OnAfterRead(stage, target)
 		}
 	case *XHTML_CONTENT:
 		if stage.OnAfterXHTML_CONTENTReadCallback != nil {
@@ -2697,6 +2760,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[ENUM_VALUE])
 	
+	case *JpgImage:
+		stage.OnAfterJpgImageUpdateCallback = any(callback).(OnAfterUpdateInterface[JpgImage])
+	
 	case *Kill:
 		stage.OnAfterKillUpdateCallback = any(callback).(OnAfterUpdateInterface[Kill])
 	
@@ -2775,6 +2841,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
 	
+	case *PngImage:
+		stage.OnAfterPngImageUpdateCallback = any(callback).(OnAfterUpdateInterface[PngImage])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPUpdateCallback = any(callback).(OnAfterUpdateInterface[RELATION_GROUP])
 	
@@ -2831,6 +2900,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSiteParagraph])
+	
+	case *SvgImage:
+		stage.OnAfterSvgImageUpdateCallback = any(callback).(OnAfterUpdateInterface[SvgImage])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTUpdateCallback = any(callback).(OnAfterUpdateInterface[XHTML_CONTENT])
@@ -3052,6 +3124,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUECreateCallback = any(callback).(OnAfterCreateInterface[ENUM_VALUE])
 	
+	case *JpgImage:
+		stage.OnAfterJpgImageCreateCallback = any(callback).(OnAfterCreateInterface[JpgImage])
+	
 	case *Kill:
 		stage.OnAfterKillCreateCallback = any(callback).(OnAfterCreateInterface[Kill])
 	
@@ -3130,6 +3205,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
 	
+	case *PngImage:
+		stage.OnAfterPngImageCreateCallback = any(callback).(OnAfterCreateInterface[PngImage])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPCreateCallback = any(callback).(OnAfterCreateInterface[RELATION_GROUP])
 	
@@ -3186,6 +3264,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSiteParagraph])
+	
+	case *SvgImage:
+		stage.OnAfterSvgImageCreateCallback = any(callback).(OnAfterCreateInterface[SvgImage])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTCreateCallback = any(callback).(OnAfterCreateInterface[XHTML_CONTENT])
@@ -3407,6 +3488,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[ENUM_VALUE])
 	
+	case *JpgImage:
+		stage.OnAfterJpgImageDeleteCallback = any(callback).(OnAfterDeleteInterface[JpgImage])
+	
 	case *Kill:
 		stage.OnAfterKillDeleteCallback = any(callback).(OnAfterDeleteInterface[Kill])
 	
@@ -3485,6 +3569,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
 	
+	case *PngImage:
+		stage.OnAfterPngImageDeleteCallback = any(callback).(OnAfterDeleteInterface[PngImage])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPDeleteCallback = any(callback).(OnAfterDeleteInterface[RELATION_GROUP])
 	
@@ -3541,6 +3628,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSiteParagraph])
+	
+	case *SvgImage:
+		stage.OnAfterSvgImageDeleteCallback = any(callback).(OnAfterDeleteInterface[SvgImage])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTDeleteCallback = any(callback).(OnAfterDeleteInterface[XHTML_CONTENT])
@@ -3762,6 +3852,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEReadCallback = any(callback).(OnAfterReadInterface[ENUM_VALUE])
 	
+	case *JpgImage:
+		stage.OnAfterJpgImageReadCallback = any(callback).(OnAfterReadInterface[JpgImage])
+	
 	case *Kill:
 		stage.OnAfterKillReadCallback = any(callback).(OnAfterReadInterface[Kill])
 	
@@ -3840,6 +3933,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback = any(callback).(OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
 	
+	case *PngImage:
+		stage.OnAfterPngImageReadCallback = any(callback).(OnAfterReadInterface[PngImage])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPReadCallback = any(callback).(OnAfterReadInterface[RELATION_GROUP])
 	
@@ -3896,6 +3992,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphReadCallback = any(callback).(OnAfterReadInterface[StaticWebSiteParagraph])
+	
+	case *SvgImage:
+		stage.OnAfterSvgImageReadCallback = any(callback).(OnAfterReadInterface[SvgImage])
 	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTReadCallback = any(callback).(OnAfterReadInterface[XHTML_CONTENT])

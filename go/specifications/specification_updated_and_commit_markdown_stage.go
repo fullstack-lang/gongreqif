@@ -3,6 +3,7 @@ package specifications
 import (
 
 	// Corrected path
+	"github.com/fullstack-lang/gongreqif/go/models"
 	m "github.com/fullstack-lang/gongreqif/go/models"
 
 	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
@@ -55,6 +56,12 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		content := &markdown.Content{
 			Name:    "*" + specification.GetName() + "*",
 			Content: markDownContent, // Assign the generated markdown
+		}
+
+		for _, svgImage := range models.GetGongstrucsSorted[*models.SvgImage](stager.GetStage()) {
+			markdownSvgImage := new(markdown.SvgImage).Stage(markdownStage)
+			markdownSvgImage.Content = svgImage.Content
+			markdownSvgImage.Name = svgImage.Name
 		}
 
 		markdown.StageBranch(markdownStage, content)

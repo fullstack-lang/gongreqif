@@ -144,6 +144,8 @@ type BackRepoData struct {
 
 	ENUM_VALUEAPIs []*ENUM_VALUEAPI
 
+	JpgImageAPIs []*JpgImageAPI
+
 	KillAPIs []*KillAPI
 
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryAPIs []*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryAPI
@@ -196,6 +198,8 @@ type BackRepoData struct {
 
 	Map_SPEC_OBJECT_TYPE_showNameEntryAPIs []*Map_SPEC_OBJECT_TYPE_showNameEntryAPI
 
+	PngImageAPIs []*PngImageAPI
+
 	RELATION_GROUPAPIs []*RELATION_GROUPAPI
 
 	RELATION_GROUP_TYPEAPIs []*RELATION_GROUP_TYPEAPI
@@ -233,6 +237,8 @@ type BackRepoData struct {
 	StaticWebSiteImageAPIs []*StaticWebSiteImageAPI
 
 	StaticWebSiteParagraphAPIs []*StaticWebSiteParagraphAPI
+
+	SvgImageAPIs []*SvgImageAPI
 
 	XHTML_CONTENTAPIs []*XHTML_CONTENTAPI
 
@@ -947,6 +953,16 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		backRepoData.ENUM_VALUEAPIs = append(backRepoData.ENUM_VALUEAPIs, &enum_valueAPI)
 	}
 
+	for _, jpgimageDB := range backRepo.BackRepoJpgImage.Map_JpgImageDBID_JpgImageDB {
+
+		var jpgimageAPI JpgImageAPI
+		jpgimageAPI.ID = jpgimageDB.ID
+		jpgimageAPI.JpgImagePointersEncoding = jpgimageDB.JpgImagePointersEncoding
+		jpgimageDB.CopyBasicFieldsToJpgImage_WOP(&jpgimageAPI.JpgImage_WOP)
+
+		backRepoData.JpgImageAPIs = append(backRepoData.JpgImageAPIs, &jpgimageAPI)
+	}
+
 	for _, killDB := range backRepo.BackRepoKill.Map_KillDBID_KillDB {
 
 		var killAPI KillAPI
@@ -1207,6 +1223,16 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		backRepoData.Map_SPEC_OBJECT_TYPE_showNameEntryAPIs = append(backRepoData.Map_SPEC_OBJECT_TYPE_showNameEntryAPIs, &map_spec_object_type_shownameentryAPI)
 	}
 
+	for _, pngimageDB := range backRepo.BackRepoPngImage.Map_PngImageDBID_PngImageDB {
+
+		var pngimageAPI PngImageAPI
+		pngimageAPI.ID = pngimageDB.ID
+		pngimageAPI.PngImagePointersEncoding = pngimageDB.PngImagePointersEncoding
+		pngimageDB.CopyBasicFieldsToPngImage_WOP(&pngimageAPI.PngImage_WOP)
+
+		backRepoData.PngImageAPIs = append(backRepoData.PngImageAPIs, &pngimageAPI)
+	}
+
 	for _, relation_groupDB := range backRepo.BackRepoRELATION_GROUP.Map_RELATION_GROUPDBID_RELATION_GROUPDB {
 
 		var relation_groupAPI RELATION_GROUPAPI
@@ -1395,6 +1421,16 @@ func CopyBackRepoToBackRepoData(backRepo *BackRepoStruct, backRepoData *BackRepo
 		staticwebsiteparagraphDB.CopyBasicFieldsToStaticWebSiteParagraph_WOP(&staticwebsiteparagraphAPI.StaticWebSiteParagraph_WOP)
 
 		backRepoData.StaticWebSiteParagraphAPIs = append(backRepoData.StaticWebSiteParagraphAPIs, &staticwebsiteparagraphAPI)
+	}
+
+	for _, svgimageDB := range backRepo.BackRepoSvgImage.Map_SvgImageDBID_SvgImageDB {
+
+		var svgimageAPI SvgImageAPI
+		svgimageAPI.ID = svgimageDB.ID
+		svgimageAPI.SvgImagePointersEncoding = svgimageDB.SvgImagePointersEncoding
+		svgimageDB.CopyBasicFieldsToSvgImage_WOP(&svgimageAPI.SvgImage_WOP)
+
+		backRepoData.SvgImageAPIs = append(backRepoData.SvgImageAPIs, &svgimageAPI)
 	}
 
 	for _, xhtml_contentDB := range backRepo.BackRepoXHTML_CONTENT.Map_XHTML_CONTENTDBID_XHTML_CONTENTDB {

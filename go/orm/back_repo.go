@@ -164,6 +164,8 @@ type BackRepoStruct struct {
 
 	BackRepoENUM_VALUE BackRepoENUM_VALUEStruct
 
+	BackRepoJpgImage BackRepoJpgImageStruct
+
 	BackRepoKill BackRepoKillStruct
 
 	BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryStruct
@@ -216,6 +218,8 @@ type BackRepoStruct struct {
 
 	BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry BackRepoMap_SPEC_OBJECT_TYPE_showNameEntryStruct
 
+	BackRepoPngImage BackRepoPngImageStruct
+
 	BackRepoRELATION_GROUP BackRepoRELATION_GROUPStruct
 
 	BackRepoRELATION_GROUP_TYPE BackRepoRELATION_GROUP_TYPEStruct
@@ -253,6 +257,8 @@ type BackRepoStruct struct {
 	BackRepoStaticWebSiteImage BackRepoStaticWebSiteImageStruct
 
 	BackRepoStaticWebSiteParagraph BackRepoStaticWebSiteParagraphStruct
+
+	BackRepoSvgImage BackRepoSvgImageStruct
 
 	BackRepoXHTML_CONTENT BackRepoXHTML_CONTENTStruct
 
@@ -347,6 +353,7 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&DATATYPE_DEFINITION_XHTMLDB{},
 		&EMBEDDED_VALUEDB{},
 		&ENUM_VALUEDB{},
+		&JpgImageDB{},
 		&KillDB{},
 		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB{},
 		&Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDB{},
@@ -373,6 +380,7 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryDB{},
 		&Map_SPEC_OBJECT_TYPE_showIdentifierEntryDB{},
 		&Map_SPEC_OBJECT_TYPE_showNameEntryDB{},
+		&PngImageDB{},
 		&RELATION_GROUPDB{},
 		&RELATION_GROUP_TYPEDB{},
 		&REQ_IFDB{},
@@ -392,6 +400,7 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		&StaticWebSiteGeneratedImageDB{},
 		&StaticWebSiteImageDB{},
 		&StaticWebSiteParagraphDB{},
+		&SvgImageDB{},
 		&XHTML_CONTENTDB{},
 	)
 	THIS IS REMOVED BY GONG COMPILER IF TARGET IS gorm */
@@ -959,6 +968,14 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		db:    db,
 		stage: stage,
 	}
+	backRepo.BackRepoJpgImage = BackRepoJpgImageStruct{
+		Map_JpgImageDBID_JpgImagePtr: make(map[uint]*models.JpgImage, 0),
+		Map_JpgImageDBID_JpgImageDB:  make(map[uint]*JpgImageDB, 0),
+		Map_JpgImagePtr_JpgImageDBID: make(map[*models.JpgImage]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
 	backRepo.BackRepoKill = BackRepoKillStruct{
 		Map_KillDBID_KillPtr: make(map[uint]*models.Kill, 0),
 		Map_KillDBID_KillDB:  make(map[uint]*KillDB, 0),
@@ -1167,6 +1184,14 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		db:    db,
 		stage: stage,
 	}
+	backRepo.BackRepoPngImage = BackRepoPngImageStruct{
+		Map_PngImageDBID_PngImagePtr: make(map[uint]*models.PngImage, 0),
+		Map_PngImageDBID_PngImageDB:  make(map[uint]*PngImageDB, 0),
+		Map_PngImagePtr_PngImageDBID: make(map[*models.PngImage]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
 	backRepo.BackRepoRELATION_GROUP = BackRepoRELATION_GROUPStruct{
 		Map_RELATION_GROUPDBID_RELATION_GROUPPtr: make(map[uint]*models.RELATION_GROUP, 0),
 		Map_RELATION_GROUPDBID_RELATION_GROUPDB:  make(map[uint]*RELATION_GROUPDB, 0),
@@ -1319,6 +1344,14 @@ func NewBackRepo(stage *models.Stage, filename string) (backRepo *BackRepoStruct
 		db:    db,
 		stage: stage,
 	}
+	backRepo.BackRepoSvgImage = BackRepoSvgImageStruct{
+		Map_SvgImageDBID_SvgImagePtr: make(map[uint]*models.SvgImage, 0),
+		Map_SvgImageDBID_SvgImageDB:  make(map[uint]*SvgImageDB, 0),
+		Map_SvgImagePtr_SvgImageDBID: make(map[*models.SvgImage]uint, 0),
+
+		db:    db,
+		stage: stage,
+	}
 	backRepo.BackRepoXHTML_CONTENT = BackRepoXHTML_CONTENTStruct{
 		Map_XHTML_CONTENTDBID_XHTML_CONTENTPtr: make(map[uint]*models.XHTML_CONTENT, 0),
 		Map_XHTML_CONTENTDBID_XHTML_CONTENTDB:  make(map[uint]*XHTML_CONTENTDB, 0),
@@ -1449,6 +1482,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseOne(stage)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseOne(stage)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseOne(stage)
+	backRepo.BackRepoJpgImage.CommitPhaseOne(stage)
 	backRepo.BackRepoKill.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CommitPhaseOne(stage)
@@ -1475,6 +1509,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CommitPhaseOne(stage)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CommitPhaseOne(stage)
+	backRepo.BackRepoPngImage.CommitPhaseOne(stage)
 	backRepo.BackRepoRELATION_GROUP.CommitPhaseOne(stage)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CommitPhaseOne(stage)
 	backRepo.BackRepoREQ_IF.CommitPhaseOne(stage)
@@ -1494,6 +1529,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.CommitPhaseOne(stage)
 	backRepo.BackRepoStaticWebSiteImage.CommitPhaseOne(stage)
 	backRepo.BackRepoStaticWebSiteParagraph.CommitPhaseOne(stage)
+	backRepo.BackRepoSvgImage.CommitPhaseOne(stage)
 	backRepo.BackRepoXHTML_CONTENT.CommitPhaseOne(stage)
 
 	// insertion point for per struct back repo phase two commit
@@ -1567,6 +1603,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoJpgImage.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoKill.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CommitPhaseTwo(backRepo)
@@ -1593,6 +1630,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoPngImage.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF.CommitPhaseTwo(backRepo)
@@ -1612,6 +1650,7 @@ func (backRepo *BackRepoStruct) Commit(stage *models.Stage) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSiteImage.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSiteParagraph.CommitPhaseTwo(backRepo)
+	backRepo.BackRepoSvgImage.CommitPhaseTwo(backRepo)
 	backRepo.BackRepoXHTML_CONTENT.CommitPhaseTwo(backRepo)
 
 	// important to release the mutex before calls to IncrementCommitFromBackNb
@@ -1697,6 +1736,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseOne()
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseOne()
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseOne()
+	backRepo.BackRepoJpgImage.CheckoutPhaseOne()
 	backRepo.BackRepoKill.CheckoutPhaseOne()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CheckoutPhaseOne()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CheckoutPhaseOne()
@@ -1723,6 +1763,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CheckoutPhaseOne()
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CheckoutPhaseOne()
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CheckoutPhaseOne()
+	backRepo.BackRepoPngImage.CheckoutPhaseOne()
 	backRepo.BackRepoRELATION_GROUP.CheckoutPhaseOne()
 	backRepo.BackRepoRELATION_GROUP_TYPE.CheckoutPhaseOne()
 	backRepo.BackRepoREQ_IF.CheckoutPhaseOne()
@@ -1742,6 +1783,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.CheckoutPhaseOne()
 	backRepo.BackRepoStaticWebSiteImage.CheckoutPhaseOne()
 	backRepo.BackRepoStaticWebSiteParagraph.CheckoutPhaseOne()
+	backRepo.BackRepoSvgImage.CheckoutPhaseOne()
 	backRepo.BackRepoXHTML_CONTENT.CheckoutPhaseOne()
 
 	// insertion point for per struct back repo phase two commit
@@ -1815,6 +1857,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoEMBEDDED_VALUE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoENUM_VALUE.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoJpgImage.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoKill.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.CheckoutPhaseTwo(backRepo)
@@ -1841,6 +1884,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoPngImage.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoRELATION_GROUP_TYPE.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoREQ_IF.CheckoutPhaseTwo(backRepo)
@@ -1860,6 +1904,7 @@ func (backRepo *BackRepoStruct) Checkout(stage *models.Stage) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSiteImage.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoStaticWebSiteParagraph.CheckoutPhaseTwo(backRepo)
+	backRepo.BackRepoSvgImage.CheckoutPhaseTwo(backRepo)
 	backRepo.BackRepoXHTML_CONTENT.CheckoutPhaseTwo(backRepo)
 }
 
@@ -1938,6 +1983,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.Backup(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.Backup(dirPath)
 	backRepo.BackRepoENUM_VALUE.Backup(dirPath)
+	backRepo.BackRepoJpgImage.Backup(dirPath)
 	backRepo.BackRepoKill.Backup(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Backup(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.Backup(dirPath)
@@ -1964,6 +2010,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.Backup(dirPath)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.Backup(dirPath)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.Backup(dirPath)
+	backRepo.BackRepoPngImage.Backup(dirPath)
 	backRepo.BackRepoRELATION_GROUP.Backup(dirPath)
 	backRepo.BackRepoRELATION_GROUP_TYPE.Backup(dirPath)
 	backRepo.BackRepoREQ_IF.Backup(dirPath)
@@ -1983,6 +2030,7 @@ func (backRepo *BackRepoStruct) Backup(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.Backup(dirPath)
 	backRepo.BackRepoStaticWebSiteImage.Backup(dirPath)
 	backRepo.BackRepoStaticWebSiteParagraph.Backup(dirPath)
+	backRepo.BackRepoSvgImage.Backup(dirPath)
 	backRepo.BackRepoXHTML_CONTENT.Backup(dirPath)
 }
 
@@ -2064,6 +2112,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.BackupXL(file)
 	backRepo.BackRepoEMBEDDED_VALUE.BackupXL(file)
 	backRepo.BackRepoENUM_VALUE.BackupXL(file)
+	backRepo.BackRepoJpgImage.BackupXL(file)
 	backRepo.BackRepoKill.BackupXL(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.BackupXL(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.BackupXL(file)
@@ -2090,6 +2139,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.BackupXL(file)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.BackupXL(file)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.BackupXL(file)
+	backRepo.BackRepoPngImage.BackupXL(file)
 	backRepo.BackRepoRELATION_GROUP.BackupXL(file)
 	backRepo.BackRepoRELATION_GROUP_TYPE.BackupXL(file)
 	backRepo.BackRepoREQ_IF.BackupXL(file)
@@ -2109,6 +2159,7 @@ func (backRepo *BackRepoStruct) BackupXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.BackupXL(file)
 	backRepo.BackRepoStaticWebSiteImage.BackupXL(file)
 	backRepo.BackRepoStaticWebSiteParagraph.BackupXL(file)
+	backRepo.BackRepoSvgImage.BackupXL(file)
 	backRepo.BackRepoXHTML_CONTENT.BackupXL(file)
 
 	var b bytes.Buffer
@@ -2204,6 +2255,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseOne(dirPath)
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoENUM_VALUE.RestorePhaseOne(dirPath)
+	backRepo.BackRepoJpgImage.RestorePhaseOne(dirPath)
 	backRepo.BackRepoKill.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestorePhaseOne(dirPath)
@@ -2230,6 +2282,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.RestorePhaseOne(dirPath)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.RestorePhaseOne(dirPath)
+	backRepo.BackRepoPngImage.RestorePhaseOne(dirPath)
 	backRepo.BackRepoRELATION_GROUP.RestorePhaseOne(dirPath)
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestorePhaseOne(dirPath)
 	backRepo.BackRepoREQ_IF.RestorePhaseOne(dirPath)
@@ -2249,6 +2302,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.RestorePhaseOne(dirPath)
 	backRepo.BackRepoStaticWebSiteImage.RestorePhaseOne(dirPath)
 	backRepo.BackRepoStaticWebSiteParagraph.RestorePhaseOne(dirPath)
+	backRepo.BackRepoSvgImage.RestorePhaseOne(dirPath)
 	backRepo.BackRepoXHTML_CONTENT.RestorePhaseOne(dirPath)
 
 	//
@@ -2326,6 +2380,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestorePhaseTwo()
 	backRepo.BackRepoEMBEDDED_VALUE.RestorePhaseTwo()
 	backRepo.BackRepoENUM_VALUE.RestorePhaseTwo()
+	backRepo.BackRepoJpgImage.RestorePhaseTwo()
 	backRepo.BackRepoKill.RestorePhaseTwo()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestorePhaseTwo()
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestorePhaseTwo()
@@ -2352,6 +2407,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.RestorePhaseTwo()
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.RestorePhaseTwo()
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.RestorePhaseTwo()
+	backRepo.BackRepoPngImage.RestorePhaseTwo()
 	backRepo.BackRepoRELATION_GROUP.RestorePhaseTwo()
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestorePhaseTwo()
 	backRepo.BackRepoREQ_IF.RestorePhaseTwo()
@@ -2371,6 +2427,7 @@ func (backRepo *BackRepoStruct) Restore(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.RestorePhaseTwo()
 	backRepo.BackRepoStaticWebSiteImage.RestorePhaseTwo()
 	backRepo.BackRepoStaticWebSiteParagraph.RestorePhaseTwo()
+	backRepo.BackRepoSvgImage.RestorePhaseTwo()
 	backRepo.BackRepoXHTML_CONTENT.RestorePhaseTwo()
 
 	backRepo.stage.Checkout()
@@ -2469,6 +2526,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoDATATYPE_DEFINITION_XHTML.RestoreXLPhaseOne(file)
 	backRepo.BackRepoEMBEDDED_VALUE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoENUM_VALUE.RestoreXLPhaseOne(file)
+	backRepo.BackRepoJpgImage.RestoreXLPhaseOne(file)
 	backRepo.BackRepoKill.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.RestoreXLPhaseOne(file)
@@ -2495,6 +2553,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showIdentifierEntry.RestoreXLPhaseOne(file)
 	backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.RestoreXLPhaseOne(file)
+	backRepo.BackRepoPngImage.RestoreXLPhaseOne(file)
 	backRepo.BackRepoRELATION_GROUP.RestoreXLPhaseOne(file)
 	backRepo.BackRepoRELATION_GROUP_TYPE.RestoreXLPhaseOne(file)
 	backRepo.BackRepoREQ_IF.RestoreXLPhaseOne(file)
@@ -2514,6 +2573,7 @@ func (backRepo *BackRepoStruct) RestoreXL(stage *models.Stage, dirPath string) {
 	backRepo.BackRepoStaticWebSiteGeneratedImage.RestoreXLPhaseOne(file)
 	backRepo.BackRepoStaticWebSiteImage.RestoreXLPhaseOne(file)
 	backRepo.BackRepoStaticWebSiteParagraph.RestoreXLPhaseOne(file)
+	backRepo.BackRepoSvgImage.RestoreXLPhaseOne(file)
 	backRepo.BackRepoXHTML_CONTENT.RestoreXLPhaseOne(file)
 
 	// commit the restored stage

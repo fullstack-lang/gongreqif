@@ -782,6 +782,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "JpgImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.JpgImage](probe.stageOfInterest)
+			for _jpgimage := range set {
+				nodeInstance := &tree.Node{Name: _jpgimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_jpgimage, "JpgImage", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "Kill":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.Kill](probe.stageOfInterest)
@@ -1042,6 +1052,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "PngImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.PngImage](probe.stageOfInterest)
+			for _pngimage := range set {
+				nodeInstance := &tree.Node{Name: _pngimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_pngimage, "PngImage", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "RELATION_GROUP":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.RELATION_GROUP](probe.stageOfInterest)
@@ -1229,6 +1249,16 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _staticwebsiteparagraph.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsiteparagraph, "StaticWebSiteParagraph", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "SvgImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.SvgImage](probe.stageOfInterest)
+			for _svgimage := range set {
+				nodeInstance := &tree.Node{Name: _svgimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_svgimage, "SvgImage", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}

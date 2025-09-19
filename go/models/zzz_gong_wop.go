@@ -1118,6 +1118,20 @@ func (from *ENUM_VALUE) CopyBasicFields(to *ENUM_VALUE) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type JpgImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	Base64Content string
+}
+
+func (from *JpgImage) CopyBasicFields(to *JpgImage) {
+	// insertion point
+	to.Name = from.Name
+	to.Base64Content = from.Base64Content
+}
+
 type Kill_WOP struct {
 	// insertion point
 
@@ -1477,6 +1491,20 @@ func (from *Map_SPEC_OBJECT_TYPE_showNameEntry) CopyBasicFields(to *Map_SPEC_OBJ
 	// insertion point
 	to.Name = from.Name
 	to.Value = from.Value
+}
+
+type PngImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	Base64Content string
+}
+
+func (from *PngImage) CopyBasicFields(to *PngImage) {
+	// insertion point
+	to.Name = from.Name
+	to.Base64Content = from.Base64Content
 }
 
 type RELATION_GROUP_WOP struct {
@@ -1863,6 +1891,20 @@ func (from *StaticWebSiteParagraph) CopyBasicFields(to *StaticWebSiteParagraph) 
 	// insertion point
 	to.Name = from.Name
 	to.LegendMarkdownContent = from.LegendMarkdownContent
+}
+
+type SvgImage_WOP struct {
+	// insertion point
+
+	Name string
+
+	Content string
+}
+
+func (from *SvgImage) CopyBasicFields(to *SvgImage) {
+	// insertion point
+	to.Name = from.Name
+	to.Content = from.Content
 }
 
 type XHTML_CONTENT_WOP struct {

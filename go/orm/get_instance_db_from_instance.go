@@ -295,6 +295,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		enum_valueInstance := any(concreteInstance).(*models.ENUM_VALUE)
 		ret2 := backRepo.BackRepoENUM_VALUE.GetENUM_VALUEDBFromENUM_VALUEPtr(enum_valueInstance)
 		ret = any(ret2).(*T2)
+	case *models.JpgImage:
+		jpgimageInstance := any(concreteInstance).(*models.JpgImage)
+		ret2 := backRepo.BackRepoJpgImage.GetJpgImageDBFromJpgImagePtr(jpgimageInstance)
+		ret = any(ret2).(*T2)
 	case *models.Kill:
 		killInstance := any(concreteInstance).(*models.Kill)
 		ret2 := backRepo.BackRepoKill.GetKillDBFromKillPtr(killInstance)
@@ -399,6 +403,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 		map_spec_object_type_shownameentryInstance := any(concreteInstance).(*models.Map_SPEC_OBJECT_TYPE_showNameEntry)
 		ret2 := backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.GetMap_SPEC_OBJECT_TYPE_showNameEntryDBFromMap_SPEC_OBJECT_TYPE_showNameEntryPtr(map_spec_object_type_shownameentryInstance)
 		ret = any(ret2).(*T2)
+	case *models.PngImage:
+		pngimageInstance := any(concreteInstance).(*models.PngImage)
+		ret2 := backRepo.BackRepoPngImage.GetPngImageDBFromPngImagePtr(pngimageInstance)
+		ret = any(ret2).(*T2)
 	case *models.RELATION_GROUP:
 		relation_groupInstance := any(concreteInstance).(*models.RELATION_GROUP)
 		ret2 := backRepo.BackRepoRELATION_GROUP.GetRELATION_GROUPDBFromRELATION_GROUPPtr(relation_groupInstance)
@@ -474,6 +482,10 @@ func GetInstanceDBFromInstance[T models.Gongstruct, T2 GongstructDB](
 	case *models.StaticWebSiteParagraph:
 		staticwebsiteparagraphInstance := any(concreteInstance).(*models.StaticWebSiteParagraph)
 		ret2 := backRepo.BackRepoStaticWebSiteParagraph.GetStaticWebSiteParagraphDBFromStaticWebSiteParagraphPtr(staticwebsiteparagraphInstance)
+		ret = any(ret2).(*T2)
+	case *models.SvgImage:
+		svgimageInstance := any(concreteInstance).(*models.SvgImage)
+		ret2 := backRepo.BackRepoSvgImage.GetSvgImageDBFromSvgImagePtr(svgimageInstance)
 		ret = any(ret2).(*T2)
 	case *models.XHTML_CONTENT:
 		xhtml_contentInstance := any(concreteInstance).(*models.XHTML_CONTENT)
@@ -842,6 +854,11 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.JpgImage:
+		tmp := GetInstanceDBFromInstance[models.JpgImage, JpgImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.Kill:
 		tmp := GetInstanceDBFromInstance[models.Kill, KillDB](
 			stage, backRepo, inst,
@@ -972,6 +989,11 @@ func GetID[T models.Gongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.PngImage:
+		tmp := GetInstanceDBFromInstance[models.PngImage, PngImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -1064,6 +1086,11 @@ func GetID[T models.Gongstruct](
 		id = int(tmp.ID)
 	case *models.StaticWebSiteParagraph:
 		tmp := GetInstanceDBFromInstance[models.StaticWebSiteParagraph, StaticWebSiteParagraphDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.SvgImage:
+		tmp := GetInstanceDBFromInstance[models.SvgImage, SvgImageDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
@@ -1435,6 +1462,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.JpgImage:
+		tmp := GetInstanceDBFromInstance[models.JpgImage, JpgImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.Kill:
 		tmp := GetInstanceDBFromInstance[models.Kill, KillDB](
 			stage, backRepo, inst,
@@ -1565,6 +1597,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)
+	case *models.PngImage:
+		tmp := GetInstanceDBFromInstance[models.PngImage, PngImageDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
 	case *models.RELATION_GROUP:
 		tmp := GetInstanceDBFromInstance[models.RELATION_GROUP, RELATION_GROUPDB](
 			stage, backRepo, inst,
@@ -1657,6 +1694,11 @@ func GetIDPointer[T models.PointerToGongstruct](
 		id = int(tmp.ID)
 	case *models.StaticWebSiteParagraph:
 		tmp := GetInstanceDBFromInstance[models.StaticWebSiteParagraph, StaticWebSiteParagraphDB](
+			stage, backRepo, inst,
+		)
+		id = int(tmp.ID)
+	case *models.SvgImage:
+		tmp := GetInstanceDBFromInstance[models.SvgImage, SvgImageDB](
 			stage, backRepo, inst,
 		)
 		id = int(tmp.ID)

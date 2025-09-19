@@ -859,6 +859,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.JpgImage:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "JpgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__JpgImageFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.Kill:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
@@ -1171,6 +1183,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.PngImage:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "PngImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__PngImageFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.RELATION_GROUP:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
@@ -1393,6 +1417,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 			Label: "StaticWebSiteParagraph Form",
 		}).Stage(formStage)
 		formGroup.OnSave = __gong__New__StaticWebSiteParagraphFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.SvgImage:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "SvgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SvgImageFormCallback(
 			instancesTyped,
 			probe,
 			formGroup,

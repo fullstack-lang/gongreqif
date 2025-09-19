@@ -546,6 +546,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/enum_values/:id", GetController().UpdateENUM_VALUE)
 		v1.DELETE("/v1/enum_values/:id", GetController().DeleteENUM_VALUE)
 
+		v1.GET("/v1/jpgimages", GetController().GetJpgImages)
+		v1.GET("/v1/jpgimages/:id", GetController().GetJpgImage)
+		v1.POST("/v1/jpgimages", GetController().PostJpgImage)
+		v1.PATCH("/v1/jpgimages/:id", GetController().UpdateJpgImage)
+		v1.PUT("/v1/jpgimages/:id", GetController().UpdateJpgImage)
+		v1.DELETE("/v1/jpgimages/:id", GetController().DeleteJpgImage)
+
 		v1.GET("/v1/kills", GetController().GetKills)
 		v1.GET("/v1/kills/:id", GetController().GetKill)
 		v1.POST("/v1/kills", GetController().PostKill)
@@ -728,6 +735,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PUT("/v1/map_spec_object_type_shownameentrys/:id", GetController().UpdateMap_SPEC_OBJECT_TYPE_showNameEntry)
 		v1.DELETE("/v1/map_spec_object_type_shownameentrys/:id", GetController().DeleteMap_SPEC_OBJECT_TYPE_showNameEntry)
 
+		v1.GET("/v1/pngimages", GetController().GetPngImages)
+		v1.GET("/v1/pngimages/:id", GetController().GetPngImage)
+		v1.POST("/v1/pngimages", GetController().PostPngImage)
+		v1.PATCH("/v1/pngimages/:id", GetController().UpdatePngImage)
+		v1.PUT("/v1/pngimages/:id", GetController().UpdatePngImage)
+		v1.DELETE("/v1/pngimages/:id", GetController().DeletePngImage)
+
 		v1.GET("/v1/relation_groups", GetController().GetRELATION_GROUPs)
 		v1.GET("/v1/relation_groups/:id", GetController().GetRELATION_GROUP)
 		v1.POST("/v1/relation_groups", GetController().PostRELATION_GROUP)
@@ -860,6 +874,13 @@ func registerControllers(r *gin.Engine) {
 		v1.PATCH("/v1/staticwebsiteparagraphs/:id", GetController().UpdateStaticWebSiteParagraph)
 		v1.PUT("/v1/staticwebsiteparagraphs/:id", GetController().UpdateStaticWebSiteParagraph)
 		v1.DELETE("/v1/staticwebsiteparagraphs/:id", GetController().DeleteStaticWebSiteParagraph)
+
+		v1.GET("/v1/svgimages", GetController().GetSvgImages)
+		v1.GET("/v1/svgimages/:id", GetController().GetSvgImage)
+		v1.POST("/v1/svgimages", GetController().PostSvgImage)
+		v1.PATCH("/v1/svgimages/:id", GetController().UpdateSvgImage)
+		v1.PUT("/v1/svgimages/:id", GetController().UpdateSvgImage)
+		v1.DELETE("/v1/svgimages/:id", GetController().DeleteSvgImage)
 
 		v1.GET("/v1/xhtml_contents", GetController().GetXHTML_CONTENTs)
 		v1.GET("/v1/xhtml_contents/:id", GetController().GetXHTML_CONTENT)

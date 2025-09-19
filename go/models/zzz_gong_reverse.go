@@ -562,6 +562,11 @@ func GetReverseFieldOwnerName(
 			}
 		}
 
+	case *JpgImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	case *Kill:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -867,6 +872,11 @@ func GetReverseFieldOwnerName(
 			}
 		}
 
+	case *PngImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	case *RELATION_GROUP:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -1044,6 +1054,11 @@ func GetReverseFieldOwnerName(
 					res = _staticwebsitechapter.Name
 				}
 			}
+		}
+
+	case *SvgImage:
+		switch reverseField.GongstructName {
+		// insertion point
 		}
 
 	case *XHTML_CONTENT:
@@ -1560,6 +1575,11 @@ func GetReverseFieldOwner[T Gongstruct](
 			}
 		}
 
+	case *JpgImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	case *Kill:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -1815,6 +1835,11 @@ func GetReverseFieldOwner[T Gongstruct](
 			}
 		}
 
+	case *PngImage:
+		switch reverseField.GongstructName {
+		// insertion point
+		}
+
 	case *RELATION_GROUP:
 		switch reverseField.GongstructName {
 		// insertion point
@@ -1968,6 +1993,11 @@ func GetReverseFieldOwner[T Gongstruct](
 			case "Paragraphs":
 				res = stage.StaticWebSiteChapter_Paragraphs_reverseMap[inst]
 			}
+		}
+
+	case *SvgImage:
+		switch reverseField.GongstructName {
+		// insertion point
 		}
 
 	case *XHTML_CONTENT:

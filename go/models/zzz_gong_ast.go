@@ -463,6 +463,7 @@ var __gong__map_DATATYPE_DEFINITION_STRING = make(map[string]*DATATYPE_DEFINITIO
 var __gong__map_DATATYPE_DEFINITION_XHTML = make(map[string]*DATATYPE_DEFINITION_XHTML)
 var __gong__map_EMBEDDED_VALUE = make(map[string]*EMBEDDED_VALUE)
 var __gong__map_ENUM_VALUE = make(map[string]*ENUM_VALUE)
+var __gong__map_JpgImage = make(map[string]*JpgImage)
 var __gong__map_Kill = make(map[string]*Kill)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -489,6 +490,7 @@ var __gong__map_Map_SPECIFICATION_Nodes_expandedEntry = make(map[string]*Map_SPE
 var __gong__map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry = make(map[string]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
 var __gong__map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry = make(map[string]*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 var __gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry = make(map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry)
+var __gong__map_PngImage = make(map[string]*PngImage)
 var __gong__map_RELATION_GROUP = make(map[string]*RELATION_GROUP)
 var __gong__map_RELATION_GROUP_TYPE = make(map[string]*RELATION_GROUP_TYPE)
 var __gong__map_REQ_IF = make(map[string]*REQ_IF)
@@ -508,6 +510,7 @@ var __gong__map_StaticWebSiteChapter = make(map[string]*StaticWebSiteChapter)
 var __gong__map_StaticWebSiteGeneratedImage = make(map[string]*StaticWebSiteGeneratedImage)
 var __gong__map_StaticWebSiteImage = make(map[string]*StaticWebSiteImage)
 var __gong__map_StaticWebSiteParagraph = make(map[string]*StaticWebSiteParagraph)
+var __gong__map_SvgImage = make(map[string]*SvgImage)
 var __gong__map_XHTML_CONTENT = make(map[string]*XHTML_CONTENT)
 
 // Parser needs to be configured for having the [Name1.Name2] or [pkg.Name1] ...
@@ -1101,6 +1104,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceENUM_VALUE.Stage(stage)
 										instance = any(instanceENUM_VALUE)
 										__gong__map_ENUM_VALUE[identifier] = instanceENUM_VALUE
+									case "JpgImage":
+										instanceJpgImage := new(JpgImage)
+										instanceJpgImage.Name = instanceName
+										instanceJpgImage.Stage(stage)
+										instance = any(instanceJpgImage)
+										__gong__map_JpgImage[identifier] = instanceJpgImage
 									case "Kill":
 										instanceKill := new(Kill)
 										instanceKill.Name = instanceName
@@ -1257,6 +1266,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceMap_SPEC_OBJECT_TYPE_showNameEntry.Stage(stage)
 										instance = any(instanceMap_SPEC_OBJECT_TYPE_showNameEntry)
 										__gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifier] = instanceMap_SPEC_OBJECT_TYPE_showNameEntry
+									case "PngImage":
+										instancePngImage := new(PngImage)
+										instancePngImage.Name = instanceName
+										instancePngImage.Stage(stage)
+										instance = any(instancePngImage)
+										__gong__map_PngImage[identifier] = instancePngImage
 									case "RELATION_GROUP":
 										instanceRELATION_GROUP := new(RELATION_GROUP)
 										instanceRELATION_GROUP.Name = instanceName
@@ -1371,6 +1386,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceStaticWebSiteParagraph.Stage(stage)
 										instance = any(instanceStaticWebSiteParagraph)
 										__gong__map_StaticWebSiteParagraph[identifier] = instanceStaticWebSiteParagraph
+									case "SvgImage":
+										instanceSvgImage := new(SvgImage)
+										instanceSvgImage.Name = instanceName
+										instanceSvgImage.Stage(stage)
+										instance = any(instanceSvgImage)
+										__gong__map_SvgImage[identifier] = instanceSvgImage
 									case "XHTML_CONTENT":
 										instanceXHTML_CONTENT := new(XHTML_CONTENT)
 										instanceXHTML_CONTENT.Name = instanceName
@@ -1694,6 +1715,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							switch fieldName {
 							// insertion point for date assign code
 							}
+						case "JpgImage":
+							switch fieldName {
+							// insertion point for date assign code
+							}
 						case "Kill":
 							switch fieldName {
 							// insertion point for date assign code
@@ -1798,6 +1823,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							switch fieldName {
 							// insertion point for date assign code
 							}
+						case "PngImage":
+							switch fieldName {
+							// insertion point for date assign code
+							}
 						case "RELATION_GROUP":
 							switch fieldName {
 							// insertion point for date assign code
@@ -1871,6 +1900,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "StaticWebSiteParagraph":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "SvgImage":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -2605,6 +2638,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
+					case "JpgImage":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
 					case "Kill":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
@@ -2706,6 +2743,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					case "Map_SPEC_OBJECT_TYPE_showNameEntry":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "PngImage":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -3052,6 +3093,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					case "StaticWebSiteParagraph":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "SvgImage":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -4113,6 +4158,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ENUM_VALUE[identifier].LONG_NAME = fielValue
 				}
+			case "JpgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_JpgImage[identifier].Name = fielValue
+				case "Base64Content":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_JpgImage[identifier].Base64Content = fielValue
+				}
 			case "Kill":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -4320,6 +4377,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifier].Name = fielValue
+				}
+			case "PngImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_PngImage[identifier].Name = fielValue
+				case "Base64Content":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_PngImage[identifier].Base64Content = fielValue
 				}
 			case "RELATION_GROUP":
 				switch fieldName {
@@ -4712,6 +4781,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_StaticWebSiteParagraph[identifier].LegendMarkdownContent = fielValue
+				}
+			case "SvgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SvgImage[identifier].Name = fielValue
+				case "Content":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SvgImage[identifier].Content = fielValue
 				}
 			case "XHTML_CONTENT":
 				switch fieldName {
@@ -5229,6 +5310,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					targetIdentifier := ident.Name
 					__gong__map_ENUM_VALUE[identifier].PROPERTIES = __gong__map_A_PROPERTIES[targetIdentifier]
 				}
+			case "JpgImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
 			case "Kill":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -5508,6 +5593,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					}
 					__gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifier].Value = fielValue
 				}
+			case "PngImage":
+				switch fieldName {
+				// insertion point for field dependant code
+				}
 			case "RELATION_GROUP":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -5714,6 +5803,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "Image":
 					targetIdentifier := ident.Name
 					__gong__map_StaticWebSiteParagraph[identifier].Image = __gong__map_StaticWebSiteImage[targetIdentifier]
+				}
+			case "SvgImage":
+				switch fieldName {
+				// insertion point for field dependant code
 				}
 			case "XHTML_CONTENT":
 				switch fieldName {
@@ -6064,6 +6157,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}
+				case "JpgImage":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
 				case "Kill":
 					switch fieldName {
 					// insertion point for selector expr assign code
@@ -6168,6 +6265,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}
+				case "PngImage":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
 				case "RELATION_GROUP":
 					switch fieldName {
 					// insertion point for selector expr assign code
@@ -6241,6 +6342,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for selector expr assign code
 					}
 				case "StaticWebSiteParagraph":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "SvgImage":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}
