@@ -3654,35 +3654,35 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
-	map_JpgImage_Identifiers := make(map[*JpgImage]string)
-	_ = map_JpgImage_Identifiers
+	map_EmbeddedJpgImage_Identifiers := make(map[*EmbeddedJpgImage]string)
+	_ = map_EmbeddedJpgImage_Identifiers
 
-	jpgimageOrdered := []*JpgImage{}
-	for jpgimage := range stage.JpgImages {
-		jpgimageOrdered = append(jpgimageOrdered, jpgimage)
+	embeddedjpgimageOrdered := []*EmbeddedJpgImage{}
+	for embeddedjpgimage := range stage.EmbeddedJpgImages {
+		embeddedjpgimageOrdered = append(embeddedjpgimageOrdered, embeddedjpgimage)
 	}
-	sort.Slice(jpgimageOrdered[:], func(i, j int) bool {
-		jpgimagei := jpgimageOrdered[i]
-		jpgimagej := jpgimageOrdered[j]
-		jpgimagei_order, oki := stage.JpgImageMap_Staged_Order[jpgimagei]
-		jpgimagej_order, okj := stage.JpgImageMap_Staged_Order[jpgimagej]
+	sort.Slice(embeddedjpgimageOrdered[:], func(i, j int) bool {
+		embeddedjpgimagei := embeddedjpgimageOrdered[i]
+		embeddedjpgimagej := embeddedjpgimageOrdered[j]
+		embeddedjpgimagei_order, oki := stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimagei]
+		embeddedjpgimagej_order, okj := stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimagej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
-		return jpgimagei_order < jpgimagej_order
+		return embeddedjpgimagei_order < embeddedjpgimagej_order
 	})
-	if len(jpgimageOrdered) > 0 {
+	if len(embeddedjpgimageOrdered) > 0 {
 		identifiersDecl += "\n"
 	}
-	for idx, jpgimage := range jpgimageOrdered {
+	for idx, embeddedjpgimage := range embeddedjpgimageOrdered {
 
-		id = generatesIdentifier("JpgImage", idx, jpgimage.Name)
-		map_JpgImage_Identifiers[jpgimage] = id
+		id = generatesIdentifier("EmbeddedJpgImage", idx, embeddedjpgimage.Name)
+		map_EmbeddedJpgImage_Identifiers[embeddedjpgimage] = id
 
 		decl = IdentifiersDecls
 		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "JpgImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", jpgimage.Name)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedJpgImage")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedjpgimage.Name)
 		identifiersDecl += decl
 
 		initializerStatements += "\n"
@@ -3690,13 +3690,107 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 		setValueField = StringInitStatement
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(jpgimage.Name))
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Name))
 		initializerStatements += setValueField
 
 		setValueField = StringInitStatement
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Base64Content")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(jpgimage.Base64Content))
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Base64Content))
+		initializerStatements += setValueField
+
+	}
+
+	map_EmbeddedPngImage_Identifiers := make(map[*EmbeddedPngImage]string)
+	_ = map_EmbeddedPngImage_Identifiers
+
+	embeddedpngimageOrdered := []*EmbeddedPngImage{}
+	for embeddedpngimage := range stage.EmbeddedPngImages {
+		embeddedpngimageOrdered = append(embeddedpngimageOrdered, embeddedpngimage)
+	}
+	sort.Slice(embeddedpngimageOrdered[:], func(i, j int) bool {
+		embeddedpngimagei := embeddedpngimageOrdered[i]
+		embeddedpngimagej := embeddedpngimageOrdered[j]
+		embeddedpngimagei_order, oki := stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimagei]
+		embeddedpngimagej_order, okj := stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimagej]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return embeddedpngimagei_order < embeddedpngimagej_order
+	})
+	if len(embeddedpngimageOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, embeddedpngimage := range embeddedpngimageOrdered {
+
+		id = generatesIdentifier("EmbeddedPngImage", idx, embeddedpngimage.Name)
+		map_EmbeddedPngImage_Identifiers[embeddedpngimage] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedPngImage")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedpngimage.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Base64Content")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Base64Content))
+		initializerStatements += setValueField
+
+	}
+
+	map_EmbeddedSvgImage_Identifiers := make(map[*EmbeddedSvgImage]string)
+	_ = map_EmbeddedSvgImage_Identifiers
+
+	embeddedsvgimageOrdered := []*EmbeddedSvgImage{}
+	for embeddedsvgimage := range stage.EmbeddedSvgImages {
+		embeddedsvgimageOrdered = append(embeddedsvgimageOrdered, embeddedsvgimage)
+	}
+	sort.Slice(embeddedsvgimageOrdered[:], func(i, j int) bool {
+		embeddedsvgimagei := embeddedsvgimageOrdered[i]
+		embeddedsvgimagej := embeddedsvgimageOrdered[j]
+		embeddedsvgimagei_order, oki := stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimagei]
+		embeddedsvgimagej_order, okj := stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimagej]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return embeddedsvgimagei_order < embeddedsvgimagej_order
+	})
+	if len(embeddedsvgimageOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, embeddedsvgimage := range embeddedsvgimageOrdered {
+
+		id = generatesIdentifier("EmbeddedSvgImage", idx, embeddedsvgimage.Name)
+		map_EmbeddedSvgImage_Identifiers[embeddedsvgimage] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedSvgImage")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedsvgimage.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Name))
+		initializerStatements += setValueField
+
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Content")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Content))
 		initializerStatements += setValueField
 
 	}
@@ -4917,53 +5011,6 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
-	map_PngImage_Identifiers := make(map[*PngImage]string)
-	_ = map_PngImage_Identifiers
-
-	pngimageOrdered := []*PngImage{}
-	for pngimage := range stage.PngImages {
-		pngimageOrdered = append(pngimageOrdered, pngimage)
-	}
-	sort.Slice(pngimageOrdered[:], func(i, j int) bool {
-		pngimagei := pngimageOrdered[i]
-		pngimagej := pngimageOrdered[j]
-		pngimagei_order, oki := stage.PngImageMap_Staged_Order[pngimagei]
-		pngimagej_order, okj := stage.PngImageMap_Staged_Order[pngimagej]
-		if !oki || !okj {
-			log.Fatalln("unknown pointers")
-		}
-		return pngimagei_order < pngimagej_order
-	})
-	if len(pngimageOrdered) > 0 {
-		identifiersDecl += "\n"
-	}
-	for idx, pngimage := range pngimageOrdered {
-
-		id = generatesIdentifier("PngImage", idx, pngimage.Name)
-		map_PngImage_Identifiers[pngimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "PngImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", pngimage.Name)
-		identifiersDecl += decl
-
-		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(pngimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Base64Content")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(pngimage.Base64Content))
-		initializerStatements += setValueField
-
-	}
-
 	map_RELATION_GROUP_Identifiers := make(map[*RELATION_GROUP]string)
 	_ = map_RELATION_GROUP_Identifiers
 
@@ -6093,53 +6140,6 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LegendMarkdownContent")
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.LegendMarkdownContent))
-		initializerStatements += setValueField
-
-	}
-
-	map_SvgImage_Identifiers := make(map[*SvgImage]string)
-	_ = map_SvgImage_Identifiers
-
-	svgimageOrdered := []*SvgImage{}
-	for svgimage := range stage.SvgImages {
-		svgimageOrdered = append(svgimageOrdered, svgimage)
-	}
-	sort.Slice(svgimageOrdered[:], func(i, j int) bool {
-		svgimagei := svgimageOrdered[i]
-		svgimagej := svgimageOrdered[j]
-		svgimagei_order, oki := stage.SvgImageMap_Staged_Order[svgimagei]
-		svgimagej_order, okj := stage.SvgImageMap_Staged_Order[svgimagej]
-		if !oki || !okj {
-			log.Fatalln("unknown pointers")
-		}
-		return svgimagei_order < svgimagej_order
-	})
-	if len(svgimageOrdered) > 0 {
-		identifiersDecl += "\n"
-	}
-	for idx, svgimage := range svgimageOrdered {
-
-		id = generatesIdentifier("SvgImage", idx, svgimage.Name)
-		map_SvgImage_Identifiers[svgimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SvgImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", svgimage.Name)
-		identifiersDecl += decl
-
-		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(svgimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Content")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(svgimage.Content))
 		initializerStatements += setValueField
 
 	}
@@ -7780,15 +7780,41 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 	}
 
-	if len(jpgimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of JpgImage instances pointers"
+	if len(embeddedjpgimageOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of EmbeddedJpgImage instances pointers"
 	}
-	for idx, jpgimage := range jpgimageOrdered {
+	for idx, embeddedjpgimage := range embeddedjpgimageOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("JpgImage", idx, jpgimage.Name)
-		map_JpgImage_Identifiers[jpgimage] = id
+		id = generatesIdentifier("EmbeddedJpgImage", idx, embeddedjpgimage.Name)
+		map_EmbeddedJpgImage_Identifiers[embeddedjpgimage] = id
+
+		// Initialisation of values
+	}
+
+	if len(embeddedpngimageOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of EmbeddedPngImage instances pointers"
+	}
+	for idx, embeddedpngimage := range embeddedpngimageOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("EmbeddedPngImage", idx, embeddedpngimage.Name)
+		map_EmbeddedPngImage_Identifiers[embeddedpngimage] = id
+
+		// Initialisation of values
+	}
+
+	if len(embeddedsvgimageOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of EmbeddedSvgImage instances pointers"
+	}
+	for idx, embeddedsvgimage := range embeddedsvgimageOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("EmbeddedSvgImage", idx, embeddedsvgimage.Name)
+		map_EmbeddedSvgImage_Identifiers[embeddedsvgimage] = id
 
 		// Initialisation of values
 	}
@@ -8127,19 +8153,6 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 
 		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showNameEntry", idx, map_spec_object_type_shownameentry.Name)
 		map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers[map_spec_object_type_shownameentry] = id
-
-		// Initialisation of values
-	}
-
-	if len(pngimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of PngImage instances pointers"
-	}
-	for idx, pngimage := range pngimageOrdered {
-		var setPointerField string
-		_ = setPointerField
-
-		id = generatesIdentifier("PngImage", idx, pngimage.Name)
-		map_PngImage_Identifiers[pngimage] = id
 
 		// Initialisation of values
 	}
@@ -8917,19 +8930,6 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 			pointersInitializesStatements += setPointerField
 		}
 
-	}
-
-	if len(svgimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SvgImage instances pointers"
-	}
-	for idx, svgimage := range svgimageOrdered {
-		var setPointerField string
-		_ = setPointerField
-
-		id = generatesIdentifier("SvgImage", idx, svgimage.Name)
-		map_SvgImage_Identifiers[svgimage] = id
-
-		// Initialisation of values
 	}
 
 	if len(xhtml_contentOrdered) > 0 {

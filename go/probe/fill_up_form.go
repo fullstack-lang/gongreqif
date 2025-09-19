@@ -1314,11 +1314,25 @@ func FillUpForm(
 			}
 		}
 
-	case *models.JpgImage:
+	case *models.EmbeddedJpgImage:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("Base64Content", instanceWithInferedType.Base64Content, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 600, true, 400)
+
+	case *models.EmbeddedPngImage:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Base64Content", instanceWithInferedType.Base64Content, instanceWithInferedType, probe.formStage, formGroup,
+			true, true, 600, true, 400)
+
+	case *models.EmbeddedSvgImage:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Content", instanceWithInferedType.Content, instanceWithInferedType, probe.formStage, formGroup,
 			true, true, 600, true, 400)
 
 	case *models.Kill:
@@ -2051,13 +2065,6 @@ func FillUpForm(
 			}
 		}
 
-	case *models.PngImage:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Base64Content", instanceWithInferedType.Base64Content, instanceWithInferedType, probe.formStage, formGroup,
-			true, true, 600, true, 400)
-
 	case *models.RELATION_GROUP:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
@@ -2600,13 +2607,6 @@ func FillUpForm(
 					probe)
 			}
 		}
-
-	case *models.SvgImage:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Content", instanceWithInferedType.Content, instanceWithInferedType, probe.formStage, formGroup,
-			true, true, 600, true, 400)
 
 	case *models.XHTML_CONTENT:
 		// insertion point

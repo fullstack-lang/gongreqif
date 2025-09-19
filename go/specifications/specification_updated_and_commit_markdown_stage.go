@@ -58,16 +58,22 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 			Content: markDownContent, // Assign the generated markdown
 		}
 
-		for _, svgImage := range models.GetGongstrucsSorted[*models.SvgImage](stager.GetStage()) {
+		for _, svgImage := range models.GetGongstrucsSorted[*models.EmbeddedSvgImage](stager.GetStage()) {
 			markdownSvgImage := new(markdown.SvgImage).Stage(markdownStage)
 			markdownSvgImage.Content = svgImage.Content
 			markdownSvgImage.Name = svgImage.Name
 		}
 
-		for _, jpgImage := range models.GetGongstrucsSorted[*models.JpgImage](stager.GetStage()) {
+		for _, jpgImage := range models.GetGongstrucsSorted[*models.EmbeddedJpgImage](stager.GetStage()) {
 			markdownSvgImage := new(markdown.JpgImage).Stage(markdownStage)
 			markdownSvgImage.Base64Content = jpgImage.Base64Content
 			markdownSvgImage.Name = jpgImage.Name
+		}
+
+		for _, pngImage := range models.GetGongstrucsSorted[*models.EmbeddedPngImage](stager.GetStage()) {
+			markdownSvgImage := new(markdown.PngImage).Stage(markdownStage)
+			markdownSvgImage.Base64Content = pngImage.Base64Content
+			markdownSvgImage.Name = pngImage.Name
 		}
 
 		markdown.StageBranch(markdownStage, content)

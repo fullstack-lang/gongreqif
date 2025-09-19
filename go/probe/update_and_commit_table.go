@@ -159,8 +159,12 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.EMBEDDED_VALUE](probe)
 	case *models.ENUM_VALUE:
 		updateAndCommitTable[models.ENUM_VALUE](probe)
-	case *models.JpgImage:
-		updateAndCommitTable[models.JpgImage](probe)
+	case *models.EmbeddedJpgImage:
+		updateAndCommitTable[models.EmbeddedJpgImage](probe)
+	case *models.EmbeddedPngImage:
+		updateAndCommitTable[models.EmbeddedPngImage](probe)
+	case *models.EmbeddedSvgImage:
+		updateAndCommitTable[models.EmbeddedSvgImage](probe)
 	case *models.Kill:
 		updateAndCommitTable[models.Kill](probe)
 	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -213,8 +217,6 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](probe)
 	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
 		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](probe)
-	case *models.PngImage:
-		updateAndCommitTable[models.PngImage](probe)
 	case *models.RELATION_GROUP:
 		updateAndCommitTable[models.RELATION_GROUP](probe)
 	case *models.RELATION_GROUP_TYPE:
@@ -253,8 +255,6 @@ func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
 		updateAndCommitTable[models.StaticWebSiteImage](probe)
 	case *models.StaticWebSiteParagraph:
 		updateAndCommitTable[models.StaticWebSiteParagraph](probe)
-	case *models.SvgImage:
-		updateAndCommitTable[models.SvgImage](probe)
 	case *models.XHTML_CONTENT:
 		updateAndCommitTable[models.XHTML_CONTENT](probe)
 	default:

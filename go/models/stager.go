@@ -597,17 +597,17 @@ func NewStager(
 		}
 
 		if strings.HasSuffix(pathToReqifFile, ".reqifz") {
-			reqifData, svgImages, jpgImages, err := extractReqifFromZip(reqifData)
+			reqifData, svgImages, jpgImages, pngImages, err := extractReqifFromZip(reqifData)
 			if err != nil {
 				fmt.Printf("Error extracting reqif from zip %s: %v\n", pathToReqifFile, err)
 			}
-			stager.processReqifData(reqifData, svgImages, jpgImages, pathToReqifFile)
+			stager.processReqifData(reqifData, svgImages, jpgImages, pngImages, pathToReqifFile)
 
 			for _, svgImage := range svgImages {
 				_ = svgImage
 			}
 		} else {
-			stager.processReqifData(reqifData, []*SvgImage{}, []*JpgImage{}, pathToReqifFile)
+			stager.processReqifData(reqifData, []*EmbeddedSvgImage{}, []*EmbeddedJpgImage{}, []*EmbeddedPngImage{}, pathToReqifFile)
 		}
 	}
 
@@ -622,7 +622,7 @@ func NewStager(
 	return
 }
 
-func (stager *Stager) processReqifData(reqifData []byte, svgImages []*SvgImage, jpgImages []*JpgImage, pathToReqifFile string) {
+func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSvgImage, jpgImages []*EmbeddedJpgImage, pngImages []*EmbeddedPngImage, pathToReqifFile string) {
 
 	stager.stage.Reset()
 	stager.pathToReqifFile = pathToReqifFile
@@ -642,6 +642,9 @@ func (stager *Stager) processReqifData(reqifData []byte, svgImages []*SvgImage, 
 	}
 	for _, jpgImage := range jpgImages {
 		jpgImage.Stage(stager.stage)
+	}
+	for _, pngImage := range pngImages {
+		pngImage.Stage(stager.stage)
 	}
 
 	// fetch the root REQ_IF element and exit otherwise

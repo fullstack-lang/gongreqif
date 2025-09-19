@@ -14,16 +14,16 @@ import (
 )
 
 // declaration in order to justify use of the models import
-var __SvgImage__dummysDeclaration__ models.SvgImage
-var __SvgImage_time__dummyDeclaration time.Duration
+var __EmbeddedPngImage__dummysDeclaration__ models.EmbeddedPngImage
+var __EmbeddedPngImage_time__dummyDeclaration time.Duration
 
-var mutexSvgImage sync.Mutex
+var mutexEmbeddedPngImage sync.Mutex
 
-// An SvgImageID parameter model.
+// An EmbeddedPngImageID parameter model.
 //
 // This is used for operations that want the ID of an order in the path
-// swagger:parameters getSvgImage updateSvgImage deleteSvgImage
-type SvgImageID struct {
+// swagger:parameters getEmbeddedPngImage updateEmbeddedPngImage deleteEmbeddedPngImage
+type EmbeddedPngImageID struct {
 	// The ID of the order
 	//
 	// in: path
@@ -31,29 +31,29 @@ type SvgImageID struct {
 	ID int64
 }
 
-// SvgImageInput is a schema that can validate the user’s
+// EmbeddedPngImageInput is a schema that can validate the user’s
 // input to prevent us from getting invalid data
-// swagger:parameters postSvgImage updateSvgImage
-type SvgImageInput struct {
-	// The SvgImage to submit or modify
+// swagger:parameters postEmbeddedPngImage updateEmbeddedPngImage
+type EmbeddedPngImageInput struct {
+	// The EmbeddedPngImage to submit or modify
 	// in: body
-	SvgImage *orm.SvgImageAPI
+	EmbeddedPngImage *orm.EmbeddedPngImageAPI
 }
 
-// GetSvgImages
+// GetEmbeddedPngImages
 //
-// swagger:route GET /svgimages svgimages getSvgImages
+// swagger:route GET /embeddedpngimages embeddedpngimages getEmbeddedPngImages
 //
-// # Get all svgimages
+// # Get all embeddedpngimages
 //
 // Responses:
 // default: genericError
 //
-//	200: svgimageDBResponse
-func (controller *Controller) GetSvgImages(c *gin.Context) {
+//	200: embeddedpngimageDBResponse
+func (controller *Controller) GetEmbeddedPngImages(c *gin.Context) {
 
 	// source slice
-	var svgimageDBs []orm.SvgImageDB
+	var embeddedpngimageDBs []orm.EmbeddedPngImageDB
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -61,7 +61,7 @@ func (controller *Controller) GetSvgImages(c *gin.Context) {
 		value := _values["Name"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetSvgImages", "Name", stackPath)
+			// log.Println("GetEmbeddedPngImages", "Name", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
@@ -75,9 +75,9 @@ func (controller *Controller) GetSvgImages(c *gin.Context) {
 
 		log.Panic(message)
 	}
-	db := backRepo.BackRepoSvgImage.GetDB()
+	db := backRepo.BackRepoEmbeddedPngImage.GetDB()
 
-	_, err := db.Find(&svgimageDBs)
+	_, err := db.Find(&embeddedpngimageDBs)
 	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -88,29 +88,29 @@ func (controller *Controller) GetSvgImages(c *gin.Context) {
 	}
 
 	// slice that will be transmitted to the front
-	svgimageAPIs := make([]orm.SvgImageAPI, 0)
+	embeddedpngimageAPIs := make([]orm.EmbeddedPngImageAPI, 0)
 
-	// for each svgimage, update fields from the database nullable fields
-	for idx := range svgimageDBs {
-		svgimageDB := &svgimageDBs[idx]
-		_ = svgimageDB
-		var svgimageAPI orm.SvgImageAPI
+	// for each embeddedpngimage, update fields from the database nullable fields
+	for idx := range embeddedpngimageDBs {
+		embeddedpngimageDB := &embeddedpngimageDBs[idx]
+		_ = embeddedpngimageDB
+		var embeddedpngimageAPI orm.EmbeddedPngImageAPI
 
 		// insertion point for updating fields
-		svgimageAPI.ID = svgimageDB.ID
-		svgimageDB.CopyBasicFieldsToSvgImage_WOP(&svgimageAPI.SvgImage_WOP)
-		svgimageAPI.SvgImagePointersEncoding = svgimageDB.SvgImagePointersEncoding
-		svgimageAPIs = append(svgimageAPIs, svgimageAPI)
+		embeddedpngimageAPI.ID = embeddedpngimageDB.ID
+		embeddedpngimageDB.CopyBasicFieldsToEmbeddedPngImage_WOP(&embeddedpngimageAPI.EmbeddedPngImage_WOP)
+		embeddedpngimageAPI.EmbeddedPngImagePointersEncoding = embeddedpngimageDB.EmbeddedPngImagePointersEncoding
+		embeddedpngimageAPIs = append(embeddedpngimageAPIs, embeddedpngimageAPI)
 	}
 
-	c.JSON(http.StatusOK, svgimageAPIs)
+	c.JSON(http.StatusOK, embeddedpngimageAPIs)
 }
 
-// PostSvgImage
+// PostEmbeddedPngImage
 //
-// swagger:route POST /svgimages svgimages postSvgImage
+// swagger:route POST /embeddedpngimages embeddedpngimages postEmbeddedPngImage
 //
-// Creates a svgimage
+// Creates a embeddedpngimage
 //
 //	Consumes:
 //	- application/json
@@ -120,10 +120,10 @@ func (controller *Controller) GetSvgImages(c *gin.Context) {
 //
 //	Responses:
 //	  200: nodeDBResponse
-func (controller *Controller) PostSvgImage(c *gin.Context) {
+func (controller *Controller) PostEmbeddedPngImage(c *gin.Context) {
 
-	mutexSvgImage.Lock()
-	defer mutexSvgImage.Unlock()
+	mutexEmbeddedPngImage.Lock()
+	defer mutexEmbeddedPngImage.Unlock()
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -131,7 +131,7 @@ func (controller *Controller) PostSvgImage(c *gin.Context) {
 		value := _values["Name"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("PostSvgImages", "Name", stackPath)
+			// log.Println("PostEmbeddedPngImages", "Name", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
@@ -145,10 +145,10 @@ func (controller *Controller) PostSvgImage(c *gin.Context) {
 
 		log.Panic(message)
 	}
-	db := backRepo.BackRepoSvgImage.GetDB()
+	db := backRepo.BackRepoEmbeddedPngImage.GetDB()
 
 	// Validate input
-	var input orm.SvgImageAPI
+	var input orm.EmbeddedPngImageAPI
 
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
@@ -160,12 +160,12 @@ func (controller *Controller) PostSvgImage(c *gin.Context) {
 		return
 	}
 
-	// Create svgimage
-	svgimageDB := orm.SvgImageDB{}
-	svgimageDB.SvgImagePointersEncoding = input.SvgImagePointersEncoding
-	svgimageDB.CopyBasicFieldsFromSvgImage_WOP(&input.SvgImage_WOP)
+	// Create embeddedpngimage
+	embeddedpngimageDB := orm.EmbeddedPngImageDB{}
+	embeddedpngimageDB.EmbeddedPngImagePointersEncoding = input.EmbeddedPngImagePointersEncoding
+	embeddedpngimageDB.CopyBasicFieldsFromEmbeddedPngImage_WOP(&input.EmbeddedPngImage_WOP)
 
-	_, err = db.Create(&svgimageDB)
+	_, err = db.Create(&embeddedpngimageDB)
 	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -176,31 +176,31 @@ func (controller *Controller) PostSvgImage(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	backRepo.BackRepoSvgImage.CheckoutPhaseOneInstance(&svgimageDB)
-	svgimage := backRepo.BackRepoSvgImage.Map_SvgImageDBID_SvgImagePtr[svgimageDB.ID]
+	backRepo.BackRepoEmbeddedPngImage.CheckoutPhaseOneInstance(&embeddedpngimageDB)
+	embeddedpngimage := backRepo.BackRepoEmbeddedPngImage.Map_EmbeddedPngImageDBID_EmbeddedPngImagePtr[embeddedpngimageDB.ID]
 
-	if svgimage != nil {
-		models.AfterCreateFromFront(backRepo.GetStage(), svgimage)
+	if embeddedpngimage != nil {
+		models.AfterCreateFromFront(backRepo.GetStage(), embeddedpngimage)
 	}
 
 	// a POST is equivalent to a back repo commit increase
 	// (this will be improved with implementation of unit of work design pattern)
 	backRepo.IncrementPushFromFrontNb()
 
-	c.JSON(http.StatusOK, svgimageDB)
+	c.JSON(http.StatusOK, embeddedpngimageDB)
 }
 
-// GetSvgImage
+// GetEmbeddedPngImage
 //
-// swagger:route GET /svgimages/{ID} svgimages getSvgImage
+// swagger:route GET /embeddedpngimages/{ID} embeddedpngimages getEmbeddedPngImage
 //
-// Gets the details for a svgimage.
+// Gets the details for a embeddedpngimage.
 //
 // Responses:
 // default: genericError
 //
-//	200: svgimageDBResponse
-func (controller *Controller) GetSvgImage(c *gin.Context) {
+//	200: embeddedpngimageDBResponse
+func (controller *Controller) GetEmbeddedPngImage(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -208,7 +208,7 @@ func (controller *Controller) GetSvgImage(c *gin.Context) {
 		value := _values["Name"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("GetSvgImage", "Name", stackPath)
+			// log.Println("GetEmbeddedPngImage", "Name", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
@@ -222,11 +222,11 @@ func (controller *Controller) GetSvgImage(c *gin.Context) {
 
 		log.Panic(message)
 	}
-	db := backRepo.BackRepoSvgImage.GetDB()
+	db := backRepo.BackRepoEmbeddedPngImage.GetDB()
 
-	// Get svgimageDB in DB
-	var svgimageDB orm.SvgImageDB
-	if _, err := db.First(&svgimageDB, c.Param("id")); err != nil {
+	// Get embeddedpngimageDB in DB
+	var embeddedpngimageDB orm.EmbeddedPngImageDB
+	if _, err := db.First(&embeddedpngimageDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -235,28 +235,28 @@ func (controller *Controller) GetSvgImage(c *gin.Context) {
 		return
 	}
 
-	var svgimageAPI orm.SvgImageAPI
-	svgimageAPI.ID = svgimageDB.ID
-	svgimageAPI.SvgImagePointersEncoding = svgimageDB.SvgImagePointersEncoding
-	svgimageDB.CopyBasicFieldsToSvgImage_WOP(&svgimageAPI.SvgImage_WOP)
+	var embeddedpngimageAPI orm.EmbeddedPngImageAPI
+	embeddedpngimageAPI.ID = embeddedpngimageDB.ID
+	embeddedpngimageAPI.EmbeddedPngImagePointersEncoding = embeddedpngimageDB.EmbeddedPngImagePointersEncoding
+	embeddedpngimageDB.CopyBasicFieldsToEmbeddedPngImage_WOP(&embeddedpngimageAPI.EmbeddedPngImage_WOP)
 
-	c.JSON(http.StatusOK, svgimageAPI)
+	c.JSON(http.StatusOK, embeddedpngimageAPI)
 }
 
-// UpdateSvgImage
+// UpdateEmbeddedPngImage
 //
-// swagger:route PATCH /svgimages/{ID} svgimages updateSvgImage
+// swagger:route PATCH /embeddedpngimages/{ID} embeddedpngimages updateEmbeddedPngImage
 //
-// # Update a svgimage
+// # Update a embeddedpngimage
 //
 // Responses:
 // default: genericError
 //
-//	200: svgimageDBResponse
-func (controller *Controller) UpdateSvgImage(c *gin.Context) {
+//	200: embeddedpngimageDBResponse
+func (controller *Controller) UpdateEmbeddedPngImage(c *gin.Context) {
 
-	mutexSvgImage.Lock()
-	defer mutexSvgImage.Unlock()
+	mutexEmbeddedPngImage.Lock()
+	defer mutexEmbeddedPngImage.Unlock()
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -289,10 +289,10 @@ func (controller *Controller) UpdateSvgImage(c *gin.Context) {
 
 		log.Panic(message)
 	}
-	db := backRepo.BackRepoSvgImage.GetDB()
+	db := backRepo.BackRepoEmbeddedPngImage.GetDB()
 
 	// Validate input
-	var input orm.SvgImageAPI
+	var input orm.EmbeddedPngImageAPI
 	if err := c.ShouldBindJSON(&input); err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -300,10 +300,10 @@ func (controller *Controller) UpdateSvgImage(c *gin.Context) {
 	}
 
 	// Get model if exist
-	var svgimageDB orm.SvgImageDB
+	var embeddedpngimageDB orm.EmbeddedPngImageDB
 
-	// fetch the svgimage
-	_, err := db.First(&svgimageDB, c.Param("id"))
+	// fetch the embeddedpngimage
+	_, err := db.First(&embeddedpngimageDB, c.Param("id"))
 
 	if err != nil {
 		var returnError GenericError
@@ -315,11 +315,11 @@ func (controller *Controller) UpdateSvgImage(c *gin.Context) {
 	}
 
 	// update
-	svgimageDB.CopyBasicFieldsFromSvgImage_WOP(&input.SvgImage_WOP)
-	svgimageDB.SvgImagePointersEncoding = input.SvgImagePointersEncoding
+	embeddedpngimageDB.CopyBasicFieldsFromEmbeddedPngImage_WOP(&input.EmbeddedPngImage_WOP)
+	embeddedpngimageDB.EmbeddedPngImagePointersEncoding = input.EmbeddedPngImagePointersEncoding
 
-	db, _ = db.Model(&svgimageDB)
-	_, err = db.Updates(&svgimageDB)
+	db, _ = db.Model(&embeddedpngimageDB)
+	_, err = db.Updates(&embeddedpngimageDB)
 	if err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
@@ -330,22 +330,22 @@ func (controller *Controller) UpdateSvgImage(c *gin.Context) {
 	}
 
 	// get an instance (not staged) from DB instance, and call callback function
-	svgimageNew := new(models.SvgImage)
-	svgimageDB.CopyBasicFieldsToSvgImage(svgimageNew)
+	embeddedpngimageNew := new(models.EmbeddedPngImage)
+	embeddedpngimageDB.CopyBasicFieldsToEmbeddedPngImage(embeddedpngimageNew)
 
 	// redeem pointers
-	svgimageDB.DecodePointers(backRepo, svgimageNew)
+	embeddedpngimageDB.DecodePointers(backRepo, embeddedpngimageNew)
 
 	// get stage instance from DB instance, and call callback function
-	svgimageOld := backRepo.BackRepoSvgImage.Map_SvgImageDBID_SvgImagePtr[svgimageDB.ID]
-	if svgimageOld != nil {
+	embeddedpngimageOld := backRepo.BackRepoEmbeddedPngImage.Map_EmbeddedPngImageDBID_EmbeddedPngImagePtr[embeddedpngimageDB.ID]
+	if embeddedpngimageOld != nil {
 		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), svgimageOld, svgimageNew, nil)
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), embeddedpngimageOld, embeddedpngimageNew, nil)
 		} else {
 			mouseEvent := &models.Gong__MouseEvent{
 				ShiftKey: shiftKey,
 			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), svgimageOld, svgimageNew, mouseEvent)
+			models.OnAfterUpdateFromFront(backRepo.GetStage(), embeddedpngimageOld, embeddedpngimageNew, mouseEvent)
 
 		}
 	}
@@ -356,23 +356,23 @@ func (controller *Controller) UpdateSvgImage(c *gin.Context) {
 	// generates a checkout
 	backRepo.IncrementPushFromFrontNb()
 
-	// return status OK with the marshalling of the the svgimageDB
-	c.JSON(http.StatusOK, svgimageDB)
+	// return status OK with the marshalling of the the embeddedpngimageDB
+	c.JSON(http.StatusOK, embeddedpngimageDB)
 }
 
-// DeleteSvgImage
+// DeleteEmbeddedPngImage
 //
-// swagger:route DELETE /svgimages/{ID} svgimages deleteSvgImage
+// swagger:route DELETE /embeddedpngimages/{ID} embeddedpngimages deleteEmbeddedPngImage
 //
-// # Delete a svgimage
+// # Delete a embeddedpngimage
 //
 // default: genericError
 //
-//	200: svgimageDBResponse
-func (controller *Controller) DeleteSvgImage(c *gin.Context) {
+//	200: embeddedpngimageDBResponse
+func (controller *Controller) DeleteEmbeddedPngImage(c *gin.Context) {
 
-	mutexSvgImage.Lock()
-	defer mutexSvgImage.Unlock()
+	mutexEmbeddedPngImage.Lock()
+	defer mutexEmbeddedPngImage.Unlock()
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
@@ -380,7 +380,7 @@ func (controller *Controller) DeleteSvgImage(c *gin.Context) {
 		value := _values["Name"]
 		if len(value) == 1 {
 			stackPath = value[0]
-			// log.Println("DeleteSvgImage", "Name", stackPath)
+			// log.Println("DeleteEmbeddedPngImage", "Name", stackPath)
 		}
 	}
 	backRepo := controller.Map_BackRepos[stackPath]
@@ -394,11 +394,11 @@ func (controller *Controller) DeleteSvgImage(c *gin.Context) {
 
 		log.Panic(message)
 	}
-	db := backRepo.BackRepoSvgImage.GetDB()
+	db := backRepo.BackRepoEmbeddedPngImage.GetDB()
 
 	// Get model if exist
-	var svgimageDB orm.SvgImageDB
-	if _, err := db.First(&svgimageDB, c.Param("id")); err != nil {
+	var embeddedpngimageDB orm.EmbeddedPngImageDB
+	if _, err := db.First(&embeddedpngimageDB, c.Param("id")); err != nil {
 		var returnError GenericError
 		returnError.Body.Code = http.StatusBadRequest
 		returnError.Body.Message = err.Error()
@@ -409,16 +409,16 @@ func (controller *Controller) DeleteSvgImage(c *gin.Context) {
 
 	// with gorm.Model field, default delete is a soft delete. Unscoped() force delete
 	db.Unscoped()
-	db.Delete(&svgimageDB)
+	db.Delete(&embeddedpngimageDB)
 
 	// get an instance (not staged) from DB instance, and call callback function
-	svgimageDeleted := new(models.SvgImage)
-	svgimageDB.CopyBasicFieldsToSvgImage(svgimageDeleted)
+	embeddedpngimageDeleted := new(models.EmbeddedPngImage)
+	embeddedpngimageDB.CopyBasicFieldsToEmbeddedPngImage(embeddedpngimageDeleted)
 
 	// get stage instance from DB instance, and call callback function
-	svgimageStaged := backRepo.BackRepoSvgImage.Map_SvgImageDBID_SvgImagePtr[svgimageDB.ID]
-	if svgimageStaged != nil {
-		models.AfterDeleteFromFront(backRepo.GetStage(), svgimageStaged, svgimageDeleted)
+	embeddedpngimageStaged := backRepo.BackRepoEmbeddedPngImage.Map_EmbeddedPngImageDBID_EmbeddedPngImagePtr[embeddedpngimageDB.ID]
+	if embeddedpngimageStaged != nil {
+		models.AfterDeleteFromFront(backRepo.GetStage(), embeddedpngimageStaged, embeddedpngimageDeleted)
 	}
 
 	// a DELETE generates a back repo commit increase

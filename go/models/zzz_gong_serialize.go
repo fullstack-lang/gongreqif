@@ -86,7 +86,9 @@ func SerializeStage(stage *Stage, filename string) {
 		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_XHTML](stage, f)
 		SerializeExcelizePointerToGongstruct[*EMBEDDED_VALUE](stage, f)
 		SerializeExcelizePointerToGongstruct[*ENUM_VALUE](stage, f)
-		SerializeExcelizePointerToGongstruct[*JpgImage](stage, f)
+		SerializeExcelizePointerToGongstruct[*EmbeddedJpgImage](stage, f)
+		SerializeExcelizePointerToGongstruct[*EmbeddedPngImage](stage, f)
+		SerializeExcelizePointerToGongstruct[*EmbeddedSvgImage](stage, f)
 		SerializeExcelizePointerToGongstruct[*Kill](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](stage, f)
@@ -113,7 +115,6 @@ func SerializeStage(stage *Stage, filename string) {
 		SerializeExcelizePointerToGongstruct[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry](stage, f)
 		SerializeExcelizePointerToGongstruct[*Map_SPEC_OBJECT_TYPE_showNameEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*PngImage](stage, f)
 		SerializeExcelizePointerToGongstruct[*RELATION_GROUP](stage, f)
 		SerializeExcelizePointerToGongstruct[*RELATION_GROUP_TYPE](stage, f)
 		SerializeExcelizePointerToGongstruct[*REQ_IF](stage, f)
@@ -133,7 +134,6 @@ func SerializeStage(stage *Stage, filename string) {
 		SerializeExcelizePointerToGongstruct[*StaticWebSiteGeneratedImage](stage, f)
 		SerializeExcelizePointerToGongstruct[*StaticWebSiteImage](stage, f)
 		SerializeExcelizePointerToGongstruct[*StaticWebSiteParagraph](stage, f)
-		SerializeExcelizePointerToGongstruct[*SvgImage](stage, f)
 		SerializeExcelizePointerToGongstruct[*XHTML_CONTENT](stage, f)
 	}
 

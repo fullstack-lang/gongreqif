@@ -865,15 +865,35 @@ type Stage struct {
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
-	JpgImages           map[*JpgImage]any
-	JpgImages_mapString map[string]*JpgImage
+	EmbeddedJpgImages           map[*EmbeddedJpgImage]any
+	EmbeddedJpgImages_mapString map[string]*EmbeddedJpgImage
 
 	// insertion point for slice of pointers maps
-	OnAfterJpgImageCreateCallback OnAfterCreateInterface[JpgImage]
-	OnAfterJpgImageUpdateCallback OnAfterUpdateInterface[JpgImage]
-	OnAfterJpgImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[JpgImage]
-	OnAfterJpgImageDeleteCallback OnAfterDeleteInterface[JpgImage]
-	OnAfterJpgImageReadCallback   OnAfterReadInterface[JpgImage]
+	OnAfterEmbeddedJpgImageCreateCallback OnAfterCreateInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageUpdateCallback OnAfterUpdateInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageDeleteCallback OnAfterDeleteInterface[EmbeddedJpgImage]
+	OnAfterEmbeddedJpgImageReadCallback   OnAfterReadInterface[EmbeddedJpgImage]
+
+	EmbeddedPngImages           map[*EmbeddedPngImage]any
+	EmbeddedPngImages_mapString map[string]*EmbeddedPngImage
+
+	// insertion point for slice of pointers maps
+	OnAfterEmbeddedPngImageCreateCallback OnAfterCreateInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageUpdateCallback OnAfterUpdateInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageDeleteCallback OnAfterDeleteInterface[EmbeddedPngImage]
+	OnAfterEmbeddedPngImageReadCallback   OnAfterReadInterface[EmbeddedPngImage]
+
+	EmbeddedSvgImages           map[*EmbeddedSvgImage]any
+	EmbeddedSvgImages_mapString map[string]*EmbeddedSvgImage
+
+	// insertion point for slice of pointers maps
+	OnAfterEmbeddedSvgImageCreateCallback OnAfterCreateInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageUpdateCallback OnAfterUpdateInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageDeleteCallback OnAfterDeleteInterface[EmbeddedSvgImage]
+	OnAfterEmbeddedSvgImageReadCallback   OnAfterReadInterface[EmbeddedSvgImage]
 
 	Kills           map[*Kill]any
 	Kills_mapString map[string]*Kill
@@ -1135,16 +1155,6 @@ type Stage struct {
 	OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showNameEntry]
 	OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback   OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showNameEntry]
 
-	PngImages           map[*PngImage]any
-	PngImages_mapString map[string]*PngImage
-
-	// insertion point for slice of pointers maps
-	OnAfterPngImageCreateCallback OnAfterCreateInterface[PngImage]
-	OnAfterPngImageUpdateCallback OnAfterUpdateInterface[PngImage]
-	OnAfterPngImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[PngImage]
-	OnAfterPngImageDeleteCallback OnAfterDeleteInterface[PngImage]
-	OnAfterPngImageReadCallback   OnAfterReadInterface[PngImage]
-
 	RELATION_GROUPs           map[*RELATION_GROUP]any
 	RELATION_GROUPs_mapString map[string]*RELATION_GROUP
 
@@ -1388,16 +1398,6 @@ type Stage struct {
 	OnAfterStaticWebSiteParagraphUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphDeleteCallback OnAfterDeleteInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphReadCallback   OnAfterReadInterface[StaticWebSiteParagraph]
-
-	SvgImages           map[*SvgImage]any
-	SvgImages_mapString map[string]*SvgImage
-
-	// insertion point for slice of pointers maps
-	OnAfterSvgImageCreateCallback OnAfterCreateInterface[SvgImage]
-	OnAfterSvgImageUpdateCallback OnAfterUpdateInterface[SvgImage]
-	OnAfterSvgImageUpdateWithMouseEventCallback OnAfterUpdateWithMouseEventInterface[SvgImage]
-	OnAfterSvgImageDeleteCallback OnAfterDeleteInterface[SvgImage]
-	OnAfterSvgImageReadCallback   OnAfterReadInterface[SvgImage]
 
 	XHTML_CONTENTs           map[*XHTML_CONTENT]any
 	XHTML_CONTENTs_mapString map[string]*XHTML_CONTENT
@@ -1645,8 +1645,14 @@ type Stage struct {
 	ENUM_VALUEOrder            uint
 	ENUM_VALUEMap_Staged_Order map[*ENUM_VALUE]uint
 
-	JpgImageOrder            uint
-	JpgImageMap_Staged_Order map[*JpgImage]uint
+	EmbeddedJpgImageOrder            uint
+	EmbeddedJpgImageMap_Staged_Order map[*EmbeddedJpgImage]uint
+
+	EmbeddedPngImageOrder            uint
+	EmbeddedPngImageMap_Staged_Order map[*EmbeddedPngImage]uint
+
+	EmbeddedSvgImageOrder            uint
+	EmbeddedSvgImageMap_Staged_Order map[*EmbeddedSvgImage]uint
 
 	KillOrder            uint
 	KillMap_Staged_Order map[*Kill]uint
@@ -1726,9 +1732,6 @@ type Stage struct {
 	Map_SPEC_OBJECT_TYPE_showNameEntryOrder            uint
 	Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint
 
-	PngImageOrder            uint
-	PngImageMap_Staged_Order map[*PngImage]uint
-
 	RELATION_GROUPOrder            uint
 	RELATION_GROUPMap_Staged_Order map[*RELATION_GROUP]uint
 
@@ -1785,9 +1788,6 @@ type Stage struct {
 
 	StaticWebSiteParagraphOrder            uint
 	StaticWebSiteParagraphMap_Staged_Order map[*StaticWebSiteParagraph]uint
-
-	SvgImageOrder            uint
-	SvgImageMap_Staged_Order map[*SvgImage]uint
 
 	XHTML_CONTENTOrder            uint
 	XHTML_CONTENTMap_Staged_Order map[*XHTML_CONTENT]uint
@@ -2827,8 +2827,8 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
-	case *JpgImage:
-		tmp := GetStructInstancesByOrder(stage.JpgImages, stage.JpgImageMap_Staged_Order)
+	case *EmbeddedJpgImage:
+		tmp := GetStructInstancesByOrder(stage.EmbeddedJpgImages, stage.EmbeddedJpgImageMap_Staged_Order)
 
 		// Create a new slice of the generic type T with the same capacity.
 		res = make([]T, 0, len(tmp))
@@ -2837,7 +2837,35 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 		for _, v := range tmp {
 			// Assert that the element 'v' can be treated as type 'T'.
 			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *JpgImage implements.
+			// is an interface that *EmbeddedJpgImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *EmbeddedPngImage:
+		tmp := GetStructInstancesByOrder(stage.EmbeddedPngImages, stage.EmbeddedPngImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *EmbeddedPngImage implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *EmbeddedSvgImage:
+		tmp := GetStructInstancesByOrder(stage.EmbeddedSvgImages, stage.EmbeddedSvgImageMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *EmbeddedSvgImage implements.
 			res = append(res, any(v).(T))
 		}
 		return res
@@ -3205,20 +3233,6 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
-	case *PngImage:
-		tmp := GetStructInstancesByOrder(stage.PngImages, stage.PngImageMap_Staged_Order)
-
-		// Create a new slice of the generic type T with the same capacity.
-		res = make([]T, 0, len(tmp))
-
-		// Iterate over the source slice and perform a type assertion on each element.
-		for _, v := range tmp {
-			// Assert that the element 'v' can be treated as type 'T'.
-			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *PngImage implements.
-			res = append(res, any(v).(T))
-		}
-		return res
 	case *RELATION_GROUP:
 		tmp := GetStructInstancesByOrder(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
 
@@ -3485,20 +3499,6 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
-	case *SvgImage:
-		tmp := GetStructInstancesByOrder(stage.SvgImages, stage.SvgImageMap_Staged_Order)
-
-		// Create a new slice of the generic type T with the same capacity.
-		res = make([]T, 0, len(tmp))
-
-		// Iterate over the source slice and perform a type assertion on each element.
-		for _, v := range tmp {
-			// Assert that the element 'v' can be treated as type 'T'.
-			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *SvgImage implements.
-			res = append(res, any(v).(T))
-		}
-		return res
 	case *XHTML_CONTENT:
 		tmp := GetStructInstancesByOrder(stage.XHTML_CONTENTs, stage.XHTML_CONTENTMap_Staged_Order)
 
@@ -3686,8 +3686,12 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.EMBEDDED_VALUEs, stage.EMBEDDED_VALUEMap_Staged_Order)
 	case "ENUM_VALUE":
 		res = GetNamedStructInstances(stage.ENUM_VALUEs, stage.ENUM_VALUEMap_Staged_Order)
-	case "JpgImage":
-		res = GetNamedStructInstances(stage.JpgImages, stage.JpgImageMap_Staged_Order)
+	case "EmbeddedJpgImage":
+		res = GetNamedStructInstances(stage.EmbeddedJpgImages, stage.EmbeddedJpgImageMap_Staged_Order)
+	case "EmbeddedPngImage":
+		res = GetNamedStructInstances(stage.EmbeddedPngImages, stage.EmbeddedPngImageMap_Staged_Order)
+	case "EmbeddedSvgImage":
+		res = GetNamedStructInstances(stage.EmbeddedSvgImages, stage.EmbeddedSvgImageMap_Staged_Order)
 	case "Kill":
 		res = GetNamedStructInstances(stage.Kills, stage.KillMap_Staged_Order)
 	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
@@ -3740,8 +3744,6 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys, stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order)
 	case "Map_SPEC_OBJECT_TYPE_showNameEntry":
 		res = GetNamedStructInstances(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys, stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order)
-	case "PngImage":
-		res = GetNamedStructInstances(stage.PngImages, stage.PngImageMap_Staged_Order)
 	case "RELATION_GROUP":
 		res = GetNamedStructInstances(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
 	case "RELATION_GROUP_TYPE":
@@ -3780,8 +3782,6 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.StaticWebSiteImages, stage.StaticWebSiteImageMap_Staged_Order)
 	case "StaticWebSiteParagraph":
 		res = GetNamedStructInstances(stage.StaticWebSiteParagraphs, stage.StaticWebSiteParagraphMap_Staged_Order)
-	case "SvgImage":
-		res = GetNamedStructInstances(stage.SvgImages, stage.SvgImageMap_Staged_Order)
 	case "XHTML_CONTENT":
 		res = GetNamedStructInstances(stage.XHTML_CONTENTs, stage.XHTML_CONTENTMap_Staged_Order)
 	}
@@ -3998,8 +3998,12 @@ type BackRepoInterface interface {
 	CheckoutEMBEDDED_VALUE(embedded_value *EMBEDDED_VALUE)
 	CommitENUM_VALUE(enum_value *ENUM_VALUE)
 	CheckoutENUM_VALUE(enum_value *ENUM_VALUE)
-	CommitJpgImage(jpgimage *JpgImage)
-	CheckoutJpgImage(jpgimage *JpgImage)
+	CommitEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage)
+	CheckoutEmbeddedJpgImage(embeddedjpgimage *EmbeddedJpgImage)
+	CommitEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage)
+	CheckoutEmbeddedPngImage(embeddedpngimage *EmbeddedPngImage)
+	CommitEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage)
+	CheckoutEmbeddedSvgImage(embeddedsvgimage *EmbeddedSvgImage)
 	CommitKill(kill *Kill)
 	CheckoutKill(kill *Kill)
 	CommitMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
@@ -4052,8 +4056,6 @@ type BackRepoInterface interface {
 	CheckoutMap_SPEC_OBJECT_TYPE_showIdentifierEntry(map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	CommitMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry)
 	CheckoutMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry)
-	CommitPngImage(pngimage *PngImage)
-	CheckoutPngImage(pngimage *PngImage)
 	CommitRELATION_GROUP(relation_group *RELATION_GROUP)
 	CheckoutRELATION_GROUP(relation_group *RELATION_GROUP)
 	CommitRELATION_GROUP_TYPE(relation_group_type *RELATION_GROUP_TYPE)
@@ -4092,8 +4094,6 @@ type BackRepoInterface interface {
 	CheckoutStaticWebSiteImage(staticwebsiteimage *StaticWebSiteImage)
 	CommitStaticWebSiteParagraph(staticwebsiteparagraph *StaticWebSiteParagraph)
 	CheckoutStaticWebSiteParagraph(staticwebsiteparagraph *StaticWebSiteParagraph)
-	CommitSvgImage(svgimage *SvgImage)
-	CheckoutSvgImage(svgimage *SvgImage)
 	CommitXHTML_CONTENT(xhtml_content *XHTML_CONTENT)
 	CheckoutXHTML_CONTENT(xhtml_content *XHTML_CONTENT)
 	GetLastCommitFromBackNb() uint
@@ -4313,8 +4313,14 @@ func NewStage(name string) (stage *Stage) {
 		ENUM_VALUEs:           make(map[*ENUM_VALUE]any),
 		ENUM_VALUEs_mapString: make(map[string]*ENUM_VALUE),
 
-		JpgImages:           make(map[*JpgImage]any),
-		JpgImages_mapString: make(map[string]*JpgImage),
+		EmbeddedJpgImages:           make(map[*EmbeddedJpgImage]any),
+		EmbeddedJpgImages_mapString: make(map[string]*EmbeddedJpgImage),
+
+		EmbeddedPngImages:           make(map[*EmbeddedPngImage]any),
+		EmbeddedPngImages_mapString: make(map[string]*EmbeddedPngImage),
+
+		EmbeddedSvgImages:           make(map[*EmbeddedSvgImage]any),
+		EmbeddedSvgImages_mapString: make(map[string]*EmbeddedSvgImage),
 
 		Kills:           make(map[*Kill]any),
 		Kills_mapString: make(map[string]*Kill),
@@ -4394,9 +4400,6 @@ func NewStage(name string) (stage *Stage) {
 		Map_SPEC_OBJECT_TYPE_showNameEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]any),
 		Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString: make(map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry),
 
-		PngImages:           make(map[*PngImage]any),
-		PngImages_mapString: make(map[string]*PngImage),
-
 		RELATION_GROUPs:           make(map[*RELATION_GROUP]any),
 		RELATION_GROUPs_mapString: make(map[string]*RELATION_GROUP),
 
@@ -4453,9 +4456,6 @@ func NewStage(name string) (stage *Stage) {
 
 		StaticWebSiteParagraphs:           make(map[*StaticWebSiteParagraph]any),
 		StaticWebSiteParagraphs_mapString: make(map[string]*StaticWebSiteParagraph),
-
-		SvgImages:           make(map[*SvgImage]any),
-		SvgImages_mapString: make(map[string]*SvgImage),
 
 		XHTML_CONTENTs:           make(map[*XHTML_CONTENT]any),
 		XHTML_CONTENTs_mapString: make(map[string]*XHTML_CONTENT),
@@ -4610,7 +4610,11 @@ func NewStage(name string) (stage *Stage) {
 
 		ENUM_VALUEMap_Staged_Order: make(map[*ENUM_VALUE]uint),
 
-		JpgImageMap_Staged_Order: make(map[*JpgImage]uint),
+		EmbeddedJpgImageMap_Staged_Order: make(map[*EmbeddedJpgImage]uint),
+
+		EmbeddedPngImageMap_Staged_Order: make(map[*EmbeddedPngImage]uint),
+
+		EmbeddedSvgImageMap_Staged_Order: make(map[*EmbeddedSvgImage]uint),
 
 		KillMap_Staged_Order: make(map[*Kill]uint),
 
@@ -4664,8 +4668,6 @@ func NewStage(name string) (stage *Stage) {
 
 		Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order: make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint),
 
-		PngImageMap_Staged_Order: make(map[*PngImage]uint),
-
 		RELATION_GROUPMap_Staged_Order: make(map[*RELATION_GROUP]uint),
 
 		RELATION_GROUP_TYPEMap_Staged_Order: make(map[*RELATION_GROUP_TYPE]uint),
@@ -4703,8 +4705,6 @@ func NewStage(name string) (stage *Stage) {
 		StaticWebSiteImageMap_Staged_Order: make(map[*StaticWebSiteImage]uint),
 
 		StaticWebSiteParagraphMap_Staged_Order: make(map[*StaticWebSiteParagraph]uint),
-
-		SvgImageMap_Staged_Order: make(map[*SvgImage]uint),
 
 		XHTML_CONTENTMap_Staged_Order: make(map[*XHTML_CONTENT]uint),
 
@@ -4781,7 +4781,9 @@ func NewStage(name string) (stage *Stage) {
 			{name: "DATATYPE_DEFINITION_XHTML"},
 			{name: "EMBEDDED_VALUE"},
 			{name: "ENUM_VALUE"},
-			{name: "JpgImage"},
+			{name: "EmbeddedJpgImage"},
+			{name: "EmbeddedPngImage"},
+			{name: "EmbeddedSvgImage"},
 			{name: "Kill"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"},
 			{name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"},
@@ -4808,7 +4810,6 @@ func NewStage(name string) (stage *Stage) {
 			{name: "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"},
 			{name: "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"},
 			{name: "Map_SPEC_OBJECT_TYPE_showNameEntry"},
-			{name: "PngImage"},
 			{name: "RELATION_GROUP"},
 			{name: "RELATION_GROUP_TYPE"},
 			{name: "REQ_IF"},
@@ -4828,7 +4829,6 @@ func NewStage(name string) (stage *Stage) {
 			{name: "StaticWebSiteGeneratedImage"},
 			{name: "StaticWebSiteImage"},
 			{name: "StaticWebSiteParagraph"},
-			{name: "SvgImage"},
 			{name: "XHTML_CONTENT"},
 		}, // end of insertion point
 	}
@@ -4980,8 +4980,12 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
-	case *JpgImage:
-		return stage.JpgImageMap_Staged_Order[instance]
+	case *EmbeddedJpgImage:
+		return stage.EmbeddedJpgImageMap_Staged_Order[instance]
+	case *EmbeddedPngImage:
+		return stage.EmbeddedPngImageMap_Staged_Order[instance]
+	case *EmbeddedSvgImage:
+		return stage.EmbeddedSvgImageMap_Staged_Order[instance]
 	case *Kill:
 		return stage.KillMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -5034,8 +5038,6 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[instance]
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[instance]
-	case *PngImage:
-		return stage.PngImageMap_Staged_Order[instance]
 	case *RELATION_GROUP:
 		return stage.RELATION_GROUPMap_Staged_Order[instance]
 	case *RELATION_GROUP_TYPE:
@@ -5074,8 +5076,6 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.StaticWebSiteImageMap_Staged_Order[instance]
 	case *StaticWebSiteParagraph:
 		return stage.StaticWebSiteParagraphMap_Staged_Order[instance]
-	case *SvgImage:
-		return stage.SvgImageMap_Staged_Order[instance]
 	case *XHTML_CONTENT:
 		return stage.XHTML_CONTENTMap_Staged_Order[instance]
 	default:
@@ -5227,8 +5227,12 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.EMBEDDED_VALUEMap_Staged_Order[instance]
 	case *ENUM_VALUE:
 		return stage.ENUM_VALUEMap_Staged_Order[instance]
-	case *JpgImage:
-		return stage.JpgImageMap_Staged_Order[instance]
+	case *EmbeddedJpgImage:
+		return stage.EmbeddedJpgImageMap_Staged_Order[instance]
+	case *EmbeddedPngImage:
+		return stage.EmbeddedPngImageMap_Staged_Order[instance]
+	case *EmbeddedSvgImage:
+		return stage.EmbeddedSvgImageMap_Staged_Order[instance]
 	case *Kill:
 		return stage.KillMap_Staged_Order[instance]
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -5281,8 +5285,6 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[instance]
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[instance]
-	case *PngImage:
-		return stage.PngImageMap_Staged_Order[instance]
 	case *RELATION_GROUP:
 		return stage.RELATION_GROUPMap_Staged_Order[instance]
 	case *RELATION_GROUP_TYPE:
@@ -5321,8 +5323,6 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.StaticWebSiteImageMap_Staged_Order[instance]
 	case *StaticWebSiteParagraph:
 		return stage.StaticWebSiteParagraphMap_Staged_Order[instance]
-	case *SvgImage:
-		return stage.SvgImageMap_Staged_Order[instance]
 	case *XHTML_CONTENT:
 		return stage.XHTML_CONTENTMap_Staged_Order[instance]
 	default:
@@ -5422,7 +5422,9 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
-	stage.Map_GongStructName_InstancesNb["JpgImage"] = len(stage.JpgImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedJpgImage"] = len(stage.EmbeddedJpgImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedPngImage"] = len(stage.EmbeddedPngImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedSvgImage"] = len(stage.EmbeddedSvgImages)
 	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
@@ -5449,7 +5451,6 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showIdentifierEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showNameEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys)
-	stage.Map_GongStructName_InstancesNb["PngImage"] = len(stage.PngImages)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP"] = len(stage.RELATION_GROUPs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP_TYPE"] = len(stage.RELATION_GROUP_TYPEs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF"] = len(stage.REQ_IFs)
@@ -5469,7 +5470,6 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteGeneratedImage"] = len(stage.StaticWebSiteGeneratedImages)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteImage"] = len(stage.StaticWebSiteImages)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteParagraph"] = len(stage.StaticWebSiteParagraphs)
-	stage.Map_GongStructName_InstancesNb["SvgImage"] = len(stage.SvgImages)
 	stage.Map_GongStructName_InstancesNb["XHTML_CONTENT"] = len(stage.XHTML_CONTENTs)
 
 }
@@ -5551,7 +5551,9 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
 	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
-	stage.Map_GongStructName_InstancesNb["JpgImage"] = len(stage.JpgImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedJpgImage"] = len(stage.EmbeddedJpgImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedPngImage"] = len(stage.EmbeddedPngImages)
+	stage.Map_GongStructName_InstancesNb["EmbeddedSvgImage"] = len(stage.EmbeddedSvgImages)
 	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
@@ -5578,7 +5580,6 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showIdentifierEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showNameEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys)
-	stage.Map_GongStructName_InstancesNb["PngImage"] = len(stage.PngImages)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP"] = len(stage.RELATION_GROUPs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP_TYPE"] = len(stage.RELATION_GROUP_TYPEs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF"] = len(stage.REQ_IFs)
@@ -5598,7 +5599,6 @@ func (stage *Stage) Checkout() {
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteGeneratedImage"] = len(stage.StaticWebSiteGeneratedImages)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteImage"] = len(stage.StaticWebSiteImages)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteParagraph"] = len(stage.StaticWebSiteParagraphs)
-	stage.Map_GongStructName_InstancesNb["SvgImage"] = len(stage.SvgImages)
 	stage.Map_GongStructName_InstancesNb["XHTML_CONTENT"] = len(stage.XHTML_CONTENTs)
 
 }
@@ -9482,59 +9482,169 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 	return enum_value.Name
 }
 
-// Stage puts jpgimage to the model stage
-func (jpgimage *JpgImage) Stage(stage *Stage) *JpgImage {
+// Stage puts embeddedjpgimage to the model stage
+func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage {
 
-	if _, ok := stage.JpgImages[jpgimage]; !ok {
-		stage.JpgImages[jpgimage] = __member
-		stage.JpgImageMap_Staged_Order[jpgimage] = stage.JpgImageOrder
-		stage.JpgImageOrder++
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; !ok {
+		stage.EmbeddedJpgImages[embeddedjpgimage] = __member
+		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
+		stage.EmbeddedJpgImageOrder++
 	}
-	stage.JpgImages_mapString[jpgimage.Name] = jpgimage
+	stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
 
-	return jpgimage
+	return embeddedjpgimage
 }
 
-// Unstage removes jpgimage off the model stage
-func (jpgimage *JpgImage) Unstage(stage *Stage) *JpgImage {
-	delete(stage.JpgImages, jpgimage)
-	delete(stage.JpgImages_mapString, jpgimage.Name)
-	return jpgimage
+// Unstage removes embeddedjpgimage off the model stage
+func (embeddedjpgimage *EmbeddedJpgImage) Unstage(stage *Stage) *EmbeddedJpgImage {
+	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
+	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
+	return embeddedjpgimage
 }
 
-// UnstageVoid removes jpgimage off the model stage
-func (jpgimage *JpgImage) UnstageVoid(stage *Stage) {
-	delete(stage.JpgImages, jpgimage)
-	delete(stage.JpgImages_mapString, jpgimage.Name)
+// UnstageVoid removes embeddedjpgimage off the model stage
+func (embeddedjpgimage *EmbeddedJpgImage) UnstageVoid(stage *Stage) {
+	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
+	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
 }
 
-// commit jpgimage to the back repo (if it is already staged)
-func (jpgimage *JpgImage) Commit(stage *Stage) *JpgImage {
-	if _, ok := stage.JpgImages[jpgimage]; ok {
+// commit embeddedjpgimage to the back repo (if it is already staged)
+func (embeddedjpgimage *EmbeddedJpgImage) Commit(stage *Stage) *EmbeddedJpgImage {
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; ok {
 		if stage.BackRepo != nil {
-			stage.BackRepo.CommitJpgImage(jpgimage)
+			stage.BackRepo.CommitEmbeddedJpgImage(embeddedjpgimage)
 		}
 	}
-	return jpgimage
+	return embeddedjpgimage
 }
 
-func (jpgimage *JpgImage) CommitVoid(stage *Stage) {
-	jpgimage.Commit(stage)
+func (embeddedjpgimage *EmbeddedJpgImage) CommitVoid(stage *Stage) {
+	embeddedjpgimage.Commit(stage)
 }
 
-// Checkout jpgimage to the back repo (if it is already staged)
-func (jpgimage *JpgImage) Checkout(stage *Stage) *JpgImage {
-	if _, ok := stage.JpgImages[jpgimage]; ok {
+// Checkout embeddedjpgimage to the back repo (if it is already staged)
+func (embeddedjpgimage *EmbeddedJpgImage) Checkout(stage *Stage) *EmbeddedJpgImage {
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; ok {
 		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutJpgImage(jpgimage)
+			stage.BackRepo.CheckoutEmbeddedJpgImage(embeddedjpgimage)
 		}
 	}
-	return jpgimage
+	return embeddedjpgimage
 }
 
 // for satisfaction of GongStruct interface
-func (jpgimage *JpgImage) GetName() (res string) {
-	return jpgimage.Name
+func (embeddedjpgimage *EmbeddedJpgImage) GetName() (res string) {
+	return embeddedjpgimage.Name
+}
+
+// Stage puts embeddedpngimage to the model stage
+func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage {
+
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; !ok {
+		stage.EmbeddedPngImages[embeddedpngimage] = __member
+		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
+		stage.EmbeddedPngImageOrder++
+	}
+	stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
+
+	return embeddedpngimage
+}
+
+// Unstage removes embeddedpngimage off the model stage
+func (embeddedpngimage *EmbeddedPngImage) Unstage(stage *Stage) *EmbeddedPngImage {
+	delete(stage.EmbeddedPngImages, embeddedpngimage)
+	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
+	return embeddedpngimage
+}
+
+// UnstageVoid removes embeddedpngimage off the model stage
+func (embeddedpngimage *EmbeddedPngImage) UnstageVoid(stage *Stage) {
+	delete(stage.EmbeddedPngImages, embeddedpngimage)
+	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
+}
+
+// commit embeddedpngimage to the back repo (if it is already staged)
+func (embeddedpngimage *EmbeddedPngImage) Commit(stage *Stage) *EmbeddedPngImage {
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitEmbeddedPngImage(embeddedpngimage)
+		}
+	}
+	return embeddedpngimage
+}
+
+func (embeddedpngimage *EmbeddedPngImage) CommitVoid(stage *Stage) {
+	embeddedpngimage.Commit(stage)
+}
+
+// Checkout embeddedpngimage to the back repo (if it is already staged)
+func (embeddedpngimage *EmbeddedPngImage) Checkout(stage *Stage) *EmbeddedPngImage {
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutEmbeddedPngImage(embeddedpngimage)
+		}
+	}
+	return embeddedpngimage
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedpngimage *EmbeddedPngImage) GetName() (res string) {
+	return embeddedpngimage.Name
+}
+
+// Stage puts embeddedsvgimage to the model stage
+func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage {
+
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; !ok {
+		stage.EmbeddedSvgImages[embeddedsvgimage] = __member
+		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
+		stage.EmbeddedSvgImageOrder++
+	}
+	stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
+
+	return embeddedsvgimage
+}
+
+// Unstage removes embeddedsvgimage off the model stage
+func (embeddedsvgimage *EmbeddedSvgImage) Unstage(stage *Stage) *EmbeddedSvgImage {
+	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
+	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
+	return embeddedsvgimage
+}
+
+// UnstageVoid removes embeddedsvgimage off the model stage
+func (embeddedsvgimage *EmbeddedSvgImage) UnstageVoid(stage *Stage) {
+	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
+	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
+}
+
+// commit embeddedsvgimage to the back repo (if it is already staged)
+func (embeddedsvgimage *EmbeddedSvgImage) Commit(stage *Stage) *EmbeddedSvgImage {
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitEmbeddedSvgImage(embeddedsvgimage)
+		}
+	}
+	return embeddedsvgimage
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) CommitVoid(stage *Stage) {
+	embeddedsvgimage.Commit(stage)
+}
+
+// Checkout embeddedsvgimage to the back repo (if it is already staged)
+func (embeddedsvgimage *EmbeddedSvgImage) Checkout(stage *Stage) *EmbeddedSvgImage {
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutEmbeddedSvgImage(embeddedsvgimage)
+		}
+	}
+	return embeddedsvgimage
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedsvgimage *EmbeddedSvgImage) GetName() (res string) {
+	return embeddedsvgimage.Name
 }
 
 // Stage puts kill to the model stage
@@ -10967,61 +11077,6 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Ge
 	return map_spec_object_type_shownameentry.Name
 }
 
-// Stage puts pngimage to the model stage
-func (pngimage *PngImage) Stage(stage *Stage) *PngImage {
-
-	if _, ok := stage.PngImages[pngimage]; !ok {
-		stage.PngImages[pngimage] = __member
-		stage.PngImageMap_Staged_Order[pngimage] = stage.PngImageOrder
-		stage.PngImageOrder++
-	}
-	stage.PngImages_mapString[pngimage.Name] = pngimage
-
-	return pngimage
-}
-
-// Unstage removes pngimage off the model stage
-func (pngimage *PngImage) Unstage(stage *Stage) *PngImage {
-	delete(stage.PngImages, pngimage)
-	delete(stage.PngImages_mapString, pngimage.Name)
-	return pngimage
-}
-
-// UnstageVoid removes pngimage off the model stage
-func (pngimage *PngImage) UnstageVoid(stage *Stage) {
-	delete(stage.PngImages, pngimage)
-	delete(stage.PngImages_mapString, pngimage.Name)
-}
-
-// commit pngimage to the back repo (if it is already staged)
-func (pngimage *PngImage) Commit(stage *Stage) *PngImage {
-	if _, ok := stage.PngImages[pngimage]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitPngImage(pngimage)
-		}
-	}
-	return pngimage
-}
-
-func (pngimage *PngImage) CommitVoid(stage *Stage) {
-	pngimage.Commit(stage)
-}
-
-// Checkout pngimage to the back repo (if it is already staged)
-func (pngimage *PngImage) Checkout(stage *Stage) *PngImage {
-	if _, ok := stage.PngImages[pngimage]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutPngImage(pngimage)
-		}
-	}
-	return pngimage
-}
-
-// for satisfaction of GongStruct interface
-func (pngimage *PngImage) GetName() (res string) {
-	return pngimage.Name
-}
-
 // Stage puts relation_group to the model stage
 func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 
@@ -12067,61 +12122,6 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GetName() (res string) {
 	return staticwebsiteparagraph.Name
 }
 
-// Stage puts svgimage to the model stage
-func (svgimage *SvgImage) Stage(stage *Stage) *SvgImage {
-
-	if _, ok := stage.SvgImages[svgimage]; !ok {
-		stage.SvgImages[svgimage] = __member
-		stage.SvgImageMap_Staged_Order[svgimage] = stage.SvgImageOrder
-		stage.SvgImageOrder++
-	}
-	stage.SvgImages_mapString[svgimage.Name] = svgimage
-
-	return svgimage
-}
-
-// Unstage removes svgimage off the model stage
-func (svgimage *SvgImage) Unstage(stage *Stage) *SvgImage {
-	delete(stage.SvgImages, svgimage)
-	delete(stage.SvgImages_mapString, svgimage.Name)
-	return svgimage
-}
-
-// UnstageVoid removes svgimage off the model stage
-func (svgimage *SvgImage) UnstageVoid(stage *Stage) {
-	delete(stage.SvgImages, svgimage)
-	delete(stage.SvgImages_mapString, svgimage.Name)
-}
-
-// commit svgimage to the back repo (if it is already staged)
-func (svgimage *SvgImage) Commit(stage *Stage) *SvgImage {
-	if _, ok := stage.SvgImages[svgimage]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitSvgImage(svgimage)
-		}
-	}
-	return svgimage
-}
-
-func (svgimage *SvgImage) CommitVoid(stage *Stage) {
-	svgimage.Commit(stage)
-}
-
-// Checkout svgimage to the back repo (if it is already staged)
-func (svgimage *SvgImage) Checkout(stage *Stage) *SvgImage {
-	if _, ok := stage.SvgImages[svgimage]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutSvgImage(svgimage)
-		}
-	}
-	return svgimage
-}
-
-// for satisfaction of GongStruct interface
-func (svgimage *SvgImage) GetName() (res string) {
-	return svgimage.Name
-}
-
 // Stage puts xhtml_content to the model stage
 func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 
@@ -12249,7 +12249,9 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	CreateORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	CreateORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
-	CreateORMJpgImage(JpgImage *JpgImage)
+	CreateORMEmbeddedJpgImage(EmbeddedJpgImage *EmbeddedJpgImage)
+	CreateORMEmbeddedPngImage(EmbeddedPngImage *EmbeddedPngImage)
+	CreateORMEmbeddedSvgImage(EmbeddedSvgImage *EmbeddedSvgImage)
 	CreateORMKill(Kill *Kill)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	CreateORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -12276,7 +12278,6 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
 	CreateORMMap_SPEC_OBJECT_TYPE_showIdentifierEntry(Map_SPEC_OBJECT_TYPE_showIdentifierEntry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	CreateORMMap_SPEC_OBJECT_TYPE_showNameEntry(Map_SPEC_OBJECT_TYPE_showNameEntry *Map_SPEC_OBJECT_TYPE_showNameEntry)
-	CreateORMPngImage(PngImage *PngImage)
 	CreateORMRELATION_GROUP(RELATION_GROUP *RELATION_GROUP)
 	CreateORMRELATION_GROUP_TYPE(RELATION_GROUP_TYPE *RELATION_GROUP_TYPE)
 	CreateORMREQ_IF(REQ_IF *REQ_IF)
@@ -12296,7 +12297,6 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMStaticWebSiteGeneratedImage(StaticWebSiteGeneratedImage *StaticWebSiteGeneratedImage)
 	CreateORMStaticWebSiteImage(StaticWebSiteImage *StaticWebSiteImage)
 	CreateORMStaticWebSiteParagraph(StaticWebSiteParagraph *StaticWebSiteParagraph)
-	CreateORMSvgImage(SvgImage *SvgImage)
 	CreateORMXHTML_CONTENT(XHTML_CONTENT *XHTML_CONTENT)
 }
 
@@ -12371,7 +12371,9 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMDATATYPE_DEFINITION_XHTML(DATATYPE_DEFINITION_XHTML *DATATYPE_DEFINITION_XHTML)
 	DeleteORMEMBEDDED_VALUE(EMBEDDED_VALUE *EMBEDDED_VALUE)
 	DeleteORMENUM_VALUE(ENUM_VALUE *ENUM_VALUE)
-	DeleteORMJpgImage(JpgImage *JpgImage)
+	DeleteORMEmbeddedJpgImage(EmbeddedJpgImage *EmbeddedJpgImage)
+	DeleteORMEmbeddedPngImage(EmbeddedPngImage *EmbeddedPngImage)
+	DeleteORMEmbeddedSvgImage(EmbeddedSvgImage *EmbeddedSvgImage)
 	DeleteORMKill(Kill *Kill)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	DeleteORMMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
@@ -12398,7 +12400,6 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
 	DeleteORMMap_SPEC_OBJECT_TYPE_showIdentifierEntry(Map_SPEC_OBJECT_TYPE_showIdentifierEntry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	DeleteORMMap_SPEC_OBJECT_TYPE_showNameEntry(Map_SPEC_OBJECT_TYPE_showNameEntry *Map_SPEC_OBJECT_TYPE_showNameEntry)
-	DeleteORMPngImage(PngImage *PngImage)
 	DeleteORMRELATION_GROUP(RELATION_GROUP *RELATION_GROUP)
 	DeleteORMRELATION_GROUP_TYPE(RELATION_GROUP_TYPE *RELATION_GROUP_TYPE)
 	DeleteORMREQ_IF(REQ_IF *REQ_IF)
@@ -12418,7 +12419,6 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMStaticWebSiteGeneratedImage(StaticWebSiteGeneratedImage *StaticWebSiteGeneratedImage)
 	DeleteORMStaticWebSiteImage(StaticWebSiteImage *StaticWebSiteImage)
 	DeleteORMStaticWebSiteParagraph(StaticWebSiteParagraph *StaticWebSiteParagraph)
-	DeleteORMSvgImage(SvgImage *SvgImage)
 	DeleteORMXHTML_CONTENT(XHTML_CONTENT *XHTML_CONTENT)
 }
 
@@ -12773,10 +12773,20 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.ENUM_VALUEMap_Staged_Order = make(map[*ENUM_VALUE]uint)
 	stage.ENUM_VALUEOrder = 0
 
-	stage.JpgImages = make(map[*JpgImage]any)
-	stage.JpgImages_mapString = make(map[string]*JpgImage)
-	stage.JpgImageMap_Staged_Order = make(map[*JpgImage]uint)
-	stage.JpgImageOrder = 0
+	stage.EmbeddedJpgImages = make(map[*EmbeddedJpgImage]any)
+	stage.EmbeddedJpgImages_mapString = make(map[string]*EmbeddedJpgImage)
+	stage.EmbeddedJpgImageMap_Staged_Order = make(map[*EmbeddedJpgImage]uint)
+	stage.EmbeddedJpgImageOrder = 0
+
+	stage.EmbeddedPngImages = make(map[*EmbeddedPngImage]any)
+	stage.EmbeddedPngImages_mapString = make(map[string]*EmbeddedPngImage)
+	stage.EmbeddedPngImageMap_Staged_Order = make(map[*EmbeddedPngImage]uint)
+	stage.EmbeddedPngImageOrder = 0
+
+	stage.EmbeddedSvgImages = make(map[*EmbeddedSvgImage]any)
+	stage.EmbeddedSvgImages_mapString = make(map[string]*EmbeddedSvgImage)
+	stage.EmbeddedSvgImageMap_Staged_Order = make(map[*EmbeddedSvgImage]uint)
+	stage.EmbeddedSvgImageOrder = 0
 
 	stage.Kills = make(map[*Kill]any)
 	stage.Kills_mapString = make(map[string]*Kill)
@@ -12908,11 +12918,6 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order = make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint)
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder = 0
 
-	stage.PngImages = make(map[*PngImage]any)
-	stage.PngImages_mapString = make(map[string]*PngImage)
-	stage.PngImageMap_Staged_Order = make(map[*PngImage]uint)
-	stage.PngImageOrder = 0
-
 	stage.RELATION_GROUPs = make(map[*RELATION_GROUP]any)
 	stage.RELATION_GROUPs_mapString = make(map[string]*RELATION_GROUP)
 	stage.RELATION_GROUPMap_Staged_Order = make(map[*RELATION_GROUP]uint)
@@ -13007,11 +13012,6 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.StaticWebSiteParagraphs_mapString = make(map[string]*StaticWebSiteParagraph)
 	stage.StaticWebSiteParagraphMap_Staged_Order = make(map[*StaticWebSiteParagraph]uint)
 	stage.StaticWebSiteParagraphOrder = 0
-
-	stage.SvgImages = make(map[*SvgImage]any)
-	stage.SvgImages_mapString = make(map[string]*SvgImage)
-	stage.SvgImageMap_Staged_Order = make(map[*SvgImage]uint)
-	stage.SvgImageOrder = 0
 
 	stage.XHTML_CONTENTs = make(map[*XHTML_CONTENT]any)
 	stage.XHTML_CONTENTs_mapString = make(map[string]*XHTML_CONTENT)
@@ -13231,8 +13231,14 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.ENUM_VALUEs = nil
 	stage.ENUM_VALUEs_mapString = nil
 
-	stage.JpgImages = nil
-	stage.JpgImages_mapString = nil
+	stage.EmbeddedJpgImages = nil
+	stage.EmbeddedJpgImages_mapString = nil
+
+	stage.EmbeddedPngImages = nil
+	stage.EmbeddedPngImages_mapString = nil
+
+	stage.EmbeddedSvgImages = nil
+	stage.EmbeddedSvgImages_mapString = nil
 
 	stage.Kills = nil
 	stage.Kills_mapString = nil
@@ -13312,9 +13318,6 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys = nil
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString = nil
 
-	stage.PngImages = nil
-	stage.PngImages_mapString = nil
-
 	stage.RELATION_GROUPs = nil
 	stage.RELATION_GROUPs_mapString = nil
 
@@ -13371,9 +13374,6 @@ func (stage *Stage) Nil() { // insertion point for array nil
 
 	stage.StaticWebSiteParagraphs = nil
 	stage.StaticWebSiteParagraphs_mapString = nil
-
-	stage.SvgImages = nil
-	stage.SvgImages_mapString = nil
 
 	stage.XHTML_CONTENTs = nil
 	stage.XHTML_CONTENTs_mapString = nil
@@ -13661,8 +13661,16 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		enum_value.Unstage(stage)
 	}
 
-	for jpgimage := range stage.JpgImages {
-		jpgimage.Unstage(stage)
+	for embeddedjpgimage := range stage.EmbeddedJpgImages {
+		embeddedjpgimage.Unstage(stage)
+	}
+
+	for embeddedpngimage := range stage.EmbeddedPngImages {
+		embeddedpngimage.Unstage(stage)
+	}
+
+	for embeddedsvgimage := range stage.EmbeddedSvgImages {
+		embeddedsvgimage.Unstage(stage)
 	}
 
 	for kill := range stage.Kills {
@@ -13769,10 +13777,6 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		map_spec_object_type_shownameentry.Unstage(stage)
 	}
 
-	for pngimage := range stage.PngImages {
-		pngimage.Unstage(stage)
-	}
-
 	for relation_group := range stage.RELATION_GROUPs {
 		relation_group.Unstage(stage)
 	}
@@ -13847,10 +13851,6 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 
 	for staticwebsiteparagraph := range stage.StaticWebSiteParagraphs {
 		staticwebsiteparagraph.Unstage(stage)
-	}
-
-	for svgimage := range stage.SvgImages {
-		svgimage.Unstage(stage)
 	}
 
 	for xhtml_content := range stage.XHTML_CONTENTs {
@@ -14058,8 +14058,12 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs).(*Type)
 	case map[*ENUM_VALUE]any:
 		return any(&stage.ENUM_VALUEs).(*Type)
-	case map[*JpgImage]any:
-		return any(&stage.JpgImages).(*Type)
+	case map[*EmbeddedJpgImage]any:
+		return any(&stage.EmbeddedJpgImages).(*Type)
+	case map[*EmbeddedPngImage]any:
+		return any(&stage.EmbeddedPngImages).(*Type)
+	case map[*EmbeddedSvgImage]any:
+		return any(&stage.EmbeddedSvgImages).(*Type)
 	case map[*Kill]any:
 		return any(&stage.Kills).(*Type)
 	case map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any:
@@ -14112,8 +14116,6 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*Type)
 	case map[*Map_SPEC_OBJECT_TYPE_showNameEntry]any:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*Type)
-	case map[*PngImage]any:
-		return any(&stage.PngImages).(*Type)
 	case map[*RELATION_GROUP]any:
 		return any(&stage.RELATION_GROUPs).(*Type)
 	case map[*RELATION_GROUP_TYPE]any:
@@ -14152,8 +14154,6 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.StaticWebSiteImages).(*Type)
 	case map[*StaticWebSiteParagraph]any:
 		return any(&stage.StaticWebSiteParagraphs).(*Type)
-	case map[*SvgImage]any:
-		return any(&stage.SvgImages).(*Type)
 	case map[*XHTML_CONTENT]any:
 		return any(&stage.XHTML_CONTENTs).(*Type)
 	default:
@@ -14308,8 +14308,12 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*Type)
 	case map[string]*ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*Type)
-	case map[string]*JpgImage:
-		return any(&stage.JpgImages_mapString).(*Type)
+	case map[string]*EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages_mapString).(*Type)
+	case map[string]*EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages_mapString).(*Type)
+	case map[string]*EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages_mapString).(*Type)
 	case map[string]*Kill:
 		return any(&stage.Kills_mapString).(*Type)
 	case map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -14362,8 +14366,6 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString).(*Type)
 	case map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString).(*Type)
-	case map[string]*PngImage:
-		return any(&stage.PngImages_mapString).(*Type)
 	case map[string]*RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs_mapString).(*Type)
 	case map[string]*RELATION_GROUP_TYPE:
@@ -14402,8 +14404,6 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.StaticWebSiteImages_mapString).(*Type)
 	case map[string]*StaticWebSiteParagraph:
 		return any(&stage.StaticWebSiteParagraphs_mapString).(*Type)
-	case map[string]*SvgImage:
-		return any(&stage.SvgImages_mapString).(*Type)
 	case map[string]*XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs_mapString).(*Type)
 	default:
@@ -14558,8 +14558,12 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.EMBEDDED_VALUEs).(*map[*Type]any)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[*Type]any)
-	case JpgImage:
-		return any(&stage.JpgImages).(*map[*Type]any)
+	case EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages).(*map[*Type]any)
+	case EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages).(*map[*Type]any)
+	case EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages).(*map[*Type]any)
 	case Kill:
 		return any(&stage.Kills).(*map[*Type]any)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -14612,8 +14616,6 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[*Type]any)
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[*Type]any)
-	case PngImage:
-		return any(&stage.PngImages).(*map[*Type]any)
 	case RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs).(*map[*Type]any)
 	case RELATION_GROUP_TYPE:
@@ -14652,8 +14654,6 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 		return any(&stage.StaticWebSiteImages).(*map[*Type]any)
 	case StaticWebSiteParagraph:
 		return any(&stage.StaticWebSiteParagraphs).(*map[*Type]any)
-	case SvgImage:
-		return any(&stage.SvgImages).(*map[*Type]any)
 	case XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs).(*map[*Type]any)
 	default:
@@ -14808,8 +14808,12 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.EMBEDDED_VALUEs).(*map[Type]any)
 	case *ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs).(*map[Type]any)
-	case *JpgImage:
-		return any(&stage.JpgImages).(*map[Type]any)
+	case *EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages).(*map[Type]any)
+	case *EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages).(*map[Type]any)
+	case *EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages).(*map[Type]any)
 	case *Kill:
 		return any(&stage.Kills).(*map[Type]any)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -14862,8 +14866,6 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[Type]any)
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[Type]any)
-	case *PngImage:
-		return any(&stage.PngImages).(*map[Type]any)
 	case *RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs).(*map[Type]any)
 	case *RELATION_GROUP_TYPE:
@@ -14902,8 +14904,6 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.StaticWebSiteImages).(*map[Type]any)
 	case *StaticWebSiteParagraph:
 		return any(&stage.StaticWebSiteParagraphs).(*map[Type]any)
-	case *SvgImage:
-		return any(&stage.SvgImages).(*map[Type]any)
 	case *XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs).(*map[Type]any)
 	default:
@@ -15058,8 +15058,12 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.EMBEDDED_VALUEs_mapString).(*map[string]*Type)
 	case ENUM_VALUE:
 		return any(&stage.ENUM_VALUEs_mapString).(*map[string]*Type)
-	case JpgImage:
-		return any(&stage.JpgImages_mapString).(*map[string]*Type)
+	case EmbeddedJpgImage:
+		return any(&stage.EmbeddedJpgImages_mapString).(*map[string]*Type)
+	case EmbeddedPngImage:
+		return any(&stage.EmbeddedPngImages_mapString).(*map[string]*Type)
+	case EmbeddedSvgImage:
+		return any(&stage.EmbeddedSvgImages_mapString).(*map[string]*Type)
 	case Kill:
 		return any(&stage.Kills_mapString).(*map[string]*Type)
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -15112,8 +15116,6 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString).(*map[string]*Type)
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString).(*map[string]*Type)
-	case PngImage:
-		return any(&stage.PngImages_mapString).(*map[string]*Type)
 	case RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs_mapString).(*map[string]*Type)
 	case RELATION_GROUP_TYPE:
@@ -15152,8 +15154,6 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.StaticWebSiteImages_mapString).(*map[string]*Type)
 	case StaticWebSiteParagraph:
 		return any(&stage.StaticWebSiteParagraphs_mapString).(*map[string]*Type)
-	case SvgImage:
-		return any(&stage.SvgImages_mapString).(*map[string]*Type)
 	case XHTML_CONTENT:
 		return any(&stage.XHTML_CONTENTs_mapString).(*map[string]*Type)
 	default:
@@ -15618,8 +15618,16 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// field is initialized with an instance of A_PROPERTIES with the name of the field
 			PROPERTIES: &A_PROPERTIES{Name: "PROPERTIES"},
 		}).(*Type)
-	case JpgImage:
-		return any(&JpgImage{
+	case EmbeddedJpgImage:
+		return any(&EmbeddedJpgImage{
+			// Initialisation of associations
+		}).(*Type)
+	case EmbeddedPngImage:
+		return any(&EmbeddedPngImage{
+			// Initialisation of associations
+		}).(*Type)
+	case EmbeddedSvgImage:
+		return any(&EmbeddedSvgImage{
 			// Initialisation of associations
 		}).(*Type)
 	case Kill:
@@ -15724,10 +15732,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 		}).(*Type)
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&Map_SPEC_OBJECT_TYPE_showNameEntry{
-			// Initialisation of associations
-		}).(*Type)
-	case PngImage:
-		return any(&PngImage{
 			// Initialisation of associations
 		}).(*Type)
 	case RELATION_GROUP:
@@ -15937,10 +15941,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// Initialisation of associations
 			// field is initialized with an instance of StaticWebSiteImage with the name of the field
 			Image: &StaticWebSiteImage{Name: "Image"},
-		}).(*Type)
-	case SvgImage:
-		return any(&SvgImage{
-			// Initialisation of associations
 		}).(*Type)
 	case XHTML_CONTENT:
 		return any(&XHTML_CONTENT{
@@ -17079,8 +17079,18 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 			}
 			return any(res).(map[*End][]*Start)
 		}
-	// reverse maps of direct associations of JpgImage
-	case JpgImage:
+	// reverse maps of direct associations of EmbeddedJpgImage
+	case EmbeddedJpgImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedPngImage
+	case EmbeddedPngImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedSvgImage
+	case EmbeddedSvgImage:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -17211,11 +17221,6 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 		}
 	// reverse maps of direct associations of Map_SPEC_OBJECT_TYPE_showNameEntry
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
-	// reverse maps of direct associations of PngImage
-	case PngImage:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -17977,11 +17982,6 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 			}
 			return any(res).(map[*End][]*Start)
 		}
-	// reverse maps of direct associations of SvgImage
-	case SvgImage:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
 	// reverse maps of direct associations of XHTML_CONTENT
 	case XHTML_CONTENT:
 		switch fieldname {
@@ -18665,8 +18665,18 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of JpgImage
-	case JpgImage:
+	// reverse maps of direct associations of EmbeddedJpgImage
+	case EmbeddedJpgImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedPngImage
+	case EmbeddedPngImage:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of EmbeddedSvgImage
+	case EmbeddedSvgImage:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -18797,11 +18807,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		}
 	// reverse maps of direct associations of Map_SPEC_OBJECT_TYPE_showNameEntry
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
-	// reverse maps of direct associations of PngImage
-	case PngImage:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -19116,11 +19121,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of SvgImage
-	case SvgImage:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
 	// reverse maps of direct associations of XHTML_CONTENT
 	case XHTML_CONTENT:
 		switch fieldname {
@@ -19278,8 +19278,12 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case ENUM_VALUE:
 		res = "ENUM_VALUE"
-	case JpgImage:
-		res = "JpgImage"
+	case EmbeddedJpgImage:
+		res = "EmbeddedJpgImage"
+	case EmbeddedPngImage:
+		res = "EmbeddedPngImage"
+	case EmbeddedSvgImage:
+		res = "EmbeddedSvgImage"
 	case Kill:
 		res = "Kill"
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -19332,8 +19336,6 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		res = "Map_SPEC_OBJECT_TYPE_showNameEntry"
-	case PngImage:
-		res = "PngImage"
 	case RELATION_GROUP:
 		res = "RELATION_GROUP"
 	case RELATION_GROUP_TYPE:
@@ -19372,8 +19374,6 @@ func GetGongstructName[Type Gongstruct]() (res string) {
 		res = "StaticWebSiteImage"
 	case StaticWebSiteParagraph:
 		res = "StaticWebSiteParagraph"
-	case SvgImage:
-		res = "SvgImage"
 	case XHTML_CONTENT:
 		res = "XHTML_CONTENT"
 	}
@@ -19528,8 +19528,12 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "EMBEDDED_VALUE"
 	case *ENUM_VALUE:
 		res = "ENUM_VALUE"
-	case *JpgImage:
-		res = "JpgImage"
+	case *EmbeddedJpgImage:
+		res = "EmbeddedJpgImage"
+	case *EmbeddedPngImage:
+		res = "EmbeddedPngImage"
+	case *EmbeddedSvgImage:
+		res = "EmbeddedSvgImage"
 	case *Kill:
 		res = "Kill"
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -19582,8 +19586,6 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		res = "Map_SPEC_OBJECT_TYPE_showNameEntry"
-	case *PngImage:
-		res = "PngImage"
 	case *RELATION_GROUP:
 		res = "RELATION_GROUP"
 	case *RELATION_GROUP_TYPE:
@@ -19622,8 +19624,6 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "StaticWebSiteImage"
 	case *StaticWebSiteParagraph:
 		res = "StaticWebSiteParagraph"
-	case *SvgImage:
-		res = "SvgImage"
 	case *XHTML_CONTENT:
 		res = "XHTML_CONTENT"
 	}
@@ -19777,8 +19777,12 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
-	case JpgImage:
+	case EmbeddedJpgImage:
 		res = []string{"Name", "Base64Content"}
+	case EmbeddedPngImage:
+		res = []string{"Name", "Base64Content"}
+	case EmbeddedSvgImage:
+		res = []string{"Name", "Content"}
 	case Kill:
 		res = []string{"Name"}
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -19831,8 +19835,6 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "Value"}
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		res = []string{"Name", "Value"}
-	case PngImage:
-		res = []string{"Name", "Base64Content"}
 	case RELATION_GROUP:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SOURCE_SPECIFICATION", "SPEC_RELATIONS", "TARGET_SPECIFICATION", "TYPE"}
 	case RELATION_GROUP_TYPE:
@@ -19871,8 +19873,6 @@ func GetFields[Type Gongstruct]() (res []string) {
 		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
 	case StaticWebSiteParagraph:
 		res = []string{"Name", "LegendMarkdownContent", "Image"}
-	case SvgImage:
-		res = []string{"Name", "Content"}
 	case XHTML_CONTENT:
 		res = []string{"Name", "EnclosedText", "PureText"}
 	}
@@ -20190,7 +20190,13 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPECIFIED_VALUES"
 		rf.Fieldname = "ENUM_VALUE"
 		res = append(res, rf)
-	case JpgImage:
+	case EmbeddedJpgImage:
+		var rf ReverseField
+		_ = rf
+	case EmbeddedPngImage:
+		var rf ReverseField
+		_ = rf
+	case EmbeddedSvgImage:
 		var rf ReverseField
 		_ = rf
 	case Kill:
@@ -20346,9 +20352,6 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
 		res = append(res, rf)
-	case PngImage:
-		var rf ReverseField
-		_ = rf
 	case RELATION_GROUP:
 		var rf ReverseField
 		_ = rf
@@ -20442,9 +20445,6 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "StaticWebSiteChapter"
 		rf.Fieldname = "Paragraphs"
 		res = append(res, rf)
-	case SvgImage:
-		var rf ReverseField
-		_ = rf
 	case XHTML_CONTENT:
 		var rf ReverseField
 		_ = rf
@@ -20599,8 +20599,12 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "KEY", "OTHER_CONTENT"}
 	case *ENUM_VALUE:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
-	case *JpgImage:
+	case *EmbeddedJpgImage:
 		res = []string{"Name", "Base64Content"}
+	case *EmbeddedPngImage:
+		res = []string{"Name", "Base64Content"}
+	case *EmbeddedSvgImage:
+		res = []string{"Name", "Content"}
 	case *Kill:
 		res = []string{"Name"}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
@@ -20653,8 +20657,6 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "Value"}
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		res = []string{"Name", "Value"}
-	case *PngImage:
-		res = []string{"Name", "Base64Content"}
 	case *RELATION_GROUP:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SOURCE_SPECIFICATION", "SPEC_RELATIONS", "TARGET_SPECIFICATION", "TYPE"}
 	case *RELATION_GROUP_TYPE:
@@ -20693,8 +20695,6 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
 	case *StaticWebSiteParagraph:
 		res = []string{"Name", "LegendMarkdownContent", "Image"}
-	case *SvgImage:
-		res = []string{"Name", "Content"}
 	case *XHTML_CONTENT:
 		res = []string{"Name", "EnclosedText", "PureText"}
 	}
@@ -21876,13 +21876,29 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
 		}
-	case *JpgImage:
+	case *EmbeddedJpgImage:
 		switch fieldName {
 		// string value of fields
 		case "Name":
 			res.valueString = inferedInstance.Name
 		case "Base64Content":
 			res.valueString = inferedInstance.Base64Content
+		}
+	case *EmbeddedPngImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Base64Content":
+			res.valueString = inferedInstance.Base64Content
+		}
+	case *EmbeddedSvgImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Content":
+			res.valueString = inferedInstance.Content
 		}
 	case *Kill:
 		switch fieldName {
@@ -22139,14 +22155,6 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
 			res.valueBool = inferedInstance.Value
 			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *PngImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Base64Content":
-			res.valueString = inferedInstance.Base64Content
 		}
 	case *RELATION_GROUP:
 		switch fieldName {
@@ -22736,14 +22744,6 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 			if inferedInstance.Image != nil {
 				res.valueString = inferedInstance.Image.Name
 			}
-		}
-	case *SvgImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Content":
-			res.valueString = inferedInstance.Content
 		}
 	case *XHTML_CONTENT:
 		switch fieldName {
@@ -23903,13 +23903,29 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 				res.valueString = inferedInstance.PROPERTIES.Name
 			}
 		}
-	case JpgImage:
+	case EmbeddedJpgImage:
 		switch fieldName {
 		// string value of fields
 		case "Name":
 			res.valueString = inferedInstance.Name
 		case "Base64Content":
 			res.valueString = inferedInstance.Base64Content
+		}
+	case EmbeddedPngImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Base64Content":
+			res.valueString = inferedInstance.Base64Content
+		}
+	case EmbeddedSvgImage:
+		switch fieldName {
+		// string value of fields
+		case "Name":
+			res.valueString = inferedInstance.Name
+		case "Content":
+			res.valueString = inferedInstance.Content
 		}
 	case Kill:
 		switch fieldName {
@@ -24166,14 +24182,6 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
 			res.valueBool = inferedInstance.Value
 			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case PngImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Base64Content":
-			res.valueString = inferedInstance.Base64Content
 		}
 	case RELATION_GROUP:
 		switch fieldName {
@@ -24763,14 +24771,6 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 			if inferedInstance.Image != nil {
 				res.valueString = inferedInstance.Image.Name
 			}
-		}
-	case SvgImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Content":
-			res.valueString = inferedInstance.Content
 		}
 	case XHTML_CONTENT:
 		switch fieldName {

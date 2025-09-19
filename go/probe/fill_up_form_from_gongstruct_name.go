@@ -935,19 +935,45 @@ func FillUpFormFromGongstructName(
 		enum_value := new(models.ENUM_VALUE)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(enum_value, formGroup, probe)
-	case "JpgImage":
+	case "EmbeddedJpgImage":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
-			Label: prefix + "JpgImage Form",
+			Label: prefix + "EmbeddedJpgImage Form",
 		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__JpgImageFormCallback(
+		formGroup.OnSave = __gong__New__EmbeddedJpgImageFormCallback(
 			nil,
 			probe,
 			formGroup,
 		)
-		jpgimage := new(models.JpgImage)
+		embeddedjpgimage := new(models.EmbeddedJpgImage)
 		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(jpgimage, formGroup, probe)
+		FillUpForm(embeddedjpgimage, formGroup, probe)
+	case "EmbeddedPngImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "EmbeddedPngImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedPngImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		embeddedpngimage := new(models.EmbeddedPngImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(embeddedpngimage, formGroup, probe)
+	case "EmbeddedSvgImage":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "EmbeddedSvgImage Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__EmbeddedSvgImageFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		embeddedsvgimage := new(models.EmbeddedSvgImage)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(embeddedsvgimage, formGroup, probe)
 	case "Kill":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
@@ -1286,19 +1312,6 @@ func FillUpFormFromGongstructName(
 		map_spec_object_type_shownameentry := new(models.Map_SPEC_OBJECT_TYPE_showNameEntry)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(map_spec_object_type_shownameentry, formGroup, probe)
-	case "PngImage":
-		formGroup := (&form.FormGroup{
-			Name:  FormName,
-			Label: prefix + "PngImage Form",
-		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__PngImageFormCallback(
-			nil,
-			probe,
-			formGroup,
-		)
-		pngimage := new(models.PngImage)
-		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(pngimage, formGroup, probe)
 	case "RELATION_GROUP":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
@@ -1546,19 +1559,6 @@ func FillUpFormFromGongstructName(
 		staticwebsiteparagraph := new(models.StaticWebSiteParagraph)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(staticwebsiteparagraph, formGroup, probe)
-	case "SvgImage":
-		formGroup := (&form.FormGroup{
-			Name:  FormName,
-			Label: prefix + "SvgImage Form",
-		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__SvgImageFormCallback(
-			nil,
-			probe,
-			formGroup,
-		)
-		svgimage := new(models.SvgImage)
-		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(svgimage, formGroup, probe)
 	case "XHTML_CONTENT":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,

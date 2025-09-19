@@ -260,8 +260,14 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ENUM_VALUE" {
 		updateAndCommitTable[models.ENUM_VALUE](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "JpgImage" {
-		updateAndCommitTable[models.JpgImage](nodeImplGongstruct.probe)
+	if nodeImplGongstruct.gongStruct.GetName() == "EmbeddedJpgImage" {
+		updateAndCommitTable[models.EmbeddedJpgImage](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "EmbeddedPngImage" {
+		updateAndCommitTable[models.EmbeddedPngImage](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "EmbeddedSvgImage" {
+		updateAndCommitTable[models.EmbeddedSvgImage](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "Kill" {
 		updateAndCommitTable[models.Kill](nodeImplGongstruct.probe)
@@ -341,9 +347,6 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPEC_OBJECT_TYPE_showNameEntry" {
 		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "PngImage" {
-		updateAndCommitTable[models.PngImage](nodeImplGongstruct.probe)
-	}
 	if nodeImplGongstruct.gongStruct.GetName() == "RELATION_GROUP" {
 		updateAndCommitTable[models.RELATION_GROUP](nodeImplGongstruct.probe)
 	}
@@ -400,9 +403,6 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "StaticWebSiteParagraph" {
 		updateAndCommitTable[models.StaticWebSiteParagraph](nodeImplGongstruct.probe)
-	}
-	if nodeImplGongstruct.gongStruct.GetName() == "SvgImage" {
-		updateAndCommitTable[models.SvgImage](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "XHTML_CONTENT" {
 		updateAndCommitTable[models.XHTML_CONTENT](nodeImplGongstruct.probe)

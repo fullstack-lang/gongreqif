@@ -41,12 +41,16 @@
               </DEFINITION>
               <THE-VALUE>
                 <xhtml:div>
-                  <xhtml:p>This is the requirement text, and here is the embedded svg image:</xhtml:p>
+                  <xhtml:p>This is text, and here is the embedded svg image:</xhtml:p>
                   <xhtml:object data="vera rubin logo.svg" type="image/svg">Embedded Image</xhtml:object>
                 </xhtml:div>
-                  <xhtml:div>
-                  <xhtml:p>ANother requirement text, another embedded image, this one is jpg:</xhtml:p>
+                <xhtml:div>
+                  <xhtml:p>This is text again, another embedded image, this one is jpg:</xhtml:p>
                   <xhtml:object data="circular curve 2.jpg" type="image/jpg">Embedded Image</xhtml:object>
+                </xhtml:div>
+                <xhtml:div>
+                  <xhtml:p>This is text again, another embedded image, this one is png:</xhtml:p>
+                  <xhtml:object data="chessboard.png" type="image/png">Embedded Image</xhtml:object>
                 </xhtml:div>
               </THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>

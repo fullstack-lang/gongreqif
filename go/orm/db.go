@@ -300,9 +300,17 @@ type DBLite struct {
 
 	nextIDENUM_VALUEDB uint
 
-	jpgimageDBs map[uint]*JpgImageDB
+	embeddedjpgimageDBs map[uint]*EmbeddedJpgImageDB
 
-	nextIDJpgImageDB uint
+	nextIDEmbeddedJpgImageDB uint
+
+	embeddedpngimageDBs map[uint]*EmbeddedPngImageDB
+
+	nextIDEmbeddedPngImageDB uint
+
+	embeddedsvgimageDBs map[uint]*EmbeddedSvgImageDB
+
+	nextIDEmbeddedSvgImageDB uint
 
 	killDBs map[uint]*KillDB
 
@@ -408,10 +416,6 @@ type DBLite struct {
 
 	nextIDMap_SPEC_OBJECT_TYPE_showNameEntryDB uint
 
-	pngimageDBs map[uint]*PngImageDB
-
-	nextIDPngImageDB uint
-
 	relation_groupDBs map[uint]*RELATION_GROUPDB
 
 	nextIDRELATION_GROUPDB uint
@@ -487,10 +491,6 @@ type DBLite struct {
 	staticwebsiteparagraphDBs map[uint]*StaticWebSiteParagraphDB
 
 	nextIDStaticWebSiteParagraphDB uint
-
-	svgimageDBs map[uint]*SvgImageDB
-
-	nextIDSvgImageDB uint
 
 	xhtml_contentDBs map[uint]*XHTML_CONTENTDB
 
@@ -642,7 +642,11 @@ func NewDBLite() *DBLite {
 
 		enum_valueDBs: make(map[uint]*ENUM_VALUEDB),
 
-		jpgimageDBs: make(map[uint]*JpgImageDB),
+		embeddedjpgimageDBs: make(map[uint]*EmbeddedJpgImageDB),
+
+		embeddedpngimageDBs: make(map[uint]*EmbeddedPngImageDB),
+
+		embeddedsvgimageDBs: make(map[uint]*EmbeddedSvgImageDB),
 
 		killDBs: make(map[uint]*KillDB),
 
@@ -696,8 +700,6 @@ func NewDBLite() *DBLite {
 
 		map_spec_object_type_shownameentryDBs: make(map[uint]*Map_SPEC_OBJECT_TYPE_showNameEntryDB),
 
-		pngimageDBs: make(map[uint]*PngImageDB),
-
 		relation_groupDBs: make(map[uint]*RELATION_GROUPDB),
 
 		relation_group_typeDBs: make(map[uint]*RELATION_GROUP_TYPEDB),
@@ -735,8 +737,6 @@ func NewDBLite() *DBLite {
 		staticwebsiteimageDBs: make(map[uint]*StaticWebSiteImageDB),
 
 		staticwebsiteparagraphDBs: make(map[uint]*StaticWebSiteParagraphDB),
-
-		svgimageDBs: make(map[uint]*SvgImageDB),
 
 		xhtml_contentDBs: make(map[uint]*XHTML_CONTENTDB),
 	}
@@ -1033,10 +1033,18 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDENUM_VALUEDB++
 		v.ID = db.nextIDENUM_VALUEDB
 		db.enum_valueDBs[v.ID] = v
-	case *JpgImageDB:
-		db.nextIDJpgImageDB++
-		v.ID = db.nextIDJpgImageDB
-		db.jpgimageDBs[v.ID] = v
+	case *EmbeddedJpgImageDB:
+		db.nextIDEmbeddedJpgImageDB++
+		v.ID = db.nextIDEmbeddedJpgImageDB
+		db.embeddedjpgimageDBs[v.ID] = v
+	case *EmbeddedPngImageDB:
+		db.nextIDEmbeddedPngImageDB++
+		v.ID = db.nextIDEmbeddedPngImageDB
+		db.embeddedpngimageDBs[v.ID] = v
+	case *EmbeddedSvgImageDB:
+		db.nextIDEmbeddedSvgImageDB++
+		v.ID = db.nextIDEmbeddedSvgImageDB
+		db.embeddedsvgimageDBs[v.ID] = v
 	case *KillDB:
 		db.nextIDKillDB++
 		v.ID = db.nextIDKillDB
@@ -1141,10 +1149,6 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDMap_SPEC_OBJECT_TYPE_showNameEntryDB++
 		v.ID = db.nextIDMap_SPEC_OBJECT_TYPE_showNameEntryDB
 		db.map_spec_object_type_shownameentryDBs[v.ID] = v
-	case *PngImageDB:
-		db.nextIDPngImageDB++
-		v.ID = db.nextIDPngImageDB
-		db.pngimageDBs[v.ID] = v
 	case *RELATION_GROUPDB:
 		db.nextIDRELATION_GROUPDB++
 		v.ID = db.nextIDRELATION_GROUPDB
@@ -1221,10 +1225,6 @@ func (db *DBLite) Create(instanceDB any) (db.DBInterface, error) {
 		db.nextIDStaticWebSiteParagraphDB++
 		v.ID = db.nextIDStaticWebSiteParagraphDB
 		db.staticwebsiteparagraphDBs[v.ID] = v
-	case *SvgImageDB:
-		db.nextIDSvgImageDB++
-		v.ID = db.nextIDSvgImageDB
-		db.svgimageDBs[v.ID] = v
 	case *XHTML_CONTENTDB:
 		db.nextIDXHTML_CONTENTDB++
 		v.ID = db.nextIDXHTML_CONTENTDB
@@ -1397,8 +1397,12 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.embedded_valueDBs, v.ID)
 	case *ENUM_VALUEDB:
 		delete(db.enum_valueDBs, v.ID)
-	case *JpgImageDB:
-		delete(db.jpgimageDBs, v.ID)
+	case *EmbeddedJpgImageDB:
+		delete(db.embeddedjpgimageDBs, v.ID)
+	case *EmbeddedPngImageDB:
+		delete(db.embeddedpngimageDBs, v.ID)
+	case *EmbeddedSvgImageDB:
+		delete(db.embeddedsvgimageDBs, v.ID)
 	case *KillDB:
 		delete(db.killDBs, v.ID)
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDB:
@@ -1451,8 +1455,6 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.map_spec_object_type_showidentifierentryDBs, v.ID)
 	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
 		delete(db.map_spec_object_type_shownameentryDBs, v.ID)
-	case *PngImageDB:
-		delete(db.pngimageDBs, v.ID)
 	case *RELATION_GROUPDB:
 		delete(db.relation_groupDBs, v.ID)
 	case *RELATION_GROUP_TYPEDB:
@@ -1491,8 +1493,6 @@ func (db *DBLite) Delete(instanceDB any) (db.DBInterface, error) {
 		delete(db.staticwebsiteimageDBs, v.ID)
 	case *StaticWebSiteParagraphDB:
 		delete(db.staticwebsiteparagraphDBs, v.ID)
-	case *SvgImageDB:
-		delete(db.svgimageDBs, v.ID)
 	case *XHTML_CONTENTDB:
 		delete(db.xhtml_contentDBs, v.ID)
 	default:
@@ -1723,8 +1723,14 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 	case *ENUM_VALUEDB:
 		db.enum_valueDBs[v.ID] = v
 		return db, nil
-	case *JpgImageDB:
-		db.jpgimageDBs[v.ID] = v
+	case *EmbeddedJpgImageDB:
+		db.embeddedjpgimageDBs[v.ID] = v
+		return db, nil
+	case *EmbeddedPngImageDB:
+		db.embeddedpngimageDBs[v.ID] = v
+		return db, nil
+	case *EmbeddedSvgImageDB:
+		db.embeddedsvgimageDBs[v.ID] = v
 		return db, nil
 	case *KillDB:
 		db.killDBs[v.ID] = v
@@ -1804,9 +1810,6 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 	case *Map_SPEC_OBJECT_TYPE_showNameEntryDB:
 		db.map_spec_object_type_shownameentryDBs[v.ID] = v
 		return db, nil
-	case *PngImageDB:
-		db.pngimageDBs[v.ID] = v
-		return db, nil
 	case *RELATION_GROUPDB:
 		db.relation_groupDBs[v.ID] = v
 		return db, nil
@@ -1863,9 +1866,6 @@ func (db *DBLite) Save(instanceDB any) (db.DBInterface, error) {
 		return db, nil
 	case *StaticWebSiteParagraphDB:
 		db.staticwebsiteparagraphDBs[v.ID] = v
-		return db, nil
-	case *SvgImageDB:
-		db.svgimageDBs[v.ID] = v
 		return db, nil
 	case *XHTML_CONTENTDB:
 		db.xhtml_contentDBs[v.ID] = v
@@ -2306,11 +2306,23 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 		} else {
 			return nil, errors.New("db ENUM_VALUE github.com/fullstack-lang/gongreqif/go, record not found")
 		}
-	case *JpgImageDB:
-		if existing, ok := db.jpgimageDBs[v.ID]; ok {
+	case *EmbeddedJpgImageDB:
+		if existing, ok := db.embeddedjpgimageDBs[v.ID]; ok {
 			*existing = *v
 		} else {
-			return nil, errors.New("db JpgImage github.com/fullstack-lang/gongreqif/go, record not found")
+			return nil, errors.New("db EmbeddedJpgImage github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *EmbeddedPngImageDB:
+		if existing, ok := db.embeddedpngimageDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db EmbeddedPngImage github.com/fullstack-lang/gongreqif/go, record not found")
+		}
+	case *EmbeddedSvgImageDB:
+		if existing, ok := db.embeddedsvgimageDBs[v.ID]; ok {
+			*existing = *v
+		} else {
+			return nil, errors.New("db EmbeddedSvgImage github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *KillDB:
 		if existing, ok := db.killDBs[v.ID]; ok {
@@ -2468,12 +2480,6 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 		} else {
 			return nil, errors.New("db Map_SPEC_OBJECT_TYPE_showNameEntry github.com/fullstack-lang/gongreqif/go, record not found")
 		}
-	case *PngImageDB:
-		if existing, ok := db.pngimageDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db PngImage github.com/fullstack-lang/gongreqif/go, record not found")
-		}
 	case *RELATION_GROUPDB:
 		if existing, ok := db.relation_groupDBs[v.ID]; ok {
 			*existing = *v
@@ -2587,12 +2593,6 @@ func (db *DBLite) Updates(instanceDB any) (db.DBInterface, error) {
 			*existing = *v
 		} else {
 			return nil, errors.New("db StaticWebSiteParagraph github.com/fullstack-lang/gongreqif/go, record not found")
-		}
-	case *SvgImageDB:
-		if existing, ok := db.svgimageDBs[v.ID]; ok {
-			*existing = *v
-		} else {
-			return nil, errors.New("db SvgImage github.com/fullstack-lang/gongreqif/go, record not found")
 		}
 	case *XHTML_CONTENTDB:
 		if existing, ok := db.xhtml_contentDBs[v.ID]; ok {
@@ -3034,9 +3034,21 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
-	case *[]JpgImageDB:
-		*ptr = make([]JpgImageDB, 0, len(db.jpgimageDBs))
-		for _, v := range db.jpgimageDBs {
+	case *[]EmbeddedJpgImageDB:
+		*ptr = make([]EmbeddedJpgImageDB, 0, len(db.embeddedjpgimageDBs))
+		for _, v := range db.embeddedjpgimageDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]EmbeddedPngImageDB:
+		*ptr = make([]EmbeddedPngImageDB, 0, len(db.embeddedpngimageDBs))
+		for _, v := range db.embeddedpngimageDBs {
+			*ptr = append(*ptr, *v)
+		}
+		return db, nil
+	case *[]EmbeddedSvgImageDB:
+		*ptr = make([]EmbeddedSvgImageDB, 0, len(db.embeddedsvgimageDBs))
+		for _, v := range db.embeddedsvgimageDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -3196,12 +3208,6 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
-	case *[]PngImageDB:
-		*ptr = make([]PngImageDB, 0, len(db.pngimageDBs))
-		for _, v := range db.pngimageDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
 	case *[]RELATION_GROUPDB:
 		*ptr = make([]RELATION_GROUPDB, 0, len(db.relation_groupDBs))
 		for _, v := range db.relation_groupDBs {
@@ -3313,12 +3319,6 @@ func (db *DBLite) Find(instanceDBs any) (db.DBInterface, error) {
 	case *[]StaticWebSiteParagraphDB:
 		*ptr = make([]StaticWebSiteParagraphDB, 0, len(db.staticwebsiteparagraphDBs))
 		for _, v := range db.staticwebsiteparagraphDBs {
-			*ptr = append(*ptr, *v)
-		}
-		return db, nil
-	case *[]SvgImageDB:
-		*ptr = make([]SvgImageDB, 0, len(db.svgimageDBs))
-		for _, v := range db.svgimageDBs {
 			*ptr = append(*ptr, *v)
 		}
 		return db, nil
@@ -4061,15 +4061,35 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 		enum_valueDB, _ := instanceDB.(*ENUM_VALUEDB)
 		*enum_valueDB = *tmp
 		
-	case *JpgImageDB:
-		tmp, ok := db.jpgimageDBs[uint(i)]
+	case *EmbeddedJpgImageDB:
+		tmp, ok := db.embeddedjpgimageDBs[uint(i)]
 
 		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First JpgImage Unkown entry %d", i))
+			return nil, errors.New(fmt.Sprintf("db.First EmbeddedJpgImage Unkown entry %d", i))
 		}
 
-		jpgimageDB, _ := instanceDB.(*JpgImageDB)
-		*jpgimageDB = *tmp
+		embeddedjpgimageDB, _ := instanceDB.(*EmbeddedJpgImageDB)
+		*embeddedjpgimageDB = *tmp
+		
+	case *EmbeddedPngImageDB:
+		tmp, ok := db.embeddedpngimageDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First EmbeddedPngImage Unkown entry %d", i))
+		}
+
+		embeddedpngimageDB, _ := instanceDB.(*EmbeddedPngImageDB)
+		*embeddedpngimageDB = *tmp
+		
+	case *EmbeddedSvgImageDB:
+		tmp, ok := db.embeddedsvgimageDBs[uint(i)]
+
+		if !ok {
+			return nil, errors.New(fmt.Sprintf("db.First EmbeddedSvgImage Unkown entry %d", i))
+		}
+
+		embeddedsvgimageDB, _ := instanceDB.(*EmbeddedSvgImageDB)
+		*embeddedsvgimageDB = *tmp
 		
 	case *KillDB:
 		tmp, ok := db.killDBs[uint(i)]
@@ -4331,16 +4351,6 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 		map_spec_object_type_shownameentryDB, _ := instanceDB.(*Map_SPEC_OBJECT_TYPE_showNameEntryDB)
 		*map_spec_object_type_shownameentryDB = *tmp
 		
-	case *PngImageDB:
-		tmp, ok := db.pngimageDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First PngImage Unkown entry %d", i))
-		}
-
-		pngimageDB, _ := instanceDB.(*PngImageDB)
-		*pngimageDB = *tmp
-		
 	case *RELATION_GROUPDB:
 		tmp, ok := db.relation_groupDBs[uint(i)]
 
@@ -4530,16 +4540,6 @@ func (db *DBLite) First(instanceDB any, conds ...any) (db.DBInterface, error) {
 
 		staticwebsiteparagraphDB, _ := instanceDB.(*StaticWebSiteParagraphDB)
 		*staticwebsiteparagraphDB = *tmp
-		
-	case *SvgImageDB:
-		tmp, ok := db.svgimageDBs[uint(i)]
-
-		if !ok {
-			return nil, errors.New(fmt.Sprintf("db.First SvgImage Unkown entry %d", i))
-		}
-
-		svgimageDB, _ := instanceDB.(*SvgImageDB)
-		*svgimageDB = *tmp
 		
 	case *XHTML_CONTENTDB:
 		tmp, ok := db.xhtml_contentDBs[uint(i)]

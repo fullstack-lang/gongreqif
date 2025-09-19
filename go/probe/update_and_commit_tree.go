@@ -782,13 +782,33 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
-		case "JpgImage":
+		case "EmbeddedJpgImage":
 			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.JpgImage](probe.stageOfInterest)
-			for _jpgimage := range set {
-				nodeInstance := &tree.Node{Name: _jpgimage.GetName()}
+			set := *models.GetGongstructInstancesSet[models.EmbeddedJpgImage](probe.stageOfInterest)
+			for _embeddedjpgimage := range set {
+				nodeInstance := &tree.Node{Name: _embeddedjpgimage.GetName()}
 				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_jpgimage, "JpgImage", probe)
+				nodeInstance.Impl = NewInstanceNodeCallback(_embeddedjpgimage, "EmbeddedJpgImage", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "EmbeddedPngImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.EmbeddedPngImage](probe.stageOfInterest)
+			for _embeddedpngimage := range set {
+				nodeInstance := &tree.Node{Name: _embeddedpngimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_embeddedpngimage, "EmbeddedPngImage", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "EmbeddedSvgImage":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSet[models.EmbeddedSvgImage](probe.stageOfInterest)
+			for _embeddedsvgimage := range set {
+				nodeInstance := &tree.Node{Name: _embeddedsvgimage.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_embeddedsvgimage, "EmbeddedSvgImage", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
@@ -1052,16 +1072,6 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
-		case "PngImage":
-			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.PngImage](probe.stageOfInterest)
-			for _pngimage := range set {
-				nodeInstance := &tree.Node{Name: _pngimage.GetName()}
-				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_pngimage, "PngImage", probe)
-
-				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
-			}
 		case "RELATION_GROUP":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSet[models.RELATION_GROUP](probe.stageOfInterest)
@@ -1249,16 +1259,6 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _staticwebsiteparagraph.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_staticwebsiteparagraph, "StaticWebSiteParagraph", probe)
-
-				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
-			}
-		case "SvgImage":
-			nodeGongstruct.Name = name
-			set := *models.GetGongstructInstancesSet[models.SvgImage](probe.stageOfInterest)
-			for _svgimage := range set {
-				nodeInstance := &tree.Node{Name: _svgimage.GetName()}
-				nodeInstance.IsNodeClickable = true
-				nodeInstance.Impl = NewInstanceNodeCallback(_svgimage, "SvgImage", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
