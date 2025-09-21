@@ -56,13 +56,13 @@ Once downloaded, you can open it in the application using the drag-and-drop or b
 
 If you want to see images, you can download the "reqifz" sample file, `ReqIF for Wheeled Tennis Ball Drone.reqifz`, directly using the link below.
 
-* **[Download the ReqIF Sample File (ReqIF file zipped with images)](https://raw.githubusercontent.com/fullstack-lang/gongreqif/main/go/cmd/gongreqif/reqif%20samples/ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone.reqifz)**
+* **[Download the ReqIF Sample File (ReqIF file zipped with images)](https://github.com/fullstack-lang/gongreqif/blob/main/go/cmd/gongreqif/reqif%20samples/ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone.reqifz)**
 
 Once downloaded, you can open it in the application using the drag-and-drop or browse method described above.
 
 You then configure the rendering configuration for each of the 3 specifications or you can all download the rendering configuration for the sample file, directly using the ling below.
 
-* **[Download Rendering Conf of Sample File](https://raw.githubusercontent.com/fullstack-lang/gongreqif/main/go/cmd/gongreqif/reqif%20samples/ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone-renderingConf.go)**
+* **[Download Rendering Conf of Sample File](https://github.com/fullstack-lang/gongreqif/blob/main/go/cmd/gongreqif/reqif%20samples/reqif%20samples_ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone-renderingConf.go)**
 
 Once downloaded, go to the "ReqIF render" and you can open it in the application using the drag-and-drop or browse method described above.
 
