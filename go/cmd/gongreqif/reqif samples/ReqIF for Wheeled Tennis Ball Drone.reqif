@@ -7,7 +7,7 @@
       <REQ-IF-TOOL-ID>Gemini AI</REQ-IF-TOOL-ID>
       <REQ-IF-VERSION>2.1.0</REQ-IF-VERSION>
       <SOURCE-TOOL-ID>Manual</SOURCE-TOOL-ID>
-      <TITLE>ReqIF for Wheeled Tennis Ball Drone (Ungrouped Relations)</TITLE>
+      <TITLE>ReqIF for Wheeled Tennis Ball Drone</TITLE>
     </REQ-IF-HEADER>
   </THE-HEADER>
   <CORE-CONTENT>
