@@ -116,15 +116,15 @@ func renderNode(n *html.Node, parent *html.Node) string {
 		case "object":
 			if getAttr(n, "type") == "image/svg" {
 				data := getAttr(n, "data")
-				return fmt.Sprintf("\n\n![%s](svg:%s?width=250px)", data, data)
+				return fmt.Sprintf("\n\n![%s](svg:%s?width=750px)", data, data)
 			}
 			if getAttr(n, "type") == "image/jpg" {
 				data := getAttr(n, "data")
-				return fmt.Sprintf("\n\n![%s](jpg:%s?width=250px)", data, data)
+				return fmt.Sprintf("\n\n![%s](jpg:%s?width=750px)", data, data)
 			}
 			if getAttr(n, "type") == "image/png" {
 				data := getAttr(n, "data")
-				return fmt.Sprintf("\n\n![%s](png:%s?width=250px)", data, data)
+				return fmt.Sprintf("\n\n![%s](png:%s?width=750px)", data, data)
 			}
 			return content
 		default:

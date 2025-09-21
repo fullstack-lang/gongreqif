@@ -235,7 +235,8 @@
                     stakeholder needs. It translates operational needs into specific, <xhtml:strong>
                     testable</xhtml:strong> technical requirements that will guide the system
                     design.</xhtml:p>
-
+                  <xhtml:p>Schematic view</xhtml:p>
+                  <xhtml:object data="images/drone tennis.svg" type="image/svg">Embedded Image</xhtml:object>
                   <xhtml:h3>1. User Roles &amp; Permissions</xhtml:h3>
                   <xhtml:p>The system shall support the following user roles:</xhtml:p>
                   <xhtml:ul>
