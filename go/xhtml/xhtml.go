@@ -12,7 +12,8 @@ import (
 
 // ToMarkdown converts a given XHTML string to its Markdown equivalent.
 func ToMarkdown(xhtmlString string) (string, error) {
-	sanitizedXHTML := strings.ReplaceAll(xhtmlString, "xhtml:", "")
+	sanitizedXHTML := strings.ReplaceAll(xhtmlString, "reqif-xhtml:", "") // DOORS exports xhtml with the "reqif-" prefix
+	sanitizedXHTML = strings.ReplaceAll(sanitizedXHTML, "xhtml:", "")
 
 	doc, err := html.Parse(strings.NewReader(sanitizedXHTML))
 	if err != nil {
