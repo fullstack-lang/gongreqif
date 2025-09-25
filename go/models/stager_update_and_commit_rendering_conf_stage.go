@@ -34,6 +34,9 @@ func (proxy *RenderingConfFileToUploadProxy) OnFileUpload(uploadedFile *load.Fil
 
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+	proxy.stager.updateAndCommitLoadRenderingConfStage()
+	proxy.stager.updateAndCommitLoadReqifStage()
+
 	return nil
 }
 
@@ -59,6 +62,7 @@ func (stager *Stager) updateAndCommitLoadRenderingConfStage() {
 	message.Stage(stager.loadRenderingConfStage)
 
 	stager.loadRenderingConfStage.Commit()
+
 }
 
 func ParseAstFromBytes(stage *Stage, input []byte) error {

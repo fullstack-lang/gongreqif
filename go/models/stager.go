@@ -453,14 +453,30 @@ func NewStager(
 				Name:             "room for tree",
 				ShowNameInHeader: false,
 				Size:             100,
-				AsSplit: (&split.AsSplit{
+				AsSplit: &split.AsSplit{
 					Direction: split.Horizontal,
 					AsSplitAreas: []*split.AsSplitArea{
-
 						{
 							Size: 19.1,
-							Tree: &split.Tree{
-								StackName: stager.specificationsTreeStage.GetName(),
+							AsSplit: &split.AsSplit{
+								Direction: split.Vertical,
+								AsSplitAreas: []*split.AsSplitArea{
+									{
+										Size: 75,
+										Tree: &split.Tree{
+											StackName: stager.specificationsTreeStage.GetName(),
+										},
+									},
+									{
+										Name: "Upload Reqif File",
+										Size: 25,
+										AsSplit: (&split.AsSplit{
+											Direction: split.Horizontal,
+											AsSplitAreas: []*split.AsSplitArea{
+												load.NewStager(r, stager.loadReqifStage, stager.splitStage).GetAsSplitArea()},
+										}),
+									},
+								},
 							},
 						},
 						{
@@ -506,7 +522,7 @@ func NewStager(
 						// 	Size: 15,
 						// },
 					},
-				}),
+				},
 			},
 		},
 	})
