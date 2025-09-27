@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 
@@ -55,6 +56,10 @@ func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingCon
 	resultString := string(content)
 	fileToDownload.Content = resultString
 
+	stager.GetLoadStage().Commit()
+
+	time.Sleep(1 * time.Second)
+	stager.GetLoadStage().Reset()
 	stager.GetLoadStage().Commit()
 
 	log.Println("Finished exporting the rendering configuration file", tempFile.Name())
