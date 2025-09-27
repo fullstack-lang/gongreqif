@@ -23,10 +23,10 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
-	const __write__local_time = "2025-07-25 14:36:15.644792 CEST"
-	const __write__utc_time__ = "2025-07-25 12:36:15.644792 UTC"
+	const __write__local_time = "2025-09-27 20:07:23.957910 CEST"
+	const __write__utc_time__ = "2025-09-27 18:07:23.957910 UTC"
 
-	const __commitId__ = "0000001329"
+	const __commitId__ = "0000001335"
 
 	// Declaration of instances to stage
 
@@ -351,9 +351,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000004_4_Specs_Objects_2.Description = `DEscription du package Specs`
 	__Classdiagram__000004_4_Specs_Objects_2.IsIncludedInStaticWebSite = false
 	__Classdiagram__000004_4_Specs_Objects_2.IsInRenameMode = false
-	__Classdiagram__000004_4_Specs_Objects_2.IsExpanded = true
+	__Classdiagram__000004_4_Specs_Objects_2.IsExpanded = false
 	__Classdiagram__000004_4_Specs_Objects_2.NodeGongStructsIsExpanded = true
-	__Classdiagram__000004_4_Specs_Objects_2.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,false,true,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
+	__Classdiagram__000004_4_Specs_Objects_2.NodeGongStructNodeExpansion = `[false,false,false,false,false,false,false,true,true,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true]`
 	__Classdiagram__000004_4_Specs_Objects_2.NodeGongEnumsIsExpanded = false
 	__Classdiagram__000004_4_Specs_Objects_2.NodeGongEnumNodeExpansion = ``
 	__Classdiagram__000004_4_Specs_Objects_2.NodeGongNotesIsExpanded = true
@@ -2093,7 +2093,7 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000005_6_Specifications)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000006_3_Spectype_2)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000007_5_Spec_Relation)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000004_4_Specs_Objects_2
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000001_2_Datatypes
 	// setup of GongNoteShape instances pointers
 	// setup of GongStructShape instances pointers
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000008_THE_HEADER)
