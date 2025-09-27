@@ -42,9 +42,10 @@ var (
 
 	port = flag.Int("port", 8080, "port server")
 
-	pathToReqifFile   = flag.String("pathToReqifFile", "", "Path to the reqif file")
-	pathToGoModelFile = flag.String("pathToGoModelFile", "", "Path to the go model file")
-	pathToXLFile      = flag.String("pathToXLFile", "", "Path to the go model file")
+	pathToReqifFile     = flag.String("pathToReqifFile", "", "Path to the reqif file")
+	pathToRenderingConf = flag.String("pathToRenderingConf", "", "Path to the rendering conf file")
+	pathToGoModelFile   = flag.String("pathToGoModelFile", "", "Path to the go model file")
+	pathToXLFile        = flag.String("pathToXLFile", "", "Path to the go model file")
 
 	pathToOutputReqifFile = flag.String("pathToOutputReqifFile", "", "Path to the output reqif file")
 
@@ -96,6 +97,7 @@ func main() {
 		splitStage,
 		stack.Stage,
 		*pathToReqifFile,
+		*pathToRenderingConf,
 		*pathToOutputReqifFile,
 		&datatypes.DataTypeTreeStageUpdater{},
 		&spectypes.SpecTypesTreeStageUpdater{},

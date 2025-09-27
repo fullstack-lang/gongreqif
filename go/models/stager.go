@@ -96,6 +96,7 @@ type Stager struct {
 
 	rootReqif             *REQ_IF
 	pathToReqifFile       string
+	pathToRenderingConf   string
 	pathToOutputReqifFile string
 
 	// those interface allows for processing outside the models
@@ -291,6 +292,7 @@ func NewStager(
 	splitStage *split.Stage,
 	stage *Stage,
 	pathToReqifFile string,
+	pathToRenderingConf string,
 	pathToOutputReqifFile string,
 
 	dataTypesTreeUpdater DataTypesTreeUpdaterInterface,
@@ -311,6 +313,7 @@ func NewStager(
 	stager.stage = stage
 	stager.splitStage = splitStage
 	stager.pathToReqifFile = pathToReqifFile
+	stager.pathToRenderingConf = pathToRenderingConf
 	stager.pathToOutputReqifFile = pathToOutputReqifFile
 
 	stager.dataTypesTreeUpdater = dataTypesTreeUpdater
@@ -625,6 +628,25 @@ func NewStager(
 		} else {
 			stager.processReqifData(reqifData, []*EmbeddedSvgImage{}, []*EmbeddedJpgImage{}, []*EmbeddedPngImage{}, pathToReqifFile)
 		}
+	}
+
+	if pathToRenderingConf != "" {
+		// file
+		renderingConf, err := os.ReadFile(pathToRenderingConf) // os.ReadFile is simpler
+		if err != nil {
+			fmt.Printf("Error reading file %s: %v\n", pathToRenderingConf, err)
+		}
+
+		stageForRenderinfConf := NewStage("renderingConf")
+		ParseAstFromBytes(stageForRenderinfConf, renderingConf)
+
+		// get the rendering configuration
+		var conf *RenderingConfiguration
+		for _, _conf := range GetGongstrucsSorted[*RenderingConfiguration](stageForRenderinfConf) {
+			conf = _conf
+		}
+
+		stager.FromRenderingConfiguration(conf)
 	}
 
 	stager.updateAndCommitLoadReqifStage()
