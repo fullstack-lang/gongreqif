@@ -20,6 +20,10 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 
+	if spectypes == nil {
+		return
+	}
+
 	rootNode := &tree.Node{
 		Name:       "Spec types",
 		IsExpanded: true,

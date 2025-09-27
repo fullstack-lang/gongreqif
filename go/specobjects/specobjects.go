@@ -28,6 +28,12 @@ func (o *SpecObjectsTreeStageUpdater) UpdateAndCommitSpecObjectsTreeStage(stager
 
 	// prepare one node per spec object type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+
+	if spectypes == nil {
+		treeStage.Commit()
+		return
+	}
+
 	map_specObjectType_node := make(map[*m.SPEC_OBJECT_TYPE]*tree.Node)
 	map_specObjectType_nbInstances := make(map[*m.SPEC_OBJECT_TYPE]int)
 	for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {

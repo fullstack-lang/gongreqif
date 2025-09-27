@@ -18,6 +18,10 @@ func (dataTypeTreeStageUpdater *DataTypeTreeStageUpdater) UpdateAndCommitDataTyp
 
 	datatypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.DATATYPES
 
+	if datatypes == nil {
+		return
+	}
+
 	rootNode := &tree.Node{
 		Name:       "Data types",
 		IsExpanded: true,

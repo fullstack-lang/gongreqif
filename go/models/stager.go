@@ -69,6 +69,7 @@ type SpecificationsTreeUpdaterInterface interface {
 type Exporter interface {
 	ExportReqif(stager *Stager)
 	ExportRenderingConf(renderingConf *RenderingConfiguration, stager *Stager)
+	ExportAnonymousReqif(stager *Stager)
 }
 
 type ObjectNamerInterface interface {
@@ -81,6 +82,7 @@ type Stager struct {
 
 	welcomeTabButtonStage   *button.Stage
 	renderingTabButtonStage *button.Stage
+	anonymousButtonStage    *button.Stage
 
 	summaryTableStage *table.Stage
 
@@ -340,6 +342,7 @@ func NewStager(
 	stager.specificationsTreeStage = tree_stack.NewStack(r, stage.GetName()+"-specifications", "", "", "", true, true).Stage
 	stager.welcomeTabButtonStage = button_stack.NewStack(r, stage.GetName()+"-Specification Tab", "", "", "", true, true).Stage
 	stager.renderingTabButtonStage = button_stack.NewStack(r, stage.GetName()+"-Render Tab", "", "", "", true, true).Stage
+	stager.anonymousButtonStage = button_stack.NewStack(r, stage.GetName()+"-Anonymous", "", "", "", true, true).Stage
 
 	// StageBranch will stage on the the first argument
 	// all instances related to the second argument
@@ -465,19 +468,25 @@ func NewStager(
 								Direction: split.Vertical,
 								AsSplitAreas: []*split.AsSplitArea{
 									{
-										Size: 75,
+										Size: 70,
 										Tree: &split.Tree{
 											StackName: stager.specificationsTreeStage.GetName(),
 										},
 									},
 									{
 										Name: "Upload Reqif File",
-										Size: 25,
+										Size: 20,
 										AsSplit: (&split.AsSplit{
 											Direction: split.Horizontal,
 											AsSplitAreas: []*split.AsSplitArea{
 												load.NewStager(r, stager.loadReqifStage, stager.splitStage).GetAsSplitArea()},
 										}),
+									},
+									{
+										Size: 10,
+										Button: &split.Button{
+											StackName: stager.anonymousButtonStage.GetName(),
+										},
 									},
 								},
 							},
@@ -653,6 +662,7 @@ func NewStager(
 	stager.updateAndCommitLoadRenderingConfStage()
 	stager.UpdateAndCommitWelcomeTabButtonStage()
 	stager.UpdateAndCommitRenderingTabButtonStage()
+	stager.UpdateAndCommitAnonymousButtonStage()
 
 	// hook the stage on a kill command
 	stage.OnAfterKillCreateCallback = &OnAfterKillCreateCallback{}

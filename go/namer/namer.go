@@ -143,11 +143,13 @@ func (objectNamer *ObjectNamer) SetNamesToElements(stage *m.Stage, reqif *m.REQ_
 
 	objects := reqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS
 
-	for idx, x := range objects.SPEC_OBJECT {
-		x.Name = x.LONG_NAME
-		if x.LONG_NAME == "" {
-			x.Name = fmt.Sprintf("Spec_object_%.5d", idx)
-			idx++
+	if objects != nil {
+		for idx, x := range objects.SPEC_OBJECT {
+			x.Name = x.LONG_NAME
+			if x.LONG_NAME == "" {
+				x.Name = fmt.Sprintf("Spec_object_%.5d", idx)
+				idx++
+			}
 		}
 	}
 

@@ -28,6 +28,12 @@ func (specRelationsTreeUpdater *SpecRelationsTreeStageUpdater) UpdateAndCommitSp
 
 	// prepare one node per spec relation type
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+
+	if spectypes == nil {
+		treeStage.Commit()
+		return
+	}
+
 	map_specRelationType_node := make(map[*m.SPEC_RELATION_TYPE]*tree.Node)
 	map_specRelationType_nbInstances := make(map[*m.SPEC_RELATION_TYPE]int)
 	for _, specRelationType := range spectypes.SPEC_RELATION_TYPE {
