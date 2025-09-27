@@ -4,6 +4,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"log"
+	"strings"
+	"time"
 
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 
@@ -45,11 +47,20 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 
 	fileToDownload := new(load.FileToDownload).Stage(stager.GetLoadStage())
 
-	fileToDownload.Name = stager.GetPathToOutputReqifFile()
+	filename := stager.GetPathToReqifFile()
+
+	if strings.HasSuffix(filename, ".reqifz") {
+		filename = strings.TrimSuffix(filename, "z")
+	}
+
+	fileToDownload.Name = filename
 	fileToDownload.Content = string(outputData)
 
 	stager.GetLoadStage().Commit()
 
-	log.Println("Finished exporting the ReqIF file", stager.GetPathToOutputReqifFile())
+	time.Sleep(1 * time.Second)
+	stager.UpdateAndCommitLoadReqifStage()
+
+	log.Println("Finished exporting the anonymous ReqIF file", filename)
 
 }

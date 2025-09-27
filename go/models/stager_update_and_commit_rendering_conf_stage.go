@@ -35,7 +35,7 @@ func (proxy *RenderingConfFileToUploadProxy) OnFileUpload(uploadedFile *load.Fil
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.updateAndCommitLoadRenderingConfStage()
-	proxy.stager.updateAndCommitLoadReqifStage()
+	proxy.stager.UpdateAndCommitLoadReqifStage()
 
 	return nil
 }

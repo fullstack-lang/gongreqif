@@ -153,7 +153,7 @@ func extractReqifFromZip(zipData []byte) ([]byte, []*EmbeddedSvgImage, []*Embedd
 	return reqifContent, svgImages, jpgImages, pngImages, nil
 }
 
-func (stager *Stager) updateAndCommitLoadReqifStage() {
+func (stager *Stager) UpdateAndCommitLoadReqifStage() {
 
 	stager.loadReqifStage.Reset()
 

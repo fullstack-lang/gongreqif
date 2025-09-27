@@ -278,6 +278,10 @@ func (stager *Stager) GetPathToOutputReqifFile() string {
 	return stager.pathToOutputReqifFile
 }
 
+func (stager *Stager) GetPathToReqifFile() string {
+	return stager.pathToReqifFile
+}
+
 // OTHERS
 
 func (stager *Stager) GetRootREQIF() (rootReqif *REQ_IF) {
@@ -658,7 +662,7 @@ func NewStager(
 		stager.FromRenderingConfiguration(conf)
 	}
 
-	stager.updateAndCommitLoadReqifStage()
+	stager.UpdateAndCommitLoadReqifStage()
 	stager.updateAndCommitLoadRenderingConfStage()
 	stager.UpdateAndCommitWelcomeTabButtonStage()
 	stager.UpdateAndCommitRenderingTabButtonStage()

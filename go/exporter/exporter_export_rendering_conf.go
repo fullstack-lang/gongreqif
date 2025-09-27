@@ -59,8 +59,7 @@ func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingCon
 	stager.GetLoadStage().Commit()
 
 	time.Sleep(1 * time.Second)
-	stager.GetLoadStage().Reset()
-	stager.GetLoadStage().Commit()
+	stager.UpdateAndCommitLoadReqifStage()
 
 	log.Println("Finished exporting the rendering configuration file", tempFile.Name())
 

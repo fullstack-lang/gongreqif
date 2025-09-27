@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"log"
+	"time"
 
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 
@@ -191,6 +192,9 @@ func (exporter *Exporter) ExportReqif(stager *models.Stager) {
 	fileToDownload.Content = string(outputData)
 
 	stager.GetLoadStage().Commit()
+
+	time.Sleep(1 * time.Second)
+	stager.UpdateAndCommitLoadReqifStage()
 
 	log.Println("Finished exporting the ReqIF file", stager.GetPathToOutputReqifFile())
 
