@@ -17,7 +17,6 @@ echo "Updating module with latest commit: $LATEST_COMMIT"
 go get github.com/fullstack-lang/gong@"$LATEST_COMMIT"
 
 go mod tidy
-go mod vendor
 
 gongc  -level1 go/models
 
