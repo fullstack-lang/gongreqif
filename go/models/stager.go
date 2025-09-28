@@ -369,7 +369,7 @@ func NewStager(
 									{
 										Name:             "Summary table",
 										ShowNameInHeader: false,
-										Size:             25,
+										Size:             50,
 										Table: &split.Table{
 											StackName: stager.summaryTableStage.GetName(),
 										},
@@ -386,7 +386,7 @@ func NewStager(
 									{
 										Name:             "Buttons",
 										ShowNameInHeader: false,
-										Size:             50,
+										Size:             25,
 										Button: &split.Button{
 											StackName: stager.welcomeTabButtonStage.GetName(),
 										},

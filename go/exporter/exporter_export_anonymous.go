@@ -22,12 +22,17 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 	}
 	_ = rootReqif
 
-	for _, specObject := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.SPEC_OBJECT {
+	rootReqif.THE_HEADER.REQ_IF_HEADER.COMMENT = "anonymous COMMENT"
+	rootReqif.THE_HEADER.REQ_IF_HEADER.TITLE = "anonymous TITLE"
+
+	for idxSpecObject, specObject := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.SPEC_OBJECT {
 		_ = specObject
 
 		if specObject.VALUES == nil {
 			continue
 		}
+
+		specObject.LONG_NAME = fmt.Sprintf("%5d", idxSpecObject)
 
 		for idx, attrValue := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 			attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx)
