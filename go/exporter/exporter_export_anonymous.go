@@ -51,6 +51,32 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		}
 	}
 
+	for idxSpecObject, specification := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION {
+		_ = specification
+
+		if specification.VALUES == nil {
+			continue
+		}
+
+		specification.LONG_NAME = fmt.Sprintf("%5d", idxSpecObject)
+
+		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_STRING {
+			attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_INTEGER {
+			attrValue.THE_VALUE = 10000 + idx
+		}
+		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_REAL {
+			attrValue.THE_VALUE = 10000.0 + float64(idx)
+		}
+		for _, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_DATE {
+			attrValue.THE_VALUE = time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Local().UTC().Format(time.DateOnly)
+		}
+		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
+			attrValue.THE_VALUE.EnclosedText = "XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx)
+		}
+	}
+
 	// for idx, a_specified_values := range models.GetGongstrucsSorted[*models.A_SPECIFIED_VALUES](stager.GetStage()) {
 
 	// 	for idx2, a_specified_value := range a_specified_values.ENUM_VALUE {
