@@ -25,6 +25,67 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 	rootReqif.THE_HEADER.REQ_IF_HEADER.COMMENT = "anonymous COMMENT"
 	rootReqif.THE_HEADER.REQ_IF_HEADER.TITLE = "anonymous TITLE"
 
+	datatypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.DATATYPES
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_XHTML {
+		datatype.LONG_NAME = "XHTML datatype " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_STRING {
+		datatype.LONG_NAME = "STRING datatype " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_BOOLEAN {
+		datatype.LONG_NAME = "BOODATATYPE_DEFINITION_BOOLEAN datatype " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_INTEGER {
+		datatype.LONG_NAME = "INTEGER datatype " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_REAL {
+		datatype.LONG_NAME = "REAL datatype " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_DATE {
+		datatype.LONG_NAME = "DATE datatype " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, datatype := range datatypes.DATATYPE_DEFINITION_ENUMERATION {
+		datatype.LONG_NAME = "ENUMERATION datatype " + fmt.Sprintf("%5d", idx)
+
+		for idx2, enum := range datatype.SPECIFIED_VALUES.ENUM_VALUE {
+			enum.LONG_NAME = "ENUMERATION datatype " + fmt.Sprintf("%5d", idx) + ", ENUM " + fmt.Sprintf("%5d", idx2)
+		}
+	}
+
+	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
+	for idx, type_ := range spectypes.SPEC_OBJECT_TYPE {
+		type_.LONG_NAME = "spec object type " + fmt.Sprintf("%5d", idx)
+
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+			attributeDefinition.LONG_NAME = "XHTML attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
+			attributeDefinition.LONG_NAME = "STRING attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
+			attributeDefinition.LONG_NAME = "BOOattributeDefinition_DEFINITION_BOOLEAN attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER {
+			attributeDefinition.LONG_NAME = "INTEGER attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL {
+			attributeDefinition.LONG_NAME = "REAL attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
+			attributeDefinition.LONG_NAME = "DATE attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
+			attributeDefinition.LONG_NAME = "ENUMERATION attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+
+	}
+	for idx, type_ := range spectypes.SPEC_RELATION_TYPE {
+		type_.LONG_NAME = "spec relation type " + fmt.Sprintf("%5d", idx)
+	}
+	for idx, type_ := range spectypes.SPECIFICATION_TYPE {
+		type_.LONG_NAME = "specification type " + fmt.Sprintf("%5d", idx)
+	}
+
 	for idxSpecObject, specObject := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.SPEC_OBJECT {
 		_ = specObject
 
@@ -109,6 +170,9 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 	if strings.HasSuffix(filename, ".reqifz") {
 		filename = strings.TrimSuffix(filename, "z")
 	}
+
+	filename = strings.TrimSuffix(filename, ".reqif")
+	filename += "-scrambled.reqif"
 
 	fileToDownload.Name = filename
 	fileToDownload.Content = string(outputData)

@@ -20,9 +20,9 @@ func (stager *Stager) UpdateAndCommitAnonymousButtonStage() {
 		&AnonymousButtonProxy{
 			stager: stager,
 		},
-		"Export anonymoused version",
+		"Export blanked version",
 		string(buttons.BUTTON_shuffle),
-		"Export anonymoused version",
+		"Export blanked version",
 	)
 
 	group1.Buttons = append(group1.Buttons, buttonExportRenderingCong)
