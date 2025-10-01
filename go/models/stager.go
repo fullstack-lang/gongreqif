@@ -455,8 +455,8 @@ func NewStager(
 		},
 	})
 
-	asSplitAreaRenderingTabButtonStage := load.NewStager(r, stager.loadRenderingConfStage, stager.splitStage).GetAsSplitArea()
-	asSplitAreaRenderingTabButtonStage.Size = 70
+	asSplitAreaRenderingConfStage := load.NewStager(r, stager.loadRenderingConfStage, stager.splitStage).GetAsSplitArea()
+	asSplitAreaRenderingConfStage.Size = 20
 
 	split.StageBranch(stager.splitStage, &split.View{
 		Name: "REQIF Render",
@@ -508,21 +508,12 @@ func NewStager(
 											StackName: stager.specTypesTreeStage.GetName(),
 										},
 									},
+									asSplitAreaRenderingConfStage,
 									{
-										Name: "Upload Rendering Configuration",
-										Size: 30,
-										AsSplit: (&split.AsSplit{
-											Direction: split.Vertical,
-											AsSplitAreas: []*split.AsSplitArea{
-												{
-													Size: 30,
-													Button: &split.Button{
-														StackName: stager.renderingTabButtonStage.GetName(),
-													},
-												},
-												asSplitAreaRenderingTabButtonStage,
-											},
-										}),
+										Size: 10,
+										Button: &split.Button{
+											StackName: stager.renderingTabButtonStage.GetName(),
+										},
 									},
 								},
 							},
