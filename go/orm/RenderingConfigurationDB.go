@@ -138,6 +138,10 @@ type RenderingConfigurationDB struct {
 	// Declation for basic field renderingconfigurationDB.Name
 	Name_Data sql.NullString
 
+	// Declation for basic field renderingconfigurationDB.ShowSpecHierachyIdentifiers
+	// provide the sql storage for the boolan
+	ShowSpecHierachyIdentifiers_Data sql.NullBool
+
 	// encoding of pointers
 	// for GORM serialization, it is necessary to embed to Pointer Encoding declaration
 	RenderingConfigurationPointersEncoding
@@ -161,6 +165,8 @@ type RenderingConfigurationWOP struct {
 	// insertion for WOP basic fields
 
 	Name string `xlsx:"1"`
+
+	ShowSpecHierachyIdentifiers bool `xlsx:"2"`
 	// insertion for WOP pointer fields
 }
 
@@ -168,6 +174,7 @@ var RenderingConfiguration_Fields = []string{
 	// insertion for WOP basic fields
 	"ID",
 	"Name",
+	"ShowSpecHierachyIdentifiers",
 }
 
 type BackRepoRenderingConfigurationStruct struct {
@@ -1122,6 +1129,9 @@ func (renderingconfigurationDB *RenderingConfigurationDB) CopyBasicFieldsFromRen
 
 	renderingconfigurationDB.Name_Data.String = renderingconfiguration.Name
 	renderingconfigurationDB.Name_Data.Valid = true
+
+	renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Bool = renderingconfiguration.ShowSpecHierachyIdentifiers
+	renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Valid = true
 }
 
 // CopyBasicFieldsFromRenderingConfiguration_WOP
@@ -1130,6 +1140,9 @@ func (renderingconfigurationDB *RenderingConfigurationDB) CopyBasicFieldsFromRen
 
 	renderingconfigurationDB.Name_Data.String = renderingconfiguration.Name
 	renderingconfigurationDB.Name_Data.Valid = true
+
+	renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Bool = renderingconfiguration.ShowSpecHierachyIdentifiers
+	renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Valid = true
 }
 
 // CopyBasicFieldsFromRenderingConfigurationWOP
@@ -1138,18 +1151,23 @@ func (renderingconfigurationDB *RenderingConfigurationDB) CopyBasicFieldsFromRen
 
 	renderingconfigurationDB.Name_Data.String = renderingconfiguration.Name
 	renderingconfigurationDB.Name_Data.Valid = true
+
+	renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Bool = renderingconfiguration.ShowSpecHierachyIdentifiers
+	renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Valid = true
 }
 
 // CopyBasicFieldsToRenderingConfiguration
 func (renderingconfigurationDB *RenderingConfigurationDB) CopyBasicFieldsToRenderingConfiguration(renderingconfiguration *models.RenderingConfiguration) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	renderingconfiguration.Name = renderingconfigurationDB.Name_Data.String
+	renderingconfiguration.ShowSpecHierachyIdentifiers = renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Bool
 }
 
 // CopyBasicFieldsToRenderingConfiguration_WOP
 func (renderingconfigurationDB *RenderingConfigurationDB) CopyBasicFieldsToRenderingConfiguration_WOP(renderingconfiguration *models.RenderingConfiguration_WOP) {
 	// insertion point for checkout of basic fields (back repo to stage)
 	renderingconfiguration.Name = renderingconfigurationDB.Name_Data.String
+	renderingconfiguration.ShowSpecHierachyIdentifiers = renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Bool
 }
 
 // CopyBasicFieldsToRenderingConfigurationWOP
@@ -1157,6 +1175,7 @@ func (renderingconfigurationDB *RenderingConfigurationDB) CopyBasicFieldsToRende
 	renderingconfiguration.ID = int(renderingconfigurationDB.ID)
 	// insertion point for checkout of basic fields (back repo to stage)
 	renderingconfiguration.Name = renderingconfigurationDB.Name_Data.String
+	renderingconfiguration.ShowSpecHierachyIdentifiers = renderingconfigurationDB.ShowSpecHierachyIdentifiers_Data.Bool
 }
 
 // Backup generates a json file from a slice of all RenderingConfigurationDB instances in the backrepo

@@ -1642,11 +1642,14 @@ type RenderingConfiguration_WOP struct {
 	// insertion point
 
 	Name string
+
+	ShowSpecHierachyIdentifiers bool
 }
 
 func (from *RenderingConfiguration) CopyBasicFields(to *RenderingConfiguration) {
 	// insertion point
 	to.Name = from.Name
+	to.ShowSpecHierachyIdentifiers = from.ShowSpecHierachyIdentifiers
 }
 
 type SPECIFICATION_WOP struct {

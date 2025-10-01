@@ -31,6 +31,10 @@ func processSpecHierarchy(
 
 	// starting makr bold
 
+	if stager.ShowSpecHierachyIdentifiers {
+		*markDownContent += fmt.Sprintf("\n\nSH : %s, depth %d\n\n", specHierarchy.IDENTIFIER, outerDepth)
+	}
+
 	markdownBoldStartingMark := `
 **`
 	markdownBoldEndingMark := `**

@@ -14006,6 +14006,8 @@ func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) On
 			}
 			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_showNameEntries = instanceSlice
 
+		case "ShowSpecHierachyIdentifiers":
+			FormDivBasicFieldToField(&(renderingconfiguration_.ShowSpecHierachyIdentifiers), formDiv)
 		}
 	}
 

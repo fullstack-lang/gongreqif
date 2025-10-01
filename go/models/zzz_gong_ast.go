@@ -5676,6 +5676,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			case "RenderingConfiguration":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "ShowSpecHierachyIdentifiers":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_RenderingConfiguration[identifier].ShowSpecHierachyIdentifiers = fielValue
 				}
 			case "SPECIFICATION":
 				switch fieldName {

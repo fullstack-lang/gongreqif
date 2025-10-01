@@ -5398,6 +5398,12 @@ func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName strin
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(renderingconfiguration.Name))
 		initializerStatements += setValueField
 
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowSpecHierachyIdentifiers")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", renderingconfiguration.ShowSpecHierachyIdentifiers))
+		initializerStatements += setValueField
+
 	}
 
 	map_SPECIFICATION_Identifiers := make(map[*SPECIFICATION]string)

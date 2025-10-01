@@ -19848,7 +19848,7 @@ func GetFields[Type Gongstruct]() (res []string) {
 	case REQ_IF_TOOL_EXTENSION:
 		res = []string{"Name"}
 	case RenderingConfiguration:
-		res = []string{"Name", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", "Map_SPECIFICATION_Nodes_expandedEntries", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries", "Map_SPEC_OBJECT_TYPE_showNameEntries"}
+		res = []string{"Name", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", "Map_SPECIFICATION_Nodes_expandedEntries", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries", "Map_SPEC_OBJECT_TYPE_showNameEntries", "ShowSpecHierachyIdentifiers"}
 	case SPECIFICATION:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "CHILDREN", "VALUES", "TYPE"}
 	case SPECIFICATION_TYPE:
@@ -20670,7 +20670,7 @@ func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
 	case *REQ_IF_TOOL_EXTENSION:
 		res = []string{"Name"}
 	case *RenderingConfiguration:
-		res = []string{"Name", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", "Map_SPECIFICATION_Nodes_expandedEntries", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries", "Map_SPEC_OBJECT_TYPE_showNameEntries"}
+		res = []string{"Name", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", "Map_SPECIFICATION_Nodes_expandedEntries", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries", "Map_SPEC_OBJECT_TYPE_showNameEntries", "ShowSpecHierachyIdentifiers"}
 	case *SPECIFICATION:
 		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "CHILDREN", "VALUES", "TYPE"}
 	case *SPECIFICATION_TYPE:
@@ -22470,6 +22470,10 @@ func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFie
 				}
 				res.valueString += __instance__.Name
 			}
+		case "ShowSpecHierachyIdentifiers":
+			res.valueString = fmt.Sprintf("%t", inferedInstance.ShowSpecHierachyIdentifiers)
+			res.valueBool = inferedInstance.ShowSpecHierachyIdentifiers
+			res.GongFieldValueType = GongFieldValueTypeBool
 		}
 	case *SPECIFICATION:
 		switch fieldName {
@@ -24497,6 +24501,10 @@ func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
 				}
 				res.valueString += __instance__.Name
 			}
+		case "ShowSpecHierachyIdentifiers":
+			res.valueString = fmt.Sprintf("%t", inferedInstance.ShowSpecHierachyIdentifiers)
+			res.valueBool = inferedInstance.ShowSpecHierachyIdentifiers
+			res.GongFieldValueType = GongFieldValueTypeBool
 		}
 	case SPECIFICATION:
 		switch fieldName {

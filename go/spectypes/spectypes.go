@@ -175,6 +175,25 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			IsExpanded: true,
 			FontStyle:  tree.ITALIC,
 		}
+		{
+			button := &tree.Button{
+				Name: "Show/Unshow long name",
+				Impl: &ButtonToggleShowSpecHierachyIdentifiersProxy{
+					stager: stager,
+				},
+				HasToolTip:      true,
+				ToolTipPosition: tree.Right,
+			}
+
+			if !stager.ShowSpecHierachyIdentifiers {
+				button.ToolTipText = "Show spec hierarchy identifiers"
+				button.SVGIcon = icons.SvgIconBadge
+			} else {
+				button.ToolTipText = "Hide spec hierarchy identifiers"
+				button.SVGIcon = icons.SvgIconBadgeOff
+			}
+			spectypeCategory.Buttons = append(spectypeCategory.Buttons, button)
+		}
 		rootNode.Children = append(rootNode.Children, spectypeCategory)
 
 		// compute the number of time this spec object type is used

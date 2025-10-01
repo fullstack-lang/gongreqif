@@ -2240,6 +2240,8 @@ func FillUpForm(
 		AssociationSliceToForm("Map_SPECIFICATION_Nodes_expandedEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPECIFICATION_Nodes_expandedEntries, formGroup, probe)
 		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showIdentifierEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, formGroup, probe)
 		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showNameEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showNameEntries, formGroup, probe)
+		BasicFieldtoForm("ShowSpecHierachyIdentifiers", instanceWithInferedType.ShowSpecHierachyIdentifiers, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.SPECIFICATION:
 		// insertion point
