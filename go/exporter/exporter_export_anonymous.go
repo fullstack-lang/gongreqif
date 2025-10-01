@@ -86,14 +86,14 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		type_.LONG_NAME = "specification type " + fmt.Sprintf("%5d", idx)
 	}
 
-	for idxSpecObject, specObject := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.SPEC_OBJECT {
+	for idx2, specObject := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.SPEC_OBJECT {
 		_ = specObject
 
 		if specObject.VALUES == nil {
 			continue
 		}
 
-		specObject.LONG_NAME = fmt.Sprintf("%5d", idxSpecObject)
+		specObject.LONG_NAME = fmt.Sprintf("%5d", idx2)
 
 		for idx, attrValue := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 			attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx)
@@ -112,14 +112,14 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		}
 	}
 
-	for idxSpecObject, specification := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION {
+	for idx2, specification := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION {
 		_ = specification
 
 		if specification.VALUES == nil {
 			continue
 		}
 
-		specification.LONG_NAME = fmt.Sprintf("%5d", idxSpecObject)
+		specification.LONG_NAME = fmt.Sprintf("%5d", idx2)
 
 		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_STRING {
 			attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx)
@@ -135,6 +135,34 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		}
 		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
 			attrValue.THE_VALUE.EnclosedText = "XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx)
+		}
+	}
+
+	if rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS != nil {
+		for idx2, specRelation := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS.SPEC_RELATION {
+			_ = specRelation
+
+			if specRelation.VALUES == nil {
+				continue
+			}
+
+			specRelation.LONG_NAME = fmt.Sprintf("%5d", idx2)
+
+			for idx, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_STRING {
+				attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specRelation.Name + "_" + fmt.Sprintf("%5d", idx)
+			}
+			for idx, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_INTEGER {
+				attrValue.THE_VALUE = 10000 + idx
+			}
+			for idx, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_REAL {
+				attrValue.THE_VALUE = 10000.0 + float64(idx)
+			}
+			for _, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_DATE {
+				attrValue.THE_VALUE = time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Local().UTC().Format(time.DateOnly)
+			}
+			for idx, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_XHTML {
+				attrValue.THE_VALUE.EnclosedText = "XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specRelation.Name + "_" + fmt.Sprintf("%5d", idx)
+			}
 		}
 	}
 
