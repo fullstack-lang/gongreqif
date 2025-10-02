@@ -161,14 +161,14 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 			attrValue.THE_VALUE = time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Local().UTC().Format(time.DateOnly)
 		}
 		for idx, attrValue := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
-			attrValue.THE_VALUE.EnclosedText = "XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx)
+			attrValue.THE_VALUE.EnclosedText = "<xhtml:div><p>XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx) + "</p></xhtml:div>"
 		}
 	}
 
 	for idx2, specification := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION {
 		_ = specification
 
-		specification.LONG_NAME = fmt.Sprintf("%5d", idx2)
+		specification.LONG_NAME = fmt.Sprintf("Specification%2d", idx2)
 
 		if specification.VALUES == nil {
 			continue
@@ -187,7 +187,7 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 			attrValue.THE_VALUE = time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Local().UTC().Format(time.DateOnly)
 		}
 		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_XHTML {
-			attrValue.THE_VALUE.EnclosedText = "XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx)
+			attrValue.THE_VALUE.EnclosedText = "<xhtml:div><p>XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx) + "</p></xhtml:div>"
 		}
 	}
 
@@ -214,7 +214,7 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 				attrValue.THE_VALUE = time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Local().UTC().Format(time.DateOnly)
 			}
 			for idx, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_XHTML {
-				attrValue.THE_VALUE.EnclosedText = "XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specRelation.Name + "_" + fmt.Sprintf("%5d", idx)
+				attrValue.THE_VALUE.EnclosedText = "<xhtml:div><p>XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specRelation.Name + "_" + fmt.Sprintf("%5d", idx) + "</p></xhtml:div>"
 			}
 		}
 	}
