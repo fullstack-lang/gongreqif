@@ -400,12 +400,11 @@ type ATTRIBUTE_VALUE_BOOLEAN struct {
 	Name string `xml:"-"`
 
 	// insertion point for fields
+	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-BOOLEAN-REF.
+	DEFINITION *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF `xml:"DEFINITION,omitempty"`
 
 	// generated from attribute "THE-VALUE
 	THE_VALUE bool `xml:"THE-VALUE,attr,omitempty"`
-
-	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-BOOLEAN-REF.
-	DEFINITION *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF `xml:"DEFINITION,omitempty"`
 }
 
 // A_ATTRIBUTE_DEFINITION_BOOLEAN_REF Named source within outer element "DEFINITION"
@@ -424,11 +423,11 @@ type ATTRIBUTE_VALUE_DATE struct {
 
 	// insertion point for fields
 
-	// generated from attribute "THE-VALUE
-	THE_VALUE string `xml:"THE-VALUE,attr,omitempty"`
-
 	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-DATE-REF.
 	DEFINITION *A_ATTRIBUTE_DEFINITION_DATE_REF `xml:"DEFINITION,omitempty"`
+
+	// generated from attribute "THE-VALUE
+	THE_VALUE string `xml:"THE-VALUE,attr,omitempty"`
 }
 
 // A_ATTRIBUTE_DEFINITION_DATE_REF Named source within outer element "DEFINITION"
@@ -479,12 +478,11 @@ type ATTRIBUTE_VALUE_INTEGER struct {
 	Name string `xml:"-"`
 
 	// insertion point for fields
+	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-INTEGER-REF.
+	DEFINITION *A_ATTRIBUTE_DEFINITION_INTEGER_REF `xml:"DEFINITION,omitempty"`
 
 	// generated from attribute "THE-VALUE
 	THE_VALUE int `xml:"THE-VALUE,attr,omitempty"`
-
-	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-INTEGER-REF.
-	DEFINITION *A_ATTRIBUTE_DEFINITION_INTEGER_REF `xml:"DEFINITION,omitempty"`
 }
 
 // A_ATTRIBUTE_DEFINITION_INTEGER_REF Named source within outer element "DEFINITION"
@@ -502,12 +500,11 @@ type ATTRIBUTE_VALUE_REAL struct {
 	Name string `xml:"-"`
 
 	// insertion point for fields
+	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-REAL-REF.
+	DEFINITION *A_ATTRIBUTE_DEFINITION_REAL_REF `xml:"DEFINITION,omitempty"`
 
 	// generated from attribute "THE-VALUE
 	THE_VALUE float64 `xml:"THE-VALUE,attr,omitempty"`
-
-	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-REAL-REF.
-	DEFINITION *A_ATTRIBUTE_DEFINITION_REAL_REF `xml:"DEFINITION,omitempty"`
 }
 
 // A_ATTRIBUTE_DEFINITION_REAL_REF Named source within outer element "DEFINITION"
@@ -525,12 +522,11 @@ type ATTRIBUTE_VALUE_STRING struct {
 	Name string `xml:"-"`
 
 	// insertion point for fields
+	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-STRING-REF.
+	DEFINITION *A_ATTRIBUTE_DEFINITION_STRING_REF `xml:"DEFINITION,omitempty"`
 
 	// generated from attribute "THE-VALUE
 	THE_VALUE string `xml:"THE-VALUE,attr,omitempty"`
-
-	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-STRING-REF.
-	DEFINITION *A_ATTRIBUTE_DEFINITION_STRING_REF `xml:"DEFINITION,omitempty"`
 }
 
 // A_ATTRIBUTE_DEFINITION_STRING_REF Named source within outer element "DEFINITION"
@@ -548,6 +544,8 @@ type ATTRIBUTE_VALUE_XHTML struct {
 	Name string `xml:"-"`
 
 	// insertion point for fields
+	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-XHTML-REF.
+	DEFINITION *A_ATTRIBUTE_DEFINITION_XHTML_REF `xml:"DEFINITION,omitempty"`
 
 	// generated from attribute "IS-SIMPLIFIED
 	IS_SIMPLIFIED bool `xml:"IS-SIMPLIFIED,attr,omitempty"`
@@ -557,9 +555,6 @@ type ATTRIBUTE_VALUE_XHTML struct {
 
 	// generated from element "THE-ORIGINAL-VALUE" of type XHTML-CONTENT order 104 depth 1
 	THE_ORIGINAL_VALUE *XHTML_CONTENT `xml:"THE-ORIGINAL-VALUE,omitempty"`
-
-	// generated from anonymous type within outer element "DEFINITION" of type A_ATTRIBUTE-DEFINITION-XHTML-REF.
-	DEFINITION *A_ATTRIBUTE_DEFINITION_XHTML_REF `xml:"DEFINITION,omitempty"`
 }
 
 // A_ATTRIBUTE_DEFINITION_XHTML_REF Named source within outer element "DEFINITION"
@@ -1141,14 +1136,15 @@ type SPEC_HIERARCHY struct {
 	// generated from anonymous type within outer element "ALTERNATIVE-ID" of type A_ALTERNATIVE-ID.
 	ALTERNATIVE_ID *A_ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty"`
 
+	// Manual Patch n°1: the OBJECT must be BEFORE the CHILDREN, not after
+	// generated from anonymous type within outer element "OBJECT" of type A_OBJECT.
+	OBJECT *A_OBJECT `xml:"OBJECT,omitempty"`
+
 	// generated from anonymous type within outer element "CHILDREN" of type A_CHILDREN.
 	CHILDREN *A_CHILDREN `xml:"CHILDREN,omitempty"`
 
 	// generated from anonymous type within outer element "EDITABLE-ATTS" of type A_EDITABLE-ATTS.
 	EDITABLE_ATTS *A_EDITABLE_ATTS `xml:"EDITABLE-ATTS,omitempty"`
-
-	// generated from anonymous type within outer element "OBJECT" of type A_OBJECT.
-	OBJECT *A_OBJECT `xml:"OBJECT,omitempty"`
 }
 
 // A_CHILDREN Named source within outer element "CHILDREN"
@@ -1390,14 +1386,15 @@ type SPECIFICATION struct {
 	// generated from anonymous type within outer element "ALTERNATIVE-ID" of type A_ALTERNATIVE-ID.
 	ALTERNATIVE_ID *A_ALTERNATIVE_ID `xml:"ALTERNATIVE-ID,omitempty"`
 
+	// Patch n°3, TYPE is before CHILDREN
+	// generated from anonymous type within outer element "TYPE" of type A_SPECIFICATION-TYPE-REF.
+	TYPE *A_SPECIFICATION_TYPE_REF `xml:"TYPE,omitempty"`
+
 	// generated from anonymous type within outer element "CHILDREN" of type A_CHILDREN.
 	CHILDREN *A_CHILDREN `xml:"CHILDREN,omitempty"`
 
 	// generated from anonymous type within outer element "VALUES" of type A_ATTRIBUTE-VALUE-XHTML.
 	VALUES *A_ATTRIBUTE_VALUE_XHTML_1 `xml:"VALUES,omitempty"`
-
-	// generated from anonymous type within outer element "TYPE" of type A_SPECIFICATION-TYPE-REF.
-	TYPE *A_SPECIFICATION_TYPE_REF `xml:"TYPE,omitempty"`
 }
 
 // A_SPECIFICATION_TYPE_REF Named source within outer element "TYPE"

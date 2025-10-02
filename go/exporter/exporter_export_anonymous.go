@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"log"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -161,14 +162,14 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 			attrValue.THE_VALUE = time.Date(1970, time.January, 1, 0, 0, 0, 0, time.UTC).Local().UTC().Format(time.DateOnly)
 		}
 		for idx, attrValue := range specObject.VALUES.ATTRIBUTE_VALUE_XHTML {
-			attrValue.THE_VALUE.EnclosedText = "<xhtml:div><p>XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx) + "</p></xhtml:div>"
+			attrValue.THE_VALUE.EnclosedText = "<xhtml:div>XHTML Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx) + "</xhtml:div>"
 		}
 	}
 
 	for idx2, specification := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION {
 		_ = specification
 
-		specification.LONG_NAME = fmt.Sprintf("Specification%2d", idx2)
+		specification.LONG_NAME = fmt.Sprintf("%5d", idx2)
 
 		if specification.VALUES == nil {
 			continue
@@ -238,15 +239,26 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		return
 	}
 
+	// Replace the REQ_IF tag with the desired one
+	xmlString := string(xmlData)
+	xmlString = strings.Replace(xmlString,
+		"<REQ_IF>",
+		`<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml">`, 1)
+
+	xmlString = strings.Replace(xmlString,
+		"</REQ_IF>",
+		`</REQ-IF>`, 1)
+
 	// Prepend the standard XML header to the marshalled data.
 	// This makes it a valid XML file.
-	outputData := []byte(xml.Header + string(xmlData))
+	outputData := []byte(xml.Header + xmlString)
 
 	stager.GetLoadStage().Reset()
 
 	fileToDownload := new(load.FileToDownload).Stage(stager.GetLoadStage())
 
 	filename := stager.GetPathToReqifFile()
+	filename = filepath.Base(filename)
 
 	if strings.HasSuffix(filename, ".reqifz") {
 		filename = strings.TrimSuffix(filename, "z")

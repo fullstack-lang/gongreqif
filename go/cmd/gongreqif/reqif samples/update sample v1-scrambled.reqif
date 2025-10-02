@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<REQ_IF>
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <THE-HEADER>
     <REQ-IF-HEADER IDENTIFIER="header_subchap_v1">
       <COMMENT>anonymous COMMENT</COMMENT>
@@ -40,10 +40,10 @@
         <SPEC-OBJECT IDENTIFIER="_chap_func" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    0">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_heading_text_Spec_object_00000_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_heading_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_heading_text_Spec_object_00000_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -53,10 +53,10 @@
         <SPEC-OBJECT IDENTIFIER="_chap_nfunc" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    1">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_heading_text_Spec_object_00001_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_heading_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_heading_text_Spec_object_00001_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -66,10 +66,10 @@
         <SPEC-OBJECT IDENTIFIER="_subchap_user" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    2">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_heading_text_Spec_object_00002_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_heading_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_heading_text_Spec_object_00002_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -79,10 +79,10 @@
         <SPEC-OBJECT IDENTIFIER="_subchap_data" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    3">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_heading_text_Spec_object_00003_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_heading_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_heading_text_Spec_object_00003_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -92,10 +92,10 @@
         <SPEC-OBJECT IDENTIFIER="_subchap_perf" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    4">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_heading_text_Spec_object_00004_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_heading_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_heading_text_Spec_object_00004_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -105,10 +105,10 @@
         <SPEC-OBJECT IDENTIFIER="_subchap_usability" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    5">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_heading_text_Spec_object_00005_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_heading_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_heading_text_Spec_object_00005_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -118,10 +118,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_func_01" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    6">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00006_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00006_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -131,10 +131,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_func_02" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    7">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00007_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00007_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -144,10 +144,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_func_03" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    8">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00008_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00008_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -157,10 +157,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_func_04" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    9">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00009_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00009_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -170,10 +170,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_nfunc_01" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="   10">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00010_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00010_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -183,10 +183,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_nfunc_02" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="   11">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00011_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00011_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -196,10 +196,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_nfunc_03" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="   12">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00012_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00012_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -209,10 +209,10 @@
         <SPEC-OBJECT IDENTIFIER="_req_nfunc_04" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="   13">
           <VALUES>
             <ATTRIBUTE-VALUE-XHTML>
-              <THE-VALUE><xhtml:div><p>XHTML Value : _attr_reqif_text_Spec_object_00013_    0</p></xhtml:div></THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>_attr_reqif_text</ATTRIBUTE-DEFINITION-XHTML-REF>
               </DEFINITION>
+              <THE-VALUE><xhtml:div>XHTML Value : _attr_reqif_text_Spec_object_00013_    0</xhtml:div></THE-VALUE>
             </ATTRIBUTE-VALUE-XHTML>
           </VALUES>
           <TYPE>
@@ -221,11 +221,20 @@
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPECIFICATIONS>
-        <SPECIFICATION IDENTIFIER="_spec_main" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="Specification 0">
+        <SPECIFICATION IDENTIFIER="_spec_main" LAST-CHANGE="2025-09-25T11:00:00.000+02:00" LONG-NAME="    0">
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>_spectype_specification</SPECIFICATION-TYPE-REF>
+          </TYPE>
           <CHILDREN>
             <SPEC-HIERARCHY IDENTIFIER="_hier_chap_func" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_chap_func</SPEC-OBJECT-REF>
+              </OBJECT>
               <CHILDREN>
                 <SPEC-HIERARCHY IDENTIFIER="_hier_subchap_user" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_subchap_user</SPEC-OBJECT-REF>
+                  </OBJECT>
                   <CHILDREN>
                     <SPEC-HIERARCHY IDENTIFIER="_hier_req_func_01" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
                       <OBJECT>
@@ -243,11 +252,11 @@
                       </OBJECT>
                     </SPEC-HIERARCHY>
                   </CHILDREN>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>_subchap_user</SPEC-OBJECT-REF>
-                  </OBJECT>
                 </SPEC-HIERARCHY>
                 <SPEC-HIERARCHY IDENTIFIER="_hier_subchap_data" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_subchap_data</SPEC-OBJECT-REF>
+                  </OBJECT>
                   <CHILDREN>
                     <SPEC-HIERARCHY IDENTIFIER="_hier_req_func_03" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
                       <OBJECT>
@@ -255,18 +264,18 @@
                       </OBJECT>
                     </SPEC-HIERARCHY>
                   </CHILDREN>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>_subchap_data</SPEC-OBJECT-REF>
-                  </OBJECT>
                 </SPEC-HIERARCHY>
               </CHILDREN>
-              <OBJECT>
-                <SPEC-OBJECT-REF>_chap_func</SPEC-OBJECT-REF>
-              </OBJECT>
             </SPEC-HIERARCHY>
             <SPEC-HIERARCHY IDENTIFIER="_hier_chap_nfunc" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>_chap_nfunc</SPEC-OBJECT-REF>
+              </OBJECT>
               <CHILDREN>
                 <SPEC-HIERARCHY IDENTIFIER="_hier_subchap_perf" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_subchap_perf</SPEC-OBJECT-REF>
+                  </OBJECT>
                   <CHILDREN>
                     <SPEC-HIERARCHY IDENTIFIER="_hier_req_nfunc_01" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
                       <OBJECT>
@@ -279,11 +288,11 @@
                       </OBJECT>
                     </SPEC-HIERARCHY>
                   </CHILDREN>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>_subchap_perf</SPEC-OBJECT-REF>
-                  </OBJECT>
                 </SPEC-HIERARCHY>
                 <SPEC-HIERARCHY IDENTIFIER="_hier_subchap_usability" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>_subchap_usability</SPEC-OBJECT-REF>
+                  </OBJECT>
                   <CHILDREN>
                     <SPEC-HIERARCHY IDENTIFIER="_hier_req_nfunc_02" LAST-CHANGE="2025-09-25T11:00:00.000+02:00">
                       <OBJECT>
@@ -296,21 +305,12 @@
                       </OBJECT>
                     </SPEC-HIERARCHY>
                   </CHILDREN>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>_subchap_usability</SPEC-OBJECT-REF>
-                  </OBJECT>
                 </SPEC-HIERARCHY>
               </CHILDREN>
-              <OBJECT>
-                <SPEC-OBJECT-REF>_chap_nfunc</SPEC-OBJECT-REF>
-              </OBJECT>
             </SPEC-HIERARCHY>
           </CHILDREN>
-          <TYPE>
-            <SPECIFICATION-TYPE-REF>_spectype_specification</SPECIFICATION-TYPE-REF>
-          </TYPE>
         </SPECIFICATION>
       </SPECIFICATIONS>
     </REQ-IF-CONTENT>
   </CORE-CONTENT>
-</REQ_IF>
+</REQ-IF>
