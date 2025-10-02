@@ -53,8 +53,8 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 	}
 
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
-	for idx, type_ := range spectypes.SPEC_OBJECT_TYPE {
-		type_.LONG_NAME = "spec object type " + fmt.Sprintf("%5d", idx)
+	for idx2, type_ := range spectypes.SPEC_OBJECT_TYPE {
+		type_.LONG_NAME = "spec object type " + fmt.Sprintf("%5d", idx2)
 
 		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
 			attributeDefinition.LONG_NAME = "XHTML attributeDefinition " + fmt.Sprintf("%5d", idx)
@@ -79,21 +79,74 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		}
 
 	}
-	for idx, type_ := range spectypes.SPEC_RELATION_TYPE {
-		type_.LONG_NAME = "spec relation type " + fmt.Sprintf("%5d", idx)
+
+	for idx2, type_ := range spectypes.SPEC_RELATION_TYPE {
+		type_.LONG_NAME = "spec relation type " + fmt.Sprintf("%5d", idx2)
+
+		if type_.SPEC_ATTRIBUTES == nil {
+			continue
+		}
+
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+			attributeDefinition.LONG_NAME = "XHTML attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
+			attributeDefinition.LONG_NAME = "STRING attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
+			attributeDefinition.LONG_NAME = "BOOattributeDefinition_DEFINITION_BOOLEAN attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER {
+			attributeDefinition.LONG_NAME = "INTEGER attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL {
+			attributeDefinition.LONG_NAME = "REAL attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
+			attributeDefinition.LONG_NAME = "DATE attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
+			attributeDefinition.LONG_NAME = "ENUMERATION attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
 	}
-	for idx, type_ := range spectypes.SPECIFICATION_TYPE {
-		type_.LONG_NAME = "specification type " + fmt.Sprintf("%5d", idx)
+	for idx2, type_ := range spectypes.SPECIFICATION_TYPE {
+		type_.LONG_NAME = "specification type " + fmt.Sprintf("%5d", idx2)
+
+		if type_.SPEC_ATTRIBUTES == nil {
+			continue
+		}
+
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML {
+			attributeDefinition.LONG_NAME = "XHTML attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING {
+			attributeDefinition.LONG_NAME = "STRING attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN {
+			attributeDefinition.LONG_NAME = "BOOattributeDefinition_DEFINITION_BOOLEAN attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER {
+			attributeDefinition.LONG_NAME = "INTEGER attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL {
+			attributeDefinition.LONG_NAME = "REAL attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE {
+			attributeDefinition.LONG_NAME = "DATE attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
+		for idx, attributeDefinition := range type_.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION {
+			attributeDefinition.LONG_NAME = "ENUMERATION attributeDefinition " + fmt.Sprintf("%5d", idx)
+		}
 	}
 
 	for idx2, specObject := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.SPEC_OBJECT {
 		_ = specObject
 
+		specObject.LONG_NAME = fmt.Sprintf("%5d", idx2)
+
 		if specObject.VALUES == nil {
 			continue
 		}
-
-		specObject.LONG_NAME = fmt.Sprintf("%5d", idx2)
 
 		for idx, attrValue := range specObject.VALUES.ATTRIBUTE_VALUE_STRING {
 			attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specObject.Name + "_" + fmt.Sprintf("%5d", idx)
@@ -115,11 +168,11 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 	for idx2, specification := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION {
 		_ = specification
 
+		specification.LONG_NAME = fmt.Sprintf("%5d", idx2)
+
 		if specification.VALUES == nil {
 			continue
 		}
-
-		specification.LONG_NAME = fmt.Sprintf("%5d", idx2)
 
 		for idx, attrValue := range specification.VALUES.ATTRIBUTE_VALUE_STRING {
 			attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specification.Name + "_" + fmt.Sprintf("%5d", idx)
@@ -142,11 +195,11 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		for idx2, specRelation := range rootReqif.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS.SPEC_RELATION {
 			_ = specRelation
 
+			specRelation.LONG_NAME = fmt.Sprintf("%5d", idx2)
+
 			if specRelation.VALUES == nil {
 				continue
 			}
-
-			specRelation.LONG_NAME = fmt.Sprintf("%5d", idx2)
 
 			for idx, attrValue := range specRelation.VALUES.ATTRIBUTE_VALUE_STRING {
 				attrValue.THE_VALUE = "String Value : " + attrValue.GetAttributeDefinitionRef() + "_" + specRelation.Name + "_" + fmt.Sprintf("%5d", idx)
