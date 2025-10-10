@@ -352,7 +352,7 @@ func NewStager(
 	stager.anonymousButtonStage = button_stack.NewStack(r, stage.GetName()+"-Anonymous", "", "", "", true, true).Stage
 
 	// add a title to the web application
-	(&split.Title{Name: "GONG ReQIF"}).Stage(stager.splitStage)
+	(&split.Title{Name: "GONG ReqIF"}).Stage(stager.splitStage)
 	(&split.FavIcon{Name: "Test",
 		SVG: icons.ReqifIconSVG,
 	}).Stage(stager.splitStage)
