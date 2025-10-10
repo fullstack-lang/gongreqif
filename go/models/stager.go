@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	split "github.com/fullstack-lang/gong/lib/split/go/models"
+	"github.com/fullstack-lang/gongreqif/go/icons"
 
 	table "github.com/fullstack-lang/gong/lib/table/go/models"
 	table_stack "github.com/fullstack-lang/gong/lib/table/go/stack"
@@ -349,6 +350,20 @@ func NewStager(
 	stager.welcomeTabButtonStage = button_stack.NewStack(r, stage.GetName()+"-Specification Tab", "", "", "", true, true).Stage
 	stager.renderingTabButtonStage = button_stack.NewStack(r, stage.GetName()+"-Render Tab", "", "", "", true, true).Stage
 	stager.anonymousButtonStage = button_stack.NewStack(r, stage.GetName()+"-Anonymous", "", "", "", true, true).Stage
+
+	// add a title to the web application
+	(&split.Title{Name: "GONG ReQIF"}).Stage(stager.splitStage)
+	(&split.FavIcon{Name: "Test",
+		SVG: icons.ReqifIconSVG,
+	}).Stage(stager.splitStage)
+	logoOnTheLeft := (&split.LogoOnTheLeft{
+		Name:   "Gong Reqif Icons",
+		Width:  108,
+		Height: 127,
+		SVG:    icons.ReqifIconSVG,
+	}).Stage(stager.splitStage)
+	logoOnTheLeft.Width /= 2.0
+	logoOnTheLeft.Height /= 2.0
 
 	// StageBranch will stage on the the first argument
 	// all instances related to the second argument

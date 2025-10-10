@@ -260,6 +260,12 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 		"</REQ_IF>",
 		`</REQ-IF>`, 1)
 
+	// // Mangle UUIDs by replacing them with their first 8 characters
+	// re := regexp.MustCompile(`[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`)
+	// xmlString = re.ReplaceAllStringFunc(xmlString, func(s string) string {
+	// 	return s[:8]
+	// })
+
 	// Prepend the standard XML header to the marshalled data.
 	// This makes it a valid XML file.
 	outputData := []byte(xml.Header + xmlString)
