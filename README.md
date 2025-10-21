@@ -62,7 +62,7 @@ Once downloaded, you can open it in the application using the drag-and-drop or b
 
 You then configure the rendering configuration for each of the 3 specifications or you can all download the rendering configuration for the sample file, directly using the ling below.
 
-* **[Download Rendering Conf of Sample File](https://github.com/fullstack-lang/gongreqif/blob/main/go/cmd/gongreqif/reqif%20samples/reqif%20samples_ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone-renderingConf.go)**
+* **[Download Rendering Conf of Sample File](https://github.com/fullstack-lang/gongreqif/blob/main/go/cmd/gongreqif/reqif%20samples/reqif%20samples_ReqIF%20for%20Wheeled%20Tennis%20Ball%20Drone-renderingConf.go1)**
 
 Once downloaded, go to the "ReqIF render" tab and you can open it in the application using the drag-and-drop or browse method described above.
 
