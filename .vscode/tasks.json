@@ -98,6 +98,15 @@
 			"group": "build"
 		},
 		{
+			"label": "00 - go build wasm",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}/go/cmd/gongreqif"
+			},
+			"command": "GOOS=js GOARCH=wasm go build -o gongreqif.wasm",
+			"group": "build"
+		},
+		{
 			"label": "00 - go mod tidy",
 			"type": "shell",
 			"command": "go",

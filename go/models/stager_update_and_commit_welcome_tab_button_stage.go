@@ -146,6 +146,16 @@ func (proxy *ResetReqifButtonProxy) OnAfterUpdateButton() {
 	req_if.CORE_CONTENT = &coreContent
 	var REQ_IF_CONTENT REQ_IF_CONTENT
 	req_if.CORE_CONTENT.REQ_IF_CONTENT = &REQ_IF_CONTENT
+	var A_DATATYPES A_DATATYPES
+	req_if.CORE_CONTENT.REQ_IF_CONTENT.DATATYPES = &A_DATATYPES
+	var A_SPEC_TYPES A_SPEC_TYPES
+	req_if.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES = &A_SPEC_TYPES
+	var A_SPEC_OBJECTS A_SPEC_OBJECTS
+	req_if.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS = &A_SPEC_OBJECTS
+	var A_SPEC_RELATIONS A_SPEC_RELATIONS
+	req_if.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS = &A_SPEC_RELATIONS
+	var A_SPECIFICATIONS A_SPECIFICATIONS
+	req_if.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS = &A_SPECIFICATIONS
 
 	StageBranch(proxy.stager.stage, &req_if)
 	proxy.stager.rootReqif = &req_if
@@ -156,5 +166,8 @@ func (proxy *ResetReqifButtonProxy) OnAfterUpdateButton() {
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
+	proxy.stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(proxy.stager)
+	proxy.stager.dataTypesTreeUpdater.UpdateAndCommitDataTypeTreeStage(proxy.stager)
+	proxy.stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(proxy.stager)
 
 }
