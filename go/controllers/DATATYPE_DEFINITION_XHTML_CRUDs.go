@@ -260,21 +260,10 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateDATATYPE_DEFINITION_XHTML(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	datatype_definition_xhtmlOld := backRepo.BackRepoDATATYPE_DEFINITION_XHTML.Map_DATATYPE_DEFINITION_XHTMLDBID_DATATYPE_DEFINITION_XHTMLPtr[datatype_definition_xhtmlDB.ID]
 	if datatype_definition_xhtmlOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), datatype_definition_xhtmlOld, datatype_definition_xhtmlNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), datatype_definition_xhtmlOld, datatype_definition_xhtmlNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), datatype_definition_xhtmlOld, datatype_definition_xhtmlNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

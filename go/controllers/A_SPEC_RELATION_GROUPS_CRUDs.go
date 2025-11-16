@@ -260,21 +260,10 @@ func (controller *Controller) UpdateA_SPEC_RELATION_GROUPS(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateA_SPEC_RELATION_GROUPS(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	a_spec_relation_groupsOld := backRepo.BackRepoA_SPEC_RELATION_GROUPS.Map_A_SPEC_RELATION_GROUPSDBID_A_SPEC_RELATION_GROUPSPtr[a_spec_relation_groupsDB.ID]
 	if a_spec_relation_groupsOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_spec_relation_groupsOld, a_spec_relation_groupsNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_spec_relation_groupsOld, a_spec_relation_groupsNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), a_spec_relation_groupsOld, a_spec_relation_groupsNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

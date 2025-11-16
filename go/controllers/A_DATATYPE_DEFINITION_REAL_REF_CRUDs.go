@@ -260,21 +260,10 @@ func (controller *Controller) UpdateA_DATATYPE_DEFINITION_REAL_REF(c *gin.Contex
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateA_DATATYPE_DEFINITION_REAL_REF(c *gin.Contex
 	// get stage instance from DB instance, and call callback function
 	a_datatype_definition_real_refOld := backRepo.BackRepoA_DATATYPE_DEFINITION_REAL_REF.Map_A_DATATYPE_DEFINITION_REAL_REFDBID_A_DATATYPE_DEFINITION_REAL_REFPtr[a_datatype_definition_real_refDB.ID]
 	if a_datatype_definition_real_refOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_datatype_definition_real_refOld, a_datatype_definition_real_refNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_datatype_definition_real_refOld, a_datatype_definition_real_refNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), a_datatype_definition_real_refOld, a_datatype_definition_real_refNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

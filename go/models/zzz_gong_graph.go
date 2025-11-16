@@ -1877,14 +1877,14 @@ func (stage *Stage) StageBranchATTRIBUTE_VALUE_XHTML(attribute_value_xhtml *ATTR
 	attribute_value_xhtml.Stage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
+	if attribute_value_xhtml.DEFINITION != nil {
+		StageBranch(stage, attribute_value_xhtml.DEFINITION)
+	}
 	if attribute_value_xhtml.THE_VALUE != nil {
 		StageBranch(stage, attribute_value_xhtml.THE_VALUE)
 	}
 	if attribute_value_xhtml.THE_ORIGINAL_VALUE != nil {
 		StageBranch(stage, attribute_value_xhtml.THE_ORIGINAL_VALUE)
-	}
-	if attribute_value_xhtml.DEFINITION != nil {
-		StageBranch(stage, attribute_value_xhtml.DEFINITION)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3551,14 +3551,14 @@ func (stage *Stage) StageBranchSPECIFICATION(specification *SPECIFICATION) {
 	if specification.ALTERNATIVE_ID != nil {
 		StageBranch(stage, specification.ALTERNATIVE_ID)
 	}
+	if specification.TYPE != nil {
+		StageBranch(stage, specification.TYPE)
+	}
 	if specification.CHILDREN != nil {
 		StageBranch(stage, specification.CHILDREN)
 	}
 	if specification.VALUES != nil {
 		StageBranch(stage, specification.VALUES)
-	}
-	if specification.TYPE != nil {
-		StageBranch(stage, specification.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -3599,14 +3599,14 @@ func (stage *Stage) StageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY) {
 	if spec_hierarchy.ALTERNATIVE_ID != nil {
 		StageBranch(stage, spec_hierarchy.ALTERNATIVE_ID)
 	}
+	if spec_hierarchy.OBJECT != nil {
+		StageBranch(stage, spec_hierarchy.OBJECT)
+	}
 	if spec_hierarchy.CHILDREN != nil {
 		StageBranch(stage, spec_hierarchy.CHILDREN)
 	}
 	if spec_hierarchy.EDITABLE_ATTS != nil {
 		StageBranch(stage, spec_hierarchy.EDITABLE_ATTS)
-	}
-	if spec_hierarchy.OBJECT != nil {
-		StageBranch(stage, spec_hierarchy.OBJECT)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -4665,14 +4665,14 @@ func CopyBranchATTRIBUTE_VALUE_XHTML(mapOrigCopy map[any]any, attribute_value_xh
 	attribute_value_xhtmlFrom.CopyBasicFields(attribute_value_xhtmlTo)
 
 	//insertion point for the staging of instances referenced by pointers
+	if attribute_value_xhtmlFrom.DEFINITION != nil {
+		attribute_value_xhtmlTo.DEFINITION = CopyBranchA_ATTRIBUTE_DEFINITION_XHTML_REF(mapOrigCopy, attribute_value_xhtmlFrom.DEFINITION)
+	}
 	if attribute_value_xhtmlFrom.THE_VALUE != nil {
 		attribute_value_xhtmlTo.THE_VALUE = CopyBranchXHTML_CONTENT(mapOrigCopy, attribute_value_xhtmlFrom.THE_VALUE)
 	}
 	if attribute_value_xhtmlFrom.THE_ORIGINAL_VALUE != nil {
 		attribute_value_xhtmlTo.THE_ORIGINAL_VALUE = CopyBranchXHTML_CONTENT(mapOrigCopy, attribute_value_xhtmlFrom.THE_ORIGINAL_VALUE)
-	}
-	if attribute_value_xhtmlFrom.DEFINITION != nil {
-		attribute_value_xhtmlTo.DEFINITION = CopyBranchA_ATTRIBUTE_DEFINITION_XHTML_REF(mapOrigCopy, attribute_value_xhtmlFrom.DEFINITION)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -6707,14 +6707,14 @@ func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFI
 	if specificationFrom.ALTERNATIVE_ID != nil {
 		specificationTo.ALTERNATIVE_ID = CopyBranchA_ALTERNATIVE_ID(mapOrigCopy, specificationFrom.ALTERNATIVE_ID)
 	}
+	if specificationFrom.TYPE != nil {
+		specificationTo.TYPE = CopyBranchA_SPECIFICATION_TYPE_REF(mapOrigCopy, specificationFrom.TYPE)
+	}
 	if specificationFrom.CHILDREN != nil {
 		specificationTo.CHILDREN = CopyBranchA_CHILDREN(mapOrigCopy, specificationFrom.CHILDREN)
 	}
 	if specificationFrom.VALUES != nil {
 		specificationTo.VALUES = CopyBranchA_ATTRIBUTE_VALUE_XHTML_1(mapOrigCopy, specificationFrom.VALUES)
-	}
-	if specificationFrom.TYPE != nil {
-		specificationTo.TYPE = CopyBranchA_SPECIFICATION_TYPE_REF(mapOrigCopy, specificationFrom.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -6763,14 +6763,14 @@ func CopyBranchSPEC_HIERARCHY(mapOrigCopy map[any]any, spec_hierarchyFrom *SPEC_
 	if spec_hierarchyFrom.ALTERNATIVE_ID != nil {
 		spec_hierarchyTo.ALTERNATIVE_ID = CopyBranchA_ALTERNATIVE_ID(mapOrigCopy, spec_hierarchyFrom.ALTERNATIVE_ID)
 	}
+	if spec_hierarchyFrom.OBJECT != nil {
+		spec_hierarchyTo.OBJECT = CopyBranchA_OBJECT(mapOrigCopy, spec_hierarchyFrom.OBJECT)
+	}
 	if spec_hierarchyFrom.CHILDREN != nil {
 		spec_hierarchyTo.CHILDREN = CopyBranchA_CHILDREN(mapOrigCopy, spec_hierarchyFrom.CHILDREN)
 	}
 	if spec_hierarchyFrom.EDITABLE_ATTS != nil {
 		spec_hierarchyTo.EDITABLE_ATTS = CopyBranchA_EDITABLE_ATTS(mapOrigCopy, spec_hierarchyFrom.EDITABLE_ATTS)
-	}
-	if spec_hierarchyFrom.OBJECT != nil {
-		spec_hierarchyTo.OBJECT = CopyBranchA_OBJECT(mapOrigCopy, spec_hierarchyFrom.OBJECT)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -7688,14 +7688,14 @@ func (stage *Stage) UnstageBranchATTRIBUTE_VALUE_XHTML(attribute_value_xhtml *AT
 	attribute_value_xhtml.Unstage(stage)
 
 	//insertion point for the staging of instances referenced by pointers
+	if attribute_value_xhtml.DEFINITION != nil {
+		UnstageBranch(stage, attribute_value_xhtml.DEFINITION)
+	}
 	if attribute_value_xhtml.THE_VALUE != nil {
 		UnstageBranch(stage, attribute_value_xhtml.THE_VALUE)
 	}
 	if attribute_value_xhtml.THE_ORIGINAL_VALUE != nil {
 		UnstageBranch(stage, attribute_value_xhtml.THE_ORIGINAL_VALUE)
-	}
-	if attribute_value_xhtml.DEFINITION != nil {
-		UnstageBranch(stage, attribute_value_xhtml.DEFINITION)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -9362,14 +9362,14 @@ func (stage *Stage) UnstageBranchSPECIFICATION(specification *SPECIFICATION) {
 	if specification.ALTERNATIVE_ID != nil {
 		UnstageBranch(stage, specification.ALTERNATIVE_ID)
 	}
+	if specification.TYPE != nil {
+		UnstageBranch(stage, specification.TYPE)
+	}
 	if specification.CHILDREN != nil {
 		UnstageBranch(stage, specification.CHILDREN)
 	}
 	if specification.VALUES != nil {
 		UnstageBranch(stage, specification.VALUES)
-	}
-	if specification.TYPE != nil {
-		UnstageBranch(stage, specification.TYPE)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers
@@ -9410,14 +9410,14 @@ func (stage *Stage) UnstageBranchSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY) 
 	if spec_hierarchy.ALTERNATIVE_ID != nil {
 		UnstageBranch(stage, spec_hierarchy.ALTERNATIVE_ID)
 	}
+	if spec_hierarchy.OBJECT != nil {
+		UnstageBranch(stage, spec_hierarchy.OBJECT)
+	}
 	if spec_hierarchy.CHILDREN != nil {
 		UnstageBranch(stage, spec_hierarchy.CHILDREN)
 	}
 	if spec_hierarchy.EDITABLE_ATTS != nil {
 		UnstageBranch(stage, spec_hierarchy.EDITABLE_ATTS)
-	}
-	if spec_hierarchy.OBJECT != nil {
-		UnstageBranch(stage, spec_hierarchy.OBJECT)
 	}
 
 	//insertion point for the staging of instances referenced by slice of pointers

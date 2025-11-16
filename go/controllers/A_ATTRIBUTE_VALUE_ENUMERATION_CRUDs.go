@@ -260,21 +260,10 @@ func (controller *Controller) UpdateA_ATTRIBUTE_VALUE_ENUMERATION(c *gin.Context
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateA_ATTRIBUTE_VALUE_ENUMERATION(c *gin.Context
 	// get stage instance from DB instance, and call callback function
 	a_attribute_value_enumerationOld := backRepo.BackRepoA_ATTRIBUTE_VALUE_ENUMERATION.Map_A_ATTRIBUTE_VALUE_ENUMERATIONDBID_A_ATTRIBUTE_VALUE_ENUMERATIONPtr[a_attribute_value_enumerationDB.ID]
 	if a_attribute_value_enumerationOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_attribute_value_enumerationOld, a_attribute_value_enumerationNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_attribute_value_enumerationOld, a_attribute_value_enumerationNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), a_attribute_value_enumerationOld, a_attribute_value_enumerationNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

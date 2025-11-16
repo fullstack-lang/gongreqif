@@ -52,6 +52,10 @@ type SPECIFICATIONPointersEncoding struct {
 	// This field is generated into another field to enable AS ONE association
 	ALTERNATIVE_IDID sql.NullInt64
 
+	// field TYPE is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	TYPEID sql.NullInt64
+
 	// field CHILDREN is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	CHILDRENID sql.NullInt64
@@ -59,10 +63,6 @@ type SPECIFICATIONPointersEncoding struct {
 	// field VALUES is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	VALUESID sql.NullInt64
-
-	// field TYPE is a pointer to another Struct (optional or 0..1)
-	// This field is generated into another field to enable AS ONE association
-	TYPEID sql.NullInt64
 }
 
 // SPECIFICATIONDB describes a specification in the database
@@ -275,6 +275,18 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 			specificationDB.ALTERNATIVE_IDID.Valid = true
 		}
 
+		// commit pointer value specification.TYPE translates to updating the specification.TYPEID
+		specificationDB.TYPEID.Valid = true // allow for a 0 value (nil association)
+		if specification.TYPE != nil {
+			if TYPEId, ok := backRepo.BackRepoA_SPECIFICATION_TYPE_REF.Map_A_SPECIFICATION_TYPE_REFPtr_A_SPECIFICATION_TYPE_REFDBID[specification.TYPE]; ok {
+				specificationDB.TYPEID.Int64 = int64(TYPEId)
+				specificationDB.TYPEID.Valid = true
+			}
+		} else {
+			specificationDB.TYPEID.Int64 = 0
+			specificationDB.TYPEID.Valid = true
+		}
+
 		// commit pointer value specification.CHILDREN translates to updating the specification.CHILDRENID
 		specificationDB.CHILDRENID.Valid = true // allow for a 0 value (nil association)
 		if specification.CHILDREN != nil {
@@ -297,18 +309,6 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) CommitPhaseTwoInstance
 		} else {
 			specificationDB.VALUESID.Int64 = 0
 			specificationDB.VALUESID.Valid = true
-		}
-
-		// commit pointer value specification.TYPE translates to updating the specification.TYPEID
-		specificationDB.TYPEID.Valid = true // allow for a 0 value (nil association)
-		if specification.TYPE != nil {
-			if TYPEId, ok := backRepo.BackRepoA_SPECIFICATION_TYPE_REF.Map_A_SPECIFICATION_TYPE_REFPtr_A_SPECIFICATION_TYPE_REFDBID[specification.TYPE]; ok {
-				specificationDB.TYPEID.Int64 = int64(TYPEId)
-				specificationDB.TYPEID.Valid = true
-			}
-		} else {
-			specificationDB.TYPEID.Int64 = 0
-			specificationDB.TYPEID.Valid = true
 		}
 
 		_, err := backRepoSPECIFICATION.db.Save(specificationDB)
@@ -445,6 +445,27 @@ func (specificationDB *SPECIFICATIONDB) DecodePointers(backRepo *BackRepoStruct,
 		}
 	}
 	
+	// TYPE field	
+	{
+		id := specificationDB.TYPEID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_SPECIFICATION_TYPE_REF.Map_A_SPECIFICATION_TYPE_REFDBID_A_SPECIFICATION_TYPE_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: specification.TYPE, unknown pointer id", id)
+				specification.TYPE = nil
+			} else {
+				// updates only if field has changed
+				if specification.TYPE == nil || specification.TYPE != tmp {
+					specification.TYPE = tmp
+				}
+			}
+		} else {
+			specification.TYPE = nil
+		}
+	}
+	
 	// CHILDREN field	
 	{
 		id := specificationDB.CHILDRENID.Int64
@@ -484,27 +505,6 @@ func (specificationDB *SPECIFICATIONDB) DecodePointers(backRepo *BackRepoStruct,
 			}
 		} else {
 			specification.VALUES = nil
-		}
-	}
-	
-	// TYPE field	
-	{
-		id := specificationDB.TYPEID.Int64
-		if id != 0 {
-			tmp, ok := backRepo.BackRepoA_SPECIFICATION_TYPE_REF.Map_A_SPECIFICATION_TYPE_REFDBID_A_SPECIFICATION_TYPE_REFPtr[uint(id)]
-
-			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
-			if !ok {
-				log.Println("DecodePointers: specification.TYPE, unknown pointer id", id)
-				specification.TYPE = nil
-			} else {
-				// updates only if field has changed
-				if specification.TYPE == nil || specification.TYPE != tmp {
-					specification.TYPE = tmp
-				}
-			}
-		} else {
-			specification.TYPE = nil
 		}
 	}
 	
@@ -790,6 +790,12 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseTwo() {
 			specificationDB.ALTERNATIVE_IDID.Valid = true
 		}
 
+		// reindexing TYPE field
+		if specificationDB.TYPEID.Int64 != 0 {
+			specificationDB.TYPEID.Int64 = int64(BackRepoA_SPECIFICATION_TYPE_REFid_atBckpTime_newID[uint(specificationDB.TYPEID.Int64)])
+			specificationDB.TYPEID.Valid = true
+		}
+
 		// reindexing CHILDREN field
 		if specificationDB.CHILDRENID.Int64 != 0 {
 			specificationDB.CHILDRENID.Int64 = int64(BackRepoA_CHILDRENid_atBckpTime_newID[uint(specificationDB.CHILDRENID.Int64)])
@@ -800,12 +806,6 @@ func (backRepoSPECIFICATION *BackRepoSPECIFICATIONStruct) RestorePhaseTwo() {
 		if specificationDB.VALUESID.Int64 != 0 {
 			specificationDB.VALUESID.Int64 = int64(BackRepoA_ATTRIBUTE_VALUE_XHTML_1id_atBckpTime_newID[uint(specificationDB.VALUESID.Int64)])
 			specificationDB.VALUESID.Valid = true
-		}
-
-		// reindexing TYPE field
-		if specificationDB.TYPEID.Int64 != 0 {
-			specificationDB.TYPEID.Int64 = int64(BackRepoA_SPECIFICATION_TYPE_REFid_atBckpTime_newID[uint(specificationDB.TYPEID.Int64)])
-			specificationDB.TYPEID.Valid = true
 		}
 
 		// update databse with new index encoding

@@ -260,21 +260,10 @@ func (controller *Controller) UpdateEmbeddedSvgImage(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateEmbeddedSvgImage(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	embeddedsvgimageOld := backRepo.BackRepoEmbeddedSvgImage.Map_EmbeddedSvgImageDBID_EmbeddedSvgImagePtr[embeddedsvgimageDB.ID]
 	if embeddedsvgimageOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), embeddedsvgimageOld, embeddedsvgimageNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), embeddedsvgimageOld, embeddedsvgimageNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), embeddedsvgimageOld, embeddedsvgimageNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

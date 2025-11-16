@@ -1949,13 +1949,18 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					var ident *ast.Ident
 					var ok bool
 					_ = ok
+					_ = arg
 					if ident, ok = arg.(*ast.Ident); !ok {
+						_ = ident
+						_ = ok
 						// log.Println("we are in the case of new(....)")
 					}
 
 					var se *ast.SelectorExpr
 					if se, ok = arg.(*ast.SelectorExpr); ok {
 						if ident, ok = se.X.(*ast.Ident); !ok {
+							_ = ident
+							_ = ok
 							// log.Println("we are in the case of append(....)")
 						}
 					}
@@ -3122,9 +3127,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				if bl, ok := v.X.(*ast.BasicLit); ok {
 					basicLit = bl
 					// Check the operator to set the sign
-					if v.Op == token.SUB { // token.SUB is for '-'
+					switch v.Op {
+					case token.SUB: // token.SUB is for '-'
 						exprSign = -1
-					} else if v.Op == token.ADD { // token.ADD is for '+'
+					case token.ADD: // token.ADD is for '+'
 						exprSign = 1
 					}
 				}
@@ -4979,6 +4985,9 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			case "ATTRIBUTE_VALUE_BOOLEAN":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "DEFINITION":
+					targetIdentifier := ident.Name
+					__gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifier].DEFINITION = __gong__map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF[targetIdentifier]
 				case "THE_VALUE":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
@@ -4986,9 +4995,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifier].THE_VALUE = fielValue
-				case "DEFINITION":
-					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifier].DEFINITION = __gong__map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF[targetIdentifier]
 				}
 			case "ATTRIBUTE_VALUE_DATE":
 				switch fieldName {
@@ -5031,6 +5037,9 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			case "ATTRIBUTE_VALUE_XHTML":
 				switch fieldName {
 				// insertion point for field dependant code
+				case "DEFINITION":
+					targetIdentifier := ident.Name
+					__gong__map_ATTRIBUTE_VALUE_XHTML[identifier].DEFINITION = __gong__map_A_ATTRIBUTE_DEFINITION_XHTML_REF[targetIdentifier]
 				case "IS_SIMPLIFIED":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
@@ -5044,9 +5053,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "THE_ORIGINAL_VALUE":
 					targetIdentifier := ident.Name
 					__gong__map_ATTRIBUTE_VALUE_XHTML[identifier].THE_ORIGINAL_VALUE = __gong__map_XHTML_CONTENT[targetIdentifier]
-				case "DEFINITION":
-					targetIdentifier := ident.Name
-					__gong__map_ATTRIBUTE_VALUE_XHTML[identifier].DEFINITION = __gong__map_A_ATTRIBUTE_DEFINITION_XHTML_REF[targetIdentifier]
 				}
 			case "A_ALTERNATIVE_ID":
 				switch fieldName {
@@ -5690,15 +5696,15 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "ALTERNATIVE_ID":
 					targetIdentifier := ident.Name
 					__gong__map_SPECIFICATION[identifier].ALTERNATIVE_ID = __gong__map_A_ALTERNATIVE_ID[targetIdentifier]
+				case "TYPE":
+					targetIdentifier := ident.Name
+					__gong__map_SPECIFICATION[identifier].TYPE = __gong__map_A_SPECIFICATION_TYPE_REF[targetIdentifier]
 				case "CHILDREN":
 					targetIdentifier := ident.Name
 					__gong__map_SPECIFICATION[identifier].CHILDREN = __gong__map_A_CHILDREN[targetIdentifier]
 				case "VALUES":
 					targetIdentifier := ident.Name
 					__gong__map_SPECIFICATION[identifier].VALUES = __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[targetIdentifier]
-				case "TYPE":
-					targetIdentifier := ident.Name
-					__gong__map_SPECIFICATION[identifier].TYPE = __gong__map_A_SPECIFICATION_TYPE_REF[targetIdentifier]
 				}
 			case "SPECIFICATION_TYPE":
 				switch fieldName {
@@ -5730,15 +5736,15 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "ALTERNATIVE_ID":
 					targetIdentifier := ident.Name
 					__gong__map_SPEC_HIERARCHY[identifier].ALTERNATIVE_ID = __gong__map_A_ALTERNATIVE_ID[targetIdentifier]
+				case "OBJECT":
+					targetIdentifier := ident.Name
+					__gong__map_SPEC_HIERARCHY[identifier].OBJECT = __gong__map_A_OBJECT[targetIdentifier]
 				case "CHILDREN":
 					targetIdentifier := ident.Name
 					__gong__map_SPEC_HIERARCHY[identifier].CHILDREN = __gong__map_A_CHILDREN[targetIdentifier]
 				case "EDITABLE_ATTS":
 					targetIdentifier := ident.Name
 					__gong__map_SPEC_HIERARCHY[identifier].EDITABLE_ATTS = __gong__map_A_EDITABLE_ATTS[targetIdentifier]
-				case "OBJECT":
-					targetIdentifier := ident.Name
-					__gong__map_SPEC_HIERARCHY[identifier].OBJECT = __gong__map_A_OBJECT[targetIdentifier]
 				}
 			case "SPEC_OBJECT":
 				switch fieldName {

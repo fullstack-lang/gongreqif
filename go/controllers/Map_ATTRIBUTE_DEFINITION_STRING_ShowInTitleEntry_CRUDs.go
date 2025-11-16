@@ -260,21 +260,10 @@ func (controller *Controller) UpdateMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleE
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleE
 	// get stage instance from DB instance, and call callback function
 	map_attribute_definition_string_showintitleentryOld := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.Map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDBID_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryPtr[map_attribute_definition_string_showintitleentryDB.ID]
 	if map_attribute_definition_string_showintitleentryOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), map_attribute_definition_string_showintitleentryOld, map_attribute_definition_string_showintitleentryNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), map_attribute_definition_string_showintitleentryOld, map_attribute_definition_string_showintitleentryNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), map_attribute_definition_string_showintitleentryOld, map_attribute_definition_string_showintitleentryNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

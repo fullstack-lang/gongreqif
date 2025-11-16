@@ -52,6 +52,10 @@ type SPEC_HIERARCHYPointersEncoding struct {
 	// This field is generated into another field to enable AS ONE association
 	ALTERNATIVE_IDID sql.NullInt64
 
+	// field OBJECT is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	OBJECTID sql.NullInt64
+
 	// field CHILDREN is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	CHILDRENID sql.NullInt64
@@ -59,10 +63,6 @@ type SPEC_HIERARCHYPointersEncoding struct {
 	// field EDITABLE_ATTS is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	EDITABLE_ATTSID sql.NullInt64
-
-	// field OBJECT is a pointer to another Struct (optional or 0..1)
-	// This field is generated into another field to enable AS ONE association
-	OBJECTID sql.NullInt64
 }
 
 // SPEC_HIERARCHYDB describes a spec_hierarchy in the database
@@ -289,6 +289,18 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseTwoInstan
 			spec_hierarchyDB.ALTERNATIVE_IDID.Valid = true
 		}
 
+		// commit pointer value spec_hierarchy.OBJECT translates to updating the spec_hierarchy.OBJECTID
+		spec_hierarchyDB.OBJECTID.Valid = true // allow for a 0 value (nil association)
+		if spec_hierarchy.OBJECT != nil {
+			if OBJECTId, ok := backRepo.BackRepoA_OBJECT.Map_A_OBJECTPtr_A_OBJECTDBID[spec_hierarchy.OBJECT]; ok {
+				spec_hierarchyDB.OBJECTID.Int64 = int64(OBJECTId)
+				spec_hierarchyDB.OBJECTID.Valid = true
+			}
+		} else {
+			spec_hierarchyDB.OBJECTID.Int64 = 0
+			spec_hierarchyDB.OBJECTID.Valid = true
+		}
+
 		// commit pointer value spec_hierarchy.CHILDREN translates to updating the spec_hierarchy.CHILDRENID
 		spec_hierarchyDB.CHILDRENID.Valid = true // allow for a 0 value (nil association)
 		if spec_hierarchy.CHILDREN != nil {
@@ -311,18 +323,6 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) CommitPhaseTwoInstan
 		} else {
 			spec_hierarchyDB.EDITABLE_ATTSID.Int64 = 0
 			spec_hierarchyDB.EDITABLE_ATTSID.Valid = true
-		}
-
-		// commit pointer value spec_hierarchy.OBJECT translates to updating the spec_hierarchy.OBJECTID
-		spec_hierarchyDB.OBJECTID.Valid = true // allow for a 0 value (nil association)
-		if spec_hierarchy.OBJECT != nil {
-			if OBJECTId, ok := backRepo.BackRepoA_OBJECT.Map_A_OBJECTPtr_A_OBJECTDBID[spec_hierarchy.OBJECT]; ok {
-				spec_hierarchyDB.OBJECTID.Int64 = int64(OBJECTId)
-				spec_hierarchyDB.OBJECTID.Valid = true
-			}
-		} else {
-			spec_hierarchyDB.OBJECTID.Int64 = 0
-			spec_hierarchyDB.OBJECTID.Valid = true
 		}
 
 		_, err := backRepoSPEC_HIERARCHY.db.Save(spec_hierarchyDB)
@@ -459,6 +459,27 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) DecodePointers(backRepo *BackRepoStruc
 		}
 	}
 	
+	// OBJECT field	
+	{
+		id := spec_hierarchyDB.OBJECTID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_OBJECT.Map_A_OBJECTDBID_A_OBJECTPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: spec_hierarchy.OBJECT, unknown pointer id", id)
+				spec_hierarchy.OBJECT = nil
+			} else {
+				// updates only if field has changed
+				if spec_hierarchy.OBJECT == nil || spec_hierarchy.OBJECT != tmp {
+					spec_hierarchy.OBJECT = tmp
+				}
+			}
+		} else {
+			spec_hierarchy.OBJECT = nil
+		}
+	}
+	
 	// CHILDREN field	
 	{
 		id := spec_hierarchyDB.CHILDRENID.Int64
@@ -498,27 +519,6 @@ func (spec_hierarchyDB *SPEC_HIERARCHYDB) DecodePointers(backRepo *BackRepoStruc
 			}
 		} else {
 			spec_hierarchy.EDITABLE_ATTS = nil
-		}
-	}
-	
-	// OBJECT field	
-	{
-		id := spec_hierarchyDB.OBJECTID.Int64
-		if id != 0 {
-			tmp, ok := backRepo.BackRepoA_OBJECT.Map_A_OBJECTDBID_A_OBJECTPtr[uint(id)]
-
-			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
-			if !ok {
-				log.Println("DecodePointers: spec_hierarchy.OBJECT, unknown pointer id", id)
-				spec_hierarchy.OBJECT = nil
-			} else {
-				// updates only if field has changed
-				if spec_hierarchy.OBJECT == nil || spec_hierarchy.OBJECT != tmp {
-					spec_hierarchy.OBJECT = tmp
-				}
-			}
-		} else {
-			spec_hierarchy.OBJECT = nil
 		}
 	}
 	
@@ -828,6 +828,12 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) RestorePhaseTwo() {
 			spec_hierarchyDB.ALTERNATIVE_IDID.Valid = true
 		}
 
+		// reindexing OBJECT field
+		if spec_hierarchyDB.OBJECTID.Int64 != 0 {
+			spec_hierarchyDB.OBJECTID.Int64 = int64(BackRepoA_OBJECTid_atBckpTime_newID[uint(spec_hierarchyDB.OBJECTID.Int64)])
+			spec_hierarchyDB.OBJECTID.Valid = true
+		}
+
 		// reindexing CHILDREN field
 		if spec_hierarchyDB.CHILDRENID.Int64 != 0 {
 			spec_hierarchyDB.CHILDRENID.Int64 = int64(BackRepoA_CHILDRENid_atBckpTime_newID[uint(spec_hierarchyDB.CHILDRENID.Int64)])
@@ -838,12 +844,6 @@ func (backRepoSPEC_HIERARCHY *BackRepoSPEC_HIERARCHYStruct) RestorePhaseTwo() {
 		if spec_hierarchyDB.EDITABLE_ATTSID.Int64 != 0 {
 			spec_hierarchyDB.EDITABLE_ATTSID.Int64 = int64(BackRepoA_EDITABLE_ATTSid_atBckpTime_newID[uint(spec_hierarchyDB.EDITABLE_ATTSID.Int64)])
 			spec_hierarchyDB.EDITABLE_ATTSID.Valid = true
-		}
-
-		// reindexing OBJECT field
-		if spec_hierarchyDB.OBJECTID.Int64 != 0 {
-			spec_hierarchyDB.OBJECTID.Int64 = int64(BackRepoA_OBJECTid_atBckpTime_newID[uint(spec_hierarchyDB.OBJECTID.Int64)])
-			spec_hierarchyDB.OBJECTID.Valid = true
 		}
 
 		// update databse with new index encoding

@@ -492,961 +492,604 @@ type Gong__MouseEvent struct {
 }
 
 // OnAfterUpdateFromFront is called after a update from front
-func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type, mouseEvent *Gong__MouseEvent) {
+func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 
 	switch oldTarget := any(old).(type) {
 	// insertion point
 	case *ALTERNATIVE_ID:
 		newTarget := any(new).(*ALTERNATIVE_ID)
-		if stage.OnAfterALTERNATIVE_IDUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterALTERNATIVE_IDUpdateCallback != nil {
 			stage.OnAfterALTERNATIVE_IDUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterALTERNATIVE_IDUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterALTERNATIVE_IDUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_BOOLEAN)
-		if stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_DATE:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_DATE)
-		if stage.OnAfterATTRIBUTE_DEFINITION_DATEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_DATEUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_DATEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_DATEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_DATEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_ENUMERATION)
-		if stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_INTEGER)
-		if stage.OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_REAL:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_REAL)
-		if stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_STRING:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_STRING)
-		if stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_XHTML)
-		if stage.OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_BOOLEAN)
-		if stage.OnAfterATTRIBUTE_VALUE_BOOLEANUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_BOOLEANUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_BOOLEANUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_BOOLEANUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_BOOLEANUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_DATE:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_DATE)
-		if stage.OnAfterATTRIBUTE_VALUE_DATEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_DATEUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_DATEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_DATEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_DATEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_ENUMERATION)
-		if stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_INTEGER:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_INTEGER)
-		if stage.OnAfterATTRIBUTE_VALUE_INTEGERUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_INTEGERUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_INTEGERUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_INTEGERUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_INTEGERUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_REAL:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_REAL)
-		if stage.OnAfterATTRIBUTE_VALUE_REALUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_REALUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_REALUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_REALUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_REALUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_STRING:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_STRING)
-		if stage.OnAfterATTRIBUTE_VALUE_STRINGUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_STRINGUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_STRINGUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_STRINGUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_STRINGUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ATTRIBUTE_VALUE_XHTML:
 		newTarget := any(new).(*ATTRIBUTE_VALUE_XHTML)
-		if stage.OnAfterATTRIBUTE_VALUE_XHTMLUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterATTRIBUTE_VALUE_XHTMLUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_VALUE_XHTMLUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterATTRIBUTE_VALUE_XHTMLUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterATTRIBUTE_VALUE_XHTMLUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ALTERNATIVE_ID:
 		newTarget := any(new).(*A_ALTERNATIVE_ID)
-		if stage.OnAfterA_ALTERNATIVE_IDUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ALTERNATIVE_IDUpdateCallback != nil {
 			stage.OnAfterA_ALTERNATIVE_IDUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ALTERNATIVE_IDUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ALTERNATIVE_IDUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_DATE_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_REAL_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_STRING_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
 		newTarget := any(new).(*A_ATTRIBUTE_DEFINITION_XHTML_REF)
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_BOOLEAN:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_BOOLEAN)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_DATE:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_DATE)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_DATEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_DATEUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_DATEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_DATEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_DATEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_ENUMERATION:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_ENUMERATION)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_INTEGER:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_INTEGER)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_REAL:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_REAL)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_REALUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_REALUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_REALUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_REALUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_REALUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_STRING:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_STRING)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_XHTML:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_XHTML)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ATTRIBUTE_VALUE_XHTML_1:
 		newTarget := any(new).(*A_ATTRIBUTE_VALUE_XHTML_1)
-		if stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateCallback != nil {
 			stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_CHILDREN:
 		newTarget := any(new).(*A_CHILDREN)
-		if stage.OnAfterA_CHILDRENUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_CHILDRENUpdateCallback != nil {
 			stage.OnAfterA_CHILDRENUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_CHILDRENUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_CHILDRENUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_CORE_CONTENT:
 		newTarget := any(new).(*A_CORE_CONTENT)
-		if stage.OnAfterA_CORE_CONTENTUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_CORE_CONTENTUpdateCallback != nil {
 			stage.OnAfterA_CORE_CONTENTUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_CORE_CONTENTUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_CORE_CONTENTUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPES:
 		newTarget := any(new).(*A_DATATYPES)
-		if stage.OnAfterA_DATATYPESUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPESUpdateCallback != nil {
 			stage.OnAfterA_DATATYPESUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPESUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPESUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_BOOLEAN_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_DATE_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_DATE_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_ENUMERATION_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_INTEGER_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_INTEGER_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_REAL_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_REAL_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_STRING_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_STRING_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_DATATYPE_DEFINITION_XHTML_REF:
 		newTarget := any(new).(*A_DATATYPE_DEFINITION_XHTML_REF)
-		if stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateCallback != nil {
 			stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_EDITABLE_ATTS:
 		newTarget := any(new).(*A_EDITABLE_ATTS)
-		if stage.OnAfterA_EDITABLE_ATTSUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_EDITABLE_ATTSUpdateCallback != nil {
 			stage.OnAfterA_EDITABLE_ATTSUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_EDITABLE_ATTSUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_EDITABLE_ATTSUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_ENUM_VALUE_REF:
 		newTarget := any(new).(*A_ENUM_VALUE_REF)
-		if stage.OnAfterA_ENUM_VALUE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_ENUM_VALUE_REFUpdateCallback != nil {
 			stage.OnAfterA_ENUM_VALUE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_ENUM_VALUE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_ENUM_VALUE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_OBJECT:
 		newTarget := any(new).(*A_OBJECT)
-		if stage.OnAfterA_OBJECTUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_OBJECTUpdateCallback != nil {
 			stage.OnAfterA_OBJECTUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_OBJECTUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_OBJECTUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_PROPERTIES:
 		newTarget := any(new).(*A_PROPERTIES)
-		if stage.OnAfterA_PROPERTIESUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_PROPERTIESUpdateCallback != nil {
 			stage.OnAfterA_PROPERTIESUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_PROPERTIESUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_PROPERTIESUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_RELATION_GROUP_TYPE_REF:
 		newTarget := any(new).(*A_RELATION_GROUP_TYPE_REF)
-		if stage.OnAfterA_RELATION_GROUP_TYPE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_RELATION_GROUP_TYPE_REFUpdateCallback != nil {
 			stage.OnAfterA_RELATION_GROUP_TYPE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_RELATION_GROUP_TYPE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_RELATION_GROUP_TYPE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SOURCE_1:
 		newTarget := any(new).(*A_SOURCE_1)
-		if stage.OnAfterA_SOURCE_1UpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SOURCE_1UpdateCallback != nil {
 			stage.OnAfterA_SOURCE_1UpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SOURCE_1UpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SOURCE_1UpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SOURCE_SPECIFICATION_1:
 		newTarget := any(new).(*A_SOURCE_SPECIFICATION_1)
-		if stage.OnAfterA_SOURCE_SPECIFICATION_1UpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SOURCE_SPECIFICATION_1UpdateCallback != nil {
 			stage.OnAfterA_SOURCE_SPECIFICATION_1UpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SOURCE_SPECIFICATION_1UpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SOURCE_SPECIFICATION_1UpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPECIFICATIONS:
 		newTarget := any(new).(*A_SPECIFICATIONS)
-		if stage.OnAfterA_SPECIFICATIONSUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPECIFICATIONSUpdateCallback != nil {
 			stage.OnAfterA_SPECIFICATIONSUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPECIFICATIONSUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPECIFICATIONSUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPECIFICATION_TYPE_REF:
 		newTarget := any(new).(*A_SPECIFICATION_TYPE_REF)
-		if stage.OnAfterA_SPECIFICATION_TYPE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPECIFICATION_TYPE_REFUpdateCallback != nil {
 			stage.OnAfterA_SPECIFICATION_TYPE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPECIFICATION_TYPE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPECIFICATION_TYPE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPECIFIED_VALUES:
 		newTarget := any(new).(*A_SPECIFIED_VALUES)
-		if stage.OnAfterA_SPECIFIED_VALUESUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPECIFIED_VALUESUpdateCallback != nil {
 			stage.OnAfterA_SPECIFIED_VALUESUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPECIFIED_VALUESUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPECIFIED_VALUESUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_ATTRIBUTES:
 		newTarget := any(new).(*A_SPEC_ATTRIBUTES)
-		if stage.OnAfterA_SPEC_ATTRIBUTESUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_ATTRIBUTESUpdateCallback != nil {
 			stage.OnAfterA_SPEC_ATTRIBUTESUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_ATTRIBUTESUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_ATTRIBUTESUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_OBJECTS:
 		newTarget := any(new).(*A_SPEC_OBJECTS)
-		if stage.OnAfterA_SPEC_OBJECTSUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_OBJECTSUpdateCallback != nil {
 			stage.OnAfterA_SPEC_OBJECTSUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_OBJECTSUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_OBJECTSUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_OBJECT_TYPE_REF:
 		newTarget := any(new).(*A_SPEC_OBJECT_TYPE_REF)
-		if stage.OnAfterA_SPEC_OBJECT_TYPE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_OBJECT_TYPE_REFUpdateCallback != nil {
 			stage.OnAfterA_SPEC_OBJECT_TYPE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_OBJECT_TYPE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_OBJECT_TYPE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_RELATIONS:
 		newTarget := any(new).(*A_SPEC_RELATIONS)
-		if stage.OnAfterA_SPEC_RELATIONSUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_RELATIONSUpdateCallback != nil {
 			stage.OnAfterA_SPEC_RELATIONSUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_RELATIONSUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_RELATIONSUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_RELATION_GROUPS:
 		newTarget := any(new).(*A_SPEC_RELATION_GROUPS)
-		if stage.OnAfterA_SPEC_RELATION_GROUPSUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_RELATION_GROUPSUpdateCallback != nil {
 			stage.OnAfterA_SPEC_RELATION_GROUPSUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_RELATION_GROUPSUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_RELATION_GROUPSUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_RELATION_REF:
 		newTarget := any(new).(*A_SPEC_RELATION_REF)
-		if stage.OnAfterA_SPEC_RELATION_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_RELATION_REFUpdateCallback != nil {
 			stage.OnAfterA_SPEC_RELATION_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_RELATION_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_RELATION_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_RELATION_TYPE_REF:
 		newTarget := any(new).(*A_SPEC_RELATION_TYPE_REF)
-		if stage.OnAfterA_SPEC_RELATION_TYPE_REFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_RELATION_TYPE_REFUpdateCallback != nil {
 			stage.OnAfterA_SPEC_RELATION_TYPE_REFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_RELATION_TYPE_REFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_RELATION_TYPE_REFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_SPEC_TYPES:
 		newTarget := any(new).(*A_SPEC_TYPES)
-		if stage.OnAfterA_SPEC_TYPESUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_SPEC_TYPESUpdateCallback != nil {
 			stage.OnAfterA_SPEC_TYPESUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_SPEC_TYPESUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_SPEC_TYPESUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_THE_HEADER:
 		newTarget := any(new).(*A_THE_HEADER)
-		if stage.OnAfterA_THE_HEADERUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_THE_HEADERUpdateCallback != nil {
 			stage.OnAfterA_THE_HEADERUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_THE_HEADERUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_THE_HEADERUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *A_TOOL_EXTENSIONS:
 		newTarget := any(new).(*A_TOOL_EXTENSIONS)
-		if stage.OnAfterA_TOOL_EXTENSIONSUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterA_TOOL_EXTENSIONSUpdateCallback != nil {
 			stage.OnAfterA_TOOL_EXTENSIONSUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterA_TOOL_EXTENSIONSUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterA_TOOL_EXTENSIONSUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		newTarget := any(new).(*DATATYPE_DEFINITION_BOOLEAN)
-		if stage.OnAfterDATATYPE_DEFINITION_BOOLEANUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_BOOLEANUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_BOOLEANUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_BOOLEANUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_BOOLEANUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_DATE:
 		newTarget := any(new).(*DATATYPE_DEFINITION_DATE)
-		if stage.OnAfterDATATYPE_DEFINITION_DATEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_DATEUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_DATEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_DATEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_DATEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		newTarget := any(new).(*DATATYPE_DEFINITION_ENUMERATION)
-		if stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_INTEGER:
 		newTarget := any(new).(*DATATYPE_DEFINITION_INTEGER)
-		if stage.OnAfterDATATYPE_DEFINITION_INTEGERUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_INTEGERUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_INTEGERUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_INTEGERUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_INTEGERUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_REAL:
 		newTarget := any(new).(*DATATYPE_DEFINITION_REAL)
-		if stage.OnAfterDATATYPE_DEFINITION_REALUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_REALUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_REALUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_REALUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_REALUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_STRING:
 		newTarget := any(new).(*DATATYPE_DEFINITION_STRING)
-		if stage.OnAfterDATATYPE_DEFINITION_STRINGUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_STRINGUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_STRINGUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_STRINGUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_STRINGUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *DATATYPE_DEFINITION_XHTML:
 		newTarget := any(new).(*DATATYPE_DEFINITION_XHTML)
-		if stage.OnAfterDATATYPE_DEFINITION_XHTMLUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterDATATYPE_DEFINITION_XHTMLUpdateCallback != nil {
 			stage.OnAfterDATATYPE_DEFINITION_XHTMLUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterDATATYPE_DEFINITION_XHTMLUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterDATATYPE_DEFINITION_XHTMLUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *EMBEDDED_VALUE:
 		newTarget := any(new).(*EMBEDDED_VALUE)
-		if stage.OnAfterEMBEDDED_VALUEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterEMBEDDED_VALUEUpdateCallback != nil {
 			stage.OnAfterEMBEDDED_VALUEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterEMBEDDED_VALUEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterEMBEDDED_VALUEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *ENUM_VALUE:
 		newTarget := any(new).(*ENUM_VALUE)
-		if stage.OnAfterENUM_VALUEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterENUM_VALUEUpdateCallback != nil {
 			stage.OnAfterENUM_VALUEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterENUM_VALUEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *EmbeddedJpgImage:
 		newTarget := any(new).(*EmbeddedJpgImage)
-		if stage.OnAfterEmbeddedJpgImageUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterEmbeddedJpgImageUpdateCallback != nil {
 			stage.OnAfterEmbeddedJpgImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterEmbeddedJpgImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterEmbeddedJpgImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *EmbeddedPngImage:
 		newTarget := any(new).(*EmbeddedPngImage)
-		if stage.OnAfterEmbeddedPngImageUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterEmbeddedPngImageUpdateCallback != nil {
 			stage.OnAfterEmbeddedPngImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterEmbeddedPngImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterEmbeddedPngImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *EmbeddedSvgImage:
 		newTarget := any(new).(*EmbeddedSvgImage)
-		if stage.OnAfterEmbeddedSvgImageUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterEmbeddedSvgImageUpdateCallback != nil {
 			stage.OnAfterEmbeddedSvgImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterEmbeddedSvgImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterEmbeddedSvgImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Kill:
 		newTarget := any(new).(*Kill)
-		if stage.OnAfterKillUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterKillUpdateCallback != nil {
 			stage.OnAfterKillUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterKillUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterKillUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
 		newTarget := any(new).(*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateCallback != nil {
 			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_SPECIFICATION_Nodes_expandedEntry:
 		newTarget := any(new).(*Map_SPECIFICATION_Nodes_expandedEntry)
-		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateCallback != nil {
 			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_SPECIFICATION_Nodes_expandedEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
 		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
-		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
 		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
-		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_showNameEntry)
-		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *RELATION_GROUP:
 		newTarget := any(new).(*RELATION_GROUP)
-		if stage.OnAfterRELATION_GROUPUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterRELATION_GROUPUpdateCallback != nil {
 			stage.OnAfterRELATION_GROUPUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterRELATION_GROUPUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterRELATION_GROUPUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *RELATION_GROUP_TYPE:
 		newTarget := any(new).(*RELATION_GROUP_TYPE)
-		if stage.OnAfterRELATION_GROUP_TYPEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterRELATION_GROUP_TYPEUpdateCallback != nil {
 			stage.OnAfterRELATION_GROUP_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterRELATION_GROUP_TYPEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterRELATION_GROUP_TYPEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *REQ_IF:
 		newTarget := any(new).(*REQ_IF)
-		if stage.OnAfterREQ_IFUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterREQ_IFUpdateCallback != nil {
 			stage.OnAfterREQ_IFUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterREQ_IFUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterREQ_IFUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *REQ_IF_CONTENT:
 		newTarget := any(new).(*REQ_IF_CONTENT)
-		if stage.OnAfterREQ_IF_CONTENTUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterREQ_IF_CONTENTUpdateCallback != nil {
 			stage.OnAfterREQ_IF_CONTENTUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterREQ_IF_CONTENTUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterREQ_IF_CONTENTUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *REQ_IF_HEADER:
 		newTarget := any(new).(*REQ_IF_HEADER)
-		if stage.OnAfterREQ_IF_HEADERUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterREQ_IF_HEADERUpdateCallback != nil {
 			stage.OnAfterREQ_IF_HEADERUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterREQ_IF_HEADERUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterREQ_IF_HEADERUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *REQ_IF_TOOL_EXTENSION:
 		newTarget := any(new).(*REQ_IF_TOOL_EXTENSION)
-		if stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *RenderingConfiguration:
 		newTarget := any(new).(*RenderingConfiguration)
-		if stage.OnAfterRenderingConfigurationUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterRenderingConfigurationUpdateCallback != nil {
 			stage.OnAfterRenderingConfigurationUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterRenderingConfigurationUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterRenderingConfigurationUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPECIFICATION:
 		newTarget := any(new).(*SPECIFICATION)
-		if stage.OnAfterSPECIFICATIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPECIFICATIONUpdateCallback != nil {
 			stage.OnAfterSPECIFICATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPECIFICATIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPECIFICATIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPECIFICATION_TYPE:
 		newTarget := any(new).(*SPECIFICATION_TYPE)
-		if stage.OnAfterSPECIFICATION_TYPEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPECIFICATION_TYPEUpdateCallback != nil {
 			stage.OnAfterSPECIFICATION_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPECIFICATION_TYPEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPECIFICATION_TYPEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPEC_HIERARCHY:
 		newTarget := any(new).(*SPEC_HIERARCHY)
-		if stage.OnAfterSPEC_HIERARCHYUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPEC_HIERARCHYUpdateCallback != nil {
 			stage.OnAfterSPEC_HIERARCHYUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPEC_HIERARCHYUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPEC_HIERARCHYUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPEC_OBJECT:
 		newTarget := any(new).(*SPEC_OBJECT)
-		if stage.OnAfterSPEC_OBJECTUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPEC_OBJECTUpdateCallback != nil {
 			stage.OnAfterSPEC_OBJECTUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPEC_OBJECTUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPEC_OBJECTUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPEC_OBJECT_TYPE:
 		newTarget := any(new).(*SPEC_OBJECT_TYPE)
-		if stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback != nil {
 			stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPEC_OBJECT_TYPEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPEC_OBJECT_TYPEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPEC_RELATION:
 		newTarget := any(new).(*SPEC_RELATION)
-		if stage.OnAfterSPEC_RELATIONUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPEC_RELATIONUpdateCallback != nil {
 			stage.OnAfterSPEC_RELATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPEC_RELATIONUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPEC_RELATIONUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *SPEC_RELATION_TYPE:
 		newTarget := any(new).(*SPEC_RELATION_TYPE)
-		if stage.OnAfterSPEC_RELATION_TYPEUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterSPEC_RELATION_TYPEUpdateCallback != nil {
 			stage.OnAfterSPEC_RELATION_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterSPEC_RELATION_TYPEUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterSPEC_RELATION_TYPEUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *StaticWebSite:
 		newTarget := any(new).(*StaticWebSite)
-		if stage.OnAfterStaticWebSiteUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterStaticWebSiteUpdateCallback != nil {
 			stage.OnAfterStaticWebSiteUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterStaticWebSiteUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterStaticWebSiteUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *StaticWebSiteChapter:
 		newTarget := any(new).(*StaticWebSiteChapter)
-		if stage.OnAfterStaticWebSiteChapterUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterStaticWebSiteChapterUpdateCallback != nil {
 			stage.OnAfterStaticWebSiteChapterUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterStaticWebSiteChapterUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterStaticWebSiteChapterUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *StaticWebSiteGeneratedImage:
 		newTarget := any(new).(*StaticWebSiteGeneratedImage)
-		if stage.OnAfterStaticWebSiteGeneratedImageUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterStaticWebSiteGeneratedImageUpdateCallback != nil {
 			stage.OnAfterStaticWebSiteGeneratedImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterStaticWebSiteGeneratedImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterStaticWebSiteGeneratedImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *StaticWebSiteImage:
 		newTarget := any(new).(*StaticWebSiteImage)
-		if stage.OnAfterStaticWebSiteImageUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterStaticWebSiteImageUpdateCallback != nil {
 			stage.OnAfterStaticWebSiteImageUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterStaticWebSiteImageUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterStaticWebSiteImageUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *StaticWebSiteParagraph:
 		newTarget := any(new).(*StaticWebSiteParagraph)
-		if stage.OnAfterStaticWebSiteParagraphUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterStaticWebSiteParagraphUpdateCallback != nil {
 			stage.OnAfterStaticWebSiteParagraphUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterStaticWebSiteParagraphUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterStaticWebSiteParagraphUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	case *XHTML_CONTENT:
 		newTarget := any(new).(*XHTML_CONTENT)
-		if stage.OnAfterXHTML_CONTENTUpdateCallback != nil && mouseEvent == nil {
+		if stage.OnAfterXHTML_CONTENTUpdateCallback != nil {
 			stage.OnAfterXHTML_CONTENTUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-		if stage.OnAfterXHTML_CONTENTUpdateWithMouseEventCallback != nil && mouseEvent != nil {
-			stage.OnAfterXHTML_CONTENTUpdateWithMouseEventCallback.OnAfterUpdateWithMouseEvent(stage, oldTarget, newTarget, mouseEvent)
 		}
 	default:
 		_ = oldTarget

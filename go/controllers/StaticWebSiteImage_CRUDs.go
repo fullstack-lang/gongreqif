@@ -260,21 +260,10 @@ func (controller *Controller) UpdateStaticWebSiteImage(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateStaticWebSiteImage(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	staticwebsiteimageOld := backRepo.BackRepoStaticWebSiteImage.Map_StaticWebSiteImageDBID_StaticWebSiteImagePtr[staticwebsiteimageDB.ID]
 	if staticwebsiteimageOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), staticwebsiteimageOld, staticwebsiteimageNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), staticwebsiteimageOld, staticwebsiteimageNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), staticwebsiteimageOld, staticwebsiteimageNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

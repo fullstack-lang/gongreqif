@@ -260,21 +260,10 @@ func (controller *Controller) UpdateMap_SPEC_OBJECT_TYPE_showNameEntry(c *gin.Co
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateMap_SPEC_OBJECT_TYPE_showNameEntry(c *gin.Co
 	// get stage instance from DB instance, and call callback function
 	map_spec_object_type_shownameentryOld := backRepo.BackRepoMap_SPEC_OBJECT_TYPE_showNameEntry.Map_Map_SPEC_OBJECT_TYPE_showNameEntryDBID_Map_SPEC_OBJECT_TYPE_showNameEntryPtr[map_spec_object_type_shownameentryDB.ID]
 	if map_spec_object_type_shownameentryOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), map_spec_object_type_shownameentryOld, map_spec_object_type_shownameentryNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), map_spec_object_type_shownameentryOld, map_spec_object_type_shownameentryNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), map_spec_object_type_shownameentryOld, map_spec_object_type_shownameentryNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

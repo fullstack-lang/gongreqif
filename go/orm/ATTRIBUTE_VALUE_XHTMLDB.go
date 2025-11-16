@@ -48,6 +48,10 @@ type ATTRIBUTE_VALUE_XHTMLAPI struct {
 type ATTRIBUTE_VALUE_XHTMLPointersEncoding struct {
 	// insertion for pointer fields encoding declaration
 
+	// field DEFINITION is a pointer to another Struct (optional or 0..1)
+	// This field is generated into another field to enable AS ONE association
+	DEFINITIONID sql.NullInt64
+
 	// field THE_VALUE is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	THE_VALUEID sql.NullInt64
@@ -55,10 +59,6 @@ type ATTRIBUTE_VALUE_XHTMLPointersEncoding struct {
 	// field THE_ORIGINAL_VALUE is a pointer to another Struct (optional or 0..1)
 	// This field is generated into another field to enable AS ONE association
 	THE_ORIGINAL_VALUEID sql.NullInt64
-
-	// field DEFINITION is a pointer to another Struct (optional or 0..1)
-	// This field is generated into another field to enable AS ONE association
-	DEFINITIONID sql.NullInt64
 }
 
 // ATTRIBUTE_VALUE_XHTMLDB describes a attribute_value_xhtml in the database
@@ -242,6 +242,18 @@ func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) Commit
 		attribute_value_xhtmlDB.CopyBasicFieldsFromATTRIBUTE_VALUE_XHTML(attribute_value_xhtml)
 
 		// insertion point for translating pointers encodings into actual pointers
+		// commit pointer value attribute_value_xhtml.DEFINITION translates to updating the attribute_value_xhtml.DEFINITIONID
+		attribute_value_xhtmlDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
+		if attribute_value_xhtml.DEFINITION != nil {
+			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REF.Map_A_ATTRIBUTE_DEFINITION_XHTML_REFPtr_A_ATTRIBUTE_DEFINITION_XHTML_REFDBID[attribute_value_xhtml.DEFINITION]; ok {
+				attribute_value_xhtmlDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
+				attribute_value_xhtmlDB.DEFINITIONID.Valid = true
+			}
+		} else {
+			attribute_value_xhtmlDB.DEFINITIONID.Int64 = 0
+			attribute_value_xhtmlDB.DEFINITIONID.Valid = true
+		}
+
 		// commit pointer value attribute_value_xhtml.THE_VALUE translates to updating the attribute_value_xhtml.THE_VALUEID
 		attribute_value_xhtmlDB.THE_VALUEID.Valid = true // allow for a 0 value (nil association)
 		if attribute_value_xhtml.THE_VALUE != nil {
@@ -264,18 +276,6 @@ func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) Commit
 		} else {
 			attribute_value_xhtmlDB.THE_ORIGINAL_VALUEID.Int64 = 0
 			attribute_value_xhtmlDB.THE_ORIGINAL_VALUEID.Valid = true
-		}
-
-		// commit pointer value attribute_value_xhtml.DEFINITION translates to updating the attribute_value_xhtml.DEFINITIONID
-		attribute_value_xhtmlDB.DEFINITIONID.Valid = true // allow for a 0 value (nil association)
-		if attribute_value_xhtml.DEFINITION != nil {
-			if DEFINITIONId, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REF.Map_A_ATTRIBUTE_DEFINITION_XHTML_REFPtr_A_ATTRIBUTE_DEFINITION_XHTML_REFDBID[attribute_value_xhtml.DEFINITION]; ok {
-				attribute_value_xhtmlDB.DEFINITIONID.Int64 = int64(DEFINITIONId)
-				attribute_value_xhtmlDB.DEFINITIONID.Valid = true
-			}
-		} else {
-			attribute_value_xhtmlDB.DEFINITIONID.Int64 = 0
-			attribute_value_xhtmlDB.DEFINITIONID.Valid = true
 		}
 
 		_, err := backRepoATTRIBUTE_VALUE_XHTML.db.Save(attribute_value_xhtmlDB)
@@ -391,6 +391,27 @@ func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) Checko
 func (attribute_value_xhtmlDB *ATTRIBUTE_VALUE_XHTMLDB) DecodePointers(backRepo *BackRepoStruct, attribute_value_xhtml *models.ATTRIBUTE_VALUE_XHTML) {
 
 	// insertion point for checkout of pointer encoding
+	// DEFINITION field	
+	{
+		id := attribute_value_xhtmlDB.DEFINITIONID.Int64
+		if id != 0 {
+			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REF.Map_A_ATTRIBUTE_DEFINITION_XHTML_REFDBID_A_ATTRIBUTE_DEFINITION_XHTML_REFPtr[uint(id)]
+
+			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
+			if !ok {
+				log.Println("DecodePointers: attribute_value_xhtml.DEFINITION, unknown pointer id", id)
+				attribute_value_xhtml.DEFINITION = nil
+			} else {
+				// updates only if field has changed
+				if attribute_value_xhtml.DEFINITION == nil || attribute_value_xhtml.DEFINITION != tmp {
+					attribute_value_xhtml.DEFINITION = tmp
+				}
+			}
+		} else {
+			attribute_value_xhtml.DEFINITION = nil
+		}
+	}
+	
 	// THE_VALUE field	
 	{
 		id := attribute_value_xhtmlDB.THE_VALUEID.Int64
@@ -430,27 +451,6 @@ func (attribute_value_xhtmlDB *ATTRIBUTE_VALUE_XHTMLDB) DecodePointers(backRepo 
 			}
 		} else {
 			attribute_value_xhtml.THE_ORIGINAL_VALUE = nil
-		}
-	}
-	
-	// DEFINITION field	
-	{
-		id := attribute_value_xhtmlDB.DEFINITIONID.Int64
-		if id != 0 {
-			tmp, ok := backRepo.BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REF.Map_A_ATTRIBUTE_DEFINITION_XHTML_REFDBID_A_ATTRIBUTE_DEFINITION_XHTML_REFPtr[uint(id)]
-
-			// if the pointer id is unknown, it is not a problem, maybe the target was removed from the front
-			if !ok {
-				log.Println("DecodePointers: attribute_value_xhtml.DEFINITION, unknown pointer id", id)
-				attribute_value_xhtml.DEFINITION = nil
-			} else {
-				// updates only if field has changed
-				if attribute_value_xhtml.DEFINITION == nil || attribute_value_xhtml.DEFINITION != tmp {
-					attribute_value_xhtml.DEFINITION = tmp
-				}
-			}
-		} else {
-			attribute_value_xhtml.DEFINITION = nil
 		}
 	}
 	
@@ -694,6 +694,12 @@ func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) Restor
 		_ = attribute_value_xhtmlDB
 
 		// insertion point for reindexing pointers encoding
+		// reindexing DEFINITION field
+		if attribute_value_xhtmlDB.DEFINITIONID.Int64 != 0 {
+			attribute_value_xhtmlDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REFid_atBckpTime_newID[uint(attribute_value_xhtmlDB.DEFINITIONID.Int64)])
+			attribute_value_xhtmlDB.DEFINITIONID.Valid = true
+		}
+
 		// reindexing THE_VALUE field
 		if attribute_value_xhtmlDB.THE_VALUEID.Int64 != 0 {
 			attribute_value_xhtmlDB.THE_VALUEID.Int64 = int64(BackRepoXHTML_CONTENTid_atBckpTime_newID[uint(attribute_value_xhtmlDB.THE_VALUEID.Int64)])
@@ -704,12 +710,6 @@ func (backRepoATTRIBUTE_VALUE_XHTML *BackRepoATTRIBUTE_VALUE_XHTMLStruct) Restor
 		if attribute_value_xhtmlDB.THE_ORIGINAL_VALUEID.Int64 != 0 {
 			attribute_value_xhtmlDB.THE_ORIGINAL_VALUEID.Int64 = int64(BackRepoXHTML_CONTENTid_atBckpTime_newID[uint(attribute_value_xhtmlDB.THE_ORIGINAL_VALUEID.Int64)])
 			attribute_value_xhtmlDB.THE_ORIGINAL_VALUEID.Valid = true
-		}
-
-		// reindexing DEFINITION field
-		if attribute_value_xhtmlDB.DEFINITIONID.Int64 != 0 {
-			attribute_value_xhtmlDB.DEFINITIONID.Int64 = int64(BackRepoA_ATTRIBUTE_DEFINITION_XHTML_REFid_atBckpTime_newID[uint(attribute_value_xhtmlDB.DEFINITIONID.Int64)])
-			attribute_value_xhtmlDB.DEFINITIONID.Valid = true
 		}
 
 		// update databse with new index encoding

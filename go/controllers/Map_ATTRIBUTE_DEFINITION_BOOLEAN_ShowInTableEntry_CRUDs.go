@@ -260,21 +260,10 @@ func (controller *Controller) UpdateMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable
 	// get stage instance from DB instance, and call callback function
 	map_attribute_definition_boolean_showintableentryOld := backRepo.BackRepoMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.Map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDBID_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryPtr[map_attribute_definition_boolean_showintableentryDB.ID]
 	if map_attribute_definition_boolean_showintableentryOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), map_attribute_definition_boolean_showintableentryOld, map_attribute_definition_boolean_showintableentryNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), map_attribute_definition_boolean_showintableentryOld, map_attribute_definition_boolean_showintableentryNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), map_attribute_definition_boolean_showintableentryOld, map_attribute_definition_boolean_showintableentryNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

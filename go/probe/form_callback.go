@@ -1265,10 +1265,10 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_value_boolean_.Name), formDiv)
-		case "THE_VALUE":
-			FormDivBasicFieldToField(&(attribute_value_boolean_.THE_VALUE), formDiv)
 		case "DEFINITION":
 			FormDivSelectFieldToField(&(attribute_value_boolean_.DEFINITION), attribute_value_booleanFormCallback.probe.stageOfInterest, formDiv)
+		case "THE_VALUE":
+			FormDivBasicFieldToField(&(attribute_value_boolean_.THE_VALUE), formDiv)
 		case "A_ATTRIBUTE_VALUE_BOOLEAN:ATTRIBUTE_VALUE_BOOLEAN":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_BOOLEAN.ATTRIBUTE_VALUE_BOOLEAN []*ATTRIBUTE_VALUE_BOOLEAN" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -1480,10 +1480,10 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_value_date_.Name), formDiv)
-		case "THE_VALUE":
-			FormDivBasicFieldToField(&(attribute_value_date_.THE_VALUE), formDiv)
 		case "DEFINITION":
 			FormDivSelectFieldToField(&(attribute_value_date_.DEFINITION), attribute_value_dateFormCallback.probe.stageOfInterest, formDiv)
+		case "THE_VALUE":
+			FormDivBasicFieldToField(&(attribute_value_date_.THE_VALUE), formDiv)
 		case "A_ATTRIBUTE_VALUE_DATE:ATTRIBUTE_VALUE_DATE":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_DATE.ATTRIBUTE_VALUE_DATE []*ATTRIBUTE_VALUE_DATE" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -1910,10 +1910,10 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_value_integer_.Name), formDiv)
-		case "THE_VALUE":
-			FormDivBasicFieldToField(&(attribute_value_integer_.THE_VALUE), formDiv)
 		case "DEFINITION":
 			FormDivSelectFieldToField(&(attribute_value_integer_.DEFINITION), attribute_value_integerFormCallback.probe.stageOfInterest, formDiv)
+		case "THE_VALUE":
+			FormDivBasicFieldToField(&(attribute_value_integer_.THE_VALUE), formDiv)
 		case "A_ATTRIBUTE_VALUE_INTEGER:ATTRIBUTE_VALUE_INTEGER":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_INTEGER.ATTRIBUTE_VALUE_INTEGER []*ATTRIBUTE_VALUE_INTEGER" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -2125,10 +2125,10 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_value_real_.Name), formDiv)
-		case "THE_VALUE":
-			FormDivBasicFieldToField(&(attribute_value_real_.THE_VALUE), formDiv)
 		case "DEFINITION":
 			FormDivSelectFieldToField(&(attribute_value_real_.DEFINITION), attribute_value_realFormCallback.probe.stageOfInterest, formDiv)
+		case "THE_VALUE":
+			FormDivBasicFieldToField(&(attribute_value_real_.THE_VALUE), formDiv)
 		case "A_ATTRIBUTE_VALUE_REAL:ATTRIBUTE_VALUE_REAL":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_REAL.ATTRIBUTE_VALUE_REAL []*ATTRIBUTE_VALUE_REAL" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -2340,10 +2340,10 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_value_string_.Name), formDiv)
-		case "THE_VALUE":
-			FormDivBasicFieldToField(&(attribute_value_string_.THE_VALUE), formDiv)
 		case "DEFINITION":
 			FormDivSelectFieldToField(&(attribute_value_string_.DEFINITION), attribute_value_stringFormCallback.probe.stageOfInterest, formDiv)
+		case "THE_VALUE":
+			FormDivBasicFieldToField(&(attribute_value_string_.THE_VALUE), formDiv)
 		case "A_ATTRIBUTE_VALUE_STRING:ATTRIBUTE_VALUE_STRING":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_STRING.ATTRIBUTE_VALUE_STRING []*ATTRIBUTE_VALUE_STRING" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -2555,14 +2555,14 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_value_xhtml_.Name), formDiv)
+		case "DEFINITION":
+			FormDivSelectFieldToField(&(attribute_value_xhtml_.DEFINITION), attribute_value_xhtmlFormCallback.probe.stageOfInterest, formDiv)
 		case "IS_SIMPLIFIED":
 			FormDivBasicFieldToField(&(attribute_value_xhtml_.IS_SIMPLIFIED), formDiv)
 		case "THE_VALUE":
 			FormDivSelectFieldToField(&(attribute_value_xhtml_.THE_VALUE), attribute_value_xhtmlFormCallback.probe.stageOfInterest, formDiv)
 		case "THE_ORIGINAL_VALUE":
 			FormDivSelectFieldToField(&(attribute_value_xhtml_.THE_ORIGINAL_VALUE), attribute_value_xhtmlFormCallback.probe.stageOfInterest, formDiv)
-		case "DEFINITION":
-			FormDivSelectFieldToField(&(attribute_value_xhtml_.DEFINITION), attribute_value_xhtmlFormCallback.probe.stageOfInterest, formDiv)
 		case "A_ATTRIBUTE_VALUE_XHTML:ATTRIBUTE_VALUE_XHTML":
 			// WARNING : this form deals with the N-N association "A_ATTRIBUTE_VALUE_XHTML.ATTRIBUTE_VALUE_XHTML []*ATTRIBUTE_VALUE_XHTML" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -14095,12 +14095,12 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(specification_.LONG_NAME), formDiv)
 		case "ALTERNATIVE_ID":
 			FormDivSelectFieldToField(&(specification_.ALTERNATIVE_ID), specificationFormCallback.probe.stageOfInterest, formDiv)
+		case "TYPE":
+			FormDivSelectFieldToField(&(specification_.TYPE), specificationFormCallback.probe.stageOfInterest, formDiv)
 		case "CHILDREN":
 			FormDivSelectFieldToField(&(specification_.CHILDREN), specificationFormCallback.probe.stageOfInterest, formDiv)
 		case "VALUES":
 			FormDivSelectFieldToField(&(specification_.VALUES), specificationFormCallback.probe.stageOfInterest, formDiv)
-		case "TYPE":
-			FormDivSelectFieldToField(&(specification_.TYPE), specificationFormCallback.probe.stageOfInterest, formDiv)
 		case "A_SPECIFICATIONS:SPECIFICATION":
 			// WARNING : this form deals with the N-N association "A_SPECIFICATIONS.SPECIFICATION []*SPECIFICATION" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -14415,12 +14415,12 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 			FormDivBasicFieldToField(&(spec_hierarchy_.LONG_NAME), formDiv)
 		case "ALTERNATIVE_ID":
 			FormDivSelectFieldToField(&(spec_hierarchy_.ALTERNATIVE_ID), spec_hierarchyFormCallback.probe.stageOfInterest, formDiv)
+		case "OBJECT":
+			FormDivSelectFieldToField(&(spec_hierarchy_.OBJECT), spec_hierarchyFormCallback.probe.stageOfInterest, formDiv)
 		case "CHILDREN":
 			FormDivSelectFieldToField(&(spec_hierarchy_.CHILDREN), spec_hierarchyFormCallback.probe.stageOfInterest, formDiv)
 		case "EDITABLE_ATTS":
 			FormDivSelectFieldToField(&(spec_hierarchy_.EDITABLE_ATTS), spec_hierarchyFormCallback.probe.stageOfInterest, formDiv)
-		case "OBJECT":
-			FormDivSelectFieldToField(&(spec_hierarchy_.OBJECT), spec_hierarchyFormCallback.probe.stageOfInterest, formDiv)
 		case "A_CHILDREN:SPEC_HIERARCHY":
 			// WARNING : this form deals with the N-N association "A_CHILDREN.SPEC_HIERARCHY []*SPEC_HIERARCHY" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)

@@ -260,21 +260,10 @@ func (controller *Controller) UpdateA_ATTRIBUTE_VALUE_DATE(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateA_ATTRIBUTE_VALUE_DATE(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	a_attribute_value_dateOld := backRepo.BackRepoA_ATTRIBUTE_VALUE_DATE.Map_A_ATTRIBUTE_VALUE_DATEDBID_A_ATTRIBUTE_VALUE_DATEPtr[a_attribute_value_dateDB.ID]
 	if a_attribute_value_dateOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_attribute_value_dateOld, a_attribute_value_dateNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), a_attribute_value_dateOld, a_attribute_value_dateNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), a_attribute_value_dateOld, a_attribute_value_dateNew)
 	}
 
 	// an UPDATE generates a back repo commit increase

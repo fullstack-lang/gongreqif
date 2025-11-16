@@ -260,21 +260,10 @@ func (controller *Controller) UpdateREQ_IF(c *gin.Context) {
 
 	_values := c.Request.URL.Query()
 	stackPath := ""
-	hasMouseEvent := false
-	shiftKey := false
-	_ = shiftKey
 	if len(_values) >= 1 {
 		_nameValues := _values["Name"]
 		if len(_nameValues) == 1 {
 			stackPath = _nameValues[0]
-		}
-	}
-
-	if len(_values) >= 2 {
-		hasMouseEvent = true
-		_shiftKeyValues := _values["shiftKey"]
-		if len(_shiftKeyValues) == 1 {
-			shiftKey = _shiftKeyValues[0] == "true"
 		}
 	}
 
@@ -339,15 +328,7 @@ func (controller *Controller) UpdateREQ_IF(c *gin.Context) {
 	// get stage instance from DB instance, and call callback function
 	req_ifOld := backRepo.BackRepoREQ_IF.Map_REQ_IFDBID_REQ_IFPtr[req_ifDB.ID]
 	if req_ifOld != nil {
-		if !hasMouseEvent {
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), req_ifOld, req_ifNew, nil)
-		} else {
-			mouseEvent := &models.Gong__MouseEvent{
-				ShiftKey: shiftKey,
-			}
-			models.OnAfterUpdateFromFront(backRepo.GetStage(), req_ifOld, req_ifNew, mouseEvent)
-
-		}
+		models.OnAfterUpdateFromFront(backRepo.GetStage(), req_ifOld, req_ifNew)
 	}
 
 	// an UPDATE generates a back repo commit increase
