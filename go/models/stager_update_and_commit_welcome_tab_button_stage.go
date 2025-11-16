@@ -54,6 +54,20 @@ func (stager *Stager) UpdateAndCommitWelcomeTabButtonStage() {
 		group1.Buttons = append(group1.Buttons, buttonExportModifiedReqif)
 	}
 
+	{
+		buttonExportModifiedReqif := button.NewButton(
+			// stager is the target of the button. stager implements interface method OnAfterUpdateButton()
+			&ResetReqifButtonProxy{
+				stager: stager,
+			},
+			"Reset ReqIF file",
+			string(buttons.BUTTON_reset_tv),
+			"Reset ReqIF file",
+		)
+
+		group1.Buttons = append(group1.Buttons, buttonExportModifiedReqif)
+	}
+
 	buttonExportRenderingCong := button.NewButton(
 		&ExportRenderingConfButtonProxy{
 			stager: stager,
@@ -111,4 +125,36 @@ func (e *ExportModifiedReqifButtonProxy) GetButtonsStage() *button.Stage {
 func (e *ExportModifiedReqifButtonProxy) OnAfterUpdateButton() {
 
 	e.stager.reqifExporter.ExportReqif(e.stager)
+}
+
+type ResetReqifButtonProxy struct {
+	stager *Stager
+}
+
+// GetButtonsStage implements models.Target.
+func (proxy *ResetReqifButtonProxy) GetButtonsStage() *button.Stage {
+	return proxy.stager.welcomeTabButtonStage
+}
+
+// OnAfterUpdateButton implements models.Target.
+func (proxy *ResetReqifButtonProxy) OnAfterUpdateButton() {
+
+	proxy.stager.stage.Reset()
+
+	var req_if REQ_IF
+	var coreContent A_CORE_CONTENT
+	req_if.CORE_CONTENT = &coreContent
+	var REQ_IF_CONTENT REQ_IF_CONTENT
+	req_if.CORE_CONTENT.REQ_IF_CONTENT = &REQ_IF_CONTENT
+
+	StageBranch(proxy.stager.stage, &req_if)
+	proxy.stager.rootReqif = &req_if
+
+	proxy.stager.stage.Commit()
+
+	proxy.stager.GetSpecificationsTreeUpdater().UpdateAttributeDefinitionNb(proxy.stager)
+	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
+	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
+	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
+
 }
