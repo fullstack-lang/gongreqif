@@ -75,7 +75,7 @@ func (alternative_idFormCallback *ALTERNATIVE_IDFormCallback) OnSave() {
 	}
 
 	alternative_idFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ALTERNATIVE_ID](
+	updateAndCommitTable[*models.ALTERNATIVE_ID](
 		alternative_idFormCallback.probe,
 	)
 	alternative_idFormCallback.probe.tableStage.Commit()
@@ -176,9 +176,8 @@ func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANForm
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_BOOLEAN"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_boolean_.GongGetReverseFieldOwner(
 					attribute_definition_booleanFormCallback.probe.stageOfInterest,
-					attribute_definition_boolean_,
 					&rf)
 
 				var ok bool
@@ -235,7 +234,7 @@ func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANForm
 	}
 
 	attribute_definition_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_BOOLEAN](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN](
 		attribute_definition_booleanFormCallback.probe,
 	)
 	attribute_definition_booleanFormCallback.probe.tableStage.Commit()
@@ -336,9 +335,8 @@ func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallba
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_DATE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_date_.GongGetReverseFieldOwner(
 					attribute_definition_dateFormCallback.probe.stageOfInterest,
-					attribute_definition_date_,
 					&rf)
 
 				var ok bool
@@ -395,7 +393,7 @@ func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallba
 	}
 
 	attribute_definition_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_DATE](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE](
 		attribute_definition_dateFormCallback.probe,
 	)
 	attribute_definition_dateFormCallback.probe.tableStage.Commit()
@@ -498,9 +496,8 @@ func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERA
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_ENUMERATION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_enumeration_.GongGetReverseFieldOwner(
 					attribute_definition_enumerationFormCallback.probe.stageOfInterest,
-					attribute_definition_enumeration_,
 					&rf)
 
 				var ok bool
@@ -557,7 +554,7 @@ func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERA
 	}
 
 	attribute_definition_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_ENUMERATION](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION](
 		attribute_definition_enumerationFormCallback.probe,
 	)
 	attribute_definition_enumerationFormCallback.probe.tableStage.Commit()
@@ -658,9 +655,8 @@ func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERForm
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_INTEGER"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_integer_.GongGetReverseFieldOwner(
 					attribute_definition_integerFormCallback.probe.stageOfInterest,
-					attribute_definition_integer_,
 					&rf)
 
 				var ok bool
@@ -717,7 +713,7 @@ func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERForm
 	}
 
 	attribute_definition_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_INTEGER](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER](
 		attribute_definition_integerFormCallback.probe,
 	)
 	attribute_definition_integerFormCallback.probe.tableStage.Commit()
@@ -818,9 +814,8 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_REAL"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_real_.GongGetReverseFieldOwner(
 					attribute_definition_realFormCallback.probe.stageOfInterest,
-					attribute_definition_real_,
 					&rf)
 
 				var ok bool
@@ -877,7 +872,7 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 	}
 
 	attribute_definition_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_REAL](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL](
 		attribute_definition_realFormCallback.probe,
 	)
 	attribute_definition_realFormCallback.probe.tableStage.Commit()
@@ -978,9 +973,8 @@ func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCa
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_STRING"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_string_.GongGetReverseFieldOwner(
 					attribute_definition_stringFormCallback.probe.stageOfInterest,
-					attribute_definition_string_,
 					&rf)
 
 				var ok bool
@@ -1037,7 +1031,7 @@ func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCa
 	}
 
 	attribute_definition_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_STRING](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING](
 		attribute_definition_stringFormCallback.probe,
 	)
 	attribute_definition_stringFormCallback.probe.tableStage.Commit()
@@ -1138,9 +1132,8 @@ func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCall
 				_ = rf
 				rf.GongstructName = "A_SPEC_ATTRIBUTES"
 				rf.Fieldname = "ATTRIBUTE_DEFINITION_XHTML"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_definition_xhtml_.GongGetReverseFieldOwner(
 					attribute_definition_xhtmlFormCallback.probe.stageOfInterest,
-					attribute_definition_xhtml_,
 					&rf)
 
 				var ok bool
@@ -1197,7 +1190,7 @@ func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCall
 	}
 
 	attribute_definition_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_DEFINITION_XHTML](
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML](
 		attribute_definition_xhtmlFormCallback.probe,
 	)
 	attribute_definition_xhtmlFormCallback.probe.tableStage.Commit()
@@ -1286,9 +1279,8 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_BOOLEAN"
 				rf.Fieldname = "ATTRIBUTE_VALUE_BOOLEAN"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_boolean_.GongGetReverseFieldOwner(
 					attribute_value_booleanFormCallback.probe.stageOfInterest,
-					attribute_value_boolean_,
 					&rf)
 
 				var ok bool
@@ -1353,9 +1345,8 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_BOOLEAN"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_boolean_.GongGetReverseFieldOwner(
 					attribute_value_booleanFormCallback.probe.stageOfInterest,
-					attribute_value_boolean_,
 					&rf)
 
 				var ok bool
@@ -1412,7 +1403,7 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 	}
 
 	attribute_value_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_BOOLEAN](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_BOOLEAN](
 		attribute_value_booleanFormCallback.probe,
 	)
 	attribute_value_booleanFormCallback.probe.tableStage.Commit()
@@ -1501,9 +1492,8 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_DATE"
 				rf.Fieldname = "ATTRIBUTE_VALUE_DATE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_date_.GongGetReverseFieldOwner(
 					attribute_value_dateFormCallback.probe.stageOfInterest,
-					attribute_value_date_,
 					&rf)
 
 				var ok bool
@@ -1568,9 +1558,8 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_DATE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_date_.GongGetReverseFieldOwner(
 					attribute_value_dateFormCallback.probe.stageOfInterest,
-					attribute_value_date_,
 					&rf)
 
 				var ok bool
@@ -1627,7 +1616,7 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 	}
 
 	attribute_value_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_DATE](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_DATE](
 		attribute_value_dateFormCallback.probe,
 	)
 	attribute_value_dateFormCallback.probe.tableStage.Commit()
@@ -1716,9 +1705,8 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_ENUMERATION"
 				rf.Fieldname = "ATTRIBUTE_VALUE_ENUMERATION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_enumeration_.GongGetReverseFieldOwner(
 					attribute_value_enumerationFormCallback.probe.stageOfInterest,
-					attribute_value_enumeration_,
 					&rf)
 
 				var ok bool
@@ -1783,9 +1771,8 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_ENUMERATION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_enumeration_.GongGetReverseFieldOwner(
 					attribute_value_enumerationFormCallback.probe.stageOfInterest,
-					attribute_value_enumeration_,
 					&rf)
 
 				var ok bool
@@ -1842,7 +1829,7 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 	}
 
 	attribute_value_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_ENUMERATION](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_ENUMERATION](
 		attribute_value_enumerationFormCallback.probe,
 	)
 	attribute_value_enumerationFormCallback.probe.tableStage.Commit()
@@ -1931,9 +1918,8 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_INTEGER"
 				rf.Fieldname = "ATTRIBUTE_VALUE_INTEGER"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_integer_.GongGetReverseFieldOwner(
 					attribute_value_integerFormCallback.probe.stageOfInterest,
-					attribute_value_integer_,
 					&rf)
 
 				var ok bool
@@ -1998,9 +1984,8 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_INTEGER"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_integer_.GongGetReverseFieldOwner(
 					attribute_value_integerFormCallback.probe.stageOfInterest,
-					attribute_value_integer_,
 					&rf)
 
 				var ok bool
@@ -2057,7 +2042,7 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 	}
 
 	attribute_value_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_INTEGER](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_INTEGER](
 		attribute_value_integerFormCallback.probe,
 	)
 	attribute_value_integerFormCallback.probe.tableStage.Commit()
@@ -2146,9 +2131,8 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_REAL"
 				rf.Fieldname = "ATTRIBUTE_VALUE_REAL"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_real_.GongGetReverseFieldOwner(
 					attribute_value_realFormCallback.probe.stageOfInterest,
-					attribute_value_real_,
 					&rf)
 
 				var ok bool
@@ -2213,9 +2197,8 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_REAL"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_real_.GongGetReverseFieldOwner(
 					attribute_value_realFormCallback.probe.stageOfInterest,
-					attribute_value_real_,
 					&rf)
 
 				var ok bool
@@ -2272,7 +2255,7 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 	}
 
 	attribute_value_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_REAL](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_REAL](
 		attribute_value_realFormCallback.probe,
 	)
 	attribute_value_realFormCallback.probe.tableStage.Commit()
@@ -2361,9 +2344,8 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_STRING"
 				rf.Fieldname = "ATTRIBUTE_VALUE_STRING"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_string_.GongGetReverseFieldOwner(
 					attribute_value_stringFormCallback.probe.stageOfInterest,
-					attribute_value_string_,
 					&rf)
 
 				var ok bool
@@ -2428,9 +2410,8 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_STRING"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_string_.GongGetReverseFieldOwner(
 					attribute_value_stringFormCallback.probe.stageOfInterest,
-					attribute_value_string_,
 					&rf)
 
 				var ok bool
@@ -2487,7 +2468,7 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 	}
 
 	attribute_value_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_STRING](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_STRING](
 		attribute_value_stringFormCallback.probe,
 	)
 	attribute_value_stringFormCallback.probe.tableStage.Commit()
@@ -2580,9 +2561,8 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML"
 				rf.Fieldname = "ATTRIBUTE_VALUE_XHTML"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_xhtml_.GongGetReverseFieldOwner(
 					attribute_value_xhtmlFormCallback.probe.stageOfInterest,
-					attribute_value_xhtml_,
 					&rf)
 
 				var ok bool
@@ -2647,9 +2627,8 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 				_ = rf
 				rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 				rf.Fieldname = "ATTRIBUTE_VALUE_XHTML"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := attribute_value_xhtml_.GongGetReverseFieldOwner(
 					attribute_value_xhtmlFormCallback.probe.stageOfInterest,
-					attribute_value_xhtml_,
 					&rf)
 
 				var ok bool
@@ -2706,7 +2685,7 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 	}
 
 	attribute_value_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ATTRIBUTE_VALUE_XHTML](
+	updateAndCommitTable[*models.ATTRIBUTE_VALUE_XHTML](
 		attribute_value_xhtmlFormCallback.probe,
 	)
 	attribute_value_xhtmlFormCallback.probe.tableStage.Commit()
@@ -2785,7 +2764,7 @@ func (a_alternative_idFormCallback *A_ALTERNATIVE_IDFormCallback) OnSave() {
 	}
 
 	a_alternative_idFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ALTERNATIVE_ID](
+	updateAndCommitTable[*models.A_ALTERNATIVE_ID](
 		a_alternative_idFormCallback.probe,
 	)
 	a_alternative_idFormCallback.probe.tableStage.Commit()
@@ -2864,7 +2843,7 @@ func (a_attribute_definition_boolean_refFormCallback *A_ATTRIBUTE_DEFINITION_BOO
 	}
 
 	a_attribute_definition_boolean_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](
 		a_attribute_definition_boolean_refFormCallback.probe,
 	)
 	a_attribute_definition_boolean_refFormCallback.probe.tableStage.Commit()
@@ -2943,7 +2922,7 @@ func (a_attribute_definition_date_refFormCallback *A_ATTRIBUTE_DEFINITION_DATE_R
 	}
 
 	a_attribute_definition_date_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_DATE_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_DATE_REF](
 		a_attribute_definition_date_refFormCallback.probe,
 	)
 	a_attribute_definition_date_refFormCallback.probe.tableStage.Commit()
@@ -3022,7 +3001,7 @@ func (a_attribute_definition_enumeration_refFormCallback *A_ATTRIBUTE_DEFINITION
 	}
 
 	a_attribute_definition_enumeration_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](
 		a_attribute_definition_enumeration_refFormCallback.probe,
 	)
 	a_attribute_definition_enumeration_refFormCallback.probe.tableStage.Commit()
@@ -3101,7 +3080,7 @@ func (a_attribute_definition_integer_refFormCallback *A_ATTRIBUTE_DEFINITION_INT
 	}
 
 	a_attribute_definition_integer_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](
 		a_attribute_definition_integer_refFormCallback.probe,
 	)
 	a_attribute_definition_integer_refFormCallback.probe.tableStage.Commit()
@@ -3180,7 +3159,7 @@ func (a_attribute_definition_real_refFormCallback *A_ATTRIBUTE_DEFINITION_REAL_R
 	}
 
 	a_attribute_definition_real_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_REAL_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_REAL_REF](
 		a_attribute_definition_real_refFormCallback.probe,
 	)
 	a_attribute_definition_real_refFormCallback.probe.tableStage.Commit()
@@ -3259,7 +3238,7 @@ func (a_attribute_definition_string_refFormCallback *A_ATTRIBUTE_DEFINITION_STRI
 	}
 
 	a_attribute_definition_string_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_STRING_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_STRING_REF](
 		a_attribute_definition_string_refFormCallback.probe,
 	)
 	a_attribute_definition_string_refFormCallback.probe.tableStage.Commit()
@@ -3338,7 +3317,7 @@ func (a_attribute_definition_xhtml_refFormCallback *A_ATTRIBUTE_DEFINITION_XHTML
 	}
 
 	a_attribute_definition_xhtml_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_XHTML_REF](
+	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_XHTML_REF](
 		a_attribute_definition_xhtml_refFormCallback.probe,
 	)
 	a_attribute_definition_xhtml_refFormCallback.probe.tableStage.Commit()
@@ -3440,7 +3419,7 @@ func (a_attribute_value_booleanFormCallback *A_ATTRIBUTE_VALUE_BOOLEANFormCallba
 	}
 
 	a_attribute_value_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_BOOLEAN](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_BOOLEAN](
 		a_attribute_value_booleanFormCallback.probe,
 	)
 	a_attribute_value_booleanFormCallback.probe.tableStage.Commit()
@@ -3542,7 +3521,7 @@ func (a_attribute_value_dateFormCallback *A_ATTRIBUTE_VALUE_DATEFormCallback) On
 	}
 
 	a_attribute_value_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_DATE](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_DATE](
 		a_attribute_value_dateFormCallback.probe,
 	)
 	a_attribute_value_dateFormCallback.probe.tableStage.Commit()
@@ -3644,7 +3623,7 @@ func (a_attribute_value_enumerationFormCallback *A_ATTRIBUTE_VALUE_ENUMERATIONFo
 	}
 
 	a_attribute_value_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_ENUMERATION](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_ENUMERATION](
 		a_attribute_value_enumerationFormCallback.probe,
 	)
 	a_attribute_value_enumerationFormCallback.probe.tableStage.Commit()
@@ -3746,7 +3725,7 @@ func (a_attribute_value_integerFormCallback *A_ATTRIBUTE_VALUE_INTEGERFormCallba
 	}
 
 	a_attribute_value_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_INTEGER](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_INTEGER](
 		a_attribute_value_integerFormCallback.probe,
 	)
 	a_attribute_value_integerFormCallback.probe.tableStage.Commit()
@@ -3848,7 +3827,7 @@ func (a_attribute_value_realFormCallback *A_ATTRIBUTE_VALUE_REALFormCallback) On
 	}
 
 	a_attribute_value_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_REAL](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_REAL](
 		a_attribute_value_realFormCallback.probe,
 	)
 	a_attribute_value_realFormCallback.probe.tableStage.Commit()
@@ -3950,7 +3929,7 @@ func (a_attribute_value_stringFormCallback *A_ATTRIBUTE_VALUE_STRINGFormCallback
 	}
 
 	a_attribute_value_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_STRING](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_STRING](
 		a_attribute_value_stringFormCallback.probe,
 	)
 	a_attribute_value_stringFormCallback.probe.tableStage.Commit()
@@ -4052,7 +4031,7 @@ func (a_attribute_value_xhtmlFormCallback *A_ATTRIBUTE_VALUE_XHTMLFormCallback) 
 	}
 
 	a_attribute_value_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_XHTML](
 		a_attribute_value_xhtmlFormCallback.probe,
 	)
 	a_attribute_value_xhtmlFormCallback.probe.tableStage.Commit()
@@ -4304,7 +4283,7 @@ func (a_attribute_value_xhtml_1FormCallback *A_ATTRIBUTE_VALUE_XHTML_1FormCallba
 	}
 
 	a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML_1](
+	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_XHTML_1](
 		a_attribute_value_xhtml_1FormCallback.probe,
 	)
 	a_attribute_value_xhtml_1FormCallback.probe.tableStage.Commit()
@@ -4406,7 +4385,7 @@ func (a_childrenFormCallback *A_CHILDRENFormCallback) OnSave() {
 	}
 
 	a_childrenFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_CHILDREN](
+	updateAndCommitTable[*models.A_CHILDREN](
 		a_childrenFormCallback.probe,
 	)
 	a_childrenFormCallback.probe.tableStage.Commit()
@@ -4485,7 +4464,7 @@ func (a_core_contentFormCallback *A_CORE_CONTENTFormCallback) OnSave() {
 	}
 
 	a_core_contentFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_CORE_CONTENT](
+	updateAndCommitTable[*models.A_CORE_CONTENT](
 		a_core_contentFormCallback.probe,
 	)
 	a_core_contentFormCallback.probe.tableStage.Commit()
@@ -4737,7 +4716,7 @@ func (a_datatypesFormCallback *A_DATATYPESFormCallback) OnSave() {
 	}
 
 	a_datatypesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPES](
+	updateAndCommitTable[*models.A_DATATYPES](
 		a_datatypesFormCallback.probe,
 	)
 	a_datatypesFormCallback.probe.tableStage.Commit()
@@ -4816,7 +4795,7 @@ func (a_datatype_definition_boolean_refFormCallback *A_DATATYPE_DEFINITION_BOOLE
 	}
 
 	a_datatype_definition_boolean_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_BOOLEAN_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_BOOLEAN_REF](
 		a_datatype_definition_boolean_refFormCallback.probe,
 	)
 	a_datatype_definition_boolean_refFormCallback.probe.tableStage.Commit()
@@ -4895,7 +4874,7 @@ func (a_datatype_definition_date_refFormCallback *A_DATATYPE_DEFINITION_DATE_REF
 	}
 
 	a_datatype_definition_date_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_DATE_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_DATE_REF](
 		a_datatype_definition_date_refFormCallback.probe,
 	)
 	a_datatype_definition_date_refFormCallback.probe.tableStage.Commit()
@@ -4974,7 +4953,7 @@ func (a_datatype_definition_enumeration_refFormCallback *A_DATATYPE_DEFINITION_E
 	}
 
 	a_datatype_definition_enumeration_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_ENUMERATION_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_ENUMERATION_REF](
 		a_datatype_definition_enumeration_refFormCallback.probe,
 	)
 	a_datatype_definition_enumeration_refFormCallback.probe.tableStage.Commit()
@@ -5053,7 +5032,7 @@ func (a_datatype_definition_integer_refFormCallback *A_DATATYPE_DEFINITION_INTEG
 	}
 
 	a_datatype_definition_integer_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_INTEGER_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_INTEGER_REF](
 		a_datatype_definition_integer_refFormCallback.probe,
 	)
 	a_datatype_definition_integer_refFormCallback.probe.tableStage.Commit()
@@ -5132,7 +5111,7 @@ func (a_datatype_definition_real_refFormCallback *A_DATATYPE_DEFINITION_REAL_REF
 	}
 
 	a_datatype_definition_real_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_REAL_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_REAL_REF](
 		a_datatype_definition_real_refFormCallback.probe,
 	)
 	a_datatype_definition_real_refFormCallback.probe.tableStage.Commit()
@@ -5211,7 +5190,7 @@ func (a_datatype_definition_string_refFormCallback *A_DATATYPE_DEFINITION_STRING
 	}
 
 	a_datatype_definition_string_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_STRING_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_STRING_REF](
 		a_datatype_definition_string_refFormCallback.probe,
 	)
 	a_datatype_definition_string_refFormCallback.probe.tableStage.Commit()
@@ -5290,7 +5269,7 @@ func (a_datatype_definition_xhtml_refFormCallback *A_DATATYPE_DEFINITION_XHTML_R
 	}
 
 	a_datatype_definition_xhtml_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_DATATYPE_DEFINITION_XHTML_REF](
+	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_XHTML_REF](
 		a_datatype_definition_xhtml_refFormCallback.probe,
 	)
 	a_datatype_definition_xhtml_refFormCallback.probe.tableStage.Commit()
@@ -5381,7 +5360,7 @@ func (a_editable_attsFormCallback *A_EDITABLE_ATTSFormCallback) OnSave() {
 	}
 
 	a_editable_attsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_EDITABLE_ATTS](
+	updateAndCommitTable[*models.A_EDITABLE_ATTS](
 		a_editable_attsFormCallback.probe,
 	)
 	a_editable_attsFormCallback.probe.tableStage.Commit()
@@ -5460,7 +5439,7 @@ func (a_enum_value_refFormCallback *A_ENUM_VALUE_REFFormCallback) OnSave() {
 	}
 
 	a_enum_value_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_ENUM_VALUE_REF](
+	updateAndCommitTable[*models.A_ENUM_VALUE_REF](
 		a_enum_value_refFormCallback.probe,
 	)
 	a_enum_value_refFormCallback.probe.tableStage.Commit()
@@ -5539,7 +5518,7 @@ func (a_objectFormCallback *A_OBJECTFormCallback) OnSave() {
 	}
 
 	a_objectFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_OBJECT](
+	updateAndCommitTable[*models.A_OBJECT](
 		a_objectFormCallback.probe,
 	)
 	a_objectFormCallback.probe.tableStage.Commit()
@@ -5618,7 +5597,7 @@ func (a_propertiesFormCallback *A_PROPERTIESFormCallback) OnSave() {
 	}
 
 	a_propertiesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_PROPERTIES](
+	updateAndCommitTable[*models.A_PROPERTIES](
 		a_propertiesFormCallback.probe,
 	)
 	a_propertiesFormCallback.probe.tableStage.Commit()
@@ -5697,7 +5676,7 @@ func (a_relation_group_type_refFormCallback *A_RELATION_GROUP_TYPE_REFFormCallba
 	}
 
 	a_relation_group_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_RELATION_GROUP_TYPE_REF](
+	updateAndCommitTable[*models.A_RELATION_GROUP_TYPE_REF](
 		a_relation_group_type_refFormCallback.probe,
 	)
 	a_relation_group_type_refFormCallback.probe.tableStage.Commit()
@@ -5776,7 +5755,7 @@ func (a_source_1FormCallback *A_SOURCE_1FormCallback) OnSave() {
 	}
 
 	a_source_1FormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SOURCE_1](
+	updateAndCommitTable[*models.A_SOURCE_1](
 		a_source_1FormCallback.probe,
 	)
 	a_source_1FormCallback.probe.tableStage.Commit()
@@ -5855,7 +5834,7 @@ func (a_source_specification_1FormCallback *A_SOURCE_SPECIFICATION_1FormCallback
 	}
 
 	a_source_specification_1FormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SOURCE_SPECIFICATION_1](
+	updateAndCommitTable[*models.A_SOURCE_SPECIFICATION_1](
 		a_source_specification_1FormCallback.probe,
 	)
 	a_source_specification_1FormCallback.probe.tableStage.Commit()
@@ -5957,7 +5936,7 @@ func (a_specificationsFormCallback *A_SPECIFICATIONSFormCallback) OnSave() {
 	}
 
 	a_specificationsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPECIFICATIONS](
+	updateAndCommitTable[*models.A_SPECIFICATIONS](
 		a_specificationsFormCallback.probe,
 	)
 	a_specificationsFormCallback.probe.tableStage.Commit()
@@ -6036,7 +6015,7 @@ func (a_specification_type_refFormCallback *A_SPECIFICATION_TYPE_REFFormCallback
 	}
 
 	a_specification_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPECIFICATION_TYPE_REF](
+	updateAndCommitTable[*models.A_SPECIFICATION_TYPE_REF](
 		a_specification_type_refFormCallback.probe,
 	)
 	a_specification_type_refFormCallback.probe.tableStage.Commit()
@@ -6138,7 +6117,7 @@ func (a_specified_valuesFormCallback *A_SPECIFIED_VALUESFormCallback) OnSave() {
 	}
 
 	a_specified_valuesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPECIFIED_VALUES](
+	updateAndCommitTable[*models.A_SPECIFIED_VALUES](
 		a_specified_valuesFormCallback.probe,
 	)
 	a_specified_valuesFormCallback.probe.tableStage.Commit()
@@ -6390,7 +6369,7 @@ func (a_spec_attributesFormCallback *A_SPEC_ATTRIBUTESFormCallback) OnSave() {
 	}
 
 	a_spec_attributesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_ATTRIBUTES](
+	updateAndCommitTable[*models.A_SPEC_ATTRIBUTES](
 		a_spec_attributesFormCallback.probe,
 	)
 	a_spec_attributesFormCallback.probe.tableStage.Commit()
@@ -6492,7 +6471,7 @@ func (a_spec_objectsFormCallback *A_SPEC_OBJECTSFormCallback) OnSave() {
 	}
 
 	a_spec_objectsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_OBJECTS](
+	updateAndCommitTable[*models.A_SPEC_OBJECTS](
 		a_spec_objectsFormCallback.probe,
 	)
 	a_spec_objectsFormCallback.probe.tableStage.Commit()
@@ -6571,7 +6550,7 @@ func (a_spec_object_type_refFormCallback *A_SPEC_OBJECT_TYPE_REFFormCallback) On
 	}
 
 	a_spec_object_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_OBJECT_TYPE_REF](
+	updateAndCommitTable[*models.A_SPEC_OBJECT_TYPE_REF](
 		a_spec_object_type_refFormCallback.probe,
 	)
 	a_spec_object_type_refFormCallback.probe.tableStage.Commit()
@@ -6673,7 +6652,7 @@ func (a_spec_relationsFormCallback *A_SPEC_RELATIONSFormCallback) OnSave() {
 	}
 
 	a_spec_relationsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_RELATIONS](
+	updateAndCommitTable[*models.A_SPEC_RELATIONS](
 		a_spec_relationsFormCallback.probe,
 	)
 	a_spec_relationsFormCallback.probe.tableStage.Commit()
@@ -6775,7 +6754,7 @@ func (a_spec_relation_groupsFormCallback *A_SPEC_RELATION_GROUPSFormCallback) On
 	}
 
 	a_spec_relation_groupsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_RELATION_GROUPS](
+	updateAndCommitTable[*models.A_SPEC_RELATION_GROUPS](
 		a_spec_relation_groupsFormCallback.probe,
 	)
 	a_spec_relation_groupsFormCallback.probe.tableStage.Commit()
@@ -6854,7 +6833,7 @@ func (a_spec_relation_refFormCallback *A_SPEC_RELATION_REFFormCallback) OnSave()
 	}
 
 	a_spec_relation_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_RELATION_REF](
+	updateAndCommitTable[*models.A_SPEC_RELATION_REF](
 		a_spec_relation_refFormCallback.probe,
 	)
 	a_spec_relation_refFormCallback.probe.tableStage.Commit()
@@ -6933,7 +6912,7 @@ func (a_spec_relation_type_refFormCallback *A_SPEC_RELATION_TYPE_REFFormCallback
 	}
 
 	a_spec_relation_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_RELATION_TYPE_REF](
+	updateAndCommitTable[*models.A_SPEC_RELATION_TYPE_REF](
 		a_spec_relation_type_refFormCallback.probe,
 	)
 	a_spec_relation_type_refFormCallback.probe.tableStage.Commit()
@@ -7110,7 +7089,7 @@ func (a_spec_typesFormCallback *A_SPEC_TYPESFormCallback) OnSave() {
 	}
 
 	a_spec_typesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_SPEC_TYPES](
+	updateAndCommitTable[*models.A_SPEC_TYPES](
 		a_spec_typesFormCallback.probe,
 	)
 	a_spec_typesFormCallback.probe.tableStage.Commit()
@@ -7189,7 +7168,7 @@ func (a_the_headerFormCallback *A_THE_HEADERFormCallback) OnSave() {
 	}
 
 	a_the_headerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_THE_HEADER](
+	updateAndCommitTable[*models.A_THE_HEADER](
 		a_the_headerFormCallback.probe,
 	)
 	a_the_headerFormCallback.probe.tableStage.Commit()
@@ -7291,7 +7270,7 @@ func (a_tool_extensionsFormCallback *A_TOOL_EXTENSIONSFormCallback) OnSave() {
 	}
 
 	a_tool_extensionsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.A_TOOL_EXTENSIONS](
+	updateAndCommitTable[*models.A_TOOL_EXTENSIONS](
 		a_tool_extensionsFormCallback.probe,
 	)
 	a_tool_extensionsFormCallback.probe.tableStage.Commit()
@@ -7386,9 +7365,8 @@ func (datatype_definition_booleanFormCallback *DATATYPE_DEFINITION_BOOLEANFormCa
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_BOOLEAN"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_boolean_.GongGetReverseFieldOwner(
 					datatype_definition_booleanFormCallback.probe.stageOfInterest,
-					datatype_definition_boolean_,
 					&rf)
 
 				var ok bool
@@ -7445,7 +7423,7 @@ func (datatype_definition_booleanFormCallback *DATATYPE_DEFINITION_BOOLEANFormCa
 	}
 
 	datatype_definition_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_BOOLEAN](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_BOOLEAN](
 		datatype_definition_booleanFormCallback.probe,
 	)
 	datatype_definition_booleanFormCallback.probe.tableStage.Commit()
@@ -7540,9 +7518,8 @@ func (datatype_definition_dateFormCallback *DATATYPE_DEFINITION_DATEFormCallback
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_DATE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_date_.GongGetReverseFieldOwner(
 					datatype_definition_dateFormCallback.probe.stageOfInterest,
-					datatype_definition_date_,
 					&rf)
 
 				var ok bool
@@ -7599,7 +7576,7 @@ func (datatype_definition_dateFormCallback *DATATYPE_DEFINITION_DATEFormCallback
 	}
 
 	datatype_definition_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_DATE](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_DATE](
 		datatype_definition_dateFormCallback.probe,
 	)
 	datatype_definition_dateFormCallback.probe.tableStage.Commit()
@@ -7696,9 +7673,8 @@ func (datatype_definition_enumerationFormCallback *DATATYPE_DEFINITION_ENUMERATI
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_ENUMERATION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_enumeration_.GongGetReverseFieldOwner(
 					datatype_definition_enumerationFormCallback.probe.stageOfInterest,
-					datatype_definition_enumeration_,
 					&rf)
 
 				var ok bool
@@ -7755,7 +7731,7 @@ func (datatype_definition_enumerationFormCallback *DATATYPE_DEFINITION_ENUMERATI
 	}
 
 	datatype_definition_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_ENUMERATION](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_ENUMERATION](
 		datatype_definition_enumerationFormCallback.probe,
 	)
 	datatype_definition_enumerationFormCallback.probe.tableStage.Commit()
@@ -7854,9 +7830,8 @@ func (datatype_definition_integerFormCallback *DATATYPE_DEFINITION_INTEGERFormCa
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_INTEGER"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_integer_.GongGetReverseFieldOwner(
 					datatype_definition_integerFormCallback.probe.stageOfInterest,
-					datatype_definition_integer_,
 					&rf)
 
 				var ok bool
@@ -7913,7 +7888,7 @@ func (datatype_definition_integerFormCallback *DATATYPE_DEFINITION_INTEGERFormCa
 	}
 
 	datatype_definition_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_INTEGER](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_INTEGER](
 		datatype_definition_integerFormCallback.probe,
 	)
 	datatype_definition_integerFormCallback.probe.tableStage.Commit()
@@ -8014,9 +7989,8 @@ func (datatype_definition_realFormCallback *DATATYPE_DEFINITION_REALFormCallback
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_REAL"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_real_.GongGetReverseFieldOwner(
 					datatype_definition_realFormCallback.probe.stageOfInterest,
-					datatype_definition_real_,
 					&rf)
 
 				var ok bool
@@ -8073,7 +8047,7 @@ func (datatype_definition_realFormCallback *DATATYPE_DEFINITION_REALFormCallback
 	}
 
 	datatype_definition_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_REAL](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_REAL](
 		datatype_definition_realFormCallback.probe,
 	)
 	datatype_definition_realFormCallback.probe.tableStage.Commit()
@@ -8170,9 +8144,8 @@ func (datatype_definition_stringFormCallback *DATATYPE_DEFINITION_STRINGFormCall
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_STRING"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_string_.GongGetReverseFieldOwner(
 					datatype_definition_stringFormCallback.probe.stageOfInterest,
-					datatype_definition_string_,
 					&rf)
 
 				var ok bool
@@ -8229,7 +8202,7 @@ func (datatype_definition_stringFormCallback *DATATYPE_DEFINITION_STRINGFormCall
 	}
 
 	datatype_definition_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_STRING](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_STRING](
 		datatype_definition_stringFormCallback.probe,
 	)
 	datatype_definition_stringFormCallback.probe.tableStage.Commit()
@@ -8324,9 +8297,8 @@ func (datatype_definition_xhtmlFormCallback *DATATYPE_DEFINITION_XHTMLFormCallba
 				_ = rf
 				rf.GongstructName = "A_DATATYPES"
 				rf.Fieldname = "DATATYPE_DEFINITION_XHTML"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := datatype_definition_xhtml_.GongGetReverseFieldOwner(
 					datatype_definition_xhtmlFormCallback.probe.stageOfInterest,
-					datatype_definition_xhtml_,
 					&rf)
 
 				var ok bool
@@ -8383,7 +8355,7 @@ func (datatype_definition_xhtmlFormCallback *DATATYPE_DEFINITION_XHTMLFormCallba
 	}
 
 	datatype_definition_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.DATATYPE_DEFINITION_XHTML](
+	updateAndCommitTable[*models.DATATYPE_DEFINITION_XHTML](
 		datatype_definition_xhtmlFormCallback.probe,
 	)
 	datatype_definition_xhtmlFormCallback.probe.tableStage.Commit()
@@ -8464,7 +8436,7 @@ func (embedded_valueFormCallback *EMBEDDED_VALUEFormCallback) OnSave() {
 	}
 
 	embedded_valueFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.EMBEDDED_VALUE](
+	updateAndCommitTable[*models.EMBEDDED_VALUE](
 		embedded_valueFormCallback.probe,
 	)
 	embedded_valueFormCallback.probe.tableStage.Commit()
@@ -8561,9 +8533,8 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPECIFIED_VALUES"
 				rf.Fieldname = "ENUM_VALUE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := enum_value_.GongGetReverseFieldOwner(
 					enum_valueFormCallback.probe.stageOfInterest,
-					enum_value_,
 					&rf)
 
 				var ok bool
@@ -8620,7 +8591,7 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 	}
 
 	enum_valueFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.ENUM_VALUE](
+	updateAndCommitTable[*models.ENUM_VALUE](
 		enum_valueFormCallback.probe,
 	)
 	enum_valueFormCallback.probe.tableStage.Commit()
@@ -8699,7 +8670,7 @@ func (embeddedjpgimageFormCallback *EmbeddedJpgImageFormCallback) OnSave() {
 	}
 
 	embeddedjpgimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.EmbeddedJpgImage](
+	updateAndCommitTable[*models.EmbeddedJpgImage](
 		embeddedjpgimageFormCallback.probe,
 	)
 	embeddedjpgimageFormCallback.probe.tableStage.Commit()
@@ -8778,7 +8749,7 @@ func (embeddedpngimageFormCallback *EmbeddedPngImageFormCallback) OnSave() {
 	}
 
 	embeddedpngimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.EmbeddedPngImage](
+	updateAndCommitTable[*models.EmbeddedPngImage](
 		embeddedpngimageFormCallback.probe,
 	)
 	embeddedpngimageFormCallback.probe.tableStage.Commit()
@@ -8857,7 +8828,7 @@ func (embeddedsvgimageFormCallback *EmbeddedSvgImageFormCallback) OnSave() {
 	}
 
 	embeddedsvgimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.EmbeddedSvgImage](
+	updateAndCommitTable[*models.EmbeddedSvgImage](
 		embeddedsvgimageFormCallback.probe,
 	)
 	embeddedsvgimageFormCallback.probe.tableStage.Commit()
@@ -8934,7 +8905,7 @@ func (killFormCallback *KillFormCallback) OnSave() {
 	}
 
 	killFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Kill](
+	updateAndCommitTable[*models.Kill](
 		killFormCallback.probe,
 	)
 	killFormCallback.probe.tableStage.Commit()
@@ -9021,9 +8992,8 @@ func (map_attribute_definition_boolean_showinsubjectentryFormCallback *Map_ATTRI
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_boolean_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_boolean_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -9080,7 +9050,7 @@ func (map_attribute_definition_boolean_showinsubjectentryFormCallback *Map_ATTRI
 	}
 
 	map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](
 		map_attribute_definition_boolean_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_boolean_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -9167,9 +9137,8 @@ func (map_attribute_definition_boolean_showintableentryFormCallback *Map_ATTRIBU
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_boolean_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_boolean_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -9226,7 +9195,7 @@ func (map_attribute_definition_boolean_showintableentryFormCallback *Map_ATTRIBU
 	}
 
 	map_attribute_definition_boolean_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](
 		map_attribute_definition_boolean_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_boolean_showintableentryFormCallback.probe.tableStage.Commit()
@@ -9313,9 +9282,8 @@ func (map_attribute_definition_boolean_showintitleentryFormCallback *Map_ATTRIBU
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_boolean_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_boolean_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -9372,7 +9340,7 @@ func (map_attribute_definition_boolean_showintitleentryFormCallback *Map_ATTRIBU
 	}
 
 	map_attribute_definition_boolean_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](
 		map_attribute_definition_boolean_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_boolean_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -9459,9 +9427,8 @@ func (map_attribute_definition_date_showinsubjectentryFormCallback *Map_ATTRIBUT
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_date_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_date_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -9518,7 +9485,7 @@ func (map_attribute_definition_date_showinsubjectentryFormCallback *Map_ATTRIBUT
 	}
 
 	map_attribute_definition_date_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](
 		map_attribute_definition_date_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_date_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -9605,9 +9572,8 @@ func (map_attribute_definition_date_showintableentryFormCallback *Map_ATTRIBUTE_
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_date_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_date_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -9664,7 +9630,7 @@ func (map_attribute_definition_date_showintableentryFormCallback *Map_ATTRIBUTE_
 	}
 
 	map_attribute_definition_date_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](
 		map_attribute_definition_date_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_date_showintableentryFormCallback.probe.tableStage.Commit()
@@ -9751,9 +9717,8 @@ func (map_attribute_definition_date_showintitleentryFormCallback *Map_ATTRIBUTE_
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_date_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_date_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -9810,7 +9775,7 @@ func (map_attribute_definition_date_showintitleentryFormCallback *Map_ATTRIBUTE_
 	}
 
 	map_attribute_definition_date_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](
 		map_attribute_definition_date_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_date_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -9897,9 +9862,8 @@ func (map_attribute_definition_enumeration_showinsubjectentryFormCallback *Map_A
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_enumeration_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_enumeration_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -9956,7 +9920,7 @@ func (map_attribute_definition_enumeration_showinsubjectentryFormCallback *Map_A
 	}
 
 	map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](
 		map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_enumeration_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -10043,9 +10007,8 @@ func (map_attribute_definition_enumeration_showintableentryFormCallback *Map_ATT
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_enumeration_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_enumeration_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -10102,7 +10065,7 @@ func (map_attribute_definition_enumeration_showintableentryFormCallback *Map_ATT
 	}
 
 	map_attribute_definition_enumeration_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](
 		map_attribute_definition_enumeration_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_enumeration_showintableentryFormCallback.probe.tableStage.Commit()
@@ -10189,9 +10152,8 @@ func (map_attribute_definition_enumeration_showintitleentryFormCallback *Map_ATT
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_enumeration_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_enumeration_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -10248,7 +10210,7 @@ func (map_attribute_definition_enumeration_showintitleentryFormCallback *Map_ATT
 	}
 
 	map_attribute_definition_enumeration_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](
 		map_attribute_definition_enumeration_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_enumeration_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -10335,9 +10297,8 @@ func (map_attribute_definition_integer_showinsubjectentryFormCallback *Map_ATTRI
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_integer_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_integer_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -10394,7 +10355,7 @@ func (map_attribute_definition_integer_showinsubjectentryFormCallback *Map_ATTRI
 	}
 
 	map_attribute_definition_integer_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](
 		map_attribute_definition_integer_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_integer_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -10481,9 +10442,8 @@ func (map_attribute_definition_integer_showintableentryFormCallback *Map_ATTRIBU
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_integer_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_integer_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -10540,7 +10500,7 @@ func (map_attribute_definition_integer_showintableentryFormCallback *Map_ATTRIBU
 	}
 
 	map_attribute_definition_integer_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](
 		map_attribute_definition_integer_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_integer_showintableentryFormCallback.probe.tableStage.Commit()
@@ -10627,9 +10587,8 @@ func (map_attribute_definition_integer_showintitleentryFormCallback *Map_ATTRIBU
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_integer_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_integer_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -10686,7 +10645,7 @@ func (map_attribute_definition_integer_showintitleentryFormCallback *Map_ATTRIBU
 	}
 
 	map_attribute_definition_integer_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](
 		map_attribute_definition_integer_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_integer_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -10773,9 +10732,8 @@ func (map_attribute_definition_real_showinsubjectentryFormCallback *Map_ATTRIBUT
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_real_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_real_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -10832,7 +10790,7 @@ func (map_attribute_definition_real_showinsubjectentryFormCallback *Map_ATTRIBUT
 	}
 
 	map_attribute_definition_real_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](
 		map_attribute_definition_real_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_real_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -10919,9 +10877,8 @@ func (map_attribute_definition_real_showintableentryFormCallback *Map_ATTRIBUTE_
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_real_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_real_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -10978,7 +10935,7 @@ func (map_attribute_definition_real_showintableentryFormCallback *Map_ATTRIBUTE_
 	}
 
 	map_attribute_definition_real_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](
 		map_attribute_definition_real_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_real_showintableentryFormCallback.probe.tableStage.Commit()
@@ -11065,9 +11022,8 @@ func (map_attribute_definition_real_showintitleentryFormCallback *Map_ATTRIBUTE_
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_real_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_real_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -11124,7 +11080,7 @@ func (map_attribute_definition_real_showintitleentryFormCallback *Map_ATTRIBUTE_
 	}
 
 	map_attribute_definition_real_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](
 		map_attribute_definition_real_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_real_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -11211,9 +11167,8 @@ func (map_attribute_definition_string_showinsubjectentryFormCallback *Map_ATTRIB
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_string_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_string_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -11270,7 +11225,7 @@ func (map_attribute_definition_string_showinsubjectentryFormCallback *Map_ATTRIB
 	}
 
 	map_attribute_definition_string_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](
 		map_attribute_definition_string_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_string_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -11357,9 +11312,8 @@ func (map_attribute_definition_string_showintableentryFormCallback *Map_ATTRIBUT
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_string_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_string_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -11416,7 +11370,7 @@ func (map_attribute_definition_string_showintableentryFormCallback *Map_ATTRIBUT
 	}
 
 	map_attribute_definition_string_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](
 		map_attribute_definition_string_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_string_showintableentryFormCallback.probe.tableStage.Commit()
@@ -11503,9 +11457,8 @@ func (map_attribute_definition_string_showintitleentryFormCallback *Map_ATTRIBUT
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_string_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_string_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -11562,7 +11515,7 @@ func (map_attribute_definition_string_showintitleentryFormCallback *Map_ATTRIBUT
 	}
 
 	map_attribute_definition_string_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](
 		map_attribute_definition_string_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_string_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -11649,9 +11602,8 @@ func (map_attribute_definition_xhtml_showinsubjectentryFormCallback *Map_ATTRIBU
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_xhtml_showinsubjectentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_xhtml_showinsubjectentry_,
 					&rf)
 
 				var ok bool
@@ -11708,7 +11660,7 @@ func (map_attribute_definition_xhtml_showinsubjectentryFormCallback *Map_ATTRIBU
 	}
 
 	map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](
 		map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe,
 	)
 	map_attribute_definition_xhtml_showinsubjectentryFormCallback.probe.tableStage.Commit()
@@ -11795,9 +11747,8 @@ func (map_attribute_definition_xhtml_showintableentryFormCallback *Map_ATTRIBUTE
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_xhtml_showintableentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_xhtml_showintableentry_,
 					&rf)
 
 				var ok bool
@@ -11854,7 +11805,7 @@ func (map_attribute_definition_xhtml_showintableentryFormCallback *Map_ATTRIBUTE
 	}
 
 	map_attribute_definition_xhtml_showintableentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](
 		map_attribute_definition_xhtml_showintableentryFormCallback.probe,
 	)
 	map_attribute_definition_xhtml_showintableentryFormCallback.probe.tableStage.Commit()
@@ -11941,9 +11892,8 @@ func (map_attribute_definition_xhtml_showintitleentryFormCallback *Map_ATTRIBUTE
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_attribute_definition_xhtml_showintitleentry_.GongGetReverseFieldOwner(
 					map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest,
-					map_attribute_definition_xhtml_showintitleentry_,
 					&rf)
 
 				var ok bool
@@ -12000,7 +11950,7 @@ func (map_attribute_definition_xhtml_showintitleentryFormCallback *Map_ATTRIBUTE
 	}
 
 	map_attribute_definition_xhtml_showintitleentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](
+	updateAndCommitTable[*models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](
 		map_attribute_definition_xhtml_showintitleentryFormCallback.probe,
 	)
 	map_attribute_definition_xhtml_showintitleentryFormCallback.probe.tableStage.Commit()
@@ -12087,9 +12037,8 @@ func (map_specification_nodes_expandedentryFormCallback *Map_SPECIFICATION_Nodes
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_specification_nodes_expandedentry_.GongGetReverseFieldOwner(
 					map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest,
-					map_specification_nodes_expandedentry_,
 					&rf)
 
 				var ok bool
@@ -12146,7 +12095,7 @@ func (map_specification_nodes_expandedentryFormCallback *Map_SPECIFICATION_Nodes
 	}
 
 	map_specification_nodes_expandedentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_SPECIFICATION_Nodes_expandedEntry](
+	updateAndCommitTable[*models.Map_SPECIFICATION_Nodes_expandedEntry](
 		map_specification_nodes_expandedentryFormCallback.probe,
 	)
 	map_specification_nodes_expandedentryFormCallback.probe.tableStage.Commit()
@@ -12233,9 +12182,8 @@ func (map_spec_object_type_isnodeexpandedentryFormCallback *Map_SPEC_OBJECT_TYPE
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_spec_object_type_isnodeexpandedentry_.GongGetReverseFieldOwner(
 					map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest,
-					map_spec_object_type_isnodeexpandedentry_,
 					&rf)
 
 				var ok bool
@@ -12292,7 +12240,7 @@ func (map_spec_object_type_isnodeexpandedentryFormCallback *Map_SPEC_OBJECT_TYPE
 	}
 
 	map_spec_object_type_isnodeexpandedentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](
+	updateAndCommitTable[*models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](
 		map_spec_object_type_isnodeexpandedentryFormCallback.probe,
 	)
 	map_spec_object_type_isnodeexpandedentryFormCallback.probe.tableStage.Commit()
@@ -12379,9 +12327,8 @@ func (map_spec_object_type_showidentifierentryFormCallback *Map_SPEC_OBJECT_TYPE
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_spec_object_type_showidentifierentry_.GongGetReverseFieldOwner(
 					map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest,
-					map_spec_object_type_showidentifierentry_,
 					&rf)
 
 				var ok bool
@@ -12438,7 +12385,7 @@ func (map_spec_object_type_showidentifierentryFormCallback *Map_SPEC_OBJECT_TYPE
 	}
 
 	map_spec_object_type_showidentifierentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](
+	updateAndCommitTable[*models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](
 		map_spec_object_type_showidentifierentryFormCallback.probe,
 	)
 	map_spec_object_type_showidentifierentryFormCallback.probe.tableStage.Commit()
@@ -12525,9 +12472,8 @@ func (map_spec_object_type_shownameentryFormCallback *Map_SPEC_OBJECT_TYPE_showN
 				_ = rf
 				rf.GongstructName = "RenderingConfiguration"
 				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := map_spec_object_type_shownameentry_.GongGetReverseFieldOwner(
 					map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest,
-					map_spec_object_type_shownameentry_,
 					&rf)
 
 				var ok bool
@@ -12584,7 +12530,7 @@ func (map_spec_object_type_shownameentryFormCallback *Map_SPEC_OBJECT_TYPE_showN
 	}
 
 	map_spec_object_type_shownameentryFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](
+	updateAndCommitTable[*models.Map_SPEC_OBJECT_TYPE_showNameEntry](
 		map_spec_object_type_shownameentryFormCallback.probe,
 	)
 	map_spec_object_type_shownameentryFormCallback.probe.tableStage.Commit()
@@ -12687,9 +12633,8 @@ func (relation_groupFormCallback *RELATION_GROUPFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPEC_RELATION_GROUPS"
 				rf.Fieldname = "RELATION_GROUP"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := relation_group_.GongGetReverseFieldOwner(
 					relation_groupFormCallback.probe.stageOfInterest,
-					relation_group_,
 					&rf)
 
 				var ok bool
@@ -12746,7 +12691,7 @@ func (relation_groupFormCallback *RELATION_GROUPFormCallback) OnSave() {
 	}
 
 	relation_groupFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.RELATION_GROUP](
+	updateAndCommitTable[*models.RELATION_GROUP](
 		relation_groupFormCallback.probe,
 	)
 	relation_groupFormCallback.probe.tableStage.Commit()
@@ -12843,9 +12788,8 @@ func (relation_group_typeFormCallback *RELATION_GROUP_TYPEFormCallback) OnSave()
 				_ = rf
 				rf.GongstructName = "A_SPEC_TYPES"
 				rf.Fieldname = "RELATION_GROUP_TYPE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := relation_group_type_.GongGetReverseFieldOwner(
 					relation_group_typeFormCallback.probe.stageOfInterest,
-					relation_group_type_,
 					&rf)
 
 				var ok bool
@@ -12902,7 +12846,7 @@ func (relation_group_typeFormCallback *RELATION_GROUP_TYPEFormCallback) OnSave()
 	}
 
 	relation_group_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.RELATION_GROUP_TYPE](
+	updateAndCommitTable[*models.RELATION_GROUP_TYPE](
 		relation_group_typeFormCallback.probe,
 	)
 	relation_group_typeFormCallback.probe.tableStage.Commit()
@@ -12987,7 +12931,7 @@ func (req_ifFormCallback *REQ_IFFormCallback) OnSave() {
 	}
 
 	req_ifFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.REQ_IF](
+	updateAndCommitTable[*models.REQ_IF](
 		req_ifFormCallback.probe,
 	)
 	req_ifFormCallback.probe.tableStage.Commit()
@@ -13076,7 +13020,7 @@ func (req_if_contentFormCallback *REQ_IF_CONTENTFormCallback) OnSave() {
 	}
 
 	req_if_contentFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.REQ_IF_CONTENT](
+	updateAndCommitTable[*models.REQ_IF_CONTENT](
 		req_if_contentFormCallback.probe,
 	)
 	req_if_contentFormCallback.probe.tableStage.Commit()
@@ -13169,7 +13113,7 @@ func (req_if_headerFormCallback *REQ_IF_HEADERFormCallback) OnSave() {
 	}
 
 	req_if_headerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.REQ_IF_HEADER](
+	updateAndCommitTable[*models.REQ_IF_HEADER](
 		req_if_headerFormCallback.probe,
 	)
 	req_if_headerFormCallback.probe.tableStage.Commit()
@@ -13254,9 +13198,8 @@ func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSa
 				_ = rf
 				rf.GongstructName = "A_TOOL_EXTENSIONS"
 				rf.Fieldname = "REQ_IF_TOOL_EXTENSION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := req_if_tool_extension_.GongGetReverseFieldOwner(
 					req_if_tool_extensionFormCallback.probe.stageOfInterest,
-					req_if_tool_extension_,
 					&rf)
 
 				var ok bool
@@ -13313,7 +13256,7 @@ func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSa
 	}
 
 	req_if_tool_extensionFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.REQ_IF_TOOL_EXTENSION](
+	updateAndCommitTable[*models.REQ_IF_TOOL_EXTENSION](
 		req_if_tool_extensionFormCallback.probe,
 	)
 	req_if_tool_extensionFormCallback.probe.tableStage.Commit()
@@ -14017,7 +13960,7 @@ func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) On
 	}
 
 	renderingconfigurationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.RenderingConfiguration](
+	updateAndCommitTable[*models.RenderingConfiguration](
 		renderingconfigurationFormCallback.probe,
 	)
 	renderingconfigurationFormCallback.probe.tableStage.Commit()
@@ -14118,9 +14061,8 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPECIFICATIONS"
 				rf.Fieldname = "SPECIFICATION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := specification_.GongGetReverseFieldOwner(
 					specificationFormCallback.probe.stageOfInterest,
-					specification_,
 					&rf)
 
 				var ok bool
@@ -14177,7 +14119,7 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 	}
 
 	specificationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPECIFICATION](
+	updateAndCommitTable[*models.SPECIFICATION](
 		specificationFormCallback.probe,
 	)
 	specificationFormCallback.probe.tableStage.Commit()
@@ -14274,9 +14216,8 @@ func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPEC_TYPES"
 				rf.Fieldname = "SPECIFICATION_TYPE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := specification_type_.GongGetReverseFieldOwner(
 					specification_typeFormCallback.probe.stageOfInterest,
-					specification_type_,
 					&rf)
 
 				var ok bool
@@ -14333,7 +14274,7 @@ func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
 	}
 
 	specification_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPECIFICATION_TYPE](
+	updateAndCommitTable[*models.SPECIFICATION_TYPE](
 		specification_typeFormCallback.probe,
 	)
 	specification_typeFormCallback.probe.tableStage.Commit()
@@ -14438,9 +14379,8 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_CHILDREN"
 				rf.Fieldname = "SPEC_HIERARCHY"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := spec_hierarchy_.GongGetReverseFieldOwner(
 					spec_hierarchyFormCallback.probe.stageOfInterest,
-					spec_hierarchy_,
 					&rf)
 
 				var ok bool
@@ -14497,7 +14437,7 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 	}
 
 	spec_hierarchyFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPEC_HIERARCHY](
+	updateAndCommitTable[*models.SPEC_HIERARCHY](
 		spec_hierarchyFormCallback.probe,
 	)
 	spec_hierarchyFormCallback.probe.tableStage.Commit()
@@ -14596,9 +14536,8 @@ func (spec_objectFormCallback *SPEC_OBJECTFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPEC_OBJECTS"
 				rf.Fieldname = "SPEC_OBJECT"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := spec_object_.GongGetReverseFieldOwner(
 					spec_objectFormCallback.probe.stageOfInterest,
-					spec_object_,
 					&rf)
 
 				var ok bool
@@ -14655,7 +14594,7 @@ func (spec_objectFormCallback *SPEC_OBJECTFormCallback) OnSave() {
 	}
 
 	spec_objectFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPEC_OBJECT](
+	updateAndCommitTable[*models.SPEC_OBJECT](
 		spec_objectFormCallback.probe,
 	)
 	spec_objectFormCallback.probe.tableStage.Commit()
@@ -14752,9 +14691,8 @@ func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPEC_TYPES"
 				rf.Fieldname = "SPEC_OBJECT_TYPE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := spec_object_type_.GongGetReverseFieldOwner(
 					spec_object_typeFormCallback.probe.stageOfInterest,
-					spec_object_type_,
 					&rf)
 
 				var ok bool
@@ -14811,7 +14749,7 @@ func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
 	}
 
 	spec_object_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPEC_OBJECT_TYPE](
+	updateAndCommitTable[*models.SPEC_OBJECT_TYPE](
 		spec_object_typeFormCallback.probe,
 	)
 	spec_object_typeFormCallback.probe.tableStage.Commit()
@@ -14914,9 +14852,8 @@ func (spec_relationFormCallback *SPEC_RELATIONFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPEC_RELATIONS"
 				rf.Fieldname = "SPEC_RELATION"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := spec_relation_.GongGetReverseFieldOwner(
 					spec_relationFormCallback.probe.stageOfInterest,
-					spec_relation_,
 					&rf)
 
 				var ok bool
@@ -14973,7 +14910,7 @@ func (spec_relationFormCallback *SPEC_RELATIONFormCallback) OnSave() {
 	}
 
 	spec_relationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPEC_RELATION](
+	updateAndCommitTable[*models.SPEC_RELATION](
 		spec_relationFormCallback.probe,
 	)
 	spec_relationFormCallback.probe.tableStage.Commit()
@@ -15070,9 +15007,8 @@ func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
 				_ = rf
 				rf.GongstructName = "A_SPEC_TYPES"
 				rf.Fieldname = "SPEC_RELATION_TYPE"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := spec_relation_type_.GongGetReverseFieldOwner(
 					spec_relation_typeFormCallback.probe.stageOfInterest,
-					spec_relation_type_,
 					&rf)
 
 				var ok bool
@@ -15129,7 +15065,7 @@ func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
 	}
 
 	spec_relation_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.SPEC_RELATION_TYPE](
+	updateAndCommitTable[*models.SPEC_RELATION_TYPE](
 		spec_relation_typeFormCallback.probe,
 	)
 	spec_relation_typeFormCallback.probe.tableStage.Commit()
@@ -15239,7 +15175,7 @@ func (staticwebsiteFormCallback *StaticWebSiteFormCallback) OnSave() {
 	}
 
 	staticwebsiteFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.StaticWebSite](
+	updateAndCommitTable[*models.StaticWebSite](
 		staticwebsiteFormCallback.probe,
 	)
 	staticwebsiteFormCallback.probe.tableStage.Commit()
@@ -15351,9 +15287,8 @@ func (staticwebsitechapterFormCallback *StaticWebSiteChapterFormCallback) OnSave
 				_ = rf
 				rf.GongstructName = "StaticWebSite"
 				rf.Fieldname = "Chapters"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := staticwebsitechapter_.GongGetReverseFieldOwner(
 					staticwebsitechapterFormCallback.probe.stageOfInterest,
-					staticwebsitechapter_,
 					&rf)
 
 				var ok bool
@@ -15410,7 +15345,7 @@ func (staticwebsitechapterFormCallback *StaticWebSiteChapterFormCallback) OnSave
 	}
 
 	staticwebsitechapterFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.StaticWebSiteChapter](
+	updateAndCommitTable[*models.StaticWebSiteChapter](
 		staticwebsitechapterFormCallback.probe,
 	)
 	staticwebsitechapterFormCallback.probe.tableStage.Commit()
@@ -15493,7 +15428,7 @@ func (staticwebsitegeneratedimageFormCallback *StaticWebSiteGeneratedImageFormCa
 	}
 
 	staticwebsitegeneratedimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.StaticWebSiteGeneratedImage](
+	updateAndCommitTable[*models.StaticWebSiteGeneratedImage](
 		staticwebsitegeneratedimageFormCallback.probe,
 	)
 	staticwebsitegeneratedimageFormCallback.probe.tableStage.Commit()
@@ -15576,7 +15511,7 @@ func (staticwebsiteimageFormCallback *StaticWebSiteImageFormCallback) OnSave() {
 	}
 
 	staticwebsiteimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.StaticWebSiteImage](
+	updateAndCommitTable[*models.StaticWebSiteImage](
 		staticwebsiteimageFormCallback.probe,
 	)
 	staticwebsiteimageFormCallback.probe.tableStage.Commit()
@@ -15665,9 +15600,8 @@ func (staticwebsiteparagraphFormCallback *StaticWebSiteParagraphFormCallback) On
 				_ = rf
 				rf.GongstructName = "StaticWebSiteChapter"
 				rf.Fieldname = "Paragraphs"
-				formerAssociationSource := models.GetReverseFieldOwner(
+				formerAssociationSource := staticwebsiteparagraph_.GongGetReverseFieldOwner(
 					staticwebsiteparagraphFormCallback.probe.stageOfInterest,
-					staticwebsiteparagraph_,
 					&rf)
 
 				var ok bool
@@ -15724,7 +15658,7 @@ func (staticwebsiteparagraphFormCallback *StaticWebSiteParagraphFormCallback) On
 	}
 
 	staticwebsiteparagraphFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.StaticWebSiteParagraph](
+	updateAndCommitTable[*models.StaticWebSiteParagraph](
 		staticwebsiteparagraphFormCallback.probe,
 	)
 	staticwebsiteparagraphFormCallback.probe.tableStage.Commit()
@@ -15805,7 +15739,7 @@ func (xhtml_contentFormCallback *XHTML_CONTENTFormCallback) OnSave() {
 	}
 
 	xhtml_contentFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[models.XHTML_CONTENT](
+	updateAndCommitTable[*models.XHTML_CONTENT](
 		xhtml_contentFormCallback.probe,
 	)
 	xhtml_contentFormCallback.probe.tableStage.Commit()

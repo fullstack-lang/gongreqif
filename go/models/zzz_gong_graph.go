@@ -1,6 +1,373 @@
 // generated code - do not edit
 package models
 
+func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instance Type) (ok bool) {
+
+	switch target := any(instance).(type) {
+	// insertion point for stage
+	case *ALTERNATIVE_ID:
+		ok = stage.IsStagedALTERNATIVE_ID(target)
+
+	case *ATTRIBUTE_DEFINITION_BOOLEAN:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_BOOLEAN(target)
+
+	case *ATTRIBUTE_DEFINITION_DATE:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_DATE(target)
+
+	case *ATTRIBUTE_DEFINITION_ENUMERATION:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_ENUMERATION(target)
+
+	case *ATTRIBUTE_DEFINITION_INTEGER:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_INTEGER(target)
+
+	case *ATTRIBUTE_DEFINITION_REAL:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_STRING:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING(target)
+
+	case *ATTRIBUTE_DEFINITION_XHTML:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_XHTML(target)
+
+	case *ATTRIBUTE_VALUE_BOOLEAN:
+		ok = stage.IsStagedATTRIBUTE_VALUE_BOOLEAN(target)
+
+	case *ATTRIBUTE_VALUE_DATE:
+		ok = stage.IsStagedATTRIBUTE_VALUE_DATE(target)
+
+	case *ATTRIBUTE_VALUE_ENUMERATION:
+		ok = stage.IsStagedATTRIBUTE_VALUE_ENUMERATION(target)
+
+	case *ATTRIBUTE_VALUE_INTEGER:
+		ok = stage.IsStagedATTRIBUTE_VALUE_INTEGER(target)
+
+	case *ATTRIBUTE_VALUE_REAL:
+		ok = stage.IsStagedATTRIBUTE_VALUE_REAL(target)
+
+	case *ATTRIBUTE_VALUE_STRING:
+		ok = stage.IsStagedATTRIBUTE_VALUE_STRING(target)
+
+	case *ATTRIBUTE_VALUE_XHTML:
+		ok = stage.IsStagedATTRIBUTE_VALUE_XHTML(target)
+
+	case *A_ALTERNATIVE_ID:
+		ok = stage.IsStagedA_ALTERNATIVE_ID(target)
+
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_BOOLEAN_REF(target)
+
+	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_DATE_REF(target)
+
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_ENUMERATION_REF(target)
+
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_INTEGER_REF(target)
+
+	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_REAL_REF(target)
+
+	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_STRING_REF(target)
+
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		ok = stage.IsStagedA_ATTRIBUTE_DEFINITION_XHTML_REF(target)
+
+	case *A_ATTRIBUTE_VALUE_BOOLEAN:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_BOOLEAN(target)
+
+	case *A_ATTRIBUTE_VALUE_DATE:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_DATE(target)
+
+	case *A_ATTRIBUTE_VALUE_ENUMERATION:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_ENUMERATION(target)
+
+	case *A_ATTRIBUTE_VALUE_INTEGER:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_INTEGER(target)
+
+	case *A_ATTRIBUTE_VALUE_REAL:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_REAL(target)
+
+	case *A_ATTRIBUTE_VALUE_STRING:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_STRING(target)
+
+	case *A_ATTRIBUTE_VALUE_XHTML:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_XHTML(target)
+
+	case *A_ATTRIBUTE_VALUE_XHTML_1:
+		ok = stage.IsStagedA_ATTRIBUTE_VALUE_XHTML_1(target)
+
+	case *A_CHILDREN:
+		ok = stage.IsStagedA_CHILDREN(target)
+
+	case *A_CORE_CONTENT:
+		ok = stage.IsStagedA_CORE_CONTENT(target)
+
+	case *A_DATATYPES:
+		ok = stage.IsStagedA_DATATYPES(target)
+
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_BOOLEAN_REF(target)
+
+	case *A_DATATYPE_DEFINITION_DATE_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_DATE_REF(target)
+
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_ENUMERATION_REF(target)
+
+	case *A_DATATYPE_DEFINITION_INTEGER_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_INTEGER_REF(target)
+
+	case *A_DATATYPE_DEFINITION_REAL_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_REAL_REF(target)
+
+	case *A_DATATYPE_DEFINITION_STRING_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_STRING_REF(target)
+
+	case *A_DATATYPE_DEFINITION_XHTML_REF:
+		ok = stage.IsStagedA_DATATYPE_DEFINITION_XHTML_REF(target)
+
+	case *A_EDITABLE_ATTS:
+		ok = stage.IsStagedA_EDITABLE_ATTS(target)
+
+	case *A_ENUM_VALUE_REF:
+		ok = stage.IsStagedA_ENUM_VALUE_REF(target)
+
+	case *A_OBJECT:
+		ok = stage.IsStagedA_OBJECT(target)
+
+	case *A_PROPERTIES:
+		ok = stage.IsStagedA_PROPERTIES(target)
+
+	case *A_RELATION_GROUP_TYPE_REF:
+		ok = stage.IsStagedA_RELATION_GROUP_TYPE_REF(target)
+
+	case *A_SOURCE_1:
+		ok = stage.IsStagedA_SOURCE_1(target)
+
+	case *A_SOURCE_SPECIFICATION_1:
+		ok = stage.IsStagedA_SOURCE_SPECIFICATION_1(target)
+
+	case *A_SPECIFICATIONS:
+		ok = stage.IsStagedA_SPECIFICATIONS(target)
+
+	case *A_SPECIFICATION_TYPE_REF:
+		ok = stage.IsStagedA_SPECIFICATION_TYPE_REF(target)
+
+	case *A_SPECIFIED_VALUES:
+		ok = stage.IsStagedA_SPECIFIED_VALUES(target)
+
+	case *A_SPEC_ATTRIBUTES:
+		ok = stage.IsStagedA_SPEC_ATTRIBUTES(target)
+
+	case *A_SPEC_OBJECTS:
+		ok = stage.IsStagedA_SPEC_OBJECTS(target)
+
+	case *A_SPEC_OBJECT_TYPE_REF:
+		ok = stage.IsStagedA_SPEC_OBJECT_TYPE_REF(target)
+
+	case *A_SPEC_RELATIONS:
+		ok = stage.IsStagedA_SPEC_RELATIONS(target)
+
+	case *A_SPEC_RELATION_GROUPS:
+		ok = stage.IsStagedA_SPEC_RELATION_GROUPS(target)
+
+	case *A_SPEC_RELATION_REF:
+		ok = stage.IsStagedA_SPEC_RELATION_REF(target)
+
+	case *A_SPEC_RELATION_TYPE_REF:
+		ok = stage.IsStagedA_SPEC_RELATION_TYPE_REF(target)
+
+	case *A_SPEC_TYPES:
+		ok = stage.IsStagedA_SPEC_TYPES(target)
+
+	case *A_THE_HEADER:
+		ok = stage.IsStagedA_THE_HEADER(target)
+
+	case *A_TOOL_EXTENSIONS:
+		ok = stage.IsStagedA_TOOL_EXTENSIONS(target)
+
+	case *DATATYPE_DEFINITION_BOOLEAN:
+		ok = stage.IsStagedDATATYPE_DEFINITION_BOOLEAN(target)
+
+	case *DATATYPE_DEFINITION_DATE:
+		ok = stage.IsStagedDATATYPE_DEFINITION_DATE(target)
+
+	case *DATATYPE_DEFINITION_ENUMERATION:
+		ok = stage.IsStagedDATATYPE_DEFINITION_ENUMERATION(target)
+
+	case *DATATYPE_DEFINITION_INTEGER:
+		ok = stage.IsStagedDATATYPE_DEFINITION_INTEGER(target)
+
+	case *DATATYPE_DEFINITION_REAL:
+		ok = stage.IsStagedDATATYPE_DEFINITION_REAL(target)
+
+	case *DATATYPE_DEFINITION_STRING:
+		ok = stage.IsStagedDATATYPE_DEFINITION_STRING(target)
+
+	case *DATATYPE_DEFINITION_XHTML:
+		ok = stage.IsStagedDATATYPE_DEFINITION_XHTML(target)
+
+	case *EMBEDDED_VALUE:
+		ok = stage.IsStagedEMBEDDED_VALUE(target)
+
+	case *ENUM_VALUE:
+		ok = stage.IsStagedENUM_VALUE(target)
+
+	case *EmbeddedJpgImage:
+		ok = stage.IsStagedEmbeddedJpgImage(target)
+
+	case *EmbeddedPngImage:
+		ok = stage.IsStagedEmbeddedPngImage(target)
+
+	case *EmbeddedSvgImage:
+		ok = stage.IsStagedEmbeddedSvgImage(target)
+
+	case *Kill:
+		ok = stage.IsStagedKill(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry(target)
+
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+		ok = stage.IsStagedMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry(target)
+
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
+		ok = stage.IsStagedMap_SPECIFICATION_Nodes_expandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showIdentifierEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
+	case *RELATION_GROUP:
+		ok = stage.IsStagedRELATION_GROUP(target)
+
+	case *RELATION_GROUP_TYPE:
+		ok = stage.IsStagedRELATION_GROUP_TYPE(target)
+
+	case *REQ_IF:
+		ok = stage.IsStagedREQ_IF(target)
+
+	case *REQ_IF_CONTENT:
+		ok = stage.IsStagedREQ_IF_CONTENT(target)
+
+	case *REQ_IF_HEADER:
+		ok = stage.IsStagedREQ_IF_HEADER(target)
+
+	case *REQ_IF_TOOL_EXTENSION:
+		ok = stage.IsStagedREQ_IF_TOOL_EXTENSION(target)
+
+	case *RenderingConfiguration:
+		ok = stage.IsStagedRenderingConfiguration(target)
+
+	case *SPECIFICATION:
+		ok = stage.IsStagedSPECIFICATION(target)
+
+	case *SPECIFICATION_TYPE:
+		ok = stage.IsStagedSPECIFICATION_TYPE(target)
+
+	case *SPEC_HIERARCHY:
+		ok = stage.IsStagedSPEC_HIERARCHY(target)
+
+	case *SPEC_OBJECT:
+		ok = stage.IsStagedSPEC_OBJECT(target)
+
+	case *SPEC_OBJECT_TYPE:
+		ok = stage.IsStagedSPEC_OBJECT_TYPE(target)
+
+	case *SPEC_RELATION:
+		ok = stage.IsStagedSPEC_RELATION(target)
+
+	case *SPEC_RELATION_TYPE:
+		ok = stage.IsStagedSPEC_RELATION_TYPE(target)
+
+	case *StaticWebSite:
+		ok = stage.IsStagedStaticWebSite(target)
+
+	case *StaticWebSiteChapter:
+		ok = stage.IsStagedStaticWebSiteChapter(target)
+
+	case *StaticWebSiteGeneratedImage:
+		ok = stage.IsStagedStaticWebSiteGeneratedImage(target)
+
+	case *StaticWebSiteImage:
+		ok = stage.IsStagedStaticWebSiteImage(target)
+
+	case *StaticWebSiteParagraph:
+		ok = stage.IsStagedStaticWebSiteParagraph(target)
+
+	case *XHTML_CONTENT:
+		ok = stage.IsStagedXHTML_CONTENT(target)
+
+	default:
+		_ = target
+	}
+	return
+}
+
 func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	switch target := any(instance).(type) {

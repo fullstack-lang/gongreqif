@@ -12,129 +12,132 @@ import (
 )
 
 func SerializeStage(stage *Stage, filename string) {
+	SerializeStage2(stage, filename, false)
+}
+func SerializeStage2(stage *Stage, filename string, addIDs bool) {
 
 	f := excelize.NewFile()
 	{
 		// insertion point
-		SerializeExcelizePointerToGongstruct[*ALTERNATIVE_ID](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_BOOLEAN](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_DATE](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_ENUMERATION](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_INTEGER](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_REAL](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_STRING](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_DEFINITION_XHTML](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_BOOLEAN](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_DATE](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_ENUMERATION](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_INTEGER](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_REAL](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_STRING](stage, f)
-		SerializeExcelizePointerToGongstruct[*ATTRIBUTE_VALUE_XHTML](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ALTERNATIVE_ID](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_DATE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_INTEGER_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_REAL_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_STRING_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_DEFINITION_XHTML_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_BOOLEAN](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_DATE](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_ENUMERATION](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_INTEGER](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_REAL](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_STRING](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_XHTML](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ATTRIBUTE_VALUE_XHTML_1](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_CHILDREN](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_CORE_CONTENT](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPES](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_BOOLEAN_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_DATE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_ENUMERATION_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_INTEGER_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_REAL_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_STRING_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_DATATYPE_DEFINITION_XHTML_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_EDITABLE_ATTS](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_ENUM_VALUE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_OBJECT](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_PROPERTIES](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_RELATION_GROUP_TYPE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SOURCE_1](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SOURCE_SPECIFICATION_1](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPECIFICATIONS](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPECIFICATION_TYPE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPECIFIED_VALUES](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_ATTRIBUTES](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_OBJECTS](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_OBJECT_TYPE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_RELATIONS](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_RELATION_GROUPS](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_RELATION_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_RELATION_TYPE_REF](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_SPEC_TYPES](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_THE_HEADER](stage, f)
-		SerializeExcelizePointerToGongstruct[*A_TOOL_EXTENSIONS](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_BOOLEAN](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_DATE](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_ENUMERATION](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_INTEGER](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_REAL](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_STRING](stage, f)
-		SerializeExcelizePointerToGongstruct[*DATATYPE_DEFINITION_XHTML](stage, f)
-		SerializeExcelizePointerToGongstruct[*EMBEDDED_VALUE](stage, f)
-		SerializeExcelizePointerToGongstruct[*ENUM_VALUE](stage, f)
-		SerializeExcelizePointerToGongstruct[*EmbeddedJpgImage](stage, f)
-		SerializeExcelizePointerToGongstruct[*EmbeddedPngImage](stage, f)
-		SerializeExcelizePointerToGongstruct[*EmbeddedSvgImage](stage, f)
-		SerializeExcelizePointerToGongstruct[*Kill](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_SPECIFICATION_Nodes_expandedEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*Map_SPEC_OBJECT_TYPE_showNameEntry](stage, f)
-		SerializeExcelizePointerToGongstruct[*RELATION_GROUP](stage, f)
-		SerializeExcelizePointerToGongstruct[*RELATION_GROUP_TYPE](stage, f)
-		SerializeExcelizePointerToGongstruct[*REQ_IF](stage, f)
-		SerializeExcelizePointerToGongstruct[*REQ_IF_CONTENT](stage, f)
-		SerializeExcelizePointerToGongstruct[*REQ_IF_HEADER](stage, f)
-		SerializeExcelizePointerToGongstruct[*REQ_IF_TOOL_EXTENSION](stage, f)
-		SerializeExcelizePointerToGongstruct[*RenderingConfiguration](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPECIFICATION](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPECIFICATION_TYPE](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPEC_HIERARCHY](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPEC_OBJECT](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPEC_OBJECT_TYPE](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPEC_RELATION](stage, f)
-		SerializeExcelizePointerToGongstruct[*SPEC_RELATION_TYPE](stage, f)
-		SerializeExcelizePointerToGongstruct[*StaticWebSite](stage, f)
-		SerializeExcelizePointerToGongstruct[*StaticWebSiteChapter](stage, f)
-		SerializeExcelizePointerToGongstruct[*StaticWebSiteGeneratedImage](stage, f)
-		SerializeExcelizePointerToGongstruct[*StaticWebSiteImage](stage, f)
-		SerializeExcelizePointerToGongstruct[*StaticWebSiteParagraph](stage, f)
-		SerializeExcelizePointerToGongstruct[*XHTML_CONTENT](stage, f)
+		SerializeExcelizePointerToGongstruct2[*ALTERNATIVE_ID](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_BOOLEAN](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_DATE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_ENUMERATION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_INTEGER](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_REAL](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_STRING](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_DEFINITION_XHTML](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_BOOLEAN](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_DATE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_ENUMERATION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_INTEGER](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_REAL](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_STRING](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ATTRIBUTE_VALUE_XHTML](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ALTERNATIVE_ID](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_DATE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_INTEGER_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_REAL_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_STRING_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_DEFINITION_XHTML_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_BOOLEAN](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_DATE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_ENUMERATION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_INTEGER](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_REAL](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_STRING](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_XHTML](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ATTRIBUTE_VALUE_XHTML_1](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_CHILDREN](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_CORE_CONTENT](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPES](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_BOOLEAN_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_DATE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_ENUMERATION_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_INTEGER_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_REAL_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_STRING_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_DATATYPE_DEFINITION_XHTML_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_EDITABLE_ATTS](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_ENUM_VALUE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_OBJECT](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_PROPERTIES](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_RELATION_GROUP_TYPE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SOURCE_1](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SOURCE_SPECIFICATION_1](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPECIFICATIONS](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPECIFICATION_TYPE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPECIFIED_VALUES](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_ATTRIBUTES](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_OBJECTS](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_OBJECT_TYPE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_RELATIONS](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_RELATION_GROUPS](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_RELATION_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_RELATION_TYPE_REF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_SPEC_TYPES](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_THE_HEADER](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*A_TOOL_EXTENSIONS](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_BOOLEAN](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_DATE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_ENUMERATION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_INTEGER](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_REAL](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_STRING](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*DATATYPE_DEFINITION_XHTML](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*EMBEDDED_VALUE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*ENUM_VALUE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*EmbeddedJpgImage](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*EmbeddedPngImage](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*EmbeddedSvgImage](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Kill](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_SPECIFICATION_Nodes_expandedEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_showNameEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*RELATION_GROUP](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*RELATION_GROUP_TYPE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*REQ_IF](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*REQ_IF_CONTENT](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*REQ_IF_HEADER](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*REQ_IF_TOOL_EXTENSION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*RenderingConfiguration](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPECIFICATION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPECIFICATION_TYPE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPEC_HIERARCHY](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPEC_OBJECT](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPEC_OBJECT_TYPE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPEC_RELATION](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*SPEC_RELATION_TYPE](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*StaticWebSite](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*StaticWebSiteChapter](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*StaticWebSiteGeneratedImage](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*StaticWebSiteImage](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*StaticWebSiteParagraph](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*XHTML_CONTENT](stage, f, addIDs)
 	}
 
 	// Create a style with wrap text enabled
@@ -272,32 +275,6 @@ type Tabulator interface {
 	AddCell(sheetName string, rowId, columnIndex int, value string)
 }
 
-func Serialize[Type Gongstruct](stage *Stage, tab Tabulator) {
-	sheetName := GetGongstructName[Type]()
-
-	sheetName = shortenString(sheetName)
-
-	// Create a new sheet.
-	tab.AddSheet(sheetName)
-
-	headerRowIndex := tab.AddRow(sheetName)
-	for colIndex, fieldName := range GetFields[Type]() {
-		tab.AddCell(sheetName, headerRowIndex, colIndex, fieldName)
-		// f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldName)
-	}
-
-	set := *GetGongstructInstancesSet[Type](stage)
-	for instance := range set {
-		line := tab.AddRow(sheetName)
-		for index, fieldName := range GetFields[Type]() {
-			tab.AddCell(sheetName, line, index, GetFieldStringValue(
-				any(*instance).(Type), fieldName).valueString)
-			// f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), GetFieldStringValue(
-			// 	any(*instance).(Type), fieldName))
-		}
-	}
-}
-
 type ExcelizeTabulator struct {
 	f *excelize.File
 }
@@ -319,6 +296,10 @@ func (tab *ExcelizeTabulator) AddCell(sheetName string, rowId, columnIndex int, 
 }
 
 func SerializeExcelizePointerToGongstruct[Type PointerToGongstruct](stage *Stage, f *excelize.File) {
+	SerializeExcelizePointerToGongstruct2[Type](stage, f, false)
+}
+
+func SerializeExcelizePointerToGongstruct2[Type PointerToGongstruct](stage *Stage, f *excelize.File, addIDs bool) {
 	sheetName := GetPointerToGongstructName[Type]()
 
 	sheetName = shortenString(sheetName)
@@ -338,65 +319,54 @@ func SerializeExcelizePointerToGongstruct[Type PointerToGongstruct](stage *Stage
 
 	line := 1
 
-	for index, fieldName := range GetFieldsFromPointer[Type]() {
-		f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldName)
+	for index, fieldHeader := range GetFieldsFromPointer[Type]() {
+		if !addIDs {
+			f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldHeader.Name)
+		} else {
+			f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+1)), line), fieldHeader.Name)
+			switch fieldHeader.GongFieldValueType {
+			case GongFieldValueTypePointer:
+				f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+2)), line), fieldHeader.Name+":ID")
+			case GongFieldValueTypeSliceOfPointers:
+				f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+2)), line), fieldHeader.Name+":IDs")
+			default:
+				if index == 0 {
+					f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+2)), line), fieldHeader.Name+":ID")
+				} else {
+					f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+2)), line), fieldHeader.Name+":noID")
+				}			
+			}
+		}
 	}
+
+	// AutoFilter starting from A1
 	f.AutoFilter(sheetName,
 		fmt.Sprintf("%s%d", IntToLetters(int32(1)), line),
 		[]excelize.AutoFilterOptions{})
 
 	for _, instance := range sortedSlice {
 		line = line + 1
+
+		// 3. Add the ID value in column A
+		// We use type assertion to check if the instance implements GetID()
+		id := GetOrderPointerGongstruct(stage, instance)
+
 		for index, fieldName := range GetFieldsFromPointer[Type]() {
-			fieldStringValue := GetFieldStringValueFromPointer(instance, fieldName)
-			f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldStringValue.GetValueString())
-		}
-	}
+			fieldStringValue := GetFieldStringValueFromPointer(instance, fieldName.Name, stage)
+			if !addIDs {
+				f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldStringValue.GetValueString())
+			} else {
+				f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+1)), line), fieldStringValue.GetValueString())
+				if index == 0 {
+					f.SetCellInt(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+2)), line), int64(id))
+				} else {
+					switch fieldStringValue.GongFieldValueType {
+					case GongFieldValueTypePointer, GongFieldValueTypeSliceOfPointers:
+						f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(2*index+2)), line), fieldStringValue.ids)
+					}
+				}
 
-	// Autofit all columns according to their text content
-	cols, err := f.GetCols(sheetName)
-	if err != nil {
-		log.Panicln("SerializeExcelize")
-	}
-	for idx, col := range cols {
-		largestWidth := 0
-		for _, rowCell := range col {
-			cellWidth := utf8.RuneCountInString(rowCell) + 2 // + 2 for margin
-			if cellWidth > largestWidth {
-				largestWidth = cellWidth
 			}
-		}
-		name, err := excelize.ColumnNumberToName(idx + 1)
-		if err != nil {
-			log.Panicln("SerializeExcelize")
-		}
-		f.SetColWidth(sheetName, name, name, float64(largestWidth))
-	}
-}
-
-func SerializeExcelize[Type Gongstruct](stage *Stage, f *excelize.File) {
-	sheetName := GetGongstructName[Type]()
-
-	sheetName = shortenString(sheetName)
-
-	// Create a new sheet.
-	f.NewSheet(sheetName)
-
-	set := *GetGongstructInstancesSet[Type](stage)
-	line := 1
-
-	for index, fieldName := range GetFields[Type]() {
-		f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldName)
-	}
-	f.AutoFilter(sheetName,
-		fmt.Sprintf("%s%d", IntToLetters(int32(1)), line),
-		[]excelize.AutoFilterOptions{})
-
-	for instance := range set {
-		line = line + 1
-		for index, fieldName := range GetFields[Type]() {
-			fieldStringValue := GetFieldStringValue(any(*instance).(Type), fieldName)
-			f.SetCellStr(sheetName, fmt.Sprintf("%s%d", IntToLetters(int32(index+1)), line), fieldStringValue.GetValueString())
 		}
 	}
 

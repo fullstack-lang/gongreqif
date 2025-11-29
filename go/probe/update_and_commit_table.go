@@ -3,7 +3,6 @@ package probe
 
 import (
 	"fmt"
-	"log"
 	"sort"
 
 	gongtable "github.com/fullstack-lang/gong/lib/table/go/models"
@@ -13,258 +12,9 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
-func updateAndCommitTablePointerToGongstruct[T models.PointerToGongstruct](
-	probe *Probe,
-) {
-	var typedInstance T
-	switch any(typedInstance).(type) {
-	// insertion point
-	case *models.ALTERNATIVE_ID:
-		updateAndCommitTable[models.ALTERNATIVE_ID](probe)
-	case *models.ATTRIBUTE_DEFINITION_BOOLEAN:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_BOOLEAN](probe)
-	case *models.ATTRIBUTE_DEFINITION_DATE:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_DATE](probe)
-	case *models.ATTRIBUTE_DEFINITION_ENUMERATION:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_ENUMERATION](probe)
-	case *models.ATTRIBUTE_DEFINITION_INTEGER:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_INTEGER](probe)
-	case *models.ATTRIBUTE_DEFINITION_REAL:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_REAL](probe)
-	case *models.ATTRIBUTE_DEFINITION_STRING:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_STRING](probe)
-	case *models.ATTRIBUTE_DEFINITION_XHTML:
-		updateAndCommitTable[models.ATTRIBUTE_DEFINITION_XHTML](probe)
-	case *models.ATTRIBUTE_VALUE_BOOLEAN:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_BOOLEAN](probe)
-	case *models.ATTRIBUTE_VALUE_DATE:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_DATE](probe)
-	case *models.ATTRIBUTE_VALUE_ENUMERATION:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_ENUMERATION](probe)
-	case *models.ATTRIBUTE_VALUE_INTEGER:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_INTEGER](probe)
-	case *models.ATTRIBUTE_VALUE_REAL:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_REAL](probe)
-	case *models.ATTRIBUTE_VALUE_STRING:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_STRING](probe)
-	case *models.ATTRIBUTE_VALUE_XHTML:
-		updateAndCommitTable[models.ATTRIBUTE_VALUE_XHTML](probe)
-	case *models.A_ALTERNATIVE_ID:
-		updateAndCommitTable[models.A_ALTERNATIVE_ID](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_DATE_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_DATE_REF](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_REAL_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_REAL_REF](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_STRING_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_STRING_REF](probe)
-	case *models.A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		updateAndCommitTable[models.A_ATTRIBUTE_DEFINITION_XHTML_REF](probe)
-	case *models.A_ATTRIBUTE_VALUE_BOOLEAN:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_BOOLEAN](probe)
-	case *models.A_ATTRIBUTE_VALUE_DATE:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_DATE](probe)
-	case *models.A_ATTRIBUTE_VALUE_ENUMERATION:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_ENUMERATION](probe)
-	case *models.A_ATTRIBUTE_VALUE_INTEGER:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_INTEGER](probe)
-	case *models.A_ATTRIBUTE_VALUE_REAL:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_REAL](probe)
-	case *models.A_ATTRIBUTE_VALUE_STRING:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_STRING](probe)
-	case *models.A_ATTRIBUTE_VALUE_XHTML:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML](probe)
-	case *models.A_ATTRIBUTE_VALUE_XHTML_1:
-		updateAndCommitTable[models.A_ATTRIBUTE_VALUE_XHTML_1](probe)
-	case *models.A_CHILDREN:
-		updateAndCommitTable[models.A_CHILDREN](probe)
-	case *models.A_CORE_CONTENT:
-		updateAndCommitTable[models.A_CORE_CONTENT](probe)
-	case *models.A_DATATYPES:
-		updateAndCommitTable[models.A_DATATYPES](probe)
-	case *models.A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_BOOLEAN_REF](probe)
-	case *models.A_DATATYPE_DEFINITION_DATE_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_DATE_REF](probe)
-	case *models.A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_ENUMERATION_REF](probe)
-	case *models.A_DATATYPE_DEFINITION_INTEGER_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_INTEGER_REF](probe)
-	case *models.A_DATATYPE_DEFINITION_REAL_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_REAL_REF](probe)
-	case *models.A_DATATYPE_DEFINITION_STRING_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_STRING_REF](probe)
-	case *models.A_DATATYPE_DEFINITION_XHTML_REF:
-		updateAndCommitTable[models.A_DATATYPE_DEFINITION_XHTML_REF](probe)
-	case *models.A_EDITABLE_ATTS:
-		updateAndCommitTable[models.A_EDITABLE_ATTS](probe)
-	case *models.A_ENUM_VALUE_REF:
-		updateAndCommitTable[models.A_ENUM_VALUE_REF](probe)
-	case *models.A_OBJECT:
-		updateAndCommitTable[models.A_OBJECT](probe)
-	case *models.A_PROPERTIES:
-		updateAndCommitTable[models.A_PROPERTIES](probe)
-	case *models.A_RELATION_GROUP_TYPE_REF:
-		updateAndCommitTable[models.A_RELATION_GROUP_TYPE_REF](probe)
-	case *models.A_SOURCE_1:
-		updateAndCommitTable[models.A_SOURCE_1](probe)
-	case *models.A_SOURCE_SPECIFICATION_1:
-		updateAndCommitTable[models.A_SOURCE_SPECIFICATION_1](probe)
-	case *models.A_SPECIFICATIONS:
-		updateAndCommitTable[models.A_SPECIFICATIONS](probe)
-	case *models.A_SPECIFICATION_TYPE_REF:
-		updateAndCommitTable[models.A_SPECIFICATION_TYPE_REF](probe)
-	case *models.A_SPECIFIED_VALUES:
-		updateAndCommitTable[models.A_SPECIFIED_VALUES](probe)
-	case *models.A_SPEC_ATTRIBUTES:
-		updateAndCommitTable[models.A_SPEC_ATTRIBUTES](probe)
-	case *models.A_SPEC_OBJECTS:
-		updateAndCommitTable[models.A_SPEC_OBJECTS](probe)
-	case *models.A_SPEC_OBJECT_TYPE_REF:
-		updateAndCommitTable[models.A_SPEC_OBJECT_TYPE_REF](probe)
-	case *models.A_SPEC_RELATIONS:
-		updateAndCommitTable[models.A_SPEC_RELATIONS](probe)
-	case *models.A_SPEC_RELATION_GROUPS:
-		updateAndCommitTable[models.A_SPEC_RELATION_GROUPS](probe)
-	case *models.A_SPEC_RELATION_REF:
-		updateAndCommitTable[models.A_SPEC_RELATION_REF](probe)
-	case *models.A_SPEC_RELATION_TYPE_REF:
-		updateAndCommitTable[models.A_SPEC_RELATION_TYPE_REF](probe)
-	case *models.A_SPEC_TYPES:
-		updateAndCommitTable[models.A_SPEC_TYPES](probe)
-	case *models.A_THE_HEADER:
-		updateAndCommitTable[models.A_THE_HEADER](probe)
-	case *models.A_TOOL_EXTENSIONS:
-		updateAndCommitTable[models.A_TOOL_EXTENSIONS](probe)
-	case *models.DATATYPE_DEFINITION_BOOLEAN:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_BOOLEAN](probe)
-	case *models.DATATYPE_DEFINITION_DATE:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_DATE](probe)
-	case *models.DATATYPE_DEFINITION_ENUMERATION:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_ENUMERATION](probe)
-	case *models.DATATYPE_DEFINITION_INTEGER:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_INTEGER](probe)
-	case *models.DATATYPE_DEFINITION_REAL:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_REAL](probe)
-	case *models.DATATYPE_DEFINITION_STRING:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_STRING](probe)
-	case *models.DATATYPE_DEFINITION_XHTML:
-		updateAndCommitTable[models.DATATYPE_DEFINITION_XHTML](probe)
-	case *models.EMBEDDED_VALUE:
-		updateAndCommitTable[models.EMBEDDED_VALUE](probe)
-	case *models.ENUM_VALUE:
-		updateAndCommitTable[models.ENUM_VALUE](probe)
-	case *models.EmbeddedJpgImage:
-		updateAndCommitTable[models.EmbeddedJpgImage](probe)
-	case *models.EmbeddedPngImage:
-		updateAndCommitTable[models.EmbeddedPngImage](probe)
-	case *models.EmbeddedSvgImage:
-		updateAndCommitTable[models.EmbeddedSvgImage](probe)
-	case *models.Kill:
-		updateAndCommitTable[models.Kill](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry](probe)
-	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		updateAndCommitTable[models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry](probe)
-	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
-		updateAndCommitTable[models.Map_SPECIFICATION_Nodes_expandedEntry](probe)
-	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](probe)
-	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](probe)
-	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
-		updateAndCommitTable[models.Map_SPEC_OBJECT_TYPE_showNameEntry](probe)
-	case *models.RELATION_GROUP:
-		updateAndCommitTable[models.RELATION_GROUP](probe)
-	case *models.RELATION_GROUP_TYPE:
-		updateAndCommitTable[models.RELATION_GROUP_TYPE](probe)
-	case *models.REQ_IF:
-		updateAndCommitTable[models.REQ_IF](probe)
-	case *models.REQ_IF_CONTENT:
-		updateAndCommitTable[models.REQ_IF_CONTENT](probe)
-	case *models.REQ_IF_HEADER:
-		updateAndCommitTable[models.REQ_IF_HEADER](probe)
-	case *models.REQ_IF_TOOL_EXTENSION:
-		updateAndCommitTable[models.REQ_IF_TOOL_EXTENSION](probe)
-	case *models.RenderingConfiguration:
-		updateAndCommitTable[models.RenderingConfiguration](probe)
-	case *models.SPECIFICATION:
-		updateAndCommitTable[models.SPECIFICATION](probe)
-	case *models.SPECIFICATION_TYPE:
-		updateAndCommitTable[models.SPECIFICATION_TYPE](probe)
-	case *models.SPEC_HIERARCHY:
-		updateAndCommitTable[models.SPEC_HIERARCHY](probe)
-	case *models.SPEC_OBJECT:
-		updateAndCommitTable[models.SPEC_OBJECT](probe)
-	case *models.SPEC_OBJECT_TYPE:
-		updateAndCommitTable[models.SPEC_OBJECT_TYPE](probe)
-	case *models.SPEC_RELATION:
-		updateAndCommitTable[models.SPEC_RELATION](probe)
-	case *models.SPEC_RELATION_TYPE:
-		updateAndCommitTable[models.SPEC_RELATION_TYPE](probe)
-	case *models.StaticWebSite:
-		updateAndCommitTable[models.StaticWebSite](probe)
-	case *models.StaticWebSiteChapter:
-		updateAndCommitTable[models.StaticWebSiteChapter](probe)
-	case *models.StaticWebSiteGeneratedImage:
-		updateAndCommitTable[models.StaticWebSiteGeneratedImage](probe)
-	case *models.StaticWebSiteImage:
-		updateAndCommitTable[models.StaticWebSiteImage](probe)
-	case *models.StaticWebSiteParagraph:
-		updateAndCommitTable[models.StaticWebSiteParagraph](probe)
-	case *models.XHTML_CONTENT:
-		updateAndCommitTable[models.XHTML_CONTENT](probe)
-	default:
-		log.Println("unknow type")
-	}
-}
-
 const TableName = "Table"
 
-func updateAndCommitTable[T models.Gongstruct](
+func updateAndCommitTable[T models.PointerToGongstruct](
 	probe *Probe,
 ) {
 
@@ -278,24 +28,26 @@ func updateAndCommitTable[T models.Gongstruct](
 	table.HasCheckableRows = false
 	table.HasSaveButton = false
 
-	fields := models.GetFields[T]()
+	fields := models.GetFieldsFromPointer[T]()
 	reverseFields := models.GetReverseFields[T]()
 
 	table.NbOfStickyColumns = 3
 
-	// refresh the stage of interest
-	probe.stageOfInterest.Checkout()
+	// after a delete of an instance, the stage might be dirty if a pointer or a slice of pointer
+	// reference the deleted instance. 
+	// therefore, it is mandatory to clean the stage of interest
+	probe.stageOfInterest.Clean()
 
-	setOfStructs := (*models.GetGongstructInstancesSet[T](probe.stageOfInterest))
-	sliceOfGongStructsSorted := make([]*T, len(setOfStructs))
+	setOfStructs := (*models.GetGongstructInstancesSetFromPointerType[T](probe.stageOfInterest))
+	sliceOfGongStructsSorted := make([]T, len(setOfStructs))
 	i := 0
 	for k := range setOfStructs {
 		sliceOfGongStructsSorted[i] = k
 		i++
 	}
 	sort.Slice(sliceOfGongStructsSorted, func(i, j int) bool {
-		return models.GetOrder(probe.stageOfInterest, sliceOfGongStructsSorted[i]) <
-			models.GetOrder(probe.stageOfInterest, sliceOfGongStructsSorted[j])
+		return models.GetOrderPointerGongstruct(probe.stageOfInterest, sliceOfGongStructsSorted[i]) <
+			models.GetOrderPointerGongstruct(probe.stageOfInterest, sliceOfGongStructsSorted[j])
 	})
 
 	column := new(gongtable.DisplayedColumn)
@@ -308,7 +60,7 @@ func updateAndCommitTable[T models.Gongstruct](
 
 	for _, fieldName := range fields {
 		column := new(gongtable.DisplayedColumn)
-		column.Name = fieldName
+		column.Name = fieldName.Name
 		table.DisplayedColumns = append(table.DisplayedColumns, column)
 	}
 	for _, reverseField := range reverseFields {
@@ -320,7 +72,7 @@ func updateAndCommitTable[T models.Gongstruct](
 	fieldIndex := 0
 	for _, structInstance := range sliceOfGongStructsSorted {
 		row := new(gongtable.Row)
-		value := models.GetFieldStringValue(*structInstance, "Name")
+		value := models.GetFieldStringValueFromPointer(structInstance, "Name", probe.stageOfInterest)
 		row.Name = value.GetValueString()
 
 		updater := NewRowUpdate(structInstance, probe)
@@ -335,7 +87,7 @@ func updateAndCommitTable[T models.Gongstruct](
 		row.Cells = append(row.Cells, cell)
 		cellInt := &gongtable.CellInt{
 			Name: "ID",
-			Value: int(models.GetOrder(
+			Value: int(models.GetOrderPointerGongstruct(
 				probe.stageOfInterest,
 				structInstance,
 			)),
@@ -347,7 +99,7 @@ func updateAndCommitTable[T models.Gongstruct](
 		}
 		row.Cells = append(row.Cells, cell)
 		cellIcon := &gongtable.CellIcon{
-			Name: fmt.Sprintf("Delete Icon %d", models.GetOrder(
+			Name: fmt.Sprintf("Delete Icon %d", models.GetOrderPointerGongstruct(
 				probe.stageOfInterest,
 				structInstance,
 			)),
@@ -355,11 +107,11 @@ func updateAndCommitTable[T models.Gongstruct](
 			NeedsConfirmation:   true,
 			ConfirmationMessage: "Do you confirm tou want to delete this instance ?",
 		}
-		cellIcon.Impl = NewCellDeleteIconImpl(structInstance, probe)
+		cellIcon.Impl = NewCellDeleteIconImplPointerToGongstruct(structInstance, probe)
 		cell.CellIcon = cellIcon
 
 		for _, fieldName := range fields {
-			value := models.GetFieldStringValue(*structInstance, fieldName)
+			value := models.GetFieldStringValueFromPointer(structInstance, fieldName.Name, probe.stageOfInterest)
 			name := fmt.Sprintf("%d", fieldIndex) + " " + value.GetValueString()
 			fieldIndex++
 			// log.Println(fieldName, value)
@@ -398,9 +150,8 @@ func updateAndCommitTable[T models.Gongstruct](
 		}
 		for _, reverseField := range reverseFields {
 
-			value := models.GetReverseFieldOwnerName(
+			value := structInstance.GongGetReverseFieldOwnerName(
 				probe.stageOfInterest,
-				structInstance,
 				&reverseField)
 			name := fmt.Sprintf("%d", fieldIndex) + " " + value
 			fieldIndex++
@@ -422,8 +173,8 @@ func updateAndCommitTable[T models.Gongstruct](
 
 }
 
-func NewRowUpdate[T models.Gongstruct](
-	Instance *T,
+func NewRowUpdate[T models.PointerToGongstruct](
+	Instance T,
 	probe *Probe,
 ) (rowUpdate *RowUpdate[T]) {
 	rowUpdate = new(RowUpdate[T])
@@ -432,8 +183,8 @@ func NewRowUpdate[T models.Gongstruct](
 	return
 }
 
-type RowUpdate[T models.Gongstruct] struct {
-	Instance *T
+type RowUpdate[T models.PointerToGongstruct] struct {
+	Instance T
 	probe    *Probe
 }
 

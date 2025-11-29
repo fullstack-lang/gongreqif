@@ -10,6 +10,7 @@ import (
 	"math"
 	"slices"
 	"sort"
+	"strings"
 	"time"
 
 	gongreqif_go "github.com/fullstack-lang/gongreqif/go"
@@ -26,6 +27,7 @@ func __Gong__Abs(x int) int {
 }
 
 var _ = __Gong__Abs
+var _ = strings.Clone("")
 
 const ProbeTreeSidebarSuffix = ":sidebar of the probe"
 const ProbeTableSuffix = ":table of the probe"
@@ -50,6 +52,7 @@ func (stage *Stage) GetProbeSplitStageName() string {
 
 // errUnkownEnum is returns when a value cannot match enum values
 var errUnkownEnum = errors.New("unkown enum")
+var _ = errUnkownEnum
 
 // needed to avoid when fmt package is not needed by generated code
 var __dummy__fmt_variable fmt.Scanner
@@ -74,6 +77,8 @@ type GongStructInterface interface {
 	// GetID() (res int)
 	// GetFields() (res []string)
 	// GetFieldStringValue(fieldName string) (res string)
+	GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error
+	GongGetGongstructName() string
 }
 
 // Stage enables storage of staged instances
@@ -1676,6 +1681,12 @@ type Stage struct {
 	// end of insertion point
 
 	NamedStructs []*NamedStruct
+
+	// for the computation of the diff at each commit we need
+	reference map[GongstructIF]GongstructIF
+	modified  map[GongstructIF]struct{}
+	new       map[GongstructIF]struct{}
+	deleted   map[GongstructIF]struct{}
 }
 
 func (stage *Stage) GetCommitId() uint {
@@ -1698,6 +1709,22 @@ func (stage *Stage) GetNamedStructsNames() (res []string) {
 	}
 
 	return
+}
+
+func (stage *Stage) GetReference() map[GongstructIF]GongstructIF {
+	return stage.reference
+}
+
+func (stage *Stage) GetModified() map[GongstructIF]struct{} {
+	return stage.modified
+}
+
+func (stage *Stage) GetNew() map[GongstructIF]struct{} {
+	return stage.new
+}
+
+func (stage *Stage) GetDeleted() map[GongstructIF]struct{} {
+	return stage.deleted
 }
 
 func GetNamedStructInstances[T PointerToGongstruct](set map[T]any, order map[T]uint) (res []string) {
@@ -1727,7 +1754,7 @@ func GetNamedStructInstances[T PointerToGongstruct](set map[T]any, order map[T]u
 func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T) {
 	var t T
 	switch any(t).(type) {
-		// insertion point for case
+	// insertion point for case
 	case *ALTERNATIVE_ID:
 		tmp := GetStructInstancesByOrder(stage.ALTERNATIVE_IDs, stage.ALTERNATIVE_IDMap_Staged_Order)
 
@@ -3424,7 +3451,7 @@ func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]any, order map[T
 func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []string) {
 
 	switch namedStructName {
-		// insertion point for case
+	// insertion point for case
 	case "ALTERNATIVE_ID":
 		res = GetNamedStructInstances(stage.ALTERNATIVE_IDs, stage.ALTERNATIVE_IDMap_Staged_Order)
 	case "ATTRIBUTE_DEFINITION_BOOLEAN":
@@ -4705,6 +4732,11 @@ func NewStage(name string) (stage *Stage) {
 			{name: "StaticWebSiteParagraph"},
 			{name: "XHTML_CONTENT"},
 		}, // end of insertion point
+
+		reference: make(map[GongstructIF]GongstructIF),
+		new:       make(map[GongstructIF]struct{}),
+		modified:  make(map[GongstructIF]struct{}),
+		deleted:   make(map[GongstructIF]struct{}),
 	}
 
 	return
@@ -5224,7 +5256,11 @@ func (stage *Stage) Commit() {
 	if stage.BackRepo != nil {
 		stage.BackRepo.Commit(stage)
 	}
+	stage.ComputeInstancesNb()
+	stage.ComputeReference()
+}
 
+func (stage *Stage) ComputeInstancesNb() {
 	// insertion point for computing the map of number of instances per gongstruct
 	stage.Map_GongStructName_InstancesNb["ALTERNATIVE_ID"] = len(stage.ALTERNATIVE_IDs)
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_BOOLEAN"] = len(stage.ATTRIBUTE_DEFINITION_BOOLEANs)
@@ -5345,7 +5381,6 @@ func (stage *Stage) Commit() {
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteImage"] = len(stage.StaticWebSiteImages)
 	stage.Map_GongStructName_InstancesNb["StaticWebSiteParagraph"] = len(stage.StaticWebSiteParagraphs)
 	stage.Map_GongStructName_InstancesNb["XHTML_CONTENT"] = len(stage.XHTML_CONTENTs)
-
 }
 
 func (stage *Stage) Checkout() {
@@ -5354,127 +5389,7 @@ func (stage *Stage) Checkout() {
 	}
 
 	stage.ComputeReverseMaps()
-	// insertion point for computing the map of number of instances per gongstruct
-	stage.Map_GongStructName_InstancesNb["ALTERNATIVE_ID"] = len(stage.ALTERNATIVE_IDs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_BOOLEAN"] = len(stage.ATTRIBUTE_DEFINITION_BOOLEANs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_DATE"] = len(stage.ATTRIBUTE_DEFINITION_DATEs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_ENUMERATION"] = len(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_INTEGER"] = len(stage.ATTRIBUTE_DEFINITION_INTEGERs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_REAL"] = len(stage.ATTRIBUTE_DEFINITION_REALs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_STRING"] = len(stage.ATTRIBUTE_DEFINITION_STRINGs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_XHTML"] = len(stage.ATTRIBUTE_DEFINITION_XHTMLs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_BOOLEAN"] = len(stage.ATTRIBUTE_VALUE_BOOLEANs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_DATE"] = len(stage.ATTRIBUTE_VALUE_DATEs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_ENUMERATION"] = len(stage.ATTRIBUTE_VALUE_ENUMERATIONs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_INTEGER"] = len(stage.ATTRIBUTE_VALUE_INTEGERs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_REAL"] = len(stage.ATTRIBUTE_VALUE_REALs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_STRING"] = len(stage.ATTRIBUTE_VALUE_STRINGs)
-	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_XHTML"] = len(stage.ATTRIBUTE_VALUE_XHTMLs)
-	stage.Map_GongStructName_InstancesNb["A_ALTERNATIVE_ID"] = len(stage.A_ALTERNATIVE_IDs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_BOOLEAN_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_DATE_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_ENUMERATION_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_INTEGER_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_REAL_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_STRING_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_DEFINITION_XHTML_REF"] = len(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_BOOLEAN"] = len(stage.A_ATTRIBUTE_VALUE_BOOLEANs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_DATE"] = len(stage.A_ATTRIBUTE_VALUE_DATEs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_ENUMERATION"] = len(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_INTEGER"] = len(stage.A_ATTRIBUTE_VALUE_INTEGERs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_REAL"] = len(stage.A_ATTRIBUTE_VALUE_REALs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_STRING"] = len(stage.A_ATTRIBUTE_VALUE_STRINGs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_XHTML"] = len(stage.A_ATTRIBUTE_VALUE_XHTMLs)
-	stage.Map_GongStructName_InstancesNb["A_ATTRIBUTE_VALUE_XHTML_1"] = len(stage.A_ATTRIBUTE_VALUE_XHTML_1s)
-	stage.Map_GongStructName_InstancesNb["A_CHILDREN"] = len(stage.A_CHILDRENs)
-	stage.Map_GongStructName_InstancesNb["A_CORE_CONTENT"] = len(stage.A_CORE_CONTENTs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPES"] = len(stage.A_DATATYPESs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_BOOLEAN_REF"] = len(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_DATE_REF"] = len(stage.A_DATATYPE_DEFINITION_DATE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_ENUMERATION_REF"] = len(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_INTEGER_REF"] = len(stage.A_DATATYPE_DEFINITION_INTEGER_REFs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_REAL_REF"] = len(stage.A_DATATYPE_DEFINITION_REAL_REFs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_STRING_REF"] = len(stage.A_DATATYPE_DEFINITION_STRING_REFs)
-	stage.Map_GongStructName_InstancesNb["A_DATATYPE_DEFINITION_XHTML_REF"] = len(stage.A_DATATYPE_DEFINITION_XHTML_REFs)
-	stage.Map_GongStructName_InstancesNb["A_EDITABLE_ATTS"] = len(stage.A_EDITABLE_ATTSs)
-	stage.Map_GongStructName_InstancesNb["A_ENUM_VALUE_REF"] = len(stage.A_ENUM_VALUE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_OBJECT"] = len(stage.A_OBJECTs)
-	stage.Map_GongStructName_InstancesNb["A_PROPERTIES"] = len(stage.A_PROPERTIESs)
-	stage.Map_GongStructName_InstancesNb["A_RELATION_GROUP_TYPE_REF"] = len(stage.A_RELATION_GROUP_TYPE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_SOURCE_1"] = len(stage.A_SOURCE_1s)
-	stage.Map_GongStructName_InstancesNb["A_SOURCE_SPECIFICATION_1"] = len(stage.A_SOURCE_SPECIFICATION_1s)
-	stage.Map_GongStructName_InstancesNb["A_SPECIFICATIONS"] = len(stage.A_SPECIFICATIONSs)
-	stage.Map_GongStructName_InstancesNb["A_SPECIFICATION_TYPE_REF"] = len(stage.A_SPECIFICATION_TYPE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_SPECIFIED_VALUES"] = len(stage.A_SPECIFIED_VALUESs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_ATTRIBUTES"] = len(stage.A_SPEC_ATTRIBUTESs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_OBJECTS"] = len(stage.A_SPEC_OBJECTSs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_OBJECT_TYPE_REF"] = len(stage.A_SPEC_OBJECT_TYPE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_RELATIONS"] = len(stage.A_SPEC_RELATIONSs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_RELATION_GROUPS"] = len(stage.A_SPEC_RELATION_GROUPSs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_RELATION_REF"] = len(stage.A_SPEC_RELATION_REFs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_RELATION_TYPE_REF"] = len(stage.A_SPEC_RELATION_TYPE_REFs)
-	stage.Map_GongStructName_InstancesNb["A_SPEC_TYPES"] = len(stage.A_SPEC_TYPESs)
-	stage.Map_GongStructName_InstancesNb["A_THE_HEADER"] = len(stage.A_THE_HEADERs)
-	stage.Map_GongStructName_InstancesNb["A_TOOL_EXTENSIONS"] = len(stage.A_TOOL_EXTENSIONSs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_BOOLEAN"] = len(stage.DATATYPE_DEFINITION_BOOLEANs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_DATE"] = len(stage.DATATYPE_DEFINITION_DATEs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_ENUMERATION"] = len(stage.DATATYPE_DEFINITION_ENUMERATIONs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_INTEGER"] = len(stage.DATATYPE_DEFINITION_INTEGERs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_REAL"] = len(stage.DATATYPE_DEFINITION_REALs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_STRING"] = len(stage.DATATYPE_DEFINITION_STRINGs)
-	stage.Map_GongStructName_InstancesNb["DATATYPE_DEFINITION_XHTML"] = len(stage.DATATYPE_DEFINITION_XHTMLs)
-	stage.Map_GongStructName_InstancesNb["EMBEDDED_VALUE"] = len(stage.EMBEDDED_VALUEs)
-	stage.Map_GongStructName_InstancesNb["ENUM_VALUE"] = len(stage.ENUM_VALUEs)
-	stage.Map_GongStructName_InstancesNb["EmbeddedJpgImage"] = len(stage.EmbeddedJpgImages)
-	stage.Map_GongStructName_InstancesNb["EmbeddedPngImage"] = len(stage.EmbeddedPngImages)
-	stage.Map_GongStructName_InstancesNb["EmbeddedSvgImage"] = len(stage.EmbeddedSvgImages)
-	stage.Map_GongStructName_InstancesNb["Kill"] = len(stage.Kills)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry"] = len(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_SPECIFICATION_Nodes_expandedEntry"] = len(stage.Map_SPECIFICATION_Nodes_expandedEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showIdentifierEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys)
-	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showNameEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys)
-	stage.Map_GongStructName_InstancesNb["RELATION_GROUP"] = len(stage.RELATION_GROUPs)
-	stage.Map_GongStructName_InstancesNb["RELATION_GROUP_TYPE"] = len(stage.RELATION_GROUP_TYPEs)
-	stage.Map_GongStructName_InstancesNb["REQ_IF"] = len(stage.REQ_IFs)
-	stage.Map_GongStructName_InstancesNb["REQ_IF_CONTENT"] = len(stage.REQ_IF_CONTENTs)
-	stage.Map_GongStructName_InstancesNb["REQ_IF_HEADER"] = len(stage.REQ_IF_HEADERs)
-	stage.Map_GongStructName_InstancesNb["REQ_IF_TOOL_EXTENSION"] = len(stage.REQ_IF_TOOL_EXTENSIONs)
-	stage.Map_GongStructName_InstancesNb["RenderingConfiguration"] = len(stage.RenderingConfigurations)
-	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
-	stage.Map_GongStructName_InstancesNb["SPECIFICATION_TYPE"] = len(stage.SPECIFICATION_TYPEs)
-	stage.Map_GongStructName_InstancesNb["SPEC_HIERARCHY"] = len(stage.SPEC_HIERARCHYs)
-	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT"] = len(stage.SPEC_OBJECTs)
-	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT_TYPE"] = len(stage.SPEC_OBJECT_TYPEs)
-	stage.Map_GongStructName_InstancesNb["SPEC_RELATION"] = len(stage.SPEC_RELATIONs)
-	stage.Map_GongStructName_InstancesNb["SPEC_RELATION_TYPE"] = len(stage.SPEC_RELATION_TYPEs)
-	stage.Map_GongStructName_InstancesNb["StaticWebSite"] = len(stage.StaticWebSites)
-	stage.Map_GongStructName_InstancesNb["StaticWebSiteChapter"] = len(stage.StaticWebSiteChapters)
-	stage.Map_GongStructName_InstancesNb["StaticWebSiteGeneratedImage"] = len(stage.StaticWebSiteGeneratedImages)
-	stage.Map_GongStructName_InstancesNb["StaticWebSiteImage"] = len(stage.StaticWebSiteImages)
-	stage.Map_GongStructName_InstancesNb["StaticWebSiteParagraph"] = len(stage.StaticWebSiteParagraphs)
-	stage.Map_GongStructName_InstancesNb["XHTML_CONTENT"] = len(stage.XHTML_CONTENTs)
-
+	stage.ComputeInstancesNb()
 }
 
 // backup generates backup files in the dirPath
@@ -5513,6 +5428,12 @@ func (alternative_id *ALTERNATIVE_ID) Stage(stage *Stage) *ALTERNATIVE_ID {
 		stage.ALTERNATIVE_IDs[alternative_id] = __member
 		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = stage.ALTERNATIVE_IDOrder
 		stage.ALTERNATIVE_IDOrder++
+		stage.new[alternative_id] = struct{}{}
+		delete(stage.deleted, alternative_id)
+	} else {
+		if _, ok := stage.new[alternative_id]; !ok {
+			stage.modified[alternative_id] = struct{}{}
+		}
 	}
 	stage.ALTERNATIVE_IDs_mapString[alternative_id.Name] = alternative_id
 
@@ -5523,6 +5444,12 @@ func (alternative_id *ALTERNATIVE_ID) Stage(stage *Stage) *ALTERNATIVE_ID {
 func (alternative_id *ALTERNATIVE_ID) Unstage(stage *Stage) *ALTERNATIVE_ID {
 	delete(stage.ALTERNATIVE_IDs, alternative_id)
 	delete(stage.ALTERNATIVE_IDs_mapString, alternative_id.Name)
+
+	if _, ok := stage.reference[alternative_id]; ok {
+		stage.deleted[alternative_id] = struct{}{}
+	} else {
+		delete(stage.new, alternative_id)
+	}
 	return alternative_id
 }
 
@@ -5544,6 +5471,10 @@ func (alternative_id *ALTERNATIVE_ID) Commit(stage *Stage) *ALTERNATIVE_ID {
 
 func (alternative_id *ALTERNATIVE_ID) CommitVoid(stage *Stage) {
 	alternative_id.Commit(stage)
+}
+
+func (alternative_id *ALTERNATIVE_ID) StageVoid(stage *Stage) {
+	alternative_id.Stage(stage)
 }
 
 // Checkout alternative_id to the back repo (if it is already staged)
@@ -5568,6 +5499,12 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *S
 		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = __member
 		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
 		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder++
+		stage.new[attribute_definition_boolean] = struct{}{}
+		delete(stage.deleted, attribute_definition_boolean)
+	} else {
+		if _, ok := stage.new[attribute_definition_boolean]; !ok {
+			stage.modified[attribute_definition_boolean] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString[attribute_definition_boolean.Name] = attribute_definition_boolean
 
@@ -5578,6 +5515,12 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *S
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN {
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs, attribute_definition_boolean)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString, attribute_definition_boolean.Name)
+
+	if _, ok := stage.reference[attribute_definition_boolean]; ok {
+		stage.deleted[attribute_definition_boolean] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_boolean)
+	}
 	return attribute_definition_boolean
 }
 
@@ -5599,6 +5542,10 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Commit(stage *
 
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) CommitVoid(stage *Stage) {
 	attribute_definition_boolean.Commit(stage)
+}
+
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) StageVoid(stage *Stage) {
+	attribute_definition_boolean.Stage(stage)
 }
 
 // Checkout attribute_definition_boolean to the back repo (if it is already staged)
@@ -5623,6 +5570,12 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Stage(stage *Stage) 
 		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = __member
 		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEOrder
 		stage.ATTRIBUTE_DEFINITION_DATEOrder++
+		stage.new[attribute_definition_date] = struct{}{}
+		delete(stage.deleted, attribute_definition_date)
+	} else {
+		if _, ok := stage.new[attribute_definition_date]; !ok {
+			stage.modified[attribute_definition_date] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_DATEs_mapString[attribute_definition_date.Name] = attribute_definition_date
 
@@ -5633,6 +5586,12 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Stage(stage *Stage) 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_DATE {
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs, attribute_definition_date)
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs_mapString, attribute_definition_date.Name)
+
+	if _, ok := stage.reference[attribute_definition_date]; ok {
+		stage.deleted[attribute_definition_date] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_date)
+	}
 	return attribute_definition_date
 }
 
@@ -5654,6 +5613,10 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Commit(stage *Stage)
 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) CommitVoid(stage *Stage) {
 	attribute_definition_date.Commit(stage)
+}
+
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) StageVoid(stage *Stage) {
+	attribute_definition_date.Stage(stage)
 }
 
 // Checkout attribute_definition_date to the back repo (if it is already staged)
@@ -5678,6 +5641,12 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = __member
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder++
+		stage.new[attribute_definition_enumeration] = struct{}{}
+		delete(stage.deleted, attribute_definition_enumeration)
+	} else {
+		if _, ok := stage.new[attribute_definition_enumeration]; !ok {
+			stage.modified[attribute_definition_enumeration] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString[attribute_definition_enumeration.Name] = attribute_definition_enumeration
 
@@ -5688,6 +5657,12 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION {
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, attribute_definition_enumeration)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString, attribute_definition_enumeration.Name)
+
+	if _, ok := stage.reference[attribute_definition_enumeration]; ok {
+		stage.deleted[attribute_definition_enumeration] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_enumeration)
+	}
 	return attribute_definition_enumeration
 }
 
@@ -5709,6 +5684,10 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Commit
 
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) CommitVoid(stage *Stage) {
 	attribute_definition_enumeration.Commit(stage)
+}
+
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) StageVoid(stage *Stage) {
+	attribute_definition_enumeration.Stage(stage)
 }
 
 // Checkout attribute_definition_enumeration to the back repo (if it is already staged)
@@ -5733,6 +5712,12 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Stage(stage *S
 		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = __member
 		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGEROrder
 		stage.ATTRIBUTE_DEFINITION_INTEGEROrder++
+		stage.new[attribute_definition_integer] = struct{}{}
+		delete(stage.deleted, attribute_definition_integer)
+	} else {
+		if _, ok := stage.new[attribute_definition_integer]; !ok {
+			stage.modified[attribute_definition_integer] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString[attribute_definition_integer.Name] = attribute_definition_integer
 
@@ -5743,6 +5728,12 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Stage(stage *S
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_INTEGER {
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs, attribute_definition_integer)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString, attribute_definition_integer.Name)
+
+	if _, ok := stage.reference[attribute_definition_integer]; ok {
+		stage.deleted[attribute_definition_integer] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_integer)
+	}
 	return attribute_definition_integer
 }
 
@@ -5764,6 +5755,10 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Commit(stage *
 
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) CommitVoid(stage *Stage) {
 	attribute_definition_integer.Commit(stage)
+}
+
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) StageVoid(stage *Stage) {
+	attribute_definition_integer.Stage(stage)
 }
 
 // Checkout attribute_definition_integer to the back repo (if it is already staged)
@@ -5788,6 +5783,12 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) 
 		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = __member
 		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALOrder
 		stage.ATTRIBUTE_DEFINITION_REALOrder++
+		stage.new[attribute_definition_real] = struct{}{}
+		delete(stage.deleted, attribute_definition_real)
+	} else {
+		if _, ok := stage.new[attribute_definition_real]; !ok {
+			stage.modified[attribute_definition_real] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_REALs_mapString[attribute_definition_real.Name] = attribute_definition_real
 
@@ -5798,6 +5799,12 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL {
 	delete(stage.ATTRIBUTE_DEFINITION_REALs, attribute_definition_real)
 	delete(stage.ATTRIBUTE_DEFINITION_REALs_mapString, attribute_definition_real.Name)
+
+	if _, ok := stage.reference[attribute_definition_real]; ok {
+		stage.deleted[attribute_definition_real] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_real)
+	}
 	return attribute_definition_real
 }
 
@@ -5819,6 +5826,10 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Commit(stage *Stage)
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) CommitVoid(stage *Stage) {
 	attribute_definition_real.Commit(stage)
+}
+
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) StageVoid(stage *Stage) {
+	attribute_definition_real.Stage(stage)
 }
 
 // Checkout attribute_definition_real to the back repo (if it is already staged)
@@ -5843,6 +5854,12 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Sta
 		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = __member
 		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGOrder
 		stage.ATTRIBUTE_DEFINITION_STRINGOrder++
+		stage.new[attribute_definition_string] = struct{}{}
+		delete(stage.deleted, attribute_definition_string)
+	} else {
+		if _, ok := stage.new[attribute_definition_string]; !ok {
+			stage.modified[attribute_definition_string] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString[attribute_definition_string.Name] = attribute_definition_string
 
@@ -5853,6 +5870,12 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Sta
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING {
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs, attribute_definition_string)
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs_mapString, attribute_definition_string.Name)
+
+	if _, ok := stage.reference[attribute_definition_string]; ok {
+		stage.deleted[attribute_definition_string] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_string)
+	}
 	return attribute_definition_string
 }
 
@@ -5874,6 +5897,10 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Commit(stage *St
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) CommitVoid(stage *Stage) {
 	attribute_definition_string.Commit(stage)
+}
+
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) StageVoid(stage *Stage) {
+	attribute_definition_string.Stage(stage)
 }
 
 // Checkout attribute_definition_string to the back repo (if it is already staged)
@@ -5898,6 +5925,12 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Stage(stage *Stage
 		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = __member
 		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLOrder
 		stage.ATTRIBUTE_DEFINITION_XHTMLOrder++
+		stage.new[attribute_definition_xhtml] = struct{}{}
+		delete(stage.deleted, attribute_definition_xhtml)
+	} else {
+		if _, ok := stage.new[attribute_definition_xhtml]; !ok {
+			stage.modified[attribute_definition_xhtml] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString[attribute_definition_xhtml.Name] = attribute_definition_xhtml
 
@@ -5908,6 +5941,12 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Stage(stage *Stage
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_XHTML {
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs, attribute_definition_xhtml)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString, attribute_definition_xhtml.Name)
+
+	if _, ok := stage.reference[attribute_definition_xhtml]; ok {
+		stage.deleted[attribute_definition_xhtml] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_xhtml)
+	}
 	return attribute_definition_xhtml
 }
 
@@ -5929,6 +5968,10 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Commit(stage *Stag
 
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) CommitVoid(stage *Stage) {
 	attribute_definition_xhtml.Commit(stage)
+}
+
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) StageVoid(stage *Stage) {
+	attribute_definition_xhtml.Stage(stage)
 }
 
 // Checkout attribute_definition_xhtml to the back repo (if it is already staged)
@@ -5953,6 +5996,12 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATT
 		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = __member
 		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANOrder
 		stage.ATTRIBUTE_VALUE_BOOLEANOrder++
+		stage.new[attribute_value_boolean] = struct{}{}
+		delete(stage.deleted, attribute_value_boolean)
+	} else {
+		if _, ok := stage.new[attribute_value_boolean]; !ok {
+			stage.modified[attribute_value_boolean] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_BOOLEANs_mapString[attribute_value_boolean.Name] = attribute_value_boolean
 
@@ -5963,6 +6012,12 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATT
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage) *ATTRIBUTE_VALUE_BOOLEAN {
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs, attribute_value_boolean)
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs_mapString, attribute_value_boolean.Name)
+
+	if _, ok := stage.reference[attribute_value_boolean]; ok {
+		stage.deleted[attribute_value_boolean] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_boolean)
+	}
 	return attribute_value_boolean
 }
 
@@ -5984,6 +6039,10 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Commit(stage *Stage) *AT
 
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) CommitVoid(stage *Stage) {
 	attribute_value_boolean.Commit(stage)
+}
+
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) StageVoid(stage *Stage) {
+	attribute_value_boolean.Stage(stage)
 }
 
 // Checkout attribute_value_boolean to the back repo (if it is already staged)
@@ -6008,6 +6067,12 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *ATTRIBUTE
 		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = __member
 		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEOrder
 		stage.ATTRIBUTE_VALUE_DATEOrder++
+		stage.new[attribute_value_date] = struct{}{}
+		delete(stage.deleted, attribute_value_date)
+	} else {
+		if _, ok := stage.new[attribute_value_date]; !ok {
+			stage.modified[attribute_value_date] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_DATEs_mapString[attribute_value_date.Name] = attribute_value_date
 
@@ -6018,6 +6083,12 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *ATTRIBUTE
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *ATTRIBUTE_VALUE_DATE {
 	delete(stage.ATTRIBUTE_VALUE_DATEs, attribute_value_date)
 	delete(stage.ATTRIBUTE_VALUE_DATEs_mapString, attribute_value_date.Name)
+
+	if _, ok := stage.reference[attribute_value_date]; ok {
+		stage.deleted[attribute_value_date] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_date)
+	}
 	return attribute_value_date
 }
 
@@ -6039,6 +6110,10 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Commit(stage *Stage) *ATTRIBUT
 
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) CommitVoid(stage *Stage) {
 	attribute_value_date.Commit(stage)
+}
+
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) StageVoid(stage *Stage) {
+	attribute_value_date.Stage(stage)
 }
 
 // Checkout attribute_value_date to the back repo (if it is already staged)
@@ -6063,6 +6138,12 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Sta
 		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = __member
 		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
 		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder++
+		stage.new[attribute_value_enumeration] = struct{}{}
+		delete(stage.deleted, attribute_value_enumeration)
+	} else {
+		if _, ok := stage.new[attribute_value_enumeration]; !ok {
+			stage.modified[attribute_value_enumeration] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString[attribute_value_enumeration.Name] = attribute_value_enumeration
 
@@ -6073,6 +6154,12 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Sta
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Unstage(stage *Stage) *ATTRIBUTE_VALUE_ENUMERATION {
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs, attribute_value_enumeration)
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString, attribute_value_enumeration.Name)
+
+	if _, ok := stage.reference[attribute_value_enumeration]; ok {
+		stage.deleted[attribute_value_enumeration] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_enumeration)
+	}
 	return attribute_value_enumeration
 }
 
@@ -6094,6 +6181,10 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Commit(stage *St
 
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) CommitVoid(stage *Stage) {
 	attribute_value_enumeration.Commit(stage)
+}
+
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) StageVoid(stage *Stage) {
+	attribute_value_enumeration.Stage(stage)
 }
 
 // Checkout attribute_value_enumeration to the back repo (if it is already staged)
@@ -6118,6 +6209,12 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *ATT
 		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = __member
 		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGEROrder
 		stage.ATTRIBUTE_VALUE_INTEGEROrder++
+		stage.new[attribute_value_integer] = struct{}{}
+		delete(stage.deleted, attribute_value_integer)
+	} else {
+		if _, ok := stage.new[attribute_value_integer]; !ok {
+			stage.modified[attribute_value_integer] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_INTEGERs_mapString[attribute_value_integer.Name] = attribute_value_integer
 
@@ -6128,6 +6225,12 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *ATT
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage) *ATTRIBUTE_VALUE_INTEGER {
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs, attribute_value_integer)
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs_mapString, attribute_value_integer.Name)
+
+	if _, ok := stage.reference[attribute_value_integer]; ok {
+		stage.deleted[attribute_value_integer] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_integer)
+	}
 	return attribute_value_integer
 }
 
@@ -6149,6 +6252,10 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Commit(stage *Stage) *AT
 
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) CommitVoid(stage *Stage) {
 	attribute_value_integer.Commit(stage)
+}
+
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) StageVoid(stage *Stage) {
+	attribute_value_integer.Stage(stage)
 }
 
 // Checkout attribute_value_integer to the back repo (if it is already staged)
@@ -6173,6 +6280,12 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE
 		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = __member
 		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALOrder
 		stage.ATTRIBUTE_VALUE_REALOrder++
+		stage.new[attribute_value_real] = struct{}{}
+		delete(stage.deleted, attribute_value_real)
+	} else {
+		if _, ok := stage.new[attribute_value_real]; !ok {
+			stage.modified[attribute_value_real] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_REALs_mapString[attribute_value_real.Name] = attribute_value_real
 
@@ -6183,6 +6296,12 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *ATTRIBUTE_VALUE_REAL {
 	delete(stage.ATTRIBUTE_VALUE_REALs, attribute_value_real)
 	delete(stage.ATTRIBUTE_VALUE_REALs_mapString, attribute_value_real.Name)
+
+	if _, ok := stage.reference[attribute_value_real]; ok {
+		stage.deleted[attribute_value_real] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_real)
+	}
 	return attribute_value_real
 }
 
@@ -6204,6 +6323,10 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Commit(stage *Stage) *ATTRIBUT
 
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) CommitVoid(stage *Stage) {
 	attribute_value_real.Commit(stage)
+}
+
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) StageVoid(stage *Stage) {
+	attribute_value_real.Stage(stage)
 }
 
 // Checkout attribute_value_real to the back repo (if it is already staged)
@@ -6228,6 +6351,12 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *ATTRI
 		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = __member
 		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGOrder
 		stage.ATTRIBUTE_VALUE_STRINGOrder++
+		stage.new[attribute_value_string] = struct{}{}
+		delete(stage.deleted, attribute_value_string)
+	} else {
+		if _, ok := stage.new[attribute_value_string]; !ok {
+			stage.modified[attribute_value_string] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_STRINGs_mapString[attribute_value_string.Name] = attribute_value_string
 
@@ -6238,6 +6367,12 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *ATTRI
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) *ATTRIBUTE_VALUE_STRING {
 	delete(stage.ATTRIBUTE_VALUE_STRINGs, attribute_value_string)
 	delete(stage.ATTRIBUTE_VALUE_STRINGs_mapString, attribute_value_string.Name)
+
+	if _, ok := stage.reference[attribute_value_string]; ok {
+		stage.deleted[attribute_value_string] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_string)
+	}
 	return attribute_value_string
 }
 
@@ -6259,6 +6394,10 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Commit(stage *Stage) *ATTR
 
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) CommitVoid(stage *Stage) {
 	attribute_value_string.Commit(stage)
+}
+
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) StageVoid(stage *Stage) {
+	attribute_value_string.Stage(stage)
 }
 
 // Checkout attribute_value_string to the back repo (if it is already staged)
@@ -6283,6 +6422,12 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBU
 		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = __member
 		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLOrder
 		stage.ATTRIBUTE_VALUE_XHTMLOrder++
+		stage.new[attribute_value_xhtml] = struct{}{}
+		delete(stage.deleted, attribute_value_xhtml)
+	} else {
+		if _, ok := stage.new[attribute_value_xhtml]; !ok {
+			stage.modified[attribute_value_xhtml] = struct{}{}
+		}
 	}
 	stage.ATTRIBUTE_VALUE_XHTMLs_mapString[attribute_value_xhtml.Name] = attribute_value_xhtml
 
@@ -6293,6 +6438,12 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBU
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *ATTRIBUTE_VALUE_XHTML {
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs, attribute_value_xhtml)
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs_mapString, attribute_value_xhtml.Name)
+
+	if _, ok := stage.reference[attribute_value_xhtml]; ok {
+		stage.deleted[attribute_value_xhtml] = struct{}{}
+	} else {
+		delete(stage.new, attribute_value_xhtml)
+	}
 	return attribute_value_xhtml
 }
 
@@ -6314,6 +6465,10 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Commit(stage *Stage) *ATTRIB
 
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) CommitVoid(stage *Stage) {
 	attribute_value_xhtml.Commit(stage)
+}
+
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) StageVoid(stage *Stage) {
+	attribute_value_xhtml.Stage(stage)
 }
 
 // Checkout attribute_value_xhtml to the back repo (if it is already staged)
@@ -6338,6 +6493,12 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Stage(stage *Stage) *A_ALTERNATIVE_ID 
 		stage.A_ALTERNATIVE_IDs[a_alternative_id] = __member
 		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = stage.A_ALTERNATIVE_IDOrder
 		stage.A_ALTERNATIVE_IDOrder++
+		stage.new[a_alternative_id] = struct{}{}
+		delete(stage.deleted, a_alternative_id)
+	} else {
+		if _, ok := stage.new[a_alternative_id]; !ok {
+			stage.modified[a_alternative_id] = struct{}{}
+		}
 	}
 	stage.A_ALTERNATIVE_IDs_mapString[a_alternative_id.Name] = a_alternative_id
 
@@ -6348,6 +6509,12 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Stage(stage *Stage) *A_ALTERNATIVE_ID 
 func (a_alternative_id *A_ALTERNATIVE_ID) Unstage(stage *Stage) *A_ALTERNATIVE_ID {
 	delete(stage.A_ALTERNATIVE_IDs, a_alternative_id)
 	delete(stage.A_ALTERNATIVE_IDs_mapString, a_alternative_id.Name)
+
+	if _, ok := stage.reference[a_alternative_id]; ok {
+		stage.deleted[a_alternative_id] = struct{}{}
+	} else {
+		delete(stage.new, a_alternative_id)
+	}
 	return a_alternative_id
 }
 
@@ -6369,6 +6536,10 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Commit(stage *Stage) *A_ALTERNATIVE_ID
 
 func (a_alternative_id *A_ALTERNATIVE_ID) CommitVoid(stage *Stage) {
 	a_alternative_id.Commit(stage)
+}
+
+func (a_alternative_id *A_ALTERNATIVE_ID) StageVoid(stage *Stage) {
+	a_alternative_id.Stage(stage)
 }
 
 // Checkout a_alternative_id to the back repo (if it is already staged)
@@ -6393,6 +6564,12 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) St
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder++
+		stage.new[a_attribute_definition_boolean_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_boolean_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_boolean_ref]; !ok {
+			stage.modified[a_attribute_definition_boolean_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString[a_attribute_definition_boolean_ref.Name] = a_attribute_definition_boolean_ref
 
@@ -6403,6 +6580,12 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) St
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs, a_attribute_definition_boolean_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString, a_attribute_definition_boolean_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_boolean_ref]; ok {
+		stage.deleted[a_attribute_definition_boolean_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_boolean_ref)
+	}
 	return a_attribute_definition_boolean_ref
 }
 
@@ -6424,6 +6607,10 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Co
 
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_boolean_ref.Commit(stage)
+}
+
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_boolean_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_boolean_ref to the back repo (if it is already staged)
@@ -6448,6 +6635,12 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Stage(st
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder++
+		stage.new[a_attribute_definition_date_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_date_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_date_ref]; !ok {
+			stage.modified[a_attribute_definition_date_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString[a_attribute_definition_date_ref.Name] = a_attribute_definition_date_ref
 
@@ -6458,6 +6651,12 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Stage(st
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_DATE_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs, a_attribute_definition_date_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString, a_attribute_definition_date_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_date_ref]; ok {
+		stage.deleted[a_attribute_definition_date_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_date_ref)
+	}
 	return a_attribute_definition_date_ref
 }
 
@@ -6479,6 +6678,10 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Commit(s
 
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_date_ref.Commit(stage)
+}
+
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_date_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_date_ref to the back repo (if it is already staged)
@@ -6503,6 +6706,12 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder++
+		stage.new[a_attribute_definition_enumeration_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_enumeration_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_enumeration_ref]; !ok {
+			stage.modified[a_attribute_definition_enumeration_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString[a_attribute_definition_enumeration_ref.Name] = a_attribute_definition_enumeration_ref
 
@@ -6513,6 +6722,12 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs, a_attribute_definition_enumeration_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString, a_attribute_definition_enumeration_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_enumeration_ref]; ok {
+		stage.deleted[a_attribute_definition_enumeration_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_enumeration_ref)
+	}
 	return a_attribute_definition_enumeration_ref
 }
 
@@ -6534,6 +6749,10 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_enumeration_ref.Commit(stage)
+}
+
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_enumeration_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_enumeration_ref to the back repo (if it is already staged)
@@ -6558,6 +6777,12 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) St
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder++
+		stage.new[a_attribute_definition_integer_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_integer_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_integer_ref]; !ok {
+			stage.modified[a_attribute_definition_integer_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString[a_attribute_definition_integer_ref.Name] = a_attribute_definition_integer_ref
 
@@ -6568,6 +6793,12 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) St
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_INTEGER_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs, a_attribute_definition_integer_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString, a_attribute_definition_integer_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_integer_ref]; ok {
+		stage.deleted[a_attribute_definition_integer_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_integer_ref)
+	}
 	return a_attribute_definition_integer_ref
 }
 
@@ -6589,6 +6820,10 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Co
 
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_integer_ref.Commit(stage)
+}
+
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_integer_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_integer_ref to the back repo (if it is already staged)
@@ -6613,6 +6848,12 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(st
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder++
+		stage.new[a_attribute_definition_real_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_real_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_real_ref]; !ok {
+			stage.modified[a_attribute_definition_real_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString[a_attribute_definition_real_ref.Name] = a_attribute_definition_real_ref
 
@@ -6623,6 +6864,12 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(st
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_REAL_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs, a_attribute_definition_real_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString, a_attribute_definition_real_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_real_ref]; ok {
+		stage.deleted[a_attribute_definition_real_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_real_ref)
+	}
 	return a_attribute_definition_real_ref
 }
 
@@ -6644,6 +6891,10 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Commit(s
 
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_real_ref.Commit(stage)
+}
+
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_real_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_real_ref to the back repo (if it is already staged)
@@ -6668,6 +6919,12 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stag
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder++
+		stage.new[a_attribute_definition_string_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_string_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_string_ref]; !ok {
+			stage.modified[a_attribute_definition_string_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString[a_attribute_definition_string_ref.Name] = a_attribute_definition_string_ref
 
@@ -6678,6 +6935,12 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stag
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_STRING_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs, a_attribute_definition_string_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString, a_attribute_definition_string_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_string_ref]; ok {
+		stage.deleted[a_attribute_definition_string_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_string_ref)
+	}
 	return a_attribute_definition_string_ref
 }
 
@@ -6699,6 +6962,10 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Comm
 
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_string_ref.Commit(stage)
+}
+
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_string_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_string_ref to the back repo (if it is already staged)
@@ -6723,6 +6990,12 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = __member
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder++
+		stage.new[a_attribute_definition_xhtml_ref] = struct{}{}
+		delete(stage.deleted, a_attribute_definition_xhtml_ref)
+	} else {
+		if _, ok := stage.new[a_attribute_definition_xhtml_ref]; !ok {
+			stage.modified[a_attribute_definition_xhtml_ref] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString[a_attribute_definition_xhtml_ref.Name] = a_attribute_definition_xhtml_ref
 
@@ -6733,6 +7006,12 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_XHTML_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs, a_attribute_definition_xhtml_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString, a_attribute_definition_xhtml_ref.Name)
+
+	if _, ok := stage.reference[a_attribute_definition_xhtml_ref]; ok {
+		stage.deleted[a_attribute_definition_xhtml_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_definition_xhtml_ref)
+	}
 	return a_attribute_definition_xhtml_ref
 }
 
@@ -6754,6 +7033,10 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Commit
 
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) CommitVoid(stage *Stage) {
 	a_attribute_definition_xhtml_ref.Commit(stage)
+}
+
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) StageVoid(stage *Stage) {
+	a_attribute_definition_xhtml_ref.Stage(stage)
 }
 
 // Checkout a_attribute_definition_xhtml_ref to the back repo (if it is already staged)
@@ -6778,6 +7061,12 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) 
 		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = __member
 		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
 		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder++
+		stage.new[a_attribute_value_boolean] = struct{}{}
+		delete(stage.deleted, a_attribute_value_boolean)
+	} else {
+		if _, ok := stage.new[a_attribute_value_boolean]; !ok {
+			stage.modified[a_attribute_value_boolean] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString[a_attribute_value_boolean.Name] = a_attribute_value_boolean
 
@@ -6788,6 +7077,12 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_BOOLEAN {
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs, a_attribute_value_boolean)
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString, a_attribute_value_boolean.Name)
+
+	if _, ok := stage.reference[a_attribute_value_boolean]; ok {
+		stage.deleted[a_attribute_value_boolean] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_boolean)
+	}
 	return a_attribute_value_boolean
 }
 
@@ -6809,6 +7104,10 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Commit(stage *Stage)
 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) CommitVoid(stage *Stage) {
 	a_attribute_value_boolean.Commit(stage)
+}
+
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) StageVoid(stage *Stage) {
+	a_attribute_value_boolean.Stage(stage)
 }
 
 // Checkout a_attribute_value_boolean to the back repo (if it is already staged)
@@ -6833,6 +7132,12 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATT
 		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = __member
 		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEOrder
 		stage.A_ATTRIBUTE_VALUE_DATEOrder++
+		stage.new[a_attribute_value_date] = struct{}{}
+		delete(stage.deleted, a_attribute_value_date)
+	} else {
+		if _, ok := stage.new[a_attribute_value_date]; !ok {
+			stage.modified[a_attribute_value_date] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_DATEs_mapString[a_attribute_value_date.Name] = a_attribute_value_date
 
@@ -6843,6 +7148,12 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATT
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_DATE {
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs, a_attribute_value_date)
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs_mapString, a_attribute_value_date.Name)
+
+	if _, ok := stage.reference[a_attribute_value_date]; ok {
+		stage.deleted[a_attribute_value_date] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_date)
+	}
 	return a_attribute_value_date
 }
 
@@ -6864,6 +7175,10 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Commit(stage *Stage) *A_AT
 
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) CommitVoid(stage *Stage) {
 	a_attribute_value_date.Commit(stage)
+}
+
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) StageVoid(stage *Stage) {
+	a_attribute_value_date.Stage(stage)
 }
 
 // Checkout a_attribute_value_date to the back repo (if it is already staged)
@@ -6888,6 +7203,12 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Stage(stage 
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = __member
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder++
+		stage.new[a_attribute_value_enumeration] = struct{}{}
+		delete(stage.deleted, a_attribute_value_enumeration)
+	} else {
+		if _, ok := stage.new[a_attribute_value_enumeration]; !ok {
+			stage.modified[a_attribute_value_enumeration] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString[a_attribute_value_enumeration.Name] = a_attribute_value_enumeration
 
@@ -6898,6 +7219,12 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Stage(stage 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_ENUMERATION {
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs, a_attribute_value_enumeration)
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString, a_attribute_value_enumeration.Name)
+
+	if _, ok := stage.reference[a_attribute_value_enumeration]; ok {
+		stage.deleted[a_attribute_value_enumeration] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_enumeration)
+	}
 	return a_attribute_value_enumeration
 }
 
@@ -6919,6 +7246,10 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Commit(stage
 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) CommitVoid(stage *Stage) {
 	a_attribute_value_enumeration.Commit(stage)
+}
+
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) StageVoid(stage *Stage) {
+	a_attribute_value_enumeration.Stage(stage)
 }
 
 // Checkout a_attribute_value_enumeration to the back repo (if it is already staged)
@@ -6943,6 +7274,12 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) 
 		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = __member
 		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGEROrder
 		stage.A_ATTRIBUTE_VALUE_INTEGEROrder++
+		stage.new[a_attribute_value_integer] = struct{}{}
+		delete(stage.deleted, a_attribute_value_integer)
+	} else {
+		if _, ok := stage.new[a_attribute_value_integer]; !ok {
+			stage.modified[a_attribute_value_integer] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString[a_attribute_value_integer.Name] = a_attribute_value_integer
 
@@ -6953,6 +7290,12 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_INTEGER {
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs, a_attribute_value_integer)
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString, a_attribute_value_integer.Name)
+
+	if _, ok := stage.reference[a_attribute_value_integer]; ok {
+		stage.deleted[a_attribute_value_integer] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_integer)
+	}
 	return a_attribute_value_integer
 }
 
@@ -6974,6 +7317,10 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Commit(stage *Stage)
 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) CommitVoid(stage *Stage) {
 	a_attribute_value_integer.Commit(stage)
+}
+
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) StageVoid(stage *Stage) {
+	a_attribute_value_integer.Stage(stage)
 }
 
 // Checkout a_attribute_value_integer to the back repo (if it is already staged)
@@ -6998,6 +7345,12 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *A_ATT
 		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = __member
 		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALOrder
 		stage.A_ATTRIBUTE_VALUE_REALOrder++
+		stage.new[a_attribute_value_real] = struct{}{}
+		delete(stage.deleted, a_attribute_value_real)
+	} else {
+		if _, ok := stage.new[a_attribute_value_real]; !ok {
+			stage.modified[a_attribute_value_real] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_REALs_mapString[a_attribute_value_real.Name] = a_attribute_value_real
 
@@ -7008,6 +7361,12 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *A_ATT
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_REAL {
 	delete(stage.A_ATTRIBUTE_VALUE_REALs, a_attribute_value_real)
 	delete(stage.A_ATTRIBUTE_VALUE_REALs_mapString, a_attribute_value_real.Name)
+
+	if _, ok := stage.reference[a_attribute_value_real]; ok {
+		stage.deleted[a_attribute_value_real] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_real)
+	}
 	return a_attribute_value_real
 }
 
@@ -7029,6 +7388,10 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Commit(stage *Stage) *A_AT
 
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) CommitVoid(stage *Stage) {
 	a_attribute_value_real.Commit(stage)
+}
+
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) StageVoid(stage *Stage) {
+	a_attribute_value_real.Stage(stage)
 }
 
 // Checkout a_attribute_value_real to the back repo (if it is already staged)
@@ -7053,6 +7416,12 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A
 		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = __member
 		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGOrder
 		stage.A_ATTRIBUTE_VALUE_STRINGOrder++
+		stage.new[a_attribute_value_string] = struct{}{}
+		delete(stage.deleted, a_attribute_value_string)
+	} else {
+		if _, ok := stage.new[a_attribute_value_string]; !ok {
+			stage.modified[a_attribute_value_string] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_STRINGs_mapString[a_attribute_value_string.Name] = a_attribute_value_string
 
@@ -7063,6 +7432,12 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_STRING {
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs, a_attribute_value_string)
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs_mapString, a_attribute_value_string.Name)
+
+	if _, ok := stage.reference[a_attribute_value_string]; ok {
+		stage.deleted[a_attribute_value_string] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_string)
+	}
 	return a_attribute_value_string
 }
 
@@ -7084,6 +7459,10 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Commit(stage *Stage) *
 
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) CommitVoid(stage *Stage) {
 	a_attribute_value_string.Commit(stage)
+}
+
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) StageVoid(stage *Stage) {
+	a_attribute_value_string.Stage(stage)
 }
 
 // Checkout a_attribute_value_string to the back repo (if it is already staged)
@@ -7108,6 +7487,12 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *A_A
 		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = __member
 		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLOrder
 		stage.A_ATTRIBUTE_VALUE_XHTMLOrder++
+		stage.new[a_attribute_value_xhtml] = struct{}{}
+		delete(stage.deleted, a_attribute_value_xhtml)
+	} else {
+		if _, ok := stage.new[a_attribute_value_xhtml]; !ok {
+			stage.modified[a_attribute_value_xhtml] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString[a_attribute_value_xhtml.Name] = a_attribute_value_xhtml
 
@@ -7118,6 +7503,12 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *A_A
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML {
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs, a_attribute_value_xhtml)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString, a_attribute_value_xhtml.Name)
+
+	if _, ok := stage.reference[a_attribute_value_xhtml]; ok {
+		stage.deleted[a_attribute_value_xhtml] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_xhtml)
+	}
 	return a_attribute_value_xhtml
 }
 
@@ -7139,6 +7530,10 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Commit(stage *Stage) *A_
 
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) CommitVoid(stage *Stage) {
 	a_attribute_value_xhtml.Commit(stage)
+}
+
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) StageVoid(stage *Stage) {
+	a_attribute_value_xhtml.Stage(stage)
 }
 
 // Checkout a_attribute_value_xhtml to the back repo (if it is already staged)
@@ -7163,6 +7558,12 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) 
 		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = __member
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Order
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Order++
+		stage.new[a_attribute_value_xhtml_1] = struct{}{}
+		delete(stage.deleted, a_attribute_value_xhtml_1)
+	} else {
+		if _, ok := stage.new[a_attribute_value_xhtml_1]; !ok {
+			stage.modified[a_attribute_value_xhtml_1] = struct{}{}
+		}
 	}
 	stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString[a_attribute_value_xhtml_1.Name] = a_attribute_value_xhtml_1
 
@@ -7173,6 +7574,12 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML_1 {
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s, a_attribute_value_xhtml_1)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString, a_attribute_value_xhtml_1.Name)
+
+	if _, ok := stage.reference[a_attribute_value_xhtml_1]; ok {
+		stage.deleted[a_attribute_value_xhtml_1] = struct{}{}
+	} else {
+		delete(stage.new, a_attribute_value_xhtml_1)
+	}
 	return a_attribute_value_xhtml_1
 }
 
@@ -7194,6 +7601,10 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Commit(stage *Stage)
 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) CommitVoid(stage *Stage) {
 	a_attribute_value_xhtml_1.Commit(stage)
+}
+
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) StageVoid(stage *Stage) {
+	a_attribute_value_xhtml_1.Stage(stage)
 }
 
 // Checkout a_attribute_value_xhtml_1 to the back repo (if it is already staged)
@@ -7218,6 +7629,12 @@ func (a_children *A_CHILDREN) Stage(stage *Stage) *A_CHILDREN {
 		stage.A_CHILDRENs[a_children] = __member
 		stage.A_CHILDRENMap_Staged_Order[a_children] = stage.A_CHILDRENOrder
 		stage.A_CHILDRENOrder++
+		stage.new[a_children] = struct{}{}
+		delete(stage.deleted, a_children)
+	} else {
+		if _, ok := stage.new[a_children]; !ok {
+			stage.modified[a_children] = struct{}{}
+		}
 	}
 	stage.A_CHILDRENs_mapString[a_children.Name] = a_children
 
@@ -7228,6 +7645,12 @@ func (a_children *A_CHILDREN) Stage(stage *Stage) *A_CHILDREN {
 func (a_children *A_CHILDREN) Unstage(stage *Stage) *A_CHILDREN {
 	delete(stage.A_CHILDRENs, a_children)
 	delete(stage.A_CHILDRENs_mapString, a_children.Name)
+
+	if _, ok := stage.reference[a_children]; ok {
+		stage.deleted[a_children] = struct{}{}
+	} else {
+		delete(stage.new, a_children)
+	}
 	return a_children
 }
 
@@ -7249,6 +7672,10 @@ func (a_children *A_CHILDREN) Commit(stage *Stage) *A_CHILDREN {
 
 func (a_children *A_CHILDREN) CommitVoid(stage *Stage) {
 	a_children.Commit(stage)
+}
+
+func (a_children *A_CHILDREN) StageVoid(stage *Stage) {
+	a_children.Stage(stage)
 }
 
 // Checkout a_children to the back repo (if it is already staged)
@@ -7273,6 +7700,12 @@ func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
 		stage.A_CORE_CONTENTs[a_core_content] = __member
 		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = stage.A_CORE_CONTENTOrder
 		stage.A_CORE_CONTENTOrder++
+		stage.new[a_core_content] = struct{}{}
+		delete(stage.deleted, a_core_content)
+	} else {
+		if _, ok := stage.new[a_core_content]; !ok {
+			stage.modified[a_core_content] = struct{}{}
+		}
 	}
 	stage.A_CORE_CONTENTs_mapString[a_core_content.Name] = a_core_content
 
@@ -7283,6 +7716,12 @@ func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
 func (a_core_content *A_CORE_CONTENT) Unstage(stage *Stage) *A_CORE_CONTENT {
 	delete(stage.A_CORE_CONTENTs, a_core_content)
 	delete(stage.A_CORE_CONTENTs_mapString, a_core_content.Name)
+
+	if _, ok := stage.reference[a_core_content]; ok {
+		stage.deleted[a_core_content] = struct{}{}
+	} else {
+		delete(stage.new, a_core_content)
+	}
 	return a_core_content
 }
 
@@ -7304,6 +7743,10 @@ func (a_core_content *A_CORE_CONTENT) Commit(stage *Stage) *A_CORE_CONTENT {
 
 func (a_core_content *A_CORE_CONTENT) CommitVoid(stage *Stage) {
 	a_core_content.Commit(stage)
+}
+
+func (a_core_content *A_CORE_CONTENT) StageVoid(stage *Stage) {
+	a_core_content.Stage(stage)
 }
 
 // Checkout a_core_content to the back repo (if it is already staged)
@@ -7328,6 +7771,12 @@ func (a_datatypes *A_DATATYPES) Stage(stage *Stage) *A_DATATYPES {
 		stage.A_DATATYPESs[a_datatypes] = __member
 		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = stage.A_DATATYPESOrder
 		stage.A_DATATYPESOrder++
+		stage.new[a_datatypes] = struct{}{}
+		delete(stage.deleted, a_datatypes)
+	} else {
+		if _, ok := stage.new[a_datatypes]; !ok {
+			stage.modified[a_datatypes] = struct{}{}
+		}
 	}
 	stage.A_DATATYPESs_mapString[a_datatypes.Name] = a_datatypes
 
@@ -7338,6 +7787,12 @@ func (a_datatypes *A_DATATYPES) Stage(stage *Stage) *A_DATATYPES {
 func (a_datatypes *A_DATATYPES) Unstage(stage *Stage) *A_DATATYPES {
 	delete(stage.A_DATATYPESs, a_datatypes)
 	delete(stage.A_DATATYPESs_mapString, a_datatypes.Name)
+
+	if _, ok := stage.reference[a_datatypes]; ok {
+		stage.deleted[a_datatypes] = struct{}{}
+	} else {
+		delete(stage.new, a_datatypes)
+	}
 	return a_datatypes
 }
 
@@ -7359,6 +7814,10 @@ func (a_datatypes *A_DATATYPES) Commit(stage *Stage) *A_DATATYPES {
 
 func (a_datatypes *A_DATATYPES) CommitVoid(stage *Stage) {
 	a_datatypes.Commit(stage)
+}
+
+func (a_datatypes *A_DATATYPES) StageVoid(stage *Stage) {
+	a_datatypes.Stage(stage)
 }
 
 // Checkout a_datatypes to the back repo (if it is already staged)
@@ -7383,6 +7842,12 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stag
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = __member
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder++
+		stage.new[a_datatype_definition_boolean_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_boolean_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_boolean_ref]; !ok {
+			stage.modified[a_datatype_definition_boolean_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString[a_datatype_definition_boolean_ref.Name] = a_datatype_definition_boolean_ref
 
@@ -7393,6 +7858,12 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stag
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_BOOLEAN_REF {
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs, a_datatype_definition_boolean_ref)
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString, a_datatype_definition_boolean_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_boolean_ref]; ok {
+		stage.deleted[a_datatype_definition_boolean_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_boolean_ref)
+	}
 	return a_datatype_definition_boolean_ref
 }
 
@@ -7414,6 +7885,10 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Comm
 
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_boolean_ref.Commit(stage)
+}
+
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_boolean_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_boolean_ref to the back repo (if it is already staged)
@@ -7438,6 +7913,12 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Stage(stag
 		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = __member
 		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFOrder
 		stage.A_DATATYPE_DEFINITION_DATE_REFOrder++
+		stage.new[a_datatype_definition_date_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_date_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_date_ref]; !ok {
+			stage.modified[a_datatype_definition_date_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString[a_datatype_definition_date_ref.Name] = a_datatype_definition_date_ref
 
@@ -7448,6 +7929,12 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Stage(stag
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_DATE_REF {
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs, a_datatype_definition_date_ref)
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString, a_datatype_definition_date_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_date_ref]; ok {
+		stage.deleted[a_datatype_definition_date_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_date_ref)
+	}
 	return a_datatype_definition_date_ref
 }
 
@@ -7469,6 +7956,10 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Commit(sta
 
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_date_ref.Commit(stage)
+}
+
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_date_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_date_ref to the back repo (if it is already staged)
@@ -7493,6 +7984,12 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = __member
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder++
+		stage.new[a_datatype_definition_enumeration_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_enumeration_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_enumeration_ref]; !ok {
+			stage.modified[a_datatype_definition_enumeration_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString[a_datatype_definition_enumeration_ref.Name] = a_datatype_definition_enumeration_ref
 
@@ -7503,6 +8000,12 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_ENUMERATION_REF {
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs, a_datatype_definition_enumeration_ref)
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString, a_datatype_definition_enumeration_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_enumeration_ref]; ok {
+		stage.deleted[a_datatype_definition_enumeration_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_enumeration_ref)
+	}
 	return a_datatype_definition_enumeration_ref
 }
 
@@ -7524,6 +8027,10 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_enumeration_ref.Commit(stage)
+}
+
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_enumeration_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_enumeration_ref to the back repo (if it is already staged)
@@ -7548,6 +8055,12 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stag
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = __member
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder++
+		stage.new[a_datatype_definition_integer_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_integer_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_integer_ref]; !ok {
+			stage.modified[a_datatype_definition_integer_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString[a_datatype_definition_integer_ref.Name] = a_datatype_definition_integer_ref
 
@@ -7558,6 +8071,12 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stag
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_INTEGER_REF {
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs, a_datatype_definition_integer_ref)
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString, a_datatype_definition_integer_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_integer_ref]; ok {
+		stage.deleted[a_datatype_definition_integer_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_integer_ref)
+	}
 	return a_datatype_definition_integer_ref
 }
 
@@ -7579,6 +8098,10 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Comm
 
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_integer_ref.Commit(stage)
+}
+
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_integer_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_integer_ref to the back repo (if it is already staged)
@@ -7603,6 +8126,12 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stag
 		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = __member
 		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFOrder
 		stage.A_DATATYPE_DEFINITION_REAL_REFOrder++
+		stage.new[a_datatype_definition_real_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_real_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_real_ref]; !ok {
+			stage.modified[a_datatype_definition_real_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString[a_datatype_definition_real_ref.Name] = a_datatype_definition_real_ref
 
@@ -7613,6 +8142,12 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stag
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_REAL_REF {
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs, a_datatype_definition_real_ref)
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString, a_datatype_definition_real_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_real_ref]; ok {
+		stage.deleted[a_datatype_definition_real_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_real_ref)
+	}
 	return a_datatype_definition_real_ref
 }
 
@@ -7634,6 +8169,10 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Commit(sta
 
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_real_ref.Commit(stage)
+}
+
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_real_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_real_ref to the back repo (if it is already staged)
@@ -7658,6 +8197,12 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Stage(
 		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = __member
 		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFOrder
 		stage.A_DATATYPE_DEFINITION_STRING_REFOrder++
+		stage.new[a_datatype_definition_string_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_string_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_string_ref]; !ok {
+			stage.modified[a_datatype_definition_string_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString[a_datatype_definition_string_ref.Name] = a_datatype_definition_string_ref
 
@@ -7668,6 +8213,12 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Stage(
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_STRING_REF {
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs, a_datatype_definition_string_ref)
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString, a_datatype_definition_string_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_string_ref]; ok {
+		stage.deleted[a_datatype_definition_string_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_string_ref)
+	}
 	return a_datatype_definition_string_ref
 }
 
@@ -7689,6 +8240,10 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Commit
 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_string_ref.Commit(stage)
+}
+
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_string_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_string_ref to the back repo (if it is already staged)
@@ -7713,6 +8268,12 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(st
 		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = __member
 		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
 		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder++
+		stage.new[a_datatype_definition_xhtml_ref] = struct{}{}
+		delete(stage.deleted, a_datatype_definition_xhtml_ref)
+	} else {
+		if _, ok := stage.new[a_datatype_definition_xhtml_ref]; !ok {
+			stage.modified[a_datatype_definition_xhtml_ref] = struct{}{}
+		}
 	}
 	stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString[a_datatype_definition_xhtml_ref.Name] = a_datatype_definition_xhtml_ref
 
@@ -7723,6 +8284,12 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(st
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_XHTML_REF {
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs, a_datatype_definition_xhtml_ref)
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString, a_datatype_definition_xhtml_ref.Name)
+
+	if _, ok := stage.reference[a_datatype_definition_xhtml_ref]; ok {
+		stage.deleted[a_datatype_definition_xhtml_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_datatype_definition_xhtml_ref)
+	}
 	return a_datatype_definition_xhtml_ref
 }
 
@@ -7744,6 +8311,10 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Commit(s
 
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) CommitVoid(stage *Stage) {
 	a_datatype_definition_xhtml_ref.Commit(stage)
+}
+
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) StageVoid(stage *Stage) {
+	a_datatype_definition_xhtml_ref.Stage(stage)
 }
 
 // Checkout a_datatype_definition_xhtml_ref to the back repo (if it is already staged)
@@ -7768,6 +8339,12 @@ func (a_editable_atts *A_EDITABLE_ATTS) Stage(stage *Stage) *A_EDITABLE_ATTS {
 		stage.A_EDITABLE_ATTSs[a_editable_atts] = __member
 		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = stage.A_EDITABLE_ATTSOrder
 		stage.A_EDITABLE_ATTSOrder++
+		stage.new[a_editable_atts] = struct{}{}
+		delete(stage.deleted, a_editable_atts)
+	} else {
+		if _, ok := stage.new[a_editable_atts]; !ok {
+			stage.modified[a_editable_atts] = struct{}{}
+		}
 	}
 	stage.A_EDITABLE_ATTSs_mapString[a_editable_atts.Name] = a_editable_atts
 
@@ -7778,6 +8355,12 @@ func (a_editable_atts *A_EDITABLE_ATTS) Stage(stage *Stage) *A_EDITABLE_ATTS {
 func (a_editable_atts *A_EDITABLE_ATTS) Unstage(stage *Stage) *A_EDITABLE_ATTS {
 	delete(stage.A_EDITABLE_ATTSs, a_editable_atts)
 	delete(stage.A_EDITABLE_ATTSs_mapString, a_editable_atts.Name)
+
+	if _, ok := stage.reference[a_editable_atts]; ok {
+		stage.deleted[a_editable_atts] = struct{}{}
+	} else {
+		delete(stage.new, a_editable_atts)
+	}
 	return a_editable_atts
 }
 
@@ -7799,6 +8382,10 @@ func (a_editable_atts *A_EDITABLE_ATTS) Commit(stage *Stage) *A_EDITABLE_ATTS {
 
 func (a_editable_atts *A_EDITABLE_ATTS) CommitVoid(stage *Stage) {
 	a_editable_atts.Commit(stage)
+}
+
+func (a_editable_atts *A_EDITABLE_ATTS) StageVoid(stage *Stage) {
+	a_editable_atts.Stage(stage)
 }
 
 // Checkout a_editable_atts to the back repo (if it is already staged)
@@ -7823,6 +8410,12 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF 
 		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = __member
 		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = stage.A_ENUM_VALUE_REFOrder
 		stage.A_ENUM_VALUE_REFOrder++
+		stage.new[a_enum_value_ref] = struct{}{}
+		delete(stage.deleted, a_enum_value_ref)
+	} else {
+		if _, ok := stage.new[a_enum_value_ref]; !ok {
+			stage.modified[a_enum_value_ref] = struct{}{}
+		}
 	}
 	stage.A_ENUM_VALUE_REFs_mapString[a_enum_value_ref.Name] = a_enum_value_ref
 
@@ -7833,6 +8426,12 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) Unstage(stage *Stage) *A_ENUM_VALUE_REF {
 	delete(stage.A_ENUM_VALUE_REFs, a_enum_value_ref)
 	delete(stage.A_ENUM_VALUE_REFs_mapString, a_enum_value_ref.Name)
+
+	if _, ok := stage.reference[a_enum_value_ref]; ok {
+		stage.deleted[a_enum_value_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_enum_value_ref)
+	}
 	return a_enum_value_ref
 }
 
@@ -7854,6 +8453,10 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Commit(stage *Stage) *A_ENUM_VALUE_REF
 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) CommitVoid(stage *Stage) {
 	a_enum_value_ref.Commit(stage)
+}
+
+func (a_enum_value_ref *A_ENUM_VALUE_REF) StageVoid(stage *Stage) {
+	a_enum_value_ref.Stage(stage)
 }
 
 // Checkout a_enum_value_ref to the back repo (if it is already staged)
@@ -7878,6 +8481,12 @@ func (a_object *A_OBJECT) Stage(stage *Stage) *A_OBJECT {
 		stage.A_OBJECTs[a_object] = __member
 		stage.A_OBJECTMap_Staged_Order[a_object] = stage.A_OBJECTOrder
 		stage.A_OBJECTOrder++
+		stage.new[a_object] = struct{}{}
+		delete(stage.deleted, a_object)
+	} else {
+		if _, ok := stage.new[a_object]; !ok {
+			stage.modified[a_object] = struct{}{}
+		}
 	}
 	stage.A_OBJECTs_mapString[a_object.Name] = a_object
 
@@ -7888,6 +8497,12 @@ func (a_object *A_OBJECT) Stage(stage *Stage) *A_OBJECT {
 func (a_object *A_OBJECT) Unstage(stage *Stage) *A_OBJECT {
 	delete(stage.A_OBJECTs, a_object)
 	delete(stage.A_OBJECTs_mapString, a_object.Name)
+
+	if _, ok := stage.reference[a_object]; ok {
+		stage.deleted[a_object] = struct{}{}
+	} else {
+		delete(stage.new, a_object)
+	}
 	return a_object
 }
 
@@ -7909,6 +8524,10 @@ func (a_object *A_OBJECT) Commit(stage *Stage) *A_OBJECT {
 
 func (a_object *A_OBJECT) CommitVoid(stage *Stage) {
 	a_object.Commit(stage)
+}
+
+func (a_object *A_OBJECT) StageVoid(stage *Stage) {
+	a_object.Stage(stage)
 }
 
 // Checkout a_object to the back repo (if it is already staged)
@@ -7933,6 +8552,12 @@ func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
 		stage.A_PROPERTIESs[a_properties] = __member
 		stage.A_PROPERTIESMap_Staged_Order[a_properties] = stage.A_PROPERTIESOrder
 		stage.A_PROPERTIESOrder++
+		stage.new[a_properties] = struct{}{}
+		delete(stage.deleted, a_properties)
+	} else {
+		if _, ok := stage.new[a_properties]; !ok {
+			stage.modified[a_properties] = struct{}{}
+		}
 	}
 	stage.A_PROPERTIESs_mapString[a_properties.Name] = a_properties
 
@@ -7943,6 +8568,12 @@ func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
 func (a_properties *A_PROPERTIES) Unstage(stage *Stage) *A_PROPERTIES {
 	delete(stage.A_PROPERTIESs, a_properties)
 	delete(stage.A_PROPERTIESs_mapString, a_properties.Name)
+
+	if _, ok := stage.reference[a_properties]; ok {
+		stage.deleted[a_properties] = struct{}{}
+	} else {
+		delete(stage.new, a_properties)
+	}
 	return a_properties
 }
 
@@ -7964,6 +8595,10 @@ func (a_properties *A_PROPERTIES) Commit(stage *Stage) *A_PROPERTIES {
 
 func (a_properties *A_PROPERTIES) CommitVoid(stage *Stage) {
 	a_properties.Commit(stage)
+}
+
+func (a_properties *A_PROPERTIES) StageVoid(stage *Stage) {
+	a_properties.Stage(stage)
 }
 
 // Checkout a_properties to the back repo (if it is already staged)
@@ -7988,6 +8623,12 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Stage(stage *Stage) 
 		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = __member
 		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFOrder
 		stage.A_RELATION_GROUP_TYPE_REFOrder++
+		stage.new[a_relation_group_type_ref] = struct{}{}
+		delete(stage.deleted, a_relation_group_type_ref)
+	} else {
+		if _, ok := stage.new[a_relation_group_type_ref]; !ok {
+			stage.modified[a_relation_group_type_ref] = struct{}{}
+		}
 	}
 	stage.A_RELATION_GROUP_TYPE_REFs_mapString[a_relation_group_type_ref.Name] = a_relation_group_type_ref
 
@@ -7998,6 +8639,12 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Stage(stage *Stage) 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Unstage(stage *Stage) *A_RELATION_GROUP_TYPE_REF {
 	delete(stage.A_RELATION_GROUP_TYPE_REFs, a_relation_group_type_ref)
 	delete(stage.A_RELATION_GROUP_TYPE_REFs_mapString, a_relation_group_type_ref.Name)
+
+	if _, ok := stage.reference[a_relation_group_type_ref]; ok {
+		stage.deleted[a_relation_group_type_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_relation_group_type_ref)
+	}
 	return a_relation_group_type_ref
 }
 
@@ -8019,6 +8666,10 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Commit(stage *Stage)
 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) CommitVoid(stage *Stage) {
 	a_relation_group_type_ref.Commit(stage)
+}
+
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) StageVoid(stage *Stage) {
+	a_relation_group_type_ref.Stage(stage)
 }
 
 // Checkout a_relation_group_type_ref to the back repo (if it is already staged)
@@ -8043,6 +8694,12 @@ func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
 		stage.A_SOURCE_1s[a_source_1] = __member
 		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = stage.A_SOURCE_1Order
 		stage.A_SOURCE_1Order++
+		stage.new[a_source_1] = struct{}{}
+		delete(stage.deleted, a_source_1)
+	} else {
+		if _, ok := stage.new[a_source_1]; !ok {
+			stage.modified[a_source_1] = struct{}{}
+		}
 	}
 	stage.A_SOURCE_1s_mapString[a_source_1.Name] = a_source_1
 
@@ -8053,6 +8710,12 @@ func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
 func (a_source_1 *A_SOURCE_1) Unstage(stage *Stage) *A_SOURCE_1 {
 	delete(stage.A_SOURCE_1s, a_source_1)
 	delete(stage.A_SOURCE_1s_mapString, a_source_1.Name)
+
+	if _, ok := stage.reference[a_source_1]; ok {
+		stage.deleted[a_source_1] = struct{}{}
+	} else {
+		delete(stage.new, a_source_1)
+	}
 	return a_source_1
 }
 
@@ -8074,6 +8737,10 @@ func (a_source_1 *A_SOURCE_1) Commit(stage *Stage) *A_SOURCE_1 {
 
 func (a_source_1 *A_SOURCE_1) CommitVoid(stage *Stage) {
 	a_source_1.Commit(stage)
+}
+
+func (a_source_1 *A_SOURCE_1) StageVoid(stage *Stage) {
+	a_source_1.Stage(stage)
 }
 
 // Checkout a_source_1 to the back repo (if it is already staged)
@@ -8098,6 +8765,12 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Stage(stage *Stage) *A
 		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = __member
 		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Order
 		stage.A_SOURCE_SPECIFICATION_1Order++
+		stage.new[a_source_specification_1] = struct{}{}
+		delete(stage.deleted, a_source_specification_1)
+	} else {
+		if _, ok := stage.new[a_source_specification_1]; !ok {
+			stage.modified[a_source_specification_1] = struct{}{}
+		}
 	}
 	stage.A_SOURCE_SPECIFICATION_1s_mapString[a_source_specification_1.Name] = a_source_specification_1
 
@@ -8108,6 +8781,12 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Stage(stage *Stage) *A
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Unstage(stage *Stage) *A_SOURCE_SPECIFICATION_1 {
 	delete(stage.A_SOURCE_SPECIFICATION_1s, a_source_specification_1)
 	delete(stage.A_SOURCE_SPECIFICATION_1s_mapString, a_source_specification_1.Name)
+
+	if _, ok := stage.reference[a_source_specification_1]; ok {
+		stage.deleted[a_source_specification_1] = struct{}{}
+	} else {
+		delete(stage.new, a_source_specification_1)
+	}
 	return a_source_specification_1
 }
 
@@ -8129,6 +8808,10 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Commit(stage *Stage) *
 
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) CommitVoid(stage *Stage) {
 	a_source_specification_1.Commit(stage)
+}
+
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) StageVoid(stage *Stage) {
+	a_source_specification_1.Stage(stage)
 }
 
 // Checkout a_source_specification_1 to the back repo (if it is already staged)
@@ -8153,6 +8836,12 @@ func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS 
 		stage.A_SPECIFICATIONSs[a_specifications] = __member
 		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = stage.A_SPECIFICATIONSOrder
 		stage.A_SPECIFICATIONSOrder++
+		stage.new[a_specifications] = struct{}{}
+		delete(stage.deleted, a_specifications)
+	} else {
+		if _, ok := stage.new[a_specifications]; !ok {
+			stage.modified[a_specifications] = struct{}{}
+		}
 	}
 	stage.A_SPECIFICATIONSs_mapString[a_specifications.Name] = a_specifications
 
@@ -8163,6 +8852,12 @@ func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS 
 func (a_specifications *A_SPECIFICATIONS) Unstage(stage *Stage) *A_SPECIFICATIONS {
 	delete(stage.A_SPECIFICATIONSs, a_specifications)
 	delete(stage.A_SPECIFICATIONSs_mapString, a_specifications.Name)
+
+	if _, ok := stage.reference[a_specifications]; ok {
+		stage.deleted[a_specifications] = struct{}{}
+	} else {
+		delete(stage.new, a_specifications)
+	}
 	return a_specifications
 }
 
@@ -8184,6 +8879,10 @@ func (a_specifications *A_SPECIFICATIONS) Commit(stage *Stage) *A_SPECIFICATIONS
 
 func (a_specifications *A_SPECIFICATIONS) CommitVoid(stage *Stage) {
 	a_specifications.Commit(stage)
+}
+
+func (a_specifications *A_SPECIFICATIONS) StageVoid(stage *Stage) {
+	a_specifications.Stage(stage)
 }
 
 // Checkout a_specifications to the back repo (if it is already staged)
@@ -8208,6 +8907,12 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Stage(stage *Stage) *A
 		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = __member
 		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFOrder
 		stage.A_SPECIFICATION_TYPE_REFOrder++
+		stage.new[a_specification_type_ref] = struct{}{}
+		delete(stage.deleted, a_specification_type_ref)
+	} else {
+		if _, ok := stage.new[a_specification_type_ref]; !ok {
+			stage.modified[a_specification_type_ref] = struct{}{}
+		}
 	}
 	stage.A_SPECIFICATION_TYPE_REFs_mapString[a_specification_type_ref.Name] = a_specification_type_ref
 
@@ -8218,6 +8923,12 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Stage(stage *Stage) *A
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Unstage(stage *Stage) *A_SPECIFICATION_TYPE_REF {
 	delete(stage.A_SPECIFICATION_TYPE_REFs, a_specification_type_ref)
 	delete(stage.A_SPECIFICATION_TYPE_REFs_mapString, a_specification_type_ref.Name)
+
+	if _, ok := stage.reference[a_specification_type_ref]; ok {
+		stage.deleted[a_specification_type_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_specification_type_ref)
+	}
 	return a_specification_type_ref
 }
 
@@ -8239,6 +8950,10 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Commit(stage *Stage) *
 
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) CommitVoid(stage *Stage) {
 	a_specification_type_ref.Commit(stage)
+}
+
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) StageVoid(stage *Stage) {
+	a_specification_type_ref.Stage(stage)
 }
 
 // Checkout a_specification_type_ref to the back repo (if it is already staged)
@@ -8263,6 +8978,12 @@ func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_V
 		stage.A_SPECIFIED_VALUESs[a_specified_values] = __member
 		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = stage.A_SPECIFIED_VALUESOrder
 		stage.A_SPECIFIED_VALUESOrder++
+		stage.new[a_specified_values] = struct{}{}
+		delete(stage.deleted, a_specified_values)
+	} else {
+		if _, ok := stage.new[a_specified_values]; !ok {
+			stage.modified[a_specified_values] = struct{}{}
+		}
 	}
 	stage.A_SPECIFIED_VALUESs_mapString[a_specified_values.Name] = a_specified_values
 
@@ -8273,6 +8994,12 @@ func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_V
 func (a_specified_values *A_SPECIFIED_VALUES) Unstage(stage *Stage) *A_SPECIFIED_VALUES {
 	delete(stage.A_SPECIFIED_VALUESs, a_specified_values)
 	delete(stage.A_SPECIFIED_VALUESs_mapString, a_specified_values.Name)
+
+	if _, ok := stage.reference[a_specified_values]; ok {
+		stage.deleted[a_specified_values] = struct{}{}
+	} else {
+		delete(stage.new, a_specified_values)
+	}
 	return a_specified_values
 }
 
@@ -8294,6 +9021,10 @@ func (a_specified_values *A_SPECIFIED_VALUES) Commit(stage *Stage) *A_SPECIFIED_
 
 func (a_specified_values *A_SPECIFIED_VALUES) CommitVoid(stage *Stage) {
 	a_specified_values.Commit(stage)
+}
+
+func (a_specified_values *A_SPECIFIED_VALUES) StageVoid(stage *Stage) {
+	a_specified_values.Stage(stage)
 }
 
 // Checkout a_specified_values to the back repo (if it is already staged)
@@ -8318,6 +9049,12 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Stage(stage *Stage) *A_SPEC_ATTRIBUT
 		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = __member
 		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESOrder
 		stage.A_SPEC_ATTRIBUTESOrder++
+		stage.new[a_spec_attributes] = struct{}{}
+		delete(stage.deleted, a_spec_attributes)
+	} else {
+		if _, ok := stage.new[a_spec_attributes]; !ok {
+			stage.modified[a_spec_attributes] = struct{}{}
+		}
 	}
 	stage.A_SPEC_ATTRIBUTESs_mapString[a_spec_attributes.Name] = a_spec_attributes
 
@@ -8328,6 +9065,12 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Stage(stage *Stage) *A_SPEC_ATTRIBUT
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) Unstage(stage *Stage) *A_SPEC_ATTRIBUTES {
 	delete(stage.A_SPEC_ATTRIBUTESs, a_spec_attributes)
 	delete(stage.A_SPEC_ATTRIBUTESs_mapString, a_spec_attributes.Name)
+
+	if _, ok := stage.reference[a_spec_attributes]; ok {
+		stage.deleted[a_spec_attributes] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_attributes)
+	}
 	return a_spec_attributes
 }
 
@@ -8349,6 +9092,10 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Commit(stage *Stage) *A_SPEC_ATTRIBU
 
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) CommitVoid(stage *Stage) {
 	a_spec_attributes.Commit(stage)
+}
+
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) StageVoid(stage *Stage) {
+	a_spec_attributes.Stage(stage)
 }
 
 // Checkout a_spec_attributes to the back repo (if it is already staged)
@@ -8373,6 +9120,12 @@ func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
 		stage.A_SPEC_OBJECTSs[a_spec_objects] = __member
 		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = stage.A_SPEC_OBJECTSOrder
 		stage.A_SPEC_OBJECTSOrder++
+		stage.new[a_spec_objects] = struct{}{}
+		delete(stage.deleted, a_spec_objects)
+	} else {
+		if _, ok := stage.new[a_spec_objects]; !ok {
+			stage.modified[a_spec_objects] = struct{}{}
+		}
 	}
 	stage.A_SPEC_OBJECTSs_mapString[a_spec_objects.Name] = a_spec_objects
 
@@ -8383,6 +9136,12 @@ func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
 func (a_spec_objects *A_SPEC_OBJECTS) Unstage(stage *Stage) *A_SPEC_OBJECTS {
 	delete(stage.A_SPEC_OBJECTSs, a_spec_objects)
 	delete(stage.A_SPEC_OBJECTSs_mapString, a_spec_objects.Name)
+
+	if _, ok := stage.reference[a_spec_objects]; ok {
+		stage.deleted[a_spec_objects] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_objects)
+	}
 	return a_spec_objects
 }
 
@@ -8404,6 +9163,10 @@ func (a_spec_objects *A_SPEC_OBJECTS) Commit(stage *Stage) *A_SPEC_OBJECTS {
 
 func (a_spec_objects *A_SPEC_OBJECTS) CommitVoid(stage *Stage) {
 	a_spec_objects.Commit(stage)
+}
+
+func (a_spec_objects *A_SPEC_OBJECTS) StageVoid(stage *Stage) {
+	a_spec_objects.Stage(stage)
 }
 
 // Checkout a_spec_objects to the back repo (if it is already staged)
@@ -8428,6 +9191,12 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Stage(stage *Stage) *A_SPE
 		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = __member
 		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFOrder
 		stage.A_SPEC_OBJECT_TYPE_REFOrder++
+		stage.new[a_spec_object_type_ref] = struct{}{}
+		delete(stage.deleted, a_spec_object_type_ref)
+	} else {
+		if _, ok := stage.new[a_spec_object_type_ref]; !ok {
+			stage.modified[a_spec_object_type_ref] = struct{}{}
+		}
 	}
 	stage.A_SPEC_OBJECT_TYPE_REFs_mapString[a_spec_object_type_ref.Name] = a_spec_object_type_ref
 
@@ -8438,6 +9207,12 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Stage(stage *Stage) *A_SPE
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Unstage(stage *Stage) *A_SPEC_OBJECT_TYPE_REF {
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs, a_spec_object_type_ref)
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs_mapString, a_spec_object_type_ref.Name)
+
+	if _, ok := stage.reference[a_spec_object_type_ref]; ok {
+		stage.deleted[a_spec_object_type_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_object_type_ref)
+	}
 	return a_spec_object_type_ref
 }
 
@@ -8459,6 +9234,10 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Commit(stage *Stage) *A_SP
 
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) CommitVoid(stage *Stage) {
 	a_spec_object_type_ref.Commit(stage)
+}
+
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) StageVoid(stage *Stage) {
+	a_spec_object_type_ref.Stage(stage)
 }
 
 // Checkout a_spec_object_type_ref to the back repo (if it is already staged)
@@ -8483,6 +9262,12 @@ func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS 
 		stage.A_SPEC_RELATIONSs[a_spec_relations] = __member
 		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = stage.A_SPEC_RELATIONSOrder
 		stage.A_SPEC_RELATIONSOrder++
+		stage.new[a_spec_relations] = struct{}{}
+		delete(stage.deleted, a_spec_relations)
+	} else {
+		if _, ok := stage.new[a_spec_relations]; !ok {
+			stage.modified[a_spec_relations] = struct{}{}
+		}
 	}
 	stage.A_SPEC_RELATIONSs_mapString[a_spec_relations.Name] = a_spec_relations
 
@@ -8493,6 +9278,12 @@ func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS 
 func (a_spec_relations *A_SPEC_RELATIONS) Unstage(stage *Stage) *A_SPEC_RELATIONS {
 	delete(stage.A_SPEC_RELATIONSs, a_spec_relations)
 	delete(stage.A_SPEC_RELATIONSs_mapString, a_spec_relations.Name)
+
+	if _, ok := stage.reference[a_spec_relations]; ok {
+		stage.deleted[a_spec_relations] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_relations)
+	}
 	return a_spec_relations
 }
 
@@ -8514,6 +9305,10 @@ func (a_spec_relations *A_SPEC_RELATIONS) Commit(stage *Stage) *A_SPEC_RELATIONS
 
 func (a_spec_relations *A_SPEC_RELATIONS) CommitVoid(stage *Stage) {
 	a_spec_relations.Commit(stage)
+}
+
+func (a_spec_relations *A_SPEC_RELATIONS) StageVoid(stage *Stage) {
+	a_spec_relations.Stage(stage)
 }
 
 // Checkout a_spec_relations to the back repo (if it is already staged)
@@ -8538,6 +9333,12 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Stage(stage *Stage) *A_SPE
 		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = __member
 		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSOrder
 		stage.A_SPEC_RELATION_GROUPSOrder++
+		stage.new[a_spec_relation_groups] = struct{}{}
+		delete(stage.deleted, a_spec_relation_groups)
+	} else {
+		if _, ok := stage.new[a_spec_relation_groups]; !ok {
+			stage.modified[a_spec_relation_groups] = struct{}{}
+		}
 	}
 	stage.A_SPEC_RELATION_GROUPSs_mapString[a_spec_relation_groups.Name] = a_spec_relation_groups
 
@@ -8548,6 +9349,12 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Stage(stage *Stage) *A_SPE
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Unstage(stage *Stage) *A_SPEC_RELATION_GROUPS {
 	delete(stage.A_SPEC_RELATION_GROUPSs, a_spec_relation_groups)
 	delete(stage.A_SPEC_RELATION_GROUPSs_mapString, a_spec_relation_groups.Name)
+
+	if _, ok := stage.reference[a_spec_relation_groups]; ok {
+		stage.deleted[a_spec_relation_groups] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_relation_groups)
+	}
 	return a_spec_relation_groups
 }
 
@@ -8569,6 +9376,10 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Commit(stage *Stage) *A_SP
 
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) CommitVoid(stage *Stage) {
 	a_spec_relation_groups.Commit(stage)
+}
+
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) StageVoid(stage *Stage) {
+	a_spec_relation_groups.Stage(stage)
 }
 
 // Checkout a_spec_relation_groups to the back repo (if it is already staged)
@@ -8593,6 +9404,12 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELA
 		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = __member
 		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFOrder
 		stage.A_SPEC_RELATION_REFOrder++
+		stage.new[a_spec_relation_ref] = struct{}{}
+		delete(stage.deleted, a_spec_relation_ref)
+	} else {
+		if _, ok := stage.new[a_spec_relation_ref]; !ok {
+			stage.modified[a_spec_relation_ref] = struct{}{}
+		}
 	}
 	stage.A_SPEC_RELATION_REFs_mapString[a_spec_relation_ref.Name] = a_spec_relation_ref
 
@@ -8603,6 +9420,12 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELA
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) Unstage(stage *Stage) *A_SPEC_RELATION_REF {
 	delete(stage.A_SPEC_RELATION_REFs, a_spec_relation_ref)
 	delete(stage.A_SPEC_RELATION_REFs_mapString, a_spec_relation_ref.Name)
+
+	if _, ok := stage.reference[a_spec_relation_ref]; ok {
+		stage.deleted[a_spec_relation_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_relation_ref)
+	}
 	return a_spec_relation_ref
 }
 
@@ -8624,6 +9447,10 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Commit(stage *Stage) *A_SPEC_REL
 
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) CommitVoid(stage *Stage) {
 	a_spec_relation_ref.Commit(stage)
+}
+
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) StageVoid(stage *Stage) {
+	a_spec_relation_ref.Stage(stage)
 }
 
 // Checkout a_spec_relation_ref to the back repo (if it is already staged)
@@ -8648,6 +9475,12 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Stage(stage *Stage) *A
 		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = __member
 		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFOrder
 		stage.A_SPEC_RELATION_TYPE_REFOrder++
+		stage.new[a_spec_relation_type_ref] = struct{}{}
+		delete(stage.deleted, a_spec_relation_type_ref)
+	} else {
+		if _, ok := stage.new[a_spec_relation_type_ref]; !ok {
+			stage.modified[a_spec_relation_type_ref] = struct{}{}
+		}
 	}
 	stage.A_SPEC_RELATION_TYPE_REFs_mapString[a_spec_relation_type_ref.Name] = a_spec_relation_type_ref
 
@@ -8658,6 +9491,12 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Stage(stage *Stage) *A
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Unstage(stage *Stage) *A_SPEC_RELATION_TYPE_REF {
 	delete(stage.A_SPEC_RELATION_TYPE_REFs, a_spec_relation_type_ref)
 	delete(stage.A_SPEC_RELATION_TYPE_REFs_mapString, a_spec_relation_type_ref.Name)
+
+	if _, ok := stage.reference[a_spec_relation_type_ref]; ok {
+		stage.deleted[a_spec_relation_type_ref] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_relation_type_ref)
+	}
 	return a_spec_relation_type_ref
 }
 
@@ -8679,6 +9518,10 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Commit(stage *Stage) *
 
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) CommitVoid(stage *Stage) {
 	a_spec_relation_type_ref.Commit(stage)
+}
+
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) StageVoid(stage *Stage) {
+	a_spec_relation_type_ref.Stage(stage)
 }
 
 // Checkout a_spec_relation_type_ref to the back repo (if it is already staged)
@@ -8703,6 +9546,12 @@ func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
 		stage.A_SPEC_TYPESs[a_spec_types] = __member
 		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = stage.A_SPEC_TYPESOrder
 		stage.A_SPEC_TYPESOrder++
+		stage.new[a_spec_types] = struct{}{}
+		delete(stage.deleted, a_spec_types)
+	} else {
+		if _, ok := stage.new[a_spec_types]; !ok {
+			stage.modified[a_spec_types] = struct{}{}
+		}
 	}
 	stage.A_SPEC_TYPESs_mapString[a_spec_types.Name] = a_spec_types
 
@@ -8713,6 +9562,12 @@ func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
 func (a_spec_types *A_SPEC_TYPES) Unstage(stage *Stage) *A_SPEC_TYPES {
 	delete(stage.A_SPEC_TYPESs, a_spec_types)
 	delete(stage.A_SPEC_TYPESs_mapString, a_spec_types.Name)
+
+	if _, ok := stage.reference[a_spec_types]; ok {
+		stage.deleted[a_spec_types] = struct{}{}
+	} else {
+		delete(stage.new, a_spec_types)
+	}
 	return a_spec_types
 }
 
@@ -8734,6 +9589,10 @@ func (a_spec_types *A_SPEC_TYPES) Commit(stage *Stage) *A_SPEC_TYPES {
 
 func (a_spec_types *A_SPEC_TYPES) CommitVoid(stage *Stage) {
 	a_spec_types.Commit(stage)
+}
+
+func (a_spec_types *A_SPEC_TYPES) StageVoid(stage *Stage) {
+	a_spec_types.Stage(stage)
 }
 
 // Checkout a_spec_types to the back repo (if it is already staged)
@@ -8758,6 +9617,12 @@ func (a_the_header *A_THE_HEADER) Stage(stage *Stage) *A_THE_HEADER {
 		stage.A_THE_HEADERs[a_the_header] = __member
 		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = stage.A_THE_HEADEROrder
 		stage.A_THE_HEADEROrder++
+		stage.new[a_the_header] = struct{}{}
+		delete(stage.deleted, a_the_header)
+	} else {
+		if _, ok := stage.new[a_the_header]; !ok {
+			stage.modified[a_the_header] = struct{}{}
+		}
 	}
 	stage.A_THE_HEADERs_mapString[a_the_header.Name] = a_the_header
 
@@ -8768,6 +9633,12 @@ func (a_the_header *A_THE_HEADER) Stage(stage *Stage) *A_THE_HEADER {
 func (a_the_header *A_THE_HEADER) Unstage(stage *Stage) *A_THE_HEADER {
 	delete(stage.A_THE_HEADERs, a_the_header)
 	delete(stage.A_THE_HEADERs_mapString, a_the_header.Name)
+
+	if _, ok := stage.reference[a_the_header]; ok {
+		stage.deleted[a_the_header] = struct{}{}
+	} else {
+		delete(stage.new, a_the_header)
+	}
 	return a_the_header
 }
 
@@ -8789,6 +9660,10 @@ func (a_the_header *A_THE_HEADER) Commit(stage *Stage) *A_THE_HEADER {
 
 func (a_the_header *A_THE_HEADER) CommitVoid(stage *Stage) {
 	a_the_header.Commit(stage)
+}
+
+func (a_the_header *A_THE_HEADER) StageVoid(stage *Stage) {
+	a_the_header.Stage(stage)
 }
 
 // Checkout a_the_header to the back repo (if it is already staged)
@@ -8813,6 +9688,12 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIO
 		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = __member
 		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = stage.A_TOOL_EXTENSIONSOrder
 		stage.A_TOOL_EXTENSIONSOrder++
+		stage.new[a_tool_extensions] = struct{}{}
+		delete(stage.deleted, a_tool_extensions)
+	} else {
+		if _, ok := stage.new[a_tool_extensions]; !ok {
+			stage.modified[a_tool_extensions] = struct{}{}
+		}
 	}
 	stage.A_TOOL_EXTENSIONSs_mapString[a_tool_extensions.Name] = a_tool_extensions
 
@@ -8823,6 +9704,12 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIO
 func (a_tool_extensions *A_TOOL_EXTENSIONS) Unstage(stage *Stage) *A_TOOL_EXTENSIONS {
 	delete(stage.A_TOOL_EXTENSIONSs, a_tool_extensions)
 	delete(stage.A_TOOL_EXTENSIONSs_mapString, a_tool_extensions.Name)
+
+	if _, ok := stage.reference[a_tool_extensions]; ok {
+		stage.deleted[a_tool_extensions] = struct{}{}
+	} else {
+		delete(stage.new, a_tool_extensions)
+	}
 	return a_tool_extensions
 }
 
@@ -8844,6 +9731,10 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Commit(stage *Stage) *A_TOOL_EXTENSI
 
 func (a_tool_extensions *A_TOOL_EXTENSIONS) CommitVoid(stage *Stage) {
 	a_tool_extensions.Commit(stage)
+}
+
+func (a_tool_extensions *A_TOOL_EXTENSIONS) StageVoid(stage *Stage) {
+	a_tool_extensions.Stage(stage)
 }
 
 // Checkout a_tool_extensions to the back repo (if it is already staged)
@@ -8868,6 +9759,12 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Stage(stage *Sta
 		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = __member
 		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANOrder
 		stage.DATATYPE_DEFINITION_BOOLEANOrder++
+		stage.new[datatype_definition_boolean] = struct{}{}
+		delete(stage.deleted, datatype_definition_boolean)
+	} else {
+		if _, ok := stage.new[datatype_definition_boolean]; !ok {
+			stage.modified[datatype_definition_boolean] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_BOOLEANs_mapString[datatype_definition_boolean.Name] = datatype_definition_boolean
 
@@ -8878,6 +9775,12 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Stage(stage *Sta
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Unstage(stage *Stage) *DATATYPE_DEFINITION_BOOLEAN {
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs, datatype_definition_boolean)
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs_mapString, datatype_definition_boolean.Name)
+
+	if _, ok := stage.reference[datatype_definition_boolean]; ok {
+		stage.deleted[datatype_definition_boolean] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_boolean)
+	}
 	return datatype_definition_boolean
 }
 
@@ -8899,6 +9802,10 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Commit(stage *St
 
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) CommitVoid(stage *Stage) {
 	datatype_definition_boolean.Commit(stage)
+}
+
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) StageVoid(stage *Stage) {
+	datatype_definition_boolean.Stage(stage)
 }
 
 // Checkout datatype_definition_boolean to the back repo (if it is already staged)
@@ -8923,6 +9830,12 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *D
 		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = __member
 		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEOrder
 		stage.DATATYPE_DEFINITION_DATEOrder++
+		stage.new[datatype_definition_date] = struct{}{}
+		delete(stage.deleted, datatype_definition_date)
+	} else {
+		if _, ok := stage.new[datatype_definition_date]; !ok {
+			stage.modified[datatype_definition_date] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_DATEs_mapString[datatype_definition_date.Name] = datatype_definition_date
 
@@ -8933,6 +9846,12 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *D
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Unstage(stage *Stage) *DATATYPE_DEFINITION_DATE {
 	delete(stage.DATATYPE_DEFINITION_DATEs, datatype_definition_date)
 	delete(stage.DATATYPE_DEFINITION_DATEs_mapString, datatype_definition_date.Name)
+
+	if _, ok := stage.reference[datatype_definition_date]; ok {
+		stage.deleted[datatype_definition_date] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_date)
+	}
 	return datatype_definition_date
 }
 
@@ -8954,6 +9873,10 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Commit(stage *Stage) *
 
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) CommitVoid(stage *Stage) {
 	datatype_definition_date.Commit(stage)
+}
+
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) StageVoid(stage *Stage) {
+	datatype_definition_date.Stage(stage)
 }
 
 // Checkout datatype_definition_date to the back repo (if it is already staged)
@@ -8978,6 +9901,12 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Stage(st
 		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = __member
 		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONOrder
 		stage.DATATYPE_DEFINITION_ENUMERATIONOrder++
+		stage.new[datatype_definition_enumeration] = struct{}{}
+		delete(stage.deleted, datatype_definition_enumeration)
+	} else {
+		if _, ok := stage.new[datatype_definition_enumeration]; !ok {
+			stage.modified[datatype_definition_enumeration] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString[datatype_definition_enumeration.Name] = datatype_definition_enumeration
 
@@ -8988,6 +9917,12 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Stage(st
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Unstage(stage *Stage) *DATATYPE_DEFINITION_ENUMERATION {
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs, datatype_definition_enumeration)
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString, datatype_definition_enumeration.Name)
+
+	if _, ok := stage.reference[datatype_definition_enumeration]; ok {
+		stage.deleted[datatype_definition_enumeration] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_enumeration)
+	}
 	return datatype_definition_enumeration
 }
 
@@ -9009,6 +9944,10 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Commit(s
 
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) CommitVoid(stage *Stage) {
 	datatype_definition_enumeration.Commit(stage)
+}
+
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) StageVoid(stage *Stage) {
+	datatype_definition_enumeration.Stage(stage)
 }
 
 // Checkout datatype_definition_enumeration to the back repo (if it is already staged)
@@ -9033,6 +9972,12 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Sta
 		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = __member
 		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGEROrder
 		stage.DATATYPE_DEFINITION_INTEGEROrder++
+		stage.new[datatype_definition_integer] = struct{}{}
+		delete(stage.deleted, datatype_definition_integer)
+	} else {
+		if _, ok := stage.new[datatype_definition_integer]; !ok {
+			stage.modified[datatype_definition_integer] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_INTEGERs_mapString[datatype_definition_integer.Name] = datatype_definition_integer
 
@@ -9043,6 +9988,12 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Sta
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Unstage(stage *Stage) *DATATYPE_DEFINITION_INTEGER {
 	delete(stage.DATATYPE_DEFINITION_INTEGERs, datatype_definition_integer)
 	delete(stage.DATATYPE_DEFINITION_INTEGERs_mapString, datatype_definition_integer.Name)
+
+	if _, ok := stage.reference[datatype_definition_integer]; ok {
+		stage.deleted[datatype_definition_integer] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_integer)
+	}
 	return datatype_definition_integer
 }
 
@@ -9064,6 +10015,10 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Commit(stage *St
 
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) CommitVoid(stage *Stage) {
 	datatype_definition_integer.Commit(stage)
+}
+
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) StageVoid(stage *Stage) {
+	datatype_definition_integer.Stage(stage)
 }
 
 // Checkout datatype_definition_integer to the back repo (if it is already staged)
@@ -9088,6 +10043,12 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Stage(stage *Stage) *D
 		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = __member
 		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALOrder
 		stage.DATATYPE_DEFINITION_REALOrder++
+		stage.new[datatype_definition_real] = struct{}{}
+		delete(stage.deleted, datatype_definition_real)
+	} else {
+		if _, ok := stage.new[datatype_definition_real]; !ok {
+			stage.modified[datatype_definition_real] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_REALs_mapString[datatype_definition_real.Name] = datatype_definition_real
 
@@ -9098,6 +10059,12 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Stage(stage *Stage) *D
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Unstage(stage *Stage) *DATATYPE_DEFINITION_REAL {
 	delete(stage.DATATYPE_DEFINITION_REALs, datatype_definition_real)
 	delete(stage.DATATYPE_DEFINITION_REALs_mapString, datatype_definition_real.Name)
+
+	if _, ok := stage.reference[datatype_definition_real]; ok {
+		stage.deleted[datatype_definition_real] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_real)
+	}
 	return datatype_definition_real
 }
 
@@ -9119,6 +10086,10 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Commit(stage *Stage) *
 
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) CommitVoid(stage *Stage) {
 	datatype_definition_real.Commit(stage)
+}
+
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) StageVoid(stage *Stage) {
+	datatype_definition_real.Stage(stage)
 }
 
 // Checkout datatype_definition_real to the back repo (if it is already staged)
@@ -9143,6 +10114,12 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage
 		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = __member
 		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGOrder
 		stage.DATATYPE_DEFINITION_STRINGOrder++
+		stage.new[datatype_definition_string] = struct{}{}
+		delete(stage.deleted, datatype_definition_string)
+	} else {
+		if _, ok := stage.new[datatype_definition_string]; !ok {
+			stage.modified[datatype_definition_string] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_STRINGs_mapString[datatype_definition_string.Name] = datatype_definition_string
 
@@ -9153,6 +10130,12 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Unstage(stage *Stage) *DATATYPE_DEFINITION_STRING {
 	delete(stage.DATATYPE_DEFINITION_STRINGs, datatype_definition_string)
 	delete(stage.DATATYPE_DEFINITION_STRINGs_mapString, datatype_definition_string.Name)
+
+	if _, ok := stage.reference[datatype_definition_string]; ok {
+		stage.deleted[datatype_definition_string] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_string)
+	}
 	return datatype_definition_string
 }
 
@@ -9174,6 +10157,10 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Commit(stage *Stag
 
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) CommitVoid(stage *Stage) {
 	datatype_definition_string.Commit(stage)
+}
+
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) StageVoid(stage *Stage) {
+	datatype_definition_string.Stage(stage)
 }
 
 // Checkout datatype_definition_string to the back repo (if it is already staged)
@@ -9198,6 +10185,12 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Stage(stage *Stage) 
 		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = __member
 		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLOrder
 		stage.DATATYPE_DEFINITION_XHTMLOrder++
+		stage.new[datatype_definition_xhtml] = struct{}{}
+		delete(stage.deleted, datatype_definition_xhtml)
+	} else {
+		if _, ok := stage.new[datatype_definition_xhtml]; !ok {
+			stage.modified[datatype_definition_xhtml] = struct{}{}
+		}
 	}
 	stage.DATATYPE_DEFINITION_XHTMLs_mapString[datatype_definition_xhtml.Name] = datatype_definition_xhtml
 
@@ -9208,6 +10201,12 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Stage(stage *Stage) 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Unstage(stage *Stage) *DATATYPE_DEFINITION_XHTML {
 	delete(stage.DATATYPE_DEFINITION_XHTMLs, datatype_definition_xhtml)
 	delete(stage.DATATYPE_DEFINITION_XHTMLs_mapString, datatype_definition_xhtml.Name)
+
+	if _, ok := stage.reference[datatype_definition_xhtml]; ok {
+		stage.deleted[datatype_definition_xhtml] = struct{}{}
+	} else {
+		delete(stage.new, datatype_definition_xhtml)
+	}
 	return datatype_definition_xhtml
 }
 
@@ -9229,6 +10228,10 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Commit(stage *Stage)
 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) CommitVoid(stage *Stage) {
 	datatype_definition_xhtml.Commit(stage)
+}
+
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) StageVoid(stage *Stage) {
+	datatype_definition_xhtml.Stage(stage)
 }
 
 // Checkout datatype_definition_xhtml to the back repo (if it is already staged)
@@ -9253,6 +10256,12 @@ func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
 		stage.EMBEDDED_VALUEs[embedded_value] = __member
 		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = stage.EMBEDDED_VALUEOrder
 		stage.EMBEDDED_VALUEOrder++
+		stage.new[embedded_value] = struct{}{}
+		delete(stage.deleted, embedded_value)
+	} else {
+		if _, ok := stage.new[embedded_value]; !ok {
+			stage.modified[embedded_value] = struct{}{}
+		}
 	}
 	stage.EMBEDDED_VALUEs_mapString[embedded_value.Name] = embedded_value
 
@@ -9263,6 +10272,12 @@ func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
 func (embedded_value *EMBEDDED_VALUE) Unstage(stage *Stage) *EMBEDDED_VALUE {
 	delete(stage.EMBEDDED_VALUEs, embedded_value)
 	delete(stage.EMBEDDED_VALUEs_mapString, embedded_value.Name)
+
+	if _, ok := stage.reference[embedded_value]; ok {
+		stage.deleted[embedded_value] = struct{}{}
+	} else {
+		delete(stage.new, embedded_value)
+	}
 	return embedded_value
 }
 
@@ -9284,6 +10299,10 @@ func (embedded_value *EMBEDDED_VALUE) Commit(stage *Stage) *EMBEDDED_VALUE {
 
 func (embedded_value *EMBEDDED_VALUE) CommitVoid(stage *Stage) {
 	embedded_value.Commit(stage)
+}
+
+func (embedded_value *EMBEDDED_VALUE) StageVoid(stage *Stage) {
+	embedded_value.Stage(stage)
 }
 
 // Checkout embedded_value to the back repo (if it is already staged)
@@ -9308,6 +10327,12 @@ func (enum_value *ENUM_VALUE) Stage(stage *Stage) *ENUM_VALUE {
 		stage.ENUM_VALUEs[enum_value] = __member
 		stage.ENUM_VALUEMap_Staged_Order[enum_value] = stage.ENUM_VALUEOrder
 		stage.ENUM_VALUEOrder++
+		stage.new[enum_value] = struct{}{}
+		delete(stage.deleted, enum_value)
+	} else {
+		if _, ok := stage.new[enum_value]; !ok {
+			stage.modified[enum_value] = struct{}{}
+		}
 	}
 	stage.ENUM_VALUEs_mapString[enum_value.Name] = enum_value
 
@@ -9318,6 +10343,12 @@ func (enum_value *ENUM_VALUE) Stage(stage *Stage) *ENUM_VALUE {
 func (enum_value *ENUM_VALUE) Unstage(stage *Stage) *ENUM_VALUE {
 	delete(stage.ENUM_VALUEs, enum_value)
 	delete(stage.ENUM_VALUEs_mapString, enum_value.Name)
+
+	if _, ok := stage.reference[enum_value]; ok {
+		stage.deleted[enum_value] = struct{}{}
+	} else {
+		delete(stage.new, enum_value)
+	}
 	return enum_value
 }
 
@@ -9339,6 +10370,10 @@ func (enum_value *ENUM_VALUE) Commit(stage *Stage) *ENUM_VALUE {
 
 func (enum_value *ENUM_VALUE) CommitVoid(stage *Stage) {
 	enum_value.Commit(stage)
+}
+
+func (enum_value *ENUM_VALUE) StageVoid(stage *Stage) {
+	enum_value.Stage(stage)
 }
 
 // Checkout enum_value to the back repo (if it is already staged)
@@ -9363,6 +10398,12 @@ func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage 
 		stage.EmbeddedJpgImages[embeddedjpgimage] = __member
 		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
 		stage.EmbeddedJpgImageOrder++
+		stage.new[embeddedjpgimage] = struct{}{}
+		delete(stage.deleted, embeddedjpgimage)
+	} else {
+		if _, ok := stage.new[embeddedjpgimage]; !ok {
+			stage.modified[embeddedjpgimage] = struct{}{}
+		}
 	}
 	stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
 
@@ -9373,6 +10414,12 @@ func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage 
 func (embeddedjpgimage *EmbeddedJpgImage) Unstage(stage *Stage) *EmbeddedJpgImage {
 	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
 	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
+
+	if _, ok := stage.reference[embeddedjpgimage]; ok {
+		stage.deleted[embeddedjpgimage] = struct{}{}
+	} else {
+		delete(stage.new, embeddedjpgimage)
+	}
 	return embeddedjpgimage
 }
 
@@ -9394,6 +10441,10 @@ func (embeddedjpgimage *EmbeddedJpgImage) Commit(stage *Stage) *EmbeddedJpgImage
 
 func (embeddedjpgimage *EmbeddedJpgImage) CommitVoid(stage *Stage) {
 	embeddedjpgimage.Commit(stage)
+}
+
+func (embeddedjpgimage *EmbeddedJpgImage) StageVoid(stage *Stage) {
+	embeddedjpgimage.Stage(stage)
 }
 
 // Checkout embeddedjpgimage to the back repo (if it is already staged)
@@ -9418,6 +10469,12 @@ func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage 
 		stage.EmbeddedPngImages[embeddedpngimage] = __member
 		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
 		stage.EmbeddedPngImageOrder++
+		stage.new[embeddedpngimage] = struct{}{}
+		delete(stage.deleted, embeddedpngimage)
+	} else {
+		if _, ok := stage.new[embeddedpngimage]; !ok {
+			stage.modified[embeddedpngimage] = struct{}{}
+		}
 	}
 	stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
 
@@ -9428,6 +10485,12 @@ func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage 
 func (embeddedpngimage *EmbeddedPngImage) Unstage(stage *Stage) *EmbeddedPngImage {
 	delete(stage.EmbeddedPngImages, embeddedpngimage)
 	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
+
+	if _, ok := stage.reference[embeddedpngimage]; ok {
+		stage.deleted[embeddedpngimage] = struct{}{}
+	} else {
+		delete(stage.new, embeddedpngimage)
+	}
 	return embeddedpngimage
 }
 
@@ -9449,6 +10512,10 @@ func (embeddedpngimage *EmbeddedPngImage) Commit(stage *Stage) *EmbeddedPngImage
 
 func (embeddedpngimage *EmbeddedPngImage) CommitVoid(stage *Stage) {
 	embeddedpngimage.Commit(stage)
+}
+
+func (embeddedpngimage *EmbeddedPngImage) StageVoid(stage *Stage) {
+	embeddedpngimage.Stage(stage)
 }
 
 // Checkout embeddedpngimage to the back repo (if it is already staged)
@@ -9473,6 +10540,12 @@ func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage 
 		stage.EmbeddedSvgImages[embeddedsvgimage] = __member
 		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
 		stage.EmbeddedSvgImageOrder++
+		stage.new[embeddedsvgimage] = struct{}{}
+		delete(stage.deleted, embeddedsvgimage)
+	} else {
+		if _, ok := stage.new[embeddedsvgimage]; !ok {
+			stage.modified[embeddedsvgimage] = struct{}{}
+		}
 	}
 	stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
 
@@ -9483,6 +10556,12 @@ func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage 
 func (embeddedsvgimage *EmbeddedSvgImage) Unstage(stage *Stage) *EmbeddedSvgImage {
 	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
 	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
+
+	if _, ok := stage.reference[embeddedsvgimage]; ok {
+		stage.deleted[embeddedsvgimage] = struct{}{}
+	} else {
+		delete(stage.new, embeddedsvgimage)
+	}
 	return embeddedsvgimage
 }
 
@@ -9504,6 +10583,10 @@ func (embeddedsvgimage *EmbeddedSvgImage) Commit(stage *Stage) *EmbeddedSvgImage
 
 func (embeddedsvgimage *EmbeddedSvgImage) CommitVoid(stage *Stage) {
 	embeddedsvgimage.Commit(stage)
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) StageVoid(stage *Stage) {
+	embeddedsvgimage.Stage(stage)
 }
 
 // Checkout embeddedsvgimage to the back repo (if it is already staged)
@@ -9528,6 +10611,12 @@ func (kill *Kill) Stage(stage *Stage) *Kill {
 		stage.Kills[kill] = __member
 		stage.KillMap_Staged_Order[kill] = stage.KillOrder
 		stage.KillOrder++
+		stage.new[kill] = struct{}{}
+		delete(stage.deleted, kill)
+	} else {
+		if _, ok := stage.new[kill]; !ok {
+			stage.modified[kill] = struct{}{}
+		}
 	}
 	stage.Kills_mapString[kill.Name] = kill
 
@@ -9538,6 +10627,12 @@ func (kill *Kill) Stage(stage *Stage) *Kill {
 func (kill *Kill) Unstage(stage *Stage) *Kill {
 	delete(stage.Kills, kill)
 	delete(stage.Kills_mapString, kill.Name)
+
+	if _, ok := stage.reference[kill]; ok {
+		stage.deleted[kill] = struct{}{}
+	} else {
+		delete(stage.new, kill)
+	}
 	return kill
 }
 
@@ -9559,6 +10654,10 @@ func (kill *Kill) Commit(stage *Stage) *Kill {
 
 func (kill *Kill) CommitVoid(stage *Stage) {
 	kill.Commit(stage)
+}
+
+func (kill *Kill) StageVoid(stage *Stage) {
+	kill.Stage(stage)
 }
 
 // Checkout kill to the back repo (if it is already staged)
@@ -9583,6 +10682,12 @@ func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys[map_attribute_definition_boolean_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_boolean_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_boolean_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_boolean_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_boolean_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_boolean_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString[map_attribute_definition_boolean_showinsubjectentry.Name] = map_attribute_definition_boolean_showinsubjectentry
 
@@ -9593,6 +10698,12 @@ func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys, map_attribute_definition_boolean_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString, map_attribute_definition_boolean_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_boolean_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_boolean_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_boolean_showinsubjectentry)
+	}
 	return map_attribute_definition_boolean_showinsubjectentry
 }
 
@@ -9614,6 +10725,10 @@ func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 
 func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_boolean_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_boolean_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_boolean_showinsubjectentry to the back repo (if it is already staged)
@@ -9638,6 +10753,12 @@ func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITIO
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys[map_attribute_definition_boolean_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order[map_attribute_definition_boolean_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_boolean_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_boolean_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_boolean_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_boolean_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys_mapString[map_attribute_definition_boolean_showintableentry.Name] = map_attribute_definition_boolean_showintableentry
 
@@ -9648,6 +10769,12 @@ func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys, map_attribute_definition_boolean_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys_mapString, map_attribute_definition_boolean_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_boolean_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_boolean_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_boolean_showintableentry)
+	}
 	return map_attribute_definition_boolean_showintableentry
 }
 
@@ -9669,6 +10796,10 @@ func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITIO
 
 func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_boolean_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_boolean_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_boolean_showintableentry to the back repo (if it is already staged)
@@ -9693,6 +10824,12 @@ func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys[map_attribute_definition_boolean_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_boolean_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_boolean_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_boolean_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_boolean_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_boolean_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys_mapString[map_attribute_definition_boolean_showintitleentry.Name] = map_attribute_definition_boolean_showintitleentry
 
@@ -9703,6 +10840,12 @@ func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys, map_attribute_definition_boolean_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys_mapString, map_attribute_definition_boolean_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_boolean_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_boolean_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_boolean_showintitleentry)
+	}
 	return map_attribute_definition_boolean_showintitleentry
 }
 
@@ -9724,6 +10867,10 @@ func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 
 func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_boolean_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_boolean_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_boolean_showintitleentry to the back repo (if it is already staged)
@@ -9748,6 +10895,12 @@ func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys[map_attribute_definition_date_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_date_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_date_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_date_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_date_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_date_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys_mapString[map_attribute_definition_date_showinsubjectentry.Name] = map_attribute_definition_date_showinsubjectentry
 
@@ -9758,6 +10911,12 @@ func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys, map_attribute_definition_date_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys_mapString, map_attribute_definition_date_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_date_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_date_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_date_showinsubjectentry)
+	}
 	return map_attribute_definition_date_showinsubjectentry
 }
 
@@ -9779,6 +10938,10 @@ func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 
 func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_date_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_date_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_date_showinsubjectentry to the back repo (if it is already staged)
@@ -9803,6 +10966,12 @@ func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_D
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys[map_attribute_definition_date_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryMap_Staged_Order[map_attribute_definition_date_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_date_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_date_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_date_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_date_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys_mapString[map_attribute_definition_date_showintableentry.Name] = map_attribute_definition_date_showintableentry
 
@@ -9813,6 +10982,12 @@ func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_D
 func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys, map_attribute_definition_date_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys_mapString, map_attribute_definition_date_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_date_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_date_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_date_showintableentry)
+	}
 	return map_attribute_definition_date_showintableentry
 }
 
@@ -9834,6 +11009,10 @@ func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_D
 
 func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_date_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_date_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_date_showintableentry to the back repo (if it is already staged)
@@ -9858,6 +11037,12 @@ func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_D
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys[map_attribute_definition_date_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_date_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_date_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_date_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_date_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_date_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys_mapString[map_attribute_definition_date_showintitleentry.Name] = map_attribute_definition_date_showintitleentry
 
@@ -9868,6 +11053,12 @@ func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_D
 func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys, map_attribute_definition_date_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys_mapString, map_attribute_definition_date_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_date_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_date_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_date_showintitleentry)
+	}
 	return map_attribute_definition_date_showintitleentry
 }
 
@@ -9889,6 +11080,10 @@ func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_D
 
 func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_date_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_date_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_date_showintitleentry to the back repo (if it is already staged)
@@ -9913,6 +11108,12 @@ func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEF
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys[map_attribute_definition_enumeration_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_enumeration_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_enumeration_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_enumeration_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_enumeration_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_enumeration_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys_mapString[map_attribute_definition_enumeration_showinsubjectentry.Name] = map_attribute_definition_enumeration_showinsubjectentry
 
@@ -9923,6 +11124,12 @@ func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEF
 func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys, map_attribute_definition_enumeration_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys_mapString, map_attribute_definition_enumeration_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_enumeration_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_enumeration_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_enumeration_showinsubjectentry)
+	}
 	return map_attribute_definition_enumeration_showinsubjectentry
 }
 
@@ -9944,6 +11151,10 @@ func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEF
 
 func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_enumeration_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_enumeration_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_enumeration_showinsubjectentry to the back repo (if it is already staged)
@@ -9968,6 +11179,12 @@ func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFIN
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys[map_attribute_definition_enumeration_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryMap_Staged_Order[map_attribute_definition_enumeration_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_enumeration_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_enumeration_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_enumeration_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_enumeration_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys_mapString[map_attribute_definition_enumeration_showintableentry.Name] = map_attribute_definition_enumeration_showintableentry
 
@@ -9978,6 +11195,12 @@ func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFIN
 func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys, map_attribute_definition_enumeration_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys_mapString, map_attribute_definition_enumeration_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_enumeration_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_enumeration_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_enumeration_showintableentry)
+	}
 	return map_attribute_definition_enumeration_showintableentry
 }
 
@@ -9999,6 +11222,10 @@ func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFIN
 
 func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_enumeration_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_enumeration_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_enumeration_showintableentry to the back repo (if it is already staged)
@@ -10023,6 +11250,12 @@ func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFIN
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys[map_attribute_definition_enumeration_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_enumeration_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_enumeration_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_enumeration_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_enumeration_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_enumeration_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys_mapString[map_attribute_definition_enumeration_showintitleentry.Name] = map_attribute_definition_enumeration_showintitleentry
 
@@ -10033,6 +11266,12 @@ func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFIN
 func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys, map_attribute_definition_enumeration_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys_mapString, map_attribute_definition_enumeration_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_enumeration_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_enumeration_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_enumeration_showintitleentry)
+	}
 	return map_attribute_definition_enumeration_showintitleentry
 }
 
@@ -10054,6 +11293,10 @@ func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFIN
 
 func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_enumeration_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_enumeration_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_enumeration_showintitleentry to the back repo (if it is already staged)
@@ -10078,6 +11321,12 @@ func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys[map_attribute_definition_integer_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_integer_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_integer_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_integer_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_integer_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_integer_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys_mapString[map_attribute_definition_integer_showinsubjectentry.Name] = map_attribute_definition_integer_showinsubjectentry
 
@@ -10088,6 +11337,12 @@ func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys, map_attribute_definition_integer_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys_mapString, map_attribute_definition_integer_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_integer_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_integer_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_integer_showinsubjectentry)
+	}
 	return map_attribute_definition_integer_showinsubjectentry
 }
 
@@ -10109,6 +11364,10 @@ func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 
 func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_integer_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_integer_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_integer_showinsubjectentry to the back repo (if it is already staged)
@@ -10133,6 +11392,12 @@ func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITIO
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys[map_attribute_definition_integer_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryMap_Staged_Order[map_attribute_definition_integer_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_integer_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_integer_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_integer_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_integer_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys_mapString[map_attribute_definition_integer_showintableentry.Name] = map_attribute_definition_integer_showintableentry
 
@@ -10143,6 +11408,12 @@ func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys, map_attribute_definition_integer_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys_mapString, map_attribute_definition_integer_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_integer_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_integer_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_integer_showintableentry)
+	}
 	return map_attribute_definition_integer_showintableentry
 }
 
@@ -10164,6 +11435,10 @@ func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITIO
 
 func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_integer_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_integer_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_integer_showintableentry to the back repo (if it is already staged)
@@ -10188,6 +11463,12 @@ func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys[map_attribute_definition_integer_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_integer_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_integer_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_integer_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_integer_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_integer_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys_mapString[map_attribute_definition_integer_showintitleentry.Name] = map_attribute_definition_integer_showintitleentry
 
@@ -10198,6 +11479,12 @@ func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys, map_attribute_definition_integer_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys_mapString, map_attribute_definition_integer_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_integer_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_integer_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_integer_showintitleentry)
+	}
 	return map_attribute_definition_integer_showintitleentry
 }
 
@@ -10219,6 +11506,10 @@ func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 
 func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_integer_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_integer_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_integer_showintitleentry to the back repo (if it is already staged)
@@ -10243,6 +11534,12 @@ func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys[map_attribute_definition_real_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_real_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_real_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_real_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_real_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_real_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys_mapString[map_attribute_definition_real_showinsubjectentry.Name] = map_attribute_definition_real_showinsubjectentry
 
@@ -10253,6 +11550,12 @@ func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys, map_attribute_definition_real_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys_mapString, map_attribute_definition_real_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_real_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_real_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_real_showinsubjectentry)
+	}
 	return map_attribute_definition_real_showinsubjectentry
 }
 
@@ -10274,6 +11577,10 @@ func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 
 func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_real_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_real_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_real_showinsubjectentry to the back repo (if it is already staged)
@@ -10298,6 +11605,12 @@ func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_R
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys[map_attribute_definition_real_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryMap_Staged_Order[map_attribute_definition_real_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_real_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_real_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_real_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_real_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys_mapString[map_attribute_definition_real_showintableentry.Name] = map_attribute_definition_real_showintableentry
 
@@ -10308,6 +11621,12 @@ func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_R
 func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys, map_attribute_definition_real_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys_mapString, map_attribute_definition_real_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_real_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_real_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_real_showintableentry)
+	}
 	return map_attribute_definition_real_showintableentry
 }
 
@@ -10329,6 +11648,10 @@ func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_R
 
 func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_real_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_real_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_real_showintableentry to the back repo (if it is already staged)
@@ -10353,6 +11676,12 @@ func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_R
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys[map_attribute_definition_real_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_real_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_real_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_real_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_real_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_real_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys_mapString[map_attribute_definition_real_showintitleentry.Name] = map_attribute_definition_real_showintitleentry
 
@@ -10363,6 +11692,12 @@ func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_R
 func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys, map_attribute_definition_real_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys_mapString, map_attribute_definition_real_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_real_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_real_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_real_showintitleentry)
+	}
 	return map_attribute_definition_real_showintitleentry
 }
 
@@ -10384,6 +11719,10 @@ func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_R
 
 func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_real_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_real_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_real_showintitleentry to the back repo (if it is already staged)
@@ -10408,6 +11747,12 @@ func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITI
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys[map_attribute_definition_string_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_string_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_string_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_string_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_string_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_string_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys_mapString[map_attribute_definition_string_showinsubjectentry.Name] = map_attribute_definition_string_showinsubjectentry
 
@@ -10418,6 +11763,12 @@ func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITI
 func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys, map_attribute_definition_string_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys_mapString, map_attribute_definition_string_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_string_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_string_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_string_showinsubjectentry)
+	}
 	return map_attribute_definition_string_showinsubjectentry
 }
 
@@ -10439,6 +11790,10 @@ func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITI
 
 func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_string_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_string_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_string_showinsubjectentry to the back repo (if it is already staged)
@@ -10463,6 +11818,12 @@ func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys[map_attribute_definition_string_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryMap_Staged_Order[map_attribute_definition_string_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_string_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_string_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_string_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_string_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys_mapString[map_attribute_definition_string_showintableentry.Name] = map_attribute_definition_string_showintableentry
 
@@ -10473,6 +11834,12 @@ func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys, map_attribute_definition_string_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys_mapString, map_attribute_definition_string_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_string_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_string_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_string_showintableentry)
+	}
 	return map_attribute_definition_string_showintableentry
 }
 
@@ -10494,6 +11861,10 @@ func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION
 
 func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_string_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_string_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_string_showintableentry to the back repo (if it is already staged)
@@ -10518,6 +11889,12 @@ func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys[map_attribute_definition_string_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_string_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_string_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_string_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_string_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_string_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys_mapString[map_attribute_definition_string_showintitleentry.Name] = map_attribute_definition_string_showintitleentry
 
@@ -10528,6 +11905,12 @@ func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys, map_attribute_definition_string_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys_mapString, map_attribute_definition_string_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_string_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_string_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_string_showintitleentry)
+	}
 	return map_attribute_definition_string_showintitleentry
 }
 
@@ -10549,6 +11932,10 @@ func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION
 
 func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_string_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_string_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_string_showintitleentry to the back repo (if it is already staged)
@@ -10573,6 +11960,12 @@ func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITIO
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys[map_attribute_definition_xhtml_showinsubjectentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_xhtml_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryOrder++
+		stage.new[map_attribute_definition_xhtml_showinsubjectentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_xhtml_showinsubjectentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_xhtml_showinsubjectentry]; !ok {
+			stage.modified[map_attribute_definition_xhtml_showinsubjectentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys_mapString[map_attribute_definition_xhtml_showinsubjectentry.Name] = map_attribute_definition_xhtml_showinsubjectentry
 
@@ -10583,6 +11976,12 @@ func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys, map_attribute_definition_xhtml_showinsubjectentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys_mapString, map_attribute_definition_xhtml_showinsubjectentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_xhtml_showinsubjectentry]; ok {
+		stage.deleted[map_attribute_definition_xhtml_showinsubjectentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_xhtml_showinsubjectentry)
+	}
 	return map_attribute_definition_xhtml_showinsubjectentry
 }
 
@@ -10604,6 +12003,10 @@ func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITIO
 
 func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_xhtml_showinsubjectentry.Commit(stage)
+}
+
+func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_xhtml_showinsubjectentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_xhtml_showinsubjectentry to the back repo (if it is already staged)
@@ -10628,6 +12031,12 @@ func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys[map_attribute_definition_xhtml_showintableentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryMap_Staged_Order[map_attribute_definition_xhtml_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryOrder++
+		stage.new[map_attribute_definition_xhtml_showintableentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_xhtml_showintableentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_xhtml_showintableentry]; !ok {
+			stage.modified[map_attribute_definition_xhtml_showintableentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys_mapString[map_attribute_definition_xhtml_showintableentry.Name] = map_attribute_definition_xhtml_showintableentry
 
@@ -10638,6 +12047,12 @@ func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_
 func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys, map_attribute_definition_xhtml_showintableentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys_mapString, map_attribute_definition_xhtml_showintableentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_xhtml_showintableentry]; ok {
+		stage.deleted[map_attribute_definition_xhtml_showintableentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_xhtml_showintableentry)
+	}
 	return map_attribute_definition_xhtml_showintableentry
 }
 
@@ -10659,6 +12074,10 @@ func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_
 
 func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_xhtml_showintableentry.Commit(stage)
+}
+
+func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_xhtml_showintableentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_xhtml_showintableentry to the back repo (if it is already staged)
@@ -10683,6 +12102,12 @@ func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys[map_attribute_definition_xhtml_showintitleentry] = __member
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_xhtml_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryOrder++
+		stage.new[map_attribute_definition_xhtml_showintitleentry] = struct{}{}
+		delete(stage.deleted, map_attribute_definition_xhtml_showintitleentry)
+	} else {
+		if _, ok := stage.new[map_attribute_definition_xhtml_showintitleentry]; !ok {
+			stage.modified[map_attribute_definition_xhtml_showintitleentry] = struct{}{}
+		}
 	}
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys_mapString[map_attribute_definition_xhtml_showintitleentry.Name] = map_attribute_definition_xhtml_showintitleentry
 
@@ -10693,6 +12118,12 @@ func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_
 func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) Unstage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry {
 	delete(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys, map_attribute_definition_xhtml_showintitleentry)
 	delete(stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys_mapString, map_attribute_definition_xhtml_showintitleentry.Name)
+
+	if _, ok := stage.reference[map_attribute_definition_xhtml_showintitleentry]; ok {
+		stage.deleted[map_attribute_definition_xhtml_showintitleentry] = struct{}{}
+	} else {
+		delete(stage.new, map_attribute_definition_xhtml_showintitleentry)
+	}
 	return map_attribute_definition_xhtml_showintitleentry
 }
 
@@ -10714,6 +12145,10 @@ func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_
 
 func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) CommitVoid(stage *Stage) {
 	map_attribute_definition_xhtml_showintitleentry.Commit(stage)
+}
+
+func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) StageVoid(stage *Stage) {
+	map_attribute_definition_xhtml_showintitleentry.Stage(stage)
 }
 
 // Checkout map_attribute_definition_xhtml_showintitleentry to the back repo (if it is already staged)
@@ -10738,6 +12173,12 @@ func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEnt
 		stage.Map_SPECIFICATION_Nodes_expandedEntrys[map_specification_nodes_expandedentry] = __member
 		stage.Map_SPECIFICATION_Nodes_expandedEntryMap_Staged_Order[map_specification_nodes_expandedentry] = stage.Map_SPECIFICATION_Nodes_expandedEntryOrder
 		stage.Map_SPECIFICATION_Nodes_expandedEntryOrder++
+		stage.new[map_specification_nodes_expandedentry] = struct{}{}
+		delete(stage.deleted, map_specification_nodes_expandedentry)
+	} else {
+		if _, ok := stage.new[map_specification_nodes_expandedentry]; !ok {
+			stage.modified[map_specification_nodes_expandedentry] = struct{}{}
+		}
 	}
 	stage.Map_SPECIFICATION_Nodes_expandedEntrys_mapString[map_specification_nodes_expandedentry.Name] = map_specification_nodes_expandedentry
 
@@ -10748,6 +12189,12 @@ func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEnt
 func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) Unstage(stage *Stage) *Map_SPECIFICATION_Nodes_expandedEntry {
 	delete(stage.Map_SPECIFICATION_Nodes_expandedEntrys, map_specification_nodes_expandedentry)
 	delete(stage.Map_SPECIFICATION_Nodes_expandedEntrys_mapString, map_specification_nodes_expandedentry.Name)
+
+	if _, ok := stage.reference[map_specification_nodes_expandedentry]; ok {
+		stage.deleted[map_specification_nodes_expandedentry] = struct{}{}
+	} else {
+		delete(stage.new, map_specification_nodes_expandedentry)
+	}
 	return map_specification_nodes_expandedentry
 }
 
@@ -10769,6 +12216,10 @@ func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEnt
 
 func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) CommitVoid(stage *Stage) {
 	map_specification_nodes_expandedentry.Commit(stage)
+}
+
+func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) StageVoid(stage *Stage) {
+	map_specification_nodes_expandedentry.Stage(stage)
 }
 
 // Checkout map_specification_nodes_expandedentry to the back repo (if it is already staged)
@@ -10793,6 +12244,12 @@ func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpan
 		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys[map_spec_object_type_isnodeexpandedentry] = __member
 		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryMap_Staged_Order[map_spec_object_type_isnodeexpandedentry] = stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryOrder
 		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryOrder++
+		stage.new[map_spec_object_type_isnodeexpandedentry] = struct{}{}
+		delete(stage.deleted, map_spec_object_type_isnodeexpandedentry)
+	} else {
+		if _, ok := stage.new[map_spec_object_type_isnodeexpandedentry]; !ok {
+			stage.modified[map_spec_object_type_isnodeexpandedentry] = struct{}{}
+		}
 	}
 	stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys_mapString[map_spec_object_type_isnodeexpandedentry.Name] = map_spec_object_type_isnodeexpandedentry
 
@@ -10803,6 +12260,12 @@ func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpan
 func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) Unstage(stage *Stage) *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry {
 	delete(stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys, map_spec_object_type_isnodeexpandedentry)
 	delete(stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys_mapString, map_spec_object_type_isnodeexpandedentry.Name)
+
+	if _, ok := stage.reference[map_spec_object_type_isnodeexpandedentry]; ok {
+		stage.deleted[map_spec_object_type_isnodeexpandedentry] = struct{}{}
+	} else {
+		delete(stage.new, map_spec_object_type_isnodeexpandedentry)
+	}
 	return map_spec_object_type_isnodeexpandedentry
 }
 
@@ -10824,6 +12287,10 @@ func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpan
 
 func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) CommitVoid(stage *Stage) {
 	map_spec_object_type_isnodeexpandedentry.Commit(stage)
+}
+
+func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) StageVoid(stage *Stage) {
+	map_spec_object_type_isnodeexpandedentry.Stage(stage)
 }
 
 // Checkout map_spec_object_type_isnodeexpandedentry to the back repo (if it is already staged)
@@ -10848,6 +12315,12 @@ func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentif
 		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys[map_spec_object_type_showidentifierentry] = __member
 		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[map_spec_object_type_showidentifierentry] = stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryOrder
 		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryOrder++
+		stage.new[map_spec_object_type_showidentifierentry] = struct{}{}
+		delete(stage.deleted, map_spec_object_type_showidentifierentry)
+	} else {
+		if _, ok := stage.new[map_spec_object_type_showidentifierentry]; !ok {
+			stage.modified[map_spec_object_type_showidentifierentry] = struct{}{}
+		}
 	}
 	stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString[map_spec_object_type_showidentifierentry.Name] = map_spec_object_type_showidentifierentry
 
@@ -10858,6 +12331,12 @@ func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentif
 func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) Unstage(stage *Stage) *Map_SPEC_OBJECT_TYPE_showIdentifierEntry {
 	delete(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys, map_spec_object_type_showidentifierentry)
 	delete(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString, map_spec_object_type_showidentifierentry.Name)
+
+	if _, ok := stage.reference[map_spec_object_type_showidentifierentry]; ok {
+		stage.deleted[map_spec_object_type_showidentifierentry] = struct{}{}
+	} else {
+		delete(stage.new, map_spec_object_type_showidentifierentry)
+	}
 	return map_spec_object_type_showidentifierentry
 }
 
@@ -10879,6 +12358,10 @@ func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentif
 
 func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) CommitVoid(stage *Stage) {
 	map_spec_object_type_showidentifierentry.Commit(stage)
+}
+
+func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) StageVoid(stage *Stage) {
+	map_spec_object_type_showidentifierentry.Stage(stage)
 }
 
 // Checkout map_spec_object_type_showidentifierentry to the back repo (if it is already staged)
@@ -10903,6 +12386,12 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) St
 		stage.Map_SPEC_OBJECT_TYPE_showNameEntrys[map_spec_object_type_shownameentry] = __member
 		stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[map_spec_object_type_shownameentry] = stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder
 		stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder++
+		stage.new[map_spec_object_type_shownameentry] = struct{}{}
+		delete(stage.deleted, map_spec_object_type_shownameentry)
+	} else {
+		if _, ok := stage.new[map_spec_object_type_shownameentry]; !ok {
+			stage.modified[map_spec_object_type_shownameentry] = struct{}{}
+		}
 	}
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString[map_spec_object_type_shownameentry.Name] = map_spec_object_type_shownameentry
 
@@ -10913,6 +12402,12 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) St
 func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Unstage(stage *Stage) *Map_SPEC_OBJECT_TYPE_showNameEntry {
 	delete(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys, map_spec_object_type_shownameentry)
 	delete(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString, map_spec_object_type_shownameentry.Name)
+
+	if _, ok := stage.reference[map_spec_object_type_shownameentry]; ok {
+		stage.deleted[map_spec_object_type_shownameentry] = struct{}{}
+	} else {
+		delete(stage.new, map_spec_object_type_shownameentry)
+	}
 	return map_spec_object_type_shownameentry
 }
 
@@ -10934,6 +12429,10 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Co
 
 func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) CommitVoid(stage *Stage) {
 	map_spec_object_type_shownameentry.Commit(stage)
+}
+
+func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) StageVoid(stage *Stage) {
+	map_spec_object_type_shownameentry.Stage(stage)
 }
 
 // Checkout map_spec_object_type_shownameentry to the back repo (if it is already staged)
@@ -10958,6 +12457,12 @@ func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 		stage.RELATION_GROUPs[relation_group] = __member
 		stage.RELATION_GROUPMap_Staged_Order[relation_group] = stage.RELATION_GROUPOrder
 		stage.RELATION_GROUPOrder++
+		stage.new[relation_group] = struct{}{}
+		delete(stage.deleted, relation_group)
+	} else {
+		if _, ok := stage.new[relation_group]; !ok {
+			stage.modified[relation_group] = struct{}{}
+		}
 	}
 	stage.RELATION_GROUPs_mapString[relation_group.Name] = relation_group
 
@@ -10968,6 +12473,12 @@ func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 func (relation_group *RELATION_GROUP) Unstage(stage *Stage) *RELATION_GROUP {
 	delete(stage.RELATION_GROUPs, relation_group)
 	delete(stage.RELATION_GROUPs_mapString, relation_group.Name)
+
+	if _, ok := stage.reference[relation_group]; ok {
+		stage.deleted[relation_group] = struct{}{}
+	} else {
+		delete(stage.new, relation_group)
+	}
 	return relation_group
 }
 
@@ -10989,6 +12500,10 @@ func (relation_group *RELATION_GROUP) Commit(stage *Stage) *RELATION_GROUP {
 
 func (relation_group *RELATION_GROUP) CommitVoid(stage *Stage) {
 	relation_group.Commit(stage)
+}
+
+func (relation_group *RELATION_GROUP) StageVoid(stage *Stage) {
+	relation_group.Stage(stage)
 }
 
 // Checkout relation_group to the back repo (if it is already staged)
@@ -11013,6 +12528,12 @@ func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GR
 		stage.RELATION_GROUP_TYPEs[relation_group_type] = __member
 		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = stage.RELATION_GROUP_TYPEOrder
 		stage.RELATION_GROUP_TYPEOrder++
+		stage.new[relation_group_type] = struct{}{}
+		delete(stage.deleted, relation_group_type)
+	} else {
+		if _, ok := stage.new[relation_group_type]; !ok {
+			stage.modified[relation_group_type] = struct{}{}
+		}
 	}
 	stage.RELATION_GROUP_TYPEs_mapString[relation_group_type.Name] = relation_group_type
 
@@ -11023,6 +12544,12 @@ func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GR
 func (relation_group_type *RELATION_GROUP_TYPE) Unstage(stage *Stage) *RELATION_GROUP_TYPE {
 	delete(stage.RELATION_GROUP_TYPEs, relation_group_type)
 	delete(stage.RELATION_GROUP_TYPEs_mapString, relation_group_type.Name)
+
+	if _, ok := stage.reference[relation_group_type]; ok {
+		stage.deleted[relation_group_type] = struct{}{}
+	} else {
+		delete(stage.new, relation_group_type)
+	}
 	return relation_group_type
 }
 
@@ -11044,6 +12571,10 @@ func (relation_group_type *RELATION_GROUP_TYPE) Commit(stage *Stage) *RELATION_G
 
 func (relation_group_type *RELATION_GROUP_TYPE) CommitVoid(stage *Stage) {
 	relation_group_type.Commit(stage)
+}
+
+func (relation_group_type *RELATION_GROUP_TYPE) StageVoid(stage *Stage) {
+	relation_group_type.Stage(stage)
 }
 
 // Checkout relation_group_type to the back repo (if it is already staged)
@@ -11068,6 +12599,12 @@ func (req_if *REQ_IF) Stage(stage *Stage) *REQ_IF {
 		stage.REQ_IFs[req_if] = __member
 		stage.REQ_IFMap_Staged_Order[req_if] = stage.REQ_IFOrder
 		stage.REQ_IFOrder++
+		stage.new[req_if] = struct{}{}
+		delete(stage.deleted, req_if)
+	} else {
+		if _, ok := stage.new[req_if]; !ok {
+			stage.modified[req_if] = struct{}{}
+		}
 	}
 	stage.REQ_IFs_mapString[req_if.Name] = req_if
 
@@ -11078,6 +12615,12 @@ func (req_if *REQ_IF) Stage(stage *Stage) *REQ_IF {
 func (req_if *REQ_IF) Unstage(stage *Stage) *REQ_IF {
 	delete(stage.REQ_IFs, req_if)
 	delete(stage.REQ_IFs_mapString, req_if.Name)
+
+	if _, ok := stage.reference[req_if]; ok {
+		stage.deleted[req_if] = struct{}{}
+	} else {
+		delete(stage.new, req_if)
+	}
 	return req_if
 }
 
@@ -11099,6 +12642,10 @@ func (req_if *REQ_IF) Commit(stage *Stage) *REQ_IF {
 
 func (req_if *REQ_IF) CommitVoid(stage *Stage) {
 	req_if.Commit(stage)
+}
+
+func (req_if *REQ_IF) StageVoid(stage *Stage) {
+	req_if.Stage(stage)
 }
 
 // Checkout req_if to the back repo (if it is already staged)
@@ -11123,6 +12670,12 @@ func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
 		stage.REQ_IF_CONTENTs[req_if_content] = __member
 		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = stage.REQ_IF_CONTENTOrder
 		stage.REQ_IF_CONTENTOrder++
+		stage.new[req_if_content] = struct{}{}
+		delete(stage.deleted, req_if_content)
+	} else {
+		if _, ok := stage.new[req_if_content]; !ok {
+			stage.modified[req_if_content] = struct{}{}
+		}
 	}
 	stage.REQ_IF_CONTENTs_mapString[req_if_content.Name] = req_if_content
 
@@ -11133,6 +12686,12 @@ func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
 func (req_if_content *REQ_IF_CONTENT) Unstage(stage *Stage) *REQ_IF_CONTENT {
 	delete(stage.REQ_IF_CONTENTs, req_if_content)
 	delete(stage.REQ_IF_CONTENTs_mapString, req_if_content.Name)
+
+	if _, ok := stage.reference[req_if_content]; ok {
+		stage.deleted[req_if_content] = struct{}{}
+	} else {
+		delete(stage.new, req_if_content)
+	}
 	return req_if_content
 }
 
@@ -11154,6 +12713,10 @@ func (req_if_content *REQ_IF_CONTENT) Commit(stage *Stage) *REQ_IF_CONTENT {
 
 func (req_if_content *REQ_IF_CONTENT) CommitVoid(stage *Stage) {
 	req_if_content.Commit(stage)
+}
+
+func (req_if_content *REQ_IF_CONTENT) StageVoid(stage *Stage) {
+	req_if_content.Stage(stage)
 }
 
 // Checkout req_if_content to the back repo (if it is already staged)
@@ -11178,6 +12741,12 @@ func (req_if_header *REQ_IF_HEADER) Stage(stage *Stage) *REQ_IF_HEADER {
 		stage.REQ_IF_HEADERs[req_if_header] = __member
 		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = stage.REQ_IF_HEADEROrder
 		stage.REQ_IF_HEADEROrder++
+		stage.new[req_if_header] = struct{}{}
+		delete(stage.deleted, req_if_header)
+	} else {
+		if _, ok := stage.new[req_if_header]; !ok {
+			stage.modified[req_if_header] = struct{}{}
+		}
 	}
 	stage.REQ_IF_HEADERs_mapString[req_if_header.Name] = req_if_header
 
@@ -11188,6 +12757,12 @@ func (req_if_header *REQ_IF_HEADER) Stage(stage *Stage) *REQ_IF_HEADER {
 func (req_if_header *REQ_IF_HEADER) Unstage(stage *Stage) *REQ_IF_HEADER {
 	delete(stage.REQ_IF_HEADERs, req_if_header)
 	delete(stage.REQ_IF_HEADERs_mapString, req_if_header.Name)
+
+	if _, ok := stage.reference[req_if_header]; ok {
+		stage.deleted[req_if_header] = struct{}{}
+	} else {
+		delete(stage.new, req_if_header)
+	}
 	return req_if_header
 }
 
@@ -11209,6 +12784,10 @@ func (req_if_header *REQ_IF_HEADER) Commit(stage *Stage) *REQ_IF_HEADER {
 
 func (req_if_header *REQ_IF_HEADER) CommitVoid(stage *Stage) {
 	req_if_header.Commit(stage)
+}
+
+func (req_if_header *REQ_IF_HEADER) StageVoid(stage *Stage) {
+	req_if_header.Stage(stage)
 }
 
 // Checkout req_if_header to the back repo (if it is already staged)
@@ -11233,6 +12812,12 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_
 		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = __member
 		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONOrder
 		stage.REQ_IF_TOOL_EXTENSIONOrder++
+		stage.new[req_if_tool_extension] = struct{}{}
+		delete(stage.deleted, req_if_tool_extension)
+	} else {
+		if _, ok := stage.new[req_if_tool_extension]; !ok {
+			stage.modified[req_if_tool_extension] = struct{}{}
+		}
 	}
 	stage.REQ_IF_TOOL_EXTENSIONs_mapString[req_if_tool_extension.Name] = req_if_tool_extension
 
@@ -11243,6 +12828,12 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Unstage(stage *Stage) *REQ_IF_TOOL_EXTENSION {
 	delete(stage.REQ_IF_TOOL_EXTENSIONs, req_if_tool_extension)
 	delete(stage.REQ_IF_TOOL_EXTENSIONs_mapString, req_if_tool_extension.Name)
+
+	if _, ok := stage.reference[req_if_tool_extension]; ok {
+		stage.deleted[req_if_tool_extension] = struct{}{}
+	} else {
+		delete(stage.new, req_if_tool_extension)
+	}
 	return req_if_tool_extension
 }
 
@@ -11264,6 +12855,10 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Commit(stage *Stage) *REQ_IF
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) CommitVoid(stage *Stage) {
 	req_if_tool_extension.Commit(stage)
+}
+
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) StageVoid(stage *Stage) {
+	req_if_tool_extension.Stage(stage)
 }
 
 // Checkout req_if_tool_extension to the back repo (if it is already staged)
@@ -11288,6 +12883,12 @@ func (renderingconfiguration *RenderingConfiguration) Stage(stage *Stage) *Rende
 		stage.RenderingConfigurations[renderingconfiguration] = __member
 		stage.RenderingConfigurationMap_Staged_Order[renderingconfiguration] = stage.RenderingConfigurationOrder
 		stage.RenderingConfigurationOrder++
+		stage.new[renderingconfiguration] = struct{}{}
+		delete(stage.deleted, renderingconfiguration)
+	} else {
+		if _, ok := stage.new[renderingconfiguration]; !ok {
+			stage.modified[renderingconfiguration] = struct{}{}
+		}
 	}
 	stage.RenderingConfigurations_mapString[renderingconfiguration.Name] = renderingconfiguration
 
@@ -11298,6 +12899,12 @@ func (renderingconfiguration *RenderingConfiguration) Stage(stage *Stage) *Rende
 func (renderingconfiguration *RenderingConfiguration) Unstage(stage *Stage) *RenderingConfiguration {
 	delete(stage.RenderingConfigurations, renderingconfiguration)
 	delete(stage.RenderingConfigurations_mapString, renderingconfiguration.Name)
+
+	if _, ok := stage.reference[renderingconfiguration]; ok {
+		stage.deleted[renderingconfiguration] = struct{}{}
+	} else {
+		delete(stage.new, renderingconfiguration)
+	}
 	return renderingconfiguration
 }
 
@@ -11319,6 +12926,10 @@ func (renderingconfiguration *RenderingConfiguration) Commit(stage *Stage) *Rend
 
 func (renderingconfiguration *RenderingConfiguration) CommitVoid(stage *Stage) {
 	renderingconfiguration.Commit(stage)
+}
+
+func (renderingconfiguration *RenderingConfiguration) StageVoid(stage *Stage) {
+	renderingconfiguration.Stage(stage)
 }
 
 // Checkout renderingconfiguration to the back repo (if it is already staged)
@@ -11343,6 +12954,12 @@ func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 		stage.SPECIFICATIONs[specification] = __member
 		stage.SPECIFICATIONMap_Staged_Order[specification] = stage.SPECIFICATIONOrder
 		stage.SPECIFICATIONOrder++
+		stage.new[specification] = struct{}{}
+		delete(stage.deleted, specification)
+	} else {
+		if _, ok := stage.new[specification]; !ok {
+			stage.modified[specification] = struct{}{}
+		}
 	}
 	stage.SPECIFICATIONs_mapString[specification.Name] = specification
 
@@ -11353,6 +12970,12 @@ func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 func (specification *SPECIFICATION) Unstage(stage *Stage) *SPECIFICATION {
 	delete(stage.SPECIFICATIONs, specification)
 	delete(stage.SPECIFICATIONs_mapString, specification.Name)
+
+	if _, ok := stage.reference[specification]; ok {
+		stage.deleted[specification] = struct{}{}
+	} else {
+		delete(stage.new, specification)
+	}
 	return specification
 }
 
@@ -11374,6 +12997,10 @@ func (specification *SPECIFICATION) Commit(stage *Stage) *SPECIFICATION {
 
 func (specification *SPECIFICATION) CommitVoid(stage *Stage) {
 	specification.Commit(stage)
+}
+
+func (specification *SPECIFICATION) StageVoid(stage *Stage) {
+	specification.Stage(stage)
 }
 
 // Checkout specification to the back repo (if it is already staged)
@@ -11398,6 +13025,12 @@ func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION
 		stage.SPECIFICATION_TYPEs[specification_type] = __member
 		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = stage.SPECIFICATION_TYPEOrder
 		stage.SPECIFICATION_TYPEOrder++
+		stage.new[specification_type] = struct{}{}
+		delete(stage.deleted, specification_type)
+	} else {
+		if _, ok := stage.new[specification_type]; !ok {
+			stage.modified[specification_type] = struct{}{}
+		}
 	}
 	stage.SPECIFICATION_TYPEs_mapString[specification_type.Name] = specification_type
 
@@ -11408,6 +13041,12 @@ func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION
 func (specification_type *SPECIFICATION_TYPE) Unstage(stage *Stage) *SPECIFICATION_TYPE {
 	delete(stage.SPECIFICATION_TYPEs, specification_type)
 	delete(stage.SPECIFICATION_TYPEs_mapString, specification_type.Name)
+
+	if _, ok := stage.reference[specification_type]; ok {
+		stage.deleted[specification_type] = struct{}{}
+	} else {
+		delete(stage.new, specification_type)
+	}
 	return specification_type
 }
 
@@ -11429,6 +13068,10 @@ func (specification_type *SPECIFICATION_TYPE) Commit(stage *Stage) *SPECIFICATIO
 
 func (specification_type *SPECIFICATION_TYPE) CommitVoid(stage *Stage) {
 	specification_type.Commit(stage)
+}
+
+func (specification_type *SPECIFICATION_TYPE) StageVoid(stage *Stage) {
+	specification_type.Stage(stage)
 }
 
 // Checkout specification_type to the back repo (if it is already staged)
@@ -11453,6 +13096,12 @@ func (spec_hierarchy *SPEC_HIERARCHY) Stage(stage *Stage) *SPEC_HIERARCHY {
 		stage.SPEC_HIERARCHYs[spec_hierarchy] = __member
 		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = stage.SPEC_HIERARCHYOrder
 		stage.SPEC_HIERARCHYOrder++
+		stage.new[spec_hierarchy] = struct{}{}
+		delete(stage.deleted, spec_hierarchy)
+	} else {
+		if _, ok := stage.new[spec_hierarchy]; !ok {
+			stage.modified[spec_hierarchy] = struct{}{}
+		}
 	}
 	stage.SPEC_HIERARCHYs_mapString[spec_hierarchy.Name] = spec_hierarchy
 
@@ -11463,6 +13112,12 @@ func (spec_hierarchy *SPEC_HIERARCHY) Stage(stage *Stage) *SPEC_HIERARCHY {
 func (spec_hierarchy *SPEC_HIERARCHY) Unstage(stage *Stage) *SPEC_HIERARCHY {
 	delete(stage.SPEC_HIERARCHYs, spec_hierarchy)
 	delete(stage.SPEC_HIERARCHYs_mapString, spec_hierarchy.Name)
+
+	if _, ok := stage.reference[spec_hierarchy]; ok {
+		stage.deleted[spec_hierarchy] = struct{}{}
+	} else {
+		delete(stage.new, spec_hierarchy)
+	}
 	return spec_hierarchy
 }
 
@@ -11484,6 +13139,10 @@ func (spec_hierarchy *SPEC_HIERARCHY) Commit(stage *Stage) *SPEC_HIERARCHY {
 
 func (spec_hierarchy *SPEC_HIERARCHY) CommitVoid(stage *Stage) {
 	spec_hierarchy.Commit(stage)
+}
+
+func (spec_hierarchy *SPEC_HIERARCHY) StageVoid(stage *Stage) {
+	spec_hierarchy.Stage(stage)
 }
 
 // Checkout spec_hierarchy to the back repo (if it is already staged)
@@ -11508,6 +13167,12 @@ func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
 		stage.SPEC_OBJECTs[spec_object] = __member
 		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = stage.SPEC_OBJECTOrder
 		stage.SPEC_OBJECTOrder++
+		stage.new[spec_object] = struct{}{}
+		delete(stage.deleted, spec_object)
+	} else {
+		if _, ok := stage.new[spec_object]; !ok {
+			stage.modified[spec_object] = struct{}{}
+		}
 	}
 	stage.SPEC_OBJECTs_mapString[spec_object.Name] = spec_object
 
@@ -11518,6 +13183,12 @@ func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
 func (spec_object *SPEC_OBJECT) Unstage(stage *Stage) *SPEC_OBJECT {
 	delete(stage.SPEC_OBJECTs, spec_object)
 	delete(stage.SPEC_OBJECTs_mapString, spec_object.Name)
+
+	if _, ok := stage.reference[spec_object]; ok {
+		stage.deleted[spec_object] = struct{}{}
+	} else {
+		delete(stage.new, spec_object)
+	}
 	return spec_object
 }
 
@@ -11539,6 +13210,10 @@ func (spec_object *SPEC_OBJECT) Commit(stage *Stage) *SPEC_OBJECT {
 
 func (spec_object *SPEC_OBJECT) CommitVoid(stage *Stage) {
 	spec_object.Commit(stage)
+}
+
+func (spec_object *SPEC_OBJECT) StageVoid(stage *Stage) {
+	spec_object.Stage(stage)
 }
 
 // Checkout spec_object to the back repo (if it is already staged)
@@ -11563,6 +13238,12 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *Stage) *SPEC_OBJECT_TYPE 
 		stage.SPEC_OBJECT_TYPEs[spec_object_type] = __member
 		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = stage.SPEC_OBJECT_TYPEOrder
 		stage.SPEC_OBJECT_TYPEOrder++
+		stage.new[spec_object_type] = struct{}{}
+		delete(stage.deleted, spec_object_type)
+	} else {
+		if _, ok := stage.new[spec_object_type]; !ok {
+			stage.modified[spec_object_type] = struct{}{}
+		}
 	}
 	stage.SPEC_OBJECT_TYPEs_mapString[spec_object_type.Name] = spec_object_type
 
@@ -11573,6 +13254,12 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *Stage) *SPEC_OBJECT_TYPE 
 func (spec_object_type *SPEC_OBJECT_TYPE) Unstage(stage *Stage) *SPEC_OBJECT_TYPE {
 	delete(stage.SPEC_OBJECT_TYPEs, spec_object_type)
 	delete(stage.SPEC_OBJECT_TYPEs_mapString, spec_object_type.Name)
+
+	if _, ok := stage.reference[spec_object_type]; ok {
+		stage.deleted[spec_object_type] = struct{}{}
+	} else {
+		delete(stage.new, spec_object_type)
+	}
 	return spec_object_type
 }
 
@@ -11594,6 +13281,10 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Commit(stage *Stage) *SPEC_OBJECT_TYPE
 
 func (spec_object_type *SPEC_OBJECT_TYPE) CommitVoid(stage *Stage) {
 	spec_object_type.Commit(stage)
+}
+
+func (spec_object_type *SPEC_OBJECT_TYPE) StageVoid(stage *Stage) {
+	spec_object_type.Stage(stage)
 }
 
 // Checkout spec_object_type to the back repo (if it is already staged)
@@ -11618,6 +13309,12 @@ func (spec_relation *SPEC_RELATION) Stage(stage *Stage) *SPEC_RELATION {
 		stage.SPEC_RELATIONs[spec_relation] = __member
 		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = stage.SPEC_RELATIONOrder
 		stage.SPEC_RELATIONOrder++
+		stage.new[spec_relation] = struct{}{}
+		delete(stage.deleted, spec_relation)
+	} else {
+		if _, ok := stage.new[spec_relation]; !ok {
+			stage.modified[spec_relation] = struct{}{}
+		}
 	}
 	stage.SPEC_RELATIONs_mapString[spec_relation.Name] = spec_relation
 
@@ -11628,6 +13325,12 @@ func (spec_relation *SPEC_RELATION) Stage(stage *Stage) *SPEC_RELATION {
 func (spec_relation *SPEC_RELATION) Unstage(stage *Stage) *SPEC_RELATION {
 	delete(stage.SPEC_RELATIONs, spec_relation)
 	delete(stage.SPEC_RELATIONs_mapString, spec_relation.Name)
+
+	if _, ok := stage.reference[spec_relation]; ok {
+		stage.deleted[spec_relation] = struct{}{}
+	} else {
+		delete(stage.new, spec_relation)
+	}
 	return spec_relation
 }
 
@@ -11649,6 +13352,10 @@ func (spec_relation *SPEC_RELATION) Commit(stage *Stage) *SPEC_RELATION {
 
 func (spec_relation *SPEC_RELATION) CommitVoid(stage *Stage) {
 	spec_relation.Commit(stage)
+}
+
+func (spec_relation *SPEC_RELATION) StageVoid(stage *Stage) {
+	spec_relation.Stage(stage)
 }
 
 // Checkout spec_relation to the back repo (if it is already staged)
@@ -11673,6 +13380,12 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION
 		stage.SPEC_RELATION_TYPEs[spec_relation_type] = __member
 		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = stage.SPEC_RELATION_TYPEOrder
 		stage.SPEC_RELATION_TYPEOrder++
+		stage.new[spec_relation_type] = struct{}{}
+		delete(stage.deleted, spec_relation_type)
+	} else {
+		if _, ok := stage.new[spec_relation_type]; !ok {
+			stage.modified[spec_relation_type] = struct{}{}
+		}
 	}
 	stage.SPEC_RELATION_TYPEs_mapString[spec_relation_type.Name] = spec_relation_type
 
@@ -11683,6 +13396,12 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION
 func (spec_relation_type *SPEC_RELATION_TYPE) Unstage(stage *Stage) *SPEC_RELATION_TYPE {
 	delete(stage.SPEC_RELATION_TYPEs, spec_relation_type)
 	delete(stage.SPEC_RELATION_TYPEs_mapString, spec_relation_type.Name)
+
+	if _, ok := stage.reference[spec_relation_type]; ok {
+		stage.deleted[spec_relation_type] = struct{}{}
+	} else {
+		delete(stage.new, spec_relation_type)
+	}
 	return spec_relation_type
 }
 
@@ -11704,6 +13423,10 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Commit(stage *Stage) *SPEC_RELATIO
 
 func (spec_relation_type *SPEC_RELATION_TYPE) CommitVoid(stage *Stage) {
 	spec_relation_type.Commit(stage)
+}
+
+func (spec_relation_type *SPEC_RELATION_TYPE) StageVoid(stage *Stage) {
+	spec_relation_type.Stage(stage)
 }
 
 // Checkout spec_relation_type to the back repo (if it is already staged)
@@ -11728,6 +13451,12 @@ func (staticwebsite *StaticWebSite) Stage(stage *Stage) *StaticWebSite {
 		stage.StaticWebSites[staticwebsite] = __member
 		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = stage.StaticWebSiteOrder
 		stage.StaticWebSiteOrder++
+		stage.new[staticwebsite] = struct{}{}
+		delete(stage.deleted, staticwebsite)
+	} else {
+		if _, ok := stage.new[staticwebsite]; !ok {
+			stage.modified[staticwebsite] = struct{}{}
+		}
 	}
 	stage.StaticWebSites_mapString[staticwebsite.Name] = staticwebsite
 
@@ -11738,6 +13467,12 @@ func (staticwebsite *StaticWebSite) Stage(stage *Stage) *StaticWebSite {
 func (staticwebsite *StaticWebSite) Unstage(stage *Stage) *StaticWebSite {
 	delete(stage.StaticWebSites, staticwebsite)
 	delete(stage.StaticWebSites_mapString, staticwebsite.Name)
+
+	if _, ok := stage.reference[staticwebsite]; ok {
+		stage.deleted[staticwebsite] = struct{}{}
+	} else {
+		delete(stage.new, staticwebsite)
+	}
 	return staticwebsite
 }
 
@@ -11759,6 +13494,10 @@ func (staticwebsite *StaticWebSite) Commit(stage *Stage) *StaticWebSite {
 
 func (staticwebsite *StaticWebSite) CommitVoid(stage *Stage) {
 	staticwebsite.Commit(stage)
+}
+
+func (staticwebsite *StaticWebSite) StageVoid(stage *Stage) {
+	staticwebsite.Stage(stage)
 }
 
 // Checkout staticwebsite to the back repo (if it is already staged)
@@ -11783,6 +13522,12 @@ func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWeb
 		stage.StaticWebSiteChapters[staticwebsitechapter] = __member
 		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = stage.StaticWebSiteChapterOrder
 		stage.StaticWebSiteChapterOrder++
+		stage.new[staticwebsitechapter] = struct{}{}
+		delete(stage.deleted, staticwebsitechapter)
+	} else {
+		if _, ok := stage.new[staticwebsitechapter]; !ok {
+			stage.modified[staticwebsitechapter] = struct{}{}
+		}
 	}
 	stage.StaticWebSiteChapters_mapString[staticwebsitechapter.Name] = staticwebsitechapter
 
@@ -11793,6 +13538,12 @@ func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWeb
 func (staticwebsitechapter *StaticWebSiteChapter) Unstage(stage *Stage) *StaticWebSiteChapter {
 	delete(stage.StaticWebSiteChapters, staticwebsitechapter)
 	delete(stage.StaticWebSiteChapters_mapString, staticwebsitechapter.Name)
+
+	if _, ok := stage.reference[staticwebsitechapter]; ok {
+		stage.deleted[staticwebsitechapter] = struct{}{}
+	} else {
+		delete(stage.new, staticwebsitechapter)
+	}
 	return staticwebsitechapter
 }
 
@@ -11814,6 +13565,10 @@ func (staticwebsitechapter *StaticWebSiteChapter) Commit(stage *Stage) *StaticWe
 
 func (staticwebsitechapter *StaticWebSiteChapter) CommitVoid(stage *Stage) {
 	staticwebsitechapter.Commit(stage)
+}
+
+func (staticwebsitechapter *StaticWebSiteChapter) StageVoid(stage *Stage) {
+	staticwebsitechapter.Stage(stage)
 }
 
 // Checkout staticwebsitechapter to the back repo (if it is already staged)
@@ -11838,6 +13593,12 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Sta
 		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = __member
 		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
 		stage.StaticWebSiteGeneratedImageOrder++
+		stage.new[staticwebsitegeneratedimage] = struct{}{}
+		delete(stage.deleted, staticwebsitegeneratedimage)
+	} else {
+		if _, ok := stage.new[staticwebsitegeneratedimage]; !ok {
+			stage.modified[staticwebsitegeneratedimage] = struct{}{}
+		}
 	}
 	stage.StaticWebSiteGeneratedImages_mapString[staticwebsitegeneratedimage.Name] = staticwebsitegeneratedimage
 
@@ -11848,6 +13609,12 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Sta
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Unstage(stage *Stage) *StaticWebSiteGeneratedImage {
 	delete(stage.StaticWebSiteGeneratedImages, staticwebsitegeneratedimage)
 	delete(stage.StaticWebSiteGeneratedImages_mapString, staticwebsitegeneratedimage.Name)
+
+	if _, ok := stage.reference[staticwebsitegeneratedimage]; ok {
+		stage.deleted[staticwebsitegeneratedimage] = struct{}{}
+	} else {
+		delete(stage.new, staticwebsitegeneratedimage)
+	}
 	return staticwebsitegeneratedimage
 }
 
@@ -11869,6 +13636,10 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Commit(stage *St
 
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) CommitVoid(stage *Stage) {
 	staticwebsitegeneratedimage.Commit(stage)
+}
+
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) StageVoid(stage *Stage) {
+	staticwebsitegeneratedimage.Stage(stage)
 }
 
 // Checkout staticwebsitegeneratedimage to the back repo (if it is already staged)
@@ -11893,6 +13664,12 @@ func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSite
 		stage.StaticWebSiteImages[staticwebsiteimage] = __member
 		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
 		stage.StaticWebSiteImageOrder++
+		stage.new[staticwebsiteimage] = struct{}{}
+		delete(stage.deleted, staticwebsiteimage)
+	} else {
+		if _, ok := stage.new[staticwebsiteimage]; !ok {
+			stage.modified[staticwebsiteimage] = struct{}{}
+		}
 	}
 	stage.StaticWebSiteImages_mapString[staticwebsiteimage.Name] = staticwebsiteimage
 
@@ -11903,6 +13680,12 @@ func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSite
 func (staticwebsiteimage *StaticWebSiteImage) Unstage(stage *Stage) *StaticWebSiteImage {
 	delete(stage.StaticWebSiteImages, staticwebsiteimage)
 	delete(stage.StaticWebSiteImages_mapString, staticwebsiteimage.Name)
+
+	if _, ok := stage.reference[staticwebsiteimage]; ok {
+		stage.deleted[staticwebsiteimage] = struct{}{}
+	} else {
+		delete(stage.new, staticwebsiteimage)
+	}
 	return staticwebsiteimage
 }
 
@@ -11924,6 +13707,10 @@ func (staticwebsiteimage *StaticWebSiteImage) Commit(stage *Stage) *StaticWebSit
 
 func (staticwebsiteimage *StaticWebSiteImage) CommitVoid(stage *Stage) {
 	staticwebsiteimage.Commit(stage)
+}
+
+func (staticwebsiteimage *StaticWebSiteImage) StageVoid(stage *Stage) {
+	staticwebsiteimage.Stage(stage)
 }
 
 // Checkout staticwebsiteimage to the back repo (if it is already staged)
@@ -11948,6 +13735,12 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *Stati
 		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = __member
 		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
 		stage.StaticWebSiteParagraphOrder++
+		stage.new[staticwebsiteparagraph] = struct{}{}
+		delete(stage.deleted, staticwebsiteparagraph)
+	} else {
+		if _, ok := stage.new[staticwebsiteparagraph]; !ok {
+			stage.modified[staticwebsiteparagraph] = struct{}{}
+		}
 	}
 	stage.StaticWebSiteParagraphs_mapString[staticwebsiteparagraph.Name] = staticwebsiteparagraph
 
@@ -11958,6 +13751,12 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *Stati
 func (staticwebsiteparagraph *StaticWebSiteParagraph) Unstage(stage *Stage) *StaticWebSiteParagraph {
 	delete(stage.StaticWebSiteParagraphs, staticwebsiteparagraph)
 	delete(stage.StaticWebSiteParagraphs_mapString, staticwebsiteparagraph.Name)
+
+	if _, ok := stage.reference[staticwebsiteparagraph]; ok {
+		stage.deleted[staticwebsiteparagraph] = struct{}{}
+	} else {
+		delete(stage.new, staticwebsiteparagraph)
+	}
 	return staticwebsiteparagraph
 }
 
@@ -11979,6 +13778,10 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Commit(stage *Stage) *Stat
 
 func (staticwebsiteparagraph *StaticWebSiteParagraph) CommitVoid(stage *Stage) {
 	staticwebsiteparagraph.Commit(stage)
+}
+
+func (staticwebsiteparagraph *StaticWebSiteParagraph) StageVoid(stage *Stage) {
+	staticwebsiteparagraph.Stage(stage)
 }
 
 // Checkout staticwebsiteparagraph to the back repo (if it is already staged)
@@ -12003,6 +13806,12 @@ func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 		stage.XHTML_CONTENTs[xhtml_content] = __member
 		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = stage.XHTML_CONTENTOrder
 		stage.XHTML_CONTENTOrder++
+		stage.new[xhtml_content] = struct{}{}
+		delete(stage.deleted, xhtml_content)
+	} else {
+		if _, ok := stage.new[xhtml_content]; !ok {
+			stage.modified[xhtml_content] = struct{}{}
+		}
 	}
 	stage.XHTML_CONTENTs_mapString[xhtml_content.Name] = xhtml_content
 
@@ -12013,6 +13822,12 @@ func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 func (xhtml_content *XHTML_CONTENT) Unstage(stage *Stage) *XHTML_CONTENT {
 	delete(stage.XHTML_CONTENTs, xhtml_content)
 	delete(stage.XHTML_CONTENTs_mapString, xhtml_content.Name)
+
+	if _, ok := stage.reference[xhtml_content]; ok {
+		stage.deleted[xhtml_content] = struct{}{}
+	} else {
+		delete(stage.new, xhtml_content)
+	}
 	return xhtml_content
 }
 
@@ -12034,6 +13849,10 @@ func (xhtml_content *XHTML_CONTENT) Commit(stage *Stage) *XHTML_CONTENT {
 
 func (xhtml_content *XHTML_CONTENT) CommitVoid(stage *Stage) {
 	xhtml_content.Commit(stage)
+}
+
+func (xhtml_content *XHTML_CONTENT) StageVoid(stage *Stage) {
+	xhtml_content.Stage(stage)
 }
 
 // Checkout xhtml_content to the back repo (if it is already staged)
@@ -12892,6 +14711,7 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.XHTML_CONTENTMap_Staged_Order = make(map[*XHTML_CONTENT]uint)
 	stage.XHTML_CONTENTOrder = 0
 
+	stage.ComputeReference()
 }
 
 func (stage *Stage) Nil() { // insertion point for array nil
@@ -13748,10 +15568,22 @@ type GongtructBasicField interface {
 // - access to staged instances
 // - navigation between staged instances by going backward association links between gongstruct
 // - full refactoring of Gongstruct identifiers / fields
-type PointerToGongstruct interface {
+type GongstructIF interface {
 	GetName() string
 	CommitVoid(*Stage)
+	StageVoid(*Stage)
 	UnstageVoid(stage *Stage)
+	GongGetFieldHeaders() []GongFieldHeader
+	GongClean(stage *Stage)
+	GongGetFieldValue(fieldName string, stage *Stage) GongFieldValue
+	GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error
+	GongGetGongstructName() string
+	GongCopy() GongstructIF
+	GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) string
+	GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) GongstructIF
+}
+type PointerToGongstruct interface {
+	GongstructIF
 	comparable
 }
 
@@ -14786,7 +16618,7 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 }
 
 // GetGongstructInstancesMap returns the map of staged GongstructType instances
-// it is usefull because it allows refactoring of gong struct identifier
+// it is usefull because it allows refactoring of gongstruct identifier
 func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type {
 	var ret Type
 
@@ -19004,256 +20836,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 	return nil
 }
 
-// GetGongstructName returns the name of the Gongstruct
-// this can be usefull if one want program robust to refactoring
-func GetGongstructName[Type Gongstruct]() (res string) {
-
-	var ret Type
-
-	switch any(ret).(type) {
-	// insertion point for generic get gongstruct name
-	case ALTERNATIVE_ID:
-		res = "ALTERNATIVE_ID"
-	case ATTRIBUTE_DEFINITION_BOOLEAN:
-		res = "ATTRIBUTE_DEFINITION_BOOLEAN"
-	case ATTRIBUTE_DEFINITION_DATE:
-		res = "ATTRIBUTE_DEFINITION_DATE"
-	case ATTRIBUTE_DEFINITION_ENUMERATION:
-		res = "ATTRIBUTE_DEFINITION_ENUMERATION"
-	case ATTRIBUTE_DEFINITION_INTEGER:
-		res = "ATTRIBUTE_DEFINITION_INTEGER"
-	case ATTRIBUTE_DEFINITION_REAL:
-		res = "ATTRIBUTE_DEFINITION_REAL"
-	case ATTRIBUTE_DEFINITION_STRING:
-		res = "ATTRIBUTE_DEFINITION_STRING"
-	case ATTRIBUTE_DEFINITION_XHTML:
-		res = "ATTRIBUTE_DEFINITION_XHTML"
-	case ATTRIBUTE_VALUE_BOOLEAN:
-		res = "ATTRIBUTE_VALUE_BOOLEAN"
-	case ATTRIBUTE_VALUE_DATE:
-		res = "ATTRIBUTE_VALUE_DATE"
-	case ATTRIBUTE_VALUE_ENUMERATION:
-		res = "ATTRIBUTE_VALUE_ENUMERATION"
-	case ATTRIBUTE_VALUE_INTEGER:
-		res = "ATTRIBUTE_VALUE_INTEGER"
-	case ATTRIBUTE_VALUE_REAL:
-		res = "ATTRIBUTE_VALUE_REAL"
-	case ATTRIBUTE_VALUE_STRING:
-		res = "ATTRIBUTE_VALUE_STRING"
-	case ATTRIBUTE_VALUE_XHTML:
-		res = "ATTRIBUTE_VALUE_XHTML"
-	case A_ALTERNATIVE_ID:
-		res = "A_ALTERNATIVE_ID"
-	case A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		res = "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF"
-	case A_ATTRIBUTE_DEFINITION_DATE_REF:
-		res = "A_ATTRIBUTE_DEFINITION_DATE_REF"
-	case A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		res = "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF"
-	case A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		res = "A_ATTRIBUTE_DEFINITION_INTEGER_REF"
-	case A_ATTRIBUTE_DEFINITION_REAL_REF:
-		res = "A_ATTRIBUTE_DEFINITION_REAL_REF"
-	case A_ATTRIBUTE_DEFINITION_STRING_REF:
-		res = "A_ATTRIBUTE_DEFINITION_STRING_REF"
-	case A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		res = "A_ATTRIBUTE_DEFINITION_XHTML_REF"
-	case A_ATTRIBUTE_VALUE_BOOLEAN:
-		res = "A_ATTRIBUTE_VALUE_BOOLEAN"
-	case A_ATTRIBUTE_VALUE_DATE:
-		res = "A_ATTRIBUTE_VALUE_DATE"
-	case A_ATTRIBUTE_VALUE_ENUMERATION:
-		res = "A_ATTRIBUTE_VALUE_ENUMERATION"
-	case A_ATTRIBUTE_VALUE_INTEGER:
-		res = "A_ATTRIBUTE_VALUE_INTEGER"
-	case A_ATTRIBUTE_VALUE_REAL:
-		res = "A_ATTRIBUTE_VALUE_REAL"
-	case A_ATTRIBUTE_VALUE_STRING:
-		res = "A_ATTRIBUTE_VALUE_STRING"
-	case A_ATTRIBUTE_VALUE_XHTML:
-		res = "A_ATTRIBUTE_VALUE_XHTML"
-	case A_ATTRIBUTE_VALUE_XHTML_1:
-		res = "A_ATTRIBUTE_VALUE_XHTML_1"
-	case A_CHILDREN:
-		res = "A_CHILDREN"
-	case A_CORE_CONTENT:
-		res = "A_CORE_CONTENT"
-	case A_DATATYPES:
-		res = "A_DATATYPES"
-	case A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		res = "A_DATATYPE_DEFINITION_BOOLEAN_REF"
-	case A_DATATYPE_DEFINITION_DATE_REF:
-		res = "A_DATATYPE_DEFINITION_DATE_REF"
-	case A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		res = "A_DATATYPE_DEFINITION_ENUMERATION_REF"
-	case A_DATATYPE_DEFINITION_INTEGER_REF:
-		res = "A_DATATYPE_DEFINITION_INTEGER_REF"
-	case A_DATATYPE_DEFINITION_REAL_REF:
-		res = "A_DATATYPE_DEFINITION_REAL_REF"
-	case A_DATATYPE_DEFINITION_STRING_REF:
-		res = "A_DATATYPE_DEFINITION_STRING_REF"
-	case A_DATATYPE_DEFINITION_XHTML_REF:
-		res = "A_DATATYPE_DEFINITION_XHTML_REF"
-	case A_EDITABLE_ATTS:
-		res = "A_EDITABLE_ATTS"
-	case A_ENUM_VALUE_REF:
-		res = "A_ENUM_VALUE_REF"
-	case A_OBJECT:
-		res = "A_OBJECT"
-	case A_PROPERTIES:
-		res = "A_PROPERTIES"
-	case A_RELATION_GROUP_TYPE_REF:
-		res = "A_RELATION_GROUP_TYPE_REF"
-	case A_SOURCE_1:
-		res = "A_SOURCE_1"
-	case A_SOURCE_SPECIFICATION_1:
-		res = "A_SOURCE_SPECIFICATION_1"
-	case A_SPECIFICATIONS:
-		res = "A_SPECIFICATIONS"
-	case A_SPECIFICATION_TYPE_REF:
-		res = "A_SPECIFICATION_TYPE_REF"
-	case A_SPECIFIED_VALUES:
-		res = "A_SPECIFIED_VALUES"
-	case A_SPEC_ATTRIBUTES:
-		res = "A_SPEC_ATTRIBUTES"
-	case A_SPEC_OBJECTS:
-		res = "A_SPEC_OBJECTS"
-	case A_SPEC_OBJECT_TYPE_REF:
-		res = "A_SPEC_OBJECT_TYPE_REF"
-	case A_SPEC_RELATIONS:
-		res = "A_SPEC_RELATIONS"
-	case A_SPEC_RELATION_GROUPS:
-		res = "A_SPEC_RELATION_GROUPS"
-	case A_SPEC_RELATION_REF:
-		res = "A_SPEC_RELATION_REF"
-	case A_SPEC_RELATION_TYPE_REF:
-		res = "A_SPEC_RELATION_TYPE_REF"
-	case A_SPEC_TYPES:
-		res = "A_SPEC_TYPES"
-	case A_THE_HEADER:
-		res = "A_THE_HEADER"
-	case A_TOOL_EXTENSIONS:
-		res = "A_TOOL_EXTENSIONS"
-	case DATATYPE_DEFINITION_BOOLEAN:
-		res = "DATATYPE_DEFINITION_BOOLEAN"
-	case DATATYPE_DEFINITION_DATE:
-		res = "DATATYPE_DEFINITION_DATE"
-	case DATATYPE_DEFINITION_ENUMERATION:
-		res = "DATATYPE_DEFINITION_ENUMERATION"
-	case DATATYPE_DEFINITION_INTEGER:
-		res = "DATATYPE_DEFINITION_INTEGER"
-	case DATATYPE_DEFINITION_REAL:
-		res = "DATATYPE_DEFINITION_REAL"
-	case DATATYPE_DEFINITION_STRING:
-		res = "DATATYPE_DEFINITION_STRING"
-	case DATATYPE_DEFINITION_XHTML:
-		res = "DATATYPE_DEFINITION_XHTML"
-	case EMBEDDED_VALUE:
-		res = "EMBEDDED_VALUE"
-	case ENUM_VALUE:
-		res = "ENUM_VALUE"
-	case EmbeddedJpgImage:
-		res = "EmbeddedJpgImage"
-	case EmbeddedPngImage:
-		res = "EmbeddedPngImage"
-	case EmbeddedSvgImage:
-		res = "EmbeddedSvgImage"
-	case Kill:
-		res = "Kill"
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry"
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry"
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry"
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry"
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry"
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry"
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry"
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry"
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		res = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry"
-	case Map_SPECIFICATION_Nodes_expandedEntry:
-		res = "Map_SPECIFICATION_Nodes_expandedEntry"
-	case Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		res = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"
-	case Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		res = "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"
-	case Map_SPEC_OBJECT_TYPE_showNameEntry:
-		res = "Map_SPEC_OBJECT_TYPE_showNameEntry"
-	case RELATION_GROUP:
-		res = "RELATION_GROUP"
-	case RELATION_GROUP_TYPE:
-		res = "RELATION_GROUP_TYPE"
-	case REQ_IF:
-		res = "REQ_IF"
-	case REQ_IF_CONTENT:
-		res = "REQ_IF_CONTENT"
-	case REQ_IF_HEADER:
-		res = "REQ_IF_HEADER"
-	case REQ_IF_TOOL_EXTENSION:
-		res = "REQ_IF_TOOL_EXTENSION"
-	case RenderingConfiguration:
-		res = "RenderingConfiguration"
-	case SPECIFICATION:
-		res = "SPECIFICATION"
-	case SPECIFICATION_TYPE:
-		res = "SPECIFICATION_TYPE"
-	case SPEC_HIERARCHY:
-		res = "SPEC_HIERARCHY"
-	case SPEC_OBJECT:
-		res = "SPEC_OBJECT"
-	case SPEC_OBJECT_TYPE:
-		res = "SPEC_OBJECT_TYPE"
-	case SPEC_RELATION:
-		res = "SPEC_RELATION"
-	case SPEC_RELATION_TYPE:
-		res = "SPEC_RELATION_TYPE"
-	case StaticWebSite:
-		res = "StaticWebSite"
-	case StaticWebSiteChapter:
-		res = "StaticWebSiteChapter"
-	case StaticWebSiteGeneratedImage:
-		res = "StaticWebSiteGeneratedImage"
-	case StaticWebSiteImage:
-		res = "StaticWebSiteImage"
-	case StaticWebSiteParagraph:
-		res = "StaticWebSiteParagraph"
-	case XHTML_CONTENT:
-		res = "XHTML_CONTENT"
-	}
-	return res
-}
-
 // GetPointerToGongstructName returns the name of the Gongstruct
 // this can be usefull if one want program robust to refactoring
 func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
@@ -19504,261 +21086,12 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 	return res
 }
 
-// GetFields return the array of the fields
-func GetFields[Type Gongstruct]() (res []string) {
-
-	var ret Type
-
-	switch any(ret).(type) {
-	// insertion point for generic get gongstruct name
-	case ALTERNATIVE_ID:
-		res = []string{"Name", "IDENTIFIER"}
-	case ATTRIBUTE_DEFINITION_BOOLEAN:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_DEFINITION_DATE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_DEFINITION_ENUMERATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "MULTI_VALUED", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_DEFINITION_INTEGER:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_DEFINITION_REAL:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_DEFINITION_STRING:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_DEFINITION_XHTML:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case ATTRIBUTE_VALUE_BOOLEAN:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case ATTRIBUTE_VALUE_DATE:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case ATTRIBUTE_VALUE_ENUMERATION:
-		res = []string{"Name", "DEFINITION", "VALUES"}
-	case ATTRIBUTE_VALUE_INTEGER:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case ATTRIBUTE_VALUE_REAL:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case ATTRIBUTE_VALUE_STRING:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case ATTRIBUTE_VALUE_XHTML:
-		res = []string{"Name", "DEFINITION", "IS_SIMPLIFIED", "THE_VALUE", "THE_ORIGINAL_VALUE"}
-	case A_ALTERNATIVE_ID:
-		res = []string{"Name", "ALTERNATIVE_ID"}
-	case A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_BOOLEAN_REF"}
-	case A_ATTRIBUTE_DEFINITION_DATE_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_DATE_REF"}
-	case A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_ENUMERATION_REF"}
-	case A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_INTEGER_REF"}
-	case A_ATTRIBUTE_DEFINITION_REAL_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_REAL_REF"}
-	case A_ATTRIBUTE_DEFINITION_STRING_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_STRING_REF"}
-	case A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_XHTML_REF"}
-	case A_ATTRIBUTE_VALUE_BOOLEAN:
-		res = []string{"Name", "ATTRIBUTE_VALUE_BOOLEAN"}
-	case A_ATTRIBUTE_VALUE_DATE:
-		res = []string{"Name", "ATTRIBUTE_VALUE_DATE"}
-	case A_ATTRIBUTE_VALUE_ENUMERATION:
-		res = []string{"Name", "ATTRIBUTE_VALUE_ENUMERATION"}
-	case A_ATTRIBUTE_VALUE_INTEGER:
-		res = []string{"Name", "ATTRIBUTE_VALUE_INTEGER"}
-	case A_ATTRIBUTE_VALUE_REAL:
-		res = []string{"Name", "ATTRIBUTE_VALUE_REAL"}
-	case A_ATTRIBUTE_VALUE_STRING:
-		res = []string{"Name", "ATTRIBUTE_VALUE_STRING"}
-	case A_ATTRIBUTE_VALUE_XHTML:
-		res = []string{"Name", "ATTRIBUTE_VALUE_XHTML"}
-	case A_ATTRIBUTE_VALUE_XHTML_1:
-		res = []string{"Name", "ATTRIBUTE_VALUE_BOOLEAN", "ATTRIBUTE_VALUE_DATE", "ATTRIBUTE_VALUE_ENUMERATION", "ATTRIBUTE_VALUE_INTEGER", "ATTRIBUTE_VALUE_REAL", "ATTRIBUTE_VALUE_STRING", "ATTRIBUTE_VALUE_XHTML"}
-	case A_CHILDREN:
-		res = []string{"Name", "SPEC_HIERARCHY"}
-	case A_CORE_CONTENT:
-		res = []string{"Name", "REQ_IF_CONTENT"}
-	case A_DATATYPES:
-		res = []string{"Name", "DATATYPE_DEFINITION_BOOLEAN", "DATATYPE_DEFINITION_DATE", "DATATYPE_DEFINITION_ENUMERATION", "DATATYPE_DEFINITION_INTEGER", "DATATYPE_DEFINITION_REAL", "DATATYPE_DEFINITION_STRING", "DATATYPE_DEFINITION_XHTML"}
-	case A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_BOOLEAN_REF"}
-	case A_DATATYPE_DEFINITION_DATE_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_DATE_REF"}
-	case A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_ENUMERATION_REF"}
-	case A_DATATYPE_DEFINITION_INTEGER_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_INTEGER_REF"}
-	case A_DATATYPE_DEFINITION_REAL_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_REAL_REF"}
-	case A_DATATYPE_DEFINITION_STRING_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_STRING_REF"}
-	case A_DATATYPE_DEFINITION_XHTML_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_XHTML_REF"}
-	case A_EDITABLE_ATTS:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_BOOLEAN_REF", "ATTRIBUTE_DEFINITION_DATE_REF", "ATTRIBUTE_DEFINITION_ENUMERATION_REF", "ATTRIBUTE_DEFINITION_INTEGER_REF", "ATTRIBUTE_DEFINITION_REAL_REF", "ATTRIBUTE_DEFINITION_STRING_REF", "ATTRIBUTE_DEFINITION_XHTML_REF"}
-	case A_ENUM_VALUE_REF:
-		res = []string{"Name", "ENUM_VALUE_REF"}
-	case A_OBJECT:
-		res = []string{"Name", "SPEC_OBJECT_REF"}
-	case A_PROPERTIES:
-		res = []string{"Name", "EMBEDDED_VALUE"}
-	case A_RELATION_GROUP_TYPE_REF:
-		res = []string{"Name", "RELATION_GROUP_TYPE_REF"}
-	case A_SOURCE_1:
-		res = []string{"Name", "SPEC_OBJECT_REF"}
-	case A_SOURCE_SPECIFICATION_1:
-		res = []string{"Name", "SPECIFICATION_REF"}
-	case A_SPECIFICATIONS:
-		res = []string{"Name", "SPECIFICATION"}
-	case A_SPECIFICATION_TYPE_REF:
-		res = []string{"Name", "SPECIFICATION_TYPE_REF"}
-	case A_SPECIFIED_VALUES:
-		res = []string{"Name", "ENUM_VALUE"}
-	case A_SPEC_ATTRIBUTES:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_BOOLEAN", "ATTRIBUTE_DEFINITION_DATE", "ATTRIBUTE_DEFINITION_ENUMERATION", "ATTRIBUTE_DEFINITION_INTEGER", "ATTRIBUTE_DEFINITION_REAL", "ATTRIBUTE_DEFINITION_STRING", "ATTRIBUTE_DEFINITION_XHTML"}
-	case A_SPEC_OBJECTS:
-		res = []string{"Name", "SPEC_OBJECT"}
-	case A_SPEC_OBJECT_TYPE_REF:
-		res = []string{"Name", "SPEC_OBJECT_TYPE_REF"}
-	case A_SPEC_RELATIONS:
-		res = []string{"Name", "SPEC_RELATION"}
-	case A_SPEC_RELATION_GROUPS:
-		res = []string{"Name", "RELATION_GROUP"}
-	case A_SPEC_RELATION_REF:
-		res = []string{"Name", "SPEC_RELATION_REF"}
-	case A_SPEC_RELATION_TYPE_REF:
-		res = []string{"Name", "SPEC_RELATION_TYPE_REF"}
-	case A_SPEC_TYPES:
-		res = []string{"Name", "RELATION_GROUP_TYPE", "SPEC_OBJECT_TYPE", "SPEC_RELATION_TYPE", "SPECIFICATION_TYPE"}
-	case A_THE_HEADER:
-		res = []string{"Name", "REQ_IF_HEADER"}
-	case A_TOOL_EXTENSIONS:
-		res = []string{"Name", "REQ_IF_TOOL_EXTENSION"}
-	case DATATYPE_DEFINITION_BOOLEAN:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID"}
-	case DATATYPE_DEFINITION_DATE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID"}
-	case DATATYPE_DEFINITION_ENUMERATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPECIFIED_VALUES"}
-	case DATATYPE_DEFINITION_INTEGER:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "MAX", "MIN", "ALTERNATIVE_ID"}
-	case DATATYPE_DEFINITION_REAL:
-		res = []string{"Name", "ACCURACY", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "MAX", "MIN", "ALTERNATIVE_ID"}
-	case DATATYPE_DEFINITION_STRING:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "MAX_LENGTH", "ALTERNATIVE_ID"}
-	case DATATYPE_DEFINITION_XHTML:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID"}
-	case EMBEDDED_VALUE:
-		res = []string{"Name", "KEY", "OTHER_CONTENT"}
-	case ENUM_VALUE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
-	case EmbeddedJpgImage:
-		res = []string{"Name", "Base64Content"}
-	case EmbeddedPngImage:
-		res = []string{"Name", "Base64Content"}
-	case EmbeddedSvgImage:
-		res = []string{"Name", "Content"}
-	case Kill:
-		res = []string{"Name"}
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case Map_SPECIFICATION_Nodes_expandedEntry:
-		res = []string{"Name", "Value"}
-	case Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		res = []string{"Name", "Value"}
-	case Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		res = []string{"Name", "Value"}
-	case Map_SPEC_OBJECT_TYPE_showNameEntry:
-		res = []string{"Name", "Value"}
-	case RELATION_GROUP:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SOURCE_SPECIFICATION", "SPEC_RELATIONS", "TARGET_SPECIFICATION", "TYPE"}
-	case RELATION_GROUP_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case REQ_IF:
-		res = []string{"Name", "Lang", "THE_HEADER", "CORE_CONTENT", "TOOL_EXTENSIONS"}
-	case REQ_IF_CONTENT:
-		res = []string{"Name", "DATATYPES", "SPEC_TYPES", "SPEC_OBJECTS", "SPEC_RELATIONS", "SPECIFICATIONS", "SPEC_RELATION_GROUPS"}
-	case REQ_IF_HEADER:
-		res = []string{"Name", "IDENTIFIER", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
-	case REQ_IF_TOOL_EXTENSION:
-		res = []string{"Name"}
-	case RenderingConfiguration:
-		res = []string{"Name", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", "Map_SPECIFICATION_Nodes_expandedEntries", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries", "Map_SPEC_OBJECT_TYPE_showNameEntries", "ShowSpecHierachyIdentifiers"}
-	case SPECIFICATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "TYPE", "CHILDREN", "VALUES"}
-	case SPECIFICATION_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case SPEC_HIERARCHY:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "OBJECT", "CHILDREN", "EDITABLE_ATTS"}
-	case SPEC_OBJECT:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "VALUES", "TYPE"}
-	case SPEC_OBJECT_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case SPEC_RELATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "VALUES", "SOURCE", "TARGET", "TYPE"}
-	case SPEC_RELATION_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case StaticWebSite:
-		res = []string{"Name", "MarkdownContent", "Chapters", "InputImagesDir", "OutputStaticWebDir", "VersionInfo"}
-	case StaticWebSiteChapter:
-		res = []string{"Name", "MarkdownContent", "Paragraphs"}
-	case StaticWebSiteGeneratedImage:
-		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
-	case StaticWebSiteImage:
-		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
-	case StaticWebSiteParagraph:
-		res = []string{"Name", "LegendMarkdownContent", "Image"}
-	case XHTML_CONTENT:
-		res = []string{"Name", "EnclosedText", "PureText"}
-	}
-	return
-}
-
 type ReverseField struct {
 	GongstructName string
 	Fieldname      string
 }
 
-func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
+func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 
 	res = make([]ReverseField, 0)
 
@@ -19767,52 +21100,52 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 	switch any(ret).(type) {
 
 	// insertion point for generic get gongstruct name
-	case ALTERNATIVE_ID:
+	case *ALTERNATIVE_ID:
 		var rf ReverseField
 		_ = rf
-	case ATTRIBUTE_DEFINITION_BOOLEAN:
+	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_BOOLEAN"
 		res = append(res, rf)
-	case ATTRIBUTE_DEFINITION_DATE:
+	case *ATTRIBUTE_DEFINITION_DATE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_DATE"
 		res = append(res, rf)
-	case ATTRIBUTE_DEFINITION_ENUMERATION:
+	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_ENUMERATION"
 		res = append(res, rf)
-	case ATTRIBUTE_DEFINITION_INTEGER:
+	case *ATTRIBUTE_DEFINITION_INTEGER:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_INTEGER"
 		res = append(res, rf)
-	case ATTRIBUTE_DEFINITION_REAL:
+	case *ATTRIBUTE_DEFINITION_REAL:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_REAL"
 		res = append(res, rf)
-	case ATTRIBUTE_DEFINITION_STRING:
+	case *ATTRIBUTE_DEFINITION_STRING:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_STRING"
 		res = append(res, rf)
-	case ATTRIBUTE_DEFINITION_XHTML:
+	case *ATTRIBUTE_DEFINITION_XHTML:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_XHTML"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_BOOLEAN:
+	case *ATTRIBUTE_VALUE_BOOLEAN:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_BOOLEAN"
@@ -19821,7 +21154,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_BOOLEAN"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_DATE:
+	case *ATTRIBUTE_VALUE_DATE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_DATE"
@@ -19830,7 +21163,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_DATE"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_ENUMERATION:
+	case *ATTRIBUTE_VALUE_ENUMERATION:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_ENUMERATION"
@@ -19839,7 +21172,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_ENUMERATION"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_INTEGER:
+	case *ATTRIBUTE_VALUE_INTEGER:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_INTEGER"
@@ -19848,7 +21181,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_INTEGER"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_REAL:
+	case *ATTRIBUTE_VALUE_REAL:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_REAL"
@@ -19857,7 +21190,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_REAL"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_STRING:
+	case *ATTRIBUTE_VALUE_STRING:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_STRING"
@@ -19866,7 +21199,7 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_STRING"
 		res = append(res, rf)
-	case ATTRIBUTE_VALUE_XHTML:
+	case *ATTRIBUTE_VALUE_XHTML:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML"
@@ -19875,721 +21208,3364 @@ func GetReverseFields[Type Gongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_ATTRIBUTE_VALUE_XHTML_1"
 		rf.Fieldname = "ATTRIBUTE_VALUE_XHTML"
 		res = append(res, rf)
-	case A_ALTERNATIVE_ID:
+	case *A_ALTERNATIVE_ID:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_DATE_REF:
+	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_REAL_REF:
+	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_STRING_REF:
+	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_DEFINITION_XHTML_REF:
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_BOOLEAN:
+	case *A_ATTRIBUTE_VALUE_BOOLEAN:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_DATE:
+	case *A_ATTRIBUTE_VALUE_DATE:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_ENUMERATION:
+	case *A_ATTRIBUTE_VALUE_ENUMERATION:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_INTEGER:
+	case *A_ATTRIBUTE_VALUE_INTEGER:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_REAL:
+	case *A_ATTRIBUTE_VALUE_REAL:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_STRING:
+	case *A_ATTRIBUTE_VALUE_STRING:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_XHTML:
+	case *A_ATTRIBUTE_VALUE_XHTML:
 		var rf ReverseField
 		_ = rf
-	case A_ATTRIBUTE_VALUE_XHTML_1:
+	case *A_ATTRIBUTE_VALUE_XHTML_1:
 		var rf ReverseField
 		_ = rf
-	case A_CHILDREN:
+	case *A_CHILDREN:
 		var rf ReverseField
 		_ = rf
-	case A_CORE_CONTENT:
+	case *A_CORE_CONTENT:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPES:
+	case *A_DATATYPES:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_BOOLEAN_REF:
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_DATE_REF:
+	case *A_DATATYPE_DEFINITION_DATE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_ENUMERATION_REF:
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_INTEGER_REF:
+	case *A_DATATYPE_DEFINITION_INTEGER_REF:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_REAL_REF:
+	case *A_DATATYPE_DEFINITION_REAL_REF:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_STRING_REF:
+	case *A_DATATYPE_DEFINITION_STRING_REF:
 		var rf ReverseField
 		_ = rf
-	case A_DATATYPE_DEFINITION_XHTML_REF:
+	case *A_DATATYPE_DEFINITION_XHTML_REF:
 		var rf ReverseField
 		_ = rf
-	case A_EDITABLE_ATTS:
+	case *A_EDITABLE_ATTS:
 		var rf ReverseField
 		_ = rf
-	case A_ENUM_VALUE_REF:
+	case *A_ENUM_VALUE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_OBJECT:
+	case *A_OBJECT:
 		var rf ReverseField
 		_ = rf
-	case A_PROPERTIES:
+	case *A_PROPERTIES:
 		var rf ReverseField
 		_ = rf
-	case A_RELATION_GROUP_TYPE_REF:
+	case *A_RELATION_GROUP_TYPE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_SOURCE_1:
+	case *A_SOURCE_1:
 		var rf ReverseField
 		_ = rf
-	case A_SOURCE_SPECIFICATION_1:
+	case *A_SOURCE_SPECIFICATION_1:
 		var rf ReverseField
 		_ = rf
-	case A_SPECIFICATIONS:
+	case *A_SPECIFICATIONS:
 		var rf ReverseField
 		_ = rf
-	case A_SPECIFICATION_TYPE_REF:
+	case *A_SPECIFICATION_TYPE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_SPECIFIED_VALUES:
+	case *A_SPECIFIED_VALUES:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_ATTRIBUTES:
+	case *A_SPEC_ATTRIBUTES:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_OBJECTS:
+	case *A_SPEC_OBJECTS:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_OBJECT_TYPE_REF:
+	case *A_SPEC_OBJECT_TYPE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_RELATIONS:
+	case *A_SPEC_RELATIONS:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_RELATION_GROUPS:
+	case *A_SPEC_RELATION_GROUPS:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_RELATION_REF:
+	case *A_SPEC_RELATION_REF:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_RELATION_TYPE_REF:
+	case *A_SPEC_RELATION_TYPE_REF:
 		var rf ReverseField
 		_ = rf
-	case A_SPEC_TYPES:
+	case *A_SPEC_TYPES:
 		var rf ReverseField
 		_ = rf
-	case A_THE_HEADER:
+	case *A_THE_HEADER:
 		var rf ReverseField
 		_ = rf
-	case A_TOOL_EXTENSIONS:
+	case *A_TOOL_EXTENSIONS:
 		var rf ReverseField
 		_ = rf
-	case DATATYPE_DEFINITION_BOOLEAN:
+	case *DATATYPE_DEFINITION_BOOLEAN:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_BOOLEAN"
 		res = append(res, rf)
-	case DATATYPE_DEFINITION_DATE:
+	case *DATATYPE_DEFINITION_DATE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_DATE"
 		res = append(res, rf)
-	case DATATYPE_DEFINITION_ENUMERATION:
+	case *DATATYPE_DEFINITION_ENUMERATION:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_ENUMERATION"
 		res = append(res, rf)
-	case DATATYPE_DEFINITION_INTEGER:
+	case *DATATYPE_DEFINITION_INTEGER:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_INTEGER"
 		res = append(res, rf)
-	case DATATYPE_DEFINITION_REAL:
+	case *DATATYPE_DEFINITION_REAL:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_REAL"
 		res = append(res, rf)
-	case DATATYPE_DEFINITION_STRING:
+	case *DATATYPE_DEFINITION_STRING:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_STRING"
 		res = append(res, rf)
-	case DATATYPE_DEFINITION_XHTML:
+	case *DATATYPE_DEFINITION_XHTML:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_DATATYPES"
 		rf.Fieldname = "DATATYPE_DEFINITION_XHTML"
 		res = append(res, rf)
-	case EMBEDDED_VALUE:
+	case *EMBEDDED_VALUE:
 		var rf ReverseField
 		_ = rf
-	case ENUM_VALUE:
+	case *ENUM_VALUE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPECIFIED_VALUES"
 		rf.Fieldname = "ENUM_VALUE"
 		res = append(res, rf)
-	case EmbeddedJpgImage:
+	case *EmbeddedJpgImage:
 		var rf ReverseField
 		_ = rf
-	case EmbeddedPngImage:
+	case *EmbeddedPngImage:
 		var rf ReverseField
 		_ = rf
-	case EmbeddedSvgImage:
+	case *EmbeddedSvgImage:
 		var rf ReverseField
 		_ = rf
-	case Kill:
+	case *Kill:
 		var rf ReverseField
 		_ = rf
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"
 		res = append(res, rf)
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
+	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
 		res = append(res, rf)
-	case Map_SPECIFICATION_Nodes_expandedEntry:
+	case *Map_SPECIFICATION_Nodes_expandedEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
 		res = append(res, rf)
-	case Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"
 		res = append(res, rf)
-	case Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
+	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"
 		res = append(res, rf)
-	case Map_SPEC_OBJECT_TYPE_showNameEntry:
+	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
 		res = append(res, rf)
-	case RELATION_GROUP:
+	case *RELATION_GROUP:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_RELATION_GROUPS"
 		rf.Fieldname = "RELATION_GROUP"
 		res = append(res, rf)
-	case RELATION_GROUP_TYPE:
+	case *RELATION_GROUP_TYPE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_TYPES"
 		rf.Fieldname = "RELATION_GROUP_TYPE"
 		res = append(res, rf)
-	case REQ_IF:
+	case *REQ_IF:
 		var rf ReverseField
 		_ = rf
-	case REQ_IF_CONTENT:
+	case *REQ_IF_CONTENT:
 		var rf ReverseField
 		_ = rf
-	case REQ_IF_HEADER:
+	case *REQ_IF_HEADER:
 		var rf ReverseField
 		_ = rf
-	case REQ_IF_TOOL_EXTENSION:
+	case *REQ_IF_TOOL_EXTENSION:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_TOOL_EXTENSIONS"
 		rf.Fieldname = "REQ_IF_TOOL_EXTENSION"
 		res = append(res, rf)
-	case RenderingConfiguration:
+	case *RenderingConfiguration:
 		var rf ReverseField
 		_ = rf
-	case SPECIFICATION:
+	case *SPECIFICATION:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPECIFICATIONS"
 		rf.Fieldname = "SPECIFICATION"
 		res = append(res, rf)
-	case SPECIFICATION_TYPE:
+	case *SPECIFICATION_TYPE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_TYPES"
 		rf.Fieldname = "SPECIFICATION_TYPE"
 		res = append(res, rf)
-	case SPEC_HIERARCHY:
+	case *SPEC_HIERARCHY:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_CHILDREN"
 		rf.Fieldname = "SPEC_HIERARCHY"
 		res = append(res, rf)
-	case SPEC_OBJECT:
+	case *SPEC_OBJECT:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_OBJECTS"
 		rf.Fieldname = "SPEC_OBJECT"
 		res = append(res, rf)
-	case SPEC_OBJECT_TYPE:
+	case *SPEC_OBJECT_TYPE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_TYPES"
 		rf.Fieldname = "SPEC_OBJECT_TYPE"
 		res = append(res, rf)
-	case SPEC_RELATION:
+	case *SPEC_RELATION:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_RELATIONS"
 		rf.Fieldname = "SPEC_RELATION"
 		res = append(res, rf)
-	case SPEC_RELATION_TYPE:
+	case *SPEC_RELATION_TYPE:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "A_SPEC_TYPES"
 		rf.Fieldname = "SPEC_RELATION_TYPE"
 		res = append(res, rf)
-	case StaticWebSite:
+	case *StaticWebSite:
 		var rf ReverseField
 		_ = rf
-	case StaticWebSiteChapter:
+	case *StaticWebSiteChapter:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "StaticWebSite"
 		rf.Fieldname = "Chapters"
 		res = append(res, rf)
-	case StaticWebSiteGeneratedImage:
+	case *StaticWebSiteGeneratedImage:
 		var rf ReverseField
 		_ = rf
-	case StaticWebSiteImage:
+	case *StaticWebSiteImage:
 		var rf ReverseField
 		_ = rf
-	case StaticWebSiteParagraph:
+	case *StaticWebSiteParagraph:
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "StaticWebSiteChapter"
 		rf.Fieldname = "Paragraphs"
 		res = append(res, rf)
-	case XHTML_CONTENT:
+	case *XHTML_CONTENT:
 		var rf ReverseField
 		_ = rf
 	}
 	return
 }
 
-// GetFieldsFromPointer return the array of the fields
-func GetFieldsFromPointer[Type PointerToGongstruct]() (res []string) {
-
-	var ret Type
-
-	switch any(ret).(type) {
-	// insertion point for generic get gongstruct name
-	case *ALTERNATIVE_ID:
-		res = []string{"Name", "IDENTIFIER"}
-	case *ATTRIBUTE_DEFINITION_BOOLEAN:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_DEFINITION_DATE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_DEFINITION_ENUMERATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "MULTI_VALUED", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_DEFINITION_INTEGER:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_DEFINITION_REAL:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_DEFINITION_STRING:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_DEFINITION_XHTML:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "DEFAULT_VALUE", "TYPE"}
-	case *ATTRIBUTE_VALUE_BOOLEAN:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case *ATTRIBUTE_VALUE_DATE:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case *ATTRIBUTE_VALUE_ENUMERATION:
-		res = []string{"Name", "DEFINITION", "VALUES"}
-	case *ATTRIBUTE_VALUE_INTEGER:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case *ATTRIBUTE_VALUE_REAL:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case *ATTRIBUTE_VALUE_STRING:
-		res = []string{"Name", "DEFINITION", "THE_VALUE"}
-	case *ATTRIBUTE_VALUE_XHTML:
-		res = []string{"Name", "DEFINITION", "IS_SIMPLIFIED", "THE_VALUE", "THE_ORIGINAL_VALUE"}
-	case *A_ALTERNATIVE_ID:
-		res = []string{"Name", "ALTERNATIVE_ID"}
-	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_BOOLEAN_REF"}
-	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_DATE_REF"}
-	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_ENUMERATION_REF"}
-	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_INTEGER_REF"}
-	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_REAL_REF"}
-	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_STRING_REF"}
-	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_XHTML_REF"}
-	case *A_ATTRIBUTE_VALUE_BOOLEAN:
-		res = []string{"Name", "ATTRIBUTE_VALUE_BOOLEAN"}
-	case *A_ATTRIBUTE_VALUE_DATE:
-		res = []string{"Name", "ATTRIBUTE_VALUE_DATE"}
-	case *A_ATTRIBUTE_VALUE_ENUMERATION:
-		res = []string{"Name", "ATTRIBUTE_VALUE_ENUMERATION"}
-	case *A_ATTRIBUTE_VALUE_INTEGER:
-		res = []string{"Name", "ATTRIBUTE_VALUE_INTEGER"}
-	case *A_ATTRIBUTE_VALUE_REAL:
-		res = []string{"Name", "ATTRIBUTE_VALUE_REAL"}
-	case *A_ATTRIBUTE_VALUE_STRING:
-		res = []string{"Name", "ATTRIBUTE_VALUE_STRING"}
-	case *A_ATTRIBUTE_VALUE_XHTML:
-		res = []string{"Name", "ATTRIBUTE_VALUE_XHTML"}
-	case *A_ATTRIBUTE_VALUE_XHTML_1:
-		res = []string{"Name", "ATTRIBUTE_VALUE_BOOLEAN", "ATTRIBUTE_VALUE_DATE", "ATTRIBUTE_VALUE_ENUMERATION", "ATTRIBUTE_VALUE_INTEGER", "ATTRIBUTE_VALUE_REAL", "ATTRIBUTE_VALUE_STRING", "ATTRIBUTE_VALUE_XHTML"}
-	case *A_CHILDREN:
-		res = []string{"Name", "SPEC_HIERARCHY"}
-	case *A_CORE_CONTENT:
-		res = []string{"Name", "REQ_IF_CONTENT"}
-	case *A_DATATYPES:
-		res = []string{"Name", "DATATYPE_DEFINITION_BOOLEAN", "DATATYPE_DEFINITION_DATE", "DATATYPE_DEFINITION_ENUMERATION", "DATATYPE_DEFINITION_INTEGER", "DATATYPE_DEFINITION_REAL", "DATATYPE_DEFINITION_STRING", "DATATYPE_DEFINITION_XHTML"}
-	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_BOOLEAN_REF"}
-	case *A_DATATYPE_DEFINITION_DATE_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_DATE_REF"}
-	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_ENUMERATION_REF"}
-	case *A_DATATYPE_DEFINITION_INTEGER_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_INTEGER_REF"}
-	case *A_DATATYPE_DEFINITION_REAL_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_REAL_REF"}
-	case *A_DATATYPE_DEFINITION_STRING_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_STRING_REF"}
-	case *A_DATATYPE_DEFINITION_XHTML_REF:
-		res = []string{"Name", "DATATYPE_DEFINITION_XHTML_REF"}
-	case *A_EDITABLE_ATTS:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_BOOLEAN_REF", "ATTRIBUTE_DEFINITION_DATE_REF", "ATTRIBUTE_DEFINITION_ENUMERATION_REF", "ATTRIBUTE_DEFINITION_INTEGER_REF", "ATTRIBUTE_DEFINITION_REAL_REF", "ATTRIBUTE_DEFINITION_STRING_REF", "ATTRIBUTE_DEFINITION_XHTML_REF"}
-	case *A_ENUM_VALUE_REF:
-		res = []string{"Name", "ENUM_VALUE_REF"}
-	case *A_OBJECT:
-		res = []string{"Name", "SPEC_OBJECT_REF"}
-	case *A_PROPERTIES:
-		res = []string{"Name", "EMBEDDED_VALUE"}
-	case *A_RELATION_GROUP_TYPE_REF:
-		res = []string{"Name", "RELATION_GROUP_TYPE_REF"}
-	case *A_SOURCE_1:
-		res = []string{"Name", "SPEC_OBJECT_REF"}
-	case *A_SOURCE_SPECIFICATION_1:
-		res = []string{"Name", "SPECIFICATION_REF"}
-	case *A_SPECIFICATIONS:
-		res = []string{"Name", "SPECIFICATION"}
-	case *A_SPECIFICATION_TYPE_REF:
-		res = []string{"Name", "SPECIFICATION_TYPE_REF"}
-	case *A_SPECIFIED_VALUES:
-		res = []string{"Name", "ENUM_VALUE"}
-	case *A_SPEC_ATTRIBUTES:
-		res = []string{"Name", "ATTRIBUTE_DEFINITION_BOOLEAN", "ATTRIBUTE_DEFINITION_DATE", "ATTRIBUTE_DEFINITION_ENUMERATION", "ATTRIBUTE_DEFINITION_INTEGER", "ATTRIBUTE_DEFINITION_REAL", "ATTRIBUTE_DEFINITION_STRING", "ATTRIBUTE_DEFINITION_XHTML"}
-	case *A_SPEC_OBJECTS:
-		res = []string{"Name", "SPEC_OBJECT"}
-	case *A_SPEC_OBJECT_TYPE_REF:
-		res = []string{"Name", "SPEC_OBJECT_TYPE_REF"}
-	case *A_SPEC_RELATIONS:
-		res = []string{"Name", "SPEC_RELATION"}
-	case *A_SPEC_RELATION_GROUPS:
-		res = []string{"Name", "RELATION_GROUP"}
-	case *A_SPEC_RELATION_REF:
-		res = []string{"Name", "SPEC_RELATION_REF"}
-	case *A_SPEC_RELATION_TYPE_REF:
-		res = []string{"Name", "SPEC_RELATION_TYPE_REF"}
-	case *A_SPEC_TYPES:
-		res = []string{"Name", "RELATION_GROUP_TYPE", "SPEC_OBJECT_TYPE", "SPEC_RELATION_TYPE", "SPECIFICATION_TYPE"}
-	case *A_THE_HEADER:
-		res = []string{"Name", "REQ_IF_HEADER"}
-	case *A_TOOL_EXTENSIONS:
-		res = []string{"Name", "REQ_IF_TOOL_EXTENSION"}
-	case *DATATYPE_DEFINITION_BOOLEAN:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID"}
-	case *DATATYPE_DEFINITION_DATE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID"}
-	case *DATATYPE_DEFINITION_ENUMERATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPECIFIED_VALUES"}
-	case *DATATYPE_DEFINITION_INTEGER:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "MAX", "MIN", "ALTERNATIVE_ID"}
-	case *DATATYPE_DEFINITION_REAL:
-		res = []string{"Name", "ACCURACY", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "MAX", "MIN", "ALTERNATIVE_ID"}
-	case *DATATYPE_DEFINITION_STRING:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "MAX_LENGTH", "ALTERNATIVE_ID"}
-	case *DATATYPE_DEFINITION_XHTML:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID"}
-	case *EMBEDDED_VALUE:
-		res = []string{"Name", "KEY", "OTHER_CONTENT"}
-	case *ENUM_VALUE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "PROPERTIES"}
-	case *EmbeddedJpgImage:
-		res = []string{"Name", "Base64Content"}
-	case *EmbeddedPngImage:
-		res = []string{"Name", "Base64Content"}
-	case *EmbeddedSvgImage:
-		res = []string{"Name", "Content"}
-	case *Kill:
-		res = []string{"Name"}
-	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		res = []string{"Name", "Value"}
-	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		res = []string{"Name", "Value"}
-	case *Map_SPECIFICATION_Nodes_expandedEntry:
-		res = []string{"Name", "Value"}
-	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		res = []string{"Name", "Value"}
-	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		res = []string{"Name", "Value"}
-	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
-		res = []string{"Name", "Value"}
-	case *RELATION_GROUP:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SOURCE_SPECIFICATION", "SPEC_RELATIONS", "TARGET_SPECIFICATION", "TYPE"}
-	case *RELATION_GROUP_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case *REQ_IF:
-		res = []string{"Name", "Lang", "THE_HEADER", "CORE_CONTENT", "TOOL_EXTENSIONS"}
-	case *REQ_IF_CONTENT:
-		res = []string{"Name", "DATATYPES", "SPEC_TYPES", "SPEC_OBJECTS", "SPEC_RELATIONS", "SPECIFICATIONS", "SPEC_RELATION_GROUPS"}
-	case *REQ_IF_HEADER:
-		res = []string{"Name", "IDENTIFIER", "COMMENT", "CREATION_TIME", "REPOSITORY_ID", "REQ_IF_TOOL_ID", "REQ_IF_VERSION", "SOURCE_TOOL_ID", "TITLE"}
-	case *REQ_IF_TOOL_EXTENSION:
-		res = []string{"Name"}
-	case *RenderingConfiguration:
-		res = []string{"Name", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries", "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", "Map_SPECIFICATION_Nodes_expandedEntries", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries", "Map_SPEC_OBJECT_TYPE_showNameEntries", "ShowSpecHierachyIdentifiers"}
-	case *SPECIFICATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "TYPE", "CHILDREN", "VALUES"}
-	case *SPECIFICATION_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case *SPEC_HIERARCHY:
-		res = []string{"Name", "DESC", "IDENTIFIER", "IS_EDITABLE", "IS_TABLE_INTERNAL", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "OBJECT", "CHILDREN", "EDITABLE_ATTS"}
-	case *SPEC_OBJECT:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "VALUES", "TYPE"}
-	case *SPEC_OBJECT_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case *SPEC_RELATION:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "VALUES", "SOURCE", "TARGET", "TYPE"}
-	case *SPEC_RELATION_TYPE:
-		res = []string{"Name", "DESC", "IDENTIFIER", "LAST_CHANGE", "LONG_NAME", "ALTERNATIVE_ID", "SPEC_ATTRIBUTES"}
-	case *StaticWebSite:
-		res = []string{"Name", "MarkdownContent", "Chapters", "InputImagesDir", "OutputStaticWebDir", "VersionInfo"}
-	case *StaticWebSiteChapter:
-		res = []string{"Name", "MarkdownContent", "Paragraphs"}
-	case *StaticWebSiteGeneratedImage:
-		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
-	case *StaticWebSiteImage:
-		res = []string{"Name", "SourceDirectoryPath", "Width", "Height"}
-	case *StaticWebSiteParagraph:
-		res = []string{"Name", "LegendMarkdownContent", "Image"}
-	case *XHTML_CONTENT:
-		res = []string{"Name", "EnclosedText", "PureText"}
+// insertion point for get fields header method
+func (alternative_id *ALTERNATIVE_ID) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
 	}
 	return
+}
+
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_BOOLEAN",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_BOOLEAN_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_DATE",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_DATE_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MULTI_VALUED",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_ENUMERATION",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_ENUMERATION_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_INTEGER",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_INTEGER_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_REAL",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_REAL_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_STRING",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_STRING_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "DEFAULT_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPE_DEFINITION_XHTML_REF",
+		},
+	}
+	return
+}
+
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF",
+		},
+		{
+			Name:               "THE_VALUE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_DATE_REF",
+		},
+		{
+			Name:               "THE_VALUE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF",
+		},
+		{
+			Name:               "VALUES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ENUM_VALUE_REF",
+		},
+	}
+	return
+}
+
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_INTEGER_REF",
+		},
+		{
+			Name:               "THE_VALUE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_REAL_REF",
+		},
+		{
+			Name:               "THE_VALUE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_STRING_REF",
+		},
+		{
+			Name:               "THE_VALUE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DEFINITION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_XHTML_REF",
+		},
+		{
+			Name:               "IS_SIMPLIFIED",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "THE_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "XHTML_CONTENT",
+		},
+		{
+			Name:               "THE_ORIGINAL_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "XHTML_CONTENT",
+		},
+	}
+	return
+}
+
+func (a_alternative_id *A_ALTERNATIVE_ID) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_BOOLEAN_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_DATE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_ENUMERATION_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_INTEGER_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_REAL_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_STRING_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_XHTML_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_BOOLEAN",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_BOOLEAN",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_DATE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_DATE",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_ENUMERATION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_ENUMERATION",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_INTEGER",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_INTEGER",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_REAL",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_REAL",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_STRING",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_STRING",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_XHTML",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_XHTML",
+		},
+	}
+	return
+}
+
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_BOOLEAN",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_BOOLEAN",
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_DATE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_DATE",
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_ENUMERATION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_ENUMERATION",
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_INTEGER",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_INTEGER",
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_REAL",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_REAL",
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_STRING",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_STRING",
+		},
+		{
+			Name:                 "ATTRIBUTE_VALUE_XHTML",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_VALUE_XHTML",
+		},
+	}
+	return
+}
+
+func (a_children *A_CHILDREN) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "SPEC_HIERARCHY",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPEC_HIERARCHY",
+		},
+	}
+	return
+}
+
+func (a_core_content *A_CORE_CONTENT) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "REQ_IF_CONTENT",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "REQ_IF_CONTENT",
+		},
+	}
+	return
+}
+
+func (a_datatypes *A_DATATYPES) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_BOOLEAN",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_BOOLEAN",
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_DATE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_DATE",
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_ENUMERATION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_ENUMERATION",
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_INTEGER",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_INTEGER",
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_REAL",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_REAL",
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_STRING",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_STRING",
+		},
+		{
+			Name:                 "DATATYPE_DEFINITION_XHTML",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "DATATYPE_DEFINITION_XHTML",
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_BOOLEAN_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_DATE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_ENUMERATION_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_INTEGER_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_REAL_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_STRING_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPE_DEFINITION_XHTML_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_editable_atts *A_EDITABLE_ATTS) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_BOOLEAN_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_DATE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_ENUMERATION_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_INTEGER_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_REAL_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_STRING_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ATTRIBUTE_DEFINITION_XHTML_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ENUM_VALUE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_object *A_OBJECT) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPEC_OBJECT_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_properties *A_PROPERTIES) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "EMBEDDED_VALUE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "EMBEDDED_VALUE",
+		},
+	}
+	return
+}
+
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "RELATION_GROUP_TYPE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_source_1 *A_SOURCE_1) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPEC_OBJECT_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPECIFICATION_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_specifications *A_SPECIFICATIONS) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "SPECIFICATION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPECIFICATION",
+		},
+	}
+	return
+}
+
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPECIFICATION_TYPE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_specified_values *A_SPECIFIED_VALUES) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ENUM_VALUE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ENUM_VALUE",
+		},
+	}
+	return
+}
+
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_BOOLEAN",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_BOOLEAN",
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_DATE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_DATE",
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_ENUMERATION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_ENUMERATION",
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_INTEGER",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_INTEGER",
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_REAL",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_REAL",
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_STRING",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_STRING",
+		},
+		{
+			Name:                 "ATTRIBUTE_DEFINITION_XHTML",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "ATTRIBUTE_DEFINITION_XHTML",
+		},
+	}
+	return
+}
+
+func (a_spec_objects *A_SPEC_OBJECTS) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "SPEC_OBJECT",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPEC_OBJECT",
+		},
+	}
+	return
+}
+
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPEC_OBJECT_TYPE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_spec_relations *A_SPEC_RELATIONS) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "SPEC_RELATION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPEC_RELATION",
+		},
+	}
+	return
+}
+
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "RELATION_GROUP",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "RELATION_GROUP",
+		},
+	}
+	return
+}
+
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPEC_RELATION_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SPEC_RELATION_TYPE_REF",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (a_spec_types *A_SPEC_TYPES) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "RELATION_GROUP_TYPE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "RELATION_GROUP_TYPE",
+		},
+		{
+			Name:                 "SPEC_OBJECT_TYPE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPEC_OBJECT_TYPE",
+		},
+		{
+			Name:                 "SPEC_RELATION_TYPE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPEC_RELATION_TYPE",
+		},
+		{
+			Name:                 "SPECIFICATION_TYPE",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "SPECIFICATION_TYPE",
+		},
+	}
+	return
+}
+
+func (a_the_header *A_THE_HEADER) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "REQ_IF_HEADER",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "REQ_IF_HEADER",
+		},
+	}
+	return
+}
+
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "REQ_IF_TOOL_EXTENSION",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "REQ_IF_TOOL_EXTENSION",
+		},
+	}
+	return
+}
+
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "SPECIFIED_VALUES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPECIFIED_VALUES",
+		},
+	}
+	return
+}
+
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MAX",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MIN",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ACCURACY",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MAX",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MIN",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MAX_LENGTH",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+	}
+	return
+}
+
+func (embedded_value *EMBEDDED_VALUE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "KEY",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "OTHER_CONTENT",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (enum_value *ENUM_VALUE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "PROPERTIES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_PROPERTIES",
+		},
+	}
+	return
+}
+
+func (embeddedjpgimage *EmbeddedJpgImage) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Base64Content",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (embeddedpngimage *EmbeddedPngImage) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Base64Content",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Content",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (kill *Kill) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (relation_group *RELATION_GROUP) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "SOURCE_SPECIFICATION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SOURCE_SPECIFICATION_1",
+		},
+		{
+			Name:               "SPEC_RELATIONS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_RELATION_REF",
+		},
+		{
+			Name:               "TARGET_SPECIFICATION",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SOURCE_SPECIFICATION_1",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_RELATION_GROUP_TYPE_REF",
+		},
+	}
+	return
+}
+
+func (relation_group_type *RELATION_GROUP_TYPE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "SPEC_ATTRIBUTES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_ATTRIBUTES",
+		},
+	}
+	return
+}
+
+func (req_if *REQ_IF) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Lang",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "THE_HEADER",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_THE_HEADER",
+		},
+		{
+			Name:               "CORE_CONTENT",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_CORE_CONTENT",
+		},
+		{
+			Name:               "TOOL_EXTENSIONS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_TOOL_EXTENSIONS",
+		},
+	}
+	return
+}
+
+func (req_if_content *REQ_IF_CONTENT) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DATATYPES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_DATATYPES",
+		},
+		{
+			Name:               "SPEC_TYPES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_TYPES",
+		},
+		{
+			Name:               "SPEC_OBJECTS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_OBJECTS",
+		},
+		{
+			Name:               "SPEC_RELATIONS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_RELATIONS",
+		},
+		{
+			Name:               "SPECIFICATIONS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPECIFICATIONS",
+		},
+		{
+			Name:               "SPEC_RELATION_GROUPS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_RELATION_GROUPS",
+		},
+	}
+	return
+}
+
+func (req_if_header *REQ_IF_HEADER) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "COMMENT",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "CREATION_TIME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "REPOSITORY_ID",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "REQ_IF_TOOL_ID",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "REQ_IF_VERSION",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SOURCE_TOOL_ID",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "TITLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (renderingconfiguration *RenderingConfiguration) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry",
+		},
+		{
+			Name:                 "Map_SPECIFICATION_Nodes_expandedEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_SPECIFICATION_Nodes_expandedEntry",
+		},
+		{
+			Name:                 "Map_SPEC_OBJECT_TYPE_showIdentifierEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_SPEC_OBJECT_TYPE_showIdentifierEntry",
+		},
+		{
+			Name:                 "Map_SPEC_OBJECT_TYPE_showNameEntries",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_SPEC_OBJECT_TYPE_showNameEntry",
+		},
+		{
+			Name:               "ShowSpecHierachyIdentifiers",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (specification *SPECIFICATION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPECIFICATION_TYPE_REF",
+		},
+		{
+			Name:               "CHILDREN",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_CHILDREN",
+		},
+		{
+			Name:               "VALUES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML_1",
+		},
+	}
+	return
+}
+
+func (specification_type *SPECIFICATION_TYPE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "SPEC_ATTRIBUTES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_ATTRIBUTES",
+		},
+	}
+	return
+}
+
+func (spec_hierarchy *SPEC_HIERARCHY) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_EDITABLE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IS_TABLE_INTERNAL",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "OBJECT",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_OBJECT",
+		},
+		{
+			Name:               "CHILDREN",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_CHILDREN",
+		},
+		{
+			Name:               "EDITABLE_ATTS",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_EDITABLE_ATTS",
+		},
+	}
+	return
+}
+
+func (spec_object *SPEC_OBJECT) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "VALUES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML_1",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_OBJECT_TYPE_REF",
+		},
+	}
+	return
+}
+
+func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "SPEC_ATTRIBUTES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_ATTRIBUTES",
+		},
+	}
+	return
+}
+
+func (spec_relation *SPEC_RELATION) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "VALUES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML_1",
+		},
+		{
+			Name:               "SOURCE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SOURCE_1",
+		},
+		{
+			Name:               "TARGET",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SOURCE_1",
+		},
+		{
+			Name:               "TYPE",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_RELATION_TYPE_REF",
+		},
+	}
+	return
+}
+
+func (spec_relation_type *SPEC_RELATION_TYPE) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "DESC",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IDENTIFIER",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LAST_CHANGE",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LONG_NAME",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ALTERNATIVE_ID",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_ALTERNATIVE_ID",
+		},
+		{
+			Name:               "SPEC_ATTRIBUTES",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "A_SPEC_ATTRIBUTES",
+		},
+	}
+	return
+}
+
+func (staticwebsite *StaticWebSite) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MarkdownContent",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "Chapters",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "StaticWebSiteChapter",
+		},
+		{
+			Name:               "InputImagesDir",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "OutputStaticWebDir",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "VersionInfo",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (staticwebsitechapter *StaticWebSiteChapter) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "MarkdownContent",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:                 "Paragraphs",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "StaticWebSiteParagraph",
+		},
+	}
+	return
+}
+
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SourceDirectoryPath",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Width",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Height",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (staticwebsiteimage *StaticWebSiteImage) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "SourceDirectoryPath",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Width",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Height",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "LegendMarkdownContent",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Image",
+			GongFieldValueType: GongFieldValueTypePointer,
+			TargetGongstructName: "StaticWebSiteImage",
+		},
+	}
+	return
+}
+
+func (xhtml_content *XHTML_CONTENT) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "EnclosedText",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "PureText",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
+// GetFieldsFromPointer return the array of the fields
+func GetFieldsFromPointer[Type PointerToGongstruct]() (res []GongFieldHeader) {
+
+	var ret Type
+	return ret.GongGetFieldHeaders()
 }
 
 type GongFieldValueType string
 
 const (
-	GongFieldValueTypeInt    GongFieldValueType = "GongFieldValueTypeInt"
-	GongFieldValueTypeFloat  GongFieldValueType = "GongFieldValueTypeFloat"
-	GongFieldValueTypeBool   GongFieldValueType = "GongFieldValueTypeBool"
-	GongFieldValueTypeOthers GongFieldValueType = "GongFieldValueTypeOthers"
+	GongFieldValueTypeInt             GongFieldValueType = "GongFieldValueTypeInt"
+	GongFieldValueTypeFloat           GongFieldValueType = "GongFieldValueTypeFloat"
+	GongFieldValueTypeBool            GongFieldValueType = "GongFieldValueTypeBool"
+	GongFieldValueTypeString          GongFieldValueType = "GongFieldValueTypeString"
+	GongFieldValueTypeBasicKind       GongFieldValueType = "GongFieldValueTypeBasicKind"
+	GongFieldValueTypePointer         GongFieldValueType = "GongFieldValueTypePointer"
+	GongFieldValueTypeSliceOfPointers GongFieldValueType = "GongFieldValueTypeSliceOfPointers"
 )
 
 type GongFieldValue struct {
-	valueString string
 	GongFieldValueType
-	valueInt   int
-	valueFloat float64
-	valueBool  bool
+	valueString string
+	valueInt    int
+	valueFloat  float64
+	valueBool   bool
+
+	// in case of a pointer, the ID of the pointed element
+	// in case of a slice of pointers, the IDs, separated by semi columbs
+	ids string
+}
+
+type GongFieldHeader struct {
+	Name string
+	GongFieldValueType
+	TargetGongstructName string
 }
 
 func (gongValueField *GongFieldValue) GetValueString() string {
@@ -20608,4065 +24584,6688 @@ func (gongValueField *GongFieldValue) GetValueBool() bool {
 	return gongValueField.valueBool
 }
 
-func GetFieldStringValueFromPointer(instance any, fieldName string) (res GongFieldValue) {
-
-	switch inferedInstance := any(instance).(type) {
-	// insertion point for generic get gongstruct field value
-	case *ALTERNATIVE_ID:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		}
-	case *ATTRIBUTE_DEFINITION_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_DEFINITION_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_DEFINITION_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MULTI_VALUED":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.MULTI_VALUED)
-			res.valueBool = inferedInstance.MULTI_VALUED
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_DEFINITION_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_DEFINITION_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_DEFINITION_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_DEFINITION_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *ATTRIBUTE_VALUE_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.THE_VALUE)
-			res.valueBool = inferedInstance.THE_VALUE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *ATTRIBUTE_VALUE_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = inferedInstance.THE_VALUE
-		}
-	case *ATTRIBUTE_VALUE_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		}
-	case *ATTRIBUTE_VALUE_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.THE_VALUE)
-			res.valueInt = inferedInstance.THE_VALUE
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case *ATTRIBUTE_VALUE_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = fmt.Sprintf("%f", inferedInstance.THE_VALUE)
-			res.valueFloat = inferedInstance.THE_VALUE
-			res.GongFieldValueType = GongFieldValueTypeFloat
-		}
-	case *ATTRIBUTE_VALUE_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = inferedInstance.THE_VALUE
-		}
-	case *ATTRIBUTE_VALUE_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "IS_SIMPLIFIED":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_SIMPLIFIED)
-			res.valueBool = inferedInstance.IS_SIMPLIFIED
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "THE_VALUE":
-			if inferedInstance.THE_VALUE != nil {
-				res.valueString = inferedInstance.THE_VALUE.Name
-			}
-		case "THE_ORIGINAL_VALUE":
-			if inferedInstance.THE_ORIGINAL_VALUE != nil {
-				res.valueString = inferedInstance.THE_ORIGINAL_VALUE.Name
-			}
-		}
-	case *A_ALTERNATIVE_ID:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_BOOLEAN_REF
-		}
-	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_DATE_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_DATE_REF
-		}
-	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_ENUMERATION_REF
-		}
-	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_INTEGER_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_INTEGER_REF
-		}
-	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_REAL_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_REAL_REF
-		}
-	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_STRING_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_STRING_REF
-		}
-	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_XHTML_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_XHTML_REF
-		}
-	case *A_ATTRIBUTE_VALUE_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_DATE":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_INTEGER":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_REAL":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_STRING":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_XHTML":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_ATTRIBUTE_VALUE_XHTML_1:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_DATE":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_INTEGER":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_REAL":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_STRING":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_XHTML":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_CHILDREN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_HIERARCHY":
-			for idx, __instance__ := range inferedInstance.SPEC_HIERARCHY {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_CORE_CONTENT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "REQ_IF_CONTENT":
-			if inferedInstance.REQ_IF_CONTENT != nil {
-				res.valueString = inferedInstance.REQ_IF_CONTENT.Name
-			}
-		}
-	case *A_DATATYPES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_DATE":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_INTEGER":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_REAL":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_STRING":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_XHTML":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_BOOLEAN_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_BOOLEAN_REF
-		}
-	case *A_DATATYPE_DEFINITION_DATE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_DATE_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_DATE_REF
-		}
-	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_ENUMERATION_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_ENUMERATION_REF
-		}
-	case *A_DATATYPE_DEFINITION_INTEGER_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_INTEGER_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_INTEGER_REF
-		}
-	case *A_DATATYPE_DEFINITION_REAL_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_REAL_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_REAL_REF
-		}
-	case *A_DATATYPE_DEFINITION_STRING_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_STRING_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_STRING_REF
-		}
-	case *A_DATATYPE_DEFINITION_XHTML_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_XHTML_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_XHTML_REF
-		}
-	case *A_EDITABLE_ATTS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_BOOLEAN_REF
-		case "ATTRIBUTE_DEFINITION_DATE_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_DATE_REF
-		case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_ENUMERATION_REF
-		case "ATTRIBUTE_DEFINITION_INTEGER_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_INTEGER_REF
-		case "ATTRIBUTE_DEFINITION_REAL_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_REAL_REF
-		case "ATTRIBUTE_DEFINITION_STRING_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_STRING_REF
-		case "ATTRIBUTE_DEFINITION_XHTML_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_XHTML_REF
-		}
-	case *A_ENUM_VALUE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ENUM_VALUE_REF":
-			res.valueString = inferedInstance.ENUM_VALUE_REF
-		}
-	case *A_OBJECT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT_REF":
-			res.valueString = inferedInstance.SPEC_OBJECT_REF
-		}
-	case *A_PROPERTIES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "EMBEDDED_VALUE":
-			if inferedInstance.EMBEDDED_VALUE != nil {
-				res.valueString = inferedInstance.EMBEDDED_VALUE.Name
-			}
-		}
-	case *A_RELATION_GROUP_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "RELATION_GROUP_TYPE_REF":
-			res.valueString = inferedInstance.RELATION_GROUP_TYPE_REF
-		}
-	case *A_SOURCE_1:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT_REF":
-			res.valueString = inferedInstance.SPEC_OBJECT_REF
-		}
-	case *A_SOURCE_SPECIFICATION_1:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPECIFICATION_REF":
-			enum := inferedInstance.SPECIFICATION_REF
-			res.valueString = enum.ToCodeString()
-		}
-	case *A_SPECIFICATIONS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPECIFICATION":
-			for idx, __instance__ := range inferedInstance.SPECIFICATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_SPECIFICATION_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPECIFICATION_TYPE_REF":
-			res.valueString = inferedInstance.SPECIFICATION_TYPE_REF
-		}
-	case *A_SPECIFIED_VALUES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ENUM_VALUE":
-			for idx, __instance__ := range inferedInstance.ENUM_VALUE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_SPEC_ATTRIBUTES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_DATE":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_INTEGER":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_REAL":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_STRING":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_XHTML":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_SPEC_OBJECTS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT":
-			for idx, __instance__ := range inferedInstance.SPEC_OBJECT {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_SPEC_OBJECT_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT_TYPE_REF":
-			res.valueString = inferedInstance.SPEC_OBJECT_TYPE_REF
-		}
-	case *A_SPEC_RELATIONS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_RELATION":
-			for idx, __instance__ := range inferedInstance.SPEC_RELATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_SPEC_RELATION_GROUPS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "RELATION_GROUP":
-			for idx, __instance__ := range inferedInstance.RELATION_GROUP {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_SPEC_RELATION_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_RELATION_REF":
-			res.valueString = inferedInstance.SPEC_RELATION_REF
-		}
-	case *A_SPEC_RELATION_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_RELATION_TYPE_REF":
-			res.valueString = inferedInstance.SPEC_RELATION_TYPE_REF
-		}
-	case *A_SPEC_TYPES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "RELATION_GROUP_TYPE":
-			for idx, __instance__ := range inferedInstance.RELATION_GROUP_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "SPEC_OBJECT_TYPE":
-			for idx, __instance__ := range inferedInstance.SPEC_OBJECT_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "SPEC_RELATION_TYPE":
-			for idx, __instance__ := range inferedInstance.SPEC_RELATION_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "SPECIFICATION_TYPE":
-			for idx, __instance__ := range inferedInstance.SPECIFICATION_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *A_THE_HEADER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "REQ_IF_HEADER":
-			if inferedInstance.REQ_IF_HEADER != nil {
-				res.valueString = inferedInstance.REQ_IF_HEADER.Name
-			}
-		}
-	case *A_TOOL_EXTENSIONS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "REQ_IF_TOOL_EXTENSION":
-			for idx, __instance__ := range inferedInstance.REQ_IF_TOOL_EXTENSION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPECIFIED_VALUES":
-			if inferedInstance.SPECIFIED_VALUES != nil {
-				res.valueString = inferedInstance.SPECIFIED_VALUES.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MAX":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.MAX)
-			res.valueInt = inferedInstance.MAX
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "MIN":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.MIN)
-			res.valueInt = inferedInstance.MIN
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ACCURACY":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.ACCURACY)
-			res.valueInt = inferedInstance.ACCURACY
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MAX":
-			res.valueString = fmt.Sprintf("%f", inferedInstance.MAX)
-			res.valueFloat = inferedInstance.MAX
-			res.GongFieldValueType = GongFieldValueTypeFloat
-		case "MIN":
-			res.valueString = fmt.Sprintf("%f", inferedInstance.MIN)
-			res.valueFloat = inferedInstance.MIN
-			res.GongFieldValueType = GongFieldValueTypeFloat
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MAX_LENGTH":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.MAX_LENGTH)
-			res.valueInt = inferedInstance.MAX_LENGTH
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *DATATYPE_DEFINITION_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case *EMBEDDED_VALUE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "KEY":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.KEY)
-			res.valueInt = inferedInstance.KEY
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "OTHER_CONTENT":
-			res.valueString = inferedInstance.OTHER_CONTENT
-		}
-	case *ENUM_VALUE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "PROPERTIES":
-			if inferedInstance.PROPERTIES != nil {
-				res.valueString = inferedInstance.PROPERTIES.Name
-			}
-		}
-	case *EmbeddedJpgImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Base64Content":
-			res.valueString = inferedInstance.Base64Content
-		}
-	case *EmbeddedPngImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Base64Content":
-			res.valueString = inferedInstance.Base64Content
-		}
-	case *EmbeddedSvgImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Content":
-			res.valueString = inferedInstance.Content
-		}
-	case *Kill:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		}
-	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_SPECIFICATION_Nodes_expandedEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *RELATION_GROUP:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SOURCE_SPECIFICATION":
-			if inferedInstance.SOURCE_SPECIFICATION != nil {
-				res.valueString = inferedInstance.SOURCE_SPECIFICATION.Name
-			}
-		case "SPEC_RELATIONS":
-			if inferedInstance.SPEC_RELATIONS != nil {
-				res.valueString = inferedInstance.SPEC_RELATIONS.Name
-			}
-		case "TARGET_SPECIFICATION":
-			if inferedInstance.TARGET_SPECIFICATION != nil {
-				res.valueString = inferedInstance.TARGET_SPECIFICATION.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *RELATION_GROUP_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case *REQ_IF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Lang":
-			res.valueString = inferedInstance.Lang
-		case "THE_HEADER":
-			if inferedInstance.THE_HEADER != nil {
-				res.valueString = inferedInstance.THE_HEADER.Name
-			}
-		case "CORE_CONTENT":
-			if inferedInstance.CORE_CONTENT != nil {
-				res.valueString = inferedInstance.CORE_CONTENT.Name
-			}
-		case "TOOL_EXTENSIONS":
-			if inferedInstance.TOOL_EXTENSIONS != nil {
-				res.valueString = inferedInstance.TOOL_EXTENSIONS.Name
-			}
-		}
-	case *REQ_IF_CONTENT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPES":
-			if inferedInstance.DATATYPES != nil {
-				res.valueString = inferedInstance.DATATYPES.Name
-			}
-		case "SPEC_TYPES":
-			if inferedInstance.SPEC_TYPES != nil {
-				res.valueString = inferedInstance.SPEC_TYPES.Name
-			}
-		case "SPEC_OBJECTS":
-			if inferedInstance.SPEC_OBJECTS != nil {
-				res.valueString = inferedInstance.SPEC_OBJECTS.Name
-			}
-		case "SPEC_RELATIONS":
-			if inferedInstance.SPEC_RELATIONS != nil {
-				res.valueString = inferedInstance.SPEC_RELATIONS.Name
-			}
-		case "SPECIFICATIONS":
-			if inferedInstance.SPECIFICATIONS != nil {
-				res.valueString = inferedInstance.SPECIFICATIONS.Name
-			}
-		case "SPEC_RELATION_GROUPS":
-			if inferedInstance.SPEC_RELATION_GROUPS != nil {
-				res.valueString = inferedInstance.SPEC_RELATION_GROUPS.Name
-			}
-		}
-	case *REQ_IF_HEADER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "COMMENT":
-			res.valueString = inferedInstance.COMMENT
-		case "CREATION_TIME":
-			res.valueString = inferedInstance.CREATION_TIME
-		case "REPOSITORY_ID":
-			res.valueString = inferedInstance.REPOSITORY_ID
-		case "REQ_IF_TOOL_ID":
-			res.valueString = inferedInstance.REQ_IF_TOOL_ID
-		case "REQ_IF_VERSION":
-			res.valueString = inferedInstance.REQ_IF_VERSION
-		case "SOURCE_TOOL_ID":
-			res.valueString = inferedInstance.SOURCE_TOOL_ID
-		case "TITLE":
-			res.valueString = inferedInstance.TITLE
-		}
-	case *REQ_IF_TOOL_EXTENSION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		}
-	case *RenderingConfiguration:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_SPECIFICATION_Nodes_expandedEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPECIFICATION_Nodes_expandedEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPEC_OBJECT_TYPE_showNameEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ShowSpecHierachyIdentifiers":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.ShowSpecHierachyIdentifiers)
-			res.valueBool = inferedInstance.ShowSpecHierachyIdentifiers
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case *SPECIFICATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		case "CHILDREN":
-			if inferedInstance.CHILDREN != nil {
-				res.valueString = inferedInstance.CHILDREN.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		}
-	case *SPECIFICATION_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case *SPEC_HIERARCHY:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "IS_TABLE_INTERNAL":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_TABLE_INTERNAL)
-			res.valueBool = inferedInstance.IS_TABLE_INTERNAL
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "OBJECT":
-			if inferedInstance.OBJECT != nil {
-				res.valueString = inferedInstance.OBJECT.Name
-			}
-		case "CHILDREN":
-			if inferedInstance.CHILDREN != nil {
-				res.valueString = inferedInstance.CHILDREN.Name
-			}
-		case "EDITABLE_ATTS":
-			if inferedInstance.EDITABLE_ATTS != nil {
-				res.valueString = inferedInstance.EDITABLE_ATTS.Name
-			}
-		}
-	case *SPEC_OBJECT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *SPEC_OBJECT_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case *SPEC_RELATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		case "SOURCE":
-			if inferedInstance.SOURCE != nil {
-				res.valueString = inferedInstance.SOURCE.Name
-			}
-		case "TARGET":
-			if inferedInstance.TARGET != nil {
-				res.valueString = inferedInstance.TARGET.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case *SPEC_RELATION_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case *StaticWebSite:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "MarkdownContent":
-			res.valueString = inferedInstance.MarkdownContent
-		case "Chapters":
-			for idx, __instance__ := range inferedInstance.Chapters {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "InputImagesDir":
-			res.valueString = inferedInstance.InputImagesDir
-		case "OutputStaticWebDir":
-			res.valueString = inferedInstance.OutputStaticWebDir
-		case "VersionInfo":
-			res.valueString = inferedInstance.VersionInfo
-		}
-	case *StaticWebSiteChapter:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "MarkdownContent":
-			res.valueString = inferedInstance.MarkdownContent
-		case "Paragraphs":
-			for idx, __instance__ := range inferedInstance.Paragraphs {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case *StaticWebSiteGeneratedImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SourceDirectoryPath":
-			res.valueString = inferedInstance.SourceDirectoryPath
-		case "Width":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
-			res.valueInt = inferedInstance.Width
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "Height":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
-			res.valueInt = inferedInstance.Height
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case *StaticWebSiteImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SourceDirectoryPath":
-			res.valueString = inferedInstance.SourceDirectoryPath
-		case "Width":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
-			res.valueInt = inferedInstance.Width
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "Height":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
-			res.valueInt = inferedInstance.Height
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case *StaticWebSiteParagraph:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "LegendMarkdownContent":
-			res.valueString = inferedInstance.LegendMarkdownContent
-		case "Image":
-			if inferedInstance.Image != nil {
-				res.valueString = inferedInstance.Image.Name
-			}
-		}
-	case *XHTML_CONTENT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "EnclosedText":
-			res.valueString = inferedInstance.EnclosedText
-		case "PureText":
-			res.valueString = inferedInstance.PureText
-		}
-	default:
-		_ = inferedInstance
+// insertion point for generic get gongstruct field value
+func (alternative_id *ALTERNATIVE_ID) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = alternative_id.Name
+	case "IDENTIFIER":
+		res.valueString = alternative_id.IDENTIFIER
+	}
+	return
+}
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_boolean.Name
+	case "DESC":
+		res.valueString = attribute_definition_boolean.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_boolean.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean.IS_EDITABLE)
+		res.valueBool = attribute_definition_boolean.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_boolean.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_boolean.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_boolean.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_boolean.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_boolean.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_boolean.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_boolean.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_boolean.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_boolean.TYPE != nil {
+			res.valueString = attribute_definition_boolean.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_boolean.TYPE))
+		}
+	}
+	return
+}
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_date.Name
+	case "DESC":
+		res.valueString = attribute_definition_date.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_date.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_date.IS_EDITABLE)
+		res.valueBool = attribute_definition_date.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_date.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_date.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_date.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_date.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_date.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_date.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_date.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_date.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_date.TYPE != nil {
+			res.valueString = attribute_definition_date.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_date.TYPE))
+		}
+	}
+	return
+}
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_enumeration.Name
+	case "DESC":
+		res.valueString = attribute_definition_enumeration.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_enumeration.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration.IS_EDITABLE)
+		res.valueBool = attribute_definition_enumeration.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_enumeration.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_enumeration.LONG_NAME
+	case "MULTI_VALUED":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration.MULTI_VALUED)
+		res.valueBool = attribute_definition_enumeration.MULTI_VALUED
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_enumeration.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_enumeration.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_enumeration.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_enumeration.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_enumeration.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_enumeration.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_enumeration.TYPE != nil {
+			res.valueString = attribute_definition_enumeration.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_enumeration.TYPE))
+		}
+	}
+	return
+}
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_integer.Name
+	case "DESC":
+		res.valueString = attribute_definition_integer.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_integer.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_integer.IS_EDITABLE)
+		res.valueBool = attribute_definition_integer.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_integer.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_integer.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_integer.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_integer.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_integer.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_integer.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_integer.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_integer.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_integer.TYPE != nil {
+			res.valueString = attribute_definition_integer.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_integer.TYPE))
+		}
+	}
+	return
+}
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_real.Name
+	case "DESC":
+		res.valueString = attribute_definition_real.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_real.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_real.IS_EDITABLE)
+		res.valueBool = attribute_definition_real.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_real.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_real.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_real.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_real.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_real.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_real.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_real.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_real.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_real.TYPE != nil {
+			res.valueString = attribute_definition_real.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_real.TYPE))
+		}
+	}
+	return
+}
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_string.Name
+	case "DESC":
+		res.valueString = attribute_definition_string.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_string.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_string.IS_EDITABLE)
+		res.valueBool = attribute_definition_string.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_string.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_string.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_string.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_string.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_string.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_string.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_string.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_string.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_string.TYPE != nil {
+			res.valueString = attribute_definition_string.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_string.TYPE))
+		}
+	}
+	return
+}
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_xhtml.Name
+	case "DESC":
+		res.valueString = attribute_definition_xhtml.DESC
+	case "IDENTIFIER":
+		res.valueString = attribute_definition_xhtml.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml.IS_EDITABLE)
+		res.valueBool = attribute_definition_xhtml.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = attribute_definition_xhtml.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = attribute_definition_xhtml.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_xhtml.ALTERNATIVE_ID != nil {
+			res.valueString = attribute_definition_xhtml.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_xhtml.ALTERNATIVE_ID))
+		}
+	case "DEFAULT_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_xhtml.DEFAULT_VALUE != nil {
+			res.valueString = attribute_definition_xhtml.DEFAULT_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_xhtml.DEFAULT_VALUE))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_definition_xhtml.TYPE != nil {
+			res.valueString = attribute_definition_xhtml.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_xhtml.TYPE))
+		}
+	}
+	return
+}
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_boolean.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_boolean.DEFINITION != nil {
+			res.valueString = attribute_value_boolean.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_boolean.DEFINITION))
+		}
+	case "THE_VALUE":
+		res.valueString = fmt.Sprintf("%t", attribute_value_boolean.THE_VALUE)
+		res.valueBool = attribute_value_boolean.THE_VALUE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_date.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_date.DEFINITION != nil {
+			res.valueString = attribute_value_date.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_date.DEFINITION))
+		}
+	case "THE_VALUE":
+		res.valueString = attribute_value_date.THE_VALUE
+	}
+	return
+}
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_enumeration.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_enumeration.DEFINITION != nil {
+			res.valueString = attribute_value_enumeration.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_enumeration.DEFINITION))
+		}
+	case "VALUES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_enumeration.VALUES != nil {
+			res.valueString = attribute_value_enumeration.VALUES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_enumeration.VALUES))
+		}
+	}
+	return
+}
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_integer.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_integer.DEFINITION != nil {
+			res.valueString = attribute_value_integer.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_integer.DEFINITION))
+		}
+	case "THE_VALUE":
+		res.valueString = fmt.Sprintf("%d", attribute_value_integer.THE_VALUE)
+		res.valueInt = attribute_value_integer.THE_VALUE
+		res.GongFieldValueType = GongFieldValueTypeInt
+	}
+	return
+}
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_real.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_real.DEFINITION != nil {
+			res.valueString = attribute_value_real.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_real.DEFINITION))
+		}
+	case "THE_VALUE":
+		res.valueString = fmt.Sprintf("%f", attribute_value_real.THE_VALUE)
+		res.valueFloat = attribute_value_real.THE_VALUE
+		res.GongFieldValueType = GongFieldValueTypeFloat
+	}
+	return
+}
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_string.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_string.DEFINITION != nil {
+			res.valueString = attribute_value_string.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_string.DEFINITION))
+		}
+	case "THE_VALUE":
+		res.valueString = attribute_value_string.THE_VALUE
+	}
+	return
+}
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_value_xhtml.Name
+	case "DEFINITION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_xhtml.DEFINITION != nil {
+			res.valueString = attribute_value_xhtml.DEFINITION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_xhtml.DEFINITION))
+		}
+	case "IS_SIMPLIFIED":
+		res.valueString = fmt.Sprintf("%t", attribute_value_xhtml.IS_SIMPLIFIED)
+		res.valueBool = attribute_value_xhtml.IS_SIMPLIFIED
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "THE_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_xhtml.THE_VALUE != nil {
+			res.valueString = attribute_value_xhtml.THE_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_xhtml.THE_VALUE))
+		}
+	case "THE_ORIGINAL_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if attribute_value_xhtml.THE_ORIGINAL_VALUE != nil {
+			res.valueString = attribute_value_xhtml.THE_ORIGINAL_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_value_xhtml.THE_ORIGINAL_VALUE))
+		}
+	}
+	return
+}
+func (a_alternative_id *A_ALTERNATIVE_ID) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_alternative_id.Name
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if a_alternative_id.ALTERNATIVE_ID != nil {
+			res.valueString = a_alternative_id.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, a_alternative_id.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_boolean_ref.Name
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		res.valueString = a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF
+	}
+	return
+}
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_date_ref.Name
+	case "ATTRIBUTE_DEFINITION_DATE_REF":
+		res.valueString = a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF
+	}
+	return
+}
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_enumeration_ref.Name
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		res.valueString = a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF
+	}
+	return
+}
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_integer_ref.Name
+	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
+		res.valueString = a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF
+	}
+	return
+}
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_real_ref.Name
+	case "ATTRIBUTE_DEFINITION_REAL_REF":
+		res.valueString = a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF
+	}
+	return
+}
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_string_ref.Name
+	case "ATTRIBUTE_DEFINITION_STRING_REF":
+		res.valueString = a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF
+	}
+	return
+}
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_definition_xhtml_ref.Name
+	case "ATTRIBUTE_DEFINITION_XHTML_REF":
+		res.valueString = a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF
+	}
+	return
+}
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_boolean.Name
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_date.Name
+	case "ATTRIBUTE_VALUE_DATE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_date.ATTRIBUTE_VALUE_DATE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_enumeration.Name
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_integer.Name
+	case "ATTRIBUTE_VALUE_INTEGER":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_real.Name
+	case "ATTRIBUTE_VALUE_REAL":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_real.ATTRIBUTE_VALUE_REAL {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_string.Name
+	case "ATTRIBUTE_VALUE_STRING":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_string.ATTRIBUTE_VALUE_STRING {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_xhtml.Name
+	case "ATTRIBUTE_VALUE_XHTML":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_attribute_value_xhtml_1.Name
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_VALUE_DATE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_VALUE_INTEGER":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_VALUE_REAL":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_VALUE_STRING":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_VALUE_XHTML":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_children *A_CHILDREN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_children.Name
+	case "SPEC_HIERARCHY":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_children.SPEC_HIERARCHY {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_core_content *A_CORE_CONTENT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_core_content.Name
+	case "REQ_IF_CONTENT":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if a_core_content.REQ_IF_CONTENT != nil {
+			res.valueString = a_core_content.REQ_IF_CONTENT.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, a_core_content.REQ_IF_CONTENT))
+		}
+	}
+	return
+}
+func (a_datatypes *A_DATATYPES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatypes.Name
+	case "DATATYPE_DEFINITION_BOOLEAN":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_BOOLEAN {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "DATATYPE_DEFINITION_DATE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_DATE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "DATATYPE_DEFINITION_ENUMERATION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_ENUMERATION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "DATATYPE_DEFINITION_INTEGER":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_INTEGER {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "DATATYPE_DEFINITION_REAL":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_REAL {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "DATATYPE_DEFINITION_STRING":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_STRING {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "DATATYPE_DEFINITION_XHTML":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_datatypes.DATATYPE_DEFINITION_XHTML {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_boolean_ref.Name
+	case "DATATYPE_DEFINITION_BOOLEAN_REF":
+		res.valueString = a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF
+	}
+	return
+}
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_date_ref.Name
+	case "DATATYPE_DEFINITION_DATE_REF":
+		res.valueString = a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF
+	}
+	return
+}
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_enumeration_ref.Name
+	case "DATATYPE_DEFINITION_ENUMERATION_REF":
+		res.valueString = a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF
+	}
+	return
+}
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_integer_ref.Name
+	case "DATATYPE_DEFINITION_INTEGER_REF":
+		res.valueString = a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF
+	}
+	return
+}
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_real_ref.Name
+	case "DATATYPE_DEFINITION_REAL_REF":
+		res.valueString = a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF
+	}
+	return
+}
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_string_ref.Name
+	case "DATATYPE_DEFINITION_STRING_REF":
+		res.valueString = a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF
+	}
+	return
+}
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_datatype_definition_xhtml_ref.Name
+	case "DATATYPE_DEFINITION_XHTML_REF":
+		res.valueString = a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF
+	}
+	return
+}
+func (a_editable_atts *A_EDITABLE_ATTS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_editable_atts.Name
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF
+	case "ATTRIBUTE_DEFINITION_DATE_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF
+	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF
+	case "ATTRIBUTE_DEFINITION_REAL_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF
+	case "ATTRIBUTE_DEFINITION_STRING_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF
+	case "ATTRIBUTE_DEFINITION_XHTML_REF":
+		res.valueString = a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF
+	}
+	return
+}
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_enum_value_ref.Name
+	case "ENUM_VALUE_REF":
+		res.valueString = a_enum_value_ref.ENUM_VALUE_REF
+	}
+	return
+}
+func (a_object *A_OBJECT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_object.Name
+	case "SPEC_OBJECT_REF":
+		res.valueString = a_object.SPEC_OBJECT_REF
+	}
+	return
+}
+func (a_properties *A_PROPERTIES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_properties.Name
+	case "EMBEDDED_VALUE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if a_properties.EMBEDDED_VALUE != nil {
+			res.valueString = a_properties.EMBEDDED_VALUE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, a_properties.EMBEDDED_VALUE))
+		}
+	}
+	return
+}
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_relation_group_type_ref.Name
+	case "RELATION_GROUP_TYPE_REF":
+		res.valueString = a_relation_group_type_ref.RELATION_GROUP_TYPE_REF
+	}
+	return
+}
+func (a_source_1 *A_SOURCE_1) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_source_1.Name
+	case "SPEC_OBJECT_REF":
+		res.valueString = a_source_1.SPEC_OBJECT_REF
+	}
+	return
+}
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_source_specification_1.Name
+	case "SPECIFICATION_REF":
+		enum := a_source_specification_1.SPECIFICATION_REF
+		res.valueString = enum.ToCodeString()
+	}
+	return
+}
+func (a_specifications *A_SPECIFICATIONS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_specifications.Name
+	case "SPECIFICATION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_specifications.SPECIFICATION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_specification_type_ref.Name
+	case "SPECIFICATION_TYPE_REF":
+		res.valueString = a_specification_type_ref.SPECIFICATION_TYPE_REF
+	}
+	return
+}
+func (a_specified_values *A_SPECIFIED_VALUES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_specified_values.Name
+	case "ENUM_VALUE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_specified_values.ENUM_VALUE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_attributes.Name
+	case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_DEFINITION_DATE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_DATE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_DEFINITION_INTEGER":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_DEFINITION_REAL":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_REAL {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_DEFINITION_STRING":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_STRING {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ATTRIBUTE_DEFINITION_XHTML":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_spec_objects *A_SPEC_OBJECTS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_objects.Name
+	case "SPEC_OBJECT":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_objects.SPEC_OBJECT {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_object_type_ref.Name
+	case "SPEC_OBJECT_TYPE_REF":
+		res.valueString = a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF
+	}
+	return
+}
+func (a_spec_relations *A_SPEC_RELATIONS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_relations.Name
+	case "SPEC_RELATION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_relations.SPEC_RELATION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_relation_groups.Name
+	case "RELATION_GROUP":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_relation_groups.RELATION_GROUP {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_relation_ref.Name
+	case "SPEC_RELATION_REF":
+		res.valueString = a_spec_relation_ref.SPEC_RELATION_REF
+	}
+	return
+}
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_relation_type_ref.Name
+	case "SPEC_RELATION_TYPE_REF":
+		res.valueString = a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF
+	}
+	return
+}
+func (a_spec_types *A_SPEC_TYPES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_spec_types.Name
+	case "RELATION_GROUP_TYPE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_types.RELATION_GROUP_TYPE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "SPEC_OBJECT_TYPE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_types.SPEC_OBJECT_TYPE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "SPEC_RELATION_TYPE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_types.SPEC_RELATION_TYPE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "SPECIFICATION_TYPE":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_spec_types.SPECIFICATION_TYPE {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (a_the_header *A_THE_HEADER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_the_header.Name
+	case "REQ_IF_HEADER":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if a_the_header.REQ_IF_HEADER != nil {
+			res.valueString = a_the_header.REQ_IF_HEADER.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, a_the_header.REQ_IF_HEADER))
+		}
+	}
+	return
+}
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = a_tool_extensions.Name
+	case "REQ_IF_TOOL_EXTENSION":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range a_tool_extensions.REQ_IF_TOOL_EXTENSION {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_boolean.Name
+	case "DESC":
+		res.valueString = datatype_definition_boolean.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_boolean.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_boolean.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_boolean.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_boolean.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_boolean.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_boolean.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_date.Name
+	case "DESC":
+		res.valueString = datatype_definition_date.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_date.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_date.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_date.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_date.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_date.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_date.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_enumeration.Name
+	case "DESC":
+		res.valueString = datatype_definition_enumeration.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_enumeration.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_enumeration.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_enumeration.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_enumeration.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_enumeration.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_enumeration.ALTERNATIVE_ID))
+		}
+	case "SPECIFIED_VALUES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_enumeration.SPECIFIED_VALUES != nil {
+			res.valueString = datatype_definition_enumeration.SPECIFIED_VALUES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_enumeration.SPECIFIED_VALUES))
+		}
+	}
+	return
+}
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_integer.Name
+	case "DESC":
+		res.valueString = datatype_definition_integer.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_integer.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_integer.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_integer.LONG_NAME
+	case "MAX":
+		res.valueString = fmt.Sprintf("%d", datatype_definition_integer.MAX)
+		res.valueInt = datatype_definition_integer.MAX
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "MIN":
+		res.valueString = fmt.Sprintf("%d", datatype_definition_integer.MIN)
+		res.valueInt = datatype_definition_integer.MIN
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_integer.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_integer.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_integer.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_real.Name
+	case "ACCURACY":
+		res.valueString = fmt.Sprintf("%d", datatype_definition_real.ACCURACY)
+		res.valueInt = datatype_definition_real.ACCURACY
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "DESC":
+		res.valueString = datatype_definition_real.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_real.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_real.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_real.LONG_NAME
+	case "MAX":
+		res.valueString = fmt.Sprintf("%f", datatype_definition_real.MAX)
+		res.valueFloat = datatype_definition_real.MAX
+		res.GongFieldValueType = GongFieldValueTypeFloat
+	case "MIN":
+		res.valueString = fmt.Sprintf("%f", datatype_definition_real.MIN)
+		res.valueFloat = datatype_definition_real.MIN
+		res.GongFieldValueType = GongFieldValueTypeFloat
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_real.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_real.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_real.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_string.Name
+	case "DESC":
+		res.valueString = datatype_definition_string.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_string.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_string.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_string.LONG_NAME
+	case "MAX_LENGTH":
+		res.valueString = fmt.Sprintf("%d", datatype_definition_string.MAX_LENGTH)
+		res.valueInt = datatype_definition_string.MAX_LENGTH
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_string.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_string.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_string.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = datatype_definition_xhtml.Name
+	case "DESC":
+		res.valueString = datatype_definition_xhtml.DESC
+	case "IDENTIFIER":
+		res.valueString = datatype_definition_xhtml.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = datatype_definition_xhtml.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = datatype_definition_xhtml.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if datatype_definition_xhtml.ALTERNATIVE_ID != nil {
+			res.valueString = datatype_definition_xhtml.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, datatype_definition_xhtml.ALTERNATIVE_ID))
+		}
+	}
+	return
+}
+func (embedded_value *EMBEDDED_VALUE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = embedded_value.Name
+	case "KEY":
+		res.valueString = fmt.Sprintf("%d", embedded_value.KEY)
+		res.valueInt = embedded_value.KEY
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "OTHER_CONTENT":
+		res.valueString = embedded_value.OTHER_CONTENT
+	}
+	return
+}
+func (enum_value *ENUM_VALUE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = enum_value.Name
+	case "DESC":
+		res.valueString = enum_value.DESC
+	case "IDENTIFIER":
+		res.valueString = enum_value.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = enum_value.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = enum_value.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if enum_value.ALTERNATIVE_ID != nil {
+			res.valueString = enum_value.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, enum_value.ALTERNATIVE_ID))
+		}
+	case "PROPERTIES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if enum_value.PROPERTIES != nil {
+			res.valueString = enum_value.PROPERTIES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, enum_value.PROPERTIES))
+		}
+	}
+	return
+}
+func (embeddedjpgimage *EmbeddedJpgImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = embeddedjpgimage.Name
+	case "Base64Content":
+		res.valueString = embeddedjpgimage.Base64Content
+	}
+	return
+}
+func (embeddedpngimage *EmbeddedPngImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = embeddedpngimage.Name
+	case "Base64Content":
+		res.valueString = embeddedpngimage.Base64Content
+	}
+	return
+}
+func (embeddedsvgimage *EmbeddedSvgImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = embeddedsvgimage.Name
+	case "Content":
+		res.valueString = embeddedsvgimage.Content
+	}
+	return
+}
+func (kill *Kill) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = kill.Name
+	}
+	return
+}
+func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_boolean_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_boolean_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_boolean_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_boolean_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_boolean_showintableentry.Value)
+		res.valueBool = map_attribute_definition_boolean_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_boolean_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_boolean_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_boolean_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_date_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_date_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_date_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_date_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_date_showintableentry.Value)
+		res.valueBool = map_attribute_definition_date_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_date_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_date_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_date_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_enumeration_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_enumeration_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_enumeration_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_enumeration_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_enumeration_showintableentry.Value)
+		res.valueBool = map_attribute_definition_enumeration_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_enumeration_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_enumeration_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_enumeration_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_integer_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_integer_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_integer_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_integer_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_integer_showintableentry.Value)
+		res.valueBool = map_attribute_definition_integer_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_integer_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_integer_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_integer_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_real_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_real_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_real_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_real_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_real_showintableentry.Value)
+		res.valueBool = map_attribute_definition_real_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_real_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_real_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_real_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_string_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_string_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_string_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_string_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_string_showintableentry.Value)
+		res.valueBool = map_attribute_definition_string_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_string_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_string_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_string_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_xhtml_showinsubjectentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_xhtml_showinsubjectentry.Value)
+		res.valueBool = map_attribute_definition_xhtml_showinsubjectentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_xhtml_showintableentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_xhtml_showintableentry.Value)
+		res.valueBool = map_attribute_definition_xhtml_showintableentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_attribute_definition_xhtml_showintitleentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_attribute_definition_xhtml_showintitleentry.Value)
+		res.valueBool = map_attribute_definition_xhtml_showintitleentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_specification_nodes_expandedentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_specification_nodes_expandedentry.Value)
+		res.valueBool = map_specification_nodes_expandedentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_spec_object_type_isnodeexpandedentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_spec_object_type_isnodeexpandedentry.Value)
+		res.valueBool = map_spec_object_type_isnodeexpandedentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_spec_object_type_showidentifierentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_spec_object_type_showidentifierentry.Value)
+		res.valueBool = map_spec_object_type_showidentifierentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_spec_object_type_shownameentry.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_spec_object_type_shownameentry.Value)
+		res.valueBool = map_spec_object_type_shownameentry.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (relation_group *RELATION_GROUP) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = relation_group.Name
+	case "DESC":
+		res.valueString = relation_group.DESC
+	case "IDENTIFIER":
+		res.valueString = relation_group.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = relation_group.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = relation_group.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group.ALTERNATIVE_ID != nil {
+			res.valueString = relation_group.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group.ALTERNATIVE_ID))
+		}
+	case "SOURCE_SPECIFICATION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group.SOURCE_SPECIFICATION != nil {
+			res.valueString = relation_group.SOURCE_SPECIFICATION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group.SOURCE_SPECIFICATION))
+		}
+	case "SPEC_RELATIONS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group.SPEC_RELATIONS != nil {
+			res.valueString = relation_group.SPEC_RELATIONS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group.SPEC_RELATIONS))
+		}
+	case "TARGET_SPECIFICATION":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group.TARGET_SPECIFICATION != nil {
+			res.valueString = relation_group.TARGET_SPECIFICATION.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group.TARGET_SPECIFICATION))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group.TYPE != nil {
+			res.valueString = relation_group.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group.TYPE))
+		}
+	}
+	return
+}
+func (relation_group_type *RELATION_GROUP_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = relation_group_type.Name
+	case "DESC":
+		res.valueString = relation_group_type.DESC
+	case "IDENTIFIER":
+		res.valueString = relation_group_type.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = relation_group_type.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = relation_group_type.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group_type.ALTERNATIVE_ID != nil {
+			res.valueString = relation_group_type.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group_type.ALTERNATIVE_ID))
+		}
+	case "SPEC_ATTRIBUTES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if relation_group_type.SPEC_ATTRIBUTES != nil {
+			res.valueString = relation_group_type.SPEC_ATTRIBUTES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, relation_group_type.SPEC_ATTRIBUTES))
+		}
+	}
+	return
+}
+func (req_if *REQ_IF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = req_if.Name
+	case "Lang":
+		res.valueString = req_if.Lang
+	case "THE_HEADER":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if.THE_HEADER != nil {
+			res.valueString = req_if.THE_HEADER.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if.THE_HEADER))
+		}
+	case "CORE_CONTENT":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if.CORE_CONTENT != nil {
+			res.valueString = req_if.CORE_CONTENT.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if.CORE_CONTENT))
+		}
+	case "TOOL_EXTENSIONS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if.TOOL_EXTENSIONS != nil {
+			res.valueString = req_if.TOOL_EXTENSIONS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if.TOOL_EXTENSIONS))
+		}
+	}
+	return
+}
+func (req_if_content *REQ_IF_CONTENT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = req_if_content.Name
+	case "DATATYPES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if_content.DATATYPES != nil {
+			res.valueString = req_if_content.DATATYPES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if_content.DATATYPES))
+		}
+	case "SPEC_TYPES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if_content.SPEC_TYPES != nil {
+			res.valueString = req_if_content.SPEC_TYPES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if_content.SPEC_TYPES))
+		}
+	case "SPEC_OBJECTS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if_content.SPEC_OBJECTS != nil {
+			res.valueString = req_if_content.SPEC_OBJECTS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if_content.SPEC_OBJECTS))
+		}
+	case "SPEC_RELATIONS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if_content.SPEC_RELATIONS != nil {
+			res.valueString = req_if_content.SPEC_RELATIONS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if_content.SPEC_RELATIONS))
+		}
+	case "SPECIFICATIONS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if_content.SPECIFICATIONS != nil {
+			res.valueString = req_if_content.SPECIFICATIONS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if_content.SPECIFICATIONS))
+		}
+	case "SPEC_RELATION_GROUPS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if req_if_content.SPEC_RELATION_GROUPS != nil {
+			res.valueString = req_if_content.SPEC_RELATION_GROUPS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, req_if_content.SPEC_RELATION_GROUPS))
+		}
+	}
+	return
+}
+func (req_if_header *REQ_IF_HEADER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = req_if_header.Name
+	case "IDENTIFIER":
+		res.valueString = req_if_header.IDENTIFIER
+	case "COMMENT":
+		res.valueString = req_if_header.COMMENT
+	case "CREATION_TIME":
+		res.valueString = req_if_header.CREATION_TIME
+	case "REPOSITORY_ID":
+		res.valueString = req_if_header.REPOSITORY_ID
+	case "REQ_IF_TOOL_ID":
+		res.valueString = req_if_header.REQ_IF_TOOL_ID
+	case "REQ_IF_VERSION":
+		res.valueString = req_if_header.REQ_IF_VERSION
+	case "SOURCE_TOOL_ID":
+		res.valueString = req_if_header.SOURCE_TOOL_ID
+	case "TITLE":
+		res.valueString = req_if_header.TITLE
+	}
+	return
+}
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = req_if_tool_extension.Name
+	}
+	return
+}
+func (renderingconfiguration *RenderingConfiguration) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = renderingconfiguration.Name
+	case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_SPECIFICATION_Nodes_expandedEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_SPEC_OBJECT_TYPE_showNameEntries":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "ShowSpecHierachyIdentifiers":
+		res.valueString = fmt.Sprintf("%t", renderingconfiguration.ShowSpecHierachyIdentifiers)
+		res.valueBool = renderingconfiguration.ShowSpecHierachyIdentifiers
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
+func (specification *SPECIFICATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = specification.Name
+	case "DESC":
+		res.valueString = specification.DESC
+	case "IDENTIFIER":
+		res.valueString = specification.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = specification.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = specification.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if specification.ALTERNATIVE_ID != nil {
+			res.valueString = specification.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, specification.ALTERNATIVE_ID))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if specification.TYPE != nil {
+			res.valueString = specification.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, specification.TYPE))
+		}
+	case "CHILDREN":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if specification.CHILDREN != nil {
+			res.valueString = specification.CHILDREN.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, specification.CHILDREN))
+		}
+	case "VALUES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if specification.VALUES != nil {
+			res.valueString = specification.VALUES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, specification.VALUES))
+		}
+	}
+	return
+}
+func (specification_type *SPECIFICATION_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = specification_type.Name
+	case "DESC":
+		res.valueString = specification_type.DESC
+	case "IDENTIFIER":
+		res.valueString = specification_type.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = specification_type.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = specification_type.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if specification_type.ALTERNATIVE_ID != nil {
+			res.valueString = specification_type.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, specification_type.ALTERNATIVE_ID))
+		}
+	case "SPEC_ATTRIBUTES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if specification_type.SPEC_ATTRIBUTES != nil {
+			res.valueString = specification_type.SPEC_ATTRIBUTES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, specification_type.SPEC_ATTRIBUTES))
+		}
+	}
+	return
+}
+func (spec_hierarchy *SPEC_HIERARCHY) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = spec_hierarchy.Name
+	case "DESC":
+		res.valueString = spec_hierarchy.DESC
+	case "IDENTIFIER":
+		res.valueString = spec_hierarchy.IDENTIFIER
+	case "IS_EDITABLE":
+		res.valueString = fmt.Sprintf("%t", spec_hierarchy.IS_EDITABLE)
+		res.valueBool = spec_hierarchy.IS_EDITABLE
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "IS_TABLE_INTERNAL":
+		res.valueString = fmt.Sprintf("%t", spec_hierarchy.IS_TABLE_INTERNAL)
+		res.valueBool = spec_hierarchy.IS_TABLE_INTERNAL
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "LAST_CHANGE":
+		res.valueString = spec_hierarchy.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = spec_hierarchy.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_hierarchy.ALTERNATIVE_ID != nil {
+			res.valueString = spec_hierarchy.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_hierarchy.ALTERNATIVE_ID))
+		}
+	case "OBJECT":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_hierarchy.OBJECT != nil {
+			res.valueString = spec_hierarchy.OBJECT.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_hierarchy.OBJECT))
+		}
+	case "CHILDREN":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_hierarchy.CHILDREN != nil {
+			res.valueString = spec_hierarchy.CHILDREN.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_hierarchy.CHILDREN))
+		}
+	case "EDITABLE_ATTS":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_hierarchy.EDITABLE_ATTS != nil {
+			res.valueString = spec_hierarchy.EDITABLE_ATTS.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_hierarchy.EDITABLE_ATTS))
+		}
+	}
+	return
+}
+func (spec_object *SPEC_OBJECT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = spec_object.Name
+	case "DESC":
+		res.valueString = spec_object.DESC
+	case "IDENTIFIER":
+		res.valueString = spec_object.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = spec_object.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = spec_object.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_object.ALTERNATIVE_ID != nil {
+			res.valueString = spec_object.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_object.ALTERNATIVE_ID))
+		}
+	case "VALUES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_object.VALUES != nil {
+			res.valueString = spec_object.VALUES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_object.VALUES))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_object.TYPE != nil {
+			res.valueString = spec_object.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_object.TYPE))
+		}
+	}
+	return
+}
+func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = spec_object_type.Name
+	case "DESC":
+		res.valueString = spec_object_type.DESC
+	case "IDENTIFIER":
+		res.valueString = spec_object_type.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = spec_object_type.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = spec_object_type.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_object_type.ALTERNATIVE_ID != nil {
+			res.valueString = spec_object_type.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_object_type.ALTERNATIVE_ID))
+		}
+	case "SPEC_ATTRIBUTES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_object_type.SPEC_ATTRIBUTES != nil {
+			res.valueString = spec_object_type.SPEC_ATTRIBUTES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_object_type.SPEC_ATTRIBUTES))
+		}
+	}
+	return
+}
+func (spec_relation *SPEC_RELATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = spec_relation.Name
+	case "DESC":
+		res.valueString = spec_relation.DESC
+	case "IDENTIFIER":
+		res.valueString = spec_relation.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = spec_relation.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = spec_relation.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation.ALTERNATIVE_ID != nil {
+			res.valueString = spec_relation.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation.ALTERNATIVE_ID))
+		}
+	case "VALUES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation.VALUES != nil {
+			res.valueString = spec_relation.VALUES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation.VALUES))
+		}
+	case "SOURCE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation.SOURCE != nil {
+			res.valueString = spec_relation.SOURCE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation.SOURCE))
+		}
+	case "TARGET":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation.TARGET != nil {
+			res.valueString = spec_relation.TARGET.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation.TARGET))
+		}
+	case "TYPE":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation.TYPE != nil {
+			res.valueString = spec_relation.TYPE.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation.TYPE))
+		}
+	}
+	return
+}
+func (spec_relation_type *SPEC_RELATION_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = spec_relation_type.Name
+	case "DESC":
+		res.valueString = spec_relation_type.DESC
+	case "IDENTIFIER":
+		res.valueString = spec_relation_type.IDENTIFIER
+	case "LAST_CHANGE":
+		res.valueString = spec_relation_type.LAST_CHANGE
+	case "LONG_NAME":
+		res.valueString = spec_relation_type.LONG_NAME
+	case "ALTERNATIVE_ID":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation_type.ALTERNATIVE_ID != nil {
+			res.valueString = spec_relation_type.ALTERNATIVE_ID.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation_type.ALTERNATIVE_ID))
+		}
+	case "SPEC_ATTRIBUTES":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if spec_relation_type.SPEC_ATTRIBUTES != nil {
+			res.valueString = spec_relation_type.SPEC_ATTRIBUTES.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_relation_type.SPEC_ATTRIBUTES))
+		}
+	}
+	return
+}
+func (staticwebsite *StaticWebSite) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = staticwebsite.Name
+	case "MarkdownContent":
+		res.valueString = staticwebsite.MarkdownContent
+	case "Chapters":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range staticwebsite.Chapters {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "InputImagesDir":
+		res.valueString = staticwebsite.InputImagesDir
+	case "OutputStaticWebDir":
+		res.valueString = staticwebsite.OutputStaticWebDir
+	case "VersionInfo":
+		res.valueString = staticwebsite.VersionInfo
+	}
+	return
+}
+func (staticwebsitechapter *StaticWebSiteChapter) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = staticwebsitechapter.Name
+	case "MarkdownContent":
+		res.valueString = staticwebsitechapter.MarkdownContent
+	case "Paragraphs":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range staticwebsitechapter.Paragraphs {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	}
+	return
+}
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = staticwebsitegeneratedimage.Name
+	case "SourceDirectoryPath":
+		res.valueString = staticwebsitegeneratedimage.SourceDirectoryPath
+	case "Width":
+		res.valueString = fmt.Sprintf("%d", staticwebsitegeneratedimage.Width)
+		res.valueInt = staticwebsitegeneratedimage.Width
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "Height":
+		res.valueString = fmt.Sprintf("%d", staticwebsitegeneratedimage.Height)
+		res.valueInt = staticwebsitegeneratedimage.Height
+		res.GongFieldValueType = GongFieldValueTypeInt
+	}
+	return
+}
+func (staticwebsiteimage *StaticWebSiteImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = staticwebsiteimage.Name
+	case "SourceDirectoryPath":
+		res.valueString = staticwebsiteimage.SourceDirectoryPath
+	case "Width":
+		res.valueString = fmt.Sprintf("%d", staticwebsiteimage.Width)
+		res.valueInt = staticwebsiteimage.Width
+		res.GongFieldValueType = GongFieldValueTypeInt
+	case "Height":
+		res.valueString = fmt.Sprintf("%d", staticwebsiteimage.Height)
+		res.valueInt = staticwebsiteimage.Height
+		res.GongFieldValueType = GongFieldValueTypeInt
+	}
+	return
+}
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = staticwebsiteparagraph.Name
+	case "LegendMarkdownContent":
+		res.valueString = staticwebsiteparagraph.LegendMarkdownContent
+	case "Image":
+		res.GongFieldValueType = GongFieldValueTypePointer
+		if staticwebsiteparagraph.Image != nil {
+			res.valueString = staticwebsiteparagraph.Image.Name
+			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, staticwebsiteparagraph.Image))
+		}
+	}
+	return
+}
+func (xhtml_content *XHTML_CONTENT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = xhtml_content.Name
+	case "EnclosedText":
+		res.valueString = xhtml_content.EnclosedText
+	case "PureText":
+		res.valueString = xhtml_content.PureText
 	}
 	return
 }
 
-func GetFieldStringValue(instance any, fieldName string) (res GongFieldValue) {
+func GetFieldStringValueFromPointer(instance GongstructIF, fieldName string, stage *Stage) (res GongFieldValue) {
 
-	switch inferedInstance := any(instance).(type) {
-	// insertion point for generic get gongstruct field value
-	case ALTERNATIVE_ID:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		}
-	case ATTRIBUTE_DEFINITION_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_DEFINITION_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_DEFINITION_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MULTI_VALUED":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.MULTI_VALUED)
-			res.valueBool = inferedInstance.MULTI_VALUED
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_DEFINITION_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_DEFINITION_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_DEFINITION_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_DEFINITION_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "DEFAULT_VALUE":
-			if inferedInstance.DEFAULT_VALUE != nil {
-				res.valueString = inferedInstance.DEFAULT_VALUE.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case ATTRIBUTE_VALUE_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.THE_VALUE)
-			res.valueBool = inferedInstance.THE_VALUE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case ATTRIBUTE_VALUE_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = inferedInstance.THE_VALUE
-		}
-	case ATTRIBUTE_VALUE_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		}
-	case ATTRIBUTE_VALUE_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.THE_VALUE)
-			res.valueInt = inferedInstance.THE_VALUE
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case ATTRIBUTE_VALUE_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = fmt.Sprintf("%f", inferedInstance.THE_VALUE)
-			res.valueFloat = inferedInstance.THE_VALUE
-			res.GongFieldValueType = GongFieldValueTypeFloat
-		}
-	case ATTRIBUTE_VALUE_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "THE_VALUE":
-			res.valueString = inferedInstance.THE_VALUE
-		}
-	case ATTRIBUTE_VALUE_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DEFINITION":
-			if inferedInstance.DEFINITION != nil {
-				res.valueString = inferedInstance.DEFINITION.Name
-			}
-		case "IS_SIMPLIFIED":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_SIMPLIFIED)
-			res.valueBool = inferedInstance.IS_SIMPLIFIED
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "THE_VALUE":
-			if inferedInstance.THE_VALUE != nil {
-				res.valueString = inferedInstance.THE_VALUE.Name
-			}
-		case "THE_ORIGINAL_VALUE":
-			if inferedInstance.THE_ORIGINAL_VALUE != nil {
-				res.valueString = inferedInstance.THE_ORIGINAL_VALUE.Name
-			}
-		}
-	case A_ALTERNATIVE_ID:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_BOOLEAN_REF
-		}
-	case A_ATTRIBUTE_DEFINITION_DATE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_DATE_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_DATE_REF
-		}
-	case A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_ENUMERATION_REF
-		}
-	case A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_INTEGER_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_INTEGER_REF
-		}
-	case A_ATTRIBUTE_DEFINITION_REAL_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_REAL_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_REAL_REF
-		}
-	case A_ATTRIBUTE_DEFINITION_STRING_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_STRING_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_STRING_REF
-		}
-	case A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_XHTML_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_XHTML_REF
-		}
-	case A_ATTRIBUTE_VALUE_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_DATE":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_INTEGER":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_REAL":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_STRING":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_XHTML":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_ATTRIBUTE_VALUE_XHTML_1:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_VALUE_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_DATE":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_INTEGER":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_REAL":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_STRING":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_VALUE_XHTML":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_VALUE_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_CHILDREN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_HIERARCHY":
-			for idx, __instance__ := range inferedInstance.SPEC_HIERARCHY {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_CORE_CONTENT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "REQ_IF_CONTENT":
-			if inferedInstance.REQ_IF_CONTENT != nil {
-				res.valueString = inferedInstance.REQ_IF_CONTENT.Name
-			}
-		}
-	case A_DATATYPES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_DATE":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_INTEGER":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_REAL":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_STRING":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "DATATYPE_DEFINITION_XHTML":
-			for idx, __instance__ := range inferedInstance.DATATYPE_DEFINITION_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_BOOLEAN_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_BOOLEAN_REF
-		}
-	case A_DATATYPE_DEFINITION_DATE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_DATE_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_DATE_REF
-		}
-	case A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_ENUMERATION_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_ENUMERATION_REF
-		}
-	case A_DATATYPE_DEFINITION_INTEGER_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_INTEGER_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_INTEGER_REF
-		}
-	case A_DATATYPE_DEFINITION_REAL_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_REAL_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_REAL_REF
-		}
-	case A_DATATYPE_DEFINITION_STRING_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_STRING_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_STRING_REF
-		}
-	case A_DATATYPE_DEFINITION_XHTML_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPE_DEFINITION_XHTML_REF":
-			res.valueString = inferedInstance.DATATYPE_DEFINITION_XHTML_REF
-		}
-	case A_EDITABLE_ATTS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_BOOLEAN_REF
-		case "ATTRIBUTE_DEFINITION_DATE_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_DATE_REF
-		case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_ENUMERATION_REF
-		case "ATTRIBUTE_DEFINITION_INTEGER_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_INTEGER_REF
-		case "ATTRIBUTE_DEFINITION_REAL_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_REAL_REF
-		case "ATTRIBUTE_DEFINITION_STRING_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_STRING_REF
-		case "ATTRIBUTE_DEFINITION_XHTML_REF":
-			res.valueString = inferedInstance.ATTRIBUTE_DEFINITION_XHTML_REF
-		}
-	case A_ENUM_VALUE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ENUM_VALUE_REF":
-			res.valueString = inferedInstance.ENUM_VALUE_REF
-		}
-	case A_OBJECT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT_REF":
-			res.valueString = inferedInstance.SPEC_OBJECT_REF
-		}
-	case A_PROPERTIES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "EMBEDDED_VALUE":
-			if inferedInstance.EMBEDDED_VALUE != nil {
-				res.valueString = inferedInstance.EMBEDDED_VALUE.Name
-			}
-		}
-	case A_RELATION_GROUP_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "RELATION_GROUP_TYPE_REF":
-			res.valueString = inferedInstance.RELATION_GROUP_TYPE_REF
-		}
-	case A_SOURCE_1:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT_REF":
-			res.valueString = inferedInstance.SPEC_OBJECT_REF
-		}
-	case A_SOURCE_SPECIFICATION_1:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPECIFICATION_REF":
-			enum := inferedInstance.SPECIFICATION_REF
-			res.valueString = enum.ToCodeString()
-		}
-	case A_SPECIFICATIONS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPECIFICATION":
-			for idx, __instance__ := range inferedInstance.SPECIFICATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_SPECIFICATION_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPECIFICATION_TYPE_REF":
-			res.valueString = inferedInstance.SPECIFICATION_TYPE_REF
-		}
-	case A_SPECIFIED_VALUES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ENUM_VALUE":
-			for idx, __instance__ := range inferedInstance.ENUM_VALUE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_SPEC_ATTRIBUTES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ATTRIBUTE_DEFINITION_BOOLEAN":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_BOOLEAN {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_DATE":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_DATE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_ENUMERATION":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_ENUMERATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_INTEGER":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_INTEGER {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_REAL":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_REAL {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_STRING":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_STRING {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ATTRIBUTE_DEFINITION_XHTML":
-			for idx, __instance__ := range inferedInstance.ATTRIBUTE_DEFINITION_XHTML {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_SPEC_OBJECTS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT":
-			for idx, __instance__ := range inferedInstance.SPEC_OBJECT {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_SPEC_OBJECT_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_OBJECT_TYPE_REF":
-			res.valueString = inferedInstance.SPEC_OBJECT_TYPE_REF
-		}
-	case A_SPEC_RELATIONS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_RELATION":
-			for idx, __instance__ := range inferedInstance.SPEC_RELATION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_SPEC_RELATION_GROUPS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "RELATION_GROUP":
-			for idx, __instance__ := range inferedInstance.RELATION_GROUP {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case A_SPEC_RELATION_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_RELATION_REF":
-			res.valueString = inferedInstance.SPEC_RELATION_REF
-		}
-	case A_SPEC_RELATION_TYPE_REF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SPEC_RELATION_TYPE_REF":
-			res.valueString = inferedInstance.SPEC_RELATION_TYPE_REF
-		}
-	case A_SPEC_TYPES:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "RELATION_GROUP_TYPE":
-			for idx, __instance__ := range inferedInstance.RELATION_GROUP_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "SPEC_OBJECT_TYPE":
-			for idx, __instance__ := range inferedInstance.SPEC_OBJECT_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "SPEC_RELATION_TYPE":
-			for idx, __instance__ := range inferedInstance.SPEC_RELATION_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "SPECIFICATION_TYPE":
-			for idx, __instance__ := range inferedInstance.SPECIFICATION_TYPE {
-				if idx > 0 {
-					res.valueString += "\n"
+	res = instance.GongGetFieldValue(fieldName, stage)
+	return
+}
+
+// insertion point for generic set gongstruct field value
+func (alternative_id *ALTERNATIVE_ID) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		alternative_id.Name = value.GetValueString()
+	case "IDENTIFIER":
+		alternative_id.IDENTIFIER = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_boolean.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_boolean.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_boolean.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_boolean.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_boolean.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_boolean.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_boolean.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_boolean.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_boolean.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
+				if stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_boolean.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_boolean.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs {
+				if stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_boolean.TYPE = __instance__
+					break
 				}
-				res.valueString += __instance__.Name
 			}
-		}
-	case A_THE_HEADER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "REQ_IF_HEADER":
-			if inferedInstance.REQ_IF_HEADER != nil {
-				res.valueString = inferedInstance.REQ_IF_HEADER.Name
-			}
-		}
-	case A_TOOL_EXTENSIONS:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "REQ_IF_TOOL_EXTENSION":
-			for idx, __instance__ := range inferedInstance.REQ_IF_TOOL_EXTENSION {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case DATATYPE_DEFINITION_BOOLEAN:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case DATATYPE_DEFINITION_DATE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case DATATYPE_DEFINITION_ENUMERATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPECIFIED_VALUES":
-			if inferedInstance.SPECIFIED_VALUES != nil {
-				res.valueString = inferedInstance.SPECIFIED_VALUES.Name
-			}
-		}
-	case DATATYPE_DEFINITION_INTEGER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MAX":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.MAX)
-			res.valueInt = inferedInstance.MAX
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "MIN":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.MIN)
-			res.valueInt = inferedInstance.MIN
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case DATATYPE_DEFINITION_REAL:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "ACCURACY":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.ACCURACY)
-			res.valueInt = inferedInstance.ACCURACY
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MAX":
-			res.valueString = fmt.Sprintf("%f", inferedInstance.MAX)
-			res.valueFloat = inferedInstance.MAX
-			res.GongFieldValueType = GongFieldValueTypeFloat
-		case "MIN":
-			res.valueString = fmt.Sprintf("%f", inferedInstance.MIN)
-			res.valueFloat = inferedInstance.MIN
-			res.GongFieldValueType = GongFieldValueTypeFloat
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case DATATYPE_DEFINITION_STRING:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "MAX_LENGTH":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.MAX_LENGTH)
-			res.valueInt = inferedInstance.MAX_LENGTH
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case DATATYPE_DEFINITION_XHTML:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		}
-	case EMBEDDED_VALUE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "KEY":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.KEY)
-			res.valueInt = inferedInstance.KEY
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "OTHER_CONTENT":
-			res.valueString = inferedInstance.OTHER_CONTENT
-		}
-	case ENUM_VALUE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "PROPERTIES":
-			if inferedInstance.PROPERTIES != nil {
-				res.valueString = inferedInstance.PROPERTIES.Name
-			}
-		}
-	case EmbeddedJpgImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Base64Content":
-			res.valueString = inferedInstance.Base64Content
-		}
-	case EmbeddedPngImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Base64Content":
-			res.valueString = inferedInstance.Base64Content
-		}
-	case EmbeddedSvgImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Content":
-			res.valueString = inferedInstance.Content
-		}
-	case Kill:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		}
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_SPECIFICATION_Nodes_expandedEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case Map_SPEC_OBJECT_TYPE_showNameEntry:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Value":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.Value)
-			res.valueBool = inferedInstance.Value
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case RELATION_GROUP:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SOURCE_SPECIFICATION":
-			if inferedInstance.SOURCE_SPECIFICATION != nil {
-				res.valueString = inferedInstance.SOURCE_SPECIFICATION.Name
-			}
-		case "SPEC_RELATIONS":
-			if inferedInstance.SPEC_RELATIONS != nil {
-				res.valueString = inferedInstance.SPEC_RELATIONS.Name
-			}
-		case "TARGET_SPECIFICATION":
-			if inferedInstance.TARGET_SPECIFICATION != nil {
-				res.valueString = inferedInstance.TARGET_SPECIFICATION.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case RELATION_GROUP_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case REQ_IF:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Lang":
-			res.valueString = inferedInstance.Lang
-		case "THE_HEADER":
-			if inferedInstance.THE_HEADER != nil {
-				res.valueString = inferedInstance.THE_HEADER.Name
-			}
-		case "CORE_CONTENT":
-			if inferedInstance.CORE_CONTENT != nil {
-				res.valueString = inferedInstance.CORE_CONTENT.Name
-			}
-		case "TOOL_EXTENSIONS":
-			if inferedInstance.TOOL_EXTENSIONS != nil {
-				res.valueString = inferedInstance.TOOL_EXTENSIONS.Name
-			}
-		}
-	case REQ_IF_CONTENT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DATATYPES":
-			if inferedInstance.DATATYPES != nil {
-				res.valueString = inferedInstance.DATATYPES.Name
-			}
-		case "SPEC_TYPES":
-			if inferedInstance.SPEC_TYPES != nil {
-				res.valueString = inferedInstance.SPEC_TYPES.Name
-			}
-		case "SPEC_OBJECTS":
-			if inferedInstance.SPEC_OBJECTS != nil {
-				res.valueString = inferedInstance.SPEC_OBJECTS.Name
-			}
-		case "SPEC_RELATIONS":
-			if inferedInstance.SPEC_RELATIONS != nil {
-				res.valueString = inferedInstance.SPEC_RELATIONS.Name
-			}
-		case "SPECIFICATIONS":
-			if inferedInstance.SPECIFICATIONS != nil {
-				res.valueString = inferedInstance.SPECIFICATIONS.Name
-			}
-		case "SPEC_RELATION_GROUPS":
-			if inferedInstance.SPEC_RELATION_GROUPS != nil {
-				res.valueString = inferedInstance.SPEC_RELATION_GROUPS.Name
-			}
-		}
-	case REQ_IF_HEADER:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "COMMENT":
-			res.valueString = inferedInstance.COMMENT
-		case "CREATION_TIME":
-			res.valueString = inferedInstance.CREATION_TIME
-		case "REPOSITORY_ID":
-			res.valueString = inferedInstance.REPOSITORY_ID
-		case "REQ_IF_TOOL_ID":
-			res.valueString = inferedInstance.REQ_IF_TOOL_ID
-		case "REQ_IF_VERSION":
-			res.valueString = inferedInstance.REQ_IF_VERSION
-		case "SOURCE_TOOL_ID":
-			res.valueString = inferedInstance.SOURCE_TOOL_ID
-		case "TITLE":
-			res.valueString = inferedInstance.TITLE
-		}
-	case REQ_IF_TOOL_EXTENSION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		}
-	case RenderingConfiguration:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-			for idx, __instance__ := range inferedInstance.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_SPECIFICATION_Nodes_expandedEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPECIFICATION_Nodes_expandedEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-			for idx, __instance__ := range inferedInstance.Map_SPEC_OBJECT_TYPE_showNameEntries {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "ShowSpecHierachyIdentifiers":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.ShowSpecHierachyIdentifiers)
-			res.valueBool = inferedInstance.ShowSpecHierachyIdentifiers
-			res.GongFieldValueType = GongFieldValueTypeBool
-		}
-	case SPECIFICATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		case "CHILDREN":
-			if inferedInstance.CHILDREN != nil {
-				res.valueString = inferedInstance.CHILDREN.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		}
-	case SPECIFICATION_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case SPEC_HIERARCHY:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "IS_EDITABLE":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_EDITABLE)
-			res.valueBool = inferedInstance.IS_EDITABLE
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "IS_TABLE_INTERNAL":
-			res.valueString = fmt.Sprintf("%t", inferedInstance.IS_TABLE_INTERNAL)
-			res.valueBool = inferedInstance.IS_TABLE_INTERNAL
-			res.GongFieldValueType = GongFieldValueTypeBool
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "OBJECT":
-			if inferedInstance.OBJECT != nil {
-				res.valueString = inferedInstance.OBJECT.Name
-			}
-		case "CHILDREN":
-			if inferedInstance.CHILDREN != nil {
-				res.valueString = inferedInstance.CHILDREN.Name
-			}
-		case "EDITABLE_ATTS":
-			if inferedInstance.EDITABLE_ATTS != nil {
-				res.valueString = inferedInstance.EDITABLE_ATTS.Name
-			}
-		}
-	case SPEC_OBJECT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case SPEC_OBJECT_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case SPEC_RELATION:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "VALUES":
-			if inferedInstance.VALUES != nil {
-				res.valueString = inferedInstance.VALUES.Name
-			}
-		case "SOURCE":
-			if inferedInstance.SOURCE != nil {
-				res.valueString = inferedInstance.SOURCE.Name
-			}
-		case "TARGET":
-			if inferedInstance.TARGET != nil {
-				res.valueString = inferedInstance.TARGET.Name
-			}
-		case "TYPE":
-			if inferedInstance.TYPE != nil {
-				res.valueString = inferedInstance.TYPE.Name
-			}
-		}
-	case SPEC_RELATION_TYPE:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "DESC":
-			res.valueString = inferedInstance.DESC
-		case "IDENTIFIER":
-			res.valueString = inferedInstance.IDENTIFIER
-		case "LAST_CHANGE":
-			res.valueString = inferedInstance.LAST_CHANGE
-		case "LONG_NAME":
-			res.valueString = inferedInstance.LONG_NAME
-		case "ALTERNATIVE_ID":
-			if inferedInstance.ALTERNATIVE_ID != nil {
-				res.valueString = inferedInstance.ALTERNATIVE_ID.Name
-			}
-		case "SPEC_ATTRIBUTES":
-			if inferedInstance.SPEC_ATTRIBUTES != nil {
-				res.valueString = inferedInstance.SPEC_ATTRIBUTES.Name
-			}
-		}
-	case StaticWebSite:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "MarkdownContent":
-			res.valueString = inferedInstance.MarkdownContent
-		case "Chapters":
-			for idx, __instance__ := range inferedInstance.Chapters {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		case "InputImagesDir":
-			res.valueString = inferedInstance.InputImagesDir
-		case "OutputStaticWebDir":
-			res.valueString = inferedInstance.OutputStaticWebDir
-		case "VersionInfo":
-			res.valueString = inferedInstance.VersionInfo
-		}
-	case StaticWebSiteChapter:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "MarkdownContent":
-			res.valueString = inferedInstance.MarkdownContent
-		case "Paragraphs":
-			for idx, __instance__ := range inferedInstance.Paragraphs {
-				if idx > 0 {
-					res.valueString += "\n"
-				}
-				res.valueString += __instance__.Name
-			}
-		}
-	case StaticWebSiteGeneratedImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SourceDirectoryPath":
-			res.valueString = inferedInstance.SourceDirectoryPath
-		case "Width":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
-			res.valueInt = inferedInstance.Width
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "Height":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
-			res.valueInt = inferedInstance.Height
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case StaticWebSiteImage:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "SourceDirectoryPath":
-			res.valueString = inferedInstance.SourceDirectoryPath
-		case "Width":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Width)
-			res.valueInt = inferedInstance.Width
-			res.GongFieldValueType = GongFieldValueTypeInt
-		case "Height":
-			res.valueString = fmt.Sprintf("%d", inferedInstance.Height)
-			res.valueInt = inferedInstance.Height
-			res.GongFieldValueType = GongFieldValueTypeInt
-		}
-	case StaticWebSiteParagraph:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "LegendMarkdownContent":
-			res.valueString = inferedInstance.LegendMarkdownContent
-		case "Image":
-			if inferedInstance.Image != nil {
-				res.valueString = inferedInstance.Image.Name
-			}
-		}
-	case XHTML_CONTENT:
-		switch fieldName {
-		// string value of fields
-		case "Name":
-			res.valueString = inferedInstance.Name
-		case "EnclosedText":
-			res.valueString = inferedInstance.EnclosedText
-		case "PureText":
-			res.valueString = inferedInstance.PureText
 		}
 	default:
-		_ = inferedInstance
+		return fmt.Errorf("unknown field %s", fieldName)
 	}
+	return nil
+}
+
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_date.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_date.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_date.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_date.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_date.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_date.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_date.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_date.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_date.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_DATEs {
+				if stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_date.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_date.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_DATE_REFs {
+				if stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_date.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_enumeration.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_enumeration.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_enumeration.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_enumeration.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_enumeration.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_enumeration.LONG_NAME = value.GetValueString()
+	case "MULTI_VALUED":
+		attribute_definition_enumeration.MULTI_VALUED = value.GetValueBool()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_enumeration.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_enumeration.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_enumeration.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
+				if stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_enumeration.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_enumeration.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs {
+				if stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_enumeration.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_integer.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_integer.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_integer.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_integer.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_integer.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_integer.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_integer.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_integer.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_integer.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
+				if stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_integer.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_integer.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs {
+				if stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_integer.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_real.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_real.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_real.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_real.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_real.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_real.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_real.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_real.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_real.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_REALs {
+				if stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_real.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_real.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_REAL_REFs {
+				if stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_real.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_string.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_string.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_string.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_string.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_string.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_string.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_string.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_string.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_string.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_STRINGs {
+				if stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_string.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_string.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_STRING_REFs {
+				if stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_string.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_xhtml.Name = value.GetValueString()
+	case "DESC":
+		attribute_definition_xhtml.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		attribute_definition_xhtml.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		attribute_definition_xhtml.IS_EDITABLE = value.GetValueBool()
+	case "LAST_CHANGE":
+		attribute_definition_xhtml.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		attribute_definition_xhtml.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_xhtml.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_xhtml.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "DEFAULT_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_xhtml.DEFAULT_VALUE = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
+				if stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_xhtml.DEFAULT_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_definition_xhtml.TYPE = nil
+			for __instance__ := range stage.A_DATATYPE_DEFINITION_XHTML_REFs {
+				if stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_definition_xhtml.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_boolean.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_boolean.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_boolean.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "THE_VALUE":
+		attribute_value_boolean.THE_VALUE = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_date.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_date.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_date.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "THE_VALUE":
+		attribute_value_date.THE_VALUE = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_enumeration.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_enumeration.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_enumeration.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "VALUES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_enumeration.VALUES = nil
+			for __instance__ := range stage.A_ENUM_VALUE_REFs {
+				if stage.A_ENUM_VALUE_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_enumeration.VALUES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_integer.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_integer.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_integer.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "THE_VALUE":
+		attribute_value_integer.THE_VALUE = int(value.GetValueInt())
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_real.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_real.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_real.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "THE_VALUE":
+		attribute_value_real.THE_VALUE = value.GetValueFloat()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_string.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_string.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_string.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "THE_VALUE":
+		attribute_value_string.THE_VALUE = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_value_xhtml.Name = value.GetValueString()
+	case "DEFINITION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_xhtml.DEFINITION = nil
+			for __instance__ := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs {
+				if stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_xhtml.DEFINITION = __instance__
+					break
+				}
+			}
+		}
+	case "IS_SIMPLIFIED":
+		attribute_value_xhtml.IS_SIMPLIFIED = value.GetValueBool()
+	case "THE_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_xhtml.THE_VALUE = nil
+			for __instance__ := range stage.XHTML_CONTENTs {
+				if stage.XHTML_CONTENTMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_xhtml.THE_VALUE = __instance__
+					break
+				}
+			}
+		}
+	case "THE_ORIGINAL_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			attribute_value_xhtml.THE_ORIGINAL_VALUE = nil
+			for __instance__ := range stage.XHTML_CONTENTs {
+				if stage.XHTML_CONTENTMap_Staged_Order[__instance__] == uint(id) {
+					attribute_value_xhtml.THE_ORIGINAL_VALUE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_alternative_id *A_ALTERNATIVE_ID) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_alternative_id.Name = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			a_alternative_id.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.ALTERNATIVE_IDs {
+				if stage.ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					a_alternative_id.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_boolean_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_date_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_DATE_REF":
+		a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_enumeration_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_integer_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
+		a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_real_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_REAL_REF":
+		a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_string_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_STRING_REF":
+		a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_definition_xhtml_ref.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_XHTML_REF":
+		a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_boolean.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN = make([]*ATTRIBUTE_VALUE_BOOLEAN, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_BOOLEANs {
+					if stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN = append(a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_date.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_DATE":
+		a_attribute_value_date.ATTRIBUTE_VALUE_DATE = make([]*ATTRIBUTE_VALUE_DATE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_DATEs {
+					if stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_date.ATTRIBUTE_VALUE_DATE = append(a_attribute_value_date.ATTRIBUTE_VALUE_DATE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_enumeration.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION = make([]*ATTRIBUTE_VALUE_ENUMERATION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
+					if stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION = append(a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_integer.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_INTEGER":
+		a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER = make([]*ATTRIBUTE_VALUE_INTEGER, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_INTEGERs {
+					if stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER = append(a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_real.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_REAL":
+		a_attribute_value_real.ATTRIBUTE_VALUE_REAL = make([]*ATTRIBUTE_VALUE_REAL, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_REALs {
+					if stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_real.ATTRIBUTE_VALUE_REAL = append(a_attribute_value_real.ATTRIBUTE_VALUE_REAL, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_string.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_STRING":
+		a_attribute_value_string.ATTRIBUTE_VALUE_STRING = make([]*ATTRIBUTE_VALUE_STRING, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_STRINGs {
+					if stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_string.ATTRIBUTE_VALUE_STRING = append(a_attribute_value_string.ATTRIBUTE_VALUE_STRING, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_xhtml.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_XHTML":
+		a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML = make([]*ATTRIBUTE_VALUE_XHTML, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_XHTMLs {
+					if stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML = append(a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_attribute_value_xhtml_1.Name = value.GetValueString()
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN = make([]*ATTRIBUTE_VALUE_BOOLEAN, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_BOOLEANs {
+					if stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_VALUE_DATE":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE = make([]*ATTRIBUTE_VALUE_DATE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_DATEs {
+					if stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION = make([]*ATTRIBUTE_VALUE_ENUMERATION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
+					if stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_VALUE_INTEGER":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER = make([]*ATTRIBUTE_VALUE_INTEGER, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_INTEGERs {
+					if stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_VALUE_REAL":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL = make([]*ATTRIBUTE_VALUE_REAL, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_REALs {
+					if stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_VALUE_STRING":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING = make([]*ATTRIBUTE_VALUE_STRING, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_STRINGs {
+					if stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_VALUE_XHTML":
+		a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML = make([]*ATTRIBUTE_VALUE_XHTML, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_VALUE_XHTMLs {
+					if stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[__instance__] == uint(id) {
+						a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML = append(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_children *A_CHILDREN) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_children.Name = value.GetValueString()
+	case "SPEC_HIERARCHY":
+		a_children.SPEC_HIERARCHY = make([]*SPEC_HIERARCHY, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPEC_HIERARCHYs {
+					if stage.SPEC_HIERARCHYMap_Staged_Order[__instance__] == uint(id) {
+						a_children.SPEC_HIERARCHY = append(a_children.SPEC_HIERARCHY, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_core_content *A_CORE_CONTENT) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_core_content.Name = value.GetValueString()
+	case "REQ_IF_CONTENT":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			a_core_content.REQ_IF_CONTENT = nil
+			for __instance__ := range stage.REQ_IF_CONTENTs {
+				if stage.REQ_IF_CONTENTMap_Staged_Order[__instance__] == uint(id) {
+					a_core_content.REQ_IF_CONTENT = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatypes *A_DATATYPES) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatypes.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_BOOLEAN":
+		a_datatypes.DATATYPE_DEFINITION_BOOLEAN = make([]*DATATYPE_DEFINITION_BOOLEAN, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_BOOLEANs {
+					if stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_BOOLEAN = append(a_datatypes.DATATYPE_DEFINITION_BOOLEAN, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "DATATYPE_DEFINITION_DATE":
+		a_datatypes.DATATYPE_DEFINITION_DATE = make([]*DATATYPE_DEFINITION_DATE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_DATEs {
+					if stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_DATE = append(a_datatypes.DATATYPE_DEFINITION_DATE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "DATATYPE_DEFINITION_ENUMERATION":
+		a_datatypes.DATATYPE_DEFINITION_ENUMERATION = make([]*DATATYPE_DEFINITION_ENUMERATION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
+					if stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_ENUMERATION = append(a_datatypes.DATATYPE_DEFINITION_ENUMERATION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "DATATYPE_DEFINITION_INTEGER":
+		a_datatypes.DATATYPE_DEFINITION_INTEGER = make([]*DATATYPE_DEFINITION_INTEGER, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_INTEGERs {
+					if stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_INTEGER = append(a_datatypes.DATATYPE_DEFINITION_INTEGER, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "DATATYPE_DEFINITION_REAL":
+		a_datatypes.DATATYPE_DEFINITION_REAL = make([]*DATATYPE_DEFINITION_REAL, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_REALs {
+					if stage.DATATYPE_DEFINITION_REALMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_REAL = append(a_datatypes.DATATYPE_DEFINITION_REAL, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "DATATYPE_DEFINITION_STRING":
+		a_datatypes.DATATYPE_DEFINITION_STRING = make([]*DATATYPE_DEFINITION_STRING, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_STRINGs {
+					if stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_STRING = append(a_datatypes.DATATYPE_DEFINITION_STRING, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "DATATYPE_DEFINITION_XHTML":
+		a_datatypes.DATATYPE_DEFINITION_XHTML = make([]*DATATYPE_DEFINITION_XHTML, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.DATATYPE_DEFINITION_XHTMLs {
+					if stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[__instance__] == uint(id) {
+						a_datatypes.DATATYPE_DEFINITION_XHTML = append(a_datatypes.DATATYPE_DEFINITION_XHTML, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_boolean_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_BOOLEAN_REF":
+		a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_date_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_DATE_REF":
+		a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_enumeration_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_ENUMERATION_REF":
+		a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_integer_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_INTEGER_REF":
+		a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_real_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_REAL_REF":
+		a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_string_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_STRING_REF":
+		a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_datatype_definition_xhtml_ref.Name = value.GetValueString()
+	case "DATATYPE_DEFINITION_XHTML_REF":
+		a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_editable_atts *A_EDITABLE_ATTS) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_editable_atts.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_DATE_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_REAL_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_STRING_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_XHTML_REF":
+		a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_enum_value_ref.Name = value.GetValueString()
+	case "ENUM_VALUE_REF":
+		a_enum_value_ref.ENUM_VALUE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_object *A_OBJECT) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_object.Name = value.GetValueString()
+	case "SPEC_OBJECT_REF":
+		a_object.SPEC_OBJECT_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_properties *A_PROPERTIES) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_properties.Name = value.GetValueString()
+	case "EMBEDDED_VALUE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			a_properties.EMBEDDED_VALUE = nil
+			for __instance__ := range stage.EMBEDDED_VALUEs {
+				if stage.EMBEDDED_VALUEMap_Staged_Order[__instance__] == uint(id) {
+					a_properties.EMBEDDED_VALUE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_relation_group_type_ref.Name = value.GetValueString()
+	case "RELATION_GROUP_TYPE_REF":
+		a_relation_group_type_ref.RELATION_GROUP_TYPE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_source_1 *A_SOURCE_1) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_source_1.Name = value.GetValueString()
+	case "SPEC_OBJECT_REF":
+		a_source_1.SPEC_OBJECT_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_source_specification_1.Name = value.GetValueString()
+	case "SPECIFICATION_REF":
+		a_source_specification_1.SPECIFICATION_REF.FromCodeString(value.GetValueString())
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_specifications *A_SPECIFICATIONS) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_specifications.Name = value.GetValueString()
+	case "SPECIFICATION":
+		a_specifications.SPECIFICATION = make([]*SPECIFICATION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPECIFICATIONs {
+					if stage.SPECIFICATIONMap_Staged_Order[__instance__] == uint(id) {
+						a_specifications.SPECIFICATION = append(a_specifications.SPECIFICATION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_specification_type_ref.Name = value.GetValueString()
+	case "SPECIFICATION_TYPE_REF":
+		a_specification_type_ref.SPECIFICATION_TYPE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_specified_values *A_SPECIFIED_VALUES) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_specified_values.Name = value.GetValueString()
+	case "ENUM_VALUE":
+		a_specified_values.ENUM_VALUE = make([]*ENUM_VALUE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ENUM_VALUEs {
+					if stage.ENUM_VALUEMap_Staged_Order[__instance__] == uint(id) {
+						a_specified_values.ENUM_VALUE = append(a_specified_values.ENUM_VALUE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_attributes.Name = value.GetValueString()
+	case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN = make([]*ATTRIBUTE_DEFINITION_BOOLEAN, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
+					if stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN = append(a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_DEFINITION_DATE":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_DATE = make([]*ATTRIBUTE_DEFINITION_DATE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_DATEs {
+					if stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_DATE = append(a_spec_attributes.ATTRIBUTE_DEFINITION_DATE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION = make([]*ATTRIBUTE_DEFINITION_ENUMERATION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
+					if stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION = append(a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_DEFINITION_INTEGER":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER = make([]*ATTRIBUTE_DEFINITION_INTEGER, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
+					if stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER = append(a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_DEFINITION_REAL":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_REAL = make([]*ATTRIBUTE_DEFINITION_REAL, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_REALs {
+					if stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_REAL = append(a_spec_attributes.ATTRIBUTE_DEFINITION_REAL, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_DEFINITION_STRING":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_STRING = make([]*ATTRIBUTE_DEFINITION_STRING, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_STRINGs {
+					if stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_STRING = append(a_spec_attributes.ATTRIBUTE_DEFINITION_STRING, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ATTRIBUTE_DEFINITION_XHTML":
+		a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML = make([]*ATTRIBUTE_DEFINITION_XHTML, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
+					if stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML = append(a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_objects *A_SPEC_OBJECTS) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_objects.Name = value.GetValueString()
+	case "SPEC_OBJECT":
+		a_spec_objects.SPEC_OBJECT = make([]*SPEC_OBJECT, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPEC_OBJECTs {
+					if stage.SPEC_OBJECTMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_objects.SPEC_OBJECT = append(a_spec_objects.SPEC_OBJECT, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_object_type_ref.Name = value.GetValueString()
+	case "SPEC_OBJECT_TYPE_REF":
+		a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_relations *A_SPEC_RELATIONS) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_relations.Name = value.GetValueString()
+	case "SPEC_RELATION":
+		a_spec_relations.SPEC_RELATION = make([]*SPEC_RELATION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPEC_RELATIONs {
+					if stage.SPEC_RELATIONMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_relations.SPEC_RELATION = append(a_spec_relations.SPEC_RELATION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_relation_groups.Name = value.GetValueString()
+	case "RELATION_GROUP":
+		a_spec_relation_groups.RELATION_GROUP = make([]*RELATION_GROUP, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.RELATION_GROUPs {
+					if stage.RELATION_GROUPMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_relation_groups.RELATION_GROUP = append(a_spec_relation_groups.RELATION_GROUP, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_relation_ref.Name = value.GetValueString()
+	case "SPEC_RELATION_REF":
+		a_spec_relation_ref.SPEC_RELATION_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_relation_type_ref.Name = value.GetValueString()
+	case "SPEC_RELATION_TYPE_REF":
+		a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_spec_types *A_SPEC_TYPES) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_spec_types.Name = value.GetValueString()
+	case "RELATION_GROUP_TYPE":
+		a_spec_types.RELATION_GROUP_TYPE = make([]*RELATION_GROUP_TYPE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.RELATION_GROUP_TYPEs {
+					if stage.RELATION_GROUP_TYPEMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_types.RELATION_GROUP_TYPE = append(a_spec_types.RELATION_GROUP_TYPE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "SPEC_OBJECT_TYPE":
+		a_spec_types.SPEC_OBJECT_TYPE = make([]*SPEC_OBJECT_TYPE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPEC_OBJECT_TYPEs {
+					if stage.SPEC_OBJECT_TYPEMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_types.SPEC_OBJECT_TYPE = append(a_spec_types.SPEC_OBJECT_TYPE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "SPEC_RELATION_TYPE":
+		a_spec_types.SPEC_RELATION_TYPE = make([]*SPEC_RELATION_TYPE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPEC_RELATION_TYPEs {
+					if stage.SPEC_RELATION_TYPEMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_types.SPEC_RELATION_TYPE = append(a_spec_types.SPEC_RELATION_TYPE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "SPECIFICATION_TYPE":
+		a_spec_types.SPECIFICATION_TYPE = make([]*SPECIFICATION_TYPE, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.SPECIFICATION_TYPEs {
+					if stage.SPECIFICATION_TYPEMap_Staged_Order[__instance__] == uint(id) {
+						a_spec_types.SPECIFICATION_TYPE = append(a_spec_types.SPECIFICATION_TYPE, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_the_header *A_THE_HEADER) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_the_header.Name = value.GetValueString()
+	case "REQ_IF_HEADER":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			a_the_header.REQ_IF_HEADER = nil
+			for __instance__ := range stage.REQ_IF_HEADERs {
+				if stage.REQ_IF_HEADERMap_Staged_Order[__instance__] == uint(id) {
+					a_the_header.REQ_IF_HEADER = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		a_tool_extensions.Name = value.GetValueString()
+	case "REQ_IF_TOOL_EXTENSION":
+		a_tool_extensions.REQ_IF_TOOL_EXTENSION = make([]*REQ_IF_TOOL_EXTENSION, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.REQ_IF_TOOL_EXTENSIONs {
+					if stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[__instance__] == uint(id) {
+						a_tool_extensions.REQ_IF_TOOL_EXTENSION = append(a_tool_extensions.REQ_IF_TOOL_EXTENSION, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_boolean.Name = value.GetValueString()
+	case "DESC":
+		datatype_definition_boolean.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_boolean.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_boolean.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_boolean.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_boolean.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_boolean.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_date.Name = value.GetValueString()
+	case "DESC":
+		datatype_definition_date.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_date.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_date.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_date.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_date.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_date.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_enumeration.Name = value.GetValueString()
+	case "DESC":
+		datatype_definition_enumeration.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_enumeration.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_enumeration.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_enumeration.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_enumeration.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_enumeration.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "SPECIFIED_VALUES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_enumeration.SPECIFIED_VALUES = nil
+			for __instance__ := range stage.A_SPECIFIED_VALUESs {
+				if stage.A_SPECIFIED_VALUESMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_enumeration.SPECIFIED_VALUES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_integer.Name = value.GetValueString()
+	case "DESC":
+		datatype_definition_integer.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_integer.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_integer.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_integer.LONG_NAME = value.GetValueString()
+	case "MAX":
+		datatype_definition_integer.MAX = int(value.GetValueInt())
+	case "MIN":
+		datatype_definition_integer.MIN = int(value.GetValueInt())
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_integer.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_integer.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_real.Name = value.GetValueString()
+	case "ACCURACY":
+		datatype_definition_real.ACCURACY = int(value.GetValueInt())
+	case "DESC":
+		datatype_definition_real.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_real.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_real.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_real.LONG_NAME = value.GetValueString()
+	case "MAX":
+		datatype_definition_real.MAX = value.GetValueFloat()
+	case "MIN":
+		datatype_definition_real.MIN = value.GetValueFloat()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_real.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_real.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_string.Name = value.GetValueString()
+	case "DESC":
+		datatype_definition_string.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_string.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_string.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_string.LONG_NAME = value.GetValueString()
+	case "MAX_LENGTH":
+		datatype_definition_string.MAX_LENGTH = int(value.GetValueInt())
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_string.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_string.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		datatype_definition_xhtml.Name = value.GetValueString()
+	case "DESC":
+		datatype_definition_xhtml.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		datatype_definition_xhtml.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		datatype_definition_xhtml.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		datatype_definition_xhtml.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			datatype_definition_xhtml.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					datatype_definition_xhtml.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (embedded_value *EMBEDDED_VALUE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		embedded_value.Name = value.GetValueString()
+	case "KEY":
+		embedded_value.KEY = int(value.GetValueInt())
+	case "OTHER_CONTENT":
+		embedded_value.OTHER_CONTENT = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (enum_value *ENUM_VALUE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		enum_value.Name = value.GetValueString()
+	case "DESC":
+		enum_value.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		enum_value.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		enum_value.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		enum_value.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			enum_value.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					enum_value.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "PROPERTIES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			enum_value.PROPERTIES = nil
+			for __instance__ := range stage.A_PROPERTIESs {
+				if stage.A_PROPERTIESMap_Staged_Order[__instance__] == uint(id) {
+					enum_value.PROPERTIES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (embeddedjpgimage *EmbeddedJpgImage) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		embeddedjpgimage.Name = value.GetValueString()
+	case "Base64Content":
+		embeddedjpgimage.Base64Content = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (embeddedpngimage *EmbeddedPngImage) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		embeddedpngimage.Name = value.GetValueString()
+	case "Base64Content":
+		embeddedpngimage.Base64Content = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		embeddedsvgimage.Name = value.GetValueString()
+	case "Content":
+		embeddedsvgimage.Content = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (kill *Kill) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		kill.Name = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_boolean_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_boolean_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_boolean_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_boolean_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_boolean_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_boolean_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_date_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_date_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_date_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_date_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_date_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_date_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_enumeration_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_enumeration_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_enumeration_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_enumeration_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_enumeration_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_enumeration_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_integer_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_integer_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_integer_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_integer_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_integer_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_integer_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_real_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_real_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_real_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_real_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_real_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_real_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_string_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_string_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_string_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_string_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_string_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_string_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_xhtml_showinsubjectentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_xhtml_showinsubjectentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_xhtml_showintableentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_xhtml_showintableentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_attribute_definition_xhtml_showintitleentry.Name = value.GetValueString()
+	case "Value":
+		map_attribute_definition_xhtml_showintitleentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_specification_nodes_expandedentry.Name = value.GetValueString()
+	case "Value":
+		map_specification_nodes_expandedentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_spec_object_type_isnodeexpandedentry.Name = value.GetValueString()
+	case "Value":
+		map_spec_object_type_isnodeexpandedentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_spec_object_type_showidentifierentry.Name = value.GetValueString()
+	case "Value":
+		map_spec_object_type_showidentifierentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_spec_object_type_shownameentry.Name = value.GetValueString()
+	case "Value":
+		map_spec_object_type_shownameentry.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (relation_group *RELATION_GROUP) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		relation_group.Name = value.GetValueString()
+	case "DESC":
+		relation_group.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		relation_group.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		relation_group.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		relation_group.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					relation_group.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "SOURCE_SPECIFICATION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group.SOURCE_SPECIFICATION = nil
+			for __instance__ := range stage.A_SOURCE_SPECIFICATION_1s {
+				if stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[__instance__] == uint(id) {
+					relation_group.SOURCE_SPECIFICATION = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_RELATIONS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group.SPEC_RELATIONS = nil
+			for __instance__ := range stage.A_SPEC_RELATION_REFs {
+				if stage.A_SPEC_RELATION_REFMap_Staged_Order[__instance__] == uint(id) {
+					relation_group.SPEC_RELATIONS = __instance__
+					break
+				}
+			}
+		}
+	case "TARGET_SPECIFICATION":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group.TARGET_SPECIFICATION = nil
+			for __instance__ := range stage.A_SOURCE_SPECIFICATION_1s {
+				if stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[__instance__] == uint(id) {
+					relation_group.TARGET_SPECIFICATION = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group.TYPE = nil
+			for __instance__ := range stage.A_RELATION_GROUP_TYPE_REFs {
+				if stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[__instance__] == uint(id) {
+					relation_group.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (relation_group_type *RELATION_GROUP_TYPE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		relation_group_type.Name = value.GetValueString()
+	case "DESC":
+		relation_group_type.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		relation_group_type.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		relation_group_type.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		relation_group_type.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group_type.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					relation_group_type.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_ATTRIBUTES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			relation_group_type.SPEC_ATTRIBUTES = nil
+			for __instance__ := range stage.A_SPEC_ATTRIBUTESs {
+				if stage.A_SPEC_ATTRIBUTESMap_Staged_Order[__instance__] == uint(id) {
+					relation_group_type.SPEC_ATTRIBUTES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (req_if *REQ_IF) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		req_if.Name = value.GetValueString()
+	case "Lang":
+		req_if.Lang = value.GetValueString()
+	case "THE_HEADER":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if.THE_HEADER = nil
+			for __instance__ := range stage.A_THE_HEADERs {
+				if stage.A_THE_HEADERMap_Staged_Order[__instance__] == uint(id) {
+					req_if.THE_HEADER = __instance__
+					break
+				}
+			}
+		}
+	case "CORE_CONTENT":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if.CORE_CONTENT = nil
+			for __instance__ := range stage.A_CORE_CONTENTs {
+				if stage.A_CORE_CONTENTMap_Staged_Order[__instance__] == uint(id) {
+					req_if.CORE_CONTENT = __instance__
+					break
+				}
+			}
+		}
+	case "TOOL_EXTENSIONS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if.TOOL_EXTENSIONS = nil
+			for __instance__ := range stage.A_TOOL_EXTENSIONSs {
+				if stage.A_TOOL_EXTENSIONSMap_Staged_Order[__instance__] == uint(id) {
+					req_if.TOOL_EXTENSIONS = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (req_if_content *REQ_IF_CONTENT) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		req_if_content.Name = value.GetValueString()
+	case "DATATYPES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if_content.DATATYPES = nil
+			for __instance__ := range stage.A_DATATYPESs {
+				if stage.A_DATATYPESMap_Staged_Order[__instance__] == uint(id) {
+					req_if_content.DATATYPES = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_TYPES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if_content.SPEC_TYPES = nil
+			for __instance__ := range stage.A_SPEC_TYPESs {
+				if stage.A_SPEC_TYPESMap_Staged_Order[__instance__] == uint(id) {
+					req_if_content.SPEC_TYPES = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_OBJECTS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if_content.SPEC_OBJECTS = nil
+			for __instance__ := range stage.A_SPEC_OBJECTSs {
+				if stage.A_SPEC_OBJECTSMap_Staged_Order[__instance__] == uint(id) {
+					req_if_content.SPEC_OBJECTS = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_RELATIONS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if_content.SPEC_RELATIONS = nil
+			for __instance__ := range stage.A_SPEC_RELATIONSs {
+				if stage.A_SPEC_RELATIONSMap_Staged_Order[__instance__] == uint(id) {
+					req_if_content.SPEC_RELATIONS = __instance__
+					break
+				}
+			}
+		}
+	case "SPECIFICATIONS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if_content.SPECIFICATIONS = nil
+			for __instance__ := range stage.A_SPECIFICATIONSs {
+				if stage.A_SPECIFICATIONSMap_Staged_Order[__instance__] == uint(id) {
+					req_if_content.SPECIFICATIONS = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_RELATION_GROUPS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			req_if_content.SPEC_RELATION_GROUPS = nil
+			for __instance__ := range stage.A_SPEC_RELATION_GROUPSs {
+				if stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[__instance__] == uint(id) {
+					req_if_content.SPEC_RELATION_GROUPS = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (req_if_header *REQ_IF_HEADER) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		req_if_header.Name = value.GetValueString()
+	case "IDENTIFIER":
+		req_if_header.IDENTIFIER = value.GetValueString()
+	case "COMMENT":
+		req_if_header.COMMENT = value.GetValueString()
+	case "CREATION_TIME":
+		req_if_header.CREATION_TIME = value.GetValueString()
+	case "REPOSITORY_ID":
+		req_if_header.REPOSITORY_ID = value.GetValueString()
+	case "REQ_IF_TOOL_ID":
+		req_if_header.REQ_IF_TOOL_ID = value.GetValueString()
+	case "REQ_IF_VERSION":
+		req_if_header.REQ_IF_VERSION = value.GetValueString()
+	case "SOURCE_TOOL_ID":
+		req_if_header.SOURCE_TOOL_ID = value.GetValueString()
+	case "TITLE":
+		req_if_header.TITLE = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		req_if_tool_extension.Name = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (renderingconfiguration *RenderingConfiguration) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		renderingconfiguration.Name = value.GetValueString()
+	case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
+		renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = make([]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys {
+					if stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = make([]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = make([]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
+		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = make([]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys {
+					if stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_SPECIFICATION_Nodes_expandedEntries":
+		renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = make([]*Map_SPECIFICATION_Nodes_expandedEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_SPECIFICATION_Nodes_expandedEntrys {
+					if stage.Map_SPECIFICATION_Nodes_expandedEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = append(renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
+		renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = make([]*Map_SPEC_OBJECT_TYPE_showIdentifierEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys {
+					if stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_SPEC_OBJECT_TYPE_showNameEntries":
+		renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = make([]*Map_SPEC_OBJECT_TYPE_showNameEntry, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_SPEC_OBJECT_TYPE_showNameEntrys {
+					if stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "ShowSpecHierachyIdentifiers":
+		renderingconfiguration.ShowSpecHierachyIdentifiers = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (specification *SPECIFICATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		specification.Name = value.GetValueString()
+	case "DESC":
+		specification.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		specification.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		specification.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		specification.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			specification.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					specification.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			specification.TYPE = nil
+			for __instance__ := range stage.A_SPECIFICATION_TYPE_REFs {
+				if stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[__instance__] == uint(id) {
+					specification.TYPE = __instance__
+					break
+				}
+			}
+		}
+	case "CHILDREN":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			specification.CHILDREN = nil
+			for __instance__ := range stage.A_CHILDRENs {
+				if stage.A_CHILDRENMap_Staged_Order[__instance__] == uint(id) {
+					specification.CHILDREN = __instance__
+					break
+				}
+			}
+		}
+	case "VALUES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			specification.VALUES = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
+				if stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[__instance__] == uint(id) {
+					specification.VALUES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (specification_type *SPECIFICATION_TYPE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		specification_type.Name = value.GetValueString()
+	case "DESC":
+		specification_type.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		specification_type.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		specification_type.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		specification_type.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			specification_type.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					specification_type.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_ATTRIBUTES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			specification_type.SPEC_ATTRIBUTES = nil
+			for __instance__ := range stage.A_SPEC_ATTRIBUTESs {
+				if stage.A_SPEC_ATTRIBUTESMap_Staged_Order[__instance__] == uint(id) {
+					specification_type.SPEC_ATTRIBUTES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (spec_hierarchy *SPEC_HIERARCHY) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		spec_hierarchy.Name = value.GetValueString()
+	case "DESC":
+		spec_hierarchy.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		spec_hierarchy.IDENTIFIER = value.GetValueString()
+	case "IS_EDITABLE":
+		spec_hierarchy.IS_EDITABLE = value.GetValueBool()
+	case "IS_TABLE_INTERNAL":
+		spec_hierarchy.IS_TABLE_INTERNAL = value.GetValueBool()
+	case "LAST_CHANGE":
+		spec_hierarchy.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		spec_hierarchy.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_hierarchy.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					spec_hierarchy.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "OBJECT":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_hierarchy.OBJECT = nil
+			for __instance__ := range stage.A_OBJECTs {
+				if stage.A_OBJECTMap_Staged_Order[__instance__] == uint(id) {
+					spec_hierarchy.OBJECT = __instance__
+					break
+				}
+			}
+		}
+	case "CHILDREN":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_hierarchy.CHILDREN = nil
+			for __instance__ := range stage.A_CHILDRENs {
+				if stage.A_CHILDRENMap_Staged_Order[__instance__] == uint(id) {
+					spec_hierarchy.CHILDREN = __instance__
+					break
+				}
+			}
+		}
+	case "EDITABLE_ATTS":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_hierarchy.EDITABLE_ATTS = nil
+			for __instance__ := range stage.A_EDITABLE_ATTSs {
+				if stage.A_EDITABLE_ATTSMap_Staged_Order[__instance__] == uint(id) {
+					spec_hierarchy.EDITABLE_ATTS = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (spec_object *SPEC_OBJECT) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		spec_object.Name = value.GetValueString()
+	case "DESC":
+		spec_object.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		spec_object.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		spec_object.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		spec_object.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_object.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					spec_object.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "VALUES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_object.VALUES = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
+				if stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[__instance__] == uint(id) {
+					spec_object.VALUES = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_object.TYPE = nil
+			for __instance__ := range stage.A_SPEC_OBJECT_TYPE_REFs {
+				if stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[__instance__] == uint(id) {
+					spec_object.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (spec_object_type *SPEC_OBJECT_TYPE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		spec_object_type.Name = value.GetValueString()
+	case "DESC":
+		spec_object_type.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		spec_object_type.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		spec_object_type.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		spec_object_type.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_object_type.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					spec_object_type.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_ATTRIBUTES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_object_type.SPEC_ATTRIBUTES = nil
+			for __instance__ := range stage.A_SPEC_ATTRIBUTESs {
+				if stage.A_SPEC_ATTRIBUTESMap_Staged_Order[__instance__] == uint(id) {
+					spec_object_type.SPEC_ATTRIBUTES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (spec_relation *SPEC_RELATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		spec_relation.Name = value.GetValueString()
+	case "DESC":
+		spec_relation.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		spec_relation.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		spec_relation.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		spec_relation.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					spec_relation.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "VALUES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation.VALUES = nil
+			for __instance__ := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
+				if stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[__instance__] == uint(id) {
+					spec_relation.VALUES = __instance__
+					break
+				}
+			}
+		}
+	case "SOURCE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation.SOURCE = nil
+			for __instance__ := range stage.A_SOURCE_1s {
+				if stage.A_SOURCE_1Map_Staged_Order[__instance__] == uint(id) {
+					spec_relation.SOURCE = __instance__
+					break
+				}
+			}
+		}
+	case "TARGET":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation.TARGET = nil
+			for __instance__ := range stage.A_SOURCE_1s {
+				if stage.A_SOURCE_1Map_Staged_Order[__instance__] == uint(id) {
+					spec_relation.TARGET = __instance__
+					break
+				}
+			}
+		}
+	case "TYPE":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation.TYPE = nil
+			for __instance__ := range stage.A_SPEC_RELATION_TYPE_REFs {
+				if stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[__instance__] == uint(id) {
+					spec_relation.TYPE = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (spec_relation_type *SPEC_RELATION_TYPE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		spec_relation_type.Name = value.GetValueString()
+	case "DESC":
+		spec_relation_type.DESC = value.GetValueString()
+	case "IDENTIFIER":
+		spec_relation_type.IDENTIFIER = value.GetValueString()
+	case "LAST_CHANGE":
+		spec_relation_type.LAST_CHANGE = value.GetValueString()
+	case "LONG_NAME":
+		spec_relation_type.LONG_NAME = value.GetValueString()
+	case "ALTERNATIVE_ID":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation_type.ALTERNATIVE_ID = nil
+			for __instance__ := range stage.A_ALTERNATIVE_IDs {
+				if stage.A_ALTERNATIVE_IDMap_Staged_Order[__instance__] == uint(id) {
+					spec_relation_type.ALTERNATIVE_ID = __instance__
+					break
+				}
+			}
+		}
+	case "SPEC_ATTRIBUTES":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			spec_relation_type.SPEC_ATTRIBUTES = nil
+			for __instance__ := range stage.A_SPEC_ATTRIBUTESs {
+				if stage.A_SPEC_ATTRIBUTESMap_Staged_Order[__instance__] == uint(id) {
+					spec_relation_type.SPEC_ATTRIBUTES = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (staticwebsite *StaticWebSite) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		staticwebsite.Name = value.GetValueString()
+	case "MarkdownContent":
+		staticwebsite.MarkdownContent = value.GetValueString()
+	case "Chapters":
+		staticwebsite.Chapters = make([]*StaticWebSiteChapter, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.StaticWebSiteChapters {
+					if stage.StaticWebSiteChapterMap_Staged_Order[__instance__] == uint(id) {
+						staticwebsite.Chapters = append(staticwebsite.Chapters, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "InputImagesDir":
+		staticwebsite.InputImagesDir = value.GetValueString()
+	case "OutputStaticWebDir":
+		staticwebsite.OutputStaticWebDir = value.GetValueString()
+	case "VersionInfo":
+		staticwebsite.VersionInfo = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (staticwebsitechapter *StaticWebSiteChapter) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		staticwebsitechapter.Name = value.GetValueString()
+	case "MarkdownContent":
+		staticwebsitechapter.MarkdownContent = value.GetValueString()
+	case "Paragraphs":
+		staticwebsitechapter.Paragraphs = make([]*StaticWebSiteParagraph, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.StaticWebSiteParagraphs {
+					if stage.StaticWebSiteParagraphMap_Staged_Order[__instance__] == uint(id) {
+						staticwebsitechapter.Paragraphs = append(staticwebsitechapter.Paragraphs, __instance__)
+						break
+					}
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		staticwebsitegeneratedimage.Name = value.GetValueString()
+	case "SourceDirectoryPath":
+		staticwebsitegeneratedimage.SourceDirectoryPath = value.GetValueString()
+	case "Width":
+		staticwebsitegeneratedimage.Width = int(value.GetValueInt())
+	case "Height":
+		staticwebsitegeneratedimage.Height = int(value.GetValueInt())
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (staticwebsiteimage *StaticWebSiteImage) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		staticwebsiteimage.Name = value.GetValueString()
+	case "SourceDirectoryPath":
+		staticwebsiteimage.SourceDirectoryPath = value.GetValueString()
+	case "Width":
+		staticwebsiteimage.Width = int(value.GetValueInt())
+	case "Height":
+		staticwebsiteimage.Height = int(value.GetValueInt())
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		staticwebsiteparagraph.Name = value.GetValueString()
+	case "LegendMarkdownContent":
+		staticwebsiteparagraph.LegendMarkdownContent = value.GetValueString()
+	case "Image":
+		var id int
+		if _, err := fmt.Sscanf(value.ids, "%d", &id); err == nil {
+			staticwebsiteparagraph.Image = nil
+			for __instance__ := range stage.StaticWebSiteImages {
+				if stage.StaticWebSiteImageMap_Staged_Order[__instance__] == uint(id) {
+					staticwebsiteparagraph.Image = __instance__
+					break
+				}
+			}
+		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (xhtml_content *XHTML_CONTENT) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		xhtml_content.Name = value.GetValueString()
+	case "EnclosedText":
+		xhtml_content.EnclosedText = value.GetValueString()
+	case "PureText":
+		xhtml_content.PureText = value.GetValueString()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+
+func SetFieldStringValueFromPointer(instance GongstructIF, fieldName string, value GongFieldValue, stage *Stage) error {
+	return instance.GongSetFieldValue(fieldName, value, stage)
+}
+
+// insertion point for generic get gongstruct name
+func (alternative_id *ALTERNATIVE_ID) GongGetGongstructName() string {
+	return "ALTERNATIVE_ID"
+}
+
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_BOOLEAN"
+}
+
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_DATE"
+}
+
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_ENUMERATION"
+}
+
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_INTEGER"
+}
+
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_REAL"
+}
+
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_STRING"
+}
+
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_XHTML"
+}
+
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_BOOLEAN"
+}
+
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_DATE"
+}
+
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_ENUMERATION"
+}
+
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_INTEGER"
+}
+
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_REAL"
+}
+
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_STRING"
+}
+
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetGongstructName() string {
+	return "ATTRIBUTE_VALUE_XHTML"
+}
+
+func (a_alternative_id *A_ALTERNATIVE_ID) GongGetGongstructName() string {
+	return "A_ALTERNATIVE_ID"
+}
+
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF"
+}
+
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_DATE_REF"
+}
+
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF"
+}
+
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_INTEGER_REF"
+}
+
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_REAL_REF"
+}
+
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_STRING_REF"
+}
+
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_DEFINITION_XHTML_REF"
+}
+
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_BOOLEAN"
+}
+
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_DATE"
+}
+
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_ENUMERATION"
+}
+
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_INTEGER"
+}
+
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_REAL"
+}
+
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_STRING"
+}
+
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_XHTML"
+}
+
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetGongstructName() string {
+	return "A_ATTRIBUTE_VALUE_XHTML_1"
+}
+
+func (a_children *A_CHILDREN) GongGetGongstructName() string {
+	return "A_CHILDREN"
+}
+
+func (a_core_content *A_CORE_CONTENT) GongGetGongstructName() string {
+	return "A_CORE_CONTENT"
+}
+
+func (a_datatypes *A_DATATYPES) GongGetGongstructName() string {
+	return "A_DATATYPES"
+}
+
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_BOOLEAN_REF"
+}
+
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_DATE_REF"
+}
+
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_ENUMERATION_REF"
+}
+
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_INTEGER_REF"
+}
+
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_REAL_REF"
+}
+
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_STRING_REF"
+}
+
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetGongstructName() string {
+	return "A_DATATYPE_DEFINITION_XHTML_REF"
+}
+
+func (a_editable_atts *A_EDITABLE_ATTS) GongGetGongstructName() string {
+	return "A_EDITABLE_ATTS"
+}
+
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetGongstructName() string {
+	return "A_ENUM_VALUE_REF"
+}
+
+func (a_object *A_OBJECT) GongGetGongstructName() string {
+	return "A_OBJECT"
+}
+
+func (a_properties *A_PROPERTIES) GongGetGongstructName() string {
+	return "A_PROPERTIES"
+}
+
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetGongstructName() string {
+	return "A_RELATION_GROUP_TYPE_REF"
+}
+
+func (a_source_1 *A_SOURCE_1) GongGetGongstructName() string {
+	return "A_SOURCE_1"
+}
+
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetGongstructName() string {
+	return "A_SOURCE_SPECIFICATION_1"
+}
+
+func (a_specifications *A_SPECIFICATIONS) GongGetGongstructName() string {
+	return "A_SPECIFICATIONS"
+}
+
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetGongstructName() string {
+	return "A_SPECIFICATION_TYPE_REF"
+}
+
+func (a_specified_values *A_SPECIFIED_VALUES) GongGetGongstructName() string {
+	return "A_SPECIFIED_VALUES"
+}
+
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetGongstructName() string {
+	return "A_SPEC_ATTRIBUTES"
+}
+
+func (a_spec_objects *A_SPEC_OBJECTS) GongGetGongstructName() string {
+	return "A_SPEC_OBJECTS"
+}
+
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetGongstructName() string {
+	return "A_SPEC_OBJECT_TYPE_REF"
+}
+
+func (a_spec_relations *A_SPEC_RELATIONS) GongGetGongstructName() string {
+	return "A_SPEC_RELATIONS"
+}
+
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetGongstructName() string {
+	return "A_SPEC_RELATION_GROUPS"
+}
+
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetGongstructName() string {
+	return "A_SPEC_RELATION_REF"
+}
+
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetGongstructName() string {
+	return "A_SPEC_RELATION_TYPE_REF"
+}
+
+func (a_spec_types *A_SPEC_TYPES) GongGetGongstructName() string {
+	return "A_SPEC_TYPES"
+}
+
+func (a_the_header *A_THE_HEADER) GongGetGongstructName() string {
+	return "A_THE_HEADER"
+}
+
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetGongstructName() string {
+	return "A_TOOL_EXTENSIONS"
+}
+
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_BOOLEAN"
+}
+
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_DATE"
+}
+
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_ENUMERATION"
+}
+
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_INTEGER"
+}
+
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_REAL"
+}
+
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_STRING"
+}
+
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetGongstructName() string {
+	return "DATATYPE_DEFINITION_XHTML"
+}
+
+func (embedded_value *EMBEDDED_VALUE) GongGetGongstructName() string {
+	return "EMBEDDED_VALUE"
+}
+
+func (enum_value *ENUM_VALUE) GongGetGongstructName() string {
+	return "ENUM_VALUE"
+}
+
+func (embeddedjpgimage *EmbeddedJpgImage) GongGetGongstructName() string {
+	return "EmbeddedJpgImage"
+}
+
+func (embeddedpngimage *EmbeddedPngImage) GongGetGongstructName() string {
+	return "EmbeddedPngImage"
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) GongGetGongstructName() string {
+	return "EmbeddedSvgImage"
+}
+
+func (kill *Kill) GongGetGongstructName() string {
+	return "Kill"
+}
+
+func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry"
+}
+
+func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry"
+}
+
+func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry"
+}
+
+func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry"
+}
+
+func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry"
+}
+
+func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry"
+}
+
+func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry"
+}
+
+func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry"
+}
+
+func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry"
+}
+
+func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry"
+}
+
+func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry"
+}
+
+func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry"
+}
+
+func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry"
+}
+
+func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry"
+}
+
+func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) GongGetGongstructName() string {
+	return "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry"
+}
+
+func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) GongGetGongstructName() string {
+	return "Map_SPECIFICATION_Nodes_expandedEntry"
+}
+
+func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetGongstructName() string {
+	return "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"
+}
+
+func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) GongGetGongstructName() string {
+	return "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"
+}
+
+func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetGongstructName() string {
+	return "Map_SPEC_OBJECT_TYPE_showNameEntry"
+}
+
+func (relation_group *RELATION_GROUP) GongGetGongstructName() string {
+	return "RELATION_GROUP"
+}
+
+func (relation_group_type *RELATION_GROUP_TYPE) GongGetGongstructName() string {
+	return "RELATION_GROUP_TYPE"
+}
+
+func (req_if *REQ_IF) GongGetGongstructName() string {
+	return "REQ_IF"
+}
+
+func (req_if_content *REQ_IF_CONTENT) GongGetGongstructName() string {
+	return "REQ_IF_CONTENT"
+}
+
+func (req_if_header *REQ_IF_HEADER) GongGetGongstructName() string {
+	return "REQ_IF_HEADER"
+}
+
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetGongstructName() string {
+	return "REQ_IF_TOOL_EXTENSION"
+}
+
+func (renderingconfiguration *RenderingConfiguration) GongGetGongstructName() string {
+	return "RenderingConfiguration"
+}
+
+func (specification *SPECIFICATION) GongGetGongstructName() string {
+	return "SPECIFICATION"
+}
+
+func (specification_type *SPECIFICATION_TYPE) GongGetGongstructName() string {
+	return "SPECIFICATION_TYPE"
+}
+
+func (spec_hierarchy *SPEC_HIERARCHY) GongGetGongstructName() string {
+	return "SPEC_HIERARCHY"
+}
+
+func (spec_object *SPEC_OBJECT) GongGetGongstructName() string {
+	return "SPEC_OBJECT"
+}
+
+func (spec_object_type *SPEC_OBJECT_TYPE) GongGetGongstructName() string {
+	return "SPEC_OBJECT_TYPE"
+}
+
+func (spec_relation *SPEC_RELATION) GongGetGongstructName() string {
+	return "SPEC_RELATION"
+}
+
+func (spec_relation_type *SPEC_RELATION_TYPE) GongGetGongstructName() string {
+	return "SPEC_RELATION_TYPE"
+}
+
+func (staticwebsite *StaticWebSite) GongGetGongstructName() string {
+	return "StaticWebSite"
+}
+
+func (staticwebsitechapter *StaticWebSiteChapter) GongGetGongstructName() string {
+	return "StaticWebSiteChapter"
+}
+
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetGongstructName() string {
+	return "StaticWebSiteGeneratedImage"
+}
+
+func (staticwebsiteimage *StaticWebSiteImage) GongGetGongstructName() string {
+	return "StaticWebSiteImage"
+}
+
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetGongstructName() string {
+	return "StaticWebSiteParagraph"
+}
+
+func (xhtml_content *XHTML_CONTENT) GongGetGongstructName() string {
+	return "XHTML_CONTENT"
+}
+
+
+func GetGongstructNameFromPointer(instance GongstructIF) (res string) {
+	res = instance.GongGetGongstructName()
 	return
 }
 
