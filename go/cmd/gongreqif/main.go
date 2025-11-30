@@ -25,11 +25,8 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/specrelations"
 	"github.com/fullstack-lang/gongreqif/go/spectypes"
 
+	gongreqif_level1stack "github.com/fullstack-lang/gongreqif/go/level1stack"
 	gongreqif_models "github.com/fullstack-lang/gongreqif/go/models"
-	gongreqif_stack "github.com/fullstack-lang/gongreqif/go/stack"
-
-	split_stack "github.com/fullstack-lang/gong/lib/split/go/stack"
-	split_static "github.com/fullstack-lang/gong/lib/split/go/static"
 )
 
 var (
@@ -81,20 +78,13 @@ func main() {
 		}
 	}
 
-	// setup the static file server and get the controller
-	r := split_static.ServeStaticFiles(*logGINFlag)
-
-	// the root split name is "" by convention. Is is the same for all gong applications
-	// that do not develop their specific angular component
-	splitStage := split_stack.NewStack(r, "", "", "", "", false, false).Stage
-
 	// setup model stack with its probe
-	stack := gongreqif_stack.NewStack(r, "reqif", *unmarshallFromCode, *marshallOnCommit, "", *embeddedDiagrams, true)
+	stack := gongreqif_level1stack.NewLevel1Stack("reqif", *unmarshallFromCode, *marshallOnCommit, true, *embeddedDiagrams)
 	stack.Probe.Refresh()
 
 	// insertion point for call to stager
-	stager := gongreqif_models.NewStager(r,
-		splitStage,
+	stager := gongreqif_models.NewStager(
+		stack.R,
 		stack.Stage,
 		*pathToReqifFile,
 		*pathToRenderingConf,
@@ -120,7 +110,7 @@ func main() {
 	}
 
 	log.Println("Server ready serve on localhost:" + strconv.Itoa(*port))
-	err := r.Run(":" + strconv.Itoa(*port))
+	err := stack.R.Run(":" + strconv.Itoa(*port))
 	if err != nil {
 		log.Fatalln(err.Error())
 	}

@@ -5253,6 +5253,13 @@ func (stage *Stage) Commit() {
 	stage.commitId++
 	stage.commitTimeStamp = time.Now()
 
+	if stage.OnInitCommitCallback != nil {
+		stage.OnInitCommitCallback.BeforeCommit(stage)
+	}
+	if stage.OnInitCommitFromBackCallback != nil {
+		stage.OnInitCommitFromBackCallback.BeforeCommit(stage)
+	}
+
 	if stage.BackRepo != nil {
 		stage.BackRepo.Commit(stage)
 	}
@@ -21703,18 +21710,18 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetFieldHe
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_BOOLEAN",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_BOOLEAN_REF",
 		},
 	}
@@ -21749,18 +21756,18 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetFieldHeaders(
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_DATE",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_DATE_REF",
 		},
 	}
@@ -21799,18 +21806,18 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGe
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_ENUMERATION",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_ENUMERATION_REF",
 		},
 	}
@@ -21845,18 +21852,18 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetFieldHe
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_INTEGER",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_INTEGER_REF",
 		},
 	}
@@ -21891,18 +21898,18 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldHeaders(
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_REAL",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_REAL_REF",
 		},
 	}
@@ -21937,18 +21944,18 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_STRING",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_STRING_REF",
 		},
 	}
@@ -21983,18 +21990,18 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetFieldHeader
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "DEFAULT_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFAULT_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_XHTML_REF",
 		},
 	}
@@ -22009,8 +22016,8 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldHeaders() (r
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF",
 		},
 		{
@@ -22029,8 +22036,8 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetFieldHeaders() (res []G
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_DATE_REF",
 		},
 		{
@@ -22049,13 +22056,13 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF",
 		},
 		{
-			Name:               "VALUES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "VALUES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ENUM_VALUE_REF",
 		},
 	}
@@ -22070,8 +22077,8 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetFieldHeaders() (r
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_INTEGER_REF",
 		},
 		{
@@ -22090,8 +22097,8 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetFieldHeaders() (res []G
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_REAL_REF",
 		},
 		{
@@ -22110,8 +22117,8 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetFieldHeaders() (res
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_STRING_REF",
 		},
 		{
@@ -22130,8 +22137,8 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetFieldHeaders() (res [
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DEFINITION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DEFINITION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_DEFINITION_XHTML_REF",
 		},
 		{
@@ -22139,13 +22146,13 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetFieldHeaders() (res [
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "THE_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "THE_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "XHTML_CONTENT",
 		},
 		{
-			Name:               "THE_ORIGINAL_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "THE_ORIGINAL_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "XHTML_CONTENT",
 		},
 	}
@@ -22160,8 +22167,8 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongGetFieldHeaders() (res []GongField
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "ALTERNATIVE_ID",
 		},
 	}
@@ -22455,8 +22462,8 @@ func (a_core_content *A_CORE_CONTENT) GongGetFieldHeaders() (res []GongFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "REQ_IF_CONTENT",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "REQ_IF_CONTENT",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "REQ_IF_CONTENT",
 		},
 	}
@@ -22691,8 +22698,8 @@ func (a_properties *A_PROPERTIES) GongGetFieldHeaders() (res []GongFieldHeader) 
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "EMBEDDED_VALUE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "EMBEDDED_VALUE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "EMBEDDED_VALUE",
 		},
 	}
@@ -22969,8 +22976,8 @@ func (a_the_header *A_THE_HEADER) GongGetFieldHeaders() (res []GongFieldHeader) 
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "REQ_IF_HEADER",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "REQ_IF_HEADER",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "REQ_IF_HEADER",
 		},
 	}
@@ -23017,8 +23024,8 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 	}
@@ -23049,8 +23056,8 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetFieldHeaders() 
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 	}
@@ -23081,13 +23088,13 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetF
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "SPECIFIED_VALUES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPECIFIED_VALUES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPECIFIED_VALUES",
 		},
 	}
@@ -23126,8 +23133,8 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 	}
@@ -23170,8 +23177,8 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetFieldHeaders() 
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 	}
@@ -23206,8 +23213,8 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetFieldHeader
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 	}
@@ -23238,8 +23245,8 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetFieldHeaders(
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 	}
@@ -23289,13 +23296,13 @@ func (enum_value *ENUM_VALUE) GongGetFieldHeaders() (res []GongFieldHeader) {
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "PROPERTIES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "PROPERTIES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_PROPERTIES",
 		},
 	}
@@ -23757,28 +23764,28 @@ func (relation_group *RELATION_GROUP) GongGetFieldHeaders() (res []GongFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "SOURCE_SPECIFICATION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SOURCE_SPECIFICATION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SOURCE_SPECIFICATION_1",
 		},
 		{
-			Name:               "SPEC_RELATIONS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_RELATIONS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_RELATION_REF",
 		},
 		{
-			Name:               "TARGET_SPECIFICATION",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TARGET_SPECIFICATION",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SOURCE_SPECIFICATION_1",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_RELATION_GROUP_TYPE_REF",
 		},
 	}
@@ -23809,13 +23816,13 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongGetFieldHeaders() (res []Gon
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "SPEC_ATTRIBUTES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_ATTRIBUTES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_ATTRIBUTES",
 		},
 	}
@@ -23834,18 +23841,18 @@ func (req_if *REQ_IF) GongGetFieldHeaders() (res []GongFieldHeader) {
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "THE_HEADER",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "THE_HEADER",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_THE_HEADER",
 		},
 		{
-			Name:               "CORE_CONTENT",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "CORE_CONTENT",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_CORE_CONTENT",
 		},
 		{
-			Name:               "TOOL_EXTENSIONS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TOOL_EXTENSIONS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_TOOL_EXTENSIONS",
 		},
 	}
@@ -23860,33 +23867,33 @@ func (req_if_content *REQ_IF_CONTENT) GongGetFieldHeaders() (res []GongFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "DATATYPES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "DATATYPES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPES",
 		},
 		{
-			Name:               "SPEC_TYPES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_TYPES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_TYPES",
 		},
 		{
-			Name:               "SPEC_OBJECTS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_OBJECTS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_OBJECTS",
 		},
 		{
-			Name:               "SPEC_RELATIONS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_RELATIONS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_RELATIONS",
 		},
 		{
-			Name:               "SPECIFICATIONS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPECIFICATIONS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPECIFICATIONS",
 		},
 		{
-			Name:               "SPEC_RELATION_GROUPS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_RELATION_GROUPS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_RELATION_GROUPS",
 		},
 	}
@@ -24111,23 +24118,23 @@ func (specification *SPECIFICATION) GongGetFieldHeaders() (res []GongFieldHeader
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPECIFICATION_TYPE_REF",
 		},
 		{
-			Name:               "CHILDREN",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "CHILDREN",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_CHILDREN",
 		},
 		{
-			Name:               "VALUES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "VALUES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML_1",
 		},
 	}
@@ -24158,13 +24165,13 @@ func (specification_type *SPECIFICATION_TYPE) GongGetFieldHeaders() (res []GongF
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "SPEC_ATTRIBUTES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_ATTRIBUTES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_ATTRIBUTES",
 		},
 	}
@@ -24203,23 +24210,23 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongGetFieldHeaders() (res []GongFieldHead
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "OBJECT",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "OBJECT",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_OBJECT",
 		},
 		{
-			Name:               "CHILDREN",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "CHILDREN",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_CHILDREN",
 		},
 		{
-			Name:               "EDITABLE_ATTS",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "EDITABLE_ATTS",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_EDITABLE_ATTS",
 		},
 	}
@@ -24250,18 +24257,18 @@ func (spec_object *SPEC_OBJECT) GongGetFieldHeaders() (res []GongFieldHeader) {
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "VALUES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "VALUES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML_1",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_OBJECT_TYPE_REF",
 		},
 	}
@@ -24292,13 +24299,13 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldHeaders() (res []GongField
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "SPEC_ATTRIBUTES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_ATTRIBUTES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_ATTRIBUTES",
 		},
 	}
@@ -24329,28 +24336,28 @@ func (spec_relation *SPEC_RELATION) GongGetFieldHeaders() (res []GongFieldHeader
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "VALUES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "VALUES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ATTRIBUTE_VALUE_XHTML_1",
 		},
 		{
-			Name:               "SOURCE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SOURCE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SOURCE_1",
 		},
 		{
-			Name:               "TARGET",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TARGET",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SOURCE_1",
 		},
 		{
-			Name:               "TYPE",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "TYPE",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_RELATION_TYPE_REF",
 		},
 	}
@@ -24381,13 +24388,13 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongGetFieldHeaders() (res []GongF
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "ALTERNATIVE_ID",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "ALTERNATIVE_ID",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_ALTERNATIVE_ID",
 		},
 		{
-			Name:               "SPEC_ATTRIBUTES",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "SPEC_ATTRIBUTES",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_ATTRIBUTES",
 		},
 	}
@@ -24504,8 +24511,8 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetFieldHeaders() (res
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:               "Image",
-			GongFieldValueType: GongFieldValueTypePointer,
+			Name:                 "Image",
+			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "StaticWebSiteImage",
 		},
 	}
@@ -27210,7 +27217,6 @@ func (xhtml_content *XHTML_CONTENT) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
-
 func GetFieldStringValueFromPointer(instance GongstructIF, fieldName string, stage *Stage) (res GongFieldValue) {
 
 	res = instance.GongGetFieldValue(fieldName, stage)
@@ -30781,7 +30787,6 @@ func (xhtml_content *XHTML_CONTENT) GongSetFieldValue(fieldName string, value Go
 	return nil
 }
 
-
 func SetFieldStringValueFromPointer(instance GongstructIF, fieldName string, value GongFieldValue, stage *Stage) error {
 	return instance.GongSetFieldValue(fieldName, value, stage)
 }
@@ -31262,7 +31267,6 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetGongstructName() st
 func (xhtml_content *XHTML_CONTENT) GongGetGongstructName() string {
 	return "XHTML_CONTENT"
 }
-
 
 func GetGongstructNameFromPointer(instance GongstructIF) (res string) {
 	res = instance.GongGetGongstructName()

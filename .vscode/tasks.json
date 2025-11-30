@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "02 - run gongreqif -unmarshallFromCode=data/stage.go -marshallOnCommit=data/stage",
+			"label": "02 - run gongreqif --unmarshallFromCode=data/stage.go --marshallOnCommit=data/stage",
 			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/go/cmd/gongreqif"
@@ -11,38 +11,10 @@
 			"args": [
 				"run",
 				"main.go",
-				"-diagrams",
-				"-unmarshallFromCode=data/stage.go",
-				"-marshallOnCommit=data/stage"
-			],
-			"group": "build"
-		},
-		{
-			"label": "02 - run gongreqif w/o diagrams",
-			"type": "shell",
-			"options": {
-				"cwd": "${workspaceFolder}/go/cmd/gongreqif"
-			},
-			"command": "go",
-			"args": [
-				"run",
-				".",
-				"-diagrams=false",
-				"--unmarshall=data/stage",
-				"-marshallOnCommit=data/stage"
-			],
-			"group": "build"
-		},
-		{
-			"label": "02 - run gongreqif upload",
-			"type": "shell",
-			"options": {
-				"cwd": "${workspaceFolder}/go/cmd/gongreqif"
-			},
-			"command": "go",
-			"args": [
-				"run",
-				".",
+				"--unmarshallFromCode",
+				"data/stage.go",
+				"--marshallOnCommit",
+				"data/stage.go"
 			],
 			"group": "build"
 		},
@@ -67,43 +39,60 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "01 - gongc gongreqif -level1",
+			"label": "01 - gong generate gongreqif",
 			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/go/models"
 			},
-			"command": "gongc",
+			"command": "gong generate",
 			"group": "build",
-			"args": [
-				"-level1"
-			]
+			"args": []
 		},
 		{
-			"label": "01 - gongc gongreqif -level1 -skipGoModCommands",
+			"label": "01 - gong generate gongreqif --skipNg",
 			"type": "shell",
 			"options": {
 				"cwd": "${workspaceFolder}/go/models"
 			},
-			"command": "gongc",
+			"command": "gong generate",
 			"group": "build",
 			"args": [
-				"-level1",
-				"-skipGoModCommands"
+				"--skipNg"
 			]
 		},
 		{
-			"label": "00 - update dependencies",
-			"type": "shell",
-			"command": "./update_gong_dep.sh",
-			"group": "build"
-		},
-		{
-			"label": "00 - go build wasm",
+			"label": "01 - gong generate gongreqif --skipGoModCommands",
 			"type": "shell",
 			"options": {
-				"cwd": "${workspaceFolder}/go/cmd/gongreqif"
+				"cwd": "${workspaceFolder}/go/models"
 			},
-			"command": "GOOS=js GOARCH=wasm go build -o gongreqif.wasm",
+			"command": "gong generate",
+			"group": "build",
+			"args": [
+				"--skipGoModCommands"
+			]
+		},
+		{
+			"label": "01 - gong generate gongreqif --skipNg --skipGoModCommands",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}/go/models"
+			},
+			"command": "gong generate",
+			"group": "build",
+			"args": [
+				"--skipNg",
+				"--skipGoModCommands"
+			]
+		},
+		{
+			"label": "00 - update gong dependency",
+			"type": "shell",
+			"command": "go",
+			"args": [
+				"get",
+				"github.com/fullstack-lang/gong@main",
+			],
 			"group": "build"
 		},
 		{
@@ -147,6 +136,19 @@
 			"command": "go",
 			"args": [
 				"install"
+			],
+			"group": "build"
+		},
+		{
+			"label": "02 - run gongreqif upload",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}/go/cmd/gongreqif"
+			},
+			"command": "go",
+			"args": [
+				"run",
+				".",
 			],
 			"group": "build"
 		},

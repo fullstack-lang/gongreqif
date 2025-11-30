@@ -9,10 +9,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gin-gonic/gin"
-
 	split "github.com/fullstack-lang/gong/lib/split/go/models"
 	"github.com/fullstack-lang/gongreqif/go/icons"
+	"github.com/gin-gonic/gin"
 
 	table "github.com/fullstack-lang/gong/lib/table/go/models"
 	table_stack "github.com/fullstack-lang/gong/lib/table/go/stack"
@@ -31,6 +30,8 @@ import (
 
 	markdown "github.com/fullstack-lang/gong/lib/markdown/go/models"
 	markdown_stack "github.com/fullstack-lang/gong/lib/markdown/go/stack"
+
+	split_stack "github.com/fullstack-lang/gong/lib/split/go/stack"
 )
 
 type ModelGeneratorInterface interface {
@@ -298,7 +299,6 @@ func (stager *Stager) SetModelGenerator(modelGenerator ModelGeneratorInterface) 
 
 func NewStager(
 	r *gin.Engine,
-	splitStage *split.Stage,
 	stage *Stage,
 	pathToReqifFile string,
 	pathToRenderingConf string,
@@ -318,6 +318,11 @@ func NewStager(
 ) {
 
 	stager = new(Stager)
+
+	// the root split name is "" by convention. Is is the same for all gong applications
+	// that do not develop their specific angular component
+	splitStage := split_stack.NewStack(r, "", "", "", "", false, false).Stage
+	stager.splitStage = splitStage
 
 	stager.stage = stage
 	stager.splitStage = splitStage
