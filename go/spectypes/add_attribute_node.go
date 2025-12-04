@@ -22,7 +22,7 @@ func addAttributeNode[
 	map_AtttributeDefinition_showInTable map[AttrDef]bool,
 	map_AtttributeDefinition_showInSubject map[AttrDef]bool,
 
-	attributesDefinitionRefs map[AttrDefRef]any, // the set of all reference to this kind of attribute definition
+	attributesDefinitionRefs map[AttrDefRef]struct{}, // the set of all reference to this kind of attribute definition
 	map_Id_DatatypeDefinition map[string]DatatypeDef,
 
 	nodeSpecType *tree.Node) {

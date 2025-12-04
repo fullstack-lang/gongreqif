@@ -69,6 +69,7 @@ type __void any
 
 // needed for creating set of instances in the stage
 var __member __void
+var _ = __member
 
 // GongStructInterface is the interface met by GongStructs
 // It allows runtime reflexion of instances (without the hassle of the "reflect" package)
@@ -84,15 +85,10 @@ type GongStructInterface interface {
 // Stage enables storage of staged instances
 // swagger:ignore
 type Stage struct {
-	name               string
-	commitId           uint // commitId is updated at each commit
-	commitTimeStamp    time.Time
-	contentWhenParsed  string
-	commitIdWhenParsed uint
-	generatesDiff      bool
+	name string
 
 	// insertion point for definition of arrays registering instances
-	ALTERNATIVE_IDs           map[*ALTERNATIVE_ID]any
+	ALTERNATIVE_IDs           map[*ALTERNATIVE_ID]struct{}
 	ALTERNATIVE_IDs_mapString map[string]*ALTERNATIVE_ID
 
 	// insertion point for slice of pointers maps
@@ -101,7 +97,7 @@ type Stage struct {
 	OnAfterALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDReadCallback   OnAfterReadInterface[ALTERNATIVE_ID]
 
-	ATTRIBUTE_DEFINITION_BOOLEANs           map[*ATTRIBUTE_DEFINITION_BOOLEAN]any
+	ATTRIBUTE_DEFINITION_BOOLEANs           map[*ATTRIBUTE_DEFINITION_BOOLEAN]struct{}
 	ATTRIBUTE_DEFINITION_BOOLEANs_mapString map[string]*ATTRIBUTE_DEFINITION_BOOLEAN
 
 	// insertion point for slice of pointers maps
@@ -110,7 +106,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 
-	ATTRIBUTE_DEFINITION_DATEs           map[*ATTRIBUTE_DEFINITION_DATE]any
+	ATTRIBUTE_DEFINITION_DATEs           map[*ATTRIBUTE_DEFINITION_DATE]struct{}
 	ATTRIBUTE_DEFINITION_DATEs_mapString map[string]*ATTRIBUTE_DEFINITION_DATE
 
 	// insertion point for slice of pointers maps
@@ -119,7 +115,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_DATE]
 	OnAfterATTRIBUTE_DEFINITION_DATEReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_DATE]
 
-	ATTRIBUTE_DEFINITION_ENUMERATIONs           map[*ATTRIBUTE_DEFINITION_ENUMERATION]any
+	ATTRIBUTE_DEFINITION_ENUMERATIONs           map[*ATTRIBUTE_DEFINITION_ENUMERATION]struct{}
 	ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
 
 	// insertion point for slice of pointers maps
@@ -128,7 +124,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 
-	ATTRIBUTE_DEFINITION_INTEGERs           map[*ATTRIBUTE_DEFINITION_INTEGER]any
+	ATTRIBUTE_DEFINITION_INTEGERs           map[*ATTRIBUTE_DEFINITION_INTEGER]struct{}
 	ATTRIBUTE_DEFINITION_INTEGERs_mapString map[string]*ATTRIBUTE_DEFINITION_INTEGER
 
 	// insertion point for slice of pointers maps
@@ -137,7 +133,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_INTEGER]
 	OnAfterATTRIBUTE_DEFINITION_INTEGERReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_INTEGER]
 
-	ATTRIBUTE_DEFINITION_REALs           map[*ATTRIBUTE_DEFINITION_REAL]any
+	ATTRIBUTE_DEFINITION_REALs           map[*ATTRIBUTE_DEFINITION_REAL]struct{}
 	ATTRIBUTE_DEFINITION_REALs_mapString map[string]*ATTRIBUTE_DEFINITION_REAL
 
 	// insertion point for slice of pointers maps
@@ -146,7 +142,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL]
 	OnAfterATTRIBUTE_DEFINITION_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL]
 
-	ATTRIBUTE_DEFINITION_STRINGs           map[*ATTRIBUTE_DEFINITION_STRING]any
+	ATTRIBUTE_DEFINITION_STRINGs           map[*ATTRIBUTE_DEFINITION_STRING]struct{}
 	ATTRIBUTE_DEFINITION_STRINGs_mapString map[string]*ATTRIBUTE_DEFINITION_STRING
 
 	// insertion point for slice of pointers maps
@@ -155,7 +151,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING]
 	OnAfterATTRIBUTE_DEFINITION_STRINGReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING]
 
-	ATTRIBUTE_DEFINITION_XHTMLs           map[*ATTRIBUTE_DEFINITION_XHTML]any
+	ATTRIBUTE_DEFINITION_XHTMLs           map[*ATTRIBUTE_DEFINITION_XHTML]struct{}
 	ATTRIBUTE_DEFINITION_XHTMLs_mapString map[string]*ATTRIBUTE_DEFINITION_XHTML
 
 	// insertion point for slice of pointers maps
@@ -164,7 +160,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_XHTMLDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_XHTML]
 	OnAfterATTRIBUTE_DEFINITION_XHTMLReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_XHTML]
 
-	ATTRIBUTE_VALUE_BOOLEANs           map[*ATTRIBUTE_VALUE_BOOLEAN]any
+	ATTRIBUTE_VALUE_BOOLEANs           map[*ATTRIBUTE_VALUE_BOOLEAN]struct{}
 	ATTRIBUTE_VALUE_BOOLEANs_mapString map[string]*ATTRIBUTE_VALUE_BOOLEAN
 
 	// insertion point for slice of pointers maps
@@ -173,7 +169,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_BOOLEAN]
 
-	ATTRIBUTE_VALUE_DATEs           map[*ATTRIBUTE_VALUE_DATE]any
+	ATTRIBUTE_VALUE_DATEs           map[*ATTRIBUTE_VALUE_DATE]struct{}
 	ATTRIBUTE_VALUE_DATEs_mapString map[string]*ATTRIBUTE_VALUE_DATE
 
 	// insertion point for slice of pointers maps
@@ -182,7 +178,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_DATE]
 
-	ATTRIBUTE_VALUE_ENUMERATIONs           map[*ATTRIBUTE_VALUE_ENUMERATION]any
+	ATTRIBUTE_VALUE_ENUMERATIONs           map[*ATTRIBUTE_VALUE_ENUMERATION]struct{}
 	ATTRIBUTE_VALUE_ENUMERATIONs_mapString map[string]*ATTRIBUTE_VALUE_ENUMERATION
 
 	// insertion point for slice of pointers maps
@@ -191,7 +187,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_ENUMERATION]
 
-	ATTRIBUTE_VALUE_INTEGERs           map[*ATTRIBUTE_VALUE_INTEGER]any
+	ATTRIBUTE_VALUE_INTEGERs           map[*ATTRIBUTE_VALUE_INTEGER]struct{}
 	ATTRIBUTE_VALUE_INTEGERs_mapString map[string]*ATTRIBUTE_VALUE_INTEGER
 
 	// insertion point for slice of pointers maps
@@ -200,7 +196,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_INTEGER]
 
-	ATTRIBUTE_VALUE_REALs           map[*ATTRIBUTE_VALUE_REAL]any
+	ATTRIBUTE_VALUE_REALs           map[*ATTRIBUTE_VALUE_REAL]struct{}
 	ATTRIBUTE_VALUE_REALs_mapString map[string]*ATTRIBUTE_VALUE_REAL
 
 	// insertion point for slice of pointers maps
@@ -209,7 +205,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_REAL]
 
-	ATTRIBUTE_VALUE_STRINGs           map[*ATTRIBUTE_VALUE_STRING]any
+	ATTRIBUTE_VALUE_STRINGs           map[*ATTRIBUTE_VALUE_STRING]struct{}
 	ATTRIBUTE_VALUE_STRINGs_mapString map[string]*ATTRIBUTE_VALUE_STRING
 
 	// insertion point for slice of pointers maps
@@ -218,7 +214,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_STRING]
 
-	ATTRIBUTE_VALUE_XHTMLs           map[*ATTRIBUTE_VALUE_XHTML]any
+	ATTRIBUTE_VALUE_XHTMLs           map[*ATTRIBUTE_VALUE_XHTML]struct{}
 	ATTRIBUTE_VALUE_XHTMLs_mapString map[string]*ATTRIBUTE_VALUE_XHTML
 
 	// insertion point for slice of pointers maps
@@ -227,7 +223,7 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_XHTMLDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_XHTML]
 	OnAfterATTRIBUTE_VALUE_XHTMLReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_XHTML]
 
-	A_ALTERNATIVE_IDs           map[*A_ALTERNATIVE_ID]any
+	A_ALTERNATIVE_IDs           map[*A_ALTERNATIVE_ID]struct{}
 	A_ALTERNATIVE_IDs_mapString map[string]*A_ALTERNATIVE_ID
 
 	// insertion point for slice of pointers maps
@@ -236,7 +232,7 @@ type Stage struct {
 	OnAfterA_ALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[A_ALTERNATIVE_ID]
 	OnAfterA_ALTERNATIVE_IDReadCallback   OnAfterReadInterface[A_ALTERNATIVE_ID]
 
-	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs           map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]any
+	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs           map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF
 
 	// insertion point for slice of pointers maps
@@ -245,7 +241,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 
-	A_ATTRIBUTE_DEFINITION_DATE_REFs           map[*A_ATTRIBUTE_DEFINITION_DATE_REF]any
+	A_ATTRIBUTE_DEFINITION_DATE_REFs           map[*A_ATTRIBUTE_DEFINITION_DATE_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF
 
 	// insertion point for slice of pointers maps
@@ -254,7 +250,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 
-	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs           map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]any
+	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs           map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF
 
 	// insertion point for slice of pointers maps
@@ -263,7 +259,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 
-	A_ATTRIBUTE_DEFINITION_INTEGER_REFs           map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]any
+	A_ATTRIBUTE_DEFINITION_INTEGER_REFs           map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF
 
 	// insertion point for slice of pointers maps
@@ -272,7 +268,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 
-	A_ATTRIBUTE_DEFINITION_REAL_REFs           map[*A_ATTRIBUTE_DEFINITION_REAL_REF]any
+	A_ATTRIBUTE_DEFINITION_REAL_REFs           map[*A_ATTRIBUTE_DEFINITION_REAL_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF
 
 	// insertion point for slice of pointers maps
@@ -281,7 +277,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 
-	A_ATTRIBUTE_DEFINITION_STRING_REFs           map[*A_ATTRIBUTE_DEFINITION_STRING_REF]any
+	A_ATTRIBUTE_DEFINITION_STRING_REFs           map[*A_ATTRIBUTE_DEFINITION_STRING_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF
 
 	// insertion point for slice of pointers maps
@@ -290,7 +286,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 
-	A_ATTRIBUTE_DEFINITION_XHTML_REFs           map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]any
+	A_ATTRIBUTE_DEFINITION_XHTML_REFs           map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]struct{}
 	A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF
 
 	// insertion point for slice of pointers maps
@@ -299,7 +295,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 
-	A_ATTRIBUTE_VALUE_BOOLEANs           map[*A_ATTRIBUTE_VALUE_BOOLEAN]any
+	A_ATTRIBUTE_VALUE_BOOLEANs           map[*A_ATTRIBUTE_VALUE_BOOLEAN]struct{}
 	A_ATTRIBUTE_VALUE_BOOLEANs_mapString map[string]*A_ATTRIBUTE_VALUE_BOOLEAN
 
 	// insertion point for slice of pointers maps
@@ -310,7 +306,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 
-	A_ATTRIBUTE_VALUE_DATEs           map[*A_ATTRIBUTE_VALUE_DATE]any
+	A_ATTRIBUTE_VALUE_DATEs           map[*A_ATTRIBUTE_VALUE_DATE]struct{}
 	A_ATTRIBUTE_VALUE_DATEs_mapString map[string]*A_ATTRIBUTE_VALUE_DATE
 
 	// insertion point for slice of pointers maps
@@ -321,7 +317,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_DATE]
 	OnAfterA_ATTRIBUTE_VALUE_DATEReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_DATE]
 
-	A_ATTRIBUTE_VALUE_ENUMERATIONs           map[*A_ATTRIBUTE_VALUE_ENUMERATION]any
+	A_ATTRIBUTE_VALUE_ENUMERATIONs           map[*A_ATTRIBUTE_VALUE_ENUMERATION]struct{}
 	A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString map[string]*A_ATTRIBUTE_VALUE_ENUMERATION
 
 	// insertion point for slice of pointers maps
@@ -332,7 +328,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 
-	A_ATTRIBUTE_VALUE_INTEGERs           map[*A_ATTRIBUTE_VALUE_INTEGER]any
+	A_ATTRIBUTE_VALUE_INTEGERs           map[*A_ATTRIBUTE_VALUE_INTEGER]struct{}
 	A_ATTRIBUTE_VALUE_INTEGERs_mapString map[string]*A_ATTRIBUTE_VALUE_INTEGER
 
 	// insertion point for slice of pointers maps
@@ -343,7 +339,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_INTEGER]
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_INTEGER]
 
-	A_ATTRIBUTE_VALUE_REALs           map[*A_ATTRIBUTE_VALUE_REAL]any
+	A_ATTRIBUTE_VALUE_REALs           map[*A_ATTRIBUTE_VALUE_REAL]struct{}
 	A_ATTRIBUTE_VALUE_REALs_mapString map[string]*A_ATTRIBUTE_VALUE_REAL
 
 	// insertion point for slice of pointers maps
@@ -354,7 +350,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_REAL]
 	OnAfterA_ATTRIBUTE_VALUE_REALReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_REAL]
 
-	A_ATTRIBUTE_VALUE_STRINGs           map[*A_ATTRIBUTE_VALUE_STRING]any
+	A_ATTRIBUTE_VALUE_STRINGs           map[*A_ATTRIBUTE_VALUE_STRING]struct{}
 	A_ATTRIBUTE_VALUE_STRINGs_mapString map[string]*A_ATTRIBUTE_VALUE_STRING
 
 	// insertion point for slice of pointers maps
@@ -365,7 +361,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_STRING]
 	OnAfterA_ATTRIBUTE_VALUE_STRINGReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_STRING]
 
-	A_ATTRIBUTE_VALUE_XHTMLs           map[*A_ATTRIBUTE_VALUE_XHTML]any
+	A_ATTRIBUTE_VALUE_XHTMLs           map[*A_ATTRIBUTE_VALUE_XHTML]struct{}
 	A_ATTRIBUTE_VALUE_XHTMLs_mapString map[string]*A_ATTRIBUTE_VALUE_XHTML
 
 	// insertion point for slice of pointers maps
@@ -376,7 +372,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML]
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML]
 
-	A_ATTRIBUTE_VALUE_XHTML_1s           map[*A_ATTRIBUTE_VALUE_XHTML_1]any
+	A_ATTRIBUTE_VALUE_XHTML_1s           map[*A_ATTRIBUTE_VALUE_XHTML_1]struct{}
 	A_ATTRIBUTE_VALUE_XHTML_1s_mapString map[string]*A_ATTRIBUTE_VALUE_XHTML_1
 
 	// insertion point for slice of pointers maps
@@ -399,7 +395,7 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1DeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1ReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 
-	A_CHILDRENs           map[*A_CHILDREN]any
+	A_CHILDRENs           map[*A_CHILDREN]struct{}
 	A_CHILDRENs_mapString map[string]*A_CHILDREN
 
 	// insertion point for slice of pointers maps
@@ -410,7 +406,7 @@ type Stage struct {
 	OnAfterA_CHILDRENDeleteCallback OnAfterDeleteInterface[A_CHILDREN]
 	OnAfterA_CHILDRENReadCallback   OnAfterReadInterface[A_CHILDREN]
 
-	A_CORE_CONTENTs           map[*A_CORE_CONTENT]any
+	A_CORE_CONTENTs           map[*A_CORE_CONTENT]struct{}
 	A_CORE_CONTENTs_mapString map[string]*A_CORE_CONTENT
 
 	// insertion point for slice of pointers maps
@@ -419,7 +415,7 @@ type Stage struct {
 	OnAfterA_CORE_CONTENTDeleteCallback OnAfterDeleteInterface[A_CORE_CONTENT]
 	OnAfterA_CORE_CONTENTReadCallback   OnAfterReadInterface[A_CORE_CONTENT]
 
-	A_DATATYPESs           map[*A_DATATYPES]any
+	A_DATATYPESs           map[*A_DATATYPES]struct{}
 	A_DATATYPESs_mapString map[string]*A_DATATYPES
 
 	// insertion point for slice of pointers maps
@@ -442,7 +438,7 @@ type Stage struct {
 	OnAfterA_DATATYPESDeleteCallback OnAfterDeleteInterface[A_DATATYPES]
 	OnAfterA_DATATYPESReadCallback   OnAfterReadInterface[A_DATATYPES]
 
-	A_DATATYPE_DEFINITION_BOOLEAN_REFs           map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]any
+	A_DATATYPE_DEFINITION_BOOLEAN_REFs           map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]struct{}
 	A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF
 
 	// insertion point for slice of pointers maps
@@ -451,7 +447,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 
-	A_DATATYPE_DEFINITION_DATE_REFs           map[*A_DATATYPE_DEFINITION_DATE_REF]any
+	A_DATATYPE_DEFINITION_DATE_REFs           map[*A_DATATYPE_DEFINITION_DATE_REF]struct{}
 	A_DATATYPE_DEFINITION_DATE_REFs_mapString map[string]*A_DATATYPE_DEFINITION_DATE_REF
 
 	// insertion point for slice of pointers maps
@@ -460,7 +456,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_DATE_REF]
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_DATE_REF]
 
-	A_DATATYPE_DEFINITION_ENUMERATION_REFs           map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]any
+	A_DATATYPE_DEFINITION_ENUMERATION_REFs           map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]struct{}
 	A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF
 
 	// insertion point for slice of pointers maps
@@ -469,7 +465,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 
-	A_DATATYPE_DEFINITION_INTEGER_REFs           map[*A_DATATYPE_DEFINITION_INTEGER_REF]any
+	A_DATATYPE_DEFINITION_INTEGER_REFs           map[*A_DATATYPE_DEFINITION_INTEGER_REF]struct{}
 	A_DATATYPE_DEFINITION_INTEGER_REFs_mapString map[string]*A_DATATYPE_DEFINITION_INTEGER_REF
 
 	// insertion point for slice of pointers maps
@@ -478,7 +474,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 
-	A_DATATYPE_DEFINITION_REAL_REFs           map[*A_DATATYPE_DEFINITION_REAL_REF]any
+	A_DATATYPE_DEFINITION_REAL_REFs           map[*A_DATATYPE_DEFINITION_REAL_REF]struct{}
 	A_DATATYPE_DEFINITION_REAL_REFs_mapString map[string]*A_DATATYPE_DEFINITION_REAL_REF
 
 	// insertion point for slice of pointers maps
@@ -487,7 +483,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_REAL_REF]
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_REAL_REF]
 
-	A_DATATYPE_DEFINITION_STRING_REFs           map[*A_DATATYPE_DEFINITION_STRING_REF]any
+	A_DATATYPE_DEFINITION_STRING_REFs           map[*A_DATATYPE_DEFINITION_STRING_REF]struct{}
 	A_DATATYPE_DEFINITION_STRING_REFs_mapString map[string]*A_DATATYPE_DEFINITION_STRING_REF
 
 	// insertion point for slice of pointers maps
@@ -496,7 +492,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_STRING_REF]
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_STRING_REF]
 
-	A_DATATYPE_DEFINITION_XHTML_REFs           map[*A_DATATYPE_DEFINITION_XHTML_REF]any
+	A_DATATYPE_DEFINITION_XHTML_REFs           map[*A_DATATYPE_DEFINITION_XHTML_REF]struct{}
 	A_DATATYPE_DEFINITION_XHTML_REFs_mapString map[string]*A_DATATYPE_DEFINITION_XHTML_REF
 
 	// insertion point for slice of pointers maps
@@ -505,7 +501,7 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 
-	A_EDITABLE_ATTSs           map[*A_EDITABLE_ATTS]any
+	A_EDITABLE_ATTSs           map[*A_EDITABLE_ATTS]struct{}
 	A_EDITABLE_ATTSs_mapString map[string]*A_EDITABLE_ATTS
 
 	// insertion point for slice of pointers maps
@@ -514,7 +510,7 @@ type Stage struct {
 	OnAfterA_EDITABLE_ATTSDeleteCallback OnAfterDeleteInterface[A_EDITABLE_ATTS]
 	OnAfterA_EDITABLE_ATTSReadCallback   OnAfterReadInterface[A_EDITABLE_ATTS]
 
-	A_ENUM_VALUE_REFs           map[*A_ENUM_VALUE_REF]any
+	A_ENUM_VALUE_REFs           map[*A_ENUM_VALUE_REF]struct{}
 	A_ENUM_VALUE_REFs_mapString map[string]*A_ENUM_VALUE_REF
 
 	// insertion point for slice of pointers maps
@@ -523,7 +519,7 @@ type Stage struct {
 	OnAfterA_ENUM_VALUE_REFDeleteCallback OnAfterDeleteInterface[A_ENUM_VALUE_REF]
 	OnAfterA_ENUM_VALUE_REFReadCallback   OnAfterReadInterface[A_ENUM_VALUE_REF]
 
-	A_OBJECTs           map[*A_OBJECT]any
+	A_OBJECTs           map[*A_OBJECT]struct{}
 	A_OBJECTs_mapString map[string]*A_OBJECT
 
 	// insertion point for slice of pointers maps
@@ -532,7 +528,7 @@ type Stage struct {
 	OnAfterA_OBJECTDeleteCallback OnAfterDeleteInterface[A_OBJECT]
 	OnAfterA_OBJECTReadCallback   OnAfterReadInterface[A_OBJECT]
 
-	A_PROPERTIESs           map[*A_PROPERTIES]any
+	A_PROPERTIESs           map[*A_PROPERTIES]struct{}
 	A_PROPERTIESs_mapString map[string]*A_PROPERTIES
 
 	// insertion point for slice of pointers maps
@@ -541,7 +537,7 @@ type Stage struct {
 	OnAfterA_PROPERTIESDeleteCallback OnAfterDeleteInterface[A_PROPERTIES]
 	OnAfterA_PROPERTIESReadCallback   OnAfterReadInterface[A_PROPERTIES]
 
-	A_RELATION_GROUP_TYPE_REFs           map[*A_RELATION_GROUP_TYPE_REF]any
+	A_RELATION_GROUP_TYPE_REFs           map[*A_RELATION_GROUP_TYPE_REF]struct{}
 	A_RELATION_GROUP_TYPE_REFs_mapString map[string]*A_RELATION_GROUP_TYPE_REF
 
 	// insertion point for slice of pointers maps
@@ -550,7 +546,7 @@ type Stage struct {
 	OnAfterA_RELATION_GROUP_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_RELATION_GROUP_TYPE_REF]
 	OnAfterA_RELATION_GROUP_TYPE_REFReadCallback   OnAfterReadInterface[A_RELATION_GROUP_TYPE_REF]
 
-	A_SOURCE_1s           map[*A_SOURCE_1]any
+	A_SOURCE_1s           map[*A_SOURCE_1]struct{}
 	A_SOURCE_1s_mapString map[string]*A_SOURCE_1
 
 	// insertion point for slice of pointers maps
@@ -559,7 +555,7 @@ type Stage struct {
 	OnAfterA_SOURCE_1DeleteCallback OnAfterDeleteInterface[A_SOURCE_1]
 	OnAfterA_SOURCE_1ReadCallback   OnAfterReadInterface[A_SOURCE_1]
 
-	A_SOURCE_SPECIFICATION_1s           map[*A_SOURCE_SPECIFICATION_1]any
+	A_SOURCE_SPECIFICATION_1s           map[*A_SOURCE_SPECIFICATION_1]struct{}
 	A_SOURCE_SPECIFICATION_1s_mapString map[string]*A_SOURCE_SPECIFICATION_1
 
 	// insertion point for slice of pointers maps
@@ -568,7 +564,7 @@ type Stage struct {
 	OnAfterA_SOURCE_SPECIFICATION_1DeleteCallback OnAfterDeleteInterface[A_SOURCE_SPECIFICATION_1]
 	OnAfterA_SOURCE_SPECIFICATION_1ReadCallback   OnAfterReadInterface[A_SOURCE_SPECIFICATION_1]
 
-	A_SPECIFICATIONSs           map[*A_SPECIFICATIONS]any
+	A_SPECIFICATIONSs           map[*A_SPECIFICATIONS]struct{}
 	A_SPECIFICATIONSs_mapString map[string]*A_SPECIFICATIONS
 
 	// insertion point for slice of pointers maps
@@ -579,7 +575,7 @@ type Stage struct {
 	OnAfterA_SPECIFICATIONSDeleteCallback OnAfterDeleteInterface[A_SPECIFICATIONS]
 	OnAfterA_SPECIFICATIONSReadCallback   OnAfterReadInterface[A_SPECIFICATIONS]
 
-	A_SPECIFICATION_TYPE_REFs           map[*A_SPECIFICATION_TYPE_REF]any
+	A_SPECIFICATION_TYPE_REFs           map[*A_SPECIFICATION_TYPE_REF]struct{}
 	A_SPECIFICATION_TYPE_REFs_mapString map[string]*A_SPECIFICATION_TYPE_REF
 
 	// insertion point for slice of pointers maps
@@ -588,7 +584,7 @@ type Stage struct {
 	OnAfterA_SPECIFICATION_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPECIFICATION_TYPE_REF]
 	OnAfterA_SPECIFICATION_TYPE_REFReadCallback   OnAfterReadInterface[A_SPECIFICATION_TYPE_REF]
 
-	A_SPECIFIED_VALUESs           map[*A_SPECIFIED_VALUES]any
+	A_SPECIFIED_VALUESs           map[*A_SPECIFIED_VALUES]struct{}
 	A_SPECIFIED_VALUESs_mapString map[string]*A_SPECIFIED_VALUES
 
 	// insertion point for slice of pointers maps
@@ -599,7 +595,7 @@ type Stage struct {
 	OnAfterA_SPECIFIED_VALUESDeleteCallback OnAfterDeleteInterface[A_SPECIFIED_VALUES]
 	OnAfterA_SPECIFIED_VALUESReadCallback   OnAfterReadInterface[A_SPECIFIED_VALUES]
 
-	A_SPEC_ATTRIBUTESs           map[*A_SPEC_ATTRIBUTES]any
+	A_SPEC_ATTRIBUTESs           map[*A_SPEC_ATTRIBUTES]struct{}
 	A_SPEC_ATTRIBUTESs_mapString map[string]*A_SPEC_ATTRIBUTES
 
 	// insertion point for slice of pointers maps
@@ -622,7 +618,7 @@ type Stage struct {
 	OnAfterA_SPEC_ATTRIBUTESDeleteCallback OnAfterDeleteInterface[A_SPEC_ATTRIBUTES]
 	OnAfterA_SPEC_ATTRIBUTESReadCallback   OnAfterReadInterface[A_SPEC_ATTRIBUTES]
 
-	A_SPEC_OBJECTSs           map[*A_SPEC_OBJECTS]any
+	A_SPEC_OBJECTSs           map[*A_SPEC_OBJECTS]struct{}
 	A_SPEC_OBJECTSs_mapString map[string]*A_SPEC_OBJECTS
 
 	// insertion point for slice of pointers maps
@@ -633,7 +629,7 @@ type Stage struct {
 	OnAfterA_SPEC_OBJECTSDeleteCallback OnAfterDeleteInterface[A_SPEC_OBJECTS]
 	OnAfterA_SPEC_OBJECTSReadCallback   OnAfterReadInterface[A_SPEC_OBJECTS]
 
-	A_SPEC_OBJECT_TYPE_REFs           map[*A_SPEC_OBJECT_TYPE_REF]any
+	A_SPEC_OBJECT_TYPE_REFs           map[*A_SPEC_OBJECT_TYPE_REF]struct{}
 	A_SPEC_OBJECT_TYPE_REFs_mapString map[string]*A_SPEC_OBJECT_TYPE_REF
 
 	// insertion point for slice of pointers maps
@@ -642,7 +638,7 @@ type Stage struct {
 	OnAfterA_SPEC_OBJECT_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_OBJECT_TYPE_REF]
 	OnAfterA_SPEC_OBJECT_TYPE_REFReadCallback   OnAfterReadInterface[A_SPEC_OBJECT_TYPE_REF]
 
-	A_SPEC_RELATIONSs           map[*A_SPEC_RELATIONS]any
+	A_SPEC_RELATIONSs           map[*A_SPEC_RELATIONS]struct{}
 	A_SPEC_RELATIONSs_mapString map[string]*A_SPEC_RELATIONS
 
 	// insertion point for slice of pointers maps
@@ -653,7 +649,7 @@ type Stage struct {
 	OnAfterA_SPEC_RELATIONSDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATIONS]
 	OnAfterA_SPEC_RELATIONSReadCallback   OnAfterReadInterface[A_SPEC_RELATIONS]
 
-	A_SPEC_RELATION_GROUPSs           map[*A_SPEC_RELATION_GROUPS]any
+	A_SPEC_RELATION_GROUPSs           map[*A_SPEC_RELATION_GROUPS]struct{}
 	A_SPEC_RELATION_GROUPSs_mapString map[string]*A_SPEC_RELATION_GROUPS
 
 	// insertion point for slice of pointers maps
@@ -664,7 +660,7 @@ type Stage struct {
 	OnAfterA_SPEC_RELATION_GROUPSDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_GROUPS]
 	OnAfterA_SPEC_RELATION_GROUPSReadCallback   OnAfterReadInterface[A_SPEC_RELATION_GROUPS]
 
-	A_SPEC_RELATION_REFs           map[*A_SPEC_RELATION_REF]any
+	A_SPEC_RELATION_REFs           map[*A_SPEC_RELATION_REF]struct{}
 	A_SPEC_RELATION_REFs_mapString map[string]*A_SPEC_RELATION_REF
 
 	// insertion point for slice of pointers maps
@@ -673,7 +669,7 @@ type Stage struct {
 	OnAfterA_SPEC_RELATION_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_REF]
 	OnAfterA_SPEC_RELATION_REFReadCallback   OnAfterReadInterface[A_SPEC_RELATION_REF]
 
-	A_SPEC_RELATION_TYPE_REFs           map[*A_SPEC_RELATION_TYPE_REF]any
+	A_SPEC_RELATION_TYPE_REFs           map[*A_SPEC_RELATION_TYPE_REF]struct{}
 	A_SPEC_RELATION_TYPE_REFs_mapString map[string]*A_SPEC_RELATION_TYPE_REF
 
 	// insertion point for slice of pointers maps
@@ -682,7 +678,7 @@ type Stage struct {
 	OnAfterA_SPEC_RELATION_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_TYPE_REF]
 	OnAfterA_SPEC_RELATION_TYPE_REFReadCallback   OnAfterReadInterface[A_SPEC_RELATION_TYPE_REF]
 
-	A_SPEC_TYPESs           map[*A_SPEC_TYPES]any
+	A_SPEC_TYPESs           map[*A_SPEC_TYPES]struct{}
 	A_SPEC_TYPESs_mapString map[string]*A_SPEC_TYPES
 
 	// insertion point for slice of pointers maps
@@ -699,7 +695,7 @@ type Stage struct {
 	OnAfterA_SPEC_TYPESDeleteCallback OnAfterDeleteInterface[A_SPEC_TYPES]
 	OnAfterA_SPEC_TYPESReadCallback   OnAfterReadInterface[A_SPEC_TYPES]
 
-	A_THE_HEADERs           map[*A_THE_HEADER]any
+	A_THE_HEADERs           map[*A_THE_HEADER]struct{}
 	A_THE_HEADERs_mapString map[string]*A_THE_HEADER
 
 	// insertion point for slice of pointers maps
@@ -708,7 +704,7 @@ type Stage struct {
 	OnAfterA_THE_HEADERDeleteCallback OnAfterDeleteInterface[A_THE_HEADER]
 	OnAfterA_THE_HEADERReadCallback   OnAfterReadInterface[A_THE_HEADER]
 
-	A_TOOL_EXTENSIONSs           map[*A_TOOL_EXTENSIONS]any
+	A_TOOL_EXTENSIONSs           map[*A_TOOL_EXTENSIONS]struct{}
 	A_TOOL_EXTENSIONSs_mapString map[string]*A_TOOL_EXTENSIONS
 
 	// insertion point for slice of pointers maps
@@ -719,7 +715,7 @@ type Stage struct {
 	OnAfterA_TOOL_EXTENSIONSDeleteCallback OnAfterDeleteInterface[A_TOOL_EXTENSIONS]
 	OnAfterA_TOOL_EXTENSIONSReadCallback   OnAfterReadInterface[A_TOOL_EXTENSIONS]
 
-	DATATYPE_DEFINITION_BOOLEANs           map[*DATATYPE_DEFINITION_BOOLEAN]any
+	DATATYPE_DEFINITION_BOOLEANs           map[*DATATYPE_DEFINITION_BOOLEAN]struct{}
 	DATATYPE_DEFINITION_BOOLEANs_mapString map[string]*DATATYPE_DEFINITION_BOOLEAN
 
 	// insertion point for slice of pointers maps
@@ -728,7 +724,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_BOOLEANDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_BOOLEAN]
 	OnAfterDATATYPE_DEFINITION_BOOLEANReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_BOOLEAN]
 
-	DATATYPE_DEFINITION_DATEs           map[*DATATYPE_DEFINITION_DATE]any
+	DATATYPE_DEFINITION_DATEs           map[*DATATYPE_DEFINITION_DATE]struct{}
 	DATATYPE_DEFINITION_DATEs_mapString map[string]*DATATYPE_DEFINITION_DATE
 
 	// insertion point for slice of pointers maps
@@ -737,7 +733,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_DATEDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_DATE]
 	OnAfterDATATYPE_DEFINITION_DATEReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_DATE]
 
-	DATATYPE_DEFINITION_ENUMERATIONs           map[*DATATYPE_DEFINITION_ENUMERATION]any
+	DATATYPE_DEFINITION_ENUMERATIONs           map[*DATATYPE_DEFINITION_ENUMERATION]struct{}
 	DATATYPE_DEFINITION_ENUMERATIONs_mapString map[string]*DATATYPE_DEFINITION_ENUMERATION
 
 	// insertion point for slice of pointers maps
@@ -746,7 +742,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_ENUMERATION]
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_ENUMERATION]
 
-	DATATYPE_DEFINITION_INTEGERs           map[*DATATYPE_DEFINITION_INTEGER]any
+	DATATYPE_DEFINITION_INTEGERs           map[*DATATYPE_DEFINITION_INTEGER]struct{}
 	DATATYPE_DEFINITION_INTEGERs_mapString map[string]*DATATYPE_DEFINITION_INTEGER
 
 	// insertion point for slice of pointers maps
@@ -755,7 +751,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_INTEGERDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_INTEGER]
 	OnAfterDATATYPE_DEFINITION_INTEGERReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_INTEGER]
 
-	DATATYPE_DEFINITION_REALs           map[*DATATYPE_DEFINITION_REAL]any
+	DATATYPE_DEFINITION_REALs           map[*DATATYPE_DEFINITION_REAL]struct{}
 	DATATYPE_DEFINITION_REALs_mapString map[string]*DATATYPE_DEFINITION_REAL
 
 	// insertion point for slice of pointers maps
@@ -764,7 +760,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_REAL]
 	OnAfterDATATYPE_DEFINITION_REALReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_REAL]
 
-	DATATYPE_DEFINITION_STRINGs           map[*DATATYPE_DEFINITION_STRING]any
+	DATATYPE_DEFINITION_STRINGs           map[*DATATYPE_DEFINITION_STRING]struct{}
 	DATATYPE_DEFINITION_STRINGs_mapString map[string]*DATATYPE_DEFINITION_STRING
 
 	// insertion point for slice of pointers maps
@@ -773,7 +769,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_STRINGDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_STRING]
 	OnAfterDATATYPE_DEFINITION_STRINGReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_STRING]
 
-	DATATYPE_DEFINITION_XHTMLs           map[*DATATYPE_DEFINITION_XHTML]any
+	DATATYPE_DEFINITION_XHTMLs           map[*DATATYPE_DEFINITION_XHTML]struct{}
 	DATATYPE_DEFINITION_XHTMLs_mapString map[string]*DATATYPE_DEFINITION_XHTML
 
 	// insertion point for slice of pointers maps
@@ -782,7 +778,7 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_XHTMLDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_XHTML]
 	OnAfterDATATYPE_DEFINITION_XHTMLReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_XHTML]
 
-	EMBEDDED_VALUEs           map[*EMBEDDED_VALUE]any
+	EMBEDDED_VALUEs           map[*EMBEDDED_VALUE]struct{}
 	EMBEDDED_VALUEs_mapString map[string]*EMBEDDED_VALUE
 
 	// insertion point for slice of pointers maps
@@ -791,7 +787,7 @@ type Stage struct {
 	OnAfterEMBEDDED_VALUEDeleteCallback OnAfterDeleteInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEReadCallback   OnAfterReadInterface[EMBEDDED_VALUE]
 
-	ENUM_VALUEs           map[*ENUM_VALUE]any
+	ENUM_VALUEs           map[*ENUM_VALUE]struct{}
 	ENUM_VALUEs_mapString map[string]*ENUM_VALUE
 
 	// insertion point for slice of pointers maps
@@ -800,7 +796,7 @@ type Stage struct {
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
-	EmbeddedJpgImages           map[*EmbeddedJpgImage]any
+	EmbeddedJpgImages           map[*EmbeddedJpgImage]struct{}
 	EmbeddedJpgImages_mapString map[string]*EmbeddedJpgImage
 
 	// insertion point for slice of pointers maps
@@ -809,7 +805,7 @@ type Stage struct {
 	OnAfterEmbeddedJpgImageDeleteCallback OnAfterDeleteInterface[EmbeddedJpgImage]
 	OnAfterEmbeddedJpgImageReadCallback   OnAfterReadInterface[EmbeddedJpgImage]
 
-	EmbeddedPngImages           map[*EmbeddedPngImage]any
+	EmbeddedPngImages           map[*EmbeddedPngImage]struct{}
 	EmbeddedPngImages_mapString map[string]*EmbeddedPngImage
 
 	// insertion point for slice of pointers maps
@@ -818,7 +814,7 @@ type Stage struct {
 	OnAfterEmbeddedPngImageDeleteCallback OnAfterDeleteInterface[EmbeddedPngImage]
 	OnAfterEmbeddedPngImageReadCallback   OnAfterReadInterface[EmbeddedPngImage]
 
-	EmbeddedSvgImages           map[*EmbeddedSvgImage]any
+	EmbeddedSvgImages           map[*EmbeddedSvgImage]struct{}
 	EmbeddedSvgImages_mapString map[string]*EmbeddedSvgImage
 
 	// insertion point for slice of pointers maps
@@ -827,7 +823,7 @@ type Stage struct {
 	OnAfterEmbeddedSvgImageDeleteCallback OnAfterDeleteInterface[EmbeddedSvgImage]
 	OnAfterEmbeddedSvgImageReadCallback   OnAfterReadInterface[EmbeddedSvgImage]
 
-	Kills           map[*Kill]any
+	Kills           map[*Kill]struct{}
 	Kills_mapString map[string]*Kill
 
 	// insertion point for slice of pointers maps
@@ -836,7 +832,7 @@ type Stage struct {
 	OnAfterKillDeleteCallback OnAfterDeleteInterface[Kill]
 	OnAfterKillReadCallback   OnAfterReadInterface[Kill]
 
-	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -845,7 +841,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -854,7 +850,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -863,7 +859,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]
 
-	Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -872,7 +868,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -881,7 +877,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -890,7 +886,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]
 
-	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -899,7 +895,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -908,7 +904,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -917,7 +913,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]
 
-	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -926,7 +922,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -935,7 +931,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -944,7 +940,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]
 
-	Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -953,7 +949,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -962,7 +958,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -971,7 +967,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]
 
-	Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -980,7 +976,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -989,7 +985,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -998,7 +994,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]
 
-	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]any
+	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys           map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry
 
 	// insertion point for slice of pointers maps
@@ -1007,7 +1003,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]
 
-	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]any
+	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys           map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry
 
 	// insertion point for slice of pointers maps
@@ -1016,7 +1012,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]
 
-	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]any
+	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys           map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]struct{}
 	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys_mapString map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry
 
 	// insertion point for slice of pointers maps
@@ -1025,7 +1021,7 @@ type Stage struct {
 	OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryDeleteCallback OnAfterDeleteInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]
 	OnAfterMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryReadCallback   OnAfterReadInterface[Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]
 
-	Map_SPECIFICATION_Nodes_expandedEntrys           map[*Map_SPECIFICATION_Nodes_expandedEntry]any
+	Map_SPECIFICATION_Nodes_expandedEntrys           map[*Map_SPECIFICATION_Nodes_expandedEntry]struct{}
 	Map_SPECIFICATION_Nodes_expandedEntrys_mapString map[string]*Map_SPECIFICATION_Nodes_expandedEntry
 
 	// insertion point for slice of pointers maps
@@ -1034,7 +1030,7 @@ type Stage struct {
 	OnAfterMap_SPECIFICATION_Nodes_expandedEntryDeleteCallback OnAfterDeleteInterface[Map_SPECIFICATION_Nodes_expandedEntry]
 	OnAfterMap_SPECIFICATION_Nodes_expandedEntryReadCallback   OnAfterReadInterface[Map_SPECIFICATION_Nodes_expandedEntry]
 
-	Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys           map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]any
+	Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys           map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]struct{}
 	Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys_mapString map[string]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry
 
 	// insertion point for slice of pointers maps
@@ -1043,7 +1039,7 @@ type Stage struct {
 	OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryDeleteCallback OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]
 	OnAfterMap_SPEC_OBJECT_TYPE_isNodeExpandedEntryReadCallback   OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]
 
-	Map_SPEC_OBJECT_TYPE_showIdentifierEntrys           map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]any
+	Map_SPEC_OBJECT_TYPE_showIdentifierEntrys           map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]struct{}
 	Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString map[string]*Map_SPEC_OBJECT_TYPE_showIdentifierEntry
 
 	// insertion point for slice of pointers maps
@@ -1052,7 +1048,7 @@ type Stage struct {
 	OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryDeleteCallback OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showIdentifierEntry]
 	OnAfterMap_SPEC_OBJECT_TYPE_showIdentifierEntryReadCallback   OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showIdentifierEntry]
 
-	Map_SPEC_OBJECT_TYPE_showNameEntrys           map[*Map_SPEC_OBJECT_TYPE_showNameEntry]any
+	Map_SPEC_OBJECT_TYPE_showNameEntrys           map[*Map_SPEC_OBJECT_TYPE_showNameEntry]struct{}
 	Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry
 
 	// insertion point for slice of pointers maps
@@ -1061,7 +1057,7 @@ type Stage struct {
 	OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showNameEntry]
 	OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback   OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showNameEntry]
 
-	RELATION_GROUPs           map[*RELATION_GROUP]any
+	RELATION_GROUPs           map[*RELATION_GROUP]struct{}
 	RELATION_GROUPs_mapString map[string]*RELATION_GROUP
 
 	// insertion point for slice of pointers maps
@@ -1070,7 +1066,7 @@ type Stage struct {
 	OnAfterRELATION_GROUPDeleteCallback OnAfterDeleteInterface[RELATION_GROUP]
 	OnAfterRELATION_GROUPReadCallback   OnAfterReadInterface[RELATION_GROUP]
 
-	RELATION_GROUP_TYPEs           map[*RELATION_GROUP_TYPE]any
+	RELATION_GROUP_TYPEs           map[*RELATION_GROUP_TYPE]struct{}
 	RELATION_GROUP_TYPEs_mapString map[string]*RELATION_GROUP_TYPE
 
 	// insertion point for slice of pointers maps
@@ -1079,7 +1075,7 @@ type Stage struct {
 	OnAfterRELATION_GROUP_TYPEDeleteCallback OnAfterDeleteInterface[RELATION_GROUP_TYPE]
 	OnAfterRELATION_GROUP_TYPEReadCallback   OnAfterReadInterface[RELATION_GROUP_TYPE]
 
-	REQ_IFs           map[*REQ_IF]any
+	REQ_IFs           map[*REQ_IF]struct{}
 	REQ_IFs_mapString map[string]*REQ_IF
 
 	// insertion point for slice of pointers maps
@@ -1088,7 +1084,7 @@ type Stage struct {
 	OnAfterREQ_IFDeleteCallback OnAfterDeleteInterface[REQ_IF]
 	OnAfterREQ_IFReadCallback   OnAfterReadInterface[REQ_IF]
 
-	REQ_IF_CONTENTs           map[*REQ_IF_CONTENT]any
+	REQ_IF_CONTENTs           map[*REQ_IF_CONTENT]struct{}
 	REQ_IF_CONTENTs_mapString map[string]*REQ_IF_CONTENT
 
 	// insertion point for slice of pointers maps
@@ -1097,7 +1093,7 @@ type Stage struct {
 	OnAfterREQ_IF_CONTENTDeleteCallback OnAfterDeleteInterface[REQ_IF_CONTENT]
 	OnAfterREQ_IF_CONTENTReadCallback   OnAfterReadInterface[REQ_IF_CONTENT]
 
-	REQ_IF_HEADERs           map[*REQ_IF_HEADER]any
+	REQ_IF_HEADERs           map[*REQ_IF_HEADER]struct{}
 	REQ_IF_HEADERs_mapString map[string]*REQ_IF_HEADER
 
 	// insertion point for slice of pointers maps
@@ -1106,7 +1102,7 @@ type Stage struct {
 	OnAfterREQ_IF_HEADERDeleteCallback OnAfterDeleteInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERReadCallback   OnAfterReadInterface[REQ_IF_HEADER]
 
-	REQ_IF_TOOL_EXTENSIONs           map[*REQ_IF_TOOL_EXTENSION]any
+	REQ_IF_TOOL_EXTENSIONs           map[*REQ_IF_TOOL_EXTENSION]struct{}
 	REQ_IF_TOOL_EXTENSIONs_mapString map[string]*REQ_IF_TOOL_EXTENSION
 
 	// insertion point for slice of pointers maps
@@ -1115,7 +1111,7 @@ type Stage struct {
 	OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONReadCallback   OnAfterReadInterface[REQ_IF_TOOL_EXTENSION]
 
-	RenderingConfigurations           map[*RenderingConfiguration]any
+	RenderingConfigurations           map[*RenderingConfiguration]struct{}
 	RenderingConfigurations_mapString map[string]*RenderingConfiguration
 
 	// insertion point for slice of pointers maps
@@ -1174,7 +1170,7 @@ type Stage struct {
 	OnAfterRenderingConfigurationDeleteCallback OnAfterDeleteInterface[RenderingConfiguration]
 	OnAfterRenderingConfigurationReadCallback   OnAfterReadInterface[RenderingConfiguration]
 
-	SPECIFICATIONs           map[*SPECIFICATION]any
+	SPECIFICATIONs           map[*SPECIFICATION]struct{}
 	SPECIFICATIONs_mapString map[string]*SPECIFICATION
 
 	// insertion point for slice of pointers maps
@@ -1183,7 +1179,7 @@ type Stage struct {
 	OnAfterSPECIFICATIONDeleteCallback OnAfterDeleteInterface[SPECIFICATION]
 	OnAfterSPECIFICATIONReadCallback   OnAfterReadInterface[SPECIFICATION]
 
-	SPECIFICATION_TYPEs           map[*SPECIFICATION_TYPE]any
+	SPECIFICATION_TYPEs           map[*SPECIFICATION_TYPE]struct{}
 	SPECIFICATION_TYPEs_mapString map[string]*SPECIFICATION_TYPE
 
 	// insertion point for slice of pointers maps
@@ -1192,7 +1188,7 @@ type Stage struct {
 	OnAfterSPECIFICATION_TYPEDeleteCallback OnAfterDeleteInterface[SPECIFICATION_TYPE]
 	OnAfterSPECIFICATION_TYPEReadCallback   OnAfterReadInterface[SPECIFICATION_TYPE]
 
-	SPEC_HIERARCHYs           map[*SPEC_HIERARCHY]any
+	SPEC_HIERARCHYs           map[*SPEC_HIERARCHY]struct{}
 	SPEC_HIERARCHYs_mapString map[string]*SPEC_HIERARCHY
 
 	// insertion point for slice of pointers maps
@@ -1201,7 +1197,7 @@ type Stage struct {
 	OnAfterSPEC_HIERARCHYDeleteCallback OnAfterDeleteInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYReadCallback   OnAfterReadInterface[SPEC_HIERARCHY]
 
-	SPEC_OBJECTs           map[*SPEC_OBJECT]any
+	SPEC_OBJECTs           map[*SPEC_OBJECT]struct{}
 	SPEC_OBJECTs_mapString map[string]*SPEC_OBJECT
 
 	// insertion point for slice of pointers maps
@@ -1210,7 +1206,7 @@ type Stage struct {
 	OnAfterSPEC_OBJECTDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT]
 	OnAfterSPEC_OBJECTReadCallback   OnAfterReadInterface[SPEC_OBJECT]
 
-	SPEC_OBJECT_TYPEs           map[*SPEC_OBJECT_TYPE]any
+	SPEC_OBJECT_TYPEs           map[*SPEC_OBJECT_TYPE]struct{}
 	SPEC_OBJECT_TYPEs_mapString map[string]*SPEC_OBJECT_TYPE
 
 	// insertion point for slice of pointers maps
@@ -1219,7 +1215,7 @@ type Stage struct {
 	OnAfterSPEC_OBJECT_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE]
 
-	SPEC_RELATIONs           map[*SPEC_RELATION]any
+	SPEC_RELATIONs           map[*SPEC_RELATION]struct{}
 	SPEC_RELATIONs_mapString map[string]*SPEC_RELATION
 
 	// insertion point for slice of pointers maps
@@ -1228,7 +1224,7 @@ type Stage struct {
 	OnAfterSPEC_RELATIONDeleteCallback OnAfterDeleteInterface[SPEC_RELATION]
 	OnAfterSPEC_RELATIONReadCallback   OnAfterReadInterface[SPEC_RELATION]
 
-	SPEC_RELATION_TYPEs           map[*SPEC_RELATION_TYPE]any
+	SPEC_RELATION_TYPEs           map[*SPEC_RELATION_TYPE]struct{}
 	SPEC_RELATION_TYPEs_mapString map[string]*SPEC_RELATION_TYPE
 
 	// insertion point for slice of pointers maps
@@ -1237,7 +1233,7 @@ type Stage struct {
 	OnAfterSPEC_RELATION_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_RELATION_TYPE]
 	OnAfterSPEC_RELATION_TYPEReadCallback   OnAfterReadInterface[SPEC_RELATION_TYPE]
 
-	StaticWebSites           map[*StaticWebSite]any
+	StaticWebSites           map[*StaticWebSite]struct{}
 	StaticWebSites_mapString map[string]*StaticWebSite
 
 	// insertion point for slice of pointers maps
@@ -1248,7 +1244,7 @@ type Stage struct {
 	OnAfterStaticWebSiteDeleteCallback OnAfterDeleteInterface[StaticWebSite]
 	OnAfterStaticWebSiteReadCallback   OnAfterReadInterface[StaticWebSite]
 
-	StaticWebSiteChapters           map[*StaticWebSiteChapter]any
+	StaticWebSiteChapters           map[*StaticWebSiteChapter]struct{}
 	StaticWebSiteChapters_mapString map[string]*StaticWebSiteChapter
 
 	// insertion point for slice of pointers maps
@@ -1259,7 +1255,7 @@ type Stage struct {
 	OnAfterStaticWebSiteChapterDeleteCallback OnAfterDeleteInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterReadCallback   OnAfterReadInterface[StaticWebSiteChapter]
 
-	StaticWebSiteGeneratedImages           map[*StaticWebSiteGeneratedImage]any
+	StaticWebSiteGeneratedImages           map[*StaticWebSiteGeneratedImage]struct{}
 	StaticWebSiteGeneratedImages_mapString map[string]*StaticWebSiteGeneratedImage
 
 	// insertion point for slice of pointers maps
@@ -1268,7 +1264,7 @@ type Stage struct {
 	OnAfterStaticWebSiteGeneratedImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteGeneratedImage]
 	OnAfterStaticWebSiteGeneratedImageReadCallback   OnAfterReadInterface[StaticWebSiteGeneratedImage]
 
-	StaticWebSiteImages           map[*StaticWebSiteImage]any
+	StaticWebSiteImages           map[*StaticWebSiteImage]struct{}
 	StaticWebSiteImages_mapString map[string]*StaticWebSiteImage
 
 	// insertion point for slice of pointers maps
@@ -1277,7 +1273,7 @@ type Stage struct {
 	OnAfterStaticWebSiteImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteImage]
 	OnAfterStaticWebSiteImageReadCallback   OnAfterReadInterface[StaticWebSiteImage]
 
-	StaticWebSiteParagraphs           map[*StaticWebSiteParagraph]any
+	StaticWebSiteParagraphs           map[*StaticWebSiteParagraph]struct{}
 	StaticWebSiteParagraphs_mapString map[string]*StaticWebSiteParagraph
 
 	// insertion point for slice of pointers maps
@@ -1286,7 +1282,7 @@ type Stage struct {
 	OnAfterStaticWebSiteParagraphDeleteCallback OnAfterDeleteInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphReadCallback   OnAfterReadInterface[StaticWebSiteParagraph]
 
-	XHTML_CONTENTs           map[*XHTML_CONTENT]any
+	XHTML_CONTENTs           map[*XHTML_CONTENT]struct{}
 	XHTML_CONTENTs_mapString map[string]*XHTML_CONTENT
 
 	// insertion point for slice of pointers maps
@@ -1689,18 +1685,6 @@ type Stage struct {
 	deleted   map[GongstructIF]struct{}
 }
 
-func (stage *Stage) GetCommitId() uint {
-	return stage.commitId
-}
-
-func (stage *Stage) GetCommitTS() time.Time {
-	return stage.commitTimeStamp
-}
-
-func (stage *Stage) SetGeneratesDiff(generatesDiff bool) {
-	stage.generatesDiff = generatesDiff
-}
-
 // GetNamedStructs implements models.ProbebStage.
 func (stage *Stage) GetNamedStructsNames() (res []string) {
 
@@ -1727,7 +1711,7 @@ func (stage *Stage) GetDeleted() map[GongstructIF]struct{} {
 	return stage.deleted
 }
 
-func GetNamedStructInstances[T PointerToGongstruct](set map[T]any, order map[T]uint) (res []string) {
+func GetNamedStructInstances[T PointerToGongstruct](set map[T]struct{}, order map[T]uint) (res []string) {
 
 	orderedSet := []T{}
 	for instance := range set {
@@ -3426,7 +3410,7 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 	return
 }
 
-func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]any, order map[T]uint) (res []T) {
+func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]struct{}, order map[T]uint) (res []T) {
 
 	orderedSet := []T{}
 	for instance := range set {
@@ -4004,361 +3988,361 @@ type BackRepoInterface interface {
 func NewStage(name string) (stage *Stage) {
 
 	stage = &Stage{ // insertion point for array initiatialisation
-		ALTERNATIVE_IDs:           make(map[*ALTERNATIVE_ID]any),
+		ALTERNATIVE_IDs:           make(map[*ALTERNATIVE_ID]struct{}),
 		ALTERNATIVE_IDs_mapString: make(map[string]*ALTERNATIVE_ID),
 
-		ATTRIBUTE_DEFINITION_BOOLEANs:           make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]any),
+		ATTRIBUTE_DEFINITION_BOOLEANs:           make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]struct{}),
 		ATTRIBUTE_DEFINITION_BOOLEANs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_BOOLEAN),
 
-		ATTRIBUTE_DEFINITION_DATEs:           make(map[*ATTRIBUTE_DEFINITION_DATE]any),
+		ATTRIBUTE_DEFINITION_DATEs:           make(map[*ATTRIBUTE_DEFINITION_DATE]struct{}),
 		ATTRIBUTE_DEFINITION_DATEs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_DATE),
 
-		ATTRIBUTE_DEFINITION_ENUMERATIONs:           make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]any),
+		ATTRIBUTE_DEFINITION_ENUMERATIONs:           make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]struct{}),
 		ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION),
 
-		ATTRIBUTE_DEFINITION_INTEGERs:           make(map[*ATTRIBUTE_DEFINITION_INTEGER]any),
+		ATTRIBUTE_DEFINITION_INTEGERs:           make(map[*ATTRIBUTE_DEFINITION_INTEGER]struct{}),
 		ATTRIBUTE_DEFINITION_INTEGERs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_INTEGER),
 
-		ATTRIBUTE_DEFINITION_REALs:           make(map[*ATTRIBUTE_DEFINITION_REAL]any),
+		ATTRIBUTE_DEFINITION_REALs:           make(map[*ATTRIBUTE_DEFINITION_REAL]struct{}),
 		ATTRIBUTE_DEFINITION_REALs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_REAL),
 
-		ATTRIBUTE_DEFINITION_STRINGs:           make(map[*ATTRIBUTE_DEFINITION_STRING]any),
+		ATTRIBUTE_DEFINITION_STRINGs:           make(map[*ATTRIBUTE_DEFINITION_STRING]struct{}),
 		ATTRIBUTE_DEFINITION_STRINGs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_STRING),
 
-		ATTRIBUTE_DEFINITION_XHTMLs:           make(map[*ATTRIBUTE_DEFINITION_XHTML]any),
+		ATTRIBUTE_DEFINITION_XHTMLs:           make(map[*ATTRIBUTE_DEFINITION_XHTML]struct{}),
 		ATTRIBUTE_DEFINITION_XHTMLs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_XHTML),
 
-		ATTRIBUTE_VALUE_BOOLEANs:           make(map[*ATTRIBUTE_VALUE_BOOLEAN]any),
+		ATTRIBUTE_VALUE_BOOLEANs:           make(map[*ATTRIBUTE_VALUE_BOOLEAN]struct{}),
 		ATTRIBUTE_VALUE_BOOLEANs_mapString: make(map[string]*ATTRIBUTE_VALUE_BOOLEAN),
 
-		ATTRIBUTE_VALUE_DATEs:           make(map[*ATTRIBUTE_VALUE_DATE]any),
+		ATTRIBUTE_VALUE_DATEs:           make(map[*ATTRIBUTE_VALUE_DATE]struct{}),
 		ATTRIBUTE_VALUE_DATEs_mapString: make(map[string]*ATTRIBUTE_VALUE_DATE),
 
-		ATTRIBUTE_VALUE_ENUMERATIONs:           make(map[*ATTRIBUTE_VALUE_ENUMERATION]any),
+		ATTRIBUTE_VALUE_ENUMERATIONs:           make(map[*ATTRIBUTE_VALUE_ENUMERATION]struct{}),
 		ATTRIBUTE_VALUE_ENUMERATIONs_mapString: make(map[string]*ATTRIBUTE_VALUE_ENUMERATION),
 
-		ATTRIBUTE_VALUE_INTEGERs:           make(map[*ATTRIBUTE_VALUE_INTEGER]any),
+		ATTRIBUTE_VALUE_INTEGERs:           make(map[*ATTRIBUTE_VALUE_INTEGER]struct{}),
 		ATTRIBUTE_VALUE_INTEGERs_mapString: make(map[string]*ATTRIBUTE_VALUE_INTEGER),
 
-		ATTRIBUTE_VALUE_REALs:           make(map[*ATTRIBUTE_VALUE_REAL]any),
+		ATTRIBUTE_VALUE_REALs:           make(map[*ATTRIBUTE_VALUE_REAL]struct{}),
 		ATTRIBUTE_VALUE_REALs_mapString: make(map[string]*ATTRIBUTE_VALUE_REAL),
 
-		ATTRIBUTE_VALUE_STRINGs:           make(map[*ATTRIBUTE_VALUE_STRING]any),
+		ATTRIBUTE_VALUE_STRINGs:           make(map[*ATTRIBUTE_VALUE_STRING]struct{}),
 		ATTRIBUTE_VALUE_STRINGs_mapString: make(map[string]*ATTRIBUTE_VALUE_STRING),
 
-		ATTRIBUTE_VALUE_XHTMLs:           make(map[*ATTRIBUTE_VALUE_XHTML]any),
+		ATTRIBUTE_VALUE_XHTMLs:           make(map[*ATTRIBUTE_VALUE_XHTML]struct{}),
 		ATTRIBUTE_VALUE_XHTMLs_mapString: make(map[string]*ATTRIBUTE_VALUE_XHTML),
 
-		A_ALTERNATIVE_IDs:           make(map[*A_ALTERNATIVE_ID]any),
+		A_ALTERNATIVE_IDs:           make(map[*A_ALTERNATIVE_ID]struct{}),
 		A_ALTERNATIVE_IDs_mapString: make(map[string]*A_ALTERNATIVE_ID),
 
-		A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]any),
+		A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF),
 
-		A_ATTRIBUTE_DEFINITION_DATE_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]any),
+		A_ATTRIBUTE_DEFINITION_DATE_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF),
 
-		A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]any),
+		A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF),
 
-		A_ATTRIBUTE_DEFINITION_INTEGER_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]any),
+		A_ATTRIBUTE_DEFINITION_INTEGER_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF),
 
-		A_ATTRIBUTE_DEFINITION_REAL_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]any),
+		A_ATTRIBUTE_DEFINITION_REAL_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF),
 
-		A_ATTRIBUTE_DEFINITION_STRING_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]any),
+		A_ATTRIBUTE_DEFINITION_STRING_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF),
 
-		A_ATTRIBUTE_DEFINITION_XHTML_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]any),
+		A_ATTRIBUTE_DEFINITION_XHTML_REFs:           make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]struct{}),
 		A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString: make(map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF),
 
-		A_ATTRIBUTE_VALUE_BOOLEANs:           make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]any),
+		A_ATTRIBUTE_VALUE_BOOLEANs:           make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]struct{}),
 		A_ATTRIBUTE_VALUE_BOOLEANs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_BOOLEAN),
 
-		A_ATTRIBUTE_VALUE_DATEs:           make(map[*A_ATTRIBUTE_VALUE_DATE]any),
+		A_ATTRIBUTE_VALUE_DATEs:           make(map[*A_ATTRIBUTE_VALUE_DATE]struct{}),
 		A_ATTRIBUTE_VALUE_DATEs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_DATE),
 
-		A_ATTRIBUTE_VALUE_ENUMERATIONs:           make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]any),
+		A_ATTRIBUTE_VALUE_ENUMERATIONs:           make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]struct{}),
 		A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_ENUMERATION),
 
-		A_ATTRIBUTE_VALUE_INTEGERs:           make(map[*A_ATTRIBUTE_VALUE_INTEGER]any),
+		A_ATTRIBUTE_VALUE_INTEGERs:           make(map[*A_ATTRIBUTE_VALUE_INTEGER]struct{}),
 		A_ATTRIBUTE_VALUE_INTEGERs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_INTEGER),
 
-		A_ATTRIBUTE_VALUE_REALs:           make(map[*A_ATTRIBUTE_VALUE_REAL]any),
+		A_ATTRIBUTE_VALUE_REALs:           make(map[*A_ATTRIBUTE_VALUE_REAL]struct{}),
 		A_ATTRIBUTE_VALUE_REALs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_REAL),
 
-		A_ATTRIBUTE_VALUE_STRINGs:           make(map[*A_ATTRIBUTE_VALUE_STRING]any),
+		A_ATTRIBUTE_VALUE_STRINGs:           make(map[*A_ATTRIBUTE_VALUE_STRING]struct{}),
 		A_ATTRIBUTE_VALUE_STRINGs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_STRING),
 
-		A_ATTRIBUTE_VALUE_XHTMLs:           make(map[*A_ATTRIBUTE_VALUE_XHTML]any),
+		A_ATTRIBUTE_VALUE_XHTMLs:           make(map[*A_ATTRIBUTE_VALUE_XHTML]struct{}),
 		A_ATTRIBUTE_VALUE_XHTMLs_mapString: make(map[string]*A_ATTRIBUTE_VALUE_XHTML),
 
-		A_ATTRIBUTE_VALUE_XHTML_1s:           make(map[*A_ATTRIBUTE_VALUE_XHTML_1]any),
+		A_ATTRIBUTE_VALUE_XHTML_1s:           make(map[*A_ATTRIBUTE_VALUE_XHTML_1]struct{}),
 		A_ATTRIBUTE_VALUE_XHTML_1s_mapString: make(map[string]*A_ATTRIBUTE_VALUE_XHTML_1),
 
-		A_CHILDRENs:           make(map[*A_CHILDREN]any),
+		A_CHILDRENs:           make(map[*A_CHILDREN]struct{}),
 		A_CHILDRENs_mapString: make(map[string]*A_CHILDREN),
 
-		A_CORE_CONTENTs:           make(map[*A_CORE_CONTENT]any),
+		A_CORE_CONTENTs:           make(map[*A_CORE_CONTENT]struct{}),
 		A_CORE_CONTENTs_mapString: make(map[string]*A_CORE_CONTENT),
 
-		A_DATATYPESs:           make(map[*A_DATATYPES]any),
+		A_DATATYPESs:           make(map[*A_DATATYPES]struct{}),
 		A_DATATYPESs_mapString: make(map[string]*A_DATATYPES),
 
-		A_DATATYPE_DEFINITION_BOOLEAN_REFs:           make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]any),
+		A_DATATYPE_DEFINITION_BOOLEAN_REFs:           make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]struct{}),
 		A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF),
 
-		A_DATATYPE_DEFINITION_DATE_REFs:           make(map[*A_DATATYPE_DEFINITION_DATE_REF]any),
+		A_DATATYPE_DEFINITION_DATE_REFs:           make(map[*A_DATATYPE_DEFINITION_DATE_REF]struct{}),
 		A_DATATYPE_DEFINITION_DATE_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_DATE_REF),
 
-		A_DATATYPE_DEFINITION_ENUMERATION_REFs:           make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]any),
+		A_DATATYPE_DEFINITION_ENUMERATION_REFs:           make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]struct{}),
 		A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF),
 
-		A_DATATYPE_DEFINITION_INTEGER_REFs:           make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]any),
+		A_DATATYPE_DEFINITION_INTEGER_REFs:           make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]struct{}),
 		A_DATATYPE_DEFINITION_INTEGER_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_INTEGER_REF),
 
-		A_DATATYPE_DEFINITION_REAL_REFs:           make(map[*A_DATATYPE_DEFINITION_REAL_REF]any),
+		A_DATATYPE_DEFINITION_REAL_REFs:           make(map[*A_DATATYPE_DEFINITION_REAL_REF]struct{}),
 		A_DATATYPE_DEFINITION_REAL_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_REAL_REF),
 
-		A_DATATYPE_DEFINITION_STRING_REFs:           make(map[*A_DATATYPE_DEFINITION_STRING_REF]any),
+		A_DATATYPE_DEFINITION_STRING_REFs:           make(map[*A_DATATYPE_DEFINITION_STRING_REF]struct{}),
 		A_DATATYPE_DEFINITION_STRING_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_STRING_REF),
 
-		A_DATATYPE_DEFINITION_XHTML_REFs:           make(map[*A_DATATYPE_DEFINITION_XHTML_REF]any),
+		A_DATATYPE_DEFINITION_XHTML_REFs:           make(map[*A_DATATYPE_DEFINITION_XHTML_REF]struct{}),
 		A_DATATYPE_DEFINITION_XHTML_REFs_mapString: make(map[string]*A_DATATYPE_DEFINITION_XHTML_REF),
 
-		A_EDITABLE_ATTSs:           make(map[*A_EDITABLE_ATTS]any),
+		A_EDITABLE_ATTSs:           make(map[*A_EDITABLE_ATTS]struct{}),
 		A_EDITABLE_ATTSs_mapString: make(map[string]*A_EDITABLE_ATTS),
 
-		A_ENUM_VALUE_REFs:           make(map[*A_ENUM_VALUE_REF]any),
+		A_ENUM_VALUE_REFs:           make(map[*A_ENUM_VALUE_REF]struct{}),
 		A_ENUM_VALUE_REFs_mapString: make(map[string]*A_ENUM_VALUE_REF),
 
-		A_OBJECTs:           make(map[*A_OBJECT]any),
+		A_OBJECTs:           make(map[*A_OBJECT]struct{}),
 		A_OBJECTs_mapString: make(map[string]*A_OBJECT),
 
-		A_PROPERTIESs:           make(map[*A_PROPERTIES]any),
+		A_PROPERTIESs:           make(map[*A_PROPERTIES]struct{}),
 		A_PROPERTIESs_mapString: make(map[string]*A_PROPERTIES),
 
-		A_RELATION_GROUP_TYPE_REFs:           make(map[*A_RELATION_GROUP_TYPE_REF]any),
+		A_RELATION_GROUP_TYPE_REFs:           make(map[*A_RELATION_GROUP_TYPE_REF]struct{}),
 		A_RELATION_GROUP_TYPE_REFs_mapString: make(map[string]*A_RELATION_GROUP_TYPE_REF),
 
-		A_SOURCE_1s:           make(map[*A_SOURCE_1]any),
+		A_SOURCE_1s:           make(map[*A_SOURCE_1]struct{}),
 		A_SOURCE_1s_mapString: make(map[string]*A_SOURCE_1),
 
-		A_SOURCE_SPECIFICATION_1s:           make(map[*A_SOURCE_SPECIFICATION_1]any),
+		A_SOURCE_SPECIFICATION_1s:           make(map[*A_SOURCE_SPECIFICATION_1]struct{}),
 		A_SOURCE_SPECIFICATION_1s_mapString: make(map[string]*A_SOURCE_SPECIFICATION_1),
 
-		A_SPECIFICATIONSs:           make(map[*A_SPECIFICATIONS]any),
+		A_SPECIFICATIONSs:           make(map[*A_SPECIFICATIONS]struct{}),
 		A_SPECIFICATIONSs_mapString: make(map[string]*A_SPECIFICATIONS),
 
-		A_SPECIFICATION_TYPE_REFs:           make(map[*A_SPECIFICATION_TYPE_REF]any),
+		A_SPECIFICATION_TYPE_REFs:           make(map[*A_SPECIFICATION_TYPE_REF]struct{}),
 		A_SPECIFICATION_TYPE_REFs_mapString: make(map[string]*A_SPECIFICATION_TYPE_REF),
 
-		A_SPECIFIED_VALUESs:           make(map[*A_SPECIFIED_VALUES]any),
+		A_SPECIFIED_VALUESs:           make(map[*A_SPECIFIED_VALUES]struct{}),
 		A_SPECIFIED_VALUESs_mapString: make(map[string]*A_SPECIFIED_VALUES),
 
-		A_SPEC_ATTRIBUTESs:           make(map[*A_SPEC_ATTRIBUTES]any),
+		A_SPEC_ATTRIBUTESs:           make(map[*A_SPEC_ATTRIBUTES]struct{}),
 		A_SPEC_ATTRIBUTESs_mapString: make(map[string]*A_SPEC_ATTRIBUTES),
 
-		A_SPEC_OBJECTSs:           make(map[*A_SPEC_OBJECTS]any),
+		A_SPEC_OBJECTSs:           make(map[*A_SPEC_OBJECTS]struct{}),
 		A_SPEC_OBJECTSs_mapString: make(map[string]*A_SPEC_OBJECTS),
 
-		A_SPEC_OBJECT_TYPE_REFs:           make(map[*A_SPEC_OBJECT_TYPE_REF]any),
+		A_SPEC_OBJECT_TYPE_REFs:           make(map[*A_SPEC_OBJECT_TYPE_REF]struct{}),
 		A_SPEC_OBJECT_TYPE_REFs_mapString: make(map[string]*A_SPEC_OBJECT_TYPE_REF),
 
-		A_SPEC_RELATIONSs:           make(map[*A_SPEC_RELATIONS]any),
+		A_SPEC_RELATIONSs:           make(map[*A_SPEC_RELATIONS]struct{}),
 		A_SPEC_RELATIONSs_mapString: make(map[string]*A_SPEC_RELATIONS),
 
-		A_SPEC_RELATION_GROUPSs:           make(map[*A_SPEC_RELATION_GROUPS]any),
+		A_SPEC_RELATION_GROUPSs:           make(map[*A_SPEC_RELATION_GROUPS]struct{}),
 		A_SPEC_RELATION_GROUPSs_mapString: make(map[string]*A_SPEC_RELATION_GROUPS),
 
-		A_SPEC_RELATION_REFs:           make(map[*A_SPEC_RELATION_REF]any),
+		A_SPEC_RELATION_REFs:           make(map[*A_SPEC_RELATION_REF]struct{}),
 		A_SPEC_RELATION_REFs_mapString: make(map[string]*A_SPEC_RELATION_REF),
 
-		A_SPEC_RELATION_TYPE_REFs:           make(map[*A_SPEC_RELATION_TYPE_REF]any),
+		A_SPEC_RELATION_TYPE_REFs:           make(map[*A_SPEC_RELATION_TYPE_REF]struct{}),
 		A_SPEC_RELATION_TYPE_REFs_mapString: make(map[string]*A_SPEC_RELATION_TYPE_REF),
 
-		A_SPEC_TYPESs:           make(map[*A_SPEC_TYPES]any),
+		A_SPEC_TYPESs:           make(map[*A_SPEC_TYPES]struct{}),
 		A_SPEC_TYPESs_mapString: make(map[string]*A_SPEC_TYPES),
 
-		A_THE_HEADERs:           make(map[*A_THE_HEADER]any),
+		A_THE_HEADERs:           make(map[*A_THE_HEADER]struct{}),
 		A_THE_HEADERs_mapString: make(map[string]*A_THE_HEADER),
 
-		A_TOOL_EXTENSIONSs:           make(map[*A_TOOL_EXTENSIONS]any),
+		A_TOOL_EXTENSIONSs:           make(map[*A_TOOL_EXTENSIONS]struct{}),
 		A_TOOL_EXTENSIONSs_mapString: make(map[string]*A_TOOL_EXTENSIONS),
 
-		DATATYPE_DEFINITION_BOOLEANs:           make(map[*DATATYPE_DEFINITION_BOOLEAN]any),
+		DATATYPE_DEFINITION_BOOLEANs:           make(map[*DATATYPE_DEFINITION_BOOLEAN]struct{}),
 		DATATYPE_DEFINITION_BOOLEANs_mapString: make(map[string]*DATATYPE_DEFINITION_BOOLEAN),
 
-		DATATYPE_DEFINITION_DATEs:           make(map[*DATATYPE_DEFINITION_DATE]any),
+		DATATYPE_DEFINITION_DATEs:           make(map[*DATATYPE_DEFINITION_DATE]struct{}),
 		DATATYPE_DEFINITION_DATEs_mapString: make(map[string]*DATATYPE_DEFINITION_DATE),
 
-		DATATYPE_DEFINITION_ENUMERATIONs:           make(map[*DATATYPE_DEFINITION_ENUMERATION]any),
+		DATATYPE_DEFINITION_ENUMERATIONs:           make(map[*DATATYPE_DEFINITION_ENUMERATION]struct{}),
 		DATATYPE_DEFINITION_ENUMERATIONs_mapString: make(map[string]*DATATYPE_DEFINITION_ENUMERATION),
 
-		DATATYPE_DEFINITION_INTEGERs:           make(map[*DATATYPE_DEFINITION_INTEGER]any),
+		DATATYPE_DEFINITION_INTEGERs:           make(map[*DATATYPE_DEFINITION_INTEGER]struct{}),
 		DATATYPE_DEFINITION_INTEGERs_mapString: make(map[string]*DATATYPE_DEFINITION_INTEGER),
 
-		DATATYPE_DEFINITION_REALs:           make(map[*DATATYPE_DEFINITION_REAL]any),
+		DATATYPE_DEFINITION_REALs:           make(map[*DATATYPE_DEFINITION_REAL]struct{}),
 		DATATYPE_DEFINITION_REALs_mapString: make(map[string]*DATATYPE_DEFINITION_REAL),
 
-		DATATYPE_DEFINITION_STRINGs:           make(map[*DATATYPE_DEFINITION_STRING]any),
+		DATATYPE_DEFINITION_STRINGs:           make(map[*DATATYPE_DEFINITION_STRING]struct{}),
 		DATATYPE_DEFINITION_STRINGs_mapString: make(map[string]*DATATYPE_DEFINITION_STRING),
 
-		DATATYPE_DEFINITION_XHTMLs:           make(map[*DATATYPE_DEFINITION_XHTML]any),
+		DATATYPE_DEFINITION_XHTMLs:           make(map[*DATATYPE_DEFINITION_XHTML]struct{}),
 		DATATYPE_DEFINITION_XHTMLs_mapString: make(map[string]*DATATYPE_DEFINITION_XHTML),
 
-		EMBEDDED_VALUEs:           make(map[*EMBEDDED_VALUE]any),
+		EMBEDDED_VALUEs:           make(map[*EMBEDDED_VALUE]struct{}),
 		EMBEDDED_VALUEs_mapString: make(map[string]*EMBEDDED_VALUE),
 
-		ENUM_VALUEs:           make(map[*ENUM_VALUE]any),
+		ENUM_VALUEs:           make(map[*ENUM_VALUE]struct{}),
 		ENUM_VALUEs_mapString: make(map[string]*ENUM_VALUE),
 
-		EmbeddedJpgImages:           make(map[*EmbeddedJpgImage]any),
+		EmbeddedJpgImages:           make(map[*EmbeddedJpgImage]struct{}),
 		EmbeddedJpgImages_mapString: make(map[string]*EmbeddedJpgImage),
 
-		EmbeddedPngImages:           make(map[*EmbeddedPngImage]any),
+		EmbeddedPngImages:           make(map[*EmbeddedPngImage]struct{}),
 		EmbeddedPngImages_mapString: make(map[string]*EmbeddedPngImage),
 
-		EmbeddedSvgImages:           make(map[*EmbeddedSvgImage]any),
+		EmbeddedSvgImages:           make(map[*EmbeddedSvgImage]struct{}),
 		EmbeddedSvgImages_mapString: make(map[string]*EmbeddedSvgImage),
 
-		Kills:           make(map[*Kill]any),
+		Kills:           make(map[*Kill]struct{}),
 		Kills_mapString: make(map[string]*Kill),
 
-		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry),
 
-		Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry),
 
-		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry),
 
-		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry),
 
-		Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry),
 
-		Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry),
 
-		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]any),
+		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry),
 
-		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]any),
+		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry),
 
-		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]any),
+		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys:           make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]struct{}),
 		Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys_mapString: make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry),
 
-		Map_SPECIFICATION_Nodes_expandedEntrys:           make(map[*Map_SPECIFICATION_Nodes_expandedEntry]any),
+		Map_SPECIFICATION_Nodes_expandedEntrys:           make(map[*Map_SPECIFICATION_Nodes_expandedEntry]struct{}),
 		Map_SPECIFICATION_Nodes_expandedEntrys_mapString: make(map[string]*Map_SPECIFICATION_Nodes_expandedEntry),
 
-		Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]any),
+		Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]struct{}),
 		Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys_mapString: make(map[string]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry),
 
-		Map_SPEC_OBJECT_TYPE_showIdentifierEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]any),
+		Map_SPEC_OBJECT_TYPE_showIdentifierEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]struct{}),
 		Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString: make(map[string]*Map_SPEC_OBJECT_TYPE_showIdentifierEntry),
 
-		Map_SPEC_OBJECT_TYPE_showNameEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]any),
+		Map_SPEC_OBJECT_TYPE_showNameEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]struct{}),
 		Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString: make(map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry),
 
-		RELATION_GROUPs:           make(map[*RELATION_GROUP]any),
+		RELATION_GROUPs:           make(map[*RELATION_GROUP]struct{}),
 		RELATION_GROUPs_mapString: make(map[string]*RELATION_GROUP),
 
-		RELATION_GROUP_TYPEs:           make(map[*RELATION_GROUP_TYPE]any),
+		RELATION_GROUP_TYPEs:           make(map[*RELATION_GROUP_TYPE]struct{}),
 		RELATION_GROUP_TYPEs_mapString: make(map[string]*RELATION_GROUP_TYPE),
 
-		REQ_IFs:           make(map[*REQ_IF]any),
+		REQ_IFs:           make(map[*REQ_IF]struct{}),
 		REQ_IFs_mapString: make(map[string]*REQ_IF),
 
-		REQ_IF_CONTENTs:           make(map[*REQ_IF_CONTENT]any),
+		REQ_IF_CONTENTs:           make(map[*REQ_IF_CONTENT]struct{}),
 		REQ_IF_CONTENTs_mapString: make(map[string]*REQ_IF_CONTENT),
 
-		REQ_IF_HEADERs:           make(map[*REQ_IF_HEADER]any),
+		REQ_IF_HEADERs:           make(map[*REQ_IF_HEADER]struct{}),
 		REQ_IF_HEADERs_mapString: make(map[string]*REQ_IF_HEADER),
 
-		REQ_IF_TOOL_EXTENSIONs:           make(map[*REQ_IF_TOOL_EXTENSION]any),
+		REQ_IF_TOOL_EXTENSIONs:           make(map[*REQ_IF_TOOL_EXTENSION]struct{}),
 		REQ_IF_TOOL_EXTENSIONs_mapString: make(map[string]*REQ_IF_TOOL_EXTENSION),
 
-		RenderingConfigurations:           make(map[*RenderingConfiguration]any),
+		RenderingConfigurations:           make(map[*RenderingConfiguration]struct{}),
 		RenderingConfigurations_mapString: make(map[string]*RenderingConfiguration),
 
-		SPECIFICATIONs:           make(map[*SPECIFICATION]any),
+		SPECIFICATIONs:           make(map[*SPECIFICATION]struct{}),
 		SPECIFICATIONs_mapString: make(map[string]*SPECIFICATION),
 
-		SPECIFICATION_TYPEs:           make(map[*SPECIFICATION_TYPE]any),
+		SPECIFICATION_TYPEs:           make(map[*SPECIFICATION_TYPE]struct{}),
 		SPECIFICATION_TYPEs_mapString: make(map[string]*SPECIFICATION_TYPE),
 
-		SPEC_HIERARCHYs:           make(map[*SPEC_HIERARCHY]any),
+		SPEC_HIERARCHYs:           make(map[*SPEC_HIERARCHY]struct{}),
 		SPEC_HIERARCHYs_mapString: make(map[string]*SPEC_HIERARCHY),
 
-		SPEC_OBJECTs:           make(map[*SPEC_OBJECT]any),
+		SPEC_OBJECTs:           make(map[*SPEC_OBJECT]struct{}),
 		SPEC_OBJECTs_mapString: make(map[string]*SPEC_OBJECT),
 
-		SPEC_OBJECT_TYPEs:           make(map[*SPEC_OBJECT_TYPE]any),
+		SPEC_OBJECT_TYPEs:           make(map[*SPEC_OBJECT_TYPE]struct{}),
 		SPEC_OBJECT_TYPEs_mapString: make(map[string]*SPEC_OBJECT_TYPE),
 
-		SPEC_RELATIONs:           make(map[*SPEC_RELATION]any),
+		SPEC_RELATIONs:           make(map[*SPEC_RELATION]struct{}),
 		SPEC_RELATIONs_mapString: make(map[string]*SPEC_RELATION),
 
-		SPEC_RELATION_TYPEs:           make(map[*SPEC_RELATION_TYPE]any),
+		SPEC_RELATION_TYPEs:           make(map[*SPEC_RELATION_TYPE]struct{}),
 		SPEC_RELATION_TYPEs_mapString: make(map[string]*SPEC_RELATION_TYPE),
 
-		StaticWebSites:           make(map[*StaticWebSite]any),
+		StaticWebSites:           make(map[*StaticWebSite]struct{}),
 		StaticWebSites_mapString: make(map[string]*StaticWebSite),
 
-		StaticWebSiteChapters:           make(map[*StaticWebSiteChapter]any),
+		StaticWebSiteChapters:           make(map[*StaticWebSiteChapter]struct{}),
 		StaticWebSiteChapters_mapString: make(map[string]*StaticWebSiteChapter),
 
-		StaticWebSiteGeneratedImages:           make(map[*StaticWebSiteGeneratedImage]any),
+		StaticWebSiteGeneratedImages:           make(map[*StaticWebSiteGeneratedImage]struct{}),
 		StaticWebSiteGeneratedImages_mapString: make(map[string]*StaticWebSiteGeneratedImage),
 
-		StaticWebSiteImages:           make(map[*StaticWebSiteImage]any),
+		StaticWebSiteImages:           make(map[*StaticWebSiteImage]struct{}),
 		StaticWebSiteImages_mapString: make(map[string]*StaticWebSiteImage),
 
-		StaticWebSiteParagraphs:           make(map[*StaticWebSiteParagraph]any),
+		StaticWebSiteParagraphs:           make(map[*StaticWebSiteParagraph]struct{}),
 		StaticWebSiteParagraphs_mapString: make(map[string]*StaticWebSiteParagraph),
 
-		XHTML_CONTENTs:           make(map[*XHTML_CONTENT]any),
+		XHTML_CONTENTs:           make(map[*XHTML_CONTENT]struct{}),
 		XHTML_CONTENTs_mapString: make(map[string]*XHTML_CONTENT),
 
 		// end of insertion point
@@ -5250,9 +5234,7 @@ func (stage *Stage) CommitWithSuspendedCallbacks() {
 
 func (stage *Stage) Commit() {
 	stage.ComputeReverseMaps()
-	stage.commitId++
-	stage.commitTimeStamp = time.Now()
-
+	
 	if stage.OnInitCommitCallback != nil {
 		stage.OnInitCommitCallback.BeforeCommit(stage)
 	}
@@ -5432,7 +5414,7 @@ func (stage *Stage) RestoreXL(dirPath string) {
 func (alternative_id *ALTERNATIVE_ID) Stage(stage *Stage) *ALTERNATIVE_ID {
 
 	if _, ok := stage.ALTERNATIVE_IDs[alternative_id]; !ok {
-		stage.ALTERNATIVE_IDs[alternative_id] = __member
+		stage.ALTERNATIVE_IDs[alternative_id] = struct{}{}
 		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = stage.ALTERNATIVE_IDOrder
 		stage.ALTERNATIVE_IDOrder++
 		stage.new[alternative_id] = struct{}{}
@@ -5503,7 +5485,7 @@ func (alternative_id *ALTERNATIVE_ID) GetName() (res string) {
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean]; !ok {
-		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = __member
+		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
 		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder++
 		stage.new[attribute_definition_boolean] = struct{}{}
@@ -5574,7 +5556,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GetName() (res
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_DATE {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date]; !ok {
-		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = __member
+		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEOrder
 		stage.ATTRIBUTE_DEFINITION_DATEOrder++
 		stage.new[attribute_definition_date] = struct{}{}
@@ -5645,7 +5627,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GetName() (res strin
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration]; !ok {
-		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = __member
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder++
 		stage.new[attribute_definition_enumeration] = struct{}{}
@@ -5716,7 +5698,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GetNam
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_INTEGER {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer]; !ok {
-		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = __member
+		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGEROrder
 		stage.ATTRIBUTE_DEFINITION_INTEGEROrder++
 		stage.new[attribute_definition_integer] = struct{}{}
@@ -5787,7 +5769,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GetName() (res
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real]; !ok {
-		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = __member
+		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALOrder
 		stage.ATTRIBUTE_DEFINITION_REALOrder++
 		stage.new[attribute_definition_real] = struct{}{}
@@ -5858,7 +5840,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GetName() (res strin
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string]; !ok {
-		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = __member
+		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGOrder
 		stage.ATTRIBUTE_DEFINITION_STRINGOrder++
 		stage.new[attribute_definition_string] = struct{}{}
@@ -5929,7 +5911,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GetName() (res s
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_XHTML {
 
 	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml]; !ok {
-		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = __member
+		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLOrder
 		stage.ATTRIBUTE_DEFINITION_XHTMLOrder++
 		stage.new[attribute_definition_xhtml] = struct{}{}
@@ -6000,7 +5982,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GetName() (res str
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATTRIBUTE_VALUE_BOOLEAN {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean]; !ok {
-		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = __member
+		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = struct{}{}
 		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANOrder
 		stage.ATTRIBUTE_VALUE_BOOLEANOrder++
 		stage.new[attribute_value_boolean] = struct{}{}
@@ -6071,7 +6053,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GetName() (res string) {
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *ATTRIBUTE_VALUE_DATE {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date]; !ok {
-		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = __member
+		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = struct{}{}
 		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEOrder
 		stage.ATTRIBUTE_VALUE_DATEOrder++
 		stage.new[attribute_value_date] = struct{}{}
@@ -6142,7 +6124,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Stage) *ATTRIBUTE_VALUE_ENUMERATION {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration]; !ok {
-		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = __member
+		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = struct{}{}
 		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
 		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder++
 		stage.new[attribute_value_enumeration] = struct{}{}
@@ -6213,7 +6195,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GetName() (res s
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *ATTRIBUTE_VALUE_INTEGER {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer]; !ok {
-		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = __member
+		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = struct{}{}
 		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGEROrder
 		stage.ATTRIBUTE_VALUE_INTEGEROrder++
 		stage.new[attribute_value_integer] = struct{}{}
@@ -6284,7 +6266,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GetName() (res string) {
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE_VALUE_REAL {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_REALs[attribute_value_real]; !ok {
-		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = __member
+		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = struct{}{}
 		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALOrder
 		stage.ATTRIBUTE_VALUE_REALOrder++
 		stage.new[attribute_value_real] = struct{}{}
@@ -6355,7 +6337,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *ATTRIBUTE_VALUE_STRING {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string]; !ok {
-		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = __member
+		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = struct{}{}
 		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGOrder
 		stage.ATTRIBUTE_VALUE_STRINGOrder++
 		stage.new[attribute_value_string] = struct{}{}
@@ -6426,7 +6408,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GetName() (res string) {
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBUTE_VALUE_XHTML {
 
 	if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml]; !ok {
-		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = __member
+		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = struct{}{}
 		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLOrder
 		stage.ATTRIBUTE_VALUE_XHTMLOrder++
 		stage.new[attribute_value_xhtml] = struct{}{}
@@ -6497,7 +6479,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 func (a_alternative_id *A_ALTERNATIVE_ID) Stage(stage *Stage) *A_ALTERNATIVE_ID {
 
 	if _, ok := stage.A_ALTERNATIVE_IDs[a_alternative_id]; !ok {
-		stage.A_ALTERNATIVE_IDs[a_alternative_id] = __member
+		stage.A_ALTERNATIVE_IDs[a_alternative_id] = struct{}{}
 		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = stage.A_ALTERNATIVE_IDOrder
 		stage.A_ALTERNATIVE_IDOrder++
 		stage.new[a_alternative_id] = struct{}{}
@@ -6568,7 +6550,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GetName() (res string) {
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder++
 		stage.new[a_attribute_definition_boolean_ref] = struct{}{}
@@ -6639,7 +6621,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Ge
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_DATE_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder++
 		stage.new[a_attribute_definition_date_ref] = struct{}{}
@@ -6710,7 +6692,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GetName(
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder++
 		stage.new[a_attribute_definition_enumeration_ref] = struct{}{}
@@ -6781,7 +6763,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_INTEGER_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder++
 		stage.new[a_attribute_definition_integer_ref] = struct{}{}
@@ -6852,7 +6834,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Ge
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_REAL_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder++
 		stage.new[a_attribute_definition_real_ref] = struct{}{}
@@ -6923,7 +6905,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GetName(
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_STRING_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder++
 		stage.new[a_attribute_definition_string_ref] = struct{}{}
@@ -6994,7 +6976,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GetN
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_XHTML_REF {
 
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref]; !ok {
-		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = __member
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder++
 		stage.new[a_attribute_definition_xhtml_ref] = struct{}{}
@@ -7065,7 +7047,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GetNam
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_BOOLEAN {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean]; !ok {
-		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = __member
+		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
 		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder++
 		stage.new[a_attribute_value_boolean] = struct{}{}
@@ -7136,7 +7118,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GetName() (res strin
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_DATE {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date]; !ok {
-		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = __member
+		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEOrder
 		stage.A_ATTRIBUTE_VALUE_DATEOrder++
 		stage.new[a_attribute_value_date] = struct{}{}
@@ -7207,7 +7189,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_ENUMERATION {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration]; !ok {
-		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = __member
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder++
 		stage.new[a_attribute_value_enumeration] = struct{}{}
@@ -7278,7 +7260,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GetName() (r
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_INTEGER {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer]; !ok {
-		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = __member
+		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGEROrder
 		stage.A_ATTRIBUTE_VALUE_INTEGEROrder++
 		stage.new[a_attribute_value_integer] = struct{}{}
@@ -7349,7 +7331,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GetName() (res strin
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_REAL {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real]; !ok {
-		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = __member
+		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALOrder
 		stage.A_ATTRIBUTE_VALUE_REALOrder++
 		stage.new[a_attribute_value_real] = struct{}{}
@@ -7420,7 +7402,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_STRING {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string]; !ok {
-		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = __member
+		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGOrder
 		stage.A_ATTRIBUTE_VALUE_STRINGOrder++
 		stage.new[a_attribute_value_string] = struct{}{}
@@ -7491,7 +7473,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GetName() (res string)
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml]; !ok {
-		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = __member
+		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLOrder
 		stage.A_ATTRIBUTE_VALUE_XHTMLOrder++
 		stage.new[a_attribute_value_xhtml] = struct{}{}
@@ -7562,7 +7544,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML_1 {
 
 	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1]; !ok {
-		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = __member
+		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Order
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Order++
 		stage.new[a_attribute_value_xhtml_1] = struct{}{}
@@ -7633,7 +7615,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GetName() (res strin
 func (a_children *A_CHILDREN) Stage(stage *Stage) *A_CHILDREN {
 
 	if _, ok := stage.A_CHILDRENs[a_children]; !ok {
-		stage.A_CHILDRENs[a_children] = __member
+		stage.A_CHILDRENs[a_children] = struct{}{}
 		stage.A_CHILDRENMap_Staged_Order[a_children] = stage.A_CHILDRENOrder
 		stage.A_CHILDRENOrder++
 		stage.new[a_children] = struct{}{}
@@ -7704,7 +7686,7 @@ func (a_children *A_CHILDREN) GetName() (res string) {
 func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
 
 	if _, ok := stage.A_CORE_CONTENTs[a_core_content]; !ok {
-		stage.A_CORE_CONTENTs[a_core_content] = __member
+		stage.A_CORE_CONTENTs[a_core_content] = struct{}{}
 		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = stage.A_CORE_CONTENTOrder
 		stage.A_CORE_CONTENTOrder++
 		stage.new[a_core_content] = struct{}{}
@@ -7775,7 +7757,7 @@ func (a_core_content *A_CORE_CONTENT) GetName() (res string) {
 func (a_datatypes *A_DATATYPES) Stage(stage *Stage) *A_DATATYPES {
 
 	if _, ok := stage.A_DATATYPESs[a_datatypes]; !ok {
-		stage.A_DATATYPESs[a_datatypes] = __member
+		stage.A_DATATYPESs[a_datatypes] = struct{}{}
 		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = stage.A_DATATYPESOrder
 		stage.A_DATATYPESOrder++
 		stage.new[a_datatypes] = struct{}{}
@@ -7846,7 +7828,7 @@ func (a_datatypes *A_DATATYPES) GetName() (res string) {
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_BOOLEAN_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = __member
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder++
 		stage.new[a_datatype_definition_boolean_ref] = struct{}{}
@@ -7917,7 +7899,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GetN
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_DATE_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = __member
+		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFOrder
 		stage.A_DATATYPE_DEFINITION_DATE_REFOrder++
 		stage.new[a_datatype_definition_date_ref] = struct{}{}
@@ -7988,7 +7970,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GetName() 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_ENUMERATION_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = __member
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder++
 		stage.new[a_datatype_definition_enumeration_ref] = struct{}{}
@@ -8059,7 +8041,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_INTEGER_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = __member
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder++
 		stage.new[a_datatype_definition_integer_ref] = struct{}{}
@@ -8130,7 +8112,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GetN
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_REAL_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = __member
+		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFOrder
 		stage.A_DATATYPE_DEFINITION_REAL_REFOrder++
 		stage.new[a_datatype_definition_real_ref] = struct{}{}
@@ -8201,7 +8183,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GetName() 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_STRING_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = __member
+		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFOrder
 		stage.A_DATATYPE_DEFINITION_STRING_REFOrder++
 		stage.new[a_datatype_definition_string_ref] = struct{}{}
@@ -8272,7 +8254,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GetNam
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_XHTML_REF {
 
 	if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref]; !ok {
-		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = __member
+		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
 		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder++
 		stage.new[a_datatype_definition_xhtml_ref] = struct{}{}
@@ -8343,7 +8325,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GetName(
 func (a_editable_atts *A_EDITABLE_ATTS) Stage(stage *Stage) *A_EDITABLE_ATTS {
 
 	if _, ok := stage.A_EDITABLE_ATTSs[a_editable_atts]; !ok {
-		stage.A_EDITABLE_ATTSs[a_editable_atts] = __member
+		stage.A_EDITABLE_ATTSs[a_editable_atts] = struct{}{}
 		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = stage.A_EDITABLE_ATTSOrder
 		stage.A_EDITABLE_ATTSOrder++
 		stage.new[a_editable_atts] = struct{}{}
@@ -8414,7 +8396,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GetName() (res string) {
 func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF {
 
 	if _, ok := stage.A_ENUM_VALUE_REFs[a_enum_value_ref]; !ok {
-		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = __member
+		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = struct{}{}
 		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = stage.A_ENUM_VALUE_REFOrder
 		stage.A_ENUM_VALUE_REFOrder++
 		stage.new[a_enum_value_ref] = struct{}{}
@@ -8485,7 +8467,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GetName() (res string) {
 func (a_object *A_OBJECT) Stage(stage *Stage) *A_OBJECT {
 
 	if _, ok := stage.A_OBJECTs[a_object]; !ok {
-		stage.A_OBJECTs[a_object] = __member
+		stage.A_OBJECTs[a_object] = struct{}{}
 		stage.A_OBJECTMap_Staged_Order[a_object] = stage.A_OBJECTOrder
 		stage.A_OBJECTOrder++
 		stage.new[a_object] = struct{}{}
@@ -8556,7 +8538,7 @@ func (a_object *A_OBJECT) GetName() (res string) {
 func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
 
 	if _, ok := stage.A_PROPERTIESs[a_properties]; !ok {
-		stage.A_PROPERTIESs[a_properties] = __member
+		stage.A_PROPERTIESs[a_properties] = struct{}{}
 		stage.A_PROPERTIESMap_Staged_Order[a_properties] = stage.A_PROPERTIESOrder
 		stage.A_PROPERTIESOrder++
 		stage.new[a_properties] = struct{}{}
@@ -8627,7 +8609,7 @@ func (a_properties *A_PROPERTIES) GetName() (res string) {
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Stage(stage *Stage) *A_RELATION_GROUP_TYPE_REF {
 
 	if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref]; !ok {
-		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = __member
+		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = struct{}{}
 		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFOrder
 		stage.A_RELATION_GROUP_TYPE_REFOrder++
 		stage.new[a_relation_group_type_ref] = struct{}{}
@@ -8698,7 +8680,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GetName() (res strin
 func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
 
 	if _, ok := stage.A_SOURCE_1s[a_source_1]; !ok {
-		stage.A_SOURCE_1s[a_source_1] = __member
+		stage.A_SOURCE_1s[a_source_1] = struct{}{}
 		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = stage.A_SOURCE_1Order
 		stage.A_SOURCE_1Order++
 		stage.new[a_source_1] = struct{}{}
@@ -8769,7 +8751,7 @@ func (a_source_1 *A_SOURCE_1) GetName() (res string) {
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Stage(stage *Stage) *A_SOURCE_SPECIFICATION_1 {
 
 	if _, ok := stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1]; !ok {
-		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = __member
+		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = struct{}{}
 		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Order
 		stage.A_SOURCE_SPECIFICATION_1Order++
 		stage.new[a_source_specification_1] = struct{}{}
@@ -8840,7 +8822,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GetName() (res string)
 func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS {
 
 	if _, ok := stage.A_SPECIFICATIONSs[a_specifications]; !ok {
-		stage.A_SPECIFICATIONSs[a_specifications] = __member
+		stage.A_SPECIFICATIONSs[a_specifications] = struct{}{}
 		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = stage.A_SPECIFICATIONSOrder
 		stage.A_SPECIFICATIONSOrder++
 		stage.new[a_specifications] = struct{}{}
@@ -8911,7 +8893,7 @@ func (a_specifications *A_SPECIFICATIONS) GetName() (res string) {
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Stage(stage *Stage) *A_SPECIFICATION_TYPE_REF {
 
 	if _, ok := stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref]; !ok {
-		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = __member
+		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = struct{}{}
 		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFOrder
 		stage.A_SPECIFICATION_TYPE_REFOrder++
 		stage.new[a_specification_type_ref] = struct{}{}
@@ -8982,7 +8964,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GetName() (res string)
 func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_VALUES {
 
 	if _, ok := stage.A_SPECIFIED_VALUESs[a_specified_values]; !ok {
-		stage.A_SPECIFIED_VALUESs[a_specified_values] = __member
+		stage.A_SPECIFIED_VALUESs[a_specified_values] = struct{}{}
 		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = stage.A_SPECIFIED_VALUESOrder
 		stage.A_SPECIFIED_VALUESOrder++
 		stage.new[a_specified_values] = struct{}{}
@@ -9053,7 +9035,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GetName() (res string) {
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) Stage(stage *Stage) *A_SPEC_ATTRIBUTES {
 
 	if _, ok := stage.A_SPEC_ATTRIBUTESs[a_spec_attributes]; !ok {
-		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = __member
+		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = struct{}{}
 		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESOrder
 		stage.A_SPEC_ATTRIBUTESOrder++
 		stage.new[a_spec_attributes] = struct{}{}
@@ -9124,7 +9106,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GetName() (res string) {
 func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
 
 	if _, ok := stage.A_SPEC_OBJECTSs[a_spec_objects]; !ok {
-		stage.A_SPEC_OBJECTSs[a_spec_objects] = __member
+		stage.A_SPEC_OBJECTSs[a_spec_objects] = struct{}{}
 		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = stage.A_SPEC_OBJECTSOrder
 		stage.A_SPEC_OBJECTSOrder++
 		stage.new[a_spec_objects] = struct{}{}
@@ -9195,7 +9177,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GetName() (res string) {
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Stage(stage *Stage) *A_SPEC_OBJECT_TYPE_REF {
 
 	if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref]; !ok {
-		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = __member
+		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = struct{}{}
 		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFOrder
 		stage.A_SPEC_OBJECT_TYPE_REFOrder++
 		stage.new[a_spec_object_type_ref] = struct{}{}
@@ -9266,7 +9248,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GetName() (res string) {
 func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS {
 
 	if _, ok := stage.A_SPEC_RELATIONSs[a_spec_relations]; !ok {
-		stage.A_SPEC_RELATIONSs[a_spec_relations] = __member
+		stage.A_SPEC_RELATIONSs[a_spec_relations] = struct{}{}
 		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = stage.A_SPEC_RELATIONSOrder
 		stage.A_SPEC_RELATIONSOrder++
 		stage.new[a_spec_relations] = struct{}{}
@@ -9337,7 +9319,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GetName() (res string) {
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Stage(stage *Stage) *A_SPEC_RELATION_GROUPS {
 
 	if _, ok := stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups]; !ok {
-		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = __member
+		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = struct{}{}
 		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSOrder
 		stage.A_SPEC_RELATION_GROUPSOrder++
 		stage.new[a_spec_relation_groups] = struct{}{}
@@ -9408,7 +9390,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GetName() (res string) {
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELATION_REF {
 
 	if _, ok := stage.A_SPEC_RELATION_REFs[a_spec_relation_ref]; !ok {
-		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = __member
+		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = struct{}{}
 		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFOrder
 		stage.A_SPEC_RELATION_REFOrder++
 		stage.new[a_spec_relation_ref] = struct{}{}
@@ -9479,7 +9461,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GetName() (res string) {
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Stage(stage *Stage) *A_SPEC_RELATION_TYPE_REF {
 
 	if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref]; !ok {
-		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = __member
+		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = struct{}{}
 		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFOrder
 		stage.A_SPEC_RELATION_TYPE_REFOrder++
 		stage.new[a_spec_relation_type_ref] = struct{}{}
@@ -9550,7 +9532,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GetName() (res string)
 func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
 
 	if _, ok := stage.A_SPEC_TYPESs[a_spec_types]; !ok {
-		stage.A_SPEC_TYPESs[a_spec_types] = __member
+		stage.A_SPEC_TYPESs[a_spec_types] = struct{}{}
 		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = stage.A_SPEC_TYPESOrder
 		stage.A_SPEC_TYPESOrder++
 		stage.new[a_spec_types] = struct{}{}
@@ -9621,7 +9603,7 @@ func (a_spec_types *A_SPEC_TYPES) GetName() (res string) {
 func (a_the_header *A_THE_HEADER) Stage(stage *Stage) *A_THE_HEADER {
 
 	if _, ok := stage.A_THE_HEADERs[a_the_header]; !ok {
-		stage.A_THE_HEADERs[a_the_header] = __member
+		stage.A_THE_HEADERs[a_the_header] = struct{}{}
 		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = stage.A_THE_HEADEROrder
 		stage.A_THE_HEADEROrder++
 		stage.new[a_the_header] = struct{}{}
@@ -9692,7 +9674,7 @@ func (a_the_header *A_THE_HEADER) GetName() (res string) {
 func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIONS {
 
 	if _, ok := stage.A_TOOL_EXTENSIONSs[a_tool_extensions]; !ok {
-		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = __member
+		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = struct{}{}
 		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = stage.A_TOOL_EXTENSIONSOrder
 		stage.A_TOOL_EXTENSIONSOrder++
 		stage.new[a_tool_extensions] = struct{}{}
@@ -9763,7 +9745,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GetName() (res string) {
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Stage(stage *Stage) *DATATYPE_DEFINITION_BOOLEAN {
 
 	if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean]; !ok {
-		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = __member
+		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = struct{}{}
 		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANOrder
 		stage.DATATYPE_DEFINITION_BOOLEANOrder++
 		stage.new[datatype_definition_boolean] = struct{}{}
@@ -9834,7 +9816,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GetName() (res s
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *DATATYPE_DEFINITION_DATE {
 
 	if _, ok := stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date]; !ok {
-		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = __member
+		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = struct{}{}
 		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEOrder
 		stage.DATATYPE_DEFINITION_DATEOrder++
 		stage.new[datatype_definition_date] = struct{}{}
@@ -9905,7 +9887,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GetName() (res string)
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Stage(stage *Stage) *DATATYPE_DEFINITION_ENUMERATION {
 
 	if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration]; !ok {
-		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = __member
+		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = struct{}{}
 		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONOrder
 		stage.DATATYPE_DEFINITION_ENUMERATIONOrder++
 		stage.new[datatype_definition_enumeration] = struct{}{}
@@ -9976,7 +9958,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GetName(
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Stage) *DATATYPE_DEFINITION_INTEGER {
 
 	if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer]; !ok {
-		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = __member
+		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = struct{}{}
 		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGEROrder
 		stage.DATATYPE_DEFINITION_INTEGEROrder++
 		stage.new[datatype_definition_integer] = struct{}{}
@@ -10047,7 +10029,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GetName() (res s
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Stage(stage *Stage) *DATATYPE_DEFINITION_REAL {
 
 	if _, ok := stage.DATATYPE_DEFINITION_REALs[datatype_definition_real]; !ok {
-		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = __member
+		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = struct{}{}
 		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALOrder
 		stage.DATATYPE_DEFINITION_REALOrder++
 		stage.new[datatype_definition_real] = struct{}{}
@@ -10118,7 +10100,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GetName() (res string)
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage) *DATATYPE_DEFINITION_STRING {
 
 	if _, ok := stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string]; !ok {
-		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = __member
+		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = struct{}{}
 		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGOrder
 		stage.DATATYPE_DEFINITION_STRINGOrder++
 		stage.new[datatype_definition_string] = struct{}{}
@@ -10189,7 +10171,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GetName() (res str
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Stage(stage *Stage) *DATATYPE_DEFINITION_XHTML {
 
 	if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml]; !ok {
-		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = __member
+		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = struct{}{}
 		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLOrder
 		stage.DATATYPE_DEFINITION_XHTMLOrder++
 		stage.new[datatype_definition_xhtml] = struct{}{}
@@ -10260,7 +10242,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GetName() (res strin
 func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
 
 	if _, ok := stage.EMBEDDED_VALUEs[embedded_value]; !ok {
-		stage.EMBEDDED_VALUEs[embedded_value] = __member
+		stage.EMBEDDED_VALUEs[embedded_value] = struct{}{}
 		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = stage.EMBEDDED_VALUEOrder
 		stage.EMBEDDED_VALUEOrder++
 		stage.new[embedded_value] = struct{}{}
@@ -10331,7 +10313,7 @@ func (embedded_value *EMBEDDED_VALUE) GetName() (res string) {
 func (enum_value *ENUM_VALUE) Stage(stage *Stage) *ENUM_VALUE {
 
 	if _, ok := stage.ENUM_VALUEs[enum_value]; !ok {
-		stage.ENUM_VALUEs[enum_value] = __member
+		stage.ENUM_VALUEs[enum_value] = struct{}{}
 		stage.ENUM_VALUEMap_Staged_Order[enum_value] = stage.ENUM_VALUEOrder
 		stage.ENUM_VALUEOrder++
 		stage.new[enum_value] = struct{}{}
@@ -10402,7 +10384,7 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage {
 
 	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; !ok {
-		stage.EmbeddedJpgImages[embeddedjpgimage] = __member
+		stage.EmbeddedJpgImages[embeddedjpgimage] = struct{}{}
 		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
 		stage.EmbeddedJpgImageOrder++
 		stage.new[embeddedjpgimage] = struct{}{}
@@ -10473,7 +10455,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GetName() (res string) {
 func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage {
 
 	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; !ok {
-		stage.EmbeddedPngImages[embeddedpngimage] = __member
+		stage.EmbeddedPngImages[embeddedpngimage] = struct{}{}
 		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
 		stage.EmbeddedPngImageOrder++
 		stage.new[embeddedpngimage] = struct{}{}
@@ -10544,7 +10526,7 @@ func (embeddedpngimage *EmbeddedPngImage) GetName() (res string) {
 func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage {
 
 	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; !ok {
-		stage.EmbeddedSvgImages[embeddedsvgimage] = __member
+		stage.EmbeddedSvgImages[embeddedsvgimage] = struct{}{}
 		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
 		stage.EmbeddedSvgImageOrder++
 		stage.new[embeddedsvgimage] = struct{}{}
@@ -10615,7 +10597,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GetName() (res string) {
 func (kill *Kill) Stage(stage *Stage) *Kill {
 
 	if _, ok := stage.Kills[kill]; !ok {
-		stage.Kills[kill] = __member
+		stage.Kills[kill] = struct{}{}
 		stage.KillMap_Staged_Order[kill] = stage.KillOrder
 		stage.KillOrder++
 		stage.new[kill] = struct{}{}
@@ -10686,7 +10668,7 @@ func (kill *Kill) GetName() (res string) {
 func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys[map_attribute_definition_boolean_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys[map_attribute_definition_boolean_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys[map_attribute_definition_boolean_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_boolean_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_boolean_showinsubjectentry] = struct{}{}
@@ -10757,7 +10739,7 @@ func (map_attribute_definition_boolean_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys[map_attribute_definition_boolean_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys[map_attribute_definition_boolean_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys[map_attribute_definition_boolean_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order[map_attribute_definition_boolean_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_boolean_showintableentry] = struct{}{}
@@ -10828,7 +10810,7 @@ func (map_attribute_definition_boolean_showintableentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys[map_attribute_definition_boolean_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys[map_attribute_definition_boolean_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys[map_attribute_definition_boolean_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_boolean_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_boolean_showintitleentry] = struct{}{}
@@ -10899,7 +10881,7 @@ func (map_attribute_definition_boolean_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys[map_attribute_definition_date_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys[map_attribute_definition_date_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys[map_attribute_definition_date_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_date_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_date_showinsubjectentry] = struct{}{}
@@ -10970,7 +10952,7 @@ func (map_attribute_definition_date_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys[map_attribute_definition_date_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys[map_attribute_definition_date_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys[map_attribute_definition_date_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryMap_Staged_Order[map_attribute_definition_date_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_date_showintableentry] = struct{}{}
@@ -11041,7 +11023,7 @@ func (map_attribute_definition_date_showintableentry *Map_ATTRIBUTE_DEFINITION_D
 func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys[map_attribute_definition_date_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys[map_attribute_definition_date_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys[map_attribute_definition_date_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_date_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_date_showintitleentry] = struct{}{}
@@ -11112,7 +11094,7 @@ func (map_attribute_definition_date_showintitleentry *Map_ATTRIBUTE_DEFINITION_D
 func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys[map_attribute_definition_enumeration_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys[map_attribute_definition_enumeration_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys[map_attribute_definition_enumeration_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_enumeration_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_enumeration_showinsubjectentry] = struct{}{}
@@ -11183,7 +11165,7 @@ func (map_attribute_definition_enumeration_showinsubjectentry *Map_ATTRIBUTE_DEF
 func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys[map_attribute_definition_enumeration_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys[map_attribute_definition_enumeration_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys[map_attribute_definition_enumeration_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryMap_Staged_Order[map_attribute_definition_enumeration_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_enumeration_showintableentry] = struct{}{}
@@ -11254,7 +11236,7 @@ func (map_attribute_definition_enumeration_showintableentry *Map_ATTRIBUTE_DEFIN
 func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys[map_attribute_definition_enumeration_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys[map_attribute_definition_enumeration_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys[map_attribute_definition_enumeration_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_enumeration_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_enumeration_showintitleentry] = struct{}{}
@@ -11325,7 +11307,7 @@ func (map_attribute_definition_enumeration_showintitleentry *Map_ATTRIBUTE_DEFIN
 func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys[map_attribute_definition_integer_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys[map_attribute_definition_integer_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys[map_attribute_definition_integer_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_integer_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_integer_showinsubjectentry] = struct{}{}
@@ -11396,7 +11378,7 @@ func (map_attribute_definition_integer_showinsubjectentry *Map_ATTRIBUTE_DEFINIT
 func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys[map_attribute_definition_integer_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys[map_attribute_definition_integer_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys[map_attribute_definition_integer_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryMap_Staged_Order[map_attribute_definition_integer_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_integer_showintableentry] = struct{}{}
@@ -11467,7 +11449,7 @@ func (map_attribute_definition_integer_showintableentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys[map_attribute_definition_integer_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys[map_attribute_definition_integer_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys[map_attribute_definition_integer_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_integer_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_integer_showintitleentry] = struct{}{}
@@ -11538,7 +11520,7 @@ func (map_attribute_definition_integer_showintitleentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys[map_attribute_definition_real_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys[map_attribute_definition_real_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys[map_attribute_definition_real_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_real_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_real_showinsubjectentry] = struct{}{}
@@ -11609,7 +11591,7 @@ func (map_attribute_definition_real_showinsubjectentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys[map_attribute_definition_real_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys[map_attribute_definition_real_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys[map_attribute_definition_real_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryMap_Staged_Order[map_attribute_definition_real_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_real_showintableentry] = struct{}{}
@@ -11680,7 +11662,7 @@ func (map_attribute_definition_real_showintableentry *Map_ATTRIBUTE_DEFINITION_R
 func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys[map_attribute_definition_real_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys[map_attribute_definition_real_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys[map_attribute_definition_real_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_real_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_real_showintitleentry] = struct{}{}
@@ -11751,7 +11733,7 @@ func (map_attribute_definition_real_showintitleentry *Map_ATTRIBUTE_DEFINITION_R
 func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys[map_attribute_definition_string_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys[map_attribute_definition_string_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys[map_attribute_definition_string_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_string_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_string_showinsubjectentry] = struct{}{}
@@ -11822,7 +11804,7 @@ func (map_attribute_definition_string_showinsubjectentry *Map_ATTRIBUTE_DEFINITI
 func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys[map_attribute_definition_string_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys[map_attribute_definition_string_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys[map_attribute_definition_string_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryMap_Staged_Order[map_attribute_definition_string_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_string_showintableentry] = struct{}{}
@@ -11893,7 +11875,7 @@ func (map_attribute_definition_string_showintableentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys[map_attribute_definition_string_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys[map_attribute_definition_string_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys[map_attribute_definition_string_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_string_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_string_showintitleentry] = struct{}{}
@@ -11964,7 +11946,7 @@ func (map_attribute_definition_string_showintitleentry *Map_ATTRIBUTE_DEFINITION
 func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys[map_attribute_definition_xhtml_showinsubjectentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys[map_attribute_definition_xhtml_showinsubjectentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys[map_attribute_definition_xhtml_showinsubjectentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryMap_Staged_Order[map_attribute_definition_xhtml_showinsubjectentry] = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryOrder++
 		stage.new[map_attribute_definition_xhtml_showinsubjectentry] = struct{}{}
@@ -12035,7 +12017,7 @@ func (map_attribute_definition_xhtml_showinsubjectentry *Map_ATTRIBUTE_DEFINITIO
 func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys[map_attribute_definition_xhtml_showintableentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys[map_attribute_definition_xhtml_showintableentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys[map_attribute_definition_xhtml_showintableentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryMap_Staged_Order[map_attribute_definition_xhtml_showintableentry] = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryOrder++
 		stage.new[map_attribute_definition_xhtml_showintableentry] = struct{}{}
@@ -12106,7 +12088,7 @@ func (map_attribute_definition_xhtml_showintableentry *Map_ATTRIBUTE_DEFINITION_
 func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) Stage(stage *Stage) *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry {
 
 	if _, ok := stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys[map_attribute_definition_xhtml_showintitleentry]; !ok {
-		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys[map_attribute_definition_xhtml_showintitleentry] = __member
+		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys[map_attribute_definition_xhtml_showintitleentry] = struct{}{}
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryMap_Staged_Order[map_attribute_definition_xhtml_showintitleentry] = stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryOrder
 		stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryOrder++
 		stage.new[map_attribute_definition_xhtml_showintitleentry] = struct{}{}
@@ -12177,7 +12159,7 @@ func (map_attribute_definition_xhtml_showintitleentry *Map_ATTRIBUTE_DEFINITION_
 func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEntry) Stage(stage *Stage) *Map_SPECIFICATION_Nodes_expandedEntry {
 
 	if _, ok := stage.Map_SPECIFICATION_Nodes_expandedEntrys[map_specification_nodes_expandedentry]; !ok {
-		stage.Map_SPECIFICATION_Nodes_expandedEntrys[map_specification_nodes_expandedentry] = __member
+		stage.Map_SPECIFICATION_Nodes_expandedEntrys[map_specification_nodes_expandedentry] = struct{}{}
 		stage.Map_SPECIFICATION_Nodes_expandedEntryMap_Staged_Order[map_specification_nodes_expandedentry] = stage.Map_SPECIFICATION_Nodes_expandedEntryOrder
 		stage.Map_SPECIFICATION_Nodes_expandedEntryOrder++
 		stage.new[map_specification_nodes_expandedentry] = struct{}{}
@@ -12248,7 +12230,7 @@ func (map_specification_nodes_expandedentry *Map_SPECIFICATION_Nodes_expandedEnt
 func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) Stage(stage *Stage) *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry {
 
 	if _, ok := stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys[map_spec_object_type_isnodeexpandedentry]; !ok {
-		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys[map_spec_object_type_isnodeexpandedentry] = __member
+		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys[map_spec_object_type_isnodeexpandedentry] = struct{}{}
 		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryMap_Staged_Order[map_spec_object_type_isnodeexpandedentry] = stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryOrder
 		stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryOrder++
 		stage.new[map_spec_object_type_isnodeexpandedentry] = struct{}{}
@@ -12319,7 +12301,7 @@ func (map_spec_object_type_isnodeexpandedentry *Map_SPEC_OBJECT_TYPE_isNodeExpan
 func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) Stage(stage *Stage) *Map_SPEC_OBJECT_TYPE_showIdentifierEntry {
 
 	if _, ok := stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys[map_spec_object_type_showidentifierentry]; !ok {
-		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys[map_spec_object_type_showidentifierentry] = __member
+		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys[map_spec_object_type_showidentifierentry] = struct{}{}
 		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[map_spec_object_type_showidentifierentry] = stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryOrder
 		stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryOrder++
 		stage.new[map_spec_object_type_showidentifierentry] = struct{}{}
@@ -12390,7 +12372,7 @@ func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentif
 func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Stage(stage *Stage) *Map_SPEC_OBJECT_TYPE_showNameEntry {
 
 	if _, ok := stage.Map_SPEC_OBJECT_TYPE_showNameEntrys[map_spec_object_type_shownameentry]; !ok {
-		stage.Map_SPEC_OBJECT_TYPE_showNameEntrys[map_spec_object_type_shownameentry] = __member
+		stage.Map_SPEC_OBJECT_TYPE_showNameEntrys[map_spec_object_type_shownameentry] = struct{}{}
 		stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[map_spec_object_type_shownameentry] = stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder
 		stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder++
 		stage.new[map_spec_object_type_shownameentry] = struct{}{}
@@ -12461,7 +12443,7 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Ge
 func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 
 	if _, ok := stage.RELATION_GROUPs[relation_group]; !ok {
-		stage.RELATION_GROUPs[relation_group] = __member
+		stage.RELATION_GROUPs[relation_group] = struct{}{}
 		stage.RELATION_GROUPMap_Staged_Order[relation_group] = stage.RELATION_GROUPOrder
 		stage.RELATION_GROUPOrder++
 		stage.new[relation_group] = struct{}{}
@@ -12532,7 +12514,7 @@ func (relation_group *RELATION_GROUP) GetName() (res string) {
 func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GROUP_TYPE {
 
 	if _, ok := stage.RELATION_GROUP_TYPEs[relation_group_type]; !ok {
-		stage.RELATION_GROUP_TYPEs[relation_group_type] = __member
+		stage.RELATION_GROUP_TYPEs[relation_group_type] = struct{}{}
 		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = stage.RELATION_GROUP_TYPEOrder
 		stage.RELATION_GROUP_TYPEOrder++
 		stage.new[relation_group_type] = struct{}{}
@@ -12603,7 +12585,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GetName() (res string) {
 func (req_if *REQ_IF) Stage(stage *Stage) *REQ_IF {
 
 	if _, ok := stage.REQ_IFs[req_if]; !ok {
-		stage.REQ_IFs[req_if] = __member
+		stage.REQ_IFs[req_if] = struct{}{}
 		stage.REQ_IFMap_Staged_Order[req_if] = stage.REQ_IFOrder
 		stage.REQ_IFOrder++
 		stage.new[req_if] = struct{}{}
@@ -12674,7 +12656,7 @@ func (req_if *REQ_IF) GetName() (res string) {
 func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
 
 	if _, ok := stage.REQ_IF_CONTENTs[req_if_content]; !ok {
-		stage.REQ_IF_CONTENTs[req_if_content] = __member
+		stage.REQ_IF_CONTENTs[req_if_content] = struct{}{}
 		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = stage.REQ_IF_CONTENTOrder
 		stage.REQ_IF_CONTENTOrder++
 		stage.new[req_if_content] = struct{}{}
@@ -12745,7 +12727,7 @@ func (req_if_content *REQ_IF_CONTENT) GetName() (res string) {
 func (req_if_header *REQ_IF_HEADER) Stage(stage *Stage) *REQ_IF_HEADER {
 
 	if _, ok := stage.REQ_IF_HEADERs[req_if_header]; !ok {
-		stage.REQ_IF_HEADERs[req_if_header] = __member
+		stage.REQ_IF_HEADERs[req_if_header] = struct{}{}
 		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = stage.REQ_IF_HEADEROrder
 		stage.REQ_IF_HEADEROrder++
 		stage.new[req_if_header] = struct{}{}
@@ -12816,7 +12798,7 @@ func (req_if_header *REQ_IF_HEADER) GetName() (res string) {
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_TOOL_EXTENSION {
 
 	if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension]; !ok {
-		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = __member
+		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = struct{}{}
 		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONOrder
 		stage.REQ_IF_TOOL_EXTENSIONOrder++
 		stage.new[req_if_tool_extension] = struct{}{}
@@ -12887,7 +12869,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GetName() (res string) {
 func (renderingconfiguration *RenderingConfiguration) Stage(stage *Stage) *RenderingConfiguration {
 
 	if _, ok := stage.RenderingConfigurations[renderingconfiguration]; !ok {
-		stage.RenderingConfigurations[renderingconfiguration] = __member
+		stage.RenderingConfigurations[renderingconfiguration] = struct{}{}
 		stage.RenderingConfigurationMap_Staged_Order[renderingconfiguration] = stage.RenderingConfigurationOrder
 		stage.RenderingConfigurationOrder++
 		stage.new[renderingconfiguration] = struct{}{}
@@ -12958,7 +12940,7 @@ func (renderingconfiguration *RenderingConfiguration) GetName() (res string) {
 func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 
 	if _, ok := stage.SPECIFICATIONs[specification]; !ok {
-		stage.SPECIFICATIONs[specification] = __member
+		stage.SPECIFICATIONs[specification] = struct{}{}
 		stage.SPECIFICATIONMap_Staged_Order[specification] = stage.SPECIFICATIONOrder
 		stage.SPECIFICATIONOrder++
 		stage.new[specification] = struct{}{}
@@ -13029,7 +13011,7 @@ func (specification *SPECIFICATION) GetName() (res string) {
 func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION_TYPE {
 
 	if _, ok := stage.SPECIFICATION_TYPEs[specification_type]; !ok {
-		stage.SPECIFICATION_TYPEs[specification_type] = __member
+		stage.SPECIFICATION_TYPEs[specification_type] = struct{}{}
 		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = stage.SPECIFICATION_TYPEOrder
 		stage.SPECIFICATION_TYPEOrder++
 		stage.new[specification_type] = struct{}{}
@@ -13100,7 +13082,7 @@ func (specification_type *SPECIFICATION_TYPE) GetName() (res string) {
 func (spec_hierarchy *SPEC_HIERARCHY) Stage(stage *Stage) *SPEC_HIERARCHY {
 
 	if _, ok := stage.SPEC_HIERARCHYs[spec_hierarchy]; !ok {
-		stage.SPEC_HIERARCHYs[spec_hierarchy] = __member
+		stage.SPEC_HIERARCHYs[spec_hierarchy] = struct{}{}
 		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = stage.SPEC_HIERARCHYOrder
 		stage.SPEC_HIERARCHYOrder++
 		stage.new[spec_hierarchy] = struct{}{}
@@ -13171,7 +13153,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GetName() (res string) {
 func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
 
 	if _, ok := stage.SPEC_OBJECTs[spec_object]; !ok {
-		stage.SPEC_OBJECTs[spec_object] = __member
+		stage.SPEC_OBJECTs[spec_object] = struct{}{}
 		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = stage.SPEC_OBJECTOrder
 		stage.SPEC_OBJECTOrder++
 		stage.new[spec_object] = struct{}{}
@@ -13242,7 +13224,7 @@ func (spec_object *SPEC_OBJECT) GetName() (res string) {
 func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *Stage) *SPEC_OBJECT_TYPE {
 
 	if _, ok := stage.SPEC_OBJECT_TYPEs[spec_object_type]; !ok {
-		stage.SPEC_OBJECT_TYPEs[spec_object_type] = __member
+		stage.SPEC_OBJECT_TYPEs[spec_object_type] = struct{}{}
 		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = stage.SPEC_OBJECT_TYPEOrder
 		stage.SPEC_OBJECT_TYPEOrder++
 		stage.new[spec_object_type] = struct{}{}
@@ -13313,7 +13295,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GetName() (res string) {
 func (spec_relation *SPEC_RELATION) Stage(stage *Stage) *SPEC_RELATION {
 
 	if _, ok := stage.SPEC_RELATIONs[spec_relation]; !ok {
-		stage.SPEC_RELATIONs[spec_relation] = __member
+		stage.SPEC_RELATIONs[spec_relation] = struct{}{}
 		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = stage.SPEC_RELATIONOrder
 		stage.SPEC_RELATIONOrder++
 		stage.new[spec_relation] = struct{}{}
@@ -13384,7 +13366,7 @@ func (spec_relation *SPEC_RELATION) GetName() (res string) {
 func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION_TYPE {
 
 	if _, ok := stage.SPEC_RELATION_TYPEs[spec_relation_type]; !ok {
-		stage.SPEC_RELATION_TYPEs[spec_relation_type] = __member
+		stage.SPEC_RELATION_TYPEs[spec_relation_type] = struct{}{}
 		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = stage.SPEC_RELATION_TYPEOrder
 		stage.SPEC_RELATION_TYPEOrder++
 		stage.new[spec_relation_type] = struct{}{}
@@ -13455,7 +13437,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GetName() (res string) {
 func (staticwebsite *StaticWebSite) Stage(stage *Stage) *StaticWebSite {
 
 	if _, ok := stage.StaticWebSites[staticwebsite]; !ok {
-		stage.StaticWebSites[staticwebsite] = __member
+		stage.StaticWebSites[staticwebsite] = struct{}{}
 		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = stage.StaticWebSiteOrder
 		stage.StaticWebSiteOrder++
 		stage.new[staticwebsite] = struct{}{}
@@ -13526,7 +13508,7 @@ func (staticwebsite *StaticWebSite) GetName() (res string) {
 func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWebSiteChapter {
 
 	if _, ok := stage.StaticWebSiteChapters[staticwebsitechapter]; !ok {
-		stage.StaticWebSiteChapters[staticwebsitechapter] = __member
+		stage.StaticWebSiteChapters[staticwebsitechapter] = struct{}{}
 		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = stage.StaticWebSiteChapterOrder
 		stage.StaticWebSiteChapterOrder++
 		stage.new[staticwebsitechapter] = struct{}{}
@@ -13597,7 +13579,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GetName() (res string) {
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Stage) *StaticWebSiteGeneratedImage {
 
 	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; !ok {
-		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = __member
+		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = struct{}{}
 		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
 		stage.StaticWebSiteGeneratedImageOrder++
 		stage.new[staticwebsitegeneratedimage] = struct{}{}
@@ -13668,7 +13650,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GetName() (res s
 func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSiteImage {
 
 	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; !ok {
-		stage.StaticWebSiteImages[staticwebsiteimage] = __member
+		stage.StaticWebSiteImages[staticwebsiteimage] = struct{}{}
 		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
 		stage.StaticWebSiteImageOrder++
 		stage.new[staticwebsiteimage] = struct{}{}
@@ -13739,7 +13721,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GetName() (res string) {
 func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *StaticWebSiteParagraph {
 
 	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; !ok {
-		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = __member
+		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = struct{}{}
 		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
 		stage.StaticWebSiteParagraphOrder++
 		stage.new[staticwebsiteparagraph] = struct{}{}
@@ -13810,7 +13792,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GetName() (res string) {
 func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 
 	if _, ok := stage.XHTML_CONTENTs[xhtml_content]; !ok {
-		stage.XHTML_CONTENTs[xhtml_content] = __member
+		stage.XHTML_CONTENTs[xhtml_content] = struct{}{}
 		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = stage.XHTML_CONTENTOrder
 		stage.XHTML_CONTENTOrder++
 		stage.new[xhtml_content] = struct{}{}
@@ -14123,597 +14105,597 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 }
 
 func (stage *Stage) Reset() { // insertion point for array reset
-	stage.ALTERNATIVE_IDs = make(map[*ALTERNATIVE_ID]any)
+	stage.ALTERNATIVE_IDs = make(map[*ALTERNATIVE_ID]struct{})
 	stage.ALTERNATIVE_IDs_mapString = make(map[string]*ALTERNATIVE_ID)
 	stage.ALTERNATIVE_IDMap_Staged_Order = make(map[*ALTERNATIVE_ID]uint)
 	stage.ALTERNATIVE_IDOrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_BOOLEANs = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]any)
+	stage.ATTRIBUTE_DEFINITION_BOOLEANs = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]struct{})
 	stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_BOOLEAN)
 	stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]uint)
 	stage.ATTRIBUTE_DEFINITION_BOOLEANOrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_DATEs = make(map[*ATTRIBUTE_DEFINITION_DATE]any)
+	stage.ATTRIBUTE_DEFINITION_DATEs = make(map[*ATTRIBUTE_DEFINITION_DATE]struct{})
 	stage.ATTRIBUTE_DEFINITION_DATEs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_DATE)
 	stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_DATE]uint)
 	stage.ATTRIBUTE_DEFINITION_DATEOrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]any)
+	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]struct{})
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION)
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]uint)
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_INTEGERs = make(map[*ATTRIBUTE_DEFINITION_INTEGER]any)
+	stage.ATTRIBUTE_DEFINITION_INTEGERs = make(map[*ATTRIBUTE_DEFINITION_INTEGER]struct{})
 	stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_INTEGER)
 	stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_INTEGER]uint)
 	stage.ATTRIBUTE_DEFINITION_INTEGEROrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_REALs = make(map[*ATTRIBUTE_DEFINITION_REAL]any)
+	stage.ATTRIBUTE_DEFINITION_REALs = make(map[*ATTRIBUTE_DEFINITION_REAL]struct{})
 	stage.ATTRIBUTE_DEFINITION_REALs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_REAL)
 	stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_REAL]uint)
 	stage.ATTRIBUTE_DEFINITION_REALOrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_STRINGs = make(map[*ATTRIBUTE_DEFINITION_STRING]any)
+	stage.ATTRIBUTE_DEFINITION_STRINGs = make(map[*ATTRIBUTE_DEFINITION_STRING]struct{})
 	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_STRING)
 	stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_STRING]uint)
 	stage.ATTRIBUTE_DEFINITION_STRINGOrder = 0
 
-	stage.ATTRIBUTE_DEFINITION_XHTMLs = make(map[*ATTRIBUTE_DEFINITION_XHTML]any)
+	stage.ATTRIBUTE_DEFINITION_XHTMLs = make(map[*ATTRIBUTE_DEFINITION_XHTML]struct{})
 	stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_XHTML)
 	stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_XHTML]uint)
 	stage.ATTRIBUTE_DEFINITION_XHTMLOrder = 0
 
-	stage.ATTRIBUTE_VALUE_BOOLEANs = make(map[*ATTRIBUTE_VALUE_BOOLEAN]any)
+	stage.ATTRIBUTE_VALUE_BOOLEANs = make(map[*ATTRIBUTE_VALUE_BOOLEAN]struct{})
 	stage.ATTRIBUTE_VALUE_BOOLEANs_mapString = make(map[string]*ATTRIBUTE_VALUE_BOOLEAN)
 	stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_BOOLEAN]uint)
 	stage.ATTRIBUTE_VALUE_BOOLEANOrder = 0
 
-	stage.ATTRIBUTE_VALUE_DATEs = make(map[*ATTRIBUTE_VALUE_DATE]any)
+	stage.ATTRIBUTE_VALUE_DATEs = make(map[*ATTRIBUTE_VALUE_DATE]struct{})
 	stage.ATTRIBUTE_VALUE_DATEs_mapString = make(map[string]*ATTRIBUTE_VALUE_DATE)
 	stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_DATE]uint)
 	stage.ATTRIBUTE_VALUE_DATEOrder = 0
 
-	stage.ATTRIBUTE_VALUE_ENUMERATIONs = make(map[*ATTRIBUTE_VALUE_ENUMERATION]any)
+	stage.ATTRIBUTE_VALUE_ENUMERATIONs = make(map[*ATTRIBUTE_VALUE_ENUMERATION]struct{})
 	stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString = make(map[string]*ATTRIBUTE_VALUE_ENUMERATION)
 	stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_ENUMERATION]uint)
 	stage.ATTRIBUTE_VALUE_ENUMERATIONOrder = 0
 
-	stage.ATTRIBUTE_VALUE_INTEGERs = make(map[*ATTRIBUTE_VALUE_INTEGER]any)
+	stage.ATTRIBUTE_VALUE_INTEGERs = make(map[*ATTRIBUTE_VALUE_INTEGER]struct{})
 	stage.ATTRIBUTE_VALUE_INTEGERs_mapString = make(map[string]*ATTRIBUTE_VALUE_INTEGER)
 	stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_INTEGER]uint)
 	stage.ATTRIBUTE_VALUE_INTEGEROrder = 0
 
-	stage.ATTRIBUTE_VALUE_REALs = make(map[*ATTRIBUTE_VALUE_REAL]any)
+	stage.ATTRIBUTE_VALUE_REALs = make(map[*ATTRIBUTE_VALUE_REAL]struct{})
 	stage.ATTRIBUTE_VALUE_REALs_mapString = make(map[string]*ATTRIBUTE_VALUE_REAL)
 	stage.ATTRIBUTE_VALUE_REALMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_REAL]uint)
 	stage.ATTRIBUTE_VALUE_REALOrder = 0
 
-	stage.ATTRIBUTE_VALUE_STRINGs = make(map[*ATTRIBUTE_VALUE_STRING]any)
+	stage.ATTRIBUTE_VALUE_STRINGs = make(map[*ATTRIBUTE_VALUE_STRING]struct{})
 	stage.ATTRIBUTE_VALUE_STRINGs_mapString = make(map[string]*ATTRIBUTE_VALUE_STRING)
 	stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_STRING]uint)
 	stage.ATTRIBUTE_VALUE_STRINGOrder = 0
 
-	stage.ATTRIBUTE_VALUE_XHTMLs = make(map[*ATTRIBUTE_VALUE_XHTML]any)
+	stage.ATTRIBUTE_VALUE_XHTMLs = make(map[*ATTRIBUTE_VALUE_XHTML]struct{})
 	stage.ATTRIBUTE_VALUE_XHTMLs_mapString = make(map[string]*ATTRIBUTE_VALUE_XHTML)
 	stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order = make(map[*ATTRIBUTE_VALUE_XHTML]uint)
 	stage.ATTRIBUTE_VALUE_XHTMLOrder = 0
 
-	stage.A_ALTERNATIVE_IDs = make(map[*A_ALTERNATIVE_ID]any)
+	stage.A_ALTERNATIVE_IDs = make(map[*A_ALTERNATIVE_ID]struct{})
 	stage.A_ALTERNATIVE_IDs_mapString = make(map[string]*A_ALTERNATIVE_ID)
 	stage.A_ALTERNATIVE_IDMap_Staged_Order = make(map[*A_ALTERNATIVE_ID]uint)
 	stage.A_ALTERNATIVE_IDOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF)
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF)
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF)
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder = 0
 
-	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]any)
+	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]struct{})
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF)
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]uint)
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_BOOLEANs = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]any)
+	stage.A_ATTRIBUTE_VALUE_BOOLEANs = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]struct{})
 	stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_BOOLEAN)
 	stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]uint)
 	stage.A_ATTRIBUTE_VALUE_BOOLEANOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_DATEs = make(map[*A_ATTRIBUTE_VALUE_DATE]any)
+	stage.A_ATTRIBUTE_VALUE_DATEs = make(map[*A_ATTRIBUTE_VALUE_DATE]struct{})
 	stage.A_ATTRIBUTE_VALUE_DATEs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_DATE)
 	stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_DATE]uint)
 	stage.A_ATTRIBUTE_VALUE_DATEOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]any)
+	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]struct{})
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_ENUMERATION)
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]uint)
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_INTEGERs = make(map[*A_ATTRIBUTE_VALUE_INTEGER]any)
+	stage.A_ATTRIBUTE_VALUE_INTEGERs = make(map[*A_ATTRIBUTE_VALUE_INTEGER]struct{})
 	stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_INTEGER)
 	stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_INTEGER]uint)
 	stage.A_ATTRIBUTE_VALUE_INTEGEROrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_REALs = make(map[*A_ATTRIBUTE_VALUE_REAL]any)
+	stage.A_ATTRIBUTE_VALUE_REALs = make(map[*A_ATTRIBUTE_VALUE_REAL]struct{})
 	stage.A_ATTRIBUTE_VALUE_REALs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_REAL)
 	stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_REAL]uint)
 	stage.A_ATTRIBUTE_VALUE_REALOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_STRINGs = make(map[*A_ATTRIBUTE_VALUE_STRING]any)
+	stage.A_ATTRIBUTE_VALUE_STRINGs = make(map[*A_ATTRIBUTE_VALUE_STRING]struct{})
 	stage.A_ATTRIBUTE_VALUE_STRINGs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_STRING)
 	stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_STRING]uint)
 	stage.A_ATTRIBUTE_VALUE_STRINGOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_XHTMLs = make(map[*A_ATTRIBUTE_VALUE_XHTML]any)
+	stage.A_ATTRIBUTE_VALUE_XHTMLs = make(map[*A_ATTRIBUTE_VALUE_XHTML]struct{})
 	stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_XHTML)
 	stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_XHTML]uint)
 	stage.A_ATTRIBUTE_VALUE_XHTMLOrder = 0
 
-	stage.A_ATTRIBUTE_VALUE_XHTML_1s = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]any)
+	stage.A_ATTRIBUTE_VALUE_XHTML_1s = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]struct{})
 	stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString = make(map[string]*A_ATTRIBUTE_VALUE_XHTML_1)
 	stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]uint)
 	stage.A_ATTRIBUTE_VALUE_XHTML_1Order = 0
 
-	stage.A_CHILDRENs = make(map[*A_CHILDREN]any)
+	stage.A_CHILDRENs = make(map[*A_CHILDREN]struct{})
 	stage.A_CHILDRENs_mapString = make(map[string]*A_CHILDREN)
 	stage.A_CHILDRENMap_Staged_Order = make(map[*A_CHILDREN]uint)
 	stage.A_CHILDRENOrder = 0
 
-	stage.A_CORE_CONTENTs = make(map[*A_CORE_CONTENT]any)
+	stage.A_CORE_CONTENTs = make(map[*A_CORE_CONTENT]struct{})
 	stage.A_CORE_CONTENTs_mapString = make(map[string]*A_CORE_CONTENT)
 	stage.A_CORE_CONTENTMap_Staged_Order = make(map[*A_CORE_CONTENT]uint)
 	stage.A_CORE_CONTENTOrder = 0
 
-	stage.A_DATATYPESs = make(map[*A_DATATYPES]any)
+	stage.A_DATATYPESs = make(map[*A_DATATYPES]struct{})
 	stage.A_DATATYPESs_mapString = make(map[string]*A_DATATYPES)
 	stage.A_DATATYPESMap_Staged_Order = make(map[*A_DATATYPES]uint)
 	stage.A_DATATYPESOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]any)
+	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF)
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]uint)
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_DATE_REFs = make(map[*A_DATATYPE_DEFINITION_DATE_REF]any)
+	stage.A_DATATYPE_DEFINITION_DATE_REFs = make(map[*A_DATATYPE_DEFINITION_DATE_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_DATE_REF)
 	stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_DATE_REF]uint)
 	stage.A_DATATYPE_DEFINITION_DATE_REFOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]any)
+	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF)
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]uint)
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_INTEGER_REFs = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]any)
+	stage.A_DATATYPE_DEFINITION_INTEGER_REFs = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_INTEGER_REF)
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]uint)
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_REAL_REFs = make(map[*A_DATATYPE_DEFINITION_REAL_REF]any)
+	stage.A_DATATYPE_DEFINITION_REAL_REFs = make(map[*A_DATATYPE_DEFINITION_REAL_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_REAL_REF)
 	stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_REAL_REF]uint)
 	stage.A_DATATYPE_DEFINITION_REAL_REFOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_STRING_REFs = make(map[*A_DATATYPE_DEFINITION_STRING_REF]any)
+	stage.A_DATATYPE_DEFINITION_STRING_REFs = make(map[*A_DATATYPE_DEFINITION_STRING_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_STRING_REF)
 	stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_STRING_REF]uint)
 	stage.A_DATATYPE_DEFINITION_STRING_REFOrder = 0
 
-	stage.A_DATATYPE_DEFINITION_XHTML_REFs = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]any)
+	stage.A_DATATYPE_DEFINITION_XHTML_REFs = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]struct{})
 	stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_XHTML_REF)
 	stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]uint)
 	stage.A_DATATYPE_DEFINITION_XHTML_REFOrder = 0
 
-	stage.A_EDITABLE_ATTSs = make(map[*A_EDITABLE_ATTS]any)
+	stage.A_EDITABLE_ATTSs = make(map[*A_EDITABLE_ATTS]struct{})
 	stage.A_EDITABLE_ATTSs_mapString = make(map[string]*A_EDITABLE_ATTS)
 	stage.A_EDITABLE_ATTSMap_Staged_Order = make(map[*A_EDITABLE_ATTS]uint)
 	stage.A_EDITABLE_ATTSOrder = 0
 
-	stage.A_ENUM_VALUE_REFs = make(map[*A_ENUM_VALUE_REF]any)
+	stage.A_ENUM_VALUE_REFs = make(map[*A_ENUM_VALUE_REF]struct{})
 	stage.A_ENUM_VALUE_REFs_mapString = make(map[string]*A_ENUM_VALUE_REF)
 	stage.A_ENUM_VALUE_REFMap_Staged_Order = make(map[*A_ENUM_VALUE_REF]uint)
 	stage.A_ENUM_VALUE_REFOrder = 0
 
-	stage.A_OBJECTs = make(map[*A_OBJECT]any)
+	stage.A_OBJECTs = make(map[*A_OBJECT]struct{})
 	stage.A_OBJECTs_mapString = make(map[string]*A_OBJECT)
 	stage.A_OBJECTMap_Staged_Order = make(map[*A_OBJECT]uint)
 	stage.A_OBJECTOrder = 0
 
-	stage.A_PROPERTIESs = make(map[*A_PROPERTIES]any)
+	stage.A_PROPERTIESs = make(map[*A_PROPERTIES]struct{})
 	stage.A_PROPERTIESs_mapString = make(map[string]*A_PROPERTIES)
 	stage.A_PROPERTIESMap_Staged_Order = make(map[*A_PROPERTIES]uint)
 	stage.A_PROPERTIESOrder = 0
 
-	stage.A_RELATION_GROUP_TYPE_REFs = make(map[*A_RELATION_GROUP_TYPE_REF]any)
+	stage.A_RELATION_GROUP_TYPE_REFs = make(map[*A_RELATION_GROUP_TYPE_REF]struct{})
 	stage.A_RELATION_GROUP_TYPE_REFs_mapString = make(map[string]*A_RELATION_GROUP_TYPE_REF)
 	stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order = make(map[*A_RELATION_GROUP_TYPE_REF]uint)
 	stage.A_RELATION_GROUP_TYPE_REFOrder = 0
 
-	stage.A_SOURCE_1s = make(map[*A_SOURCE_1]any)
+	stage.A_SOURCE_1s = make(map[*A_SOURCE_1]struct{})
 	stage.A_SOURCE_1s_mapString = make(map[string]*A_SOURCE_1)
 	stage.A_SOURCE_1Map_Staged_Order = make(map[*A_SOURCE_1]uint)
 	stage.A_SOURCE_1Order = 0
 
-	stage.A_SOURCE_SPECIFICATION_1s = make(map[*A_SOURCE_SPECIFICATION_1]any)
+	stage.A_SOURCE_SPECIFICATION_1s = make(map[*A_SOURCE_SPECIFICATION_1]struct{})
 	stage.A_SOURCE_SPECIFICATION_1s_mapString = make(map[string]*A_SOURCE_SPECIFICATION_1)
 	stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order = make(map[*A_SOURCE_SPECIFICATION_1]uint)
 	stage.A_SOURCE_SPECIFICATION_1Order = 0
 
-	stage.A_SPECIFICATIONSs = make(map[*A_SPECIFICATIONS]any)
+	stage.A_SPECIFICATIONSs = make(map[*A_SPECIFICATIONS]struct{})
 	stage.A_SPECIFICATIONSs_mapString = make(map[string]*A_SPECIFICATIONS)
 	stage.A_SPECIFICATIONSMap_Staged_Order = make(map[*A_SPECIFICATIONS]uint)
 	stage.A_SPECIFICATIONSOrder = 0
 
-	stage.A_SPECIFICATION_TYPE_REFs = make(map[*A_SPECIFICATION_TYPE_REF]any)
+	stage.A_SPECIFICATION_TYPE_REFs = make(map[*A_SPECIFICATION_TYPE_REF]struct{})
 	stage.A_SPECIFICATION_TYPE_REFs_mapString = make(map[string]*A_SPECIFICATION_TYPE_REF)
 	stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order = make(map[*A_SPECIFICATION_TYPE_REF]uint)
 	stage.A_SPECIFICATION_TYPE_REFOrder = 0
 
-	stage.A_SPECIFIED_VALUESs = make(map[*A_SPECIFIED_VALUES]any)
+	stage.A_SPECIFIED_VALUESs = make(map[*A_SPECIFIED_VALUES]struct{})
 	stage.A_SPECIFIED_VALUESs_mapString = make(map[string]*A_SPECIFIED_VALUES)
 	stage.A_SPECIFIED_VALUESMap_Staged_Order = make(map[*A_SPECIFIED_VALUES]uint)
 	stage.A_SPECIFIED_VALUESOrder = 0
 
-	stage.A_SPEC_ATTRIBUTESs = make(map[*A_SPEC_ATTRIBUTES]any)
+	stage.A_SPEC_ATTRIBUTESs = make(map[*A_SPEC_ATTRIBUTES]struct{})
 	stage.A_SPEC_ATTRIBUTESs_mapString = make(map[string]*A_SPEC_ATTRIBUTES)
 	stage.A_SPEC_ATTRIBUTESMap_Staged_Order = make(map[*A_SPEC_ATTRIBUTES]uint)
 	stage.A_SPEC_ATTRIBUTESOrder = 0
 
-	stage.A_SPEC_OBJECTSs = make(map[*A_SPEC_OBJECTS]any)
+	stage.A_SPEC_OBJECTSs = make(map[*A_SPEC_OBJECTS]struct{})
 	stage.A_SPEC_OBJECTSs_mapString = make(map[string]*A_SPEC_OBJECTS)
 	stage.A_SPEC_OBJECTSMap_Staged_Order = make(map[*A_SPEC_OBJECTS]uint)
 	stage.A_SPEC_OBJECTSOrder = 0
 
-	stage.A_SPEC_OBJECT_TYPE_REFs = make(map[*A_SPEC_OBJECT_TYPE_REF]any)
+	stage.A_SPEC_OBJECT_TYPE_REFs = make(map[*A_SPEC_OBJECT_TYPE_REF]struct{})
 	stage.A_SPEC_OBJECT_TYPE_REFs_mapString = make(map[string]*A_SPEC_OBJECT_TYPE_REF)
 	stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order = make(map[*A_SPEC_OBJECT_TYPE_REF]uint)
 	stage.A_SPEC_OBJECT_TYPE_REFOrder = 0
 
-	stage.A_SPEC_RELATIONSs = make(map[*A_SPEC_RELATIONS]any)
+	stage.A_SPEC_RELATIONSs = make(map[*A_SPEC_RELATIONS]struct{})
 	stage.A_SPEC_RELATIONSs_mapString = make(map[string]*A_SPEC_RELATIONS)
 	stage.A_SPEC_RELATIONSMap_Staged_Order = make(map[*A_SPEC_RELATIONS]uint)
 	stage.A_SPEC_RELATIONSOrder = 0
 
-	stage.A_SPEC_RELATION_GROUPSs = make(map[*A_SPEC_RELATION_GROUPS]any)
+	stage.A_SPEC_RELATION_GROUPSs = make(map[*A_SPEC_RELATION_GROUPS]struct{})
 	stage.A_SPEC_RELATION_GROUPSs_mapString = make(map[string]*A_SPEC_RELATION_GROUPS)
 	stage.A_SPEC_RELATION_GROUPSMap_Staged_Order = make(map[*A_SPEC_RELATION_GROUPS]uint)
 	stage.A_SPEC_RELATION_GROUPSOrder = 0
 
-	stage.A_SPEC_RELATION_REFs = make(map[*A_SPEC_RELATION_REF]any)
+	stage.A_SPEC_RELATION_REFs = make(map[*A_SPEC_RELATION_REF]struct{})
 	stage.A_SPEC_RELATION_REFs_mapString = make(map[string]*A_SPEC_RELATION_REF)
 	stage.A_SPEC_RELATION_REFMap_Staged_Order = make(map[*A_SPEC_RELATION_REF]uint)
 	stage.A_SPEC_RELATION_REFOrder = 0
 
-	stage.A_SPEC_RELATION_TYPE_REFs = make(map[*A_SPEC_RELATION_TYPE_REF]any)
+	stage.A_SPEC_RELATION_TYPE_REFs = make(map[*A_SPEC_RELATION_TYPE_REF]struct{})
 	stage.A_SPEC_RELATION_TYPE_REFs_mapString = make(map[string]*A_SPEC_RELATION_TYPE_REF)
 	stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order = make(map[*A_SPEC_RELATION_TYPE_REF]uint)
 	stage.A_SPEC_RELATION_TYPE_REFOrder = 0
 
-	stage.A_SPEC_TYPESs = make(map[*A_SPEC_TYPES]any)
+	stage.A_SPEC_TYPESs = make(map[*A_SPEC_TYPES]struct{})
 	stage.A_SPEC_TYPESs_mapString = make(map[string]*A_SPEC_TYPES)
 	stage.A_SPEC_TYPESMap_Staged_Order = make(map[*A_SPEC_TYPES]uint)
 	stage.A_SPEC_TYPESOrder = 0
 
-	stage.A_THE_HEADERs = make(map[*A_THE_HEADER]any)
+	stage.A_THE_HEADERs = make(map[*A_THE_HEADER]struct{})
 	stage.A_THE_HEADERs_mapString = make(map[string]*A_THE_HEADER)
 	stage.A_THE_HEADERMap_Staged_Order = make(map[*A_THE_HEADER]uint)
 	stage.A_THE_HEADEROrder = 0
 
-	stage.A_TOOL_EXTENSIONSs = make(map[*A_TOOL_EXTENSIONS]any)
+	stage.A_TOOL_EXTENSIONSs = make(map[*A_TOOL_EXTENSIONS]struct{})
 	stage.A_TOOL_EXTENSIONSs_mapString = make(map[string]*A_TOOL_EXTENSIONS)
 	stage.A_TOOL_EXTENSIONSMap_Staged_Order = make(map[*A_TOOL_EXTENSIONS]uint)
 	stage.A_TOOL_EXTENSIONSOrder = 0
 
-	stage.DATATYPE_DEFINITION_BOOLEANs = make(map[*DATATYPE_DEFINITION_BOOLEAN]any)
+	stage.DATATYPE_DEFINITION_BOOLEANs = make(map[*DATATYPE_DEFINITION_BOOLEAN]struct{})
 	stage.DATATYPE_DEFINITION_BOOLEANs_mapString = make(map[string]*DATATYPE_DEFINITION_BOOLEAN)
 	stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order = make(map[*DATATYPE_DEFINITION_BOOLEAN]uint)
 	stage.DATATYPE_DEFINITION_BOOLEANOrder = 0
 
-	stage.DATATYPE_DEFINITION_DATEs = make(map[*DATATYPE_DEFINITION_DATE]any)
+	stage.DATATYPE_DEFINITION_DATEs = make(map[*DATATYPE_DEFINITION_DATE]struct{})
 	stage.DATATYPE_DEFINITION_DATEs_mapString = make(map[string]*DATATYPE_DEFINITION_DATE)
 	stage.DATATYPE_DEFINITION_DATEMap_Staged_Order = make(map[*DATATYPE_DEFINITION_DATE]uint)
 	stage.DATATYPE_DEFINITION_DATEOrder = 0
 
-	stage.DATATYPE_DEFINITION_ENUMERATIONs = make(map[*DATATYPE_DEFINITION_ENUMERATION]any)
+	stage.DATATYPE_DEFINITION_ENUMERATIONs = make(map[*DATATYPE_DEFINITION_ENUMERATION]struct{})
 	stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString = make(map[string]*DATATYPE_DEFINITION_ENUMERATION)
 	stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order = make(map[*DATATYPE_DEFINITION_ENUMERATION]uint)
 	stage.DATATYPE_DEFINITION_ENUMERATIONOrder = 0
 
-	stage.DATATYPE_DEFINITION_INTEGERs = make(map[*DATATYPE_DEFINITION_INTEGER]any)
+	stage.DATATYPE_DEFINITION_INTEGERs = make(map[*DATATYPE_DEFINITION_INTEGER]struct{})
 	stage.DATATYPE_DEFINITION_INTEGERs_mapString = make(map[string]*DATATYPE_DEFINITION_INTEGER)
 	stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order = make(map[*DATATYPE_DEFINITION_INTEGER]uint)
 	stage.DATATYPE_DEFINITION_INTEGEROrder = 0
 
-	stage.DATATYPE_DEFINITION_REALs = make(map[*DATATYPE_DEFINITION_REAL]any)
+	stage.DATATYPE_DEFINITION_REALs = make(map[*DATATYPE_DEFINITION_REAL]struct{})
 	stage.DATATYPE_DEFINITION_REALs_mapString = make(map[string]*DATATYPE_DEFINITION_REAL)
 	stage.DATATYPE_DEFINITION_REALMap_Staged_Order = make(map[*DATATYPE_DEFINITION_REAL]uint)
 	stage.DATATYPE_DEFINITION_REALOrder = 0
 
-	stage.DATATYPE_DEFINITION_STRINGs = make(map[*DATATYPE_DEFINITION_STRING]any)
+	stage.DATATYPE_DEFINITION_STRINGs = make(map[*DATATYPE_DEFINITION_STRING]struct{})
 	stage.DATATYPE_DEFINITION_STRINGs_mapString = make(map[string]*DATATYPE_DEFINITION_STRING)
 	stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order = make(map[*DATATYPE_DEFINITION_STRING]uint)
 	stage.DATATYPE_DEFINITION_STRINGOrder = 0
 
-	stage.DATATYPE_DEFINITION_XHTMLs = make(map[*DATATYPE_DEFINITION_XHTML]any)
+	stage.DATATYPE_DEFINITION_XHTMLs = make(map[*DATATYPE_DEFINITION_XHTML]struct{})
 	stage.DATATYPE_DEFINITION_XHTMLs_mapString = make(map[string]*DATATYPE_DEFINITION_XHTML)
 	stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order = make(map[*DATATYPE_DEFINITION_XHTML]uint)
 	stage.DATATYPE_DEFINITION_XHTMLOrder = 0
 
-	stage.EMBEDDED_VALUEs = make(map[*EMBEDDED_VALUE]any)
+	stage.EMBEDDED_VALUEs = make(map[*EMBEDDED_VALUE]struct{})
 	stage.EMBEDDED_VALUEs_mapString = make(map[string]*EMBEDDED_VALUE)
 	stage.EMBEDDED_VALUEMap_Staged_Order = make(map[*EMBEDDED_VALUE]uint)
 	stage.EMBEDDED_VALUEOrder = 0
 
-	stage.ENUM_VALUEs = make(map[*ENUM_VALUE]any)
+	stage.ENUM_VALUEs = make(map[*ENUM_VALUE]struct{})
 	stage.ENUM_VALUEs_mapString = make(map[string]*ENUM_VALUE)
 	stage.ENUM_VALUEMap_Staged_Order = make(map[*ENUM_VALUE]uint)
 	stage.ENUM_VALUEOrder = 0
 
-	stage.EmbeddedJpgImages = make(map[*EmbeddedJpgImage]any)
+	stage.EmbeddedJpgImages = make(map[*EmbeddedJpgImage]struct{})
 	stage.EmbeddedJpgImages_mapString = make(map[string]*EmbeddedJpgImage)
 	stage.EmbeddedJpgImageMap_Staged_Order = make(map[*EmbeddedJpgImage]uint)
 	stage.EmbeddedJpgImageOrder = 0
 
-	stage.EmbeddedPngImages = make(map[*EmbeddedPngImage]any)
+	stage.EmbeddedPngImages = make(map[*EmbeddedPngImage]struct{})
 	stage.EmbeddedPngImages_mapString = make(map[string]*EmbeddedPngImage)
 	stage.EmbeddedPngImageMap_Staged_Order = make(map[*EmbeddedPngImage]uint)
 	stage.EmbeddedPngImageOrder = 0
 
-	stage.EmbeddedSvgImages = make(map[*EmbeddedSvgImage]any)
+	stage.EmbeddedSvgImages = make(map[*EmbeddedSvgImage]struct{})
 	stage.EmbeddedSvgImages_mapString = make(map[string]*EmbeddedSvgImage)
 	stage.EmbeddedSvgImageMap_Staged_Order = make(map[*EmbeddedSvgImage]uint)
 	stage.EmbeddedSvgImageOrder = 0
 
-	stage.Kills = make(map[*Kill]any)
+	stage.Kills = make(map[*Kill]struct{})
 	stage.Kills_mapString = make(map[string]*Kill)
 	stage.KillMap_Staged_Order = make(map[*Kill]uint)
 	stage.KillOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntryOrder = 0
 
-	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]any)
+	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]struct{})
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys_mapString = make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryMap_Staged_Order = make(map[*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry]uint)
 	stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntryOrder = 0
 
-	stage.Map_SPECIFICATION_Nodes_expandedEntrys = make(map[*Map_SPECIFICATION_Nodes_expandedEntry]any)
+	stage.Map_SPECIFICATION_Nodes_expandedEntrys = make(map[*Map_SPECIFICATION_Nodes_expandedEntry]struct{})
 	stage.Map_SPECIFICATION_Nodes_expandedEntrys_mapString = make(map[string]*Map_SPECIFICATION_Nodes_expandedEntry)
 	stage.Map_SPECIFICATION_Nodes_expandedEntryMap_Staged_Order = make(map[*Map_SPECIFICATION_Nodes_expandedEntry]uint)
 	stage.Map_SPECIFICATION_Nodes_expandedEntryOrder = 0
 
-	stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys = make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]any)
+	stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys = make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]struct{})
 	stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys_mapString = make(map[string]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
 	stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryMap_Staged_Order = make(map[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry]uint)
 	stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntryOrder = 0
 
-	stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys = make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]any)
+	stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys = make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]struct{})
 	stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString = make(map[string]*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order = make(map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]uint)
 	stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryOrder = 0
 
-	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys = make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]any)
+	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys = make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]struct{})
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString = make(map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry)
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order = make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint)
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder = 0
 
-	stage.RELATION_GROUPs = make(map[*RELATION_GROUP]any)
+	stage.RELATION_GROUPs = make(map[*RELATION_GROUP]struct{})
 	stage.RELATION_GROUPs_mapString = make(map[string]*RELATION_GROUP)
 	stage.RELATION_GROUPMap_Staged_Order = make(map[*RELATION_GROUP]uint)
 	stage.RELATION_GROUPOrder = 0
 
-	stage.RELATION_GROUP_TYPEs = make(map[*RELATION_GROUP_TYPE]any)
+	stage.RELATION_GROUP_TYPEs = make(map[*RELATION_GROUP_TYPE]struct{})
 	stage.RELATION_GROUP_TYPEs_mapString = make(map[string]*RELATION_GROUP_TYPE)
 	stage.RELATION_GROUP_TYPEMap_Staged_Order = make(map[*RELATION_GROUP_TYPE]uint)
 	stage.RELATION_GROUP_TYPEOrder = 0
 
-	stage.REQ_IFs = make(map[*REQ_IF]any)
+	stage.REQ_IFs = make(map[*REQ_IF]struct{})
 	stage.REQ_IFs_mapString = make(map[string]*REQ_IF)
 	stage.REQ_IFMap_Staged_Order = make(map[*REQ_IF]uint)
 	stage.REQ_IFOrder = 0
 
-	stage.REQ_IF_CONTENTs = make(map[*REQ_IF_CONTENT]any)
+	stage.REQ_IF_CONTENTs = make(map[*REQ_IF_CONTENT]struct{})
 	stage.REQ_IF_CONTENTs_mapString = make(map[string]*REQ_IF_CONTENT)
 	stage.REQ_IF_CONTENTMap_Staged_Order = make(map[*REQ_IF_CONTENT]uint)
 	stage.REQ_IF_CONTENTOrder = 0
 
-	stage.REQ_IF_HEADERs = make(map[*REQ_IF_HEADER]any)
+	stage.REQ_IF_HEADERs = make(map[*REQ_IF_HEADER]struct{})
 	stage.REQ_IF_HEADERs_mapString = make(map[string]*REQ_IF_HEADER)
 	stage.REQ_IF_HEADERMap_Staged_Order = make(map[*REQ_IF_HEADER]uint)
 	stage.REQ_IF_HEADEROrder = 0
 
-	stage.REQ_IF_TOOL_EXTENSIONs = make(map[*REQ_IF_TOOL_EXTENSION]any)
+	stage.REQ_IF_TOOL_EXTENSIONs = make(map[*REQ_IF_TOOL_EXTENSION]struct{})
 	stage.REQ_IF_TOOL_EXTENSIONs_mapString = make(map[string]*REQ_IF_TOOL_EXTENSION)
 	stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order = make(map[*REQ_IF_TOOL_EXTENSION]uint)
 	stage.REQ_IF_TOOL_EXTENSIONOrder = 0
 
-	stage.RenderingConfigurations = make(map[*RenderingConfiguration]any)
+	stage.RenderingConfigurations = make(map[*RenderingConfiguration]struct{})
 	stage.RenderingConfigurations_mapString = make(map[string]*RenderingConfiguration)
 	stage.RenderingConfigurationMap_Staged_Order = make(map[*RenderingConfiguration]uint)
 	stage.RenderingConfigurationOrder = 0
 
-	stage.SPECIFICATIONs = make(map[*SPECIFICATION]any)
+	stage.SPECIFICATIONs = make(map[*SPECIFICATION]struct{})
 	stage.SPECIFICATIONs_mapString = make(map[string]*SPECIFICATION)
 	stage.SPECIFICATIONMap_Staged_Order = make(map[*SPECIFICATION]uint)
 	stage.SPECIFICATIONOrder = 0
 
-	stage.SPECIFICATION_TYPEs = make(map[*SPECIFICATION_TYPE]any)
+	stage.SPECIFICATION_TYPEs = make(map[*SPECIFICATION_TYPE]struct{})
 	stage.SPECIFICATION_TYPEs_mapString = make(map[string]*SPECIFICATION_TYPE)
 	stage.SPECIFICATION_TYPEMap_Staged_Order = make(map[*SPECIFICATION_TYPE]uint)
 	stage.SPECIFICATION_TYPEOrder = 0
 
-	stage.SPEC_HIERARCHYs = make(map[*SPEC_HIERARCHY]any)
+	stage.SPEC_HIERARCHYs = make(map[*SPEC_HIERARCHY]struct{})
 	stage.SPEC_HIERARCHYs_mapString = make(map[string]*SPEC_HIERARCHY)
 	stage.SPEC_HIERARCHYMap_Staged_Order = make(map[*SPEC_HIERARCHY]uint)
 	stage.SPEC_HIERARCHYOrder = 0
 
-	stage.SPEC_OBJECTs = make(map[*SPEC_OBJECT]any)
+	stage.SPEC_OBJECTs = make(map[*SPEC_OBJECT]struct{})
 	stage.SPEC_OBJECTs_mapString = make(map[string]*SPEC_OBJECT)
 	stage.SPEC_OBJECTMap_Staged_Order = make(map[*SPEC_OBJECT]uint)
 	stage.SPEC_OBJECTOrder = 0
 
-	stage.SPEC_OBJECT_TYPEs = make(map[*SPEC_OBJECT_TYPE]any)
+	stage.SPEC_OBJECT_TYPEs = make(map[*SPEC_OBJECT_TYPE]struct{})
 	stage.SPEC_OBJECT_TYPEs_mapString = make(map[string]*SPEC_OBJECT_TYPE)
 	stage.SPEC_OBJECT_TYPEMap_Staged_Order = make(map[*SPEC_OBJECT_TYPE]uint)
 	stage.SPEC_OBJECT_TYPEOrder = 0
 
-	stage.SPEC_RELATIONs = make(map[*SPEC_RELATION]any)
+	stage.SPEC_RELATIONs = make(map[*SPEC_RELATION]struct{})
 	stage.SPEC_RELATIONs_mapString = make(map[string]*SPEC_RELATION)
 	stage.SPEC_RELATIONMap_Staged_Order = make(map[*SPEC_RELATION]uint)
 	stage.SPEC_RELATIONOrder = 0
 
-	stage.SPEC_RELATION_TYPEs = make(map[*SPEC_RELATION_TYPE]any)
+	stage.SPEC_RELATION_TYPEs = make(map[*SPEC_RELATION_TYPE]struct{})
 	stage.SPEC_RELATION_TYPEs_mapString = make(map[string]*SPEC_RELATION_TYPE)
 	stage.SPEC_RELATION_TYPEMap_Staged_Order = make(map[*SPEC_RELATION_TYPE]uint)
 	stage.SPEC_RELATION_TYPEOrder = 0
 
-	stage.StaticWebSites = make(map[*StaticWebSite]any)
+	stage.StaticWebSites = make(map[*StaticWebSite]struct{})
 	stage.StaticWebSites_mapString = make(map[string]*StaticWebSite)
 	stage.StaticWebSiteMap_Staged_Order = make(map[*StaticWebSite]uint)
 	stage.StaticWebSiteOrder = 0
 
-	stage.StaticWebSiteChapters = make(map[*StaticWebSiteChapter]any)
+	stage.StaticWebSiteChapters = make(map[*StaticWebSiteChapter]struct{})
 	stage.StaticWebSiteChapters_mapString = make(map[string]*StaticWebSiteChapter)
 	stage.StaticWebSiteChapterMap_Staged_Order = make(map[*StaticWebSiteChapter]uint)
 	stage.StaticWebSiteChapterOrder = 0
 
-	stage.StaticWebSiteGeneratedImages = make(map[*StaticWebSiteGeneratedImage]any)
+	stage.StaticWebSiteGeneratedImages = make(map[*StaticWebSiteGeneratedImage]struct{})
 	stage.StaticWebSiteGeneratedImages_mapString = make(map[string]*StaticWebSiteGeneratedImage)
 	stage.StaticWebSiteGeneratedImageMap_Staged_Order = make(map[*StaticWebSiteGeneratedImage]uint)
 	stage.StaticWebSiteGeneratedImageOrder = 0
 
-	stage.StaticWebSiteImages = make(map[*StaticWebSiteImage]any)
+	stage.StaticWebSiteImages = make(map[*StaticWebSiteImage]struct{})
 	stage.StaticWebSiteImages_mapString = make(map[string]*StaticWebSiteImage)
 	stage.StaticWebSiteImageMap_Staged_Order = make(map[*StaticWebSiteImage]uint)
 	stage.StaticWebSiteImageOrder = 0
 
-	stage.StaticWebSiteParagraphs = make(map[*StaticWebSiteParagraph]any)
+	stage.StaticWebSiteParagraphs = make(map[*StaticWebSiteParagraph]struct{})
 	stage.StaticWebSiteParagraphs_mapString = make(map[string]*StaticWebSiteParagraph)
 	stage.StaticWebSiteParagraphMap_Staged_Order = make(map[*StaticWebSiteParagraph]uint)
 	stage.StaticWebSiteParagraphOrder = 0
 
-	stage.XHTML_CONTENTs = make(map[*XHTML_CONTENT]any)
+	stage.XHTML_CONTENTs = make(map[*XHTML_CONTENT]struct{})
 	stage.XHTML_CONTENTs_mapString = make(map[string]*XHTML_CONTENT)
 	stage.XHTML_CONTENTMap_Staged_Order = make(map[*XHTML_CONTENT]uint)
 	stage.XHTML_CONTENTOrder = 0
@@ -15598,7 +15580,7 @@ func CompareGongstructByName[T PointerToGongstruct](a, b T) int {
 	return cmp.Compare(a.GetName(), b.GetName())
 }
 
-func SortGongstructSetByName[T PointerToGongstruct](set map[T]any) (sortedSlice []T) {
+func SortGongstructSetByName[T PointerToGongstruct](set map[T]struct{}) (sortedSlice []T) {
 
 	for key := range set {
 		sortedSlice = append(sortedSlice, key)
@@ -16126,249 +16108,249 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 
 // GetGongstructInstancesSet returns the set staged GongstructType instances
 // it is usefull because it allows refactoring of gongstruct identifier
-func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
+func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]struct{} {
 	var ret Type
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
 	case ALTERNATIVE_ID:
-		return any(&stage.ALTERNATIVE_IDs).(*map[*Type]any)
+		return any(&stage.ALTERNATIVE_IDs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_BOOLEAN:
-		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_DATE:
-		return any(&stage.ATTRIBUTE_DEFINITION_DATEs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_DATEs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_ENUMERATION:
-		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_INTEGER:
-		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_REAL:
-		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_STRING:
-		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_XHTML:
-		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_DATE:
-		return any(&stage.ATTRIBUTE_VALUE_DATEs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_DATEs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.ATTRIBUTE_VALUE_INTEGERs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_INTEGERs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_REAL:
-		return any(&stage.ATTRIBUTE_VALUE_REALs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_REALs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_STRING:
-		return any(&stage.ATTRIBUTE_VALUE_STRINGs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_STRINGs).(*map[*Type]struct{})
 	case ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.ATTRIBUTE_VALUE_XHTMLs).(*map[*Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_XHTMLs).(*map[*Type]struct{})
 	case A_ALTERNATIVE_ID:
-		return any(&stage.A_ALTERNATIVE_IDs).(*map[*Type]any)
+		return any(&stage.A_ALTERNATIVE_IDs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_DATE_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_REAL_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_STRING_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_DATE:
-		return any(&stage.A_ATTRIBUTE_VALUE_DATEs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_DATEs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_REAL:
-		return any(&stage.A_ATTRIBUTE_VALUE_REALs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_REALs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_STRING:
-		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs).(*map[*Type]struct{})
 	case A_ATTRIBUTE_VALUE_XHTML_1:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s).(*map[*Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s).(*map[*Type]struct{})
 	case A_CHILDREN:
-		return any(&stage.A_CHILDRENs).(*map[*Type]any)
+		return any(&stage.A_CHILDRENs).(*map[*Type]struct{})
 	case A_CORE_CONTENT:
-		return any(&stage.A_CORE_CONTENTs).(*map[*Type]any)
+		return any(&stage.A_CORE_CONTENTs).(*map[*Type]struct{})
 	case A_DATATYPES:
-		return any(&stage.A_DATATYPESs).(*map[*Type]any)
+		return any(&stage.A_DATATYPESs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_DATE_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_REAL_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_STRING_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs).(*map[*Type]struct{})
 	case A_DATATYPE_DEFINITION_XHTML_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs).(*map[*Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs).(*map[*Type]struct{})
 	case A_EDITABLE_ATTS:
-		return any(&stage.A_EDITABLE_ATTSs).(*map[*Type]any)
+		return any(&stage.A_EDITABLE_ATTSs).(*map[*Type]struct{})
 	case A_ENUM_VALUE_REF:
-		return any(&stage.A_ENUM_VALUE_REFs).(*map[*Type]any)
+		return any(&stage.A_ENUM_VALUE_REFs).(*map[*Type]struct{})
 	case A_OBJECT:
-		return any(&stage.A_OBJECTs).(*map[*Type]any)
+		return any(&stage.A_OBJECTs).(*map[*Type]struct{})
 	case A_PROPERTIES:
-		return any(&stage.A_PROPERTIESs).(*map[*Type]any)
+		return any(&stage.A_PROPERTIESs).(*map[*Type]struct{})
 	case A_RELATION_GROUP_TYPE_REF:
-		return any(&stage.A_RELATION_GROUP_TYPE_REFs).(*map[*Type]any)
+		return any(&stage.A_RELATION_GROUP_TYPE_REFs).(*map[*Type]struct{})
 	case A_SOURCE_1:
-		return any(&stage.A_SOURCE_1s).(*map[*Type]any)
+		return any(&stage.A_SOURCE_1s).(*map[*Type]struct{})
 	case A_SOURCE_SPECIFICATION_1:
-		return any(&stage.A_SOURCE_SPECIFICATION_1s).(*map[*Type]any)
+		return any(&stage.A_SOURCE_SPECIFICATION_1s).(*map[*Type]struct{})
 	case A_SPECIFICATIONS:
-		return any(&stage.A_SPECIFICATIONSs).(*map[*Type]any)
+		return any(&stage.A_SPECIFICATIONSs).(*map[*Type]struct{})
 	case A_SPECIFICATION_TYPE_REF:
-		return any(&stage.A_SPECIFICATION_TYPE_REFs).(*map[*Type]any)
+		return any(&stage.A_SPECIFICATION_TYPE_REFs).(*map[*Type]struct{})
 	case A_SPECIFIED_VALUES:
-		return any(&stage.A_SPECIFIED_VALUESs).(*map[*Type]any)
+		return any(&stage.A_SPECIFIED_VALUESs).(*map[*Type]struct{})
 	case A_SPEC_ATTRIBUTES:
-		return any(&stage.A_SPEC_ATTRIBUTESs).(*map[*Type]any)
+		return any(&stage.A_SPEC_ATTRIBUTESs).(*map[*Type]struct{})
 	case A_SPEC_OBJECTS:
-		return any(&stage.A_SPEC_OBJECTSs).(*map[*Type]any)
+		return any(&stage.A_SPEC_OBJECTSs).(*map[*Type]struct{})
 	case A_SPEC_OBJECT_TYPE_REF:
-		return any(&stage.A_SPEC_OBJECT_TYPE_REFs).(*map[*Type]any)
+		return any(&stage.A_SPEC_OBJECT_TYPE_REFs).(*map[*Type]struct{})
 	case A_SPEC_RELATIONS:
-		return any(&stage.A_SPEC_RELATIONSs).(*map[*Type]any)
+		return any(&stage.A_SPEC_RELATIONSs).(*map[*Type]struct{})
 	case A_SPEC_RELATION_GROUPS:
-		return any(&stage.A_SPEC_RELATION_GROUPSs).(*map[*Type]any)
+		return any(&stage.A_SPEC_RELATION_GROUPSs).(*map[*Type]struct{})
 	case A_SPEC_RELATION_REF:
-		return any(&stage.A_SPEC_RELATION_REFs).(*map[*Type]any)
+		return any(&stage.A_SPEC_RELATION_REFs).(*map[*Type]struct{})
 	case A_SPEC_RELATION_TYPE_REF:
-		return any(&stage.A_SPEC_RELATION_TYPE_REFs).(*map[*Type]any)
+		return any(&stage.A_SPEC_RELATION_TYPE_REFs).(*map[*Type]struct{})
 	case A_SPEC_TYPES:
-		return any(&stage.A_SPEC_TYPESs).(*map[*Type]any)
+		return any(&stage.A_SPEC_TYPESs).(*map[*Type]struct{})
 	case A_THE_HEADER:
-		return any(&stage.A_THE_HEADERs).(*map[*Type]any)
+		return any(&stage.A_THE_HEADERs).(*map[*Type]struct{})
 	case A_TOOL_EXTENSIONS:
-		return any(&stage.A_TOOL_EXTENSIONSs).(*map[*Type]any)
+		return any(&stage.A_TOOL_EXTENSIONSs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_BOOLEAN:
-		return any(&stage.DATATYPE_DEFINITION_BOOLEANs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_BOOLEANs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_DATE:
-		return any(&stage.DATATYPE_DEFINITION_DATEs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_DATEs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_ENUMERATION:
-		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_INTEGER:
-		return any(&stage.DATATYPE_DEFINITION_INTEGERs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_INTEGERs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_REAL:
-		return any(&stage.DATATYPE_DEFINITION_REALs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_REALs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_STRING:
-		return any(&stage.DATATYPE_DEFINITION_STRINGs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_STRINGs).(*map[*Type]struct{})
 	case DATATYPE_DEFINITION_XHTML:
-		return any(&stage.DATATYPE_DEFINITION_XHTMLs).(*map[*Type]any)
+		return any(&stage.DATATYPE_DEFINITION_XHTMLs).(*map[*Type]struct{})
 	case EMBEDDED_VALUE:
-		return any(&stage.EMBEDDED_VALUEs).(*map[*Type]any)
+		return any(&stage.EMBEDDED_VALUEs).(*map[*Type]struct{})
 	case ENUM_VALUE:
-		return any(&stage.ENUM_VALUEs).(*map[*Type]any)
+		return any(&stage.ENUM_VALUEs).(*map[*Type]struct{})
 	case EmbeddedJpgImage:
-		return any(&stage.EmbeddedJpgImages).(*map[*Type]any)
+		return any(&stage.EmbeddedJpgImages).(*map[*Type]struct{})
 	case EmbeddedPngImage:
-		return any(&stage.EmbeddedPngImages).(*map[*Type]any)
+		return any(&stage.EmbeddedPngImages).(*map[*Type]struct{})
 	case EmbeddedSvgImage:
-		return any(&stage.EmbeddedSvgImages).(*map[*Type]any)
+		return any(&stage.EmbeddedSvgImages).(*map[*Type]struct{})
 	case Kill:
-		return any(&stage.Kills).(*map[*Type]any)
+		return any(&stage.Kills).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys).(*map[*Type]struct{})
 	case Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys).(*map[*Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys).(*map[*Type]struct{})
 	case Map_SPECIFICATION_Nodes_expandedEntry:
-		return any(&stage.Map_SPECIFICATION_Nodes_expandedEntrys).(*map[*Type]any)
+		return any(&stage.Map_SPECIFICATION_Nodes_expandedEntrys).(*map[*Type]struct{})
 	case Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		return any(&stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys).(*map[*Type]any)
+		return any(&stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys).(*map[*Type]struct{})
 	case Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[*Type]any)
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[*Type]struct{})
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
-		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[*Type]any)
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[*Type]struct{})
 	case RELATION_GROUP:
-		return any(&stage.RELATION_GROUPs).(*map[*Type]any)
+		return any(&stage.RELATION_GROUPs).(*map[*Type]struct{})
 	case RELATION_GROUP_TYPE:
-		return any(&stage.RELATION_GROUP_TYPEs).(*map[*Type]any)
+		return any(&stage.RELATION_GROUP_TYPEs).(*map[*Type]struct{})
 	case REQ_IF:
-		return any(&stage.REQ_IFs).(*map[*Type]any)
+		return any(&stage.REQ_IFs).(*map[*Type]struct{})
 	case REQ_IF_CONTENT:
-		return any(&stage.REQ_IF_CONTENTs).(*map[*Type]any)
+		return any(&stage.REQ_IF_CONTENTs).(*map[*Type]struct{})
 	case REQ_IF_HEADER:
-		return any(&stage.REQ_IF_HEADERs).(*map[*Type]any)
+		return any(&stage.REQ_IF_HEADERs).(*map[*Type]struct{})
 	case REQ_IF_TOOL_EXTENSION:
-		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*map[*Type]any)
+		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*map[*Type]struct{})
 	case RenderingConfiguration:
-		return any(&stage.RenderingConfigurations).(*map[*Type]any)
+		return any(&stage.RenderingConfigurations).(*map[*Type]struct{})
 	case SPECIFICATION:
-		return any(&stage.SPECIFICATIONs).(*map[*Type]any)
+		return any(&stage.SPECIFICATIONs).(*map[*Type]struct{})
 	case SPECIFICATION_TYPE:
-		return any(&stage.SPECIFICATION_TYPEs).(*map[*Type]any)
+		return any(&stage.SPECIFICATION_TYPEs).(*map[*Type]struct{})
 	case SPEC_HIERARCHY:
-		return any(&stage.SPEC_HIERARCHYs).(*map[*Type]any)
+		return any(&stage.SPEC_HIERARCHYs).(*map[*Type]struct{})
 	case SPEC_OBJECT:
-		return any(&stage.SPEC_OBJECTs).(*map[*Type]any)
+		return any(&stage.SPEC_OBJECTs).(*map[*Type]struct{})
 	case SPEC_OBJECT_TYPE:
-		return any(&stage.SPEC_OBJECT_TYPEs).(*map[*Type]any)
+		return any(&stage.SPEC_OBJECT_TYPEs).(*map[*Type]struct{})
 	case SPEC_RELATION:
-		return any(&stage.SPEC_RELATIONs).(*map[*Type]any)
+		return any(&stage.SPEC_RELATIONs).(*map[*Type]struct{})
 	case SPEC_RELATION_TYPE:
-		return any(&stage.SPEC_RELATION_TYPEs).(*map[*Type]any)
+		return any(&stage.SPEC_RELATION_TYPEs).(*map[*Type]struct{})
 	case StaticWebSite:
-		return any(&stage.StaticWebSites).(*map[*Type]any)
+		return any(&stage.StaticWebSites).(*map[*Type]struct{})
 	case StaticWebSiteChapter:
-		return any(&stage.StaticWebSiteChapters).(*map[*Type]any)
+		return any(&stage.StaticWebSiteChapters).(*map[*Type]struct{})
 	case StaticWebSiteGeneratedImage:
-		return any(&stage.StaticWebSiteGeneratedImages).(*map[*Type]any)
+		return any(&stage.StaticWebSiteGeneratedImages).(*map[*Type]struct{})
 	case StaticWebSiteImage:
-		return any(&stage.StaticWebSiteImages).(*map[*Type]any)
+		return any(&stage.StaticWebSiteImages).(*map[*Type]struct{})
 	case StaticWebSiteParagraph:
-		return any(&stage.StaticWebSiteParagraphs).(*map[*Type]any)
+		return any(&stage.StaticWebSiteParagraphs).(*map[*Type]struct{})
 	case XHTML_CONTENT:
-		return any(&stage.XHTML_CONTENTs).(*map[*Type]any)
+		return any(&stage.XHTML_CONTENTs).(*map[*Type]struct{})
 	default:
 		return nil
 	}
@@ -16376,249 +16358,249 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]any {
 
 // GetGongstructInstancesSetFromPointerType returns the set staged GongstructType instances
 // it is usefull because it allows refactoring of gongstruct identifier
-func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *Stage) *map[Type]any {
+func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *Stage) *map[Type]struct{} {
 	var ret Type
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
 	case *ALTERNATIVE_ID:
-		return any(&stage.ALTERNATIVE_IDs).(*map[Type]any)
+		return any(&stage.ALTERNATIVE_IDs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
-		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_DATE:
-		return any(&stage.ATTRIBUTE_DEFINITION_DATEs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_DATEs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
-		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_INTEGER:
-		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_REAL:
-		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_STRING:
-		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_XHTML:
-		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_DATE:
-		return any(&stage.ATTRIBUTE_VALUE_DATEs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_DATEs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.ATTRIBUTE_VALUE_INTEGERs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_INTEGERs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_REAL:
-		return any(&stage.ATTRIBUTE_VALUE_REALs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_REALs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_STRING:
-		return any(&stage.ATTRIBUTE_VALUE_STRINGs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_STRINGs).(*map[Type]struct{})
 	case *ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.ATTRIBUTE_VALUE_XHTMLs).(*map[Type]any)
+		return any(&stage.ATTRIBUTE_VALUE_XHTMLs).(*map[Type]struct{})
 	case *A_ALTERNATIVE_ID:
-		return any(&stage.A_ALTERNATIVE_IDs).(*map[Type]any)
+		return any(&stage.A_ALTERNATIVE_IDs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_DATE:
-		return any(&stage.A_ATTRIBUTE_VALUE_DATEs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_DATEs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_REAL:
-		return any(&stage.A_ATTRIBUTE_VALUE_REALs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_REALs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_STRING:
-		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs).(*map[Type]struct{})
 	case *A_ATTRIBUTE_VALUE_XHTML_1:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s).(*map[Type]any)
+		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s).(*map[Type]struct{})
 	case *A_CHILDREN:
-		return any(&stage.A_CHILDRENs).(*map[Type]any)
+		return any(&stage.A_CHILDRENs).(*map[Type]struct{})
 	case *A_CORE_CONTENT:
-		return any(&stage.A_CORE_CONTENTs).(*map[Type]any)
+		return any(&stage.A_CORE_CONTENTs).(*map[Type]struct{})
 	case *A_DATATYPES:
-		return any(&stage.A_DATATYPESs).(*map[Type]any)
+		return any(&stage.A_DATATYPESs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_DATE_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_REAL_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_STRING_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs).(*map[Type]struct{})
 	case *A_DATATYPE_DEFINITION_XHTML_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs).(*map[Type]any)
+		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs).(*map[Type]struct{})
 	case *A_EDITABLE_ATTS:
-		return any(&stage.A_EDITABLE_ATTSs).(*map[Type]any)
+		return any(&stage.A_EDITABLE_ATTSs).(*map[Type]struct{})
 	case *A_ENUM_VALUE_REF:
-		return any(&stage.A_ENUM_VALUE_REFs).(*map[Type]any)
+		return any(&stage.A_ENUM_VALUE_REFs).(*map[Type]struct{})
 	case *A_OBJECT:
-		return any(&stage.A_OBJECTs).(*map[Type]any)
+		return any(&stage.A_OBJECTs).(*map[Type]struct{})
 	case *A_PROPERTIES:
-		return any(&stage.A_PROPERTIESs).(*map[Type]any)
+		return any(&stage.A_PROPERTIESs).(*map[Type]struct{})
 	case *A_RELATION_GROUP_TYPE_REF:
-		return any(&stage.A_RELATION_GROUP_TYPE_REFs).(*map[Type]any)
+		return any(&stage.A_RELATION_GROUP_TYPE_REFs).(*map[Type]struct{})
 	case *A_SOURCE_1:
-		return any(&stage.A_SOURCE_1s).(*map[Type]any)
+		return any(&stage.A_SOURCE_1s).(*map[Type]struct{})
 	case *A_SOURCE_SPECIFICATION_1:
-		return any(&stage.A_SOURCE_SPECIFICATION_1s).(*map[Type]any)
+		return any(&stage.A_SOURCE_SPECIFICATION_1s).(*map[Type]struct{})
 	case *A_SPECIFICATIONS:
-		return any(&stage.A_SPECIFICATIONSs).(*map[Type]any)
+		return any(&stage.A_SPECIFICATIONSs).(*map[Type]struct{})
 	case *A_SPECIFICATION_TYPE_REF:
-		return any(&stage.A_SPECIFICATION_TYPE_REFs).(*map[Type]any)
+		return any(&stage.A_SPECIFICATION_TYPE_REFs).(*map[Type]struct{})
 	case *A_SPECIFIED_VALUES:
-		return any(&stage.A_SPECIFIED_VALUESs).(*map[Type]any)
+		return any(&stage.A_SPECIFIED_VALUESs).(*map[Type]struct{})
 	case *A_SPEC_ATTRIBUTES:
-		return any(&stage.A_SPEC_ATTRIBUTESs).(*map[Type]any)
+		return any(&stage.A_SPEC_ATTRIBUTESs).(*map[Type]struct{})
 	case *A_SPEC_OBJECTS:
-		return any(&stage.A_SPEC_OBJECTSs).(*map[Type]any)
+		return any(&stage.A_SPEC_OBJECTSs).(*map[Type]struct{})
 	case *A_SPEC_OBJECT_TYPE_REF:
-		return any(&stage.A_SPEC_OBJECT_TYPE_REFs).(*map[Type]any)
+		return any(&stage.A_SPEC_OBJECT_TYPE_REFs).(*map[Type]struct{})
 	case *A_SPEC_RELATIONS:
-		return any(&stage.A_SPEC_RELATIONSs).(*map[Type]any)
+		return any(&stage.A_SPEC_RELATIONSs).(*map[Type]struct{})
 	case *A_SPEC_RELATION_GROUPS:
-		return any(&stage.A_SPEC_RELATION_GROUPSs).(*map[Type]any)
+		return any(&stage.A_SPEC_RELATION_GROUPSs).(*map[Type]struct{})
 	case *A_SPEC_RELATION_REF:
-		return any(&stage.A_SPEC_RELATION_REFs).(*map[Type]any)
+		return any(&stage.A_SPEC_RELATION_REFs).(*map[Type]struct{})
 	case *A_SPEC_RELATION_TYPE_REF:
-		return any(&stage.A_SPEC_RELATION_TYPE_REFs).(*map[Type]any)
+		return any(&stage.A_SPEC_RELATION_TYPE_REFs).(*map[Type]struct{})
 	case *A_SPEC_TYPES:
-		return any(&stage.A_SPEC_TYPESs).(*map[Type]any)
+		return any(&stage.A_SPEC_TYPESs).(*map[Type]struct{})
 	case *A_THE_HEADER:
-		return any(&stage.A_THE_HEADERs).(*map[Type]any)
+		return any(&stage.A_THE_HEADERs).(*map[Type]struct{})
 	case *A_TOOL_EXTENSIONS:
-		return any(&stage.A_TOOL_EXTENSIONSs).(*map[Type]any)
+		return any(&stage.A_TOOL_EXTENSIONSs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_BOOLEAN:
-		return any(&stage.DATATYPE_DEFINITION_BOOLEANs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_BOOLEANs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_DATE:
-		return any(&stage.DATATYPE_DEFINITION_DATEs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_DATEs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_ENUMERATION:
-		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_INTEGER:
-		return any(&stage.DATATYPE_DEFINITION_INTEGERs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_INTEGERs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_REAL:
-		return any(&stage.DATATYPE_DEFINITION_REALs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_REALs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_STRING:
-		return any(&stage.DATATYPE_DEFINITION_STRINGs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_STRINGs).(*map[Type]struct{})
 	case *DATATYPE_DEFINITION_XHTML:
-		return any(&stage.DATATYPE_DEFINITION_XHTMLs).(*map[Type]any)
+		return any(&stage.DATATYPE_DEFINITION_XHTMLs).(*map[Type]struct{})
 	case *EMBEDDED_VALUE:
-		return any(&stage.EMBEDDED_VALUEs).(*map[Type]any)
+		return any(&stage.EMBEDDED_VALUEs).(*map[Type]struct{})
 	case *ENUM_VALUE:
-		return any(&stage.ENUM_VALUEs).(*map[Type]any)
+		return any(&stage.ENUM_VALUEs).(*map[Type]struct{})
 	case *EmbeddedJpgImage:
-		return any(&stage.EmbeddedJpgImages).(*map[Type]any)
+		return any(&stage.EmbeddedJpgImages).(*map[Type]struct{})
 	case *EmbeddedPngImage:
-		return any(&stage.EmbeddedPngImages).(*map[Type]any)
+		return any(&stage.EmbeddedPngImages).(*map[Type]struct{})
 	case *EmbeddedSvgImage:
-		return any(&stage.EmbeddedSvgImages).(*map[Type]any)
+		return any(&stage.EmbeddedSvgImages).(*map[Type]struct{})
 	case *Kill:
-		return any(&stage.Kills).(*map[Type]any)
+		return any(&stage.Kills).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntrys).(*map[Type]struct{})
 	case *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys).(*map[Type]any)
+		return any(&stage.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntrys).(*map[Type]struct{})
 	case *Map_SPECIFICATION_Nodes_expandedEntry:
-		return any(&stage.Map_SPECIFICATION_Nodes_expandedEntrys).(*map[Type]any)
+		return any(&stage.Map_SPECIFICATION_Nodes_expandedEntrys).(*map[Type]struct{})
 	case *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
-		return any(&stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys).(*map[Type]any)
+		return any(&stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys).(*map[Type]struct{})
 	case *Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[Type]any)
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[Type]struct{})
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
-		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[Type]any)
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[Type]struct{})
 	case *RELATION_GROUP:
-		return any(&stage.RELATION_GROUPs).(*map[Type]any)
+		return any(&stage.RELATION_GROUPs).(*map[Type]struct{})
 	case *RELATION_GROUP_TYPE:
-		return any(&stage.RELATION_GROUP_TYPEs).(*map[Type]any)
+		return any(&stage.RELATION_GROUP_TYPEs).(*map[Type]struct{})
 	case *REQ_IF:
-		return any(&stage.REQ_IFs).(*map[Type]any)
+		return any(&stage.REQ_IFs).(*map[Type]struct{})
 	case *REQ_IF_CONTENT:
-		return any(&stage.REQ_IF_CONTENTs).(*map[Type]any)
+		return any(&stage.REQ_IF_CONTENTs).(*map[Type]struct{})
 	case *REQ_IF_HEADER:
-		return any(&stage.REQ_IF_HEADERs).(*map[Type]any)
+		return any(&stage.REQ_IF_HEADERs).(*map[Type]struct{})
 	case *REQ_IF_TOOL_EXTENSION:
-		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*map[Type]any)
+		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*map[Type]struct{})
 	case *RenderingConfiguration:
-		return any(&stage.RenderingConfigurations).(*map[Type]any)
+		return any(&stage.RenderingConfigurations).(*map[Type]struct{})
 	case *SPECIFICATION:
-		return any(&stage.SPECIFICATIONs).(*map[Type]any)
+		return any(&stage.SPECIFICATIONs).(*map[Type]struct{})
 	case *SPECIFICATION_TYPE:
-		return any(&stage.SPECIFICATION_TYPEs).(*map[Type]any)
+		return any(&stage.SPECIFICATION_TYPEs).(*map[Type]struct{})
 	case *SPEC_HIERARCHY:
-		return any(&stage.SPEC_HIERARCHYs).(*map[Type]any)
+		return any(&stage.SPEC_HIERARCHYs).(*map[Type]struct{})
 	case *SPEC_OBJECT:
-		return any(&stage.SPEC_OBJECTs).(*map[Type]any)
+		return any(&stage.SPEC_OBJECTs).(*map[Type]struct{})
 	case *SPEC_OBJECT_TYPE:
-		return any(&stage.SPEC_OBJECT_TYPEs).(*map[Type]any)
+		return any(&stage.SPEC_OBJECT_TYPEs).(*map[Type]struct{})
 	case *SPEC_RELATION:
-		return any(&stage.SPEC_RELATIONs).(*map[Type]any)
+		return any(&stage.SPEC_RELATIONs).(*map[Type]struct{})
 	case *SPEC_RELATION_TYPE:
-		return any(&stage.SPEC_RELATION_TYPEs).(*map[Type]any)
+		return any(&stage.SPEC_RELATION_TYPEs).(*map[Type]struct{})
 	case *StaticWebSite:
-		return any(&stage.StaticWebSites).(*map[Type]any)
+		return any(&stage.StaticWebSites).(*map[Type]struct{})
 	case *StaticWebSiteChapter:
-		return any(&stage.StaticWebSiteChapters).(*map[Type]any)
+		return any(&stage.StaticWebSiteChapters).(*map[Type]struct{})
 	case *StaticWebSiteGeneratedImage:
-		return any(&stage.StaticWebSiteGeneratedImages).(*map[Type]any)
+		return any(&stage.StaticWebSiteGeneratedImages).(*map[Type]struct{})
 	case *StaticWebSiteImage:
-		return any(&stage.StaticWebSiteImages).(*map[Type]any)
+		return any(&stage.StaticWebSiteImages).(*map[Type]struct{})
 	case *StaticWebSiteParagraph:
-		return any(&stage.StaticWebSiteParagraphs).(*map[Type]any)
+		return any(&stage.StaticWebSiteParagraphs).(*map[Type]struct{})
 	case *XHTML_CONTENT:
-		return any(&stage.XHTML_CONTENTs).(*map[Type]any)
+		return any(&stage.XHTML_CONTENTs).(*map[Type]struct{})
 	default:
 		return nil
 	}

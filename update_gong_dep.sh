@@ -18,6 +18,6 @@ go get github.com/fullstack-lang/gong@"$LATEST_COMMIT"
 
 go mod tidy
 
-gongc  -level1 go/models
+gong generate  --level1 --skipGoModCommands go/models
 
 echo "Module updated successfully!"
