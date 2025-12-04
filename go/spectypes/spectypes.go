@@ -116,7 +116,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
+				if !stager.Map_SPEC_OBJECT_TYPE_showRelations[specObjectType] {
 					button.ToolTipText = "Show relations in object table"
 					button.SVGIcon = icons.SvgIconTable
 				} else {

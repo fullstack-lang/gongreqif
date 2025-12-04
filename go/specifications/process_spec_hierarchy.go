@@ -72,9 +72,9 @@ func processSpecHierarchy(
 		*markDownContent += fmt.Sprintf("%s", specObject.Name)
 	}
 
-	titleComplement := fillUpStringWithAttributes(stager, specObject, Title)
+	titleComplement := specobjects.FillUpStringWithAttributes(stager, specObject, specobjects.Title)
 
-	subjectComplement := fillUpStringWithAttributes(stager, specObject, Subject)
+	subjectComplement := specobjects.FillUpStringWithAttributes(stager, specObject, specobjects.Subject)
 
 	if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] && !strings.HasSuffix(*markDownContent, "**") && titleComplement != "" {
 		*markDownContent += " - "

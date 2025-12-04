@@ -1,4 +1,4 @@
-package specifications
+package specobjects
 
 import (
 	// Corrected path
@@ -8,15 +8,15 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/xhtml"
 )
 
-type targetEnum string
+type TargetEnum string
 
 const (
-	Title   targetEnum = "Title"
-	Subject targetEnum = "Subject"
+	Title   TargetEnum = "Title"
+	Subject TargetEnum = "Subject"
 )
 
-// fillUpStringWithAttributes
-func fillUpStringWithAttributes(stager *m.Stager, specObject *m.SPEC_OBJECT, target targetEnum) (titleComplement string) {
+// FillUpStringWithAttributes
+func FillUpStringWithAttributes(stager *m.Stager, specObject *m.SPEC_OBJECT, target TargetEnum) (titleComplement string) {
 
 	titleComplement += parseAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_STRING, target)
 	titleComplement += parseXHTMLAttributes(stager, specObject.GetValues().ATTRIBUTE_VALUE_XHTML, target)
@@ -28,7 +28,7 @@ func fillUpStringWithAttributes(stager *m.Stager, specObject *m.SPEC_OBJECT, tar
 	return
 }
 
-func parseXHTMLAttributes(stager *m.Stager, attributes []*m.ATTRIBUTE_VALUE_XHTML, target targetEnum) (attributesString string) {
+func parseXHTMLAttributes(stager *m.Stager, attributes []*m.ATTRIBUTE_VALUE_XHTML, target TargetEnum) (attributesString string) {
 
 	for _, attr := range attributes {
 		var isIn bool
@@ -61,7 +61,7 @@ func parseXHTMLAttributes(stager *m.Stager, attributes []*m.ATTRIBUTE_VALUE_XHTM
 	return
 }
 
-func parseAttributes[Attr m.Attribute](stager *m.Stager, attributes []Attr, target targetEnum) (attributesString string) {
+func parseAttributes[Attr m.Attribute](stager *m.Stager, attributes []Attr, target TargetEnum) (attributesString string) {
 
 	for _, attr := range attributes {
 
