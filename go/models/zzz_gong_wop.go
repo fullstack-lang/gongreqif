@@ -1521,6 +1521,20 @@ func (from *Map_SPEC_OBJECT_TYPE_showNameEntry) CopyBasicFields(to *Map_SPEC_OBJ
 	to.Value = from.Value
 }
 
+type Map_SPEC_OBJECT_TYPE_showRelations_WOP struct {
+	// insertion point
+
+	Name string
+
+	Value bool
+}
+
+func (from *Map_SPEC_OBJECT_TYPE_showRelations) CopyBasicFields(to *Map_SPEC_OBJECT_TYPE_showRelations) {
+	// insertion point
+	to.Name = from.Name
+	to.Value = from.Value
+}
+
 type RELATION_GROUP_WOP struct {
 	// insertion point
 

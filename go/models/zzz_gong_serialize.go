@@ -118,6 +118,7 @@ func SerializeStage2(stage *Stage, filename string, addIDs bool) {
 		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_showNameEntry](stage, f, addIDs)
+		SerializeExcelizePointerToGongstruct2[*Map_SPEC_OBJECT_TYPE_showRelations](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*RELATION_GROUP](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*RELATION_GROUP_TYPE](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*REQ_IF](stage, f, addIDs)

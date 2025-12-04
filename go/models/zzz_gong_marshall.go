@@ -5012,6 +5012,53 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	map_Map_SPEC_OBJECT_TYPE_showRelations_Identifiers := make(map[*Map_SPEC_OBJECT_TYPE_showRelations]string)
+	_ = map_Map_SPEC_OBJECT_TYPE_showRelations_Identifiers
+
+	map_spec_object_type_showrelationsOrdered := []*Map_SPEC_OBJECT_TYPE_showRelations{}
+	for map_spec_object_type_showrelations := range stage.Map_SPEC_OBJECT_TYPE_showRelationss {
+		map_spec_object_type_showrelationsOrdered = append(map_spec_object_type_showrelationsOrdered, map_spec_object_type_showrelations)
+	}
+	sort.Slice(map_spec_object_type_showrelationsOrdered[:], func(i, j int) bool {
+		map_spec_object_type_showrelationsi := map_spec_object_type_showrelationsOrdered[i]
+		map_spec_object_type_showrelationsj := map_spec_object_type_showrelationsOrdered[j]
+		map_spec_object_type_showrelationsi_order, oki := stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order[map_spec_object_type_showrelationsi]
+		map_spec_object_type_showrelationsj_order, okj := stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order[map_spec_object_type_showrelationsj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return map_spec_object_type_showrelationsi_order < map_spec_object_type_showrelationsj_order
+	})
+	if len(map_spec_object_type_showrelationsOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, map_spec_object_type_showrelations := range map_spec_object_type_showrelationsOrdered {
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showRelations", idx, map_spec_object_type_showrelations.Name)
+		map_Map_SPEC_OBJECT_TYPE_showRelations_Identifiers[map_spec_object_type_showrelations] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_SPEC_OBJECT_TYPE_showRelations")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_spec_object_type_showrelations.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_spec_object_type_showrelations.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_spec_object_type_showrelations.Value))
+		initializerStatements += setValueField
+
+	}
+
 	map_RELATION_GROUP_Identifiers := make(map[*RELATION_GROUP]string)
 	_ = map_RELATION_GROUP_Identifiers
 
@@ -8164,6 +8211,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		// Initialisation of values
 	}
 
+	if len(map_spec_object_type_showrelationsOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of Map_SPEC_OBJECT_TYPE_showRelations instances pointers"
+	}
+	for idx, map_spec_object_type_showrelations := range map_spec_object_type_showrelationsOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("Map_SPEC_OBJECT_TYPE_showRelations", idx, map_spec_object_type_showrelations.Name)
+		map_Map_SPEC_OBJECT_TYPE_showRelations_Identifiers[map_spec_object_type_showrelations] = id
+
+		// Initialisation of values
+	}
+
 	if len(relation_groupOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP instances pointers"
 	}
@@ -8578,6 +8638,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showNameEntries")
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_SPEC_OBJECT_TYPE_showNameEntry_Identifiers[_map_spec_object_type_shownameentry])
+			pointersInitializesStatements += setPointerField
+		}
+
+		for _, _map_spec_object_type_showrelations := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
+			setPointerField = SliceOfPointersFieldInitStatement
+			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showRelations")
+			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_SPEC_OBJECT_TYPE_showRelations_Identifiers[_map_spec_object_type_showrelations])
 			pointersInitializesStatements += setPointerField
 		}
 

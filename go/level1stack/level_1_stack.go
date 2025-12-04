@@ -201,6 +201,7 @@ func NewLevel1Stack(
 	models.SetOrchestratorOnAfterUpdate[models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry](stage)
 	models.SetOrchestratorOnAfterUpdate[models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry](stage)
 	models.SetOrchestratorOnAfterUpdate[models.Map_SPEC_OBJECT_TYPE_showNameEntry](stage)
+	models.SetOrchestratorOnAfterUpdate[models.Map_SPEC_OBJECT_TYPE_showRelations](stage)
 	models.SetOrchestratorOnAfterUpdate[models.RELATION_GROUP](stage)
 	models.SetOrchestratorOnAfterUpdate[models.RELATION_GROUP_TYPE](stage)
 	models.SetOrchestratorOnAfterUpdate[models.REQ_IF](stage)

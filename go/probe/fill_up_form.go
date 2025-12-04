@@ -2065,6 +2065,35 @@ func FillUpForm(
 			}
 		}
 
+	case *models.Map_SPEC_OBJECT_TYPE_showRelations:
+		// insertion point
+		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showRelations"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_SPEC_OBJECT_TYPE_showRelations",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_SPEC_OBJECT_TYPE_showRelations",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+
 	case *models.RELATION_GROUP:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
@@ -2240,6 +2269,7 @@ func FillUpForm(
 		AssociationSliceToForm("Map_SPECIFICATION_Nodes_expandedEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPECIFICATION_Nodes_expandedEntries, formGroup, probe)
 		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showIdentifierEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, formGroup, probe)
 		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showNameEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showNameEntries, formGroup, probe)
+		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showRelations", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showRelations, formGroup, probe)
 		BasicFieldtoForm("ShowSpecHierachyIdentifiers", instanceWithInferedType.ShowSpecHierachyIdentifiers, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 

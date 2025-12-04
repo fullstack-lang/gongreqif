@@ -402,6 +402,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsCreateCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPCreateCallback != nil {
 			stage.OnAfterRELATION_GROUPCreateCallback.OnAfterCreate(stage, target)
@@ -990,6 +994,11 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_showNameEntry)
 		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		newTarget := any(new).(*Map_SPEC_OBJECT_TYPE_showRelations)
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsUpdateCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *RELATION_GROUP:
 		newTarget := any(new).(*RELATION_GROUP)
@@ -1596,6 +1605,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*Map_SPEC_OBJECT_TYPE_showNameEntry)
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsDeleteCallback != nil {
+			staged := any(staged).(*Map_SPEC_OBJECT_TYPE_showRelations)
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPDeleteCallback != nil {
 			staged := any(staged).(*RELATION_GROUP)
@@ -2102,6 +2116,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback != nil {
 			stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback.OnAfterRead(stage, target)
 		}
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		if stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsReadCallback != nil {
+			stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsReadCallback.OnAfterRead(stage, target)
+		}
 	case *RELATION_GROUP:
 		if stage.OnAfterRELATION_GROUPReadCallback != nil {
 			stage.OnAfterRELATION_GROUPReadCallback.OnAfterRead(stage, target)
@@ -2490,6 +2508,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
 	
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_showRelations])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPUpdateCallback = any(callback).(OnAfterUpdateInterface[RELATION_GROUP])
 	
@@ -2853,6 +2874,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsCreateCallback = any(callback).(OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_showRelations])
 	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPCreateCallback = any(callback).(OnAfterCreateInterface[RELATION_GROUP])
@@ -3218,6 +3242,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
 	
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showRelations])
+	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPDeleteCallback = any(callback).(OnAfterDeleteInterface[RELATION_GROUP])
 	
@@ -3581,6 +3608,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback = any(callback).(OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showNameEntry])
+	
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		stage.OnAfterMap_SPEC_OBJECT_TYPE_showRelationsReadCallback = any(callback).(OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showRelations])
 	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPReadCallback = any(callback).(OnAfterReadInterface[RELATION_GROUP])

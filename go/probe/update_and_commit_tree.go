@@ -1070,6 +1070,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "Map_SPEC_OBJECT_TYPE_showRelations":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.Map_SPEC_OBJECT_TYPE_showRelations](probe.stageOfInterest)
+			for _map_spec_object_type_showrelations := range set {
+				nodeInstance := &tree.Node{Name: _map_spec_object_type_showrelations.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_map_spec_object_type_showrelations, "Map_SPEC_OBJECT_TYPE_showRelations", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "RELATION_GROUP":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.RELATION_GROUP](probe.stageOfInterest)

@@ -575,6 +575,9 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct Map_SPEC_OBJECT_TYPE_showNameEntry
 	// insertion point per field
 
+	// Compute reverse map for named struct Map_SPEC_OBJECT_TYPE_showRelations
+	// insertion point per field
+
 	// Compute reverse map for named struct RELATION_GROUP
 	// insertion point per field
 
@@ -768,6 +771,13 @@ func (stage *Stage) ComputeReverseMaps() {
 		_ = renderingconfiguration
 		for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
 			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[_map_spec_object_type_shownameentry] = renderingconfiguration
+		}
+	}
+	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap = make(map[*Map_SPEC_OBJECT_TYPE_showRelations]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		_ = renderingconfiguration
+		for _, _map_spec_object_type_showrelations := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
+			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[_map_spec_object_type_showrelations] = renderingconfiguration
 		}
 	}
 
@@ -1222,6 +1232,10 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 	}
 
 	for instance := range stage.Map_SPEC_OBJECT_TYPE_showNameEntrys {
+		res = append(res, instance)
+	}
+
+	for instance := range stage.Map_SPEC_OBJECT_TYPE_showRelationss {
 		res = append(res, instance)
 	}
 
@@ -1801,6 +1815,11 @@ func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentif
 
 func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) GongCopy() GongstructIF {
 	newInstance := *map_spec_object_type_shownameentry
+	return &newInstance
+}
+
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GongCopy() GongstructIF {
+	newInstance := *map_spec_object_type_showrelations
 	return &newInstance
 }
 

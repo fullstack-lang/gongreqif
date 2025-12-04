@@ -347,6 +347,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPEC_OBJECT_TYPE_showNameEntry" {
 		updateAndCommitTable[*models.Map_SPEC_OBJECT_TYPE_showNameEntry](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "Map_SPEC_OBJECT_TYPE_showRelations" {
+		updateAndCommitTable[*models.Map_SPEC_OBJECT_TYPE_showRelations](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "RELATION_GROUP" {
 		updateAndCommitTable[*models.RELATION_GROUP](nodeImplGongstruct.probe)
 	}

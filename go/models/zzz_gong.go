@@ -1057,6 +1057,15 @@ type Stage struct {
 	OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryDeleteCallback OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showNameEntry]
 	OnAfterMap_SPEC_OBJECT_TYPE_showNameEntryReadCallback   OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showNameEntry]
 
+	Map_SPEC_OBJECT_TYPE_showRelationss           map[*Map_SPEC_OBJECT_TYPE_showRelations]struct{}
+	Map_SPEC_OBJECT_TYPE_showRelationss_mapString map[string]*Map_SPEC_OBJECT_TYPE_showRelations
+
+	// insertion point for slice of pointers maps
+	OnAfterMap_SPEC_OBJECT_TYPE_showRelationsCreateCallback OnAfterCreateInterface[Map_SPEC_OBJECT_TYPE_showRelations]
+	OnAfterMap_SPEC_OBJECT_TYPE_showRelationsUpdateCallback OnAfterUpdateInterface[Map_SPEC_OBJECT_TYPE_showRelations]
+	OnAfterMap_SPEC_OBJECT_TYPE_showRelationsDeleteCallback OnAfterDeleteInterface[Map_SPEC_OBJECT_TYPE_showRelations]
+	OnAfterMap_SPEC_OBJECT_TYPE_showRelationsReadCallback   OnAfterReadInterface[Map_SPEC_OBJECT_TYPE_showRelations]
+
 	RELATION_GROUPs           map[*RELATION_GROUP]struct{}
 	RELATION_GROUPs_mapString map[string]*RELATION_GROUP
 
@@ -1164,6 +1173,8 @@ type Stage struct {
 	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap map[*Map_SPEC_OBJECT_TYPE_showIdentifierEntry]*RenderingConfiguration
 
 	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap map[*Map_SPEC_OBJECT_TYPE_showNameEntry]*RenderingConfiguration
+
+	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap map[*Map_SPEC_OBJECT_TYPE_showRelations]*RenderingConfiguration
 
 	OnAfterRenderingConfigurationCreateCallback OnAfterCreateInterface[RenderingConfiguration]
 	OnAfterRenderingConfigurationUpdateCallback OnAfterUpdateInterface[RenderingConfiguration]
@@ -1613,6 +1624,9 @@ type Stage struct {
 
 	Map_SPEC_OBJECT_TYPE_showNameEntryOrder            uint
 	Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint
+
+	Map_SPEC_OBJECT_TYPE_showRelationsOrder            uint
+	Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order map[*Map_SPEC_OBJECT_TYPE_showRelations]uint
 
 	RELATION_GROUPOrder            uint
 	RELATION_GROUPMap_Staged_Order map[*RELATION_GROUP]uint
@@ -3125,6 +3139,20 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		tmp := GetStructInstancesByOrder(stage.Map_SPEC_OBJECT_TYPE_showRelationss, stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *Map_SPEC_OBJECT_TYPE_showRelations implements.
+			res = append(res, any(v).(T))
+		}
+		return res
 	case *RELATION_GROUP:
 		tmp := GetStructInstancesByOrder(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
 
@@ -3634,6 +3662,8 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys, stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order)
 	case "Map_SPEC_OBJECT_TYPE_showNameEntry":
 		res = GetNamedStructInstances(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys, stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order)
+	case "Map_SPEC_OBJECT_TYPE_showRelations":
+		res = GetNamedStructInstances(stage.Map_SPEC_OBJECT_TYPE_showRelationss, stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order)
 	case "RELATION_GROUP":
 		res = GetNamedStructInstances(stage.RELATION_GROUPs, stage.RELATION_GROUPMap_Staged_Order)
 	case "RELATION_GROUP_TYPE":
@@ -3941,6 +3971,8 @@ type BackRepoInterface interface {
 	CheckoutMap_SPEC_OBJECT_TYPE_showIdentifierEntry(map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	CommitMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry)
 	CheckoutMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry)
+	CommitMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations)
+	CheckoutMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations)
 	CommitRELATION_GROUP(relation_group *RELATION_GROUP)
 	CheckoutRELATION_GROUP(relation_group *RELATION_GROUP)
 	CommitRELATION_GROUP_TYPE(relation_group_type *RELATION_GROUP_TYPE)
@@ -4285,6 +4317,9 @@ func NewStage(name string) (stage *Stage) {
 		Map_SPEC_OBJECT_TYPE_showNameEntrys:           make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]struct{}),
 		Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString: make(map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry),
 
+		Map_SPEC_OBJECT_TYPE_showRelationss:           make(map[*Map_SPEC_OBJECT_TYPE_showRelations]struct{}),
+		Map_SPEC_OBJECT_TYPE_showRelationss_mapString: make(map[string]*Map_SPEC_OBJECT_TYPE_showRelations),
+
 		RELATION_GROUPs:           make(map[*RELATION_GROUP]struct{}),
 		RELATION_GROUPs_mapString: make(map[string]*RELATION_GROUP),
 
@@ -4553,6 +4588,8 @@ func NewStage(name string) (stage *Stage) {
 
 		Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order: make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint),
 
+		Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order: make(map[*Map_SPEC_OBJECT_TYPE_showRelations]uint),
+
 		RELATION_GROUPMap_Staged_Order: make(map[*RELATION_GROUP]uint),
 
 		RELATION_GROUP_TYPEMap_Staged_Order: make(map[*RELATION_GROUP_TYPE]uint),
@@ -4695,6 +4732,7 @@ func NewStage(name string) (stage *Stage) {
 			{name: "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"},
 			{name: "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"},
 			{name: "Map_SPEC_OBJECT_TYPE_showNameEntry"},
+			{name: "Map_SPEC_OBJECT_TYPE_showRelations"},
 			{name: "RELATION_GROUP"},
 			{name: "RELATION_GROUP_TYPE"},
 			{name: "REQ_IF"},
@@ -4928,6 +4966,8 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[instance]
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[instance]
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		return stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order[instance]
 	case *RELATION_GROUP:
 		return stage.RELATION_GROUPMap_Staged_Order[instance]
 	case *RELATION_GROUP_TYPE:
@@ -5175,6 +5215,8 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntryMap_Staged_Order[instance]
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[instance]
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		return stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order[instance]
 	case *RELATION_GROUP:
 		return stage.RELATION_GROUPMap_Staged_Order[instance]
 	case *RELATION_GROUP_TYPE:
@@ -5350,6 +5392,7 @@ func (stage *Stage) ComputeInstancesNb() {
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showIdentifierEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys)
 	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showNameEntry"] = len(stage.Map_SPEC_OBJECT_TYPE_showNameEntrys)
+	stage.Map_GongStructName_InstancesNb["Map_SPEC_OBJECT_TYPE_showRelations"] = len(stage.Map_SPEC_OBJECT_TYPE_showRelationss)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP"] = len(stage.RELATION_GROUPs)
 	stage.Map_GongStructName_InstancesNb["RELATION_GROUP_TYPE"] = len(stage.RELATION_GROUP_TYPEs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF"] = len(stage.REQ_IFs)
@@ -12439,6 +12482,77 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Ge
 	return map_spec_object_type_shownameentry.Name
 }
 
+// Stage puts map_spec_object_type_showrelations to the model stage
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) Stage(stage *Stage) *Map_SPEC_OBJECT_TYPE_showRelations {
+
+	if _, ok := stage.Map_SPEC_OBJECT_TYPE_showRelationss[map_spec_object_type_showrelations]; !ok {
+		stage.Map_SPEC_OBJECT_TYPE_showRelationss[map_spec_object_type_showrelations] = struct{}{}
+		stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order[map_spec_object_type_showrelations] = stage.Map_SPEC_OBJECT_TYPE_showRelationsOrder
+		stage.Map_SPEC_OBJECT_TYPE_showRelationsOrder++
+		stage.new[map_spec_object_type_showrelations] = struct{}{}
+		delete(stage.deleted, map_spec_object_type_showrelations)
+	} else {
+		if _, ok := stage.new[map_spec_object_type_showrelations]; !ok {
+			stage.modified[map_spec_object_type_showrelations] = struct{}{}
+		}
+	}
+	stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString[map_spec_object_type_showrelations.Name] = map_spec_object_type_showrelations
+
+	return map_spec_object_type_showrelations
+}
+
+// Unstage removes map_spec_object_type_showrelations off the model stage
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) Unstage(stage *Stage) *Map_SPEC_OBJECT_TYPE_showRelations {
+	delete(stage.Map_SPEC_OBJECT_TYPE_showRelationss, map_spec_object_type_showrelations)
+	delete(stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString, map_spec_object_type_showrelations.Name)
+
+	if _, ok := stage.reference[map_spec_object_type_showrelations]; ok {
+		stage.deleted[map_spec_object_type_showrelations] = struct{}{}
+	} else {
+		delete(stage.new, map_spec_object_type_showrelations)
+	}
+	return map_spec_object_type_showrelations
+}
+
+// UnstageVoid removes map_spec_object_type_showrelations off the model stage
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) UnstageVoid(stage *Stage) {
+	delete(stage.Map_SPEC_OBJECT_TYPE_showRelationss, map_spec_object_type_showrelations)
+	delete(stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString, map_spec_object_type_showrelations.Name)
+}
+
+// commit map_spec_object_type_showrelations to the back repo (if it is already staged)
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) Commit(stage *Stage) *Map_SPEC_OBJECT_TYPE_showRelations {
+	if _, ok := stage.Map_SPEC_OBJECT_TYPE_showRelationss[map_spec_object_type_showrelations]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations)
+		}
+	}
+	return map_spec_object_type_showrelations
+}
+
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) CommitVoid(stage *Stage) {
+	map_spec_object_type_showrelations.Commit(stage)
+}
+
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) StageVoid(stage *Stage) {
+	map_spec_object_type_showrelations.Stage(stage)
+}
+
+// Checkout map_spec_object_type_showrelations to the back repo (if it is already staged)
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) Checkout(stage *Stage) *Map_SPEC_OBJECT_TYPE_showRelations {
+	if _, ok := stage.Map_SPEC_OBJECT_TYPE_showRelationss[map_spec_object_type_showrelations]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations)
+		}
+	}
+	return map_spec_object_type_showrelations
+}
+
+// for satisfaction of GongStruct interface
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GetName() (res string) {
+	return map_spec_object_type_showrelations.Name
+}
+
 // Stage puts relation_group to the model stage
 func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 
@@ -13960,6 +14074,7 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
 	CreateORMMap_SPEC_OBJECT_TYPE_showIdentifierEntry(Map_SPEC_OBJECT_TYPE_showIdentifierEntry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	CreateORMMap_SPEC_OBJECT_TYPE_showNameEntry(Map_SPEC_OBJECT_TYPE_showNameEntry *Map_SPEC_OBJECT_TYPE_showNameEntry)
+	CreateORMMap_SPEC_OBJECT_TYPE_showRelations(Map_SPEC_OBJECT_TYPE_showRelations *Map_SPEC_OBJECT_TYPE_showRelations)
 	CreateORMRELATION_GROUP(RELATION_GROUP *RELATION_GROUP)
 	CreateORMRELATION_GROUP_TYPE(RELATION_GROUP_TYPE *RELATION_GROUP_TYPE)
 	CreateORMREQ_IF(REQ_IF *REQ_IF)
@@ -14082,6 +14197,7 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
 	DeleteORMMap_SPEC_OBJECT_TYPE_showIdentifierEntry(Map_SPEC_OBJECT_TYPE_showIdentifierEntry *Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
 	DeleteORMMap_SPEC_OBJECT_TYPE_showNameEntry(Map_SPEC_OBJECT_TYPE_showNameEntry *Map_SPEC_OBJECT_TYPE_showNameEntry)
+	DeleteORMMap_SPEC_OBJECT_TYPE_showRelations(Map_SPEC_OBJECT_TYPE_showRelations *Map_SPEC_OBJECT_TYPE_showRelations)
 	DeleteORMRELATION_GROUP(RELATION_GROUP *RELATION_GROUP)
 	DeleteORMRELATION_GROUP_TYPE(RELATION_GROUP_TYPE *RELATION_GROUP_TYPE)
 	DeleteORMREQ_IF(REQ_IF *REQ_IF)
@@ -14600,6 +14716,11 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order = make(map[*Map_SPEC_OBJECT_TYPE_showNameEntry]uint)
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntryOrder = 0
 
+	stage.Map_SPEC_OBJECT_TYPE_showRelationss = make(map[*Map_SPEC_OBJECT_TYPE_showRelations]struct{})
+	stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString = make(map[string]*Map_SPEC_OBJECT_TYPE_showRelations)
+	stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order = make(map[*Map_SPEC_OBJECT_TYPE_showRelations]uint)
+	stage.Map_SPEC_OBJECT_TYPE_showRelationsOrder = 0
+
 	stage.RELATION_GROUPs = make(map[*RELATION_GROUP]struct{})
 	stage.RELATION_GROUPs_mapString = make(map[string]*RELATION_GROUP)
 	stage.RELATION_GROUPMap_Staged_Order = make(map[*RELATION_GROUP]uint)
@@ -15000,6 +15121,9 @@ func (stage *Stage) Nil() { // insertion point for array nil
 
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys = nil
 	stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString = nil
+
+	stage.Map_SPEC_OBJECT_TYPE_showRelationss = nil
+	stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString = nil
 
 	stage.RELATION_GROUPs = nil
 	stage.RELATION_GROUPs_mapString = nil
@@ -15460,6 +15584,10 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		map_spec_object_type_shownameentry.Unstage(stage)
 	}
 
+	for map_spec_object_type_showrelations := range stage.Map_SPEC_OBJECT_TYPE_showRelationss {
+		map_spec_object_type_showrelations.Unstage(stage)
+	}
+
 	for relation_group := range stage.RELATION_GROUPs {
 		relation_group.Unstage(stage)
 	}
@@ -15811,6 +15939,8 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*Type)
 	case map[*Map_SPEC_OBJECT_TYPE_showNameEntry]any:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*Type)
+	case map[*Map_SPEC_OBJECT_TYPE_showRelations]any:
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showRelationss).(*Type)
 	case map[*RELATION_GROUP]any:
 		return any(&stage.RELATION_GROUPs).(*Type)
 	case map[*RELATION_GROUP_TYPE]any:
@@ -16061,6 +16191,8 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString).(*Type)
 	case map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString).(*Type)
+	case map[string]*Map_SPEC_OBJECT_TYPE_showRelations:
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString).(*Type)
 	case map[string]*RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs_mapString).(*Type)
 	case map[string]*RELATION_GROUP_TYPE:
@@ -16311,6 +16443,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]struct{
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[*Type]struct{})
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[*Type]struct{})
+	case Map_SPEC_OBJECT_TYPE_showRelations:
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showRelationss).(*map[*Type]struct{})
 	case RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs).(*map[*Type]struct{})
 	case RELATION_GROUP_TYPE:
@@ -16561,6 +16695,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys).(*map[Type]struct{})
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys).(*map[Type]struct{})
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showRelationss).(*map[Type]struct{})
 	case *RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs).(*map[Type]struct{})
 	case *RELATION_GROUP_TYPE:
@@ -16811,6 +16947,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showIdentifierEntrys_mapString).(*map[string]*Type)
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
 		return any(&stage.Map_SPEC_OBJECT_TYPE_showNameEntrys_mapString).(*map[string]*Type)
+	case Map_SPEC_OBJECT_TYPE_showRelations:
+		return any(&stage.Map_SPEC_OBJECT_TYPE_showRelationss_mapString).(*map[string]*Type)
 	case RELATION_GROUP:
 		return any(&stage.RELATION_GROUPs_mapString).(*map[string]*Type)
 	case RELATION_GROUP_TYPE:
@@ -17429,6 +17567,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 		return any(&Map_SPEC_OBJECT_TYPE_showNameEntry{
 			// Initialisation of associations
 		}).(*Type)
+	case Map_SPEC_OBJECT_TYPE_showRelations:
+		return any(&Map_SPEC_OBJECT_TYPE_showRelations{
+			// Initialisation of associations
+		}).(*Type)
 	case RELATION_GROUP:
 		return any(&RELATION_GROUP{
 			// Initialisation of associations
@@ -17538,6 +17680,8 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			Map_SPEC_OBJECT_TYPE_showIdentifierEntries: []*Map_SPEC_OBJECT_TYPE_showIdentifierEntry{{Name: "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"}},
 			// field is initialized with an instance of Map_SPEC_OBJECT_TYPE_showNameEntry with the name of the field
 			Map_SPEC_OBJECT_TYPE_showNameEntries: []*Map_SPEC_OBJECT_TYPE_showNameEntry{{Name: "Map_SPEC_OBJECT_TYPE_showNameEntries"}},
+			// field is initialized with an instance of Map_SPEC_OBJECT_TYPE_showRelations with the name of the field
+			Map_SPEC_OBJECT_TYPE_showRelations: []*Map_SPEC_OBJECT_TYPE_showRelations{{Name: "Map_SPEC_OBJECT_TYPE_showRelations"}},
 		}).(*Type)
 	case SPECIFICATION:
 		return any(&SPECIFICATION{
@@ -18916,6 +19060,11 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 		}
 	// reverse maps of direct associations of Map_SPEC_OBJECT_TYPE_showNameEntry
 	case Map_SPEC_OBJECT_TYPE_showNameEntry:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of Map_SPEC_OBJECT_TYPE_showRelations
+	case Map_SPEC_OBJECT_TYPE_showRelations:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -20505,6 +20654,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of Map_SPEC_OBJECT_TYPE_showRelations
+	case Map_SPEC_OBJECT_TYPE_showRelations:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of RELATION_GROUP
 	case RELATION_GROUP:
 		switch fieldname {
@@ -20736,6 +20890,14 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 			for renderingconfiguration := range stage.RenderingConfigurations {
 				for _, map_spec_object_type_shownameentry_ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
 					res[map_spec_object_type_shownameentry_] = append(res[map_spec_object_type_shownameentry_], renderingconfiguration)
+				}
+			}
+			return any(res).(map[*End][]*Start)
+		case "Map_SPEC_OBJECT_TYPE_showRelations":
+			res := make(map[*Map_SPEC_OBJECT_TYPE_showRelations][]*RenderingConfiguration)
+			for renderingconfiguration := range stage.RenderingConfigurations {
+				for _, map_spec_object_type_showrelations_ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
+					res[map_spec_object_type_showrelations_] = append(res[map_spec_object_type_showrelations_], renderingconfiguration)
 				}
 			}
 			return any(res).(map[*End][]*Start)
@@ -21031,6 +21193,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "Map_SPEC_OBJECT_TYPE_showIdentifierEntry"
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		res = "Map_SPEC_OBJECT_TYPE_showNameEntry"
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		res = "Map_SPEC_OBJECT_TYPE_showRelations"
 	case *RELATION_GROUP:
 		res = "RELATION_GROUP"
 	case *RELATION_GROUP_TYPE:
@@ -21547,6 +21711,12 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
+		res = append(res, rf)
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		var rf ReverseField
+		_ = rf
+		rf.GongstructName = "RenderingConfiguration"
+		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showRelations"
 		res = append(res, rf)
 	case *RELATION_GROUP:
 		var rf ReverseField
@@ -23722,6 +23892,21 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Go
 	return
 }
 
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Value",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
 func (relation_group *RELATION_GROUP) GongGetFieldHeaders() (res []GongFieldHeader) {
 	// insertion point for list of field headers
 	res = []GongFieldHeader{
@@ -24067,6 +24252,11 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldHeaders() (res
 			Name:                 "Map_SPEC_OBJECT_TYPE_showNameEntries",
 			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
 			TargetGongstructName: "Map_SPEC_OBJECT_TYPE_showNameEntry",
+		},
+		{
+			Name:                 "Map_SPEC_OBJECT_TYPE_showRelations",
+			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
+			TargetGongstructName: "Map_SPEC_OBJECT_TYPE_showRelations",
 		},
 		{
 			Name:               "ShowSpecHierachyIdentifiers",
@@ -26397,6 +26587,18 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Go
 	}
 	return
 }
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = map_spec_object_type_showrelations.Name
+	case "Value":
+		res.valueString = fmt.Sprintf("%t", map_spec_object_type_showrelations.Value)
+		res.valueBool = map_spec_object_type_showrelations.Value
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
 func (relation_group *RELATION_GROUP) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -26823,6 +27025,16 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldValue(fieldNam
 	case "Map_SPEC_OBJECT_TYPE_showNameEntries":
 		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
 		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
+			if idx > 0 {
+				res.valueString += "\n"
+				res.ids += ";"
+			}
+			res.valueString += __instance__.Name
+			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
+		}
+	case "Map_SPEC_OBJECT_TYPE_showRelations":
+		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
+		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
 			if idx > 0 {
 				res.valueString += "\n"
 				res.ids += ";"
@@ -29618,6 +29830,19 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Go
 	return nil
 }
 
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		map_spec_object_type_showrelations.Name = value.GetValueString()
+	case "Value":
+		map_spec_object_type_showrelations.Value = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
 func (relation_group *RELATION_GROUP) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
 	switch fieldName {
 	// insertion point for per field code
@@ -30244,6 +30469,20 @@ func (renderingconfiguration *RenderingConfiguration) GongSetFieldValue(fieldNam
 				for __instance__ := range stage.Map_SPEC_OBJECT_TYPE_showNameEntrys {
 					if stage.Map_SPEC_OBJECT_TYPE_showNameEntryMap_Staged_Order[__instance__] == uint(id) {
 						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries, __instance__)
+						break
+					}
+				}
+			}
+		}
+	case "Map_SPEC_OBJECT_TYPE_showRelations":
+		renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = make([]*Map_SPEC_OBJECT_TYPE_showRelations, 0)
+		ids := strings.Split(value.ids, ";")
+		for _, idStr := range ids {
+			var id int
+			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
+				for __instance__ := range stage.Map_SPEC_OBJECT_TYPE_showRelationss {
+					if stage.Map_SPEC_OBJECT_TYPE_showRelationsMap_Staged_Order[__instance__] == uint(id) {
+						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations, __instance__)
 						break
 					}
 				}
@@ -31168,6 +31407,10 @@ func (map_spec_object_type_showidentifierentry *Map_SPEC_OBJECT_TYPE_showIdentif
 
 func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetGongstructName() string {
 	return "Map_SPEC_OBJECT_TYPE_showNameEntry"
+}
+
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GongGetGongstructName() string {
+	return "Map_SPEC_OBJECT_TYPE_showRelations"
 }
 
 func (relation_group *RELATION_GROUP) GongGetGongstructName() string {

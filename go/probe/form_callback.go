@@ -12553,6 +12553,151 @@ func (map_spec_object_type_shownameentryFormCallback *Map_SPEC_OBJECT_TYPE_showN
 
 	updateAndCommitTree(map_spec_object_type_shownameentryFormCallback.probe)
 }
+func __gong__New__Map_SPEC_OBJECT_TYPE_showRelationsFormCallback(
+	map_spec_object_type_showrelations *models.Map_SPEC_OBJECT_TYPE_showRelations,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (map_spec_object_type_showrelationsFormCallback *Map_SPEC_OBJECT_TYPE_showRelationsFormCallback) {
+	map_spec_object_type_showrelationsFormCallback = new(Map_SPEC_OBJECT_TYPE_showRelationsFormCallback)
+	map_spec_object_type_showrelationsFormCallback.probe = probe
+	map_spec_object_type_showrelationsFormCallback.map_spec_object_type_showrelations = map_spec_object_type_showrelations
+	map_spec_object_type_showrelationsFormCallback.formGroup = formGroup
+
+	map_spec_object_type_showrelationsFormCallback.CreationMode = (map_spec_object_type_showrelations == nil)
+
+	return
+}
+
+type Map_SPEC_OBJECT_TYPE_showRelationsFormCallback struct {
+	map_spec_object_type_showrelations *models.Map_SPEC_OBJECT_TYPE_showRelations
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (map_spec_object_type_showrelationsFormCallback *Map_SPEC_OBJECT_TYPE_showRelationsFormCallback) OnSave() {
+
+	// log.Println("Map_SPEC_OBJECT_TYPE_showRelationsFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	map_spec_object_type_showrelationsFormCallback.probe.formStage.Checkout()
+
+	if map_spec_object_type_showrelationsFormCallback.map_spec_object_type_showrelations == nil {
+		map_spec_object_type_showrelationsFormCallback.map_spec_object_type_showrelations = new(models.Map_SPEC_OBJECT_TYPE_showRelations).Stage(map_spec_object_type_showrelationsFormCallback.probe.stageOfInterest)
+	}
+	map_spec_object_type_showrelations_ := map_spec_object_type_showrelationsFormCallback.map_spec_object_type_showrelations
+	_ = map_spec_object_type_showrelations_
+
+	for _, formDiv := range map_spec_object_type_showrelationsFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(map_spec_object_type_showrelations_.Name), formDiv)
+		case "Value":
+			FormDivBasicFieldToField(&(map_spec_object_type_showrelations_.Value), formDiv)
+		case "RenderingConfiguration:Map_SPEC_OBJECT_TYPE_showRelations":
+			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showRelations []*Map_SPEC_OBJECT_TYPE_showRelations" but
+			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
+			//
+			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
+			// association. For those use cases, it is handy to set the source of the assocation with
+			// the form of the target source (when editing an instance of Map_SPEC_OBJECT_TYPE_showRelations). Setting up a value
+			// will discard the former value is there is one.
+			//
+			// Therefore, the forms works only in ONE particular case:
+			// - there was no association to this target
+			var formerSource *models.RenderingConfiguration
+			{
+				var rf models.ReverseField
+				_ = rf
+				rf.GongstructName = "RenderingConfiguration"
+				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showRelations"
+				formerAssociationSource := map_spec_object_type_showrelations_.GongGetReverseFieldOwner(
+					map_spec_object_type_showrelationsFormCallback.probe.stageOfInterest,
+					&rf)
+
+				var ok bool
+				if formerAssociationSource != nil {
+					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
+					if !ok {
+						log.Fatalln("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showRelations []*Map_SPEC_OBJECT_TYPE_showRelations, is not an RenderingConfiguration instance")
+					}
+				}
+			}
+
+			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
+
+			// case when the user set empty for the source value
+			if newSourceName == nil {
+				// That could mean we clear the assocation for all source instances
+				if formerSource != nil {
+					idx := slices.Index(formerSource.Map_SPEC_OBJECT_TYPE_showRelations, map_spec_object_type_showrelations_)
+					formerSource.Map_SPEC_OBJECT_TYPE_showRelations = slices.Delete(formerSource.Map_SPEC_OBJECT_TYPE_showRelations, idx, idx+1)
+				}
+				break // nothing else to do for this field
+			}
+
+			// the former source is not empty. the new value could
+			// be different but there mught more that one source thet
+			// points to this target
+			if formerSource != nil {
+				break // nothing else to do for this field
+			}
+
+			// (2) find the source
+			var newSource *models.RenderingConfiguration
+			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_spec_object_type_showrelationsFormCallback.probe.stageOfInterest) {
+
+				// the match is base on the name
+				if _renderingconfiguration.GetName() == newSourceName.GetName() {
+					newSource = _renderingconfiguration // we have a match
+					break
+				}
+			}
+			if newSource == nil {
+				log.Println("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_showRelations []*Map_SPEC_OBJECT_TYPE_showRelations, with name", newSourceName, ", does not exist")
+				break
+			}
+
+			// (3) append the new value to the new source field
+			newSource.Map_SPEC_OBJECT_TYPE_showRelations = append(newSource.Map_SPEC_OBJECT_TYPE_showRelations, map_spec_object_type_showrelations_)
+		}
+	}
+
+	// manage the suppress operation
+	if map_spec_object_type_showrelationsFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_showrelations_.Unstage(map_spec_object_type_showrelationsFormCallback.probe.stageOfInterest)
+	}
+
+	map_spec_object_type_showrelationsFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.Map_SPEC_OBJECT_TYPE_showRelations](
+		map_spec_object_type_showrelationsFormCallback.probe,
+	)
+	map_spec_object_type_showrelationsFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if map_spec_object_type_showrelationsFormCallback.CreationMode || map_spec_object_type_showrelationsFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		map_spec_object_type_showrelationsFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(map_spec_object_type_showrelationsFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_showRelationsFormCallback(
+			nil,
+			map_spec_object_type_showrelationsFormCallback.probe,
+			newFormGroup,
+		)
+		map_spec_object_type_showrelations := new(models.Map_SPEC_OBJECT_TYPE_showRelations)
+		FillUpForm(map_spec_object_type_showrelations, newFormGroup, map_spec_object_type_showrelationsFormCallback.probe)
+		map_spec_object_type_showrelationsFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(map_spec_object_type_showrelationsFormCallback.probe)
+}
 func __gong__New__RELATION_GROUPFormCallback(
 	relation_group *models.RELATION_GROUP,
 	probe *Probe,
@@ -13948,6 +14093,31 @@ func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) On
 				instanceSlice = append(instanceSlice, map_id_instances[id])
 			}
 			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_showNameEntries = instanceSlice
+
+		case "Map_SPEC_OBJECT_TYPE_showRelations":
+			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_SPEC_OBJECT_TYPE_showRelations](renderingconfigurationFormCallback.probe.stageOfInterest)
+			instanceSlice := make([]*models.Map_SPEC_OBJECT_TYPE_showRelations, 0)
+
+			// make a map of all instances by their ID
+			map_id_instances := make(map[uint]*models.Map_SPEC_OBJECT_TYPE_showRelations)
+
+			for instance := range instanceSet {
+				id := models.GetOrderPointerGongstruct(
+					renderingconfigurationFormCallback.probe.stageOfInterest,
+					instance,
+				)
+				map_id_instances[id] = instance
+			}
+
+			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
+
+			if err != nil {
+				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
+			}
+			for _, id := range ids {
+				instanceSlice = append(instanceSlice, map_id_instances[id])
+			}
+			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_showRelations = instanceSlice
 
 		case "ShowSpecHierachyIdentifiers":
 			FormDivBasicFieldToField(&(renderingconfiguration_.ShowSpecHierachyIdentifiers), formDiv)
