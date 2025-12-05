@@ -211,8 +211,13 @@ type Stager struct {
 	Map_SPECIFICATION_Nodes_expanded    map[*SPECIFICATION]bool
 	Map_SPEC_OBJECT_TYPE_showIdentifier map[*SPEC_OBJECT_TYPE]bool
 	Map_SPEC_OBJECT_TYPE_showName       map[*SPEC_OBJECT_TYPE]bool
+	Map_SPEC_OBJECT_TYPE_showRelations  map[*SPEC_OBJECT_TYPE]bool
 
 	ShowSpecHierachyIdentifiers bool
+
+	// allow for navigation from spec object to their relations
+	Map_SPEC_OBJECT_relations_sources map[*SPEC_OBJECT][]*SPEC_RELATION
+	Map_SPEC_OBJECT_relations_targets map[*SPEC_OBJECT][]*SPEC_RELATION
 }
 
 func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {

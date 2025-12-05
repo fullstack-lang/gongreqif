@@ -107,6 +107,27 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 			{
 				button := &tree.Button{
+					Name: "Show/Unshow relation",
+					Impl: &ButtonToggleShowSpecObjectTypeRelationsProxy{
+						stager:         stager,
+						specObjectType: specObjectType,
+					},
+					HasToolTip:      true,
+					ToolTipPosition: tree.Right,
+				}
+
+				if !stager.Map_SPEC_OBJECT_TYPE_showRelations[specObjectType] {
+					button.ToolTipText = "Show relations in object table"
+					button.SVGIcon = icons.SvgIconTable
+				} else {
+					button.ToolTipText = "Hide relations in object table"
+					button.SVGIcon = icons.SvgIconTableOff
+				}
+				specObjectTypeNode.Buttons = append(specObjectTypeNode.Buttons, button)
+			}
+
+			{
+				button := &tree.Button{
 					Name: "Is Spec Object Type Heading",
 					Impl: &ButtonToggleShowSpecObjectTypeIsHeadingProxy{
 						stager:         stager,

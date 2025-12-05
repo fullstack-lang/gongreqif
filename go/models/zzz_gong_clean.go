@@ -706,6 +706,12 @@ func (map_spec_object_type_shownameentry *Map_SPEC_OBJECT_TYPE_showNameEntry) Go
 	// insertion point per field
 }
 
+// Clean garbage collect unstaged instances that are referenced by Map_SPEC_OBJECT_TYPE_showRelations
+func (map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by RELATION_GROUP
 func (relation_group *RELATION_GROUP) GongClean(stage *Stage) {
 	// insertion point per field
@@ -786,6 +792,7 @@ func (renderingconfiguration *RenderingConfiguration) GongClean(stage *Stage) {
 	renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries)
 	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries)
 	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries)
+	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations)
 	// insertion point per field
 }
 

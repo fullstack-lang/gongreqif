@@ -27,6 +27,7 @@ func (stager *Stager) initMaps() {
 	stager.Map_SPECIFICATION_Nodes_expanded = populateBoolMap[*SPECIFICATION](stager)
 	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_SPEC_OBJECT_TYPE_showRelations = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
 	stager.Map_SPEC_OBJECT_TYPE_isHeading = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
 	stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
@@ -54,6 +55,12 @@ func (stager *Stager) initMaps() {
 	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
 	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
+
+	stager.Map_SPEC_OBJECT_relations_sources = make(map[*SPEC_OBJECT][]*SPEC_RELATION)
+	stager.Map_SPEC_OBJECT_relations_targets = make(map[*SPEC_OBJECT][]*SPEC_RELATION)
+
+	stager.initMap_Objects_Relations()
+
 }
 
 // Generic function to initialize a map with *T as key and bool as value

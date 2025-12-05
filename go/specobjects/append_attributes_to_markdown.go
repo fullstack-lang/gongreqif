@@ -38,6 +38,7 @@ func AppendAttributesToMarkdown(stager *m.Stager, specObject *m.SPEC_OBJECT, mar
 	appendAttributeRealRows(stager, specObject, &tableRows)
 	appendAttributeDateRows(stager, specObject, &tableRows)
 	appendAttributeEnumRows(stager, specObject, &tableRows)
+	appendAttributeRelations(stager, specObject, &tableRows)
 
 	// If any attributes were found, create the table.
 	if tableRows.Len() > 0 {
@@ -194,5 +195,50 @@ func appendAttributeEnumRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		tableRows.WriteString(fmt.Sprintf("| *%s*: | %s |\n",
 			sanitizeForMarkdownTable(attributeDefinitionName),
 			sanitizeForMarkdownTable(enumValueString)))
+	}
+}
+
+func appendAttributeRelations(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
+
+	specObjectType, ok := stager.Map_id_SPEC_OBJECT_TYPE[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
+	if !ok {
+		log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
+			"unknown ref")
+	}
+
+	if !stager.Map_SPEC_OBJECT_TYPE_showRelations[specObjectType] {
+		return
+	}
+
+	for _, specRelation := range stager.Map_SPEC_OBJECT_relations_targets[specObject] {
+
+		specRelationType, ok := stager.Map_id_SPEC_RELATION_TYPE[specRelation.TYPE.SPEC_RELATION_TYPE_REF]
+		if !ok {
+			log.Panic("specRelation.TYPE.SPEC_RELATION_TYPE_REF", specRelation.TYPE.SPEC_RELATION_TYPE_REF,
+				"unknown relation type")
+		}
+
+		target, _ := stager.Map_id_SPEC_OBJECT[specRelation.SOURCE.SPEC_OBJECT_REF]
+		titleComplement := FillUpStringWithAttributes(stager, target, Title)
+
+		tableRows.WriteString(fmt.Sprintf("| *%s* --> : | %s |\n",
+			sanitizeForMarkdownTable(specRelationType.GetName()),
+			titleComplement))
+	}
+
+	for _, specRelation := range stager.Map_SPEC_OBJECT_relations_sources[specObject] {
+
+		specRelationType, ok := stager.Map_id_SPEC_RELATION_TYPE[specRelation.TYPE.SPEC_RELATION_TYPE_REF]
+		if !ok {
+			log.Panic("specRelation.TYPE.SPEC_RELATION_TYPE_REF", specRelation.TYPE.SPEC_RELATION_TYPE_REF,
+				"unknown relation type")
+		}
+
+		target, _ := stager.Map_id_SPEC_OBJECT[specRelation.TARGET.SPEC_OBJECT_REF]
+		titleComplement := FillUpStringWithAttributes(stager, target, Title)
+
+		tableRows.WriteString(fmt.Sprintf("| *%s* <-- : | %s |\n",
+			sanitizeForMarkdownTable(specRelationType.GetName()),
+			titleComplement))
 	}
 }

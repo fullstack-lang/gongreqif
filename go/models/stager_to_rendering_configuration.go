@@ -117,6 +117,10 @@ func (s *Stager) ToRenderingConfiguration(pathToReqifFile string) *RenderingConf
 		config.Map_SPEC_OBJECT_TYPE_showNameEntries = append(config.Map_SPEC_OBJECT_TYPE_showNameEntries, &Map_SPEC_OBJECT_TYPE_showNameEntry{Name: key.IDENTIFIER, Value: value})
 	}
 
+	for key, value := range s.Map_SPEC_OBJECT_TYPE_showRelations {
+		config.Map_SPEC_OBJECT_TYPE_showRelations = append(config.Map_SPEC_OBJECT_TYPE_showRelations, &Map_SPEC_OBJECT_TYPE_showRelations{Name: key.IDENTIFIER, Value: value})
+	}
+
 	config.ShowSpecHierachyIdentifiers = s.ShowSpecHierachyIdentifiers
 
 	return config
@@ -352,6 +356,15 @@ func (s *Stager) FromRenderingConfiguration(conf *RenderingConfiguration) {
 		for key := range s.Map_SPEC_OBJECT_TYPE_showName {
 			if key.IDENTIFIER == entry.Name {
 				s.Map_SPEC_OBJECT_TYPE_showName[key] = entry.Value
+				break
+			}
+		}
+	}
+
+	for _, entry := range conf.Map_SPEC_OBJECT_TYPE_showRelations {
+		for key := range s.Map_SPEC_OBJECT_TYPE_showRelations {
+			if key.IDENTIFIER == entry.Name {
+				s.Map_SPEC_OBJECT_TYPE_showRelations[key] = entry.Value
 				break
 			}
 		}

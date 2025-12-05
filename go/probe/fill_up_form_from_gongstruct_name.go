@@ -1312,6 +1312,19 @@ func FillUpFormFromGongstructName(
 		map_spec_object_type_shownameentry := new(models.Map_SPEC_OBJECT_TYPE_showNameEntry)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(map_spec_object_type_shownameentry, formGroup, probe)
+	case "Map_SPEC_OBJECT_TYPE_showRelations":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "Map_SPEC_OBJECT_TYPE_showRelations Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__Map_SPEC_OBJECT_TYPE_showRelationsFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		map_spec_object_type_showrelations := new(models.Map_SPEC_OBJECT_TYPE_showRelations)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(map_spec_object_type_showrelations, formGroup, probe)
 	case "RELATION_GROUP":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,

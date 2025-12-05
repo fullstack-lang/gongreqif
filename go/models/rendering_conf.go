@@ -28,8 +28,8 @@ type RenderingConfiguration struct {
 	Map_SPECIFICATION_Nodes_expandedEntries                   []*Map_SPECIFICATION_Nodes_expandedEntry
 	Map_SPEC_OBJECT_TYPE_showIdentifierEntries                []*Map_SPEC_OBJECT_TYPE_showIdentifierEntry
 	Map_SPEC_OBJECT_TYPE_showNameEntries                      []*Map_SPEC_OBJECT_TYPE_showNameEntry
-
-	ShowSpecHierachyIdentifiers bool
+	Map_SPEC_OBJECT_TYPE_showRelations                        []*Map_SPEC_OBJECT_TYPE_showRelations
+	ShowSpecHierachyIdentifiers                               bool
 }
 
 type Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry struct {
@@ -153,6 +153,11 @@ type Map_SPEC_OBJECT_TYPE_showIdentifierEntry struct {
 }
 
 type Map_SPEC_OBJECT_TYPE_showNameEntry struct {
+	Name  string
+	Value bool
+}
+
+type Map_SPEC_OBJECT_TYPE_showRelations struct {
 	Name  string
 	Value bool
 }

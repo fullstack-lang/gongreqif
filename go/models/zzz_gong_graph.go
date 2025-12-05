@@ -302,6 +302,9 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(target)
 
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showRelations(target)
+
 	case *RELATION_GROUP:
 		ok = stage.IsStagedRELATION_GROUP(target)
 
@@ -668,6 +671,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		ok = stage.IsStagedMap_SPEC_OBJECT_TYPE_showRelations(target)
 
 	case *RELATION_GROUP:
 		ok = stage.IsStagedRELATION_GROUP(target)
@@ -1429,6 +1435,13 @@ func (stage *Stage) IsStagedMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_object_t
 	return
 }
 
+func (stage *Stage) IsStagedMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) (ok bool) {
+
+	_, ok = stage.Map_SPEC_OBJECT_TYPE_showRelationss[map_spec_object_type_showrelations]
+
+	return
+}
+
 func (stage *Stage) IsStagedRELATION_GROUP(relation_group *RELATION_GROUP) (ok bool) {
 
 	_, ok = stage.RELATION_GROUPs[relation_group]
@@ -1873,6 +1886,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.StageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		stage.StageBranchMap_SPEC_OBJECT_TYPE_showRelations(target)
 
 	case *RELATION_GROUP:
 		stage.StageBranchRELATION_GROUP(target)
@@ -3677,6 +3693,21 @@ func (stage *Stage) StageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_objec
 
 }
 
+func (stage *Stage) StageBranchMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) {
+
+	// check if instance is already staged
+	if IsStaged(stage, map_spec_object_type_showrelations) {
+		return
+	}
+
+	map_spec_object_type_showrelations.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchRELATION_GROUP(relation_group *RELATION_GROUP) {
 
 	// check if instance is already staged
@@ -3901,6 +3932,9 @@ func (stage *Stage) StageBranchRenderingConfiguration(renderingconfiguration *Re
 	}
 	for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
 		StageBranch(stage, _map_spec_object_type_shownameentry)
+	}
+	for _, _map_spec_object_type_showrelations := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
+		StageBranch(stage, _map_spec_object_type_showrelations)
 	}
 
 }
@@ -4580,6 +4614,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		toT := CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		toT := CopyBranchMap_SPEC_OBJECT_TYPE_showRelations(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *RELATION_GROUP:
@@ -6802,6 +6840,25 @@ func CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy map[any]any, map_s
 	return
 }
 
+func CopyBranchMap_SPEC_OBJECT_TYPE_showRelations(mapOrigCopy map[any]any, map_spec_object_type_showrelationsFrom *Map_SPEC_OBJECT_TYPE_showRelations) (map_spec_object_type_showrelationsTo *Map_SPEC_OBJECT_TYPE_showRelations) {
+
+	// map_spec_object_type_showrelationsFrom has already been copied
+	if _map_spec_object_type_showrelationsTo, ok := mapOrigCopy[map_spec_object_type_showrelationsFrom]; ok {
+		map_spec_object_type_showrelationsTo = _map_spec_object_type_showrelationsTo.(*Map_SPEC_OBJECT_TYPE_showRelations)
+		return
+	}
+
+	map_spec_object_type_showrelationsTo = new(Map_SPEC_OBJECT_TYPE_showRelations)
+	mapOrigCopy[map_spec_object_type_showrelationsFrom] = map_spec_object_type_showrelationsTo
+	map_spec_object_type_showrelationsFrom.CopyBasicFields(map_spec_object_type_showrelationsTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchRELATION_GROUP(mapOrigCopy map[any]any, relation_groupFrom *RELATION_GROUP) (relation_groupTo *RELATION_GROUP) {
 
 	// relation_groupFrom has already been copied
@@ -7053,6 +7110,9 @@ func CopyBranchRenderingConfiguration(mapOrigCopy map[any]any, renderingconfigur
 	}
 	for _, _map_spec_object_type_shownameentry := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showNameEntries {
 		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showNameEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showNameEntries, CopyBranchMap_SPEC_OBJECT_TYPE_showNameEntry(mapOrigCopy, _map_spec_object_type_shownameentry))
+	}
+	for _, _map_spec_object_type_showrelations := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showRelations {
+		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showRelations = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showRelations, CopyBranchMap_SPEC_OBJECT_TYPE_showRelations(mapOrigCopy, _map_spec_object_type_showrelations))
 	}
 
 	return
@@ -7684,6 +7744,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *Map_SPEC_OBJECT_TYPE_showNameEntry:
 		stage.UnstageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(target)
+
+	case *Map_SPEC_OBJECT_TYPE_showRelations:
+		stage.UnstageBranchMap_SPEC_OBJECT_TYPE_showRelations(target)
 
 	case *RELATION_GROUP:
 		stage.UnstageBranchRELATION_GROUP(target)
@@ -9488,6 +9551,21 @@ func (stage *Stage) UnstageBranchMap_SPEC_OBJECT_TYPE_showNameEntry(map_spec_obj
 
 }
 
+func (stage *Stage) UnstageBranchMap_SPEC_OBJECT_TYPE_showRelations(map_spec_object_type_showrelations *Map_SPEC_OBJECT_TYPE_showRelations) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, map_spec_object_type_showrelations) {
+		return
+	}
+
+	map_spec_object_type_showrelations.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchRELATION_GROUP(relation_group *RELATION_GROUP) {
 
 	// check if instance is already staged
@@ -9712,6 +9790,9 @@ func (stage *Stage) UnstageBranchRenderingConfiguration(renderingconfiguration *
 	}
 	for _, _map_spec_object_type_shownameentry := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
 		UnstageBranch(stage, _map_spec_object_type_shownameentry)
+	}
+	for _, _map_spec_object_type_showrelations := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
+		UnstageBranch(stage, _map_spec_object_type_showrelations)
 	}
 
 }

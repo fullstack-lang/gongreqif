@@ -1271,6 +1271,22 @@ func (inst *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetReverseFieldOwnerName(sta
 	return
 }
 
+func (inst *Map_SPEC_OBJECT_TYPE_showRelations) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
+		case "RenderingConfiguration":
+			switch reverseField.Fieldname {
+			case "Map_SPEC_OBJECT_TYPE_showRelations":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			}
+	}
+	return
+}
+
 func (inst *RELATION_GROUP) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
 
 	res = ""
@@ -2693,6 +2709,20 @@ func (inst *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetReverseFieldOwner(stage *
 			switch reverseField.Fieldname {
 			case "Map_SPEC_OBJECT_TYPE_showNameEntries":
 				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[inst]
+			}
+	}
+	return res
+}
+
+func (inst *Map_SPEC_OBJECT_TYPE_showRelations) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
+		case "RenderingConfiguration":
+			switch reverseField.Fieldname {
+			case "Map_SPEC_OBJECT_TYPE_showRelations":
+				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[inst]
 			}
 	}
 	return res
