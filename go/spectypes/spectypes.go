@@ -55,7 +55,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 				Name: specObjectType.Name + fmt.Sprintf(" (%d/%d)",
 					stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[specObjectType],
 					map_specType_nbInstance[specObjectType]),
-				IsExpanded: stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded[specObjectType],
+				IsExpanded: stager.RenderingConf.Get_SPEC_OBJECT_TYPE_isNodeExpanded(specObjectType),
 				Impl: &SpecObjectTypeNodeProxy{
 					stager:         stager,
 					specObjectType: specObjectType,
@@ -74,7 +74,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
+				if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showIdentifier(specObjectType) {
 					button.ToolTipText = "Show identifier in title"
 					button.SVGIcon = icons.SvgIconBadge
 				} else {
@@ -95,7 +95,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
+				if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showName(specObjectType) {
 					button.ToolTipText = "Show name in title"
 					button.SVGIcon = icons.SvgIconBadge
 				} else {
@@ -116,7 +116,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.Map_SPEC_OBJECT_TYPE_showRelations[specObjectType] {
+				if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showRelations(specObjectType) {
 					button.ToolTipText = "Show relations in object table"
 					button.SVGIcon = icons.SvgIconTable
 				} else {
@@ -206,7 +206,7 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 				ToolTipPosition: tree.Right,
 			}
 
-			if !stager.ShowSpecHierachyIdentifiers {
+			if !stager.RenderingConf.ShowSpecHierachyIdentifiers {
 				button.ToolTipText = "Show spec hierarchy identifiers"
 				button.SVGIcon = icons.SvgIconBadge
 			} else {
@@ -276,9 +276,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_XHTML,
 		stager.Map_id_ATTRIBUTE_DEFINITION_XHTML,
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_XHTML,
 		nodeSpecType)
@@ -288,9 +285,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_STRING,
 		stager.Map_id_ATTRIBUTE_DEFINITION_STRING,
 		stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_STRING,
 		nodeSpecType)
@@ -300,9 +294,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_BOOLEAN,
 		stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN,
 		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_BOOLEAN,
 		nodeSpecType)
@@ -312,9 +303,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_INTEGER,
 		stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER,
 		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_INTEGER_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_INTEGER,
 		nodeSpecType)
@@ -324,9 +312,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_REAL,
 		stager.Map_id_ATTRIBUTE_DEFINITION_REAL,
 		stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_REAL_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_REAL,
 		nodeSpecType)
@@ -336,9 +321,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_DATE,
 		stager.Map_id_ATTRIBUTE_DEFINITION_DATE,
 		stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_DATE_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_DATE,
 		nodeSpecType)
@@ -348,9 +330,6 @@ func addAttibutesNodes(
 		specAttributes.ATTRIBUTE_DEFINITION_ENUMERATION,
 		stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION,
 		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance,
-		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle,
-		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable,
-		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_ENUMERATION,
 		nodeSpecType)
@@ -366,9 +345,6 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 	isEditable bool,
 	longName string,
 	attributeDefinition AttrDef,
-	map_AtttributeDefinition_showInTitle map[AttrDef]bool,
-	map_AtttributeDefinition_showInTable map[AttrDef]bool,
-	map_AtttributeDefinition_showInSubject map[AttrDef]bool,
 ) {
 	if nbInstances > 0 {
 		nodeAttribute.IsWithPreceedingIcon = true
@@ -381,15 +357,32 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in title",
 			Impl: &ButtonToggleShowAttributeFieldInTitleProxy[AttrDef]{
-				stager:                               stager,
-				attributeDefinition:                  attributeDefinition,
-				map_AtttributeDefinition_showInTitle: map_AtttributeDefinition_showInTitle,
+				stager:              stager,
+				attributeDefinition: attributeDefinition,
 			},
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
 
-		if map_AtttributeDefinition_showInTitle[attributeDefinition] {
+		var showInTitle bool
+		switch ad := any(attributeDefinition).(type) {
+		case *m.ATTRIBUTE_DEFINITION_XHTML:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle(ad)
+		case *m.ATTRIBUTE_DEFINITION_STRING:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInTitle(ad)
+		case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle(ad)
+		case *m.ATTRIBUTE_DEFINITION_INTEGER:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle(ad)
+		case *m.ATTRIBUTE_DEFINITION_DATE:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInTitle(ad)
+		case *m.ATTRIBUTE_DEFINITION_REAL:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInTitle(ad)
+		case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
+			showInTitle = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle(ad)
+		}
+
+		if showInTitle {
 			button.SVGIcon = icons.SvgIconTitleOff
 			button.ToolTipText = "Click to remove attributes from the title"
 		} else {
@@ -405,15 +398,32 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in table",
 			Impl: &ButtonToggleShowAttributeFieldInTableProxy[AttrDef]{
-				stager:                               stager,
-				attributeDefinition:                  attributeDefinition,
-				map_AtttributeDefinition_showInTable: map_AtttributeDefinition_showInTable,
+				stager:              stager,
+				attributeDefinition: attributeDefinition,
 			},
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
 
-		if map_AtttributeDefinition_showInTable[attributeDefinition] {
+		var showInTable bool
+		switch ad := any(attributeDefinition).(type) {
+		case *m.ATTRIBUTE_DEFINITION_XHTML:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTable(ad)
+		case *m.ATTRIBUTE_DEFINITION_STRING:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInTable(ad)
+		case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable(ad)
+		case *m.ATTRIBUTE_DEFINITION_INTEGER:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable(ad)
+		case *m.ATTRIBUTE_DEFINITION_DATE:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInTable(ad)
+		case *m.ATTRIBUTE_DEFINITION_REAL:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInTable(ad)
+		case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
+			showInTable = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable(ad)
+		}
+
+		if showInTable {
 			button.SVGIcon = icons.SvgIconTableOff
 			button.ToolTipText = "Click to remove attributes from the table"
 		} else {
@@ -429,15 +439,32 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in subject",
 			Impl: &ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef]{
-				stager:                                 stager,
-				attributeDefinition:                    attributeDefinition,
-				map_AtttributeDefinition_showInSubject: map_AtttributeDefinition_showInSubject,
+				stager:              stager,
+				attributeDefinition: attributeDefinition,
 			},
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
 
-		if map_AtttributeDefinition_showInSubject[attributeDefinition] {
+		var showInSubject bool
+		switch ad := any(attributeDefinition).(type) {
+		case *m.ATTRIBUTE_DEFINITION_XHTML:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject(ad)
+		case *m.ATTRIBUTE_DEFINITION_STRING:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInSubject(ad)
+		case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject(ad)
+		case *m.ATTRIBUTE_DEFINITION_INTEGER:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject(ad)
+		case *m.ATTRIBUTE_DEFINITION_DATE:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInSubject(ad)
+		case *m.ATTRIBUTE_DEFINITION_REAL:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInSubject(ad)
+		case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
+			showInSubject = stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject(ad)
+		}
+
+		if showInSubject {
 			button.SVGIcon = icons.SvgIconSubjectOff
 			button.ToolTipText = "Click to remove attributes from the subject"
 		} else {
@@ -451,66 +478,117 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 }
 
 type ButtonToggleShowAttributeFieldInTitleProxy[AttrDef m.AttributeDefinition] struct {
-	stager                               *m.Stager
-	attributeDefinition                  AttrDef
-	map_AtttributeDefinition_showInTitle map[AttrDef]bool
+	stager              *m.Stager
+	attributeDefinition AttrDef
 }
 
 func (proxy *ButtonToggleShowAttributeFieldInTitleProxy[AttrDef]) ButtonUpdated(
 	treeStage *tree.Stage,
 	staged, front *tree.Button) {
 
-	showInTitle, ok := proxy.map_AtttributeDefinition_showInTitle[proxy.attributeDefinition]
-
-	if !ok {
-		log.Fatalln("Unknown specificiation in map", proxy.attributeDefinition.GetName())
+	switch ad := any(proxy.attributeDefinition).(type) {
+	case *m.ATTRIBUTE_DEFINITION_XHTML:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_STRING:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_STRING_ShowInTitle(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_INTEGER:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_DATE:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_DATE_ShowInTitle(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_REAL:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_REAL_ShowInTitle(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle(ad, !currentValue)
+	default:
+		log.Fatalln("Unknown attribute definition type", ad)
 	}
-
-	proxy.map_AtttributeDefinition_showInTitle[proxy.attributeDefinition] = !showInTitle
 
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 }
 
 type ButtonToggleShowAttributeFieldInTableProxy[AttrDef m.AttributeDefinition] struct {
-	stager                               *m.Stager
-	attributeDefinition                  AttrDef
-	map_AtttributeDefinition_showInTable map[AttrDef]bool
+	stager              *m.Stager
+	attributeDefinition AttrDef
 }
 
 func (proxy *ButtonToggleShowAttributeFieldInTableProxy[AttrDef]) ButtonUpdated(
 	treeStage *tree.Stage,
 	staged, front *tree.Button) {
 
-	showInTable, ok := proxy.map_AtttributeDefinition_showInTable[proxy.attributeDefinition]
-
-	if !ok {
-		log.Fatalln("Unknown specificiation in map", proxy.attributeDefinition.GetName())
+	switch ad := any(proxy.attributeDefinition).(type) {
+	case *m.ATTRIBUTE_DEFINITION_XHTML:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_XHTML_ShowInTable(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_STRING:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_STRING_ShowInTable(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_INTEGER:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_DATE:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_DATE_ShowInTable(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_REAL:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_REAL_ShowInTable(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable(ad, !currentValue)
+	default:
+		log.Fatalln("Unknown attribute definition type", ad)
 	}
-
-	proxy.map_AtttributeDefinition_showInTable[proxy.attributeDefinition] = !showInTable
 
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 }
 
 type ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef m.AttributeDefinition] struct {
-	stager                                 *m.Stager
-	attributeDefinition                    AttrDef
-	map_AtttributeDefinition_showInSubject map[AttrDef]bool
+	stager              *m.Stager
+	attributeDefinition AttrDef
 }
 
 func (proxy *ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef]) ButtonUpdated(
 	treeStage *tree.Stage,
 	staged, front *tree.Button) {
 
-	showInSubject, ok := proxy.map_AtttributeDefinition_showInSubject[proxy.attributeDefinition]
-
-	if !ok {
-		log.Fatalln("Unknown specificiation in map", proxy.attributeDefinition.GetName())
+	switch ad := any(proxy.attributeDefinition).(type) {
+	case *m.ATTRIBUTE_DEFINITION_XHTML:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_STRING:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_STRING_ShowInSubject(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_INTEGER:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_DATE:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_DATE_ShowInSubject(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_REAL:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_REAL_ShowInSubject(ad, !currentValue)
+	case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
+		currentValue := proxy.stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject(ad)
+		proxy.stager.RenderingConf.Set_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject(ad, !currentValue)
+	default:
+		log.Fatalln("Unknown attribute definition type", ad)
 	}
-
-	proxy.map_AtttributeDefinition_showInSubject[proxy.attributeDefinition] = !showInSubject
 
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)

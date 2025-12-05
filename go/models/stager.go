@@ -145,8 +145,7 @@ type Stager struct {
 	Map_SPEC_RELATION_TYPE_Spec_nbInstance map[*SPEC_RELATION_TYPE]int
 
 	Map_SPEC_OBJECT_TYPE_isHeading      map[*SPEC_OBJECT_TYPE]bool
-	Map_SPEC_OBJECT_TYPE_isNodeExpanded map[*SPEC_OBJECT_TYPE]bool // is the tree node expanded in the UX
-
+	
 	Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance       map[*ATTRIBUTE_DEFINITION_XHTML]int
 	Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance      map[*ATTRIBUTE_DEFINITION_STRING]int
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance     map[*ATTRIBUTE_DEFINITION_BOOLEAN]int
@@ -157,29 +156,8 @@ type Stager struct {
 
 	Map_ENUM_VALUE_Spec_nbInstance map[*ENUM_VALUE]int
 
-	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle       map[*ATTRIBUTE_DEFINITION_XHTML]bool
-	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle      map[*ATTRIBUTE_DEFINITION_STRING]bool
-	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle     map[*ATTRIBUTE_DEFINITION_BOOLEAN]bool
-	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle     map[*ATTRIBUTE_DEFINITION_INTEGER]bool
-	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle        map[*ATTRIBUTE_DEFINITION_DATE]bool
-	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle        map[*ATTRIBUTE_DEFINITION_REAL]bool
-	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle map[*ATTRIBUTE_DEFINITION_ENUMERATION]bool
-
-	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable       map[*ATTRIBUTE_DEFINITION_XHTML]bool
-	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable      map[*ATTRIBUTE_DEFINITION_STRING]bool
-	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable     map[*ATTRIBUTE_DEFINITION_BOOLEAN]bool
-	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable     map[*ATTRIBUTE_DEFINITION_INTEGER]bool
-	Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable        map[*ATTRIBUTE_DEFINITION_DATE]bool
-	Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable        map[*ATTRIBUTE_DEFINITION_REAL]bool
-	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable map[*ATTRIBUTE_DEFINITION_ENUMERATION]bool
-
-	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject       map[*ATTRIBUTE_DEFINITION_XHTML]bool
-	Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubject      map[*ATTRIBUTE_DEFINITION_STRING]bool
-	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject     map[*ATTRIBUTE_DEFINITION_BOOLEAN]bool
-	Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject     map[*ATTRIBUTE_DEFINITION_INTEGER]bool
-	Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject        map[*ATTRIBUTE_DEFINITION_DATE]bool
-	Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject        map[*ATTRIBUTE_DEFINITION_REAL]bool
-	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject map[*ATTRIBUTE_DEFINITION_ENUMERATION]bool
+	// RenderingConf is the rendering configuration that is persisted
+	RenderingConf *RenderingConfiguration
 
 	Map_id_ENUM_VALUE map[string]*ENUM_VALUE
 
@@ -207,13 +185,7 @@ type Stager struct {
 	loadReqifStage         *load.Stage // load the reqif file
 	loadRenderingConfStage *load.Stage // load the rendering conf file
 
-	selectedSpecification               *SPECIFICATION
-	Map_SPECIFICATION_Nodes_expanded    map[*SPECIFICATION]bool
-	Map_SPEC_OBJECT_TYPE_showIdentifier map[*SPEC_OBJECT_TYPE]bool
-	Map_SPEC_OBJECT_TYPE_showName       map[*SPEC_OBJECT_TYPE]bool
-	Map_SPEC_OBJECT_TYPE_showRelations  map[*SPEC_OBJECT_TYPE]bool
-
-	ShowSpecHierachyIdentifiers bool
+	selectedSpecification *SPECIFICATION
 
 	// allow for navigation from spec object to their relations
 	Map_SPEC_OBJECT_relations_sources map[*SPEC_OBJECT][]*SPEC_RELATION
@@ -323,6 +295,7 @@ func NewStager(
 ) {
 
 	stager = new(Stager)
+	stager.RenderingConf = new(RenderingConfiguration)
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
@@ -677,7 +650,7 @@ func NewStager(
 			conf = _conf
 		}
 
-		stager.FromRenderingConfiguration(conf)
+		stager.RenderingConf = conf
 	}
 
 	stager.UpdateAndCommitLoadReqifStage()

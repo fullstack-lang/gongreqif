@@ -1340,645 +1340,7 @@ func FillUpForm(
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
-	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_SPECIFICATION_Nodes_expandedEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_SPECIFICATION_Nodes_expandedEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_SPECIFICATION_Nodes_expandedEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-
-	case *models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry:
+	case *models.Map_identifier_bool:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
@@ -2006,13 +1368,490 @@ func FillUpForm(
 					probe)
 			}
 		}
-
-	case *models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
+		{
+			var rf models.ReverseField
+			_ = rf
+			rf.GongstructName = "RenderingConfiguration"
+			rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
+			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
+			if reverseFieldOwner != nil {
+				AssociationReverseFieldToForm(
+					reverseFieldOwner.(*models.RenderingConfiguration),
+					"Map_SPECIFICATION_Nodes_expandedEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			} else {
+				AssociationReverseFieldToForm[*models.RenderingConfiguration](
+					nil,
+					"Map_SPECIFICATION_Nodes_expandedEntries",
+					instanceWithInferedType,
+					formGroup,
+					probe)
+			}
+		}
 		{
 			var rf models.ReverseField
 			_ = rf
@@ -2035,13 +1874,6 @@ func FillUpForm(
 					probe)
 			}
 		}
-
-	case *models.Map_SPEC_OBJECT_TYPE_showNameEntry:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
 		{
 			var rf models.ReverseField
 			_ = rf
@@ -2064,13 +1896,6 @@ func FillUpForm(
 					probe)
 			}
 		}
-
-	case *models.Map_SPEC_OBJECT_TYPE_showRelations:
-		// insertion point
-		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
-		BasicFieldtoForm("Value", instanceWithInferedType.Value, instanceWithInferedType, probe.formStage, formGroup,
-			false, false, 0, false, 0)
 		{
 			var rf models.ReverseField
 			_ = rf

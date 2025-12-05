@@ -14,7 +14,7 @@ func (proxy *ButtonToggleShowSpecHierachyIdentifiersProxy) ButtonUpdated(
 	treeStage *tree.Stage,
 	staged, front *tree.Button) {
 
-	proxy.stager.ShowSpecHierachyIdentifiers = !proxy.stager.ShowSpecHierachyIdentifiers
+	proxy.stager.RenderingConf.ShowSpecHierachyIdentifiers = !proxy.stager.RenderingConf.ShowSpecHierachyIdentifiers
 
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)

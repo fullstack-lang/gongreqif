@@ -435,32 +435,7 @@ var __gong__map_EmbeddedJpgImage = make(map[string]*EmbeddedJpgImage)
 var __gong__map_EmbeddedPngImage = make(map[string]*EmbeddedPngImage)
 var __gong__map_EmbeddedSvgImage = make(map[string]*EmbeddedSvgImage)
 var __gong__map_Kill = make(map[string]*Kill)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
-var __gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry = make(map[string]*Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
-var __gong__map_Map_SPECIFICATION_Nodes_expandedEntry = make(map[string]*Map_SPECIFICATION_Nodes_expandedEntry)
-var __gong__map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry = make(map[string]*Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
-var __gong__map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry = make(map[string]*Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
-var __gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry = make(map[string]*Map_SPEC_OBJECT_TYPE_showNameEntry)
-var __gong__map_Map_SPEC_OBJECT_TYPE_showRelations = make(map[string]*Map_SPEC_OBJECT_TYPE_showRelations)
+var __gong__map_Map_identifier_bool = make(map[string]*Map_identifier_bool)
 var __gong__map_RELATION_GROUP = make(map[string]*RELATION_GROUP)
 var __gong__map_RELATION_GROUP_TYPE = make(map[string]*RELATION_GROUP_TYPE)
 var __gong__map_REQ_IF = make(map[string]*REQ_IF)
@@ -1097,162 +1072,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceKill.Stage(stage)
 										instance = any(instanceKill)
 										__gong__map_Kill[identifier] = instanceKill
-									case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry
-									case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry
-									case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry
-									case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry
-									case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry
-									case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry
-									case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry := new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry
-									case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry := new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry
-									case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry := new(Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.Name = instanceName
-										instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry.Stage(stage)
-										instance = any(instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry)
-										__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry[identifier] = instanceMap_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry
-									case "Map_SPECIFICATION_Nodes_expandedEntry":
-										instanceMap_SPECIFICATION_Nodes_expandedEntry := new(Map_SPECIFICATION_Nodes_expandedEntry)
-										instanceMap_SPECIFICATION_Nodes_expandedEntry.Name = instanceName
-										instanceMap_SPECIFICATION_Nodes_expandedEntry.Stage(stage)
-										instance = any(instanceMap_SPECIFICATION_Nodes_expandedEntry)
-										__gong__map_Map_SPECIFICATION_Nodes_expandedEntry[identifier] = instanceMap_SPECIFICATION_Nodes_expandedEntry
-									case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
-										instanceMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry := new(Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
-										instanceMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.Name = instanceName
-										instanceMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry.Stage(stage)
-										instance = any(instanceMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry)
-										__gong__map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry[identifier] = instanceMap_SPEC_OBJECT_TYPE_isNodeExpandedEntry
-									case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
-										instanceMap_SPEC_OBJECT_TYPE_showIdentifierEntry := new(Map_SPEC_OBJECT_TYPE_showIdentifierEntry)
-										instanceMap_SPEC_OBJECT_TYPE_showIdentifierEntry.Name = instanceName
-										instanceMap_SPEC_OBJECT_TYPE_showIdentifierEntry.Stage(stage)
-										instance = any(instanceMap_SPEC_OBJECT_TYPE_showIdentifierEntry)
-										__gong__map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry[identifier] = instanceMap_SPEC_OBJECT_TYPE_showIdentifierEntry
-									case "Map_SPEC_OBJECT_TYPE_showNameEntry":
-										instanceMap_SPEC_OBJECT_TYPE_showNameEntry := new(Map_SPEC_OBJECT_TYPE_showNameEntry)
-										instanceMap_SPEC_OBJECT_TYPE_showNameEntry.Name = instanceName
-										instanceMap_SPEC_OBJECT_TYPE_showNameEntry.Stage(stage)
-										instance = any(instanceMap_SPEC_OBJECT_TYPE_showNameEntry)
-										__gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifier] = instanceMap_SPEC_OBJECT_TYPE_showNameEntry
-									case "Map_SPEC_OBJECT_TYPE_showRelations":
-										instanceMap_SPEC_OBJECT_TYPE_showRelations := new(Map_SPEC_OBJECT_TYPE_showRelations)
-										instanceMap_SPEC_OBJECT_TYPE_showRelations.Name = instanceName
-										instanceMap_SPEC_OBJECT_TYPE_showRelations.Stage(stage)
-										instance = any(instanceMap_SPEC_OBJECT_TYPE_showRelations)
-										__gong__map_Map_SPEC_OBJECT_TYPE_showRelations[identifier] = instanceMap_SPEC_OBJECT_TYPE_showRelations
+									case "Map_identifier_bool":
+										instanceMap_identifier_bool := new(Map_identifier_bool)
+										instanceMap_identifier_bool.Name = instanceName
+										instanceMap_identifier_bool.Stage(stage)
+										instance = any(instanceMap_identifier_bool)
+										__gong__map_Map_identifier_bool[identifier] = instanceMap_identifier_bool
 									case "RELATION_GROUP":
 										instanceRELATION_GROUP := new(RELATION_GROUP)
 										instanceRELATION_GROUP.Name = instanceName
@@ -1706,107 +1531,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							switch fieldName {
 							// insertion point for date assign code
 							}
-						case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_SPECIFICATION_Nodes_expandedEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_SPEC_OBJECT_TYPE_showNameEntry":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "Map_SPEC_OBJECT_TYPE_showRelations":
+						case "Map_identifier_bool":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -2638,107 +2363,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
-					case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_SPECIFICATION_Nodes_expandedEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_SPEC_OBJECT_TYPE_showNameEntry":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						}
-					case "Map_SPEC_OBJECT_TYPE_showRelations":
+					case "Map_identifier_bool":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -2775,7 +2400,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, instanceToAppend)
 							}
@@ -2785,7 +2410,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2795,7 +2420,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2805,7 +2430,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2815,7 +2440,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2825,7 +2450,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2835,7 +2460,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2845,7 +2470,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, instanceToAppend)
 							}
@@ -2855,7 +2480,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, instanceToAppend)
 							}
@@ -2865,7 +2490,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, instanceToAppend)
 							}
@@ -2875,7 +2500,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, instanceToAppend)
 							}
@@ -2885,7 +2510,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, instanceToAppend)
 							}
@@ -2895,7 +2520,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, instanceToAppend)
 							}
@@ -2905,7 +2530,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, instanceToAppend)
 							}
@@ -2915,7 +2540,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, instanceToAppend)
 							}
@@ -2925,7 +2550,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2935,7 +2560,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2945,7 +2570,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2955,7 +2580,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2965,7 +2590,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2975,7 +2600,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2985,7 +2610,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, instanceToAppend)
 							}
@@ -2995,7 +2620,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_SPECIFICATION_Nodes_expandedEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_SPECIFICATION_Nodes_expandedEntries = append(instanceWhoseFieldIsAppended.Map_SPECIFICATION_Nodes_expandedEntries, instanceToAppend)
 							}
@@ -3005,7 +2630,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, instanceToAppend)
 							}
@@ -3015,7 +2640,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showNameEntries = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showNameEntries, instanceToAppend)
 							}
@@ -3025,7 +2650,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								break
 							}
 							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_SPEC_OBJECT_TYPE_showRelations[identifierOfInstanceToAppend]; ok {
+							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showRelations = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showRelations, instanceToAppend)
 							}
@@ -4201,213 +3826,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_Kill[identifier].Name = fielValue
 				}
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
+			case "Map_identifier_bool":
 				switch fieldName {
 				// insertion point for field dependant code
 				case "Name":
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry[identifier].Name = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry[identifier].Name = fielValue
-				}
-			case "Map_SPECIFICATION_Nodes_expandedEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_SPECIFICATION_Nodes_expandedEntry[identifier].Name = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry[identifier].Name = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry[identifier].Name = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_showNameEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifier].Name = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_showRelations":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_Map_SPEC_OBJECT_TYPE_showRelations[identifier].Name = fielValue
+					__gong__map_Map_identifier_bool[identifier].Name = fielValue
 				}
 			case "RELATION_GROUP":
 				switch fieldName {
@@ -5333,7 +4758,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				switch fieldName {
 				// insertion point for field dependant code
 				}
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
+			case "Map_identifier_bool":
 				switch fieldName {
 				// insertion point for field dependant code
 				case "Value":
@@ -5342,282 +4767,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry[identifier].Value = fielValue
-				}
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry[identifier].Value = fielValue
-				}
-			case "Map_SPECIFICATION_Nodes_expandedEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_SPECIFICATION_Nodes_expandedEntry[identifier].Value = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry[identifier].Value = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_SPEC_OBJECT_TYPE_showIdentifierEntry[identifier].Value = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_showNameEntry":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_SPEC_OBJECT_TYPE_showNameEntry[identifier].Value = fielValue
-				}
-			case "Map_SPEC_OBJECT_TYPE_showRelations":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Value":
-					// convert string to boolean
-					fielValue, err := strconv.ParseBool(ident.Name)
-					if err != nil {
-						log.Fatalln(err)
-					}
-					__gong__map_Map_SPEC_OBJECT_TYPE_showRelations[identifier].Value = fielValue
+					__gong__map_Map_identifier_bool[identifier].Value = fielValue
 				}
 			case "RELATION_GROUP":
 				switch fieldName {
@@ -6198,107 +5348,7 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}
-				case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_SPECIFICATION_Nodes_expandedEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_SPEC_OBJECT_TYPE_showIdentifierEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_SPEC_OBJECT_TYPE_showNameEntry":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "Map_SPEC_OBJECT_TYPE_showRelations":
+				case "Map_identifier_bool":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}

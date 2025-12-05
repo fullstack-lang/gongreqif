@@ -42,8 +42,8 @@ func (e *ExportRenderingConfButtonProxy) GetButtonsStage() *button.Stage {
 // OnAfterUpdateButton implements models.Target.
 func (e *ExportRenderingConfButtonProxy) OnAfterUpdateButton() {
 
-	conf := e.stager.ToRenderingConfiguration(e.stager.pathToReqifFile)
-	_ = conf
+	conf := e.stager.RenderingConf
+	conf.Name = e.stager.pathToReqifFile
 
 	e.stager.reqifExporter.ExportRenderingConf(conf, e.stager)
 

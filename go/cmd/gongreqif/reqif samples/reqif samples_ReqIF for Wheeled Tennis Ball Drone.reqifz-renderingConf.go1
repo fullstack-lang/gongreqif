@@ -23,446 +23,396 @@ func _(stage *models.Stage) {
 
 	// Declaration of instances to stage
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000000_ats_trace_approved := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000001_ats_system_req_verified := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000002_ats_spec_approved := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000000_ats_system_req_verified := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000001_ats_spec_approved := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000002_ats_trace_approved := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000000_ats_system_req_verified := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000001_ats_spec_approved := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000002_ats_trace_approved := (&models.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry__000000_ats_system_req_duedate := (&models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry__000000_ats_system_req_duedate := (&models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry__000000_ats_system_req_duedate := (&models.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000000_ats_system_req_status := (&models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000001_ats_relation_status := (&models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000000_ats_system_req_status := (&models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000001_ats_relation_status := (&models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000000_ats_system_req_status := (&models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000001_ats_relation_status := (&models.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry__000000_ats_system_req_priority := (&models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry__000000_ats_system_req_priority := (&models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry__000000_ats_system_req_priority := (&models.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry__000000_ats_system_req_cost := (&models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry__000000_ats_system_req_cost := (&models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry__000000_ats_system_req_cost := (&models.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000000_ats_system_req_text := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000001_ats_spec_version := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000002_ats_stakeholder_req_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000003_ats_stakeholder_req_text := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000004_ats_system_req_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000005_ats_trace_version := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000006_ats_relation_validation := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000007_ats_trace_owner := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000008_ats_spec_owner := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000009_ats_heading_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000000_ats_stakeholder_req_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000001_ats_system_req_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000002_ats_spec_owner := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000003_ats_heading_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000004_ats_system_req_text := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000005_ats_relation_validation := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000006_ats_spec_version := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000007_ats_stakeholder_req_text := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000008_ats_trace_version := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000009_ats_trace_owner := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000000_ats_system_req_text := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000001_ats_relation_validation := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000002_ats_spec_version := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000003_ats_stakeholder_req_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000004_ats_stakeholder_req_text := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000005_ats_spec_owner := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000006_ats_heading_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000007_ats_trace_owner := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000008_ats_system_req_title := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000009_ats_trace_version := (&models.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry__000000_ats_text_content := (&models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry__000000_ats_text_content := (&models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry{}).Stage(stage)
-
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry__000000_ats_text_content := (&models.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry{}).Stage(stage)
-
-	__Map_SPECIFICATION_Nodes_expandedEntry__000000_spec_stakeholder := (&models.Map_SPECIFICATION_Nodes_expandedEntry{}).Stage(stage)
-	__Map_SPECIFICATION_Nodes_expandedEntry__000001_spec_system := (&models.Map_SPECIFICATION_Nodes_expandedEntry{}).Stage(stage)
-	__Map_SPECIFICATION_Nodes_expandedEntry__000002_spec_traceability_matrix := (&models.Map_SPECIFICATION_Nodes_expandedEntry{}).Stage(stage)
-
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000000_st_stakeholder_req := (&models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000001_st_system_req := (&models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000002_st_descriptive_text := (&models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000003_st_heading := (&models.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry{}).Stage(stage)
-
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000000_st_heading := (&models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000001_st_stakeholder_req := (&models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000002_st_system_req := (&models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000003_st_descriptive_text := (&models.Map_SPEC_OBJECT_TYPE_showIdentifierEntry{}).Stage(stage)
-
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000000_st_descriptive_text := (&models.Map_SPEC_OBJECT_TYPE_showNameEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000001_st_heading := (&models.Map_SPEC_OBJECT_TYPE_showNameEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000002_st_stakeholder_req := (&models.Map_SPEC_OBJECT_TYPE_showNameEntry{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000003_st_system_req := (&models.Map_SPEC_OBJECT_TYPE_showNameEntry{}).Stage(stage)
-
-	__Map_SPEC_OBJECT_TYPE_showRelations__000000_st_descriptive_text := (&models.Map_SPEC_OBJECT_TYPE_showRelations{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showRelations__000001_st_heading := (&models.Map_SPEC_OBJECT_TYPE_showRelations{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showRelations__000002_st_stakeholder_req := (&models.Map_SPEC_OBJECT_TYPE_showRelations{}).Stage(stage)
-	__Map_SPEC_OBJECT_TYPE_showRelations__000003_st_system_req := (&models.Map_SPEC_OBJECT_TYPE_showRelations{}).Stage(stage)
+	__Map_identifier_bool__000000_st_system_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000001_st_descriptive_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000002_st_heading := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000003_st_stakeholder_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000004_ats_text_content := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000005_ats_stakeholder_req_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000006_ats_system_req_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000007_ats_spec_version := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000008_ats_trace_owner := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000009_ats_stakeholder_req_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000010_ats_trace_version := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000011_ats_heading_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000012_ats_system_req_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000013_ats_relation_validation := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000014_ats_spec_owner := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000015_ats_system_req_verified := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000016_ats_spec_approved := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000017_ats_trace_approved := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000018_ats_system_req_priority := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000019_ats_system_req_duedate := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000020_ats_system_req_cost := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000021_ats_system_req_status := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000022_ats_relation_status := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000023_ats_text_content := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000024_ats_spec_owner := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000025_ats_trace_version := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000026_ats_heading_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000027_ats_system_req_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000028_ats_relation_validation := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000029_ats_stakeholder_req_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000030_ats_system_req_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000031_ats_spec_version := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000032_ats_trace_owner := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000033_ats_stakeholder_req_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000034_ats_system_req_verified := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000035_ats_spec_approved := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000036_ats_trace_approved := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000037_ats_system_req_priority := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000038_ats_system_req_duedate := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000039_ats_system_req_cost := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000040_ats_system_req_status := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000041_ats_relation_status := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000042_ats_text_content := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000043_ats_spec_owner := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000044_ats_heading_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000045_ats_stakeholder_req_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000046_ats_system_req_title := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000047_ats_system_req_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000048_ats_relation_validation := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000049_ats_trace_version := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000050_ats_spec_version := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000051_ats_trace_owner := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000052_ats_stakeholder_req_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000053_ats_system_req_verified := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000054_ats_spec_approved := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000055_ats_trace_approved := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000056_ats_system_req_priority := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000057_ats_system_req_duedate := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000058_ats_system_req_cost := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000059_ats_system_req_status := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000060_ats_relation_status := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000061_spec_traceability_matrix := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000062_spec_stakeholder := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000063_spec_system := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000064_st_descriptive_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000065_st_heading := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000066_st_stakeholder_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000067_st_system_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000068_st_system_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000069_st_descriptive_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000070_st_heading := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000071_st_stakeholder_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000072_st_system_req := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000073_st_descriptive_text := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000074_st_heading := (&models.Map_identifier_bool{}).Stage(stage)
+	__Map_identifier_bool__000075_st_stakeholder_req := (&models.Map_identifier_bool{}).Stage(stage)
 
 	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz := (&models.RenderingConfiguration{}).Stage(stage)
 
 	// Setup of values
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000000_ats_trace_approved.Name = `ats-trace-approved`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000000_ats_trace_approved.Value = false
+	__Map_identifier_bool__000000_st_system_req.Name = `st-system-req`
+	__Map_identifier_bool__000000_st_system_req.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000001_ats_system_req_verified.Name = `ats-system-req-verified`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000001_ats_system_req_verified.Value = false
+	__Map_identifier_bool__000001_st_descriptive_text.Name = `st-descriptive-text`
+	__Map_identifier_bool__000001_st_descriptive_text.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000002_ats_spec_approved.Name = `ats-spec-approved`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000002_ats_spec_approved.Value = false
+	__Map_identifier_bool__000002_st_heading.Name = `st-heading`
+	__Map_identifier_bool__000002_st_heading.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000000_ats_system_req_verified.Name = `ats-system-req-verified`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000000_ats_system_req_verified.Value = true
+	__Map_identifier_bool__000003_st_stakeholder_req.Name = `st-stakeholder-req`
+	__Map_identifier_bool__000003_st_stakeholder_req.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000001_ats_spec_approved.Name = `ats-spec-approved`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000001_ats_spec_approved.Value = false
+	__Map_identifier_bool__000004_ats_text_content.Name = `ats-text-content`
+	__Map_identifier_bool__000004_ats_text_content.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000002_ats_trace_approved.Name = `ats-trace-approved`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000002_ats_trace_approved.Value = false
+	__Map_identifier_bool__000005_ats_stakeholder_req_title.Name = `ats-stakeholder-req-title`
+	__Map_identifier_bool__000005_ats_stakeholder_req_title.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000000_ats_system_req_verified.Name = `ats-system-req-verified`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000000_ats_system_req_verified.Value = false
+	__Map_identifier_bool__000006_ats_system_req_title.Name = `ats-system-req-title`
+	__Map_identifier_bool__000006_ats_system_req_title.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000001_ats_spec_approved.Name = `ats-spec-approved`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000001_ats_spec_approved.Value = false
+	__Map_identifier_bool__000007_ats_spec_version.Name = `ats-spec-version`
+	__Map_identifier_bool__000007_ats_spec_version.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000002_ats_trace_approved.Name = `ats-trace-approved`
-	__Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000002_ats_trace_approved.Value = false
+	__Map_identifier_bool__000008_ats_trace_owner.Name = `ats-trace-owner`
+	__Map_identifier_bool__000008_ats_trace_owner.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry__000000_ats_system_req_duedate.Name = `ats-system-req-duedate`
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry__000000_ats_system_req_duedate.Value = false
+	__Map_identifier_bool__000009_ats_stakeholder_req_text.Name = `ats-stakeholder-req-text`
+	__Map_identifier_bool__000009_ats_stakeholder_req_text.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry__000000_ats_system_req_duedate.Name = `ats-system-req-duedate`
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry__000000_ats_system_req_duedate.Value = true
+	__Map_identifier_bool__000010_ats_trace_version.Name = `ats-trace-version`
+	__Map_identifier_bool__000010_ats_trace_version.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry__000000_ats_system_req_duedate.Name = `ats-system-req-duedate`
-	__Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry__000000_ats_system_req_duedate.Value = false
+	__Map_identifier_bool__000011_ats_heading_title.Name = `ats-heading-title`
+	__Map_identifier_bool__000011_ats_heading_title.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000000_ats_system_req_status.Name = `ats-system-req-status`
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000000_ats_system_req_status.Value = false
+	__Map_identifier_bool__000012_ats_system_req_text.Name = `ats-system-req-text`
+	__Map_identifier_bool__000012_ats_system_req_text.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000001_ats_relation_status.Name = `ats-relation-status`
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000001_ats_relation_status.Value = false
+	__Map_identifier_bool__000013_ats_relation_validation.Name = `ats-relation-validation`
+	__Map_identifier_bool__000013_ats_relation_validation.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000000_ats_system_req_status.Name = `ats-system-req-status`
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000000_ats_system_req_status.Value = true
+	__Map_identifier_bool__000014_ats_spec_owner.Name = `ats-spec-owner`
+	__Map_identifier_bool__000014_ats_spec_owner.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000001_ats_relation_status.Name = `ats-relation-status`
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000001_ats_relation_status.Value = true
+	__Map_identifier_bool__000015_ats_system_req_verified.Name = `ats-system-req-verified`
+	__Map_identifier_bool__000015_ats_system_req_verified.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000000_ats_system_req_status.Name = `ats-system-req-status`
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000000_ats_system_req_status.Value = false
+	__Map_identifier_bool__000016_ats_spec_approved.Name = `ats-spec-approved`
+	__Map_identifier_bool__000016_ats_spec_approved.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000001_ats_relation_status.Name = `ats-relation-status`
-	__Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000001_ats_relation_status.Value = false
+	__Map_identifier_bool__000017_ats_trace_approved.Name = `ats-trace-approved`
+	__Map_identifier_bool__000017_ats_trace_approved.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry__000000_ats_system_req_priority.Name = `ats-system-req-priority`
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry__000000_ats_system_req_priority.Value = false
+	__Map_identifier_bool__000018_ats_system_req_priority.Name = `ats-system-req-priority`
+	__Map_identifier_bool__000018_ats_system_req_priority.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry__000000_ats_system_req_priority.Name = `ats-system-req-priority`
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry__000000_ats_system_req_priority.Value = true
+	__Map_identifier_bool__000019_ats_system_req_duedate.Name = `ats-system-req-duedate`
+	__Map_identifier_bool__000019_ats_system_req_duedate.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry__000000_ats_system_req_priority.Name = `ats-system-req-priority`
-	__Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry__000000_ats_system_req_priority.Value = false
+	__Map_identifier_bool__000020_ats_system_req_cost.Name = `ats-system-req-cost`
+	__Map_identifier_bool__000020_ats_system_req_cost.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry__000000_ats_system_req_cost.Name = `ats-system-req-cost`
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry__000000_ats_system_req_cost.Value = false
+	__Map_identifier_bool__000021_ats_system_req_status.Name = `ats-system-req-status`
+	__Map_identifier_bool__000021_ats_system_req_status.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry__000000_ats_system_req_cost.Name = `ats-system-req-cost`
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry__000000_ats_system_req_cost.Value = true
+	__Map_identifier_bool__000022_ats_relation_status.Name = `ats-relation-status`
+	__Map_identifier_bool__000022_ats_relation_status.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry__000000_ats_system_req_cost.Name = `ats-system-req-cost`
-	__Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry__000000_ats_system_req_cost.Value = false
+	__Map_identifier_bool__000023_ats_text_content.Name = `ats-text-content`
+	__Map_identifier_bool__000023_ats_text_content.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000000_ats_system_req_text.Name = `ats-system-req-text`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000000_ats_system_req_text.Value = true
+	__Map_identifier_bool__000024_ats_spec_owner.Name = `ats-spec-owner`
+	__Map_identifier_bool__000024_ats_spec_owner.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000001_ats_spec_version.Name = `ats-spec-version`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000001_ats_spec_version.Value = false
+	__Map_identifier_bool__000025_ats_trace_version.Name = `ats-trace-version`
+	__Map_identifier_bool__000025_ats_trace_version.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000002_ats_stakeholder_req_title.Name = `ats-stakeholder-req-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000002_ats_stakeholder_req_title.Value = false
+	__Map_identifier_bool__000026_ats_heading_title.Name = `ats-heading-title`
+	__Map_identifier_bool__000026_ats_heading_title.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000003_ats_stakeholder_req_text.Name = `ats-stakeholder-req-text`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000003_ats_stakeholder_req_text.Value = true
+	__Map_identifier_bool__000027_ats_system_req_text.Name = `ats-system-req-text`
+	__Map_identifier_bool__000027_ats_system_req_text.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000004_ats_system_req_title.Name = `ats-system-req-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000004_ats_system_req_title.Value = false
+	__Map_identifier_bool__000028_ats_relation_validation.Name = `ats-relation-validation`
+	__Map_identifier_bool__000028_ats_relation_validation.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000005_ats_trace_version.Name = `ats-trace-version`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000005_ats_trace_version.Value = false
+	__Map_identifier_bool__000029_ats_stakeholder_req_title.Name = `ats-stakeholder-req-title`
+	__Map_identifier_bool__000029_ats_stakeholder_req_title.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000006_ats_relation_validation.Name = `ats-relation-validation`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000006_ats_relation_validation.Value = false
+	__Map_identifier_bool__000030_ats_system_req_title.Name = `ats-system-req-title`
+	__Map_identifier_bool__000030_ats_system_req_title.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000007_ats_trace_owner.Name = `ats-trace-owner`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000007_ats_trace_owner.Value = false
+	__Map_identifier_bool__000031_ats_spec_version.Name = `ats-spec-version`
+	__Map_identifier_bool__000031_ats_spec_version.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000008_ats_spec_owner.Name = `ats-spec-owner`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000008_ats_spec_owner.Value = false
+	__Map_identifier_bool__000032_ats_trace_owner.Name = `ats-trace-owner`
+	__Map_identifier_bool__000032_ats_trace_owner.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000009_ats_heading_title.Name = `ats-heading-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000009_ats_heading_title.Value = false
+	__Map_identifier_bool__000033_ats_stakeholder_req_text.Name = `ats-stakeholder-req-text`
+	__Map_identifier_bool__000033_ats_stakeholder_req_text.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000000_ats_stakeholder_req_title.Name = `ats-stakeholder-req-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000000_ats_stakeholder_req_title.Value = false
+	__Map_identifier_bool__000034_ats_system_req_verified.Name = `ats-system-req-verified`
+	__Map_identifier_bool__000034_ats_system_req_verified.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000001_ats_system_req_title.Name = `ats-system-req-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000001_ats_system_req_title.Value = false
+	__Map_identifier_bool__000035_ats_spec_approved.Name = `ats-spec-approved`
+	__Map_identifier_bool__000035_ats_spec_approved.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000002_ats_spec_owner.Name = `ats-spec-owner`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000002_ats_spec_owner.Value = false
+	__Map_identifier_bool__000036_ats_trace_approved.Name = `ats-trace-approved`
+	__Map_identifier_bool__000036_ats_trace_approved.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000003_ats_heading_title.Name = `ats-heading-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000003_ats_heading_title.Value = false
+	__Map_identifier_bool__000037_ats_system_req_priority.Name = `ats-system-req-priority`
+	__Map_identifier_bool__000037_ats_system_req_priority.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000004_ats_system_req_text.Name = `ats-system-req-text`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000004_ats_system_req_text.Value = false
+	__Map_identifier_bool__000038_ats_system_req_duedate.Name = `ats-system-req-duedate`
+	__Map_identifier_bool__000038_ats_system_req_duedate.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000005_ats_relation_validation.Name = `ats-relation-validation`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000005_ats_relation_validation.Value = true
+	__Map_identifier_bool__000039_ats_system_req_cost.Name = `ats-system-req-cost`
+	__Map_identifier_bool__000039_ats_system_req_cost.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000006_ats_spec_version.Name = `ats-spec-version`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000006_ats_spec_version.Value = false
+	__Map_identifier_bool__000040_ats_system_req_status.Name = `ats-system-req-status`
+	__Map_identifier_bool__000040_ats_system_req_status.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000007_ats_stakeholder_req_text.Name = `ats-stakeholder-req-text`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000007_ats_stakeholder_req_text.Value = false
+	__Map_identifier_bool__000041_ats_relation_status.Name = `ats-relation-status`
+	__Map_identifier_bool__000041_ats_relation_status.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000008_ats_trace_version.Name = `ats-trace-version`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000008_ats_trace_version.Value = false
+	__Map_identifier_bool__000042_ats_text_content.Name = `ats-text-content`
+	__Map_identifier_bool__000042_ats_text_content.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000009_ats_trace_owner.Name = `ats-trace-owner`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000009_ats_trace_owner.Value = false
+	__Map_identifier_bool__000043_ats_spec_owner.Name = `ats-spec-owner`
+	__Map_identifier_bool__000043_ats_spec_owner.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000000_ats_system_req_text.Name = `ats-system-req-text`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000000_ats_system_req_text.Value = false
+	__Map_identifier_bool__000044_ats_heading_title.Name = `ats-heading-title`
+	__Map_identifier_bool__000044_ats_heading_title.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000001_ats_relation_validation.Name = `ats-relation-validation`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000001_ats_relation_validation.Value = false
+	__Map_identifier_bool__000045_ats_stakeholder_req_title.Name = `ats-stakeholder-req-title`
+	__Map_identifier_bool__000045_ats_stakeholder_req_title.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000002_ats_spec_version.Name = `ats-spec-version`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000002_ats_spec_version.Value = false
+	__Map_identifier_bool__000046_ats_system_req_title.Name = `ats-system-req-title`
+	__Map_identifier_bool__000046_ats_system_req_title.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000003_ats_stakeholder_req_title.Name = `ats-stakeholder-req-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000003_ats_stakeholder_req_title.Value = true
+	__Map_identifier_bool__000047_ats_system_req_text.Name = `ats-system-req-text`
+	__Map_identifier_bool__000047_ats_system_req_text.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000004_ats_stakeholder_req_text.Name = `ats-stakeholder-req-text`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000004_ats_stakeholder_req_text.Value = false
+	__Map_identifier_bool__000048_ats_relation_validation.Name = `ats-relation-validation`
+	__Map_identifier_bool__000048_ats_relation_validation.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000005_ats_spec_owner.Name = `ats-spec-owner`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000005_ats_spec_owner.Value = false
+	__Map_identifier_bool__000049_ats_trace_version.Name = `ats-trace-version`
+	__Map_identifier_bool__000049_ats_trace_version.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000006_ats_heading_title.Name = `ats-heading-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000006_ats_heading_title.Value = true
+	__Map_identifier_bool__000050_ats_spec_version.Name = `ats-spec-version`
+	__Map_identifier_bool__000050_ats_spec_version.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000007_ats_trace_owner.Name = `ats-trace-owner`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000007_ats_trace_owner.Value = false
+	__Map_identifier_bool__000051_ats_trace_owner.Name = `ats-trace-owner`
+	__Map_identifier_bool__000051_ats_trace_owner.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000008_ats_system_req_title.Name = `ats-system-req-title`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000008_ats_system_req_title.Value = true
+	__Map_identifier_bool__000052_ats_stakeholder_req_text.Name = `ats-stakeholder-req-text`
+	__Map_identifier_bool__000052_ats_stakeholder_req_text.Value = true
 
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000009_ats_trace_version.Name = `ats-trace-version`
-	__Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000009_ats_trace_version.Value = false
+	__Map_identifier_bool__000053_ats_system_req_verified.Name = `ats-system-req-verified`
+	__Map_identifier_bool__000053_ats_system_req_verified.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry__000000_ats_text_content.Name = `ats-text-content`
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry__000000_ats_text_content.Value = true
+	__Map_identifier_bool__000054_ats_spec_approved.Name = `ats-spec-approved`
+	__Map_identifier_bool__000054_ats_spec_approved.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry__000000_ats_text_content.Name = `ats-text-content`
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry__000000_ats_text_content.Value = false
+	__Map_identifier_bool__000055_ats_trace_approved.Name = `ats-trace-approved`
+	__Map_identifier_bool__000055_ats_trace_approved.Value = false
 
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry__000000_ats_text_content.Name = `ats-text-content`
-	__Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry__000000_ats_text_content.Value = false
+	__Map_identifier_bool__000056_ats_system_req_priority.Name = `ats-system-req-priority`
+	__Map_identifier_bool__000056_ats_system_req_priority.Value = false
 
-	__Map_SPECIFICATION_Nodes_expandedEntry__000000_spec_stakeholder.Name = `spec-stakeholder`
-	__Map_SPECIFICATION_Nodes_expandedEntry__000000_spec_stakeholder.Value = false
+	__Map_identifier_bool__000057_ats_system_req_duedate.Name = `ats-system-req-duedate`
+	__Map_identifier_bool__000057_ats_system_req_duedate.Value = false
 
-	__Map_SPECIFICATION_Nodes_expandedEntry__000001_spec_system.Name = `spec-system`
-	__Map_SPECIFICATION_Nodes_expandedEntry__000001_spec_system.Value = false
+	__Map_identifier_bool__000058_ats_system_req_cost.Name = `ats-system-req-cost`
+	__Map_identifier_bool__000058_ats_system_req_cost.Value = false
 
-	__Map_SPECIFICATION_Nodes_expandedEntry__000002_spec_traceability_matrix.Name = `spec-traceability-matrix`
-	__Map_SPECIFICATION_Nodes_expandedEntry__000002_spec_traceability_matrix.Value = false
+	__Map_identifier_bool__000059_ats_system_req_status.Name = `ats-system-req-status`
+	__Map_identifier_bool__000059_ats_system_req_status.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000000_st_stakeholder_req.Name = `st-stakeholder-req`
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000000_st_stakeholder_req.Value = true
+	__Map_identifier_bool__000060_ats_relation_status.Name = `ats-relation-status`
+	__Map_identifier_bool__000060_ats_relation_status.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000001_st_system_req.Name = `st-system-req`
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000001_st_system_req.Value = true
+	__Map_identifier_bool__000061_spec_traceability_matrix.Name = `spec-traceability-matrix`
+	__Map_identifier_bool__000061_spec_traceability_matrix.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000002_st_descriptive_text.Name = `st-descriptive-text`
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000002_st_descriptive_text.Value = true
+	__Map_identifier_bool__000062_spec_stakeholder.Name = `spec-stakeholder`
+	__Map_identifier_bool__000062_spec_stakeholder.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000003_st_heading.Name = `st-heading`
-	__Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000003_st_heading.Value = true
+	__Map_identifier_bool__000063_spec_system.Name = `spec-system`
+	__Map_identifier_bool__000063_spec_system.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000000_st_heading.Name = `st-heading`
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000000_st_heading.Value = false
+	__Map_identifier_bool__000064_st_descriptive_text.Name = `st-descriptive-text`
+	__Map_identifier_bool__000064_st_descriptive_text.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000001_st_stakeholder_req.Name = `st-stakeholder-req`
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000001_st_stakeholder_req.Value = true
+	__Map_identifier_bool__000065_st_heading.Name = `st-heading`
+	__Map_identifier_bool__000065_st_heading.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000002_st_system_req.Name = `st-system-req`
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000002_st_system_req.Value = true
+	__Map_identifier_bool__000066_st_stakeholder_req.Name = `st-stakeholder-req`
+	__Map_identifier_bool__000066_st_stakeholder_req.Value = true
 
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000003_st_descriptive_text.Name = `st-descriptive-text`
-	__Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000003_st_descriptive_text.Value = false
+	__Map_identifier_bool__000067_st_system_req.Name = `st-system-req`
+	__Map_identifier_bool__000067_st_system_req.Value = true
 
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000000_st_descriptive_text.Name = `st-descriptive-text`
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000000_st_descriptive_text.Value = false
+	__Map_identifier_bool__000068_st_system_req.Name = `st-system-req`
+	__Map_identifier_bool__000068_st_system_req.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000001_st_heading.Name = `st-heading`
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000001_st_heading.Value = false
+	__Map_identifier_bool__000069_st_descriptive_text.Name = `st-descriptive-text`
+	__Map_identifier_bool__000069_st_descriptive_text.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000002_st_stakeholder_req.Name = `st-stakeholder-req`
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000002_st_stakeholder_req.Value = false
+	__Map_identifier_bool__000070_st_heading.Name = `st-heading`
+	__Map_identifier_bool__000070_st_heading.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000003_st_system_req.Name = `st-system-req`
-	__Map_SPEC_OBJECT_TYPE_showNameEntry__000003_st_system_req.Value = false
+	__Map_identifier_bool__000071_st_stakeholder_req.Name = `st-stakeholder-req`
+	__Map_identifier_bool__000071_st_stakeholder_req.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showRelations__000000_st_descriptive_text.Name = `st-descriptive-text`
-	__Map_SPEC_OBJECT_TYPE_showRelations__000000_st_descriptive_text.Value = false
+	__Map_identifier_bool__000072_st_system_req.Name = `st-system-req`
+	__Map_identifier_bool__000072_st_system_req.Value = true
 
-	__Map_SPEC_OBJECT_TYPE_showRelations__000001_st_heading.Name = `st-heading`
-	__Map_SPEC_OBJECT_TYPE_showRelations__000001_st_heading.Value = false
+	__Map_identifier_bool__000073_st_descriptive_text.Name = `st-descriptive-text`
+	__Map_identifier_bool__000073_st_descriptive_text.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showRelations__000002_st_stakeholder_req.Name = `st-stakeholder-req`
-	__Map_SPEC_OBJECT_TYPE_showRelations__000002_st_stakeholder_req.Value = true
+	__Map_identifier_bool__000074_st_heading.Name = `st-heading`
+	__Map_identifier_bool__000074_st_heading.Value = false
 
-	__Map_SPEC_OBJECT_TYPE_showRelations__000003_st_system_req.Name = `st-system-req`
-	__Map_SPEC_OBJECT_TYPE_showRelations__000003_st_system_req.Value = true
+	__Map_identifier_bool__000075_st_stakeholder_req.Name = `st-stakeholder-req`
+	__Map_identifier_bool__000075_st_stakeholder_req.Value = true
 
 	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Name = `reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqifz`
 	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.ShowSpecHierachyIdentifiers = false
 
 	// Setup of pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry instances pointers
-	// setup of Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry instances pointers
-	// setup of Map_SPECIFICATION_Nodes_expandedEntry instances pointers
-	// setup of Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry instances pointers
-	// setup of Map_SPEC_OBJECT_TYPE_showIdentifierEntry instances pointers
-	// setup of Map_SPEC_OBJECT_TYPE_showNameEntry instances pointers
-	// setup of Map_SPEC_OBJECT_TYPE_showRelations instances pointers
+	// setup of Map_identifier_bool instances pointers
 	// setup of RenderingConfiguration instances pointers
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000000_st_stakeholder_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000001_st_system_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000002_st_descriptive_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry__000003_st_heading)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry__000000_ats_text_content)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000000_ats_system_req_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000001_ats_relation_validation)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000002_ats_spec_version)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000003_ats_stakeholder_req_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000004_ats_stakeholder_req_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000005_ats_spec_owner)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000006_ats_heading_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000007_ats_trace_owner)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000008_ats_system_req_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry__000009_ats_trace_version)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000000_ats_system_req_verified)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000001_ats_spec_approved)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry__000002_ats_trace_approved)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry__000000_ats_system_req_priority)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry__000000_ats_system_req_duedate)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry__000000_ats_system_req_cost)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000000_ats_system_req_status)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, __Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry__000001_ats_relation_status)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry__000000_ats_text_content)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000000_ats_stakeholder_req_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000001_ats_system_req_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000002_ats_spec_owner)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000003_ats_heading_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000004_ats_system_req_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000005_ats_relation_validation)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000006_ats_spec_version)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000007_ats_stakeholder_req_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000008_ats_trace_version)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry__000009_ats_trace_owner)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000000_ats_system_req_verified)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000001_ats_spec_approved)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry__000002_ats_trace_approved)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry__000000_ats_system_req_priority)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry__000000_ats_system_req_duedate)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry__000000_ats_system_req_cost)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000000_ats_system_req_status)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, __Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry__000001_ats_relation_status)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry__000000_ats_text_content)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000000_ats_system_req_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000001_ats_spec_version)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000002_ats_stakeholder_req_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000003_ats_stakeholder_req_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000004_ats_system_req_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000005_ats_trace_version)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000006_ats_relation_validation)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000007_ats_trace_owner)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000008_ats_spec_owner)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry__000009_ats_heading_title)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000000_ats_trace_approved)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000001_ats_system_req_verified)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry__000002_ats_spec_approved)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry__000000_ats_system_req_priority)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry__000000_ats_system_req_duedate)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry__000000_ats_system_req_cost)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000000_ats_system_req_status)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry__000001_ats_relation_status)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries, __Map_SPECIFICATION_Nodes_expandedEntry__000000_spec_stakeholder)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries, __Map_SPECIFICATION_Nodes_expandedEntry__000001_spec_system)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries, __Map_SPECIFICATION_Nodes_expandedEntry__000002_spec_traceability_matrix)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000000_st_heading)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000001_st_stakeholder_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000002_st_system_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_SPEC_OBJECT_TYPE_showIdentifierEntry__000003_st_descriptive_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_SPEC_OBJECT_TYPE_showNameEntry__000000_st_descriptive_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_SPEC_OBJECT_TYPE_showNameEntry__000001_st_heading)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_SPEC_OBJECT_TYPE_showNameEntry__000002_st_stakeholder_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_SPEC_OBJECT_TYPE_showNameEntry__000003_st_system_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_SPEC_OBJECT_TYPE_showRelations__000000_st_descriptive_text)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_SPEC_OBJECT_TYPE_showRelations__000001_st_heading)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_SPEC_OBJECT_TYPE_showRelations__000002_st_stakeholder_req)
-	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_SPEC_OBJECT_TYPE_showRelations__000003_st_system_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_identifier_bool__000000_st_system_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_identifier_bool__000001_st_descriptive_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_identifier_bool__000002_st_heading)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __Map_identifier_bool__000003_st_stakeholder_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, __Map_identifier_bool__000004_ats_text_content)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000005_ats_stakeholder_req_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000006_ats_system_req_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000007_ats_spec_version)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000008_ats_trace_owner)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000009_ats_stakeholder_req_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000010_ats_trace_version)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000011_ats_heading_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000012_ats_system_req_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000013_ats_relation_validation)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __Map_identifier_bool__000014_ats_spec_owner)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __Map_identifier_bool__000015_ats_system_req_verified)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __Map_identifier_bool__000016_ats_spec_approved)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __Map_identifier_bool__000017_ats_trace_approved)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, __Map_identifier_bool__000018_ats_system_req_priority)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, __Map_identifier_bool__000019_ats_system_req_duedate)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, __Map_identifier_bool__000020_ats_system_req_cost)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, __Map_identifier_bool__000021_ats_system_req_status)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, __Map_identifier_bool__000022_ats_relation_status)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, __Map_identifier_bool__000023_ats_text_content)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000024_ats_spec_owner)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000025_ats_trace_version)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000026_ats_heading_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000027_ats_system_req_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000028_ats_relation_validation)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000029_ats_stakeholder_req_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000030_ats_system_req_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000031_ats_spec_version)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000032_ats_trace_owner)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __Map_identifier_bool__000033_ats_stakeholder_req_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __Map_identifier_bool__000034_ats_system_req_verified)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __Map_identifier_bool__000035_ats_spec_approved)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __Map_identifier_bool__000036_ats_trace_approved)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, __Map_identifier_bool__000037_ats_system_req_priority)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, __Map_identifier_bool__000038_ats_system_req_duedate)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, __Map_identifier_bool__000039_ats_system_req_cost)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, __Map_identifier_bool__000040_ats_system_req_status)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, __Map_identifier_bool__000041_ats_relation_status)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, __Map_identifier_bool__000042_ats_text_content)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000043_ats_spec_owner)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000044_ats_heading_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000045_ats_stakeholder_req_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000046_ats_system_req_title)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000047_ats_system_req_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000048_ats_relation_validation)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000049_ats_trace_version)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000050_ats_spec_version)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000051_ats_trace_owner)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __Map_identifier_bool__000052_ats_stakeholder_req_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __Map_identifier_bool__000053_ats_system_req_verified)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __Map_identifier_bool__000054_ats_spec_approved)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __Map_identifier_bool__000055_ats_trace_approved)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, __Map_identifier_bool__000056_ats_system_req_priority)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, __Map_identifier_bool__000057_ats_system_req_duedate)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, __Map_identifier_bool__000058_ats_system_req_cost)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __Map_identifier_bool__000059_ats_system_req_status)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __Map_identifier_bool__000060_ats_relation_status)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries, __Map_identifier_bool__000061_spec_traceability_matrix)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries, __Map_identifier_bool__000062_spec_stakeholder)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPECIFICATION_Nodes_expandedEntries, __Map_identifier_bool__000063_spec_system)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_identifier_bool__000064_st_descriptive_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_identifier_bool__000065_st_heading)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_identifier_bool__000066_st_stakeholder_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __Map_identifier_bool__000067_st_system_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_identifier_bool__000068_st_system_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_identifier_bool__000069_st_descriptive_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_identifier_bool__000070_st_heading)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showNameEntries, __Map_identifier_bool__000071_st_stakeholder_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_identifier_bool__000072_st_system_req)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_identifier_bool__000073_st_descriptive_text)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_identifier_bool__000074_st_heading)
+	__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations = append(__RenderingConfiguration__000000_reqif_samples_ReqIF_for_Wheeled_Tennis_Ball_Drone_reqifz.Map_SPEC_OBJECT_TYPE_showRelations, __Map_identifier_bool__000075_st_stakeholder_req)
 }
 
