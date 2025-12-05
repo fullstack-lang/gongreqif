@@ -18,107 +18,107 @@ func (s *Stager) ToRenderingConfiguration(pathToReqifFile string) *RenderingConf
 	}
 
 	for key, value := range s.Map_SPEC_OBJECT_TYPE_isNodeExpanded {
-		config.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(config.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, &Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(config.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle {
-		config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, &Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable {
-		config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, &Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject {
-		config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, &Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(config.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_SPECIFICATION_Nodes_expanded {
-		config.Map_SPECIFICATION_Nodes_expandedEntries = append(config.Map_SPECIFICATION_Nodes_expandedEntries, &Map_SPECIFICATION_Nodes_expandedEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_SPECIFICATION_Nodes_expandedEntries = append(config.Map_SPECIFICATION_Nodes_expandedEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_SPEC_OBJECT_TYPE_showIdentifier {
-		config.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(config.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, &Map_SPEC_OBJECT_TYPE_showIdentifierEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(config.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_SPEC_OBJECT_TYPE_showName {
-		config.Map_SPEC_OBJECT_TYPE_showNameEntries = append(config.Map_SPEC_OBJECT_TYPE_showNameEntries, &Map_SPEC_OBJECT_TYPE_showNameEntry{Name: key.IDENTIFIER, Value: value})
+		config.Map_SPEC_OBJECT_TYPE_showNameEntries = append(config.Map_SPEC_OBJECT_TYPE_showNameEntries, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	for key, value := range s.Map_SPEC_OBJECT_TYPE_showRelations {
-		config.Map_SPEC_OBJECT_TYPE_showRelations = append(config.Map_SPEC_OBJECT_TYPE_showRelations, &Map_SPEC_OBJECT_TYPE_showRelations{Name: key.IDENTIFIER, Value: value})
+		config.Map_SPEC_OBJECT_TYPE_showRelations = append(config.Map_SPEC_OBJECT_TYPE_showRelations, &Map_identifier_bool{Name: key.IDENTIFIER, Value: value})
 	}
 
 	config.ShowSpecHierachyIdentifiers = s.ShowSpecHierachyIdentifiers

@@ -871,359 +871,7 @@ func (inst *Kill) GongGetReverseFieldOwnerName(stage *Stage, reverseField *Rever
 	return
 }
 
-func (inst *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_SPECIFICATION_Nodes_expandedEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_SPECIFICATION_Nodes_expandedEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			}
-	}
-	return
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+func (inst *Map_identifier_bool) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
 
 	res = ""
 	switch reverseField.GongstructName {
@@ -1234,50 +882,102 @@ func (inst *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetReverseFieldOwnerNa
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
 				}
-			}
-	}
-	return
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
+			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
+			case "Map_SPECIFICATION_Nodes_expandedEntries":
+				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]; ok {
+					res = _renderingconfiguration.Name
+				}
 			case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
 				}
-			}
-	}
-	return
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
 			case "Map_SPEC_OBJECT_TYPE_showNameEntries":
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
 				}
-			}
-	}
-	return
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_showRelations) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
-
-	res = ""
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
 			case "Map_SPEC_OBJECT_TYPE_showRelations":
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
@@ -2364,315 +2064,7 @@ func (inst *Kill) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseFi
 	return res
 }
 
-func (inst *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_SPECIFICATION_Nodes_expandedEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
-			case "Map_SPECIFICATION_Nodes_expandedEntries":
-				res = stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+func (inst *Map_identifier_bool) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
 
 	res = nil
 	switch reverseField.GongstructName {
@@ -2681,46 +2073,54 @@ func (inst *Map_SPEC_OBJECT_TYPE_isNodeExpandedEntry) GongGetReverseFieldOwner(s
 			switch reverseField.Fieldname {
 			case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
 				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_showIdentifierEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
+			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
+				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]
+			case "Map_SPECIFICATION_Nodes_expandedEntries":
+				res = stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]
 			case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
 				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_showNameEntry) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
 			case "Map_SPEC_OBJECT_TYPE_showNameEntries":
 				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[inst]
-			}
-	}
-	return res
-}
-
-func (inst *Map_SPEC_OBJECT_TYPE_showRelations) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
-
-	res = nil
-	switch reverseField.GongstructName {
-	// insertion point
-		case "RenderingConfiguration":
-			switch reverseField.Fieldname {
 			case "Map_SPEC_OBJECT_TYPE_showRelations":
 				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[inst]
 			}
