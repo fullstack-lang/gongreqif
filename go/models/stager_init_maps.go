@@ -24,37 +24,7 @@ func (stager *Stager) initMaps() {
 	stager.Map_id_ENUM_VALUE = populateIdMap[*ENUM_VALUE](stager)
 	stager.Map_id_SPEC_RELATION_TYPE = populateIdMap[*SPEC_RELATION_TYPE](stager)
 
-	stager.Map_SPECIFICATION_Nodes_expanded = populateBoolMap[*SPECIFICATION](stager)
-	stager.Map_SPEC_OBJECT_TYPE_showIdentifier = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
-	stager.Map_SPEC_OBJECT_TYPE_showName = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
-	stager.Map_SPEC_OBJECT_TYPE_showRelations = populateBoolMap[*SPEC_OBJECT_TYPE](stager)
 
-	stager.Map_SPEC_OBJECT_TYPE_isHeading = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
-	stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded = initializePointerToGongstructMap[*SPEC_OBJECT_TYPE](stager)
-
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitle = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
-
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
-
-	stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_STRING](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_INTEGER](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_DATE](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_REAL](stager)
-	stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject = initializePointerToGongstructMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
 
 	stager.Map_SPEC_OBJECT_relations_sources = make(map[*SPEC_OBJECT][]*SPEC_RELATION)
 	stager.Map_SPEC_OBJECT_relations_targets = make(map[*SPEC_OBJECT][]*SPEC_RELATION)

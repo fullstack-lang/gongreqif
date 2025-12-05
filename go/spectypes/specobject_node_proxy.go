@@ -1,8 +1,6 @@
 package spectypes
 
 import (
-	"log"
-
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
@@ -18,12 +16,8 @@ func (proxy *SpecObjectTypeNodeProxy) OnAfterUpdate(
 	staged, front *tree.Node) {
 
 	if staged.IsExpanded != front.IsExpanded {
-		isNodeExpanded, ok := proxy.stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded[proxy.specObjectType]
+		isNodeExpanded := proxy.stager.RenderingConf.Get_SPEC_OBJECT_TYPE_isNodeExpanded(proxy.specObjectType)
 
-		if !ok {
-			log.Fatalln("Unknown specificiation in map", proxy.specObjectType.Name)
-		}
-
-		proxy.stager.Map_SPEC_OBJECT_TYPE_isNodeExpanded[proxy.specObjectType] = !isNodeExpanded
+		proxy.stager.RenderingConf.Set_SPEC_OBJECT_TYPE_isNodeExpanded(proxy.specObjectType, !isNodeExpanded)
 	}
 }

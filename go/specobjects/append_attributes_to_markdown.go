@@ -54,7 +54,7 @@ func appendAttributeXHTMLRows(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[attribute.DEFINITION.ATTRIBUTE_DEFINITION_XHTML_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -85,7 +85,7 @@ func appendAttributeStringRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tabl
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_STRING[attribute.DEFINITION.ATTRIBUTE_DEFINITION_STRING_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_STRING_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -103,7 +103,7 @@ func appendAttributeBooleanRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tab
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[attribute.DEFINITION.ATTRIBUTE_DEFINITION_BOOLEAN_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -121,7 +121,7 @@ func appendAttributeIntegerRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tab
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[attribute.DEFINITION.ATTRIBUTE_DEFINITION_INTEGER_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_INTEGER_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -139,7 +139,7 @@ func appendAttributeDateRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_DATE[attribute.DEFINITION.ATTRIBUTE_DEFINITION_DATE_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_DATE_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -157,7 +157,7 @@ func appendAttributeRealRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_REAL[attribute.DEFINITION.ATTRIBUTE_DEFINITION_REAL_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_REAL_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -175,7 +175,7 @@ func appendAttributeEnumRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 		var attributeDefinitionName string
 		if attributeDefinition, ok := stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[attribute.DEFINITION.ATTRIBUTE_DEFINITION_ENUMERATION_REF]; ok {
 			attributeDefinitionName = attributeDefinition.LONG_NAME
-			if !stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable[attributeDefinition] {
+			if !stager.RenderingConf.Get_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTable(attributeDefinition) {
 				continue
 			}
 		} else {
@@ -208,7 +208,7 @@ func appendAttributeRelations(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 			"unknown ref")
 	}
 
-	if !stager.Map_SPEC_OBJECT_TYPE_showRelations[specObjectType] {
+	if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showRelations(specObjectType) {
 		return
 	}
 

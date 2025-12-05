@@ -31,7 +31,7 @@ func processSpecHierarchy(
 
 	// starting makr bold
 
-	if stager.ShowSpecHierachyIdentifiers {
+	if stager.RenderingConf.ShowSpecHierachyIdentifiers {
 		*markDownContent += fmt.Sprintf("\n\nSH : %s, depth %d\n\n", specHierarchy.IDENTIFIER, outerDepth)
 	}
 
@@ -140,10 +140,10 @@ func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode,
 	}
 
 	if frontNode.IsExpanded && !stageNode.IsExpanded {
-		proxy.stager.Map_SPECIFICATION_Nodes_expanded[proxy.specification] = true
+		proxy.stager.RenderingConf.Set_SPECIFICATION_Nodes_expanded(proxy.specification, true)
 	}
 
 	if !frontNode.IsExpanded && stageNode.IsExpanded {
-		proxy.stager.Map_SPECIFICATION_Nodes_expanded[proxy.specification] = false
+		proxy.stager.RenderingConf.Set_SPECIFICATION_Nodes_expanded(proxy.specification, false)
 	}
 }

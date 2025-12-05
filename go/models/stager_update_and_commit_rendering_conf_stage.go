@@ -25,12 +25,12 @@ func (proxy *RenderingConfFileToUploadProxy) OnFileUpload(uploadedFile *load.Fil
 	ParseAstFromBytes(stageForRenderinfConf, decodedBytes)
 
 	// get the rendering configuration
-	var conf *RenderingConfiguration
+	var renderingConf *RenderingConfiguration
 	for _, _conf := range GetGongstrucsSorted[*RenderingConfiguration](stageForRenderinfConf) {
-		conf = _conf
+		renderingConf = _conf
 	}
 
-	proxy.stager.FromRenderingConfiguration(conf)
+	proxy.stager.RenderingConf = renderingConf
 
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)

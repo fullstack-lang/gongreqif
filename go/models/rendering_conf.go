@@ -49,6 +49,6 @@ type RenderingConfiguration struct {
 }
 
 type Map_identifier_bool struct {
-	Name  string
+	Name  string // the ReqIF unique identifier
 	Value bool
 }

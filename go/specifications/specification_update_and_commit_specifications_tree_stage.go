@@ -55,7 +55,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			Name:              specification.Name,
 			HasCheckboxButton: true,
 			IsChecked:         isSelectedSpecification,
-			IsExpanded:        stager.Map_SPECIFICATION_Nodes_expanded[specification],
+			IsExpanded:        stager.RenderingConf.Get_SPECIFICATION_Nodes_expanded(specification),
 			Impl: &ProxySpecification{
 				stager:        stager,
 				specification: specification,
