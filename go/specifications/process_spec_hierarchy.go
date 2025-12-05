@@ -59,18 +59,7 @@ func processSpecHierarchy(
 		*markDownContent += markdownBoldStartingMark
 	}
 
-	if stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] {
-		*markDownContent += fmt.Sprintf("%s", specObject.IDENTIFIER)
-	}
-
-	if stager.Map_SPEC_OBJECT_TYPE_showIdentifier[specObjectType] &&
-		stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
-		*markDownContent += " - "
-	}
-
-	if stager.Map_SPEC_OBJECT_TYPE_showName[specObjectType] {
-		*markDownContent += fmt.Sprintf("%s", specObject.Name)
-	}
+	specobjects.AddIdentifierAndNameToTitle(stager, specObjectType, markDownContent, specObject)
 
 	titleComplement := specobjects.FillUpStringWithAttributes(stager, specObject, specobjects.Title)
 

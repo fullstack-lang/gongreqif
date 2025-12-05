@@ -19,9 +19,9 @@
 			"group": "build"
 		},
 		{
-			"label": "03 - lsof -i tcp:8080 ",
+			"label": "03 - lsof -ti :8080 | xargs kill",
 			"type": "shell",
-			"command": "lsof -i tcp:8080 ",
+			"command": "lsof -ti :8080 | xargs kill",
 			"group": "build"
 		},
 		{

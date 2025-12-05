@@ -198,6 +198,8 @@ func appendAttributeEnumRows(stager *m.Stager, specObject *m.SPEC_OBJECT, tableR
 	}
 }
 
+// appendAttributeRelations appends rows to the markdown table for each of the spec object's relations,
+// indicating the relation type and the related object.
 func appendAttributeRelations(stager *m.Stager, specObject *m.SPEC_OBJECT, tableRows *strings.Builder) {
 
 	specObjectType, ok := stager.Map_id_SPEC_OBJECT_TYPE[specObject.TYPE.SPEC_OBJECT_TYPE_REF]
@@ -218,12 +220,15 @@ func appendAttributeRelations(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 				"unknown relation type")
 		}
 
-		target, _ := stager.Map_id_SPEC_OBJECT[specRelation.SOURCE.SPEC_OBJECT_REF]
-		titleComplement := FillUpStringWithAttributes(stager, target, Title)
+		specObjectInRelation := stager.Map_id_SPEC_OBJECT[specRelation.SOURCE.SPEC_OBJECT_REF]
 
-		tableRows.WriteString(fmt.Sprintf("| *%s* --> : | %s |\n",
+		var relationIdentification string
+		AddIdentifierAndNameToTitle(stager, specObjectType, &relationIdentification, specObjectInRelation)
+		relationIdentification += FillUpStringWithAttributes(stager, specObjectInRelation, Title)
+
+		tableRows.WriteString(fmt.Sprintf("| *%s* >> : | %s |\n",
 			sanitizeForMarkdownTable(specRelationType.GetName()),
-			titleComplement))
+			relationIdentification))
 	}
 
 	for _, specRelation := range stager.Map_SPEC_OBJECT_relations_sources[specObject] {
@@ -234,11 +239,13 @@ func appendAttributeRelations(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 				"unknown relation type")
 		}
 
-		target, _ := stager.Map_id_SPEC_OBJECT[specRelation.TARGET.SPEC_OBJECT_REF]
-		titleComplement := FillUpStringWithAttributes(stager, target, Title)
+		specObjectInRelation := stager.Map_id_SPEC_OBJECT[specRelation.TARGET.SPEC_OBJECT_REF]
+		var relationIdentification string
+		AddIdentifierAndNameToTitle(stager, specObjectType, &relationIdentification, specObjectInRelation)
+		relationIdentification += FillUpStringWithAttributes(stager, specObjectInRelation, Title)
 
-		tableRows.WriteString(fmt.Sprintf("| *%s* <-- : | %s |\n",
+		tableRows.WriteString(fmt.Sprintf("| *%s* << : | %s |\n",
 			sanitizeForMarkdownTable(specRelationType.GetName()),
-			titleComplement))
+			relationIdentification))
 	}
 }
