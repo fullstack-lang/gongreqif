@@ -111,13 +111,13 @@ type Stager struct {
 	// package where modification will be compiled in a much faster time
 	modelGenerator ModelGeneratorInterface
 
-	dataTypesTreeUpdater      DataTypesTreeUpdaterInterface
-	specTypesTreeUpdater      SpecTypesTreeUpdaterInterface
-	specObjectsTreeUpdater    SpecObjectsTreeUpdaterInterface
-	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
-	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
-	reqifExporter             Exporter
-	objectNamer               ObjectNamerInterface
+	dataTypesTreeUpdater DataTypesTreeUpdaterInterface
+	specTypesTreeUpdater SpecTypesTreeUpdaterInterface
+	specObjectsUX        SpecObjectsTreeUpdaterInterface
+	specRelationsUX      SpecRelationsTreeUpdaterInterface
+	specificationsUX     SpecificationsTreeUpdaterInterface
+	reqifExporter        Exporter
+	objectNamer          ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
 	Map_id_DATATYPE_DEFINITION_XHTML       map[string]*DATATYPE_DEFINITION_XHTML
@@ -144,8 +144,8 @@ type Stager struct {
 	Map_SPECIFICATION_TYPE_Spec_nbInstance map[*SPECIFICATION_TYPE]int
 	Map_SPEC_RELATION_TYPE_Spec_nbInstance map[*SPEC_RELATION_TYPE]int
 
-	Map_SPEC_OBJECT_TYPE_isHeading      map[*SPEC_OBJECT_TYPE]bool
-	
+	Map_SPEC_OBJECT_TYPE_isHeading map[*SPEC_OBJECT_TYPE]bool
+
 	Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance       map[*ATTRIBUTE_DEFINITION_XHTML]int
 	Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance      map[*ATTRIBUTE_DEFINITION_STRING]int
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance     map[*ATTRIBUTE_DEFINITION_BOOLEAN]int
@@ -310,9 +310,9 @@ func NewStager(
 
 	stager.dataTypesTreeUpdater = dataTypesTreeUpdater
 	stager.specTypesTreeUpdater = specTypesTreeUpdater
-	stager.specObjectsTreeUpdater = specObjectsTreeUpdater
-	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
-	stager.specificationsTreeUpdater = specificationsTreeUpdater
+	stager.specObjectsUX = specObjectsTreeUpdater
+	stager.specRelationsUX = specRelationsTreeUpdater
+	stager.specificationsUX = specificationsTreeUpdater
 
 	stager.reqifExporter = exporter
 
@@ -701,7 +701,7 @@ func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSv
 
 	stager.objectNamer.SetNamesToElements(stager.stage, &req_if)
 
-	stager.initMaps()
+	stager.enforceModelSemantic()
 
 	stager.stage.Commit()
 
@@ -710,17 +710,17 @@ func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSv
 	stager.dataTypesTreeUpdater.UpdateAndCommitDataTypeTreeStage(stager)
 	stager.specTypesTreeUpdater.UpdateAndCommitSpecTypesTreeStage(stager)
 
-	stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(stager)
-	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
-	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
-	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsMarkdownStage(stager)
+	stager.specObjectsUX.UpdateAndCommitSpecObjectsTreeStage(stager)
+	stager.specRelationsUX.UpdateAndCommitSpecRelationsTreeStage(stager)
+	stager.specificationsUX.UpdateAndCommitSpecificationsTreeStage(stager)
+	stager.specificationsUX.UpdateAndCommitSpecificationsMarkdownStage(stager)
 
 	// stager.UpdateAndCommitButtonStage()
 
 }
 
 func (stager *Stager) GetSpecificationsTreeUpdater() (specificationsTreeUpdater SpecificationsTreeUpdaterInterface) {
-	return stager.specificationsTreeUpdater
+	return stager.specificationsUX
 }
 
 func (stager *Stager) GetSpecTypesTreeUpdater() (specTypesTreeUpdater SpecTypesTreeUpdaterInterface) {

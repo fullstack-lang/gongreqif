@@ -166,8 +166,8 @@ func (proxy *ResetReqifButtonProxy) OnAfterUpdateButton() {
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
-	proxy.stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(proxy.stager)
+	proxy.stager.specObjectsUX.UpdateAndCommitSpecObjectsTreeStage(proxy.stager)
 	proxy.stager.dataTypesTreeUpdater.UpdateAndCommitDataTypeTreeStage(proxy.stager)
-	proxy.stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(proxy.stager)
+	proxy.stager.specRelationsUX.UpdateAndCommitSpecRelationsTreeStage(proxy.stager)
 
 }
