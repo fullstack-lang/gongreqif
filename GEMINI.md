@@ -9,4 +9,25 @@ Therefore, there is no need to refactor the generated code.
 That is:
 
 - all files that starts with "zzz_"
-- all files that are in the "probe" and "level1stack" package 
+- all files that are in the "probe" and "level1stack" package
+
+To generate those files from the models, the task is
+
+```json
+		{
+			"label": "01 - gong generate gongreqif",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}/go/models"
+			},
+			"command": "gong",
+			"group": "build",
+			"args": [
+				"generate",
+				"--level1",
+				"--skipGoModCommands"
+			]
+		},
+```
+
+Do no try to refactor the files in the "data" directory
