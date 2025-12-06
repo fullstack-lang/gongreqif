@@ -21,7 +21,7 @@ func (stager *Stager) enforceRenderingConfigurationSemantic() {
 	}
 
 	for specObjectTypeRendering := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE_Rendering](stage) {
-		if _, ok := stager.Map_id_SPEC_OBJECT_TYPE[specObjectTypeRendering.GetName()]; !ok {
+		if _, ok := stage.SPEC_OBJECT_TYPE_Renderings_mapString[specObjectTypeRendering.GetName()]; !ok {
 			specObjectTypeRendering.Unstage(stage)
 		}
 	}
@@ -35,7 +35,7 @@ func (stager *Stager) enforceRenderingConfigurationSemantic() {
 	}
 
 	for specificationRendering := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stage) {
-		if _, ok := stager.Map_id_SPECIFICATION_TYPE[specificationRendering.GetName()]; !ok {
+		if _, ok := stage.SPECIFICATION_Renderings_mapString[specificationRendering.GetName()]; !ok {
 			specificationRendering.Unstage(stage)
 		}
 	}
