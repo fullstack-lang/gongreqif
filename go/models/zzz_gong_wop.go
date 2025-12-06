@@ -156,6 +156,26 @@ func (from *ATTRIBUTE_DEFINITION_REAL) CopyBasicFields(to *ATTRIBUTE_DEFINITION_
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type ATTRIBUTE_DEFINITION_Rendering_WOP struct {
+	// insertion point
+
+	Name string
+
+	ShowInTableEntries bool
+
+	ShowInTitleEntries bool
+
+	ShowInSubjectEntries bool
+}
+
+func (from *ATTRIBUTE_DEFINITION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_Rendering) {
+	// insertion point
+	to.Name = from.Name
+	to.ShowInTableEntries = from.ShowInTableEntries
+	to.ShowInTitleEntries = from.ShowInTitleEntries
+	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+}
+
 type ATTRIBUTE_DEFINITION_STRING_WOP struct {
 	// insertion point
 
@@ -1339,6 +1359,23 @@ func (from *SPECIFICATION) CopyBasicFields(to *SPECIFICATION) {
 	to.LONG_NAME = from.LONG_NAME
 }
 
+type SPECIFICATION_Rendering_WOP struct {
+	// insertion point
+
+	Name string
+
+	IsNodeExpanded bool
+
+	IsSelected bool
+}
+
+func (from *SPECIFICATION_Rendering) CopyBasicFields(to *SPECIFICATION_Rendering) {
+	// insertion point
+	to.Name = from.Name
+	to.IsNodeExpanded = from.IsNodeExpanded
+	to.IsSelected = from.IsSelected
+}
+
 type SPECIFICATION_TYPE_WOP struct {
 	// insertion point
 
@@ -1435,6 +1472,29 @@ func (from *SPEC_OBJECT_TYPE) CopyBasicFields(to *SPEC_OBJECT_TYPE) {
 	to.IDENTIFIER = from.IDENTIFIER
 	to.LAST_CHANGE = from.LAST_CHANGE
 	to.LONG_NAME = from.LONG_NAME
+}
+
+type SPEC_OBJECT_TYPE_Rendering_WOP struct {
+	// insertion point
+
+	Name string
+
+	IsNodeExpanded bool
+
+	ShowIdentifier bool
+
+	ShowName bool
+
+	ShowRelations bool
+}
+
+func (from *SPEC_OBJECT_TYPE_Rendering) CopyBasicFields(to *SPEC_OBJECT_TYPE_Rendering) {
+	// insertion point
+	to.Name = from.Name
+	to.IsNodeExpanded = from.IsNodeExpanded
+	to.ShowIdentifier = from.ShowIdentifier
+	to.ShowName = from.ShowName
+	to.ShowRelations = from.ShowRelations
 }
 
 type SPEC_RELATION_WOP struct {

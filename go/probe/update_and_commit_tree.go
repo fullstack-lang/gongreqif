@@ -140,6 +140,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "ATTRIBUTE_DEFINITION_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_Rendering](probe.stageOfInterest)
+			for _attribute_definition_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_rendering, "ATTRIBUTE_DEFINITION_Rendering", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "ATTRIBUTE_DEFINITION_STRING":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_STRING](probe.stageOfInterest)
@@ -910,6 +920,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "SPECIFICATION_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.SPECIFICATION_Rendering](probe.stageOfInterest)
+			for _specification_rendering := range set {
+				nodeInstance := &tree.Node{Name: _specification_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_specification_rendering, "SPECIFICATION_Rendering", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "SPECIFICATION_TYPE":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.SPECIFICATION_TYPE](probe.stageOfInterest)
@@ -947,6 +967,16 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _spec_object_type.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_spec_object_type, "SPEC_OBJECT_TYPE", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "SPEC_OBJECT_TYPE_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_OBJECT_TYPE_Rendering](probe.stageOfInterest)
+			for _spec_object_type_rendering := range set {
+				nodeInstance := &tree.Node{Name: _spec_object_type_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_spec_object_type_rendering, "SPEC_OBJECT_TYPE_Rendering", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}

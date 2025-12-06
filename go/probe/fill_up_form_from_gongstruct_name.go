@@ -103,6 +103,19 @@ func FillUpFormFromGongstructName(
 		attribute_definition_real := new(models.ATTRIBUTE_DEFINITION_REAL)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(attribute_definition_real, formGroup, probe)
+	case "ATTRIBUTE_DEFINITION_Rendering":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "ATTRIBUTE_DEFINITION_Rendering Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_RenderingFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		attribute_definition_rendering := new(models.ATTRIBUTE_DEFINITION_Rendering)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(attribute_definition_rendering, formGroup, probe)
 	case "ATTRIBUTE_DEFINITION_STRING":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
@@ -1104,6 +1117,19 @@ func FillUpFormFromGongstructName(
 		specification := new(models.SPECIFICATION)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(specification, formGroup, probe)
+	case "SPECIFICATION_Rendering":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "SPECIFICATION_Rendering Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SPECIFICATION_RenderingFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		specification_rendering := new(models.SPECIFICATION_Rendering)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(specification_rendering, formGroup, probe)
 	case "SPECIFICATION_TYPE":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,
@@ -1156,6 +1182,19 @@ func FillUpFormFromGongstructName(
 		spec_object_type := new(models.SPEC_OBJECT_TYPE)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(spec_object_type, formGroup, probe)
+	case "SPEC_OBJECT_TYPE_Rendering":
+		formGroup := (&form.FormGroup{
+			Name:  FormName,
+			Label: prefix + "SPEC_OBJECT_TYPE_Rendering Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SPEC_OBJECT_TYPE_RenderingFormCallback(
+			nil,
+			probe,
+			formGroup,
+		)
+		spec_object_type_rendering := new(models.SPEC_OBJECT_TYPE_Rendering)
+		formGroup.HasSuppressButton = !isNewInstance
+		FillUpForm(spec_object_type_rendering, formGroup, probe)
 	case "SPEC_RELATION":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,

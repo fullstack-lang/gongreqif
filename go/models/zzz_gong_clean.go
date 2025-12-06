@@ -79,6 +79,12 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongClean(stage *Sta
 	attribute_definition_real.TYPE = GongCleanPointer(stage, attribute_definition_real.TYPE)
 }
 
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_Rendering
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_STRING
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongClean(stage *Stage) {
 	// insertion point per field
@@ -656,6 +662,12 @@ func (specification *SPECIFICATION) GongClean(stage *Stage) {
 	specification.VALUES = GongCleanPointer(stage, specification.VALUES)
 }
 
+// Clean garbage collect unstaged instances that are referenced by SPECIFICATION_Rendering
+func (specification_rendering *SPECIFICATION_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by SPECIFICATION_TYPE
 func (specification_type *SPECIFICATION_TYPE) GongClean(stage *Stage) {
 	// insertion point per field
@@ -689,6 +701,12 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongClean(stage *Stage) {
 	// insertion point per field
 	spec_object_type.ALTERNATIVE_ID = GongCleanPointer(stage, spec_object_type.ALTERNATIVE_ID)
 	spec_object_type.SPEC_ATTRIBUTES = GongCleanPointer(stage, spec_object_type.SPEC_ATTRIBUTES)
+}
+
+// Clean garbage collect unstaged instances that are referenced by SPEC_OBJECT_TYPE_Rendering
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
 }
 
 // Clean garbage collect unstaged instances that are referenced by SPEC_RELATION

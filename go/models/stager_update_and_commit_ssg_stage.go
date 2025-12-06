@@ -34,7 +34,7 @@ func (stager *Stager) UpdateAndCommitSsgStage() {
 		if len(*siteWebs) != 1 {
 			log.Fatalln("There should be one siteWeb")
 		}
-		for k, _ := range *siteWebs {
+		for k := range *siteWebs {
 			siteWeb = k
 		}
 		_ = siteWeb

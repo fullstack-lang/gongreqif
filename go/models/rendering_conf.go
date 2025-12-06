@@ -1,5 +1,29 @@
 package models
 
+// ATTRIBUTE_DEFINITION_Rendering store the rendering choices
+type ATTRIBUTE_DEFINITION_Rendering struct {
+	Name                 string // the identifier
+	ShowInTableEntries   bool
+	ShowInTitleEntries   bool
+	ShowInSubjectEntries bool
+}
+
+// SPEC_OBJECT_TYPE_Rendering store the rendering choices
+type SPEC_OBJECT_TYPE_Rendering struct {
+	Name           string // the identifier
+	IsNodeExpanded bool
+	ShowIdentifier bool
+	ShowName       bool
+	ShowRelations  bool
+}
+
+// SPECIFICATION_Rendering store the rendering choices
+type SPECIFICATION_Rendering struct {
+	Name           string // the identifier
+	IsNodeExpanded bool
+	IsSelected     bool
+}
+
 // RenderingConfiguration is the persistance in gong
 // of the rendering configuration
 //

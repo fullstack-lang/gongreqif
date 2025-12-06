@@ -895,6 +895,89 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 
 	updateAndCommitTree(attribute_definition_realFormCallback.probe)
 }
+func __gong__New__ATTRIBUTE_DEFINITION_RenderingFormCallback(
+	attribute_definition_rendering *models.ATTRIBUTE_DEFINITION_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_renderingFormCallback *ATTRIBUTE_DEFINITION_RenderingFormCallback) {
+	attribute_definition_renderingFormCallback = new(ATTRIBUTE_DEFINITION_RenderingFormCallback)
+	attribute_definition_renderingFormCallback.probe = probe
+	attribute_definition_renderingFormCallback.attribute_definition_rendering = attribute_definition_rendering
+	attribute_definition_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_renderingFormCallback.CreationMode = (attribute_definition_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_RenderingFormCallback struct {
+	attribute_definition_rendering *models.ATTRIBUTE_DEFINITION_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_renderingFormCallback *ATTRIBUTE_DEFINITION_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_renderingFormCallback.attribute_definition_rendering == nil {
+		attribute_definition_renderingFormCallback.attribute_definition_rendering = new(models.ATTRIBUTE_DEFINITION_Rendering).Stage(attribute_definition_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_rendering_ := attribute_definition_renderingFormCallback.attribute_definition_rendering
+	_ = attribute_definition_rendering_
+
+	for _, formDiv := range attribute_definition_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_rendering_.Unstage(attribute_definition_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_Rendering](
+		attribute_definition_renderingFormCallback.probe,
+	)
+	attribute_definition_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_renderingFormCallback.CreationMode || attribute_definition_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_RenderingFormCallback(
+			nil,
+			attribute_definition_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_rendering := new(models.ATTRIBUTE_DEFINITION_Rendering)
+		FillUpForm(attribute_definition_rendering, newFormGroup, attribute_definition_renderingFormCallback.probe)
+		attribute_definition_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_renderingFormCallback.probe)
+}
 func __gong__New__ATTRIBUTE_DEFINITION_STRINGFormCallback(
 	attribute_definition_string *models.ATTRIBUTE_DEFINITION_STRING,
 	probe *Probe,
@@ -12337,6 +12420,87 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 
 	updateAndCommitTree(specificationFormCallback.probe)
 }
+func __gong__New__SPECIFICATION_RenderingFormCallback(
+	specification_rendering *models.SPECIFICATION_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (specification_renderingFormCallback *SPECIFICATION_RenderingFormCallback) {
+	specification_renderingFormCallback = new(SPECIFICATION_RenderingFormCallback)
+	specification_renderingFormCallback.probe = probe
+	specification_renderingFormCallback.specification_rendering = specification_rendering
+	specification_renderingFormCallback.formGroup = formGroup
+
+	specification_renderingFormCallback.CreationMode = (specification_rendering == nil)
+
+	return
+}
+
+type SPECIFICATION_RenderingFormCallback struct {
+	specification_rendering *models.SPECIFICATION_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (specification_renderingFormCallback *SPECIFICATION_RenderingFormCallback) OnSave() {
+
+	// log.Println("SPECIFICATION_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	specification_renderingFormCallback.probe.formStage.Checkout()
+
+	if specification_renderingFormCallback.specification_rendering == nil {
+		specification_renderingFormCallback.specification_rendering = new(models.SPECIFICATION_Rendering).Stage(specification_renderingFormCallback.probe.stageOfInterest)
+	}
+	specification_rendering_ := specification_renderingFormCallback.specification_rendering
+	_ = specification_rendering_
+
+	for _, formDiv := range specification_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(specification_rendering_.Name), formDiv)
+		case "IsNodeExpanded":
+			FormDivBasicFieldToField(&(specification_rendering_.IsNodeExpanded), formDiv)
+		case "IsSelected":
+			FormDivBasicFieldToField(&(specification_rendering_.IsSelected), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if specification_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		specification_rendering_.Unstage(specification_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	specification_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.SPECIFICATION_Rendering](
+		specification_renderingFormCallback.probe,
+	)
+	specification_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if specification_renderingFormCallback.CreationMode || specification_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		specification_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(specification_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__SPECIFICATION_RenderingFormCallback(
+			nil,
+			specification_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		specification_rendering := new(models.SPECIFICATION_Rendering)
+		FillUpForm(specification_rendering, newFormGroup, specification_renderingFormCallback.probe)
+		specification_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(specification_renderingFormCallback.probe)
+}
 func __gong__New__SPECIFICATION_TYPEFormCallback(
 	specification_type *models.SPECIFICATION_TYPE,
 	probe *Probe,
@@ -12966,6 +13130,91 @@ func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
 	}
 
 	updateAndCommitTree(spec_object_typeFormCallback.probe)
+}
+func __gong__New__SPEC_OBJECT_TYPE_RenderingFormCallback(
+	spec_object_type_rendering *models.SPEC_OBJECT_TYPE_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (spec_object_type_renderingFormCallback *SPEC_OBJECT_TYPE_RenderingFormCallback) {
+	spec_object_type_renderingFormCallback = new(SPEC_OBJECT_TYPE_RenderingFormCallback)
+	spec_object_type_renderingFormCallback.probe = probe
+	spec_object_type_renderingFormCallback.spec_object_type_rendering = spec_object_type_rendering
+	spec_object_type_renderingFormCallback.formGroup = formGroup
+
+	spec_object_type_renderingFormCallback.CreationMode = (spec_object_type_rendering == nil)
+
+	return
+}
+
+type SPEC_OBJECT_TYPE_RenderingFormCallback struct {
+	spec_object_type_rendering *models.SPEC_OBJECT_TYPE_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (spec_object_type_renderingFormCallback *SPEC_OBJECT_TYPE_RenderingFormCallback) OnSave() {
+
+	// log.Println("SPEC_OBJECT_TYPE_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	spec_object_type_renderingFormCallback.probe.formStage.Checkout()
+
+	if spec_object_type_renderingFormCallback.spec_object_type_rendering == nil {
+		spec_object_type_renderingFormCallback.spec_object_type_rendering = new(models.SPEC_OBJECT_TYPE_Rendering).Stage(spec_object_type_renderingFormCallback.probe.stageOfInterest)
+	}
+	spec_object_type_rendering_ := spec_object_type_renderingFormCallback.spec_object_type_rendering
+	_ = spec_object_type_rendering_
+
+	for _, formDiv := range spec_object_type_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(spec_object_type_rendering_.Name), formDiv)
+		case "IsNodeExpanded":
+			FormDivBasicFieldToField(&(spec_object_type_rendering_.IsNodeExpanded), formDiv)
+		case "ShowIdentifier":
+			FormDivBasicFieldToField(&(spec_object_type_rendering_.ShowIdentifier), formDiv)
+		case "ShowName":
+			FormDivBasicFieldToField(&(spec_object_type_rendering_.ShowName), formDiv)
+		case "ShowRelations":
+			FormDivBasicFieldToField(&(spec_object_type_rendering_.ShowRelations), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if spec_object_type_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		spec_object_type_rendering_.Unstage(spec_object_type_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	spec_object_type_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.SPEC_OBJECT_TYPE_Rendering](
+		spec_object_type_renderingFormCallback.probe,
+	)
+	spec_object_type_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if spec_object_type_renderingFormCallback.CreationMode || spec_object_type_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		spec_object_type_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(spec_object_type_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__SPEC_OBJECT_TYPE_RenderingFormCallback(
+			nil,
+			spec_object_type_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		spec_object_type_rendering := new(models.SPEC_OBJECT_TYPE_Rendering)
+		FillUpForm(spec_object_type_rendering, newFormGroup, spec_object_type_renderingFormCallback.probe)
+		spec_object_type_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(spec_object_type_renderingFormCallback.probe)
 }
 func __gong__New__SPEC_RELATIONFormCallback(
 	spec_relation *models.SPEC_RELATION,

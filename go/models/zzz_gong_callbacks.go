@@ -30,6 +30,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterATTRIBUTE_DEFINITION_REALCreateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_REALCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		if stage.OnAfterATTRIBUTE_DEFINITION_RenderingCreateCallback != nil {
+			stage.OnAfterATTRIBUTE_DEFINITION_RenderingCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *ATTRIBUTE_DEFINITION_STRING:
 		if stage.OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback.OnAfterCreate(stage, target)
@@ -338,6 +342,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterSPECIFICATIONCreateCallback != nil {
 			stage.OnAfterSPECIFICATIONCreateCallback.OnAfterCreate(stage, target)
 		}
+	case *SPECIFICATION_Rendering:
+		if stage.OnAfterSPECIFICATION_RenderingCreateCallback != nil {
+			stage.OnAfterSPECIFICATION_RenderingCreateCallback.OnAfterCreate(stage, target)
+		}
 	case *SPECIFICATION_TYPE:
 		if stage.OnAfterSPECIFICATION_TYPECreateCallback != nil {
 			stage.OnAfterSPECIFICATION_TYPECreateCallback.OnAfterCreate(stage, target)
@@ -353,6 +361,10 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *SPEC_OBJECT_TYPE:
 		if stage.OnAfterSPEC_OBJECT_TYPECreateCallback != nil {
 			stage.OnAfterSPEC_OBJECT_TYPECreateCallback.OnAfterCreate(stage, target)
+		}
+	case *SPEC_OBJECT_TYPE_Rendering:
+		if stage.OnAfterSPEC_OBJECT_TYPE_RenderingCreateCallback != nil {
+			stage.OnAfterSPEC_OBJECT_TYPE_RenderingCreateCallback.OnAfterCreate(stage, target)
 		}
 	case *SPEC_RELATION:
 		if stage.OnAfterSPEC_RELATIONCreateCallback != nil {
@@ -429,6 +441,11 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_REAL)
 		if stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		newTarget := any(new).(*ATTRIBUTE_DEFINITION_Rendering)
+		if stage.OnAfterATTRIBUTE_DEFINITION_RenderingUpdateCallback != nil {
+			stage.OnAfterATTRIBUTE_DEFINITION_RenderingUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *ATTRIBUTE_DEFINITION_STRING:
 		newTarget := any(new).(*ATTRIBUTE_DEFINITION_STRING)
@@ -815,6 +832,11 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		if stage.OnAfterSPECIFICATIONUpdateCallback != nil {
 			stage.OnAfterSPECIFICATIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
+	case *SPECIFICATION_Rendering:
+		newTarget := any(new).(*SPECIFICATION_Rendering)
+		if stage.OnAfterSPECIFICATION_RenderingUpdateCallback != nil {
+			stage.OnAfterSPECIFICATION_RenderingUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
 	case *SPECIFICATION_TYPE:
 		newTarget := any(new).(*SPECIFICATION_TYPE)
 		if stage.OnAfterSPECIFICATION_TYPEUpdateCallback != nil {
@@ -834,6 +856,11 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		newTarget := any(new).(*SPEC_OBJECT_TYPE)
 		if stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback != nil {
 			stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
+		}
+	case *SPEC_OBJECT_TYPE_Rendering:
+		newTarget := any(new).(*SPEC_OBJECT_TYPE_Rendering)
+		if stage.OnAfterSPEC_OBJECT_TYPE_RenderingUpdateCallback != nil {
+			stage.OnAfterSPEC_OBJECT_TYPE_RenderingUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *SPEC_RELATION:
 		newTarget := any(new).(*SPEC_RELATION)
@@ -914,6 +941,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 		if stage.OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback != nil {
 			staged := any(staged).(*ATTRIBUTE_DEFINITION_REAL)
 			stage.OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		if stage.OnAfterATTRIBUTE_DEFINITION_RenderingDeleteCallback != nil {
+			staged := any(staged).(*ATTRIBUTE_DEFINITION_Rendering)
+			stage.OnAfterATTRIBUTE_DEFINITION_RenderingDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
 	case *ATTRIBUTE_DEFINITION_STRING:
 		if stage.OnAfterATTRIBUTE_DEFINITION_STRINGDeleteCallback != nil {
@@ -1300,6 +1332,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*SPECIFICATION)
 			stage.OnAfterSPECIFICATIONDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
+	case *SPECIFICATION_Rendering:
+		if stage.OnAfterSPECIFICATION_RenderingDeleteCallback != nil {
+			staged := any(staged).(*SPECIFICATION_Rendering)
+			stage.OnAfterSPECIFICATION_RenderingDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
 	case *SPECIFICATION_TYPE:
 		if stage.OnAfterSPECIFICATION_TYPEDeleteCallback != nil {
 			staged := any(staged).(*SPECIFICATION_TYPE)
@@ -1319,6 +1356,11 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 		if stage.OnAfterSPEC_OBJECT_TYPEDeleteCallback != nil {
 			staged := any(staged).(*SPEC_OBJECT_TYPE)
 			stage.OnAfterSPEC_OBJECT_TYPEDeleteCallback.OnAfterDelete(stage, staged, front)
+		}
+	case *SPEC_OBJECT_TYPE_Rendering:
+		if stage.OnAfterSPEC_OBJECT_TYPE_RenderingDeleteCallback != nil {
+			staged := any(staged).(*SPEC_OBJECT_TYPE_Rendering)
+			stage.OnAfterSPEC_OBJECT_TYPE_RenderingDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
 	case *SPEC_RELATION:
 		if stage.OnAfterSPEC_RELATIONDeleteCallback != nil {
@@ -1393,6 +1435,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ATTRIBUTE_DEFINITION_REAL:
 		if stage.OnAfterATTRIBUTE_DEFINITION_REALReadCallback != nil {
 			stage.OnAfterATTRIBUTE_DEFINITION_REALReadCallback.OnAfterRead(stage, target)
+		}
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		if stage.OnAfterATTRIBUTE_DEFINITION_RenderingReadCallback != nil {
+			stage.OnAfterATTRIBUTE_DEFINITION_RenderingReadCallback.OnAfterRead(stage, target)
 		}
 	case *ATTRIBUTE_DEFINITION_STRING:
 		if stage.OnAfterATTRIBUTE_DEFINITION_STRINGReadCallback != nil {
@@ -1702,6 +1748,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterSPECIFICATIONReadCallback != nil {
 			stage.OnAfterSPECIFICATIONReadCallback.OnAfterRead(stage, target)
 		}
+	case *SPECIFICATION_Rendering:
+		if stage.OnAfterSPECIFICATION_RenderingReadCallback != nil {
+			stage.OnAfterSPECIFICATION_RenderingReadCallback.OnAfterRead(stage, target)
+		}
 	case *SPECIFICATION_TYPE:
 		if stage.OnAfterSPECIFICATION_TYPEReadCallback != nil {
 			stage.OnAfterSPECIFICATION_TYPEReadCallback.OnAfterRead(stage, target)
@@ -1717,6 +1767,10 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 	case *SPEC_OBJECT_TYPE:
 		if stage.OnAfterSPEC_OBJECT_TYPEReadCallback != nil {
 			stage.OnAfterSPEC_OBJECT_TYPEReadCallback.OnAfterRead(stage, target)
+		}
+	case *SPEC_OBJECT_TYPE_Rendering:
+		if stage.OnAfterSPEC_OBJECT_TYPE_RenderingReadCallback != nil {
+			stage.OnAfterSPEC_OBJECT_TYPE_RenderingReadCallback.OnAfterRead(stage, target)
 		}
 	case *SPEC_RELATION:
 		if stage.OnAfterSPEC_RELATIONReadCallback != nil {
@@ -1778,6 +1832,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_REAL])
+	
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		stage.OnAfterATTRIBUTE_DEFINITION_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_Rendering])
 	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_STRING])
@@ -2010,6 +2067,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION])
 	
+	case *SPECIFICATION_Rendering:
+		stage.OnAfterSPECIFICATION_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION_Rendering])
+	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION_TYPE])
 	
@@ -2021,6 +2081,9 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_OBJECT_TYPE])
+	
+	case *SPEC_OBJECT_TYPE_Rendering:
+		stage.OnAfterSPEC_OBJECT_TYPE_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_OBJECT_TYPE_Rendering])
 	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_RELATION])
@@ -2070,6 +2133,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL])
+	
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		stage.OnAfterATTRIBUTE_DEFINITION_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_Rendering])
 	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING])
@@ -2302,6 +2368,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION])
 	
+	case *SPECIFICATION_Rendering:
+		stage.OnAfterSPECIFICATION_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION_Rendering])
+	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION_TYPE])
 	
@@ -2313,6 +2382,9 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPEC_OBJECT_TYPE])
+	
+	case *SPEC_OBJECT_TYPE_Rendering:
+		stage.OnAfterSPEC_OBJECT_TYPE_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_OBJECT_TYPE_Rendering])
 	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_RELATION])
@@ -2362,6 +2434,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL])
+	
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		stage.OnAfterATTRIBUTE_DEFINITION_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_Rendering])
 	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING])
@@ -2594,6 +2669,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION])
 	
+	case *SPECIFICATION_Rendering:
+		stage.OnAfterSPECIFICATION_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION_Rendering])
+	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION_TYPE])
 	
@@ -2605,6 +2683,9 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_OBJECT_TYPE])
+	
+	case *SPEC_OBJECT_TYPE_Rendering:
+		stage.OnAfterSPEC_OBJECT_TYPE_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_OBJECT_TYPE_Rendering])
 	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_RELATION])
@@ -2654,6 +2735,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL])
+	
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		stage.OnAfterATTRIBUTE_DEFINITION_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_Rendering])
 	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING])
@@ -2886,6 +2970,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION])
 	
+	case *SPECIFICATION_Rendering:
+		stage.OnAfterSPECIFICATION_RenderingReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION_Rendering])
+	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION_TYPE])
 	
@@ -2897,6 +2984,9 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPEC_OBJECT_TYPE])
+	
+	case *SPEC_OBJECT_TYPE_Rendering:
+		stage.OnAfterSPEC_OBJECT_TYPE_RenderingReadCallback = any(callback).(OnAfterReadInterface[SPEC_OBJECT_TYPE_Rendering])
 	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONReadCallback = any(callback).(OnAfterReadInterface[SPEC_RELATION])

@@ -23,6 +23,9 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 	case *ATTRIBUTE_DEFINITION_REAL:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL(target)
 
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_STRING:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING(target)
 
@@ -254,6 +257,9 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 	case *SPECIFICATION:
 		ok = stage.IsStagedSPECIFICATION(target)
 
+	case *SPECIFICATION_Rendering:
+		ok = stage.IsStagedSPECIFICATION_Rendering(target)
+
 	case *SPECIFICATION_TYPE:
 		ok = stage.IsStagedSPECIFICATION_TYPE(target)
 
@@ -265,6 +271,9 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 
 	case *SPEC_OBJECT_TYPE:
 		ok = stage.IsStagedSPEC_OBJECT_TYPE(target)
+
+	case *SPEC_OBJECT_TYPE_Rendering:
+		ok = stage.IsStagedSPEC_OBJECT_TYPE_Rendering(target)
 
 	case *SPEC_RELATION:
 		ok = stage.IsStagedSPEC_RELATION(target)
@@ -318,6 +327,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ATTRIBUTE_DEFINITION_REAL:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL(target)
 
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_STRING:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING(target)
 
@@ -549,6 +561,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *SPECIFICATION:
 		ok = stage.IsStagedSPECIFICATION(target)
 
+	case *SPECIFICATION_Rendering:
+		ok = stage.IsStagedSPECIFICATION_Rendering(target)
+
 	case *SPECIFICATION_TYPE:
 		ok = stage.IsStagedSPECIFICATION_TYPE(target)
 
@@ -560,6 +575,9 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	case *SPEC_OBJECT_TYPE:
 		ok = stage.IsStagedSPEC_OBJECT_TYPE(target)
+
+	case *SPEC_OBJECT_TYPE_Rendering:
+		ok = stage.IsStagedSPEC_OBJECT_TYPE_Rendering(target)
 
 	case *SPEC_RELATION:
 		ok = stage.IsStagedSPEC_RELATION(target)
@@ -630,6 +648,13 @@ func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_INTEGER(attribute_definition_in
 func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_REAL(attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) (ok bool) {
 
 	_, ok = stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real]
+
+	return
+}
+
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]
 
 	return
 }
@@ -1173,6 +1198,13 @@ func (stage *Stage) IsStagedSPECIFICATION(specification *SPECIFICATION) (ok bool
 	return
 }
 
+func (stage *Stage) IsStagedSPECIFICATION_Rendering(specification_rendering *SPECIFICATION_Rendering) (ok bool) {
+
+	_, ok = stage.SPECIFICATION_Renderings[specification_rendering]
+
+	return
+}
+
 func (stage *Stage) IsStagedSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE) (ok bool) {
 
 	_, ok = stage.SPECIFICATION_TYPEs[specification_type]
@@ -1197,6 +1229,13 @@ func (stage *Stage) IsStagedSPEC_OBJECT(spec_object *SPEC_OBJECT) (ok bool) {
 func (stage *Stage) IsStagedSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE) (ok bool) {
 
 	_, ok = stage.SPEC_OBJECT_TYPEs[spec_object_type]
+
+	return
+}
+
+func (stage *Stage) IsStagedSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) (ok bool) {
+
+	_, ok = stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]
 
 	return
 }
@@ -1282,6 +1321,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.StageBranchATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.StageBranchATTRIBUTE_DEFINITION_STRING(target)
@@ -1514,6 +1556,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *SPECIFICATION:
 		stage.StageBranchSPECIFICATION(target)
 
+	case *SPECIFICATION_Rendering:
+		stage.StageBranchSPECIFICATION_Rendering(target)
+
 	case *SPECIFICATION_TYPE:
 		stage.StageBranchSPECIFICATION_TYPE(target)
 
@@ -1525,6 +1570,9 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *SPEC_OBJECT_TYPE:
 		stage.StageBranchSPEC_OBJECT_TYPE(target)
+
+	case *SPEC_OBJECT_TYPE_Rendering:
+		stage.StageBranchSPEC_OBJECT_TYPE_Rendering(target)
 
 	case *SPEC_RELATION:
 		stage.StageBranchSPEC_RELATION(target)
@@ -1686,6 +1734,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_REAL(attribute_definition_re
 	if attribute_definition_real.TYPE != nil {
 		StageBranch(stage, attribute_definition_real.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_rendering) {
+		return
+	}
+
+	attribute_definition_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -3191,6 +3254,21 @@ func (stage *Stage) StageBranchSPECIFICATION(specification *SPECIFICATION) {
 
 }
 
+func (stage *Stage) StageBranchSPECIFICATION_Rendering(specification_rendering *SPECIFICATION_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, specification_rendering) {
+		return
+	}
+
+	specification_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE) {
 
 	// check if instance is already staged
@@ -3279,6 +3357,21 @@ func (stage *Stage) StageBranchSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TY
 	if spec_object_type.SPEC_ATTRIBUTES != nil {
 		StageBranch(stage, spec_object_type.SPEC_ATTRIBUTES)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, spec_object_type_rendering) {
+		return
+	}
+
+	spec_object_type_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -3467,6 +3560,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *ATTRIBUTE_DEFINITION_REAL:
 		toT := CopyBranchATTRIBUTE_DEFINITION_REAL(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_Rendering(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *ATTRIBUTE_DEFINITION_STRING:
@@ -3777,6 +3874,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchSPECIFICATION(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *SPECIFICATION_Rendering:
+		toT := CopyBranchSPECIFICATION_Rendering(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *SPECIFICATION_TYPE:
 		toT := CopyBranchSPECIFICATION_TYPE(mapOrigCopy, fromT)
 		return any(toT).(*Type)
@@ -3791,6 +3892,10 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *SPEC_OBJECT_TYPE:
 		toT := CopyBranchSPEC_OBJECT_TYPE(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *SPEC_OBJECT_TYPE_Rendering:
+		toT := CopyBranchSPEC_OBJECT_TYPE_Rendering(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *SPEC_RELATION:
@@ -3985,6 +4090,25 @@ func CopyBranchATTRIBUTE_DEFINITION_REAL(mapOrigCopy map[any]any, attribute_defi
 	if attribute_definition_realFrom.TYPE != nil {
 		attribute_definition_realTo.TYPE = CopyBranchA_DATATYPE_DEFINITION_REAL_REF(mapOrigCopy, attribute_definition_realFrom.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchATTRIBUTE_DEFINITION_Rendering(mapOrigCopy map[any]any, attribute_definition_renderingFrom *ATTRIBUTE_DEFINITION_Rendering) (attribute_definition_renderingTo *ATTRIBUTE_DEFINITION_Rendering) {
+
+	// attribute_definition_renderingFrom has already been copied
+	if _attribute_definition_renderingTo, ok := mapOrigCopy[attribute_definition_renderingFrom]; ok {
+		attribute_definition_renderingTo = _attribute_definition_renderingTo.(*ATTRIBUTE_DEFINITION_Rendering)
+		return
+	}
+
+	attribute_definition_renderingTo = new(ATTRIBUTE_DEFINITION_Rendering)
+	mapOrigCopy[attribute_definition_renderingFrom] = attribute_definition_renderingTo
+	attribute_definition_renderingFrom.CopyBasicFields(attribute_definition_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -5799,6 +5923,25 @@ func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFI
 	return
 }
 
+func CopyBranchSPECIFICATION_Rendering(mapOrigCopy map[any]any, specification_renderingFrom *SPECIFICATION_Rendering) (specification_renderingTo *SPECIFICATION_Rendering) {
+
+	// specification_renderingFrom has already been copied
+	if _specification_renderingTo, ok := mapOrigCopy[specification_renderingFrom]; ok {
+		specification_renderingTo = _specification_renderingTo.(*SPECIFICATION_Rendering)
+		return
+	}
+
+	specification_renderingTo = new(SPECIFICATION_Rendering)
+	mapOrigCopy[specification_renderingFrom] = specification_renderingTo
+	specification_renderingFrom.CopyBasicFields(specification_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchSPECIFICATION_TYPE(mapOrigCopy map[any]any, specification_typeFrom *SPECIFICATION_TYPE) (specification_typeTo *SPECIFICATION_TYPE) {
 
 	// specification_typeFrom has already been copied
@@ -5902,6 +6045,25 @@ func CopyBranchSPEC_OBJECT_TYPE(mapOrigCopy map[any]any, spec_object_typeFrom *S
 	if spec_object_typeFrom.SPEC_ATTRIBUTES != nil {
 		spec_object_typeTo.SPEC_ATTRIBUTES = CopyBranchA_SPEC_ATTRIBUTES(mapOrigCopy, spec_object_typeFrom.SPEC_ATTRIBUTES)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchSPEC_OBJECT_TYPE_Rendering(mapOrigCopy map[any]any, spec_object_type_renderingFrom *SPEC_OBJECT_TYPE_Rendering) (spec_object_type_renderingTo *SPEC_OBJECT_TYPE_Rendering) {
+
+	// spec_object_type_renderingFrom has already been copied
+	if _spec_object_type_renderingTo, ok := mapOrigCopy[spec_object_type_renderingFrom]; ok {
+		spec_object_type_renderingTo = _spec_object_type_renderingTo.(*SPEC_OBJECT_TYPE_Rendering)
+		return
+	}
+
+	spec_object_type_renderingTo = new(SPEC_OBJECT_TYPE_Rendering)
+	mapOrigCopy[spec_object_type_renderingFrom] = spec_object_type_renderingTo
+	spec_object_type_renderingFrom.CopyBasicFields(spec_object_type_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -6115,6 +6277,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_STRING(target)
@@ -6347,6 +6512,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *SPECIFICATION:
 		stage.UnstageBranchSPECIFICATION(target)
 
+	case *SPECIFICATION_Rendering:
+		stage.UnstageBranchSPECIFICATION_Rendering(target)
+
 	case *SPECIFICATION_TYPE:
 		stage.UnstageBranchSPECIFICATION_TYPE(target)
 
@@ -6358,6 +6526,9 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *SPEC_OBJECT_TYPE:
 		stage.UnstageBranchSPEC_OBJECT_TYPE(target)
+
+	case *SPEC_OBJECT_TYPE_Rendering:
+		stage.UnstageBranchSPEC_OBJECT_TYPE_Rendering(target)
 
 	case *SPEC_RELATION:
 		stage.UnstageBranchSPEC_RELATION(target)
@@ -6519,6 +6690,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_REAL(attribute_definition_
 	if attribute_definition_real.TYPE != nil {
 		UnstageBranch(stage, attribute_definition_real.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_rendering) {
+		return
+	}
+
+	attribute_definition_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -8024,6 +8210,21 @@ func (stage *Stage) UnstageBranchSPECIFICATION(specification *SPECIFICATION) {
 
 }
 
+func (stage *Stage) UnstageBranchSPECIFICATION_Rendering(specification_rendering *SPECIFICATION_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, specification_rendering) {
+		return
+	}
+
+	specification_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE) {
 
 	// check if instance is already staged
@@ -8112,6 +8313,21 @@ func (stage *Stage) UnstageBranchSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_
 	if spec_object_type.SPEC_ATTRIBUTES != nil {
 		UnstageBranch(stage, spec_object_type.SPEC_ATTRIBUTES)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, spec_object_type_rendering) {
+		return
+	}
+
+	spec_object_type_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

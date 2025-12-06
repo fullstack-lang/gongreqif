@@ -29,6 +29,4 @@ func (stager *Stager) initMap_Objects_Relations() {
 			}
 		}
 	}
-
-	return
 }

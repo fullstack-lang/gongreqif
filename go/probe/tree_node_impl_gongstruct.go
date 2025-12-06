@@ -68,6 +68,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_REAL" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_STRING" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING](nodeImplGongstruct.probe)
 	}
@@ -299,6 +302,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION" {
 		updateAndCommitTable[*models.SPECIFICATION](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION_Rendering" {
+		updateAndCommitTable[*models.SPECIFICATION_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION_TYPE" {
 		updateAndCommitTable[*models.SPECIFICATION_TYPE](nodeImplGongstruct.probe)
 	}
@@ -310,6 +316,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_OBJECT_TYPE" {
 		updateAndCommitTable[*models.SPEC_OBJECT_TYPE](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_OBJECT_TYPE_Rendering" {
+		updateAndCommitTable[*models.SPEC_OBJECT_TYPE_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_RELATION" {
 		updateAndCommitTable[*models.SPEC_RELATION](nodeImplGongstruct.probe)

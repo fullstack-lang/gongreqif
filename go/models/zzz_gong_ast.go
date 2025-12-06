@@ -367,6 +367,7 @@ var __gong__map_ATTRIBUTE_DEFINITION_DATE = make(map[string]*ATTRIBUTE_DEFINITIO
 var __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION = make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION)
 var __gong__map_ATTRIBUTE_DEFINITION_INTEGER = make(map[string]*ATTRIBUTE_DEFINITION_INTEGER)
 var __gong__map_ATTRIBUTE_DEFINITION_REAL = make(map[string]*ATTRIBUTE_DEFINITION_REAL)
+var __gong__map_ATTRIBUTE_DEFINITION_Rendering = make(map[string]*ATTRIBUTE_DEFINITION_Rendering)
 var __gong__map_ATTRIBUTE_DEFINITION_STRING = make(map[string]*ATTRIBUTE_DEFINITION_STRING)
 var __gong__map_ATTRIBUTE_DEFINITION_XHTML = make(map[string]*ATTRIBUTE_DEFINITION_XHTML)
 var __gong__map_ATTRIBUTE_VALUE_BOOLEAN = make(map[string]*ATTRIBUTE_VALUE_BOOLEAN)
@@ -444,10 +445,12 @@ var __gong__map_REQ_IF_HEADER = make(map[string]*REQ_IF_HEADER)
 var __gong__map_REQ_IF_TOOL_EXTENSION = make(map[string]*REQ_IF_TOOL_EXTENSION)
 var __gong__map_RenderingConfiguration = make(map[string]*RenderingConfiguration)
 var __gong__map_SPECIFICATION = make(map[string]*SPECIFICATION)
+var __gong__map_SPECIFICATION_Rendering = make(map[string]*SPECIFICATION_Rendering)
 var __gong__map_SPECIFICATION_TYPE = make(map[string]*SPECIFICATION_TYPE)
 var __gong__map_SPEC_HIERARCHY = make(map[string]*SPEC_HIERARCHY)
 var __gong__map_SPEC_OBJECT = make(map[string]*SPEC_OBJECT)
 var __gong__map_SPEC_OBJECT_TYPE = make(map[string]*SPEC_OBJECT_TYPE)
+var __gong__map_SPEC_OBJECT_TYPE_Rendering = make(map[string]*SPEC_OBJECT_TYPE_Rendering)
 var __gong__map_SPEC_RELATION = make(map[string]*SPEC_RELATION)
 var __gong__map_SPEC_RELATION_TYPE = make(map[string]*SPEC_RELATION_TYPE)
 var __gong__map_StaticWebSite = make(map[string]*StaticWebSite)
@@ -664,6 +667,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceATTRIBUTE_DEFINITION_REAL.Stage(stage)
 										instance = any(instanceATTRIBUTE_DEFINITION_REAL)
 										__gong__map_ATTRIBUTE_DEFINITION_REAL[identifier] = instanceATTRIBUTE_DEFINITION_REAL
+									case "ATTRIBUTE_DEFINITION_Rendering":
+										instanceATTRIBUTE_DEFINITION_Rendering := new(ATTRIBUTE_DEFINITION_Rendering)
+										instanceATTRIBUTE_DEFINITION_Rendering.Name = instanceName
+										instanceATTRIBUTE_DEFINITION_Rendering.Stage(stage)
+										instance = any(instanceATTRIBUTE_DEFINITION_Rendering)
+										__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier] = instanceATTRIBUTE_DEFINITION_Rendering
 									case "ATTRIBUTE_DEFINITION_STRING":
 										instanceATTRIBUTE_DEFINITION_STRING := new(ATTRIBUTE_DEFINITION_STRING)
 										instanceATTRIBUTE_DEFINITION_STRING.Name = instanceName
@@ -1126,6 +1135,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceSPECIFICATION.Stage(stage)
 										instance = any(instanceSPECIFICATION)
 										__gong__map_SPECIFICATION[identifier] = instanceSPECIFICATION
+									case "SPECIFICATION_Rendering":
+										instanceSPECIFICATION_Rendering := new(SPECIFICATION_Rendering)
+										instanceSPECIFICATION_Rendering.Name = instanceName
+										instanceSPECIFICATION_Rendering.Stage(stage)
+										instance = any(instanceSPECIFICATION_Rendering)
+										__gong__map_SPECIFICATION_Rendering[identifier] = instanceSPECIFICATION_Rendering
 									case "SPECIFICATION_TYPE":
 										instanceSPECIFICATION_TYPE := new(SPECIFICATION_TYPE)
 										instanceSPECIFICATION_TYPE.Name = instanceName
@@ -1150,6 +1165,12 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceSPEC_OBJECT_TYPE.Stage(stage)
 										instance = any(instanceSPEC_OBJECT_TYPE)
 										__gong__map_SPEC_OBJECT_TYPE[identifier] = instanceSPEC_OBJECT_TYPE
+									case "SPEC_OBJECT_TYPE_Rendering":
+										instanceSPEC_OBJECT_TYPE_Rendering := new(SPEC_OBJECT_TYPE_Rendering)
+										instanceSPEC_OBJECT_TYPE_Rendering.Name = instanceName
+										instanceSPEC_OBJECT_TYPE_Rendering.Stage(stage)
+										instance = any(instanceSPEC_OBJECT_TYPE_Rendering)
+										__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier] = instanceSPEC_OBJECT_TYPE_Rendering
 									case "SPEC_RELATION":
 										instanceSPEC_RELATION := new(SPEC_RELATION)
 										instanceSPEC_RELATION.Name = instanceName
@@ -1256,6 +1277,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "ATTRIBUTE_DEFINITION_REAL":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "ATTRIBUTE_DEFINITION_Rendering":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -1567,6 +1592,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							switch fieldName {
 							// insertion point for date assign code
 							}
+						case "SPECIFICATION_Rendering":
+							switch fieldName {
+							// insertion point for date assign code
+							}
 						case "SPECIFICATION_TYPE":
 							switch fieldName {
 							// insertion point for date assign code
@@ -1580,6 +1609,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "SPEC_OBJECT_TYPE":
+							switch fieldName {
+							// insertion point for date assign code
+							}
+						case "SPEC_OBJECT_TYPE_Rendering":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -1698,6 +1731,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					case "ATTRIBUTE_DEFINITION_REAL":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "ATTRIBUTE_DEFINITION_Rendering":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -2659,6 +2696,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
+					case "SPECIFICATION_Rendering":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
 					case "SPECIFICATION_TYPE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
@@ -2672,6 +2713,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						// insertion point for slice of pointers assign code
 						}
 					case "SPEC_OBJECT_TYPE":
+						switch fieldName {
+						// insertion point for slice of pointers assign code
+						}
+					case "SPEC_OBJECT_TYPE_Rendering":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						}
@@ -2918,6 +2963,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_REAL[identifier].LONG_NAME = fielValue
+				}
+			case "ATTRIBUTE_DEFINITION_Rendering":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].Name = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_STRING":
 				switch fieldName {
@@ -3982,6 +4035,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPECIFICATION[identifier].LONG_NAME = fielValue
 				}
+			case "SPECIFICATION_Rendering":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPECIFICATION_Rendering[identifier].Name = fielValue
+				}
 			case "SPECIFICATION_TYPE":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -4077,6 +4138,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_SPEC_OBJECT_TYPE[identifier].LONG_NAME = fielValue
+				}
+			case "SPEC_OBJECT_TYPE_Rendering":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "Name":
+					// remove first and last char
+					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
+					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].Name = fielValue
 				}
 			case "SPEC_RELATION":
 				switch fieldName {
@@ -4367,6 +4436,31 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "TYPE":
 					targetIdentifier := ident.Name
 					__gong__map_ATTRIBUTE_DEFINITION_REAL[identifier].TYPE = __gong__map_A_DATATYPE_DEFINITION_REAL_REF[targetIdentifier]
+				}
+			case "ATTRIBUTE_DEFINITION_Rendering":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "ShowInTableEntries":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInTableEntries = fielValue
+				case "ShowInTitleEntries":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInTitleEntries = fielValue
+				case "ShowInSubjectEntries":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInSubjectEntries = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_STRING":
 				switch fieldName {
@@ -4868,6 +4962,24 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					targetIdentifier := ident.Name
 					__gong__map_SPECIFICATION[identifier].VALUES = __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[targetIdentifier]
 				}
+			case "SPECIFICATION_Rendering":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "IsNodeExpanded":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPECIFICATION_Rendering[identifier].IsNodeExpanded = fielValue
+				case "IsSelected":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPECIFICATION_Rendering[identifier].IsSelected = fielValue
+				}
 			case "SPECIFICATION_TYPE":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -4930,6 +5042,38 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				case "SPEC_ATTRIBUTES":
 					targetIdentifier := ident.Name
 					__gong__map_SPEC_OBJECT_TYPE[identifier].SPEC_ATTRIBUTES = __gong__map_A_SPEC_ATTRIBUTES[targetIdentifier]
+				}
+			case "SPEC_OBJECT_TYPE_Rendering":
+				switch fieldName {
+				// insertion point for field dependant code
+				case "IsNodeExpanded":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].IsNodeExpanded = fielValue
+				case "ShowIdentifier":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].ShowIdentifier = fielValue
+				case "ShowName":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].ShowName = fielValue
+				case "ShowRelations":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].ShowRelations = fielValue
 				}
 			case "SPEC_RELATION":
 				switch fieldName {
@@ -5066,6 +5210,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for selector expr assign code
 					}
 				case "ATTRIBUTE_DEFINITION_REAL":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "ATTRIBUTE_DEFINITION_Rendering":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}
@@ -5384,6 +5532,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}
+				case "SPECIFICATION_Rendering":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
 				case "SPECIFICATION_TYPE":
 					switch fieldName {
 					// insertion point for selector expr assign code
@@ -5397,6 +5549,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for selector expr assign code
 					}
 				case "SPEC_OBJECT_TYPE":
+					switch fieldName {
+					// insertion point for selector expr assign code
+					}
+				case "SPEC_OBJECT_TYPE_Rendering":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}

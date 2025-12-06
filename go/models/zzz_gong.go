@@ -142,6 +142,15 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL]
 	OnAfterATTRIBUTE_DEFINITION_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL]
 
+	ATTRIBUTE_DEFINITION_Renderings           map[*ATTRIBUTE_DEFINITION_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_Rendering
+
+	// insertion point for slice of pointers maps
+	OnAfterATTRIBUTE_DEFINITION_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_Rendering]
+	OnAfterATTRIBUTE_DEFINITION_RenderingUpdateCallback OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_Rendering]
+	OnAfterATTRIBUTE_DEFINITION_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_Rendering]
+	OnAfterATTRIBUTE_DEFINITION_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_Rendering]
+
 	ATTRIBUTE_DEFINITION_STRINGs           map[*ATTRIBUTE_DEFINITION_STRING]struct{}
 	ATTRIBUTE_DEFINITION_STRINGs_mapString map[string]*ATTRIBUTE_DEFINITION_STRING
 
@@ -965,6 +974,15 @@ type Stage struct {
 	OnAfterSPECIFICATIONDeleteCallback OnAfterDeleteInterface[SPECIFICATION]
 	OnAfterSPECIFICATIONReadCallback   OnAfterReadInterface[SPECIFICATION]
 
+	SPECIFICATION_Renderings           map[*SPECIFICATION_Rendering]struct{}
+	SPECIFICATION_Renderings_mapString map[string]*SPECIFICATION_Rendering
+
+	// insertion point for slice of pointers maps
+	OnAfterSPECIFICATION_RenderingCreateCallback OnAfterCreateInterface[SPECIFICATION_Rendering]
+	OnAfterSPECIFICATION_RenderingUpdateCallback OnAfterUpdateInterface[SPECIFICATION_Rendering]
+	OnAfterSPECIFICATION_RenderingDeleteCallback OnAfterDeleteInterface[SPECIFICATION_Rendering]
+	OnAfterSPECIFICATION_RenderingReadCallback   OnAfterReadInterface[SPECIFICATION_Rendering]
+
 	SPECIFICATION_TYPEs           map[*SPECIFICATION_TYPE]struct{}
 	SPECIFICATION_TYPEs_mapString map[string]*SPECIFICATION_TYPE
 
@@ -1000,6 +1018,15 @@ type Stage struct {
 	OnAfterSPEC_OBJECT_TYPEUpdateCallback OnAfterUpdateInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE]
+
+	SPEC_OBJECT_TYPE_Renderings           map[*SPEC_OBJECT_TYPE_Rendering]struct{}
+	SPEC_OBJECT_TYPE_Renderings_mapString map[string]*SPEC_OBJECT_TYPE_Rendering
+
+	// insertion point for slice of pointers maps
+	OnAfterSPEC_OBJECT_TYPE_RenderingCreateCallback OnAfterCreateInterface[SPEC_OBJECT_TYPE_Rendering]
+	OnAfterSPEC_OBJECT_TYPE_RenderingUpdateCallback OnAfterUpdateInterface[SPEC_OBJECT_TYPE_Rendering]
+	OnAfterSPEC_OBJECT_TYPE_RenderingDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE_Rendering]
+	OnAfterSPEC_OBJECT_TYPE_RenderingReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE_Rendering]
 
 	SPEC_RELATIONs           map[*SPEC_RELATION]struct{}
 	SPEC_RELATIONs_mapString map[string]*SPEC_RELATION
@@ -1120,6 +1147,9 @@ type Stage struct {
 
 	ATTRIBUTE_DEFINITION_REALOrder            uint
 	ATTRIBUTE_DEFINITION_REALMap_Staged_Order map[*ATTRIBUTE_DEFINITION_REAL]uint
+
+	ATTRIBUTE_DEFINITION_RenderingOrder            uint
+	ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order map[*ATTRIBUTE_DEFINITION_Rendering]uint
 
 	ATTRIBUTE_DEFINITION_STRINGOrder            uint
 	ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order map[*ATTRIBUTE_DEFINITION_STRING]uint
@@ -1352,6 +1382,9 @@ type Stage struct {
 	SPECIFICATIONOrder            uint
 	SPECIFICATIONMap_Staged_Order map[*SPECIFICATION]uint
 
+	SPECIFICATION_RenderingOrder            uint
+	SPECIFICATION_RenderingMap_Staged_Order map[*SPECIFICATION_Rendering]uint
+
 	SPECIFICATION_TYPEOrder            uint
 	SPECIFICATION_TYPEMap_Staged_Order map[*SPECIFICATION_TYPE]uint
 
@@ -1363,6 +1396,9 @@ type Stage struct {
 
 	SPEC_OBJECT_TYPEOrder            uint
 	SPEC_OBJECT_TYPEMap_Staged_Order map[*SPEC_OBJECT_TYPE]uint
+
+	SPEC_OBJECT_TYPE_RenderingOrder            uint
+	SPEC_OBJECT_TYPE_RenderingMap_Staged_Order map[*SPEC_OBJECT_TYPE_Rendering]uint
 
 	SPEC_RELATIONOrder            uint
 	SPEC_RELATIONMap_Staged_Order map[*SPEC_RELATION]uint
@@ -1534,6 +1570,20 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			// Assert that the element 'v' can be treated as type 'T'.
 			// Note: This relies on the constraint that PointerToGongstruct
 			// is an interface that *ATTRIBUTE_DEFINITION_REAL implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		tmp := GetStructInstancesByOrder(stage.ATTRIBUTE_DEFINITION_Renderings, stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *ATTRIBUTE_DEFINITION_Rendering implements.
 			res = append(res, any(v).(T))
 		}
 		return res
@@ -2615,6 +2665,20 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
+	case *SPECIFICATION_Rendering:
+		tmp := GetStructInstancesByOrder(stage.SPECIFICATION_Renderings, stage.SPECIFICATION_RenderingMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *SPECIFICATION_Rendering implements.
+			res = append(res, any(v).(T))
+		}
+		return res
 	case *SPECIFICATION_TYPE:
 		tmp := GetStructInstancesByOrder(stage.SPECIFICATION_TYPEs, stage.SPECIFICATION_TYPEMap_Staged_Order)
 
@@ -2668,6 +2732,20 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			// Assert that the element 'v' can be treated as type 'T'.
 			// Note: This relies on the constraint that PointerToGongstruct
 			// is an interface that *SPEC_OBJECT_TYPE implements.
+			res = append(res, any(v).(T))
+		}
+		return res
+	case *SPEC_OBJECT_TYPE_Rendering:
+		tmp := GetStructInstancesByOrder(stage.SPEC_OBJECT_TYPE_Renderings, stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order)
+
+		// Create a new slice of the generic type T with the same capacity.
+		res = make([]T, 0, len(tmp))
+
+		// Iterate over the source slice and perform a type assertion on each element.
+		for _, v := range tmp {
+			// Assert that the element 'v' can be treated as type 'T'.
+			// Note: This relies on the constraint that PointerToGongstruct
+			// is an interface that *SPEC_OBJECT_TYPE_Rendering implements.
 			res = append(res, any(v).(T))
 		}
 		return res
@@ -2826,6 +2904,8 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_INTEGERs, stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order)
 	case "ATTRIBUTE_DEFINITION_REAL":
 		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_REALs, stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order)
+	case "ATTRIBUTE_DEFINITION_Rendering":
+		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_Renderings, stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order)
 	case "ATTRIBUTE_DEFINITION_STRING":
 		res = GetNamedStructInstances(stage.ATTRIBUTE_DEFINITION_STRINGs, stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order)
 	case "ATTRIBUTE_DEFINITION_XHTML":
@@ -2980,6 +3060,8 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.RenderingConfigurations, stage.RenderingConfigurationMap_Staged_Order)
 	case "SPECIFICATION":
 		res = GetNamedStructInstances(stage.SPECIFICATIONs, stage.SPECIFICATIONMap_Staged_Order)
+	case "SPECIFICATION_Rendering":
+		res = GetNamedStructInstances(stage.SPECIFICATION_Renderings, stage.SPECIFICATION_RenderingMap_Staged_Order)
 	case "SPECIFICATION_TYPE":
 		res = GetNamedStructInstances(stage.SPECIFICATION_TYPEs, stage.SPECIFICATION_TYPEMap_Staged_Order)
 	case "SPEC_HIERARCHY":
@@ -2988,6 +3070,8 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.SPEC_OBJECTs, stage.SPEC_OBJECTMap_Staged_Order)
 	case "SPEC_OBJECT_TYPE":
 		res = GetNamedStructInstances(stage.SPEC_OBJECT_TYPEs, stage.SPEC_OBJECT_TYPEMap_Staged_Order)
+	case "SPEC_OBJECT_TYPE_Rendering":
+		res = GetNamedStructInstances(stage.SPEC_OBJECT_TYPE_Renderings, stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order)
 	case "SPEC_RELATION":
 		res = GetNamedStructInstances(stage.SPEC_RELATIONs, stage.SPEC_RELATIONMap_Staged_Order)
 	case "SPEC_RELATION_TYPE":
@@ -3085,6 +3169,8 @@ type BackRepoInterface interface {
 	CheckoutATTRIBUTE_DEFINITION_INTEGER(attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER)
 	CommitATTRIBUTE_DEFINITION_REAL(attribute_definition_real *ATTRIBUTE_DEFINITION_REAL)
 	CheckoutATTRIBUTE_DEFINITION_REAL(attribute_definition_real *ATTRIBUTE_DEFINITION_REAL)
+	CommitATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering)
+	CheckoutATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering)
 	CommitATTRIBUTE_DEFINITION_STRING(attribute_definition_string *ATTRIBUTE_DEFINITION_STRING)
 	CheckoutATTRIBUTE_DEFINITION_STRING(attribute_definition_string *ATTRIBUTE_DEFINITION_STRING)
 	CommitATTRIBUTE_DEFINITION_XHTML(attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML)
@@ -3239,6 +3325,8 @@ type BackRepoInterface interface {
 	CheckoutRenderingConfiguration(renderingconfiguration *RenderingConfiguration)
 	CommitSPECIFICATION(specification *SPECIFICATION)
 	CheckoutSPECIFICATION(specification *SPECIFICATION)
+	CommitSPECIFICATION_Rendering(specification_rendering *SPECIFICATION_Rendering)
+	CheckoutSPECIFICATION_Rendering(specification_rendering *SPECIFICATION_Rendering)
 	CommitSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE)
 	CheckoutSPECIFICATION_TYPE(specification_type *SPECIFICATION_TYPE)
 	CommitSPEC_HIERARCHY(spec_hierarchy *SPEC_HIERARCHY)
@@ -3247,6 +3335,8 @@ type BackRepoInterface interface {
 	CheckoutSPEC_OBJECT(spec_object *SPEC_OBJECT)
 	CommitSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE)
 	CheckoutSPEC_OBJECT_TYPE(spec_object_type *SPEC_OBJECT_TYPE)
+	CommitSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering)
+	CheckoutSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering)
 	CommitSPEC_RELATION(spec_relation *SPEC_RELATION)
 	CheckoutSPEC_RELATION(spec_relation *SPEC_RELATION)
 	CommitSPEC_RELATION_TYPE(spec_relation_type *SPEC_RELATION_TYPE)
@@ -3287,6 +3377,9 @@ func NewStage(name string) (stage *Stage) {
 
 		ATTRIBUTE_DEFINITION_REALs:           make(map[*ATTRIBUTE_DEFINITION_REAL]struct{}),
 		ATTRIBUTE_DEFINITION_REALs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_REAL),
+
+		ATTRIBUTE_DEFINITION_Renderings:           make(map[*ATTRIBUTE_DEFINITION_Rendering]struct{}),
+		ATTRIBUTE_DEFINITION_Renderings_mapString: make(map[string]*ATTRIBUTE_DEFINITION_Rendering),
 
 		ATTRIBUTE_DEFINITION_STRINGs:           make(map[*ATTRIBUTE_DEFINITION_STRING]struct{}),
 		ATTRIBUTE_DEFINITION_STRINGs_mapString: make(map[string]*ATTRIBUTE_DEFINITION_STRING),
@@ -3519,6 +3612,9 @@ func NewStage(name string) (stage *Stage) {
 		SPECIFICATIONs:           make(map[*SPECIFICATION]struct{}),
 		SPECIFICATIONs_mapString: make(map[string]*SPECIFICATION),
 
+		SPECIFICATION_Renderings:           make(map[*SPECIFICATION_Rendering]struct{}),
+		SPECIFICATION_Renderings_mapString: make(map[string]*SPECIFICATION_Rendering),
+
 		SPECIFICATION_TYPEs:           make(map[*SPECIFICATION_TYPE]struct{}),
 		SPECIFICATION_TYPEs_mapString: make(map[string]*SPECIFICATION_TYPE),
 
@@ -3530,6 +3626,9 @@ func NewStage(name string) (stage *Stage) {
 
 		SPEC_OBJECT_TYPEs:           make(map[*SPEC_OBJECT_TYPE]struct{}),
 		SPEC_OBJECT_TYPEs_mapString: make(map[string]*SPEC_OBJECT_TYPE),
+
+		SPEC_OBJECT_TYPE_Renderings:           make(map[*SPEC_OBJECT_TYPE_Rendering]struct{}),
+		SPEC_OBJECT_TYPE_Renderings_mapString: make(map[string]*SPEC_OBJECT_TYPE_Rendering),
 
 		SPEC_RELATIONs:           make(map[*SPEC_RELATION]struct{}),
 		SPEC_RELATIONs_mapString: make(map[string]*SPEC_RELATION),
@@ -3576,6 +3675,8 @@ func NewStage(name string) (stage *Stage) {
 		ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order: make(map[*ATTRIBUTE_DEFINITION_INTEGER]uint),
 
 		ATTRIBUTE_DEFINITION_REALMap_Staged_Order: make(map[*ATTRIBUTE_DEFINITION_REAL]uint),
+
+		ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order: make(map[*ATTRIBUTE_DEFINITION_Rendering]uint),
 
 		ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order: make(map[*ATTRIBUTE_DEFINITION_STRING]uint),
 
@@ -3731,6 +3832,8 @@ func NewStage(name string) (stage *Stage) {
 
 		SPECIFICATIONMap_Staged_Order: make(map[*SPECIFICATION]uint),
 
+		SPECIFICATION_RenderingMap_Staged_Order: make(map[*SPECIFICATION_Rendering]uint),
+
 		SPECIFICATION_TYPEMap_Staged_Order: make(map[*SPECIFICATION_TYPE]uint),
 
 		SPEC_HIERARCHYMap_Staged_Order: make(map[*SPEC_HIERARCHY]uint),
@@ -3738,6 +3841,8 @@ func NewStage(name string) (stage *Stage) {
 		SPEC_OBJECTMap_Staged_Order: make(map[*SPEC_OBJECT]uint),
 
 		SPEC_OBJECT_TYPEMap_Staged_Order: make(map[*SPEC_OBJECT_TYPE]uint),
+
+		SPEC_OBJECT_TYPE_RenderingMap_Staged_Order: make(map[*SPEC_OBJECT_TYPE_Rendering]uint),
 
 		SPEC_RELATIONMap_Staged_Order: make(map[*SPEC_RELATION]uint),
 
@@ -3764,6 +3869,7 @@ func NewStage(name string) (stage *Stage) {
 			{name: "ATTRIBUTE_DEFINITION_ENUMERATION"},
 			{name: "ATTRIBUTE_DEFINITION_INTEGER"},
 			{name: "ATTRIBUTE_DEFINITION_REAL"},
+			{name: "ATTRIBUTE_DEFINITION_Rendering"},
 			{name: "ATTRIBUTE_DEFINITION_STRING"},
 			{name: "ATTRIBUTE_DEFINITION_XHTML"},
 			{name: "ATTRIBUTE_VALUE_BOOLEAN"},
@@ -3841,10 +3947,12 @@ func NewStage(name string) (stage *Stage) {
 			{name: "REQ_IF_TOOL_EXTENSION"},
 			{name: "RenderingConfiguration"},
 			{name: "SPECIFICATION"},
+			{name: "SPECIFICATION_Rendering"},
 			{name: "SPECIFICATION_TYPE"},
 			{name: "SPEC_HIERARCHY"},
 			{name: "SPEC_OBJECT"},
 			{name: "SPEC_OBJECT_TYPE"},
+			{name: "SPEC_OBJECT_TYPE_Rendering"},
 			{name: "SPEC_RELATION"},
 			{name: "SPEC_RELATION_TYPE"},
 			{name: "StaticWebSite"},
@@ -3880,6 +3988,8 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[instance]
 	case *ATTRIBUTE_DEFINITION_REAL:
 		return stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		return stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[instance]
 	case *ATTRIBUTE_DEFINITION_STRING:
 		return stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[instance]
 	case *ATTRIBUTE_DEFINITION_XHTML:
@@ -4034,6 +4144,8 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.RenderingConfigurationMap_Staged_Order[instance]
 	case *SPECIFICATION:
 		return stage.SPECIFICATIONMap_Staged_Order[instance]
+	case *SPECIFICATION_Rendering:
+		return stage.SPECIFICATION_RenderingMap_Staged_Order[instance]
 	case *SPECIFICATION_TYPE:
 		return stage.SPECIFICATION_TYPEMap_Staged_Order[instance]
 	case *SPEC_HIERARCHY:
@@ -4042,6 +4154,8 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.SPEC_OBJECTMap_Staged_Order[instance]
 	case *SPEC_OBJECT_TYPE:
 		return stage.SPEC_OBJECT_TYPEMap_Staged_Order[instance]
+	case *SPEC_OBJECT_TYPE_Rendering:
+		return stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[instance]
 	case *SPEC_RELATION:
 		return stage.SPEC_RELATIONMap_Staged_Order[instance]
 	case *SPEC_RELATION_TYPE:
@@ -4079,6 +4193,8 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[instance]
 	case *ATTRIBUTE_DEFINITION_REAL:
 		return stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[instance]
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		return stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[instance]
 	case *ATTRIBUTE_DEFINITION_STRING:
 		return stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[instance]
 	case *ATTRIBUTE_DEFINITION_XHTML:
@@ -4233,6 +4349,8 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.RenderingConfigurationMap_Staged_Order[instance]
 	case *SPECIFICATION:
 		return stage.SPECIFICATIONMap_Staged_Order[instance]
+	case *SPECIFICATION_Rendering:
+		return stage.SPECIFICATION_RenderingMap_Staged_Order[instance]
 	case *SPECIFICATION_TYPE:
 		return stage.SPECIFICATION_TYPEMap_Staged_Order[instance]
 	case *SPEC_HIERARCHY:
@@ -4241,6 +4359,8 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.SPEC_OBJECTMap_Staged_Order[instance]
 	case *SPEC_OBJECT_TYPE:
 		return stage.SPEC_OBJECT_TYPEMap_Staged_Order[instance]
+	case *SPEC_OBJECT_TYPE_Rendering:
+		return stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[instance]
 	case *SPEC_RELATION:
 		return stage.SPEC_RELATIONMap_Staged_Order[instance]
 	case *SPEC_RELATION_TYPE:
@@ -4299,6 +4419,7 @@ func (stage *Stage) ComputeInstancesNb() {
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_ENUMERATION"] = len(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs)
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_INTEGER"] = len(stage.ATTRIBUTE_DEFINITION_INTEGERs)
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_REAL"] = len(stage.ATTRIBUTE_DEFINITION_REALs)
+	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_Rendering"] = len(stage.ATTRIBUTE_DEFINITION_Renderings)
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_STRING"] = len(stage.ATTRIBUTE_DEFINITION_STRINGs)
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_DEFINITION_XHTML"] = len(stage.ATTRIBUTE_DEFINITION_XHTMLs)
 	stage.Map_GongStructName_InstancesNb["ATTRIBUTE_VALUE_BOOLEAN"] = len(stage.ATTRIBUTE_VALUE_BOOLEANs)
@@ -4376,10 +4497,12 @@ func (stage *Stage) ComputeInstancesNb() {
 	stage.Map_GongStructName_InstancesNb["REQ_IF_TOOL_EXTENSION"] = len(stage.REQ_IF_TOOL_EXTENSIONs)
 	stage.Map_GongStructName_InstancesNb["RenderingConfiguration"] = len(stage.RenderingConfigurations)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
+	stage.Map_GongStructName_InstancesNb["SPECIFICATION_Rendering"] = len(stage.SPECIFICATION_Renderings)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION_TYPE"] = len(stage.SPECIFICATION_TYPEs)
 	stage.Map_GongStructName_InstancesNb["SPEC_HIERARCHY"] = len(stage.SPEC_HIERARCHYs)
 	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT"] = len(stage.SPEC_OBJECTs)
 	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT_TYPE"] = len(stage.SPEC_OBJECT_TYPEs)
+	stage.Map_GongStructName_InstancesNb["SPEC_OBJECT_TYPE_Rendering"] = len(stage.SPEC_OBJECT_TYPE_Renderings)
 	stage.Map_GongStructName_InstancesNb["SPEC_RELATION"] = len(stage.SPEC_RELATIONs)
 	stage.Map_GongStructName_InstancesNb["SPEC_RELATION_TYPE"] = len(stage.SPEC_RELATION_TYPEs)
 	stage.Map_GongStructName_InstancesNb["StaticWebSite"] = len(stage.StaticWebSites)
@@ -4852,6 +4975,77 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Checkout(stage *Stag
 // for satisfaction of GongStruct interface
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GetName() (res string) {
 	return attribute_definition_real.Name
+}
+
+// Stage puts attribute_definition_rendering to the model stage
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_Rendering {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering] = struct{}{}
+		stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_RenderingOrder++
+		stage.new[attribute_definition_rendering] = struct{}{}
+		delete(stage.deleted, attribute_definition_rendering)
+	} else {
+		if _, ok := stage.new[attribute_definition_rendering]; !ok {
+			stage.modified[attribute_definition_rendering] = struct{}{}
+		}
+	}
+	stage.ATTRIBUTE_DEFINITION_Renderings_mapString[attribute_definition_rendering.Name] = attribute_definition_rendering
+
+	return attribute_definition_rendering
+}
+
+// Unstage removes attribute_definition_rendering off the model stage
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_Rendering {
+	delete(stage.ATTRIBUTE_DEFINITION_Renderings, attribute_definition_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_Renderings_mapString, attribute_definition_rendering.Name)
+
+	if _, ok := stage.reference[attribute_definition_rendering]; ok {
+		stage.deleted[attribute_definition_rendering] = struct{}{}
+	} else {
+		delete(stage.new, attribute_definition_rendering)
+	}
+	return attribute_definition_rendering
+}
+
+// UnstageVoid removes attribute_definition_rendering off the model stage
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) UnstageVoid(stage *Stage) {
+	delete(stage.ATTRIBUTE_DEFINITION_Renderings, attribute_definition_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_Renderings_mapString, attribute_definition_rendering.Name)
+}
+
+// commit attribute_definition_rendering to the back repo (if it is already staged)
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Commit(stage *Stage) *ATTRIBUTE_DEFINITION_Rendering {
+	if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering)
+		}
+	}
+	return attribute_definition_rendering
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) CommitVoid(stage *Stage) {
+	attribute_definition_rendering.Commit(stage)
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) StageVoid(stage *Stage) {
+	attribute_definition_rendering.Stage(stage)
+}
+
+// Checkout attribute_definition_rendering to the back repo (if it is already staged)
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Checkout(stage *Stage) *ATTRIBUTE_DEFINITION_Rendering {
+	if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutATTRIBUTE_DEFINITION_Rendering(attribute_definition_rendering)
+		}
+	}
+	return attribute_definition_rendering
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GetName() (res string) {
+	return attribute_definition_rendering.Name
 }
 
 // Stage puts attribute_definition_string to the model stage
@@ -10321,6 +10515,77 @@ func (specification *SPECIFICATION) GetName() (res string) {
 	return specification.Name
 }
 
+// Stage puts specification_rendering to the model stage
+func (specification_rendering *SPECIFICATION_Rendering) Stage(stage *Stage) *SPECIFICATION_Rendering {
+
+	if _, ok := stage.SPECIFICATION_Renderings[specification_rendering]; !ok {
+		stage.SPECIFICATION_Renderings[specification_rendering] = struct{}{}
+		stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering] = stage.SPECIFICATION_RenderingOrder
+		stage.SPECIFICATION_RenderingOrder++
+		stage.new[specification_rendering] = struct{}{}
+		delete(stage.deleted, specification_rendering)
+	} else {
+		if _, ok := stage.new[specification_rendering]; !ok {
+			stage.modified[specification_rendering] = struct{}{}
+		}
+	}
+	stage.SPECIFICATION_Renderings_mapString[specification_rendering.Name] = specification_rendering
+
+	return specification_rendering
+}
+
+// Unstage removes specification_rendering off the model stage
+func (specification_rendering *SPECIFICATION_Rendering) Unstage(stage *Stage) *SPECIFICATION_Rendering {
+	delete(stage.SPECIFICATION_Renderings, specification_rendering)
+	delete(stage.SPECIFICATION_Renderings_mapString, specification_rendering.Name)
+
+	if _, ok := stage.reference[specification_rendering]; ok {
+		stage.deleted[specification_rendering] = struct{}{}
+	} else {
+		delete(stage.new, specification_rendering)
+	}
+	return specification_rendering
+}
+
+// UnstageVoid removes specification_rendering off the model stage
+func (specification_rendering *SPECIFICATION_Rendering) UnstageVoid(stage *Stage) {
+	delete(stage.SPECIFICATION_Renderings, specification_rendering)
+	delete(stage.SPECIFICATION_Renderings_mapString, specification_rendering.Name)
+}
+
+// commit specification_rendering to the back repo (if it is already staged)
+func (specification_rendering *SPECIFICATION_Rendering) Commit(stage *Stage) *SPECIFICATION_Rendering {
+	if _, ok := stage.SPECIFICATION_Renderings[specification_rendering]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitSPECIFICATION_Rendering(specification_rendering)
+		}
+	}
+	return specification_rendering
+}
+
+func (specification_rendering *SPECIFICATION_Rendering) CommitVoid(stage *Stage) {
+	specification_rendering.Commit(stage)
+}
+
+func (specification_rendering *SPECIFICATION_Rendering) StageVoid(stage *Stage) {
+	specification_rendering.Stage(stage)
+}
+
+// Checkout specification_rendering to the back repo (if it is already staged)
+func (specification_rendering *SPECIFICATION_Rendering) Checkout(stage *Stage) *SPECIFICATION_Rendering {
+	if _, ok := stage.SPECIFICATION_Renderings[specification_rendering]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutSPECIFICATION_Rendering(specification_rendering)
+		}
+	}
+	return specification_rendering
+}
+
+// for satisfaction of GongStruct interface
+func (specification_rendering *SPECIFICATION_Rendering) GetName() (res string) {
+	return specification_rendering.Name
+}
+
 // Stage puts specification_type to the model stage
 func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION_TYPE {
 
@@ -10603,6 +10868,77 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Checkout(stage *Stage) *SPEC_OBJECT_TY
 // for satisfaction of GongStruct interface
 func (spec_object_type *SPEC_OBJECT_TYPE) GetName() (res string) {
 	return spec_object_type.Name
+}
+
+// Stage puts spec_object_type_rendering to the model stage
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Stage(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
+
+	if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]; !ok {
+		stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering] = struct{}{}
+		stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingOrder
+		stage.SPEC_OBJECT_TYPE_RenderingOrder++
+		stage.new[spec_object_type_rendering] = struct{}{}
+		delete(stage.deleted, spec_object_type_rendering)
+	} else {
+		if _, ok := stage.new[spec_object_type_rendering]; !ok {
+			stage.modified[spec_object_type_rendering] = struct{}{}
+		}
+	}
+	stage.SPEC_OBJECT_TYPE_Renderings_mapString[spec_object_type_rendering.Name] = spec_object_type_rendering
+
+	return spec_object_type_rendering
+}
+
+// Unstage removes spec_object_type_rendering off the model stage
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Unstage(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
+	delete(stage.SPEC_OBJECT_TYPE_Renderings, spec_object_type_rendering)
+	delete(stage.SPEC_OBJECT_TYPE_Renderings_mapString, spec_object_type_rendering.Name)
+
+	if _, ok := stage.reference[spec_object_type_rendering]; ok {
+		stage.deleted[spec_object_type_rendering] = struct{}{}
+	} else {
+		delete(stage.new, spec_object_type_rendering)
+	}
+	return spec_object_type_rendering
+}
+
+// UnstageVoid removes spec_object_type_rendering off the model stage
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) UnstageVoid(stage *Stage) {
+	delete(stage.SPEC_OBJECT_TYPE_Renderings, spec_object_type_rendering)
+	delete(stage.SPEC_OBJECT_TYPE_Renderings_mapString, spec_object_type_rendering.Name)
+}
+
+// commit spec_object_type_rendering to the back repo (if it is already staged)
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Commit(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
+	if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CommitSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering)
+		}
+	}
+	return spec_object_type_rendering
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) CommitVoid(stage *Stage) {
+	spec_object_type_rendering.Commit(stage)
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) StageVoid(stage *Stage) {
+	spec_object_type_rendering.Stage(stage)
+}
+
+// Checkout spec_object_type_rendering to the back repo (if it is already staged)
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Checkout(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
+	if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]; ok {
+		if stage.BackRepo != nil {
+			stage.BackRepo.CheckoutSPEC_OBJECT_TYPE_Rendering(spec_object_type_rendering)
+		}
+	}
+	return spec_object_type_rendering
+}
+
+// for satisfaction of GongStruct interface
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GetName() (res string) {
+	return spec_object_type_rendering.Name
 }
 
 // Stage puts spec_relation to the model stage
@@ -11181,6 +11517,7 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMATTRIBUTE_DEFINITION_ENUMERATION(ATTRIBUTE_DEFINITION_ENUMERATION *ATTRIBUTE_DEFINITION_ENUMERATION)
 	CreateORMATTRIBUTE_DEFINITION_INTEGER(ATTRIBUTE_DEFINITION_INTEGER *ATTRIBUTE_DEFINITION_INTEGER)
 	CreateORMATTRIBUTE_DEFINITION_REAL(ATTRIBUTE_DEFINITION_REAL *ATTRIBUTE_DEFINITION_REAL)
+	CreateORMATTRIBUTE_DEFINITION_Rendering(ATTRIBUTE_DEFINITION_Rendering *ATTRIBUTE_DEFINITION_Rendering)
 	CreateORMATTRIBUTE_DEFINITION_STRING(ATTRIBUTE_DEFINITION_STRING *ATTRIBUTE_DEFINITION_STRING)
 	CreateORMATTRIBUTE_DEFINITION_XHTML(ATTRIBUTE_DEFINITION_XHTML *ATTRIBUTE_DEFINITION_XHTML)
 	CreateORMATTRIBUTE_VALUE_BOOLEAN(ATTRIBUTE_VALUE_BOOLEAN *ATTRIBUTE_VALUE_BOOLEAN)
@@ -11258,10 +11595,12 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMREQ_IF_TOOL_EXTENSION(REQ_IF_TOOL_EXTENSION *REQ_IF_TOOL_EXTENSION)
 	CreateORMRenderingConfiguration(RenderingConfiguration *RenderingConfiguration)
 	CreateORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
+	CreateORMSPECIFICATION_Rendering(SPECIFICATION_Rendering *SPECIFICATION_Rendering)
 	CreateORMSPECIFICATION_TYPE(SPECIFICATION_TYPE *SPECIFICATION_TYPE)
 	CreateORMSPEC_HIERARCHY(SPEC_HIERARCHY *SPEC_HIERARCHY)
 	CreateORMSPEC_OBJECT(SPEC_OBJECT *SPEC_OBJECT)
 	CreateORMSPEC_OBJECT_TYPE(SPEC_OBJECT_TYPE *SPEC_OBJECT_TYPE)
+	CreateORMSPEC_OBJECT_TYPE_Rendering(SPEC_OBJECT_TYPE_Rendering *SPEC_OBJECT_TYPE_Rendering)
 	CreateORMSPEC_RELATION(SPEC_RELATION *SPEC_RELATION)
 	CreateORMSPEC_RELATION_TYPE(SPEC_RELATION_TYPE *SPEC_RELATION_TYPE)
 	CreateORMStaticWebSite(StaticWebSite *StaticWebSite)
@@ -11279,6 +11618,7 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMATTRIBUTE_DEFINITION_ENUMERATION(ATTRIBUTE_DEFINITION_ENUMERATION *ATTRIBUTE_DEFINITION_ENUMERATION)
 	DeleteORMATTRIBUTE_DEFINITION_INTEGER(ATTRIBUTE_DEFINITION_INTEGER *ATTRIBUTE_DEFINITION_INTEGER)
 	DeleteORMATTRIBUTE_DEFINITION_REAL(ATTRIBUTE_DEFINITION_REAL *ATTRIBUTE_DEFINITION_REAL)
+	DeleteORMATTRIBUTE_DEFINITION_Rendering(ATTRIBUTE_DEFINITION_Rendering *ATTRIBUTE_DEFINITION_Rendering)
 	DeleteORMATTRIBUTE_DEFINITION_STRING(ATTRIBUTE_DEFINITION_STRING *ATTRIBUTE_DEFINITION_STRING)
 	DeleteORMATTRIBUTE_DEFINITION_XHTML(ATTRIBUTE_DEFINITION_XHTML *ATTRIBUTE_DEFINITION_XHTML)
 	DeleteORMATTRIBUTE_VALUE_BOOLEAN(ATTRIBUTE_VALUE_BOOLEAN *ATTRIBUTE_VALUE_BOOLEAN)
@@ -11356,10 +11696,12 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMREQ_IF_TOOL_EXTENSION(REQ_IF_TOOL_EXTENSION *REQ_IF_TOOL_EXTENSION)
 	DeleteORMRenderingConfiguration(RenderingConfiguration *RenderingConfiguration)
 	DeleteORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
+	DeleteORMSPECIFICATION_Rendering(SPECIFICATION_Rendering *SPECIFICATION_Rendering)
 	DeleteORMSPECIFICATION_TYPE(SPECIFICATION_TYPE *SPECIFICATION_TYPE)
 	DeleteORMSPEC_HIERARCHY(SPEC_HIERARCHY *SPEC_HIERARCHY)
 	DeleteORMSPEC_OBJECT(SPEC_OBJECT *SPEC_OBJECT)
 	DeleteORMSPEC_OBJECT_TYPE(SPEC_OBJECT_TYPE *SPEC_OBJECT_TYPE)
+	DeleteORMSPEC_OBJECT_TYPE_Rendering(SPEC_OBJECT_TYPE_Rendering *SPEC_OBJECT_TYPE_Rendering)
 	DeleteORMSPEC_RELATION(SPEC_RELATION *SPEC_RELATION)
 	DeleteORMSPEC_RELATION_TYPE(SPEC_RELATION_TYPE *SPEC_RELATION_TYPE)
 	DeleteORMStaticWebSite(StaticWebSite *StaticWebSite)
@@ -11400,6 +11742,11 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.ATTRIBUTE_DEFINITION_REALs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_REAL)
 	stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_REAL]uint)
 	stage.ATTRIBUTE_DEFINITION_REALOrder = 0
+
+	stage.ATTRIBUTE_DEFINITION_Renderings = make(map[*ATTRIBUTE_DEFINITION_Rendering]struct{})
+	stage.ATTRIBUTE_DEFINITION_Renderings_mapString = make(map[string]*ATTRIBUTE_DEFINITION_Rendering)
+	stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order = make(map[*ATTRIBUTE_DEFINITION_Rendering]uint)
+	stage.ATTRIBUTE_DEFINITION_RenderingOrder = 0
 
 	stage.ATTRIBUTE_DEFINITION_STRINGs = make(map[*ATTRIBUTE_DEFINITION_STRING]struct{})
 	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_STRING)
@@ -11786,6 +12133,11 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.SPECIFICATIONMap_Staged_Order = make(map[*SPECIFICATION]uint)
 	stage.SPECIFICATIONOrder = 0
 
+	stage.SPECIFICATION_Renderings = make(map[*SPECIFICATION_Rendering]struct{})
+	stage.SPECIFICATION_Renderings_mapString = make(map[string]*SPECIFICATION_Rendering)
+	stage.SPECIFICATION_RenderingMap_Staged_Order = make(map[*SPECIFICATION_Rendering]uint)
+	stage.SPECIFICATION_RenderingOrder = 0
+
 	stage.SPECIFICATION_TYPEs = make(map[*SPECIFICATION_TYPE]struct{})
 	stage.SPECIFICATION_TYPEs_mapString = make(map[string]*SPECIFICATION_TYPE)
 	stage.SPECIFICATION_TYPEMap_Staged_Order = make(map[*SPECIFICATION_TYPE]uint)
@@ -11805,6 +12157,11 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.SPEC_OBJECT_TYPEs_mapString = make(map[string]*SPEC_OBJECT_TYPE)
 	stage.SPEC_OBJECT_TYPEMap_Staged_Order = make(map[*SPEC_OBJECT_TYPE]uint)
 	stage.SPEC_OBJECT_TYPEOrder = 0
+
+	stage.SPEC_OBJECT_TYPE_Renderings = make(map[*SPEC_OBJECT_TYPE_Rendering]struct{})
+	stage.SPEC_OBJECT_TYPE_Renderings_mapString = make(map[string]*SPEC_OBJECT_TYPE_Rendering)
+	stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order = make(map[*SPEC_OBJECT_TYPE_Rendering]uint)
+	stage.SPEC_OBJECT_TYPE_RenderingOrder = 0
 
 	stage.SPEC_RELATIONs = make(map[*SPEC_RELATION]struct{})
 	stage.SPEC_RELATIONs_mapString = make(map[string]*SPEC_RELATION)
@@ -11867,6 +12224,9 @@ func (stage *Stage) Nil() { // insertion point for array nil
 
 	stage.ATTRIBUTE_DEFINITION_REALs = nil
 	stage.ATTRIBUTE_DEFINITION_REALs_mapString = nil
+
+	stage.ATTRIBUTE_DEFINITION_Renderings = nil
+	stage.ATTRIBUTE_DEFINITION_Renderings_mapString = nil
 
 	stage.ATTRIBUTE_DEFINITION_STRINGs = nil
 	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString = nil
@@ -12099,6 +12459,9 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.SPECIFICATIONs = nil
 	stage.SPECIFICATIONs_mapString = nil
 
+	stage.SPECIFICATION_Renderings = nil
+	stage.SPECIFICATION_Renderings_mapString = nil
+
 	stage.SPECIFICATION_TYPEs = nil
 	stage.SPECIFICATION_TYPEs_mapString = nil
 
@@ -12110,6 +12473,9 @@ func (stage *Stage) Nil() { // insertion point for array nil
 
 	stage.SPEC_OBJECT_TYPEs = nil
 	stage.SPEC_OBJECT_TYPEs_mapString = nil
+
+	stage.SPEC_OBJECT_TYPE_Renderings = nil
+	stage.SPEC_OBJECT_TYPE_Renderings_mapString = nil
 
 	stage.SPEC_RELATIONs = nil
 	stage.SPEC_RELATIONs_mapString = nil
@@ -12160,6 +12526,10 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 
 	for attribute_definition_real := range stage.ATTRIBUTE_DEFINITION_REALs {
 		attribute_definition_real.Unstage(stage)
+	}
+
+	for attribute_definition_rendering := range stage.ATTRIBUTE_DEFINITION_Renderings {
+		attribute_definition_rendering.Unstage(stage)
 	}
 
 	for attribute_definition_string := range stage.ATTRIBUTE_DEFINITION_STRINGs {
@@ -12470,6 +12840,10 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		specification.Unstage(stage)
 	}
 
+	for specification_rendering := range stage.SPECIFICATION_Renderings {
+		specification_rendering.Unstage(stage)
+	}
+
 	for specification_type := range stage.SPECIFICATION_TYPEs {
 		specification_type.Unstage(stage)
 	}
@@ -12484,6 +12858,10 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 
 	for spec_object_type := range stage.SPEC_OBJECT_TYPEs {
 		spec_object_type.Unstage(stage)
+	}
+
+	for spec_object_type_rendering := range stage.SPEC_OBJECT_TYPE_Renderings {
+		spec_object_type_rendering.Unstage(stage)
 	}
 
 	for spec_relation := range stage.SPEC_RELATIONs {
@@ -12603,6 +12981,8 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*Type)
 	case map[*ATTRIBUTE_DEFINITION_REAL]any:
 		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*Type)
+	case map[*ATTRIBUTE_DEFINITION_Rendering]any:
+		return any(&stage.ATTRIBUTE_DEFINITION_Renderings).(*Type)
 	case map[*ATTRIBUTE_DEFINITION_STRING]any:
 		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*Type)
 	case map[*ATTRIBUTE_DEFINITION_XHTML]any:
@@ -12757,6 +13137,8 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.RenderingConfigurations).(*Type)
 	case map[*SPECIFICATION]any:
 		return any(&stage.SPECIFICATIONs).(*Type)
+	case map[*SPECIFICATION_Rendering]any:
+		return any(&stage.SPECIFICATION_Renderings).(*Type)
 	case map[*SPECIFICATION_TYPE]any:
 		return any(&stage.SPECIFICATION_TYPEs).(*Type)
 	case map[*SPEC_HIERARCHY]any:
@@ -12765,6 +13147,8 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.SPEC_OBJECTs).(*Type)
 	case map[*SPEC_OBJECT_TYPE]any:
 		return any(&stage.SPEC_OBJECT_TYPEs).(*Type)
+	case map[*SPEC_OBJECT_TYPE_Rendering]any:
+		return any(&stage.SPEC_OBJECT_TYPE_Renderings).(*Type)
 	case map[*SPEC_RELATION]any:
 		return any(&stage.SPEC_RELATIONs).(*Type)
 	case map[*SPEC_RELATION_TYPE]any:
@@ -12805,6 +13189,8 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString).(*Type)
 	case map[string]*ATTRIBUTE_DEFINITION_REAL:
 		return any(&stage.ATTRIBUTE_DEFINITION_REALs_mapString).(*Type)
+	case map[string]*ATTRIBUTE_DEFINITION_Rendering:
+		return any(&stage.ATTRIBUTE_DEFINITION_Renderings_mapString).(*Type)
 	case map[string]*ATTRIBUTE_DEFINITION_STRING:
 		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs_mapString).(*Type)
 	case map[string]*ATTRIBUTE_DEFINITION_XHTML:
@@ -12959,6 +13345,8 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.RenderingConfigurations_mapString).(*Type)
 	case map[string]*SPECIFICATION:
 		return any(&stage.SPECIFICATIONs_mapString).(*Type)
+	case map[string]*SPECIFICATION_Rendering:
+		return any(&stage.SPECIFICATION_Renderings_mapString).(*Type)
 	case map[string]*SPECIFICATION_TYPE:
 		return any(&stage.SPECIFICATION_TYPEs_mapString).(*Type)
 	case map[string]*SPEC_HIERARCHY:
@@ -12967,6 +13355,8 @@ func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
 		return any(&stage.SPEC_OBJECTs_mapString).(*Type)
 	case map[string]*SPEC_OBJECT_TYPE:
 		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(*Type)
+	case map[string]*SPEC_OBJECT_TYPE_Rendering:
+		return any(&stage.SPEC_OBJECT_TYPE_Renderings_mapString).(*Type)
 	case map[string]*SPEC_RELATION:
 		return any(&stage.SPEC_RELATIONs_mapString).(*Type)
 	case map[string]*SPEC_RELATION_TYPE:
@@ -13007,6 +13397,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]struct{
 		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_REAL:
 		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*map[*Type]struct{})
+	case ATTRIBUTE_DEFINITION_Rendering:
+		return any(&stage.ATTRIBUTE_DEFINITION_Renderings).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_STRING:
 		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*map[*Type]struct{})
 	case ATTRIBUTE_DEFINITION_XHTML:
@@ -13161,6 +13553,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]struct{
 		return any(&stage.RenderingConfigurations).(*map[*Type]struct{})
 	case SPECIFICATION:
 		return any(&stage.SPECIFICATIONs).(*map[*Type]struct{})
+	case SPECIFICATION_Rendering:
+		return any(&stage.SPECIFICATION_Renderings).(*map[*Type]struct{})
 	case SPECIFICATION_TYPE:
 		return any(&stage.SPECIFICATION_TYPEs).(*map[*Type]struct{})
 	case SPEC_HIERARCHY:
@@ -13169,6 +13563,8 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]struct{
 		return any(&stage.SPEC_OBJECTs).(*map[*Type]struct{})
 	case SPEC_OBJECT_TYPE:
 		return any(&stage.SPEC_OBJECT_TYPEs).(*map[*Type]struct{})
+	case SPEC_OBJECT_TYPE_Rendering:
+		return any(&stage.SPEC_OBJECT_TYPE_Renderings).(*map[*Type]struct{})
 	case SPEC_RELATION:
 		return any(&stage.SPEC_RELATIONs).(*map[*Type]struct{})
 	case SPEC_RELATION_TYPE:
@@ -13209,6 +13605,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_REAL:
 		return any(&stage.ATTRIBUTE_DEFINITION_REALs).(*map[Type]struct{})
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		return any(&stage.ATTRIBUTE_DEFINITION_Renderings).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_STRING:
 		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs).(*map[Type]struct{})
 	case *ATTRIBUTE_DEFINITION_XHTML:
@@ -13363,6 +13761,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.RenderingConfigurations).(*map[Type]struct{})
 	case *SPECIFICATION:
 		return any(&stage.SPECIFICATIONs).(*map[Type]struct{})
+	case *SPECIFICATION_Rendering:
+		return any(&stage.SPECIFICATION_Renderings).(*map[Type]struct{})
 	case *SPECIFICATION_TYPE:
 		return any(&stage.SPECIFICATION_TYPEs).(*map[Type]struct{})
 	case *SPEC_HIERARCHY:
@@ -13371,6 +13771,8 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.SPEC_OBJECTs).(*map[Type]struct{})
 	case *SPEC_OBJECT_TYPE:
 		return any(&stage.SPEC_OBJECT_TYPEs).(*map[Type]struct{})
+	case *SPEC_OBJECT_TYPE_Rendering:
+		return any(&stage.SPEC_OBJECT_TYPE_Renderings).(*map[Type]struct{})
 	case *SPEC_RELATION:
 		return any(&stage.SPEC_RELATIONs).(*map[Type]struct{})
 	case *SPEC_RELATION_TYPE:
@@ -13411,6 +13813,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString).(*map[string]*Type)
 	case ATTRIBUTE_DEFINITION_REAL:
 		return any(&stage.ATTRIBUTE_DEFINITION_REALs_mapString).(*map[string]*Type)
+	case ATTRIBUTE_DEFINITION_Rendering:
+		return any(&stage.ATTRIBUTE_DEFINITION_Renderings_mapString).(*map[string]*Type)
 	case ATTRIBUTE_DEFINITION_STRING:
 		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs_mapString).(*map[string]*Type)
 	case ATTRIBUTE_DEFINITION_XHTML:
@@ -13565,6 +13969,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.RenderingConfigurations_mapString).(*map[string]*Type)
 	case SPECIFICATION:
 		return any(&stage.SPECIFICATIONs_mapString).(*map[string]*Type)
+	case SPECIFICATION_Rendering:
+		return any(&stage.SPECIFICATION_Renderings_mapString).(*map[string]*Type)
 	case SPECIFICATION_TYPE:
 		return any(&stage.SPECIFICATION_TYPEs_mapString).(*map[string]*Type)
 	case SPEC_HIERARCHY:
@@ -13573,6 +13979,8 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.SPEC_OBJECTs_mapString).(*map[string]*Type)
 	case SPEC_OBJECT_TYPE:
 		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(*map[string]*Type)
+	case SPEC_OBJECT_TYPE_Rendering:
+		return any(&stage.SPEC_OBJECT_TYPE_Renderings_mapString).(*map[string]*Type)
 	case SPEC_RELATION:
 		return any(&stage.SPEC_RELATIONs_mapString).(*map[string]*Type)
 	case SPEC_RELATION_TYPE:
@@ -13656,6 +14064,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			DEFAULT_VALUE: &A_ATTRIBUTE_VALUE_REAL{Name: "DEFAULT_VALUE"},
 			// field is initialized with an instance of A_DATATYPE_DEFINITION_REAL_REF with the name of the field
 			TYPE: &A_DATATYPE_DEFINITION_REAL_REF{Name: "TYPE"},
+		}).(*Type)
+	case ATTRIBUTE_DEFINITION_Rendering:
+		return any(&ATTRIBUTE_DEFINITION_Rendering{
+			// Initialisation of associations
 		}).(*Type)
 	case ATTRIBUTE_DEFINITION_STRING:
 		return any(&ATTRIBUTE_DEFINITION_STRING{
@@ -14195,6 +14607,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			// field is initialized with an instance of A_ATTRIBUTE_VALUE_XHTML_1 with the name of the field
 			VALUES: &A_ATTRIBUTE_VALUE_XHTML_1{Name: "VALUES"},
 		}).(*Type)
+	case SPECIFICATION_Rendering:
+		return any(&SPECIFICATION_Rendering{
+			// Initialisation of associations
+		}).(*Type)
 	case SPECIFICATION_TYPE:
 		return any(&SPECIFICATION_TYPE{
 			// Initialisation of associations
@@ -14232,6 +14648,10 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			ALTERNATIVE_ID: &A_ALTERNATIVE_ID{Name: "ALTERNATIVE_ID"},
 			// field is initialized with an instance of A_SPEC_ATTRIBUTES with the name of the field
 			SPEC_ATTRIBUTES: &A_SPEC_ATTRIBUTES{Name: "SPEC_ATTRIBUTES"},
+		}).(*Type)
+	case SPEC_OBJECT_TYPE_Rendering:
+		return any(&SPEC_OBJECT_TYPE_Rendering{
+			// Initialisation of associations
 		}).(*Type)
 	case SPEC_RELATION:
 		return any(&SPEC_RELATION{
@@ -14587,6 +15007,11 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 				}
 			}
 			return any(res).(map[*End][]*Start)
+		}
+	// reverse maps of direct associations of ATTRIBUTE_DEFINITION_Rendering
+	case ATTRIBUTE_DEFINITION_Rendering:
+		switch fieldname {
+		// insertion point for per direct association field
 		}
 	// reverse maps of direct associations of ATTRIBUTE_DEFINITION_STRING
 	case ATTRIBUTE_DEFINITION_STRING:
@@ -15823,6 +16248,11 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 			}
 			return any(res).(map[*End][]*Start)
 		}
+	// reverse maps of direct associations of SPECIFICATION_Rendering
+	case SPECIFICATION_Rendering:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of SPECIFICATION_TYPE
 	case SPECIFICATION_TYPE:
 		switch fieldname {
@@ -16029,6 +16459,11 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 				}
 			}
 			return any(res).(map[*End][]*Start)
+		}
+	// reverse maps of direct associations of SPEC_OBJECT_TYPE_Rendering
+	case SPEC_OBJECT_TYPE_Rendering:
+		switch fieldname {
+		// insertion point for per direct association field
 		}
 	// reverse maps of direct associations of SPEC_RELATION
 	case SPEC_RELATION:
@@ -16249,6 +16684,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		}
 	// reverse maps of direct associations of ATTRIBUTE_DEFINITION_REAL
 	case ATTRIBUTE_DEFINITION_REAL:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of ATTRIBUTE_DEFINITION_Rendering
+	case ATTRIBUTE_DEFINITION_Rendering:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -17157,6 +17597,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
+	// reverse maps of direct associations of SPECIFICATION_Rendering
+	case SPECIFICATION_Rendering:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
 	// reverse maps of direct associations of SPECIFICATION_TYPE
 	case SPECIFICATION_TYPE:
 		switch fieldname {
@@ -17174,6 +17619,11 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		}
 	// reverse maps of direct associations of SPEC_OBJECT_TYPE
 	case SPEC_OBJECT_TYPE:
+		switch fieldname {
+		// insertion point for per direct association field
+		}
+	// reverse maps of direct associations of SPEC_OBJECT_TYPE_Rendering
+	case SPEC_OBJECT_TYPE_Rendering:
 		switch fieldname {
 		// insertion point for per direct association field
 		}
@@ -17257,6 +17707,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "ATTRIBUTE_DEFINITION_INTEGER"
 	case *ATTRIBUTE_DEFINITION_REAL:
 		res = "ATTRIBUTE_DEFINITION_REAL"
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		res = "ATTRIBUTE_DEFINITION_Rendering"
 	case *ATTRIBUTE_DEFINITION_STRING:
 		res = "ATTRIBUTE_DEFINITION_STRING"
 	case *ATTRIBUTE_DEFINITION_XHTML:
@@ -17411,6 +17863,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "RenderingConfiguration"
 	case *SPECIFICATION:
 		res = "SPECIFICATION"
+	case *SPECIFICATION_Rendering:
+		res = "SPECIFICATION_Rendering"
 	case *SPECIFICATION_TYPE:
 		res = "SPECIFICATION_TYPE"
 	case *SPEC_HIERARCHY:
@@ -17419,6 +17873,8 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "SPEC_OBJECT"
 	case *SPEC_OBJECT_TYPE:
 		res = "SPEC_OBJECT_TYPE"
+	case *SPEC_OBJECT_TYPE_Rendering:
+		res = "SPEC_OBJECT_TYPE_Rendering"
 	case *SPEC_RELATION:
 		res = "SPEC_RELATION"
 	case *SPEC_RELATION_TYPE:
@@ -17486,6 +17942,9 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPEC_ATTRIBUTES"
 		rf.Fieldname = "ATTRIBUTE_DEFINITION_REAL"
 		res = append(res, rf)
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		var rf ReverseField
+		_ = rf
 	case *ATTRIBUTE_DEFINITION_STRING:
 		var rf ReverseField
 		_ = rf
@@ -17879,6 +18338,9 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPECIFICATIONS"
 		rf.Fieldname = "SPECIFICATION"
 		res = append(res, rf)
+	case *SPECIFICATION_Rendering:
+		var rf ReverseField
+		_ = rf
 	case *SPECIFICATION_TYPE:
 		var rf ReverseField
 		_ = rf
@@ -17903,6 +18365,9 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_SPEC_TYPES"
 		rf.Fieldname = "SPEC_OBJECT_TYPE"
 		res = append(res, rf)
+	case *SPEC_OBJECT_TYPE_Rendering:
+		var rf ReverseField
+		_ = rf
 	case *SPEC_RELATION:
 		var rf ReverseField
 		_ = rf
@@ -18188,6 +18653,29 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldHeaders(
 			Name:                 "TYPE",
 			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_DATATYPE_DEFINITION_REAL_REF",
+		},
+	}
+	return
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ShowInTableEntries",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ShowInTitleEntries",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ShowInSubjectEntries",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
 	return
@@ -20063,6 +20551,25 @@ func (specification *SPECIFICATION) GongGetFieldHeaders() (res []GongFieldHeader
 	return
 }
 
+func (specification_rendering *SPECIFICATION_Rendering) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IsNodeExpanded",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IsSelected",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+	}
+	return
+}
+
 func (specification_type *SPECIFICATION_TYPE) GongGetFieldHeaders() (res []GongFieldHeader) {
 	// insertion point for list of field headers
 	res = []GongFieldHeader{
@@ -20229,6 +20736,33 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldHeaders() (res []GongField
 			Name:                 "SPEC_ATTRIBUTES",
 			GongFieldValueType:   GongFieldValueTypePointer,
 			TargetGongstructName: "A_SPEC_ATTRIBUTES",
+		},
+	}
+	return
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetFieldHeaders() (res []GongFieldHeader) {
+	// insertion point for list of field headers
+	res = []GongFieldHeader{
+		{
+			Name:               "Name",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IsNodeExpanded",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ShowIdentifier",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ShowName",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "ShowRelations",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
 	return
@@ -20715,6 +21249,26 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldValue(fi
 			res.valueString = attribute_definition_real.TYPE.Name
 			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, attribute_definition_real.TYPE))
 		}
+	}
+	return
+}
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = attribute_definition_rendering.Name
+	case "ShowInTableEntries":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInTableEntries)
+		res.valueBool = attribute_definition_rendering.ShowInTableEntries
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "ShowInTitleEntries":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInTitleEntries)
+		res.valueBool = attribute_definition_rendering.ShowInTitleEntries
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "ShowInSubjectEntries":
+		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubjectEntries)
+		res.valueBool = attribute_definition_rendering.ShowInSubjectEntries
+		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
 }
@@ -22539,6 +23093,22 @@ func (specification *SPECIFICATION) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
+func (specification_rendering *SPECIFICATION_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = specification_rendering.Name
+	case "IsNodeExpanded":
+		res.valueString = fmt.Sprintf("%t", specification_rendering.IsNodeExpanded)
+		res.valueBool = specification_rendering.IsNodeExpanded
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "IsSelected":
+		res.valueString = fmt.Sprintf("%t", specification_rendering.IsSelected)
+		res.valueBool = specification_rendering.IsSelected
+		res.GongFieldValueType = GongFieldValueTypeBool
+	}
+	return
+}
 func (specification_type *SPECIFICATION_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -22674,6 +23244,30 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldValue(fieldName string, st
 			res.valueString = spec_object_type.SPEC_ATTRIBUTES.Name
 			res.ids = fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, spec_object_type.SPEC_ATTRIBUTES))
 		}
+	}
+	return
+}
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
+	switch fieldName {
+	// string value of fields
+	case "Name":
+		res.valueString = spec_object_type_rendering.Name
+	case "IsNodeExpanded":
+		res.valueString = fmt.Sprintf("%t", spec_object_type_rendering.IsNodeExpanded)
+		res.valueBool = spec_object_type_rendering.IsNodeExpanded
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "ShowIdentifier":
+		res.valueString = fmt.Sprintf("%t", spec_object_type_rendering.ShowIdentifier)
+		res.valueBool = spec_object_type_rendering.ShowIdentifier
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "ShowName":
+		res.valueString = fmt.Sprintf("%t", spec_object_type_rendering.ShowName)
+		res.valueBool = spec_object_type_rendering.ShowName
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "ShowRelations":
+		res.valueString = fmt.Sprintf("%t", spec_object_type_rendering.ShowRelations)
+		res.valueBool = spec_object_type_rendering.ShowRelations
+		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
 }
@@ -23147,6 +23741,23 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongSetFieldValue(fi
 				}
 			}
 		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		attribute_definition_rendering.Name = value.GetValueString()
+	case "ShowInTableEntries":
+		attribute_definition_rendering.ShowInTableEntries = value.GetValueBool()
+	case "ShowInTitleEntries":
+		attribute_definition_rendering.ShowInTitleEntries = value.GetValueBool()
+	case "ShowInSubjectEntries":
+		attribute_definition_rendering.ShowInSubjectEntries = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25684,6 +26295,21 @@ func (specification *SPECIFICATION) GongSetFieldValue(fieldName string, value Go
 	return nil
 }
 
+func (specification_rendering *SPECIFICATION_Rendering) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		specification_rendering.Name = value.GetValueString()
+	case "IsNodeExpanded":
+		specification_rendering.IsNodeExpanded = value.GetValueBool()
+	case "IsSelected":
+		specification_rendering.IsSelected = value.GetValueBool()
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
 func (specification_type *SPECIFICATION_TYPE) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
 	switch fieldName {
 	// insertion point for per field code
@@ -25879,6 +26505,25 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongSetFieldValue(fieldName string, va
 				}
 			}
 		}
+	default:
+		return fmt.Errorf("unknown field %s", fieldName)
+	}
+	return nil
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
+	switch fieldName {
+	// insertion point for per field code
+	case "Name":
+		spec_object_type_rendering.Name = value.GetValueString()
+	case "IsNodeExpanded":
+		spec_object_type_rendering.IsNodeExpanded = value.GetValueBool()
+	case "ShowIdentifier":
+		spec_object_type_rendering.ShowIdentifier = value.GetValueBool()
+	case "ShowName":
+		spec_object_type_rendering.ShowName = value.GetValueBool()
+	case "ShowRelations":
+		spec_object_type_rendering.ShowRelations = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26160,6 +26805,10 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetGongstr
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetGongstructName() string {
 	return "ATTRIBUTE_DEFINITION_REAL"
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetGongstructName() string {
+	return "ATTRIBUTE_DEFINITION_Rendering"
 }
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetGongstructName() string {
@@ -26470,6 +27119,10 @@ func (specification *SPECIFICATION) GongGetGongstructName() string {
 	return "SPECIFICATION"
 }
 
+func (specification_rendering *SPECIFICATION_Rendering) GongGetGongstructName() string {
+	return "SPECIFICATION_Rendering"
+}
+
 func (specification_type *SPECIFICATION_TYPE) GongGetGongstructName() string {
 	return "SPECIFICATION_TYPE"
 }
@@ -26484,6 +27137,10 @@ func (spec_object *SPEC_OBJECT) GongGetGongstructName() string {
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetGongstructName() string {
 	return "SPEC_OBJECT_TYPE"
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetGongstructName() string {
+	return "SPEC_OBJECT_TYPE_Rendering"
 }
 
 func (spec_relation *SPEC_RELATION) GongGetGongstructName() string {

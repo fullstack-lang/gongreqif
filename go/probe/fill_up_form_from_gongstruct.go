@@ -91,6 +91,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.ATTRIBUTE_DEFINITION_Rendering:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "ATTRIBUTE_DEFINITION_Rendering Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_RenderingFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.ATTRIBUTE_DEFINITION_STRING:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
@@ -1015,6 +1027,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 		)
 		formGroup.HasSuppressButton = true
 		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.SPECIFICATION_Rendering:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "SPECIFICATION_Rendering Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SPECIFICATION_RenderingFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
 	case *models.SPECIFICATION_TYPE:
 		formGroup := (&gongtable.FormGroup{
 			Name:  formName,
@@ -1057,6 +1081,18 @@ func FillUpNamedFormFromGongstruct(instance any, probe *Probe, formStage *gongta
 			Label: "SPEC_OBJECT_TYPE Form",
 		}).Stage(formStage)
 		formGroup.OnSave = __gong__New__SPEC_OBJECT_TYPEFormCallback(
+			instancesTyped,
+			probe,
+			formGroup,
+		)
+		formGroup.HasSuppressButton = true
+		FillUpForm(instancesTyped, formGroup, probe)
+	case *models.SPEC_OBJECT_TYPE_Rendering:
+		formGroup := (&gongtable.FormGroup{
+			Name:  formName,
+			Label: "SPEC_OBJECT_TYPE_Rendering Form",
+		}).Stage(formStage)
+		formGroup.OnSave = __gong__New__SPEC_OBJECT_TYPE_RenderingFormCallback(
 			instancesTyped,
 			probe,
 			formGroup,

@@ -2,6 +2,16 @@ package models
 
 func (stager *Stager) enforceModelSemantic() {
 
+	// all reqif object have an unique identifier. Those runtime map
+	// allow navigation to object from the identifier
+
+	stager.Map_id_SPEC_OBJECT_TYPE = populateIdMap[*SPEC_OBJECT_TYPE](stager)
+	stager.Map_id_SPECIFICATION_TYPE = populateIdMap[*SPECIFICATION_TYPE](stager)
+	stager.Map_id_SPEC_OBJECT = populateIdMap[*SPEC_OBJECT](stager)
+
+	stager.Map_id_ENUM_VALUE = populateIdMap[*ENUM_VALUE](stager)
+	stager.Map_id_SPEC_RELATION_TYPE = populateIdMap[*SPEC_RELATION_TYPE](stager)
+
 	stager.Map_id_DATATYPE_DEFINITION_XHTML = populateIdMap[*DATATYPE_DEFINITION_XHTML](stager)
 	stager.Map_id_DATATYPE_DEFINITION_STRING = populateIdMap[*DATATYPE_DEFINITION_STRING](stager)
 	stager.Map_id_DATATYPE_DEFINITION_BOOLEAN = populateIdMap[*DATATYPE_DEFINITION_BOOLEAN](stager)
@@ -10,9 +20,6 @@ func (stager *Stager) enforceModelSemantic() {
 	stager.Map_id_DATATYPE_DEFINITION_DATE = populateIdMap[*DATATYPE_DEFINITION_DATE](stager)
 	stager.Map_id_DATATYPE_DEFINITION_ENUMERATION = populateIdMap[*DATATYPE_DEFINITION_ENUMERATION](stager)
 
-	stager.Map_id_SPEC_OBJECT_TYPE = populateIdMap[*SPEC_OBJECT_TYPE](stager)
-	stager.Map_id_SPECIFICATION_TYPE = populateIdMap[*SPECIFICATION_TYPE](stager)
-	stager.Map_id_SPEC_OBJECT = populateIdMap[*SPEC_OBJECT](stager)
 	stager.Map_id_ATTRIBUTE_DEFINITION_XHTML = populateIdMap[*ATTRIBUTE_DEFINITION_XHTML](stager)
 	stager.Map_id_ATTRIBUTE_DEFINITION_STRING = populateIdMap[*ATTRIBUTE_DEFINITION_STRING](stager)
 	stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN = populateIdMap[*ATTRIBUTE_DEFINITION_BOOLEAN](stager)
@@ -21,13 +28,12 @@ func (stager *Stager) enforceModelSemantic() {
 	stager.Map_id_ATTRIBUTE_DEFINITION_REAL = populateIdMap[*ATTRIBUTE_DEFINITION_REAL](stager)
 	stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION = populateIdMap[*ATTRIBUTE_DEFINITION_ENUMERATION](stager)
 
-	stager.Map_id_ENUM_VALUE = populateIdMap[*ENUM_VALUE](stager)
-	stager.Map_id_SPEC_RELATION_TYPE = populateIdMap[*SPEC_RELATION_TYPE](stager)
-
+	// the stager also maintain a map used to navigate spec_relations between objects
 	stager.Map_SPEC_OBJECT_relations_sources = make(map[*SPEC_OBJECT][]*SPEC_RELATION)
 	stager.Map_SPEC_OBJECT_relations_targets = make(map[*SPEC_OBJECT][]*SPEC_RELATION)
 
 	stager.initMap_Objects_Relations()
+	stager.enforceRenderingConfigurationSemantic()
 
 }
 

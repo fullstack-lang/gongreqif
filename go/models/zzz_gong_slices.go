@@ -23,6 +23,9 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_REAL
 	// insertion point per field
 
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_Rendering
+	// insertion point per field
+
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_STRING
 	// insertion point per field
 
@@ -709,6 +712,9 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct SPECIFICATION
 	// insertion point per field
 
+	// Compute reverse map for named struct SPECIFICATION_Rendering
+	// insertion point per field
+
 	// Compute reverse map for named struct SPECIFICATION_TYPE
 	// insertion point per field
 
@@ -719,6 +725,9 @@ func (stage *Stage) ComputeReverseMaps() {
 	// insertion point per field
 
 	// Compute reverse map for named struct SPEC_OBJECT_TYPE
+	// insertion point per field
+
+	// Compute reverse map for named struct SPEC_OBJECT_TYPE_Rendering
 	// insertion point per field
 
 	// Compute reverse map for named struct SPEC_RELATION
@@ -785,6 +794,10 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 	}
 
 	for instance := range stage.ATTRIBUTE_DEFINITION_REALs {
+		res = append(res, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_Renderings {
 		res = append(res, instance)
 	}
 
@@ -1096,6 +1109,10 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 		res = append(res, instance)
 	}
 
+	for instance := range stage.SPECIFICATION_Renderings {
+		res = append(res, instance)
+	}
+
 	for instance := range stage.SPECIFICATION_TYPEs {
 		res = append(res, instance)
 	}
@@ -1109,6 +1126,10 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 	}
 
 	for instance := range stage.SPEC_OBJECT_TYPEs {
+		res = append(res, instance)
+	}
+
+	for instance := range stage.SPEC_OBJECT_TYPE_Renderings {
 		res = append(res, instance)
 	}
 
@@ -1175,6 +1196,11 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongCopy() Gon
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongCopy() GongstructIF {
 	newInstance := *attribute_definition_real
+	return &newInstance
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_rendering
 	return &newInstance
 }
 
@@ -1563,6 +1589,11 @@ func (specification *SPECIFICATION) GongCopy() GongstructIF {
 	return &newInstance
 }
 
+func (specification_rendering *SPECIFICATION_Rendering) GongCopy() GongstructIF {
+	newInstance := *specification_rendering
+	return &newInstance
+}
+
 func (specification_type *SPECIFICATION_TYPE) GongCopy() GongstructIF {
 	newInstance := *specification_type
 	return &newInstance
@@ -1580,6 +1611,11 @@ func (spec_object *SPEC_OBJECT) GongCopy() GongstructIF {
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongCopy() GongstructIF {
 	newInstance := *spec_object_type
+	return &newInstance
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongCopy() GongstructIF {
+	newInstance := *spec_object_type_rendering
 	return &newInstance
 }
 
