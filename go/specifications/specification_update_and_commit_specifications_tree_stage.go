@@ -41,6 +41,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		map_specificationType_node[specificationType] = nodeSpecificationType
 	}
 
+	selectedSpecification := stager.GetSelectedSpecification()
 	for _, specification := range specifications.SPECIFICATION {
 
 		specificationType, ok := stager.Map_id_SPECIFICATION_TYPE[specification.TYPE.SPECIFICATION_TYPE_REF]
@@ -49,7 +50,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				"unknown relation type")
 		}
 
-		isSelectedSpecification := stager.GetSelectedSpecification() == specification
+		isSelectedSpecification := specification == selectedSpecification
 
 		specificationNode := &tree.Node{
 			Name:              specification.Name,

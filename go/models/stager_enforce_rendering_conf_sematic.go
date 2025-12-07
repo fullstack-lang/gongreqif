@@ -11,32 +11,49 @@ package models
 func (stager *Stager) enforceRenderingConfigurationSemantic() {
 
 	stage := stager.stage
+	enforceRendering(
+		stage, stage.SPEC_OBJECT_TYPEs, stage.SPEC_OBJECT_TYPE_Renderings_mapString)
+	enforceRendering(stage, stage.SPECIFICATIONs, stage.SPECIFICATION_Renderings_mapString)
+}
 
-	for specObjectType := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE](stage) {
-		if _, ok := stage.SPEC_OBJECT_TYPE_Renderings_mapString[specObjectType.GetIdentifier()]; !ok {
-			o := (&SPEC_OBJECT_TYPE_Rendering{}).Stage(stage)
-			o.Name = specObjectType.GetIdentifier()
-			stage.SPEC_OBJECT_TYPE_Renderings_mapString[specObjectType.GetIdentifier()] = o
+// enforceRendering is a generic function that ensures rendering configurations exist for source objects
+// and removes orphaned rendering configurations.
+// It is indeed a fascinating syntax! It looks like magic because it blends two
+// different concepts (structural types and interfaces) into one constraint line.
+// You usually see this syntax (interface{ *T; Constraint }) in Generic Object Mappers (ORMs) and
+// Serialization Libraries where the code needs to create a new object and immediately call a method on it (like .Scan() or .UnmarshalJSON()).
+func enforceRendering[T Identifiable, R Gongstruct,
+	PR interface {
+		*R
+		GongstructIF
+	}](
+	stage *Stage,
+	sourceMap map[T]struct{},
+	renderingCongMap map[string]PR,
+) {
+
+	// Create rendering for new instances
+	for instance := range sourceMap {
+		if _, ok := renderingCongMap[instance.GetIdentifier()]; !ok {
+			var r R
+			pr := PR(&r)
+			pr.StageVoid(stage)
+			pr.SetName(instance.GetIdentifier())
 		}
 	}
 
-	for specObjectTypeRendering := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE_Rendering](stage) {
-		if _, ok := stage.SPEC_OBJECT_TYPE_Renderings_mapString[specObjectTypeRendering.GetName()]; !ok {
-			specObjectTypeRendering.Unstage(stage)
+	// Remove renderings for deleted instances
+	for _, renderingConf := range renderingCongMap {
+		found := false
+		for instance := range sourceMap {
+			if instance.GetIdentifier() == renderingConf.GetName() {
+				found = true
+				break
+			}
+		}
+		if !found {
+			renderingConf.UnstageVoid(stage)
 		}
 	}
-
-	for specification := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION](stage) {
-		if _, ok := stage.SPECIFICATION_Renderings_mapString[specification.GetIdentifier()]; !ok {
-			o := (&SPECIFICATION_Rendering{}).Stage(stage)
-			o.Name = specification.GetIdentifier()
-			stage.SPECIFICATION_Renderings_mapString[specification.GetIdentifier()] = o
-		}
-	}
-
-	for specificationRendering := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stage) {
-		if _, ok := stage.SPECIFICATION_Renderings_mapString[specificationRendering.GetName()]; !ok {
-			specificationRendering.Unstage(stage)
-		}
-	}
+	stage.ResetMapStrings()
 }

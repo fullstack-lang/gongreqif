@@ -185,19 +185,34 @@ type Stager struct {
 	loadReqifStage         *load.Stage // load the reqif file
 	loadRenderingConfStage *load.Stage // load the rendering conf file
 
-	selectedSpecification *SPECIFICATION
-
 	// allow for navigation from spec object to their relations
 	Map_SPEC_OBJECT_relations_sources map[*SPEC_OBJECT][]*SPEC_RELATION
 	Map_SPEC_OBJECT_relations_targets map[*SPEC_OBJECT][]*SPEC_RELATION
 }
 
 func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {
-	stager.selectedSpecification = selectedSpecification
+
+	for specificationRendering := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stager.stage) {
+		specificationRendering.IsSelected = false
+		if specificationRendering.GetName() == selectedSpecification.GetIdentifier() {
+			specificationRendering.IsSelected = true
+		}
+	}
 }
 
 func (stager *Stager) GetSelectedSpecification() (selectedSpecification *SPECIFICATION) {
-	return stager.selectedSpecification
+
+	for specificationRendering := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stager.stage) {
+		if specificationRendering.IsSelected {
+			for specification := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION](stager.stage) {
+				if specification.GetIdentifier() == specificationRendering.GetName() {
+					selectedSpecification = specification
+				}
+			}
+		}
+	}
+
+	return
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {

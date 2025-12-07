@@ -4396,7 +4396,7 @@ func (stage *Stage) CommitWithSuspendedCallbacks() {
 
 func (stage *Stage) Commit() {
 	stage.ComputeReverseMaps()
-	
+
 	if stage.OnInitCommitCallback != nil {
 		stage.OnInitCommitCallback.BeforeCommit(stage)
 	}
@@ -4622,6 +4622,11 @@ func (alternative_id *ALTERNATIVE_ID) GetName() (res string) {
 	return alternative_id.Name
 }
 
+// for satisfaction of GongStruct interface
+func (alternative_id *ALTERNATIVE_ID) SetName(name string) (){
+	alternative_id.Name = name
+}
+
 // Stage puts attribute_definition_boolean to the model stage
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN {
 
@@ -4691,6 +4696,11 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Checkout(stage
 // for satisfaction of GongStruct interface
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GetName() (res string) {
 	return attribute_definition_boolean.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) SetName(name string) (){
+	attribute_definition_boolean.Name = name
 }
 
 // Stage puts attribute_definition_date to the model stage
@@ -4764,6 +4774,11 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GetName() (res strin
 	return attribute_definition_date.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) SetName(name string) (){
+	attribute_definition_date.Name = name
+}
+
 // Stage puts attribute_definition_enumeration to the model stage
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION {
 
@@ -4833,6 +4848,11 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Checko
 // for satisfaction of GongStruct interface
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GetName() (res string) {
 	return attribute_definition_enumeration.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) SetName(name string) (){
+	attribute_definition_enumeration.Name = name
 }
 
 // Stage puts attribute_definition_integer to the model stage
@@ -4906,6 +4926,11 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GetName() (res
 	return attribute_definition_integer.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) SetName(name string) (){
+	attribute_definition_integer.Name = name
+}
+
 // Stage puts attribute_definition_real to the model stage
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL {
 
@@ -4975,6 +5000,11 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Checkout(stage *Stag
 // for satisfaction of GongStruct interface
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GetName() (res string) {
 	return attribute_definition_real.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) SetName(name string) (){
+	attribute_definition_real.Name = name
 }
 
 // Stage puts attribute_definition_rendering to the model stage
@@ -5048,6 +5078,11 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GetName() 
 	return attribute_definition_rendering.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) SetName(name string) (){
+	attribute_definition_rendering.Name = name
+}
+
 // Stage puts attribute_definition_string to the model stage
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING {
 
@@ -5117,6 +5152,11 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Checkout(stage *
 // for satisfaction of GongStruct interface
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GetName() (res string) {
 	return attribute_definition_string.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) SetName(name string) (){
+	attribute_definition_string.Name = name
 }
 
 // Stage puts attribute_definition_xhtml to the model stage
@@ -5190,6 +5230,11 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GetName() (res str
 	return attribute_definition_xhtml.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) SetName(name string) (){
+	attribute_definition_xhtml.Name = name
+}
+
 // Stage puts attribute_value_boolean to the model stage
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATTRIBUTE_VALUE_BOOLEAN {
 
@@ -5259,6 +5304,11 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Checkout(stage *Stage) *
 // for satisfaction of GongStruct interface
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GetName() (res string) {
 	return attribute_value_boolean.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) (){
+	attribute_value_boolean.Name = name
 }
 
 // Stage puts attribute_value_date to the model stage
@@ -5332,6 +5382,11 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 	return attribute_value_date.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) SetName(name string) (){
+	attribute_value_date.Name = name
+}
+
 // Stage puts attribute_value_enumeration to the model stage
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Stage) *ATTRIBUTE_VALUE_ENUMERATION {
 
@@ -5401,6 +5456,11 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Checkout(stage *
 // for satisfaction of GongStruct interface
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GetName() (res string) {
 	return attribute_value_enumeration.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) (){
+	attribute_value_enumeration.Name = name
 }
 
 // Stage puts attribute_value_integer to the model stage
@@ -5474,6 +5534,11 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GetName() (res string) {
 	return attribute_value_integer.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) SetName(name string) (){
+	attribute_value_integer.Name = name
+}
+
 // Stage puts attribute_value_real to the model stage
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE_VALUE_REAL {
 
@@ -5543,6 +5608,11 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Checkout(stage *Stage) *ATTRIB
 // for satisfaction of GongStruct interface
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 	return attribute_value_real.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) SetName(name string) (){
+	attribute_value_real.Name = name
 }
 
 // Stage puts attribute_value_string to the model stage
@@ -5616,6 +5686,11 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GetName() (res string) {
 	return attribute_value_string.Name
 }
 
+// for satisfaction of GongStruct interface
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) SetName(name string) (){
+	attribute_value_string.Name = name
+}
+
 // Stage puts attribute_value_xhtml to the model stage
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBUTE_VALUE_XHTML {
 
@@ -5685,6 +5760,11 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Checkout(stage *Stage) *ATTR
 // for satisfaction of GongStruct interface
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 	return attribute_value_xhtml.Name
+}
+
+// for satisfaction of GongStruct interface
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) SetName(name string) (){
+	attribute_value_xhtml.Name = name
 }
 
 // Stage puts a_alternative_id to the model stage
@@ -5758,6 +5838,11 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GetName() (res string) {
 	return a_alternative_id.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_alternative_id *A_ALTERNATIVE_ID) SetName(name string) (){
+	a_alternative_id.Name = name
+}
+
 // Stage puts a_attribute_definition_boolean_ref to the model stage
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF {
 
@@ -5827,6 +5912,11 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Ch
 // for satisfaction of GongStruct interface
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GetName() (res string) {
 	return a_attribute_definition_boolean_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) SetName(name string) (){
+	a_attribute_definition_boolean_ref.Name = name
 }
 
 // Stage puts a_attribute_definition_date_ref to the model stage
@@ -5900,6 +5990,11 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GetName(
 	return a_attribute_definition_date_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) SetName(name string) (){
+	a_attribute_definition_date_ref.Name = name
+}
+
 // Stage puts a_attribute_definition_enumeration_ref to the model stage
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF {
 
@@ -5969,6 +6064,11 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 // for satisfaction of GongStruct interface
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GetName() (res string) {
 	return a_attribute_definition_enumeration_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) SetName(name string) (){
+	a_attribute_definition_enumeration_ref.Name = name
 }
 
 // Stage puts a_attribute_definition_integer_ref to the model stage
@@ -6042,6 +6142,11 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Ge
 	return a_attribute_definition_integer_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) SetName(name string) (){
+	a_attribute_definition_integer_ref.Name = name
+}
+
 // Stage puts a_attribute_definition_real_ref to the model stage
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_REAL_REF {
 
@@ -6111,6 +6216,11 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Checkout
 // for satisfaction of GongStruct interface
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GetName() (res string) {
 	return a_attribute_definition_real_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) SetName(name string) (){
+	a_attribute_definition_real_ref.Name = name
 }
 
 // Stage puts a_attribute_definition_string_ref to the model stage
@@ -6184,6 +6294,11 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GetN
 	return a_attribute_definition_string_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) SetName(name string) (){
+	a_attribute_definition_string_ref.Name = name
+}
+
 // Stage puts a_attribute_definition_xhtml_ref to the model stage
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_XHTML_REF {
 
@@ -6253,6 +6368,11 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Checko
 // for satisfaction of GongStruct interface
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GetName() (res string) {
 	return a_attribute_definition_xhtml_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) SetName(name string) (){
+	a_attribute_definition_xhtml_ref.Name = name
 }
 
 // Stage puts a_attribute_value_boolean to the model stage
@@ -6326,6 +6446,11 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GetName() (res strin
 	return a_attribute_value_boolean.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) (){
+	a_attribute_value_boolean.Name = name
+}
+
 // Stage puts a_attribute_value_date to the model stage
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_DATE {
 
@@ -6395,6 +6520,11 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Checkout(stage *Stage) *A_
 // for satisfaction of GongStruct interface
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 	return a_attribute_value_date.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) SetName(name string) (){
+	a_attribute_value_date.Name = name
 }
 
 // Stage puts a_attribute_value_enumeration to the model stage
@@ -6468,6 +6598,11 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GetName() (r
 	return a_attribute_value_enumeration.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) (){
+	a_attribute_value_enumeration.Name = name
+}
+
 // Stage puts a_attribute_value_integer to the model stage
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_INTEGER {
 
@@ -6537,6 +6672,11 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Checkout(stage *Stag
 // for satisfaction of GongStruct interface
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GetName() (res string) {
 	return a_attribute_value_integer.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) SetName(name string) (){
+	a_attribute_value_integer.Name = name
 }
 
 // Stage puts a_attribute_value_real to the model stage
@@ -6610,6 +6750,11 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 	return a_attribute_value_real.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) SetName(name string) (){
+	a_attribute_value_real.Name = name
+}
+
 // Stage puts a_attribute_value_string to the model stage
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_STRING {
 
@@ -6679,6 +6824,11 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Checkout(stage *Stage)
 // for satisfaction of GongStruct interface
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GetName() (res string) {
 	return a_attribute_value_string.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) SetName(name string) (){
+	a_attribute_value_string.Name = name
 }
 
 // Stage puts a_attribute_value_xhtml to the model stage
@@ -6752,6 +6902,11 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 	return a_attribute_value_xhtml.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) SetName(name string) (){
+	a_attribute_value_xhtml.Name = name
+}
+
 // Stage puts a_attribute_value_xhtml_1 to the model stage
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML_1 {
 
@@ -6821,6 +6976,11 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Checkout(stage *Stag
 // for satisfaction of GongStruct interface
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GetName() (res string) {
 	return a_attribute_value_xhtml_1.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) SetName(name string) (){
+	a_attribute_value_xhtml_1.Name = name
 }
 
 // Stage puts a_children to the model stage
@@ -6894,6 +7054,11 @@ func (a_children *A_CHILDREN) GetName() (res string) {
 	return a_children.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_children *A_CHILDREN) SetName(name string) (){
+	a_children.Name = name
+}
+
 // Stage puts a_core_content to the model stage
 func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
 
@@ -6963,6 +7128,11 @@ func (a_core_content *A_CORE_CONTENT) Checkout(stage *Stage) *A_CORE_CONTENT {
 // for satisfaction of GongStruct interface
 func (a_core_content *A_CORE_CONTENT) GetName() (res string) {
 	return a_core_content.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_core_content *A_CORE_CONTENT) SetName(name string) (){
+	a_core_content.Name = name
 }
 
 // Stage puts a_datatypes to the model stage
@@ -7036,6 +7206,11 @@ func (a_datatypes *A_DATATYPES) GetName() (res string) {
 	return a_datatypes.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_datatypes *A_DATATYPES) SetName(name string) (){
+	a_datatypes.Name = name
+}
+
 // Stage puts a_datatype_definition_boolean_ref to the model stage
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_BOOLEAN_REF {
 
@@ -7105,6 +7280,11 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Chec
 // for satisfaction of GongStruct interface
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GetName() (res string) {
 	return a_datatype_definition_boolean_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) SetName(name string) (){
+	a_datatype_definition_boolean_ref.Name = name
 }
 
 // Stage puts a_datatype_definition_date_ref to the model stage
@@ -7178,6 +7358,11 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GetName() 
 	return a_datatype_definition_date_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) SetName(name string) (){
+	a_datatype_definition_date_ref.Name = name
+}
+
 // Stage puts a_datatype_definition_enumeration_ref to the model stage
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_ENUMERATION_REF {
 
@@ -7247,6 +7432,11 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 // for satisfaction of GongStruct interface
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GetName() (res string) {
 	return a_datatype_definition_enumeration_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) SetName(name string) (){
+	a_datatype_definition_enumeration_ref.Name = name
 }
 
 // Stage puts a_datatype_definition_integer_ref to the model stage
@@ -7320,6 +7510,11 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GetN
 	return a_datatype_definition_integer_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) SetName(name string) (){
+	a_datatype_definition_integer_ref.Name = name
+}
+
 // Stage puts a_datatype_definition_real_ref to the model stage
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_REAL_REF {
 
@@ -7389,6 +7584,11 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Checkout(s
 // for satisfaction of GongStruct interface
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GetName() (res string) {
 	return a_datatype_definition_real_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) SetName(name string) (){
+	a_datatype_definition_real_ref.Name = name
 }
 
 // Stage puts a_datatype_definition_string_ref to the model stage
@@ -7462,6 +7662,11 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GetNam
 	return a_datatype_definition_string_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) SetName(name string) (){
+	a_datatype_definition_string_ref.Name = name
+}
+
 // Stage puts a_datatype_definition_xhtml_ref to the model stage
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_XHTML_REF {
 
@@ -7531,6 +7736,11 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Checkout
 // for satisfaction of GongStruct interface
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GetName() (res string) {
 	return a_datatype_definition_xhtml_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) SetName(name string) (){
+	a_datatype_definition_xhtml_ref.Name = name
 }
 
 // Stage puts a_editable_atts to the model stage
@@ -7604,6 +7814,11 @@ func (a_editable_atts *A_EDITABLE_ATTS) GetName() (res string) {
 	return a_editable_atts.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_editable_atts *A_EDITABLE_ATTS) SetName(name string) (){
+	a_editable_atts.Name = name
+}
+
 // Stage puts a_enum_value_ref to the model stage
 func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF {
 
@@ -7673,6 +7888,11 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Checkout(stage *Stage) *A_ENUM_VALUE_R
 // for satisfaction of GongStruct interface
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GetName() (res string) {
 	return a_enum_value_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_enum_value_ref *A_ENUM_VALUE_REF) SetName(name string) (){
+	a_enum_value_ref.Name = name
 }
 
 // Stage puts a_object to the model stage
@@ -7746,6 +7966,11 @@ func (a_object *A_OBJECT) GetName() (res string) {
 	return a_object.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_object *A_OBJECT) SetName(name string) (){
+	a_object.Name = name
+}
+
 // Stage puts a_properties to the model stage
 func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
 
@@ -7815,6 +8040,11 @@ func (a_properties *A_PROPERTIES) Checkout(stage *Stage) *A_PROPERTIES {
 // for satisfaction of GongStruct interface
 func (a_properties *A_PROPERTIES) GetName() (res string) {
 	return a_properties.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_properties *A_PROPERTIES) SetName(name string) (){
+	a_properties.Name = name
 }
 
 // Stage puts a_relation_group_type_ref to the model stage
@@ -7888,6 +8118,11 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GetName() (res strin
 	return a_relation_group_type_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) SetName(name string) (){
+	a_relation_group_type_ref.Name = name
+}
+
 // Stage puts a_source_1 to the model stage
 func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
 
@@ -7957,6 +8192,11 @@ func (a_source_1 *A_SOURCE_1) Checkout(stage *Stage) *A_SOURCE_1 {
 // for satisfaction of GongStruct interface
 func (a_source_1 *A_SOURCE_1) GetName() (res string) {
 	return a_source_1.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_source_1 *A_SOURCE_1) SetName(name string) (){
+	a_source_1.Name = name
 }
 
 // Stage puts a_source_specification_1 to the model stage
@@ -8030,6 +8270,11 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GetName() (res string)
 	return a_source_specification_1.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) SetName(name string) (){
+	a_source_specification_1.Name = name
+}
+
 // Stage puts a_specifications to the model stage
 func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS {
 
@@ -8099,6 +8344,11 @@ func (a_specifications *A_SPECIFICATIONS) Checkout(stage *Stage) *A_SPECIFICATIO
 // for satisfaction of GongStruct interface
 func (a_specifications *A_SPECIFICATIONS) GetName() (res string) {
 	return a_specifications.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_specifications *A_SPECIFICATIONS) SetName(name string) (){
+	a_specifications.Name = name
 }
 
 // Stage puts a_specification_type_ref to the model stage
@@ -8172,6 +8422,11 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GetName() (res string)
 	return a_specification_type_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) SetName(name string) (){
+	a_specification_type_ref.Name = name
+}
+
 // Stage puts a_specified_values to the model stage
 func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_VALUES {
 
@@ -8241,6 +8496,11 @@ func (a_specified_values *A_SPECIFIED_VALUES) Checkout(stage *Stage) *A_SPECIFIE
 // for satisfaction of GongStruct interface
 func (a_specified_values *A_SPECIFIED_VALUES) GetName() (res string) {
 	return a_specified_values.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_specified_values *A_SPECIFIED_VALUES) SetName(name string) (){
+	a_specified_values.Name = name
 }
 
 // Stage puts a_spec_attributes to the model stage
@@ -8314,6 +8574,11 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GetName() (res string) {
 	return a_spec_attributes.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) SetName(name string) (){
+	a_spec_attributes.Name = name
+}
+
 // Stage puts a_spec_objects to the model stage
 func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
 
@@ -8383,6 +8648,11 @@ func (a_spec_objects *A_SPEC_OBJECTS) Checkout(stage *Stage) *A_SPEC_OBJECTS {
 // for satisfaction of GongStruct interface
 func (a_spec_objects *A_SPEC_OBJECTS) GetName() (res string) {
 	return a_spec_objects.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_spec_objects *A_SPEC_OBJECTS) SetName(name string) (){
+	a_spec_objects.Name = name
 }
 
 // Stage puts a_spec_object_type_ref to the model stage
@@ -8456,6 +8726,11 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GetName() (res string) {
 	return a_spec_object_type_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) SetName(name string) (){
+	a_spec_object_type_ref.Name = name
+}
+
 // Stage puts a_spec_relations to the model stage
 func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS {
 
@@ -8525,6 +8800,11 @@ func (a_spec_relations *A_SPEC_RELATIONS) Checkout(stage *Stage) *A_SPEC_RELATIO
 // for satisfaction of GongStruct interface
 func (a_spec_relations *A_SPEC_RELATIONS) GetName() (res string) {
 	return a_spec_relations.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_spec_relations *A_SPEC_RELATIONS) SetName(name string) (){
+	a_spec_relations.Name = name
 }
 
 // Stage puts a_spec_relation_groups to the model stage
@@ -8598,6 +8878,11 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GetName() (res string) {
 	return a_spec_relation_groups.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) SetName(name string) (){
+	a_spec_relation_groups.Name = name
+}
+
 // Stage puts a_spec_relation_ref to the model stage
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELATION_REF {
 
@@ -8667,6 +8952,11 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Checkout(stage *Stage) *A_SPEC_R
 // for satisfaction of GongStruct interface
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GetName() (res string) {
 	return a_spec_relation_ref.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) SetName(name string) (){
+	a_spec_relation_ref.Name = name
 }
 
 // Stage puts a_spec_relation_type_ref to the model stage
@@ -8740,6 +9030,11 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GetName() (res string)
 	return a_spec_relation_type_ref.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) SetName(name string) (){
+	a_spec_relation_type_ref.Name = name
+}
+
 // Stage puts a_spec_types to the model stage
 func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
 
@@ -8809,6 +9104,11 @@ func (a_spec_types *A_SPEC_TYPES) Checkout(stage *Stage) *A_SPEC_TYPES {
 // for satisfaction of GongStruct interface
 func (a_spec_types *A_SPEC_TYPES) GetName() (res string) {
 	return a_spec_types.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_spec_types *A_SPEC_TYPES) SetName(name string) (){
+	a_spec_types.Name = name
 }
 
 // Stage puts a_the_header to the model stage
@@ -8882,6 +9182,11 @@ func (a_the_header *A_THE_HEADER) GetName() (res string) {
 	return a_the_header.Name
 }
 
+// for satisfaction of GongStruct interface
+func (a_the_header *A_THE_HEADER) SetName(name string) (){
+	a_the_header.Name = name
+}
+
 // Stage puts a_tool_extensions to the model stage
 func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIONS {
 
@@ -8951,6 +9256,11 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Checkout(stage *Stage) *A_TOOL_EXTEN
 // for satisfaction of GongStruct interface
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GetName() (res string) {
 	return a_tool_extensions.Name
+}
+
+// for satisfaction of GongStruct interface
+func (a_tool_extensions *A_TOOL_EXTENSIONS) SetName(name string) (){
+	a_tool_extensions.Name = name
 }
 
 // Stage puts datatype_definition_boolean to the model stage
@@ -9024,6 +9334,11 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GetName() (res s
 	return datatype_definition_boolean.Name
 }
 
+// for satisfaction of GongStruct interface
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) SetName(name string) (){
+	datatype_definition_boolean.Name = name
+}
+
 // Stage puts datatype_definition_date to the model stage
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *DATATYPE_DEFINITION_DATE {
 
@@ -9093,6 +9408,11 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Checkout(stage *Stage)
 // for satisfaction of GongStruct interface
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GetName() (res string) {
 	return datatype_definition_date.Name
+}
+
+// for satisfaction of GongStruct interface
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) SetName(name string) (){
+	datatype_definition_date.Name = name
 }
 
 // Stage puts datatype_definition_enumeration to the model stage
@@ -9166,6 +9486,11 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GetName(
 	return datatype_definition_enumeration.Name
 }
 
+// for satisfaction of GongStruct interface
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) SetName(name string) (){
+	datatype_definition_enumeration.Name = name
+}
+
 // Stage puts datatype_definition_integer to the model stage
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Stage) *DATATYPE_DEFINITION_INTEGER {
 
@@ -9235,6 +9560,11 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Checkout(stage *
 // for satisfaction of GongStruct interface
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GetName() (res string) {
 	return datatype_definition_integer.Name
+}
+
+// for satisfaction of GongStruct interface
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) SetName(name string) (){
+	datatype_definition_integer.Name = name
 }
 
 // Stage puts datatype_definition_real to the model stage
@@ -9308,6 +9638,11 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GetName() (res string)
 	return datatype_definition_real.Name
 }
 
+// for satisfaction of GongStruct interface
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) SetName(name string) (){
+	datatype_definition_real.Name = name
+}
+
 // Stage puts datatype_definition_string to the model stage
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage) *DATATYPE_DEFINITION_STRING {
 
@@ -9377,6 +9712,11 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Checkout(stage *St
 // for satisfaction of GongStruct interface
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GetName() (res string) {
 	return datatype_definition_string.Name
+}
+
+// for satisfaction of GongStruct interface
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) SetName(name string) (){
+	datatype_definition_string.Name = name
 }
 
 // Stage puts datatype_definition_xhtml to the model stage
@@ -9450,6 +9790,11 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GetName() (res strin
 	return datatype_definition_xhtml.Name
 }
 
+// for satisfaction of GongStruct interface
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) SetName(name string) (){
+	datatype_definition_xhtml.Name = name
+}
+
 // Stage puts embedded_value to the model stage
 func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
 
@@ -9519,6 +9864,11 @@ func (embedded_value *EMBEDDED_VALUE) Checkout(stage *Stage) *EMBEDDED_VALUE {
 // for satisfaction of GongStruct interface
 func (embedded_value *EMBEDDED_VALUE) GetName() (res string) {
 	return embedded_value.Name
+}
+
+// for satisfaction of GongStruct interface
+func (embedded_value *EMBEDDED_VALUE) SetName(name string) (){
+	embedded_value.Name = name
 }
 
 // Stage puts enum_value to the model stage
@@ -9592,6 +9942,11 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 	return enum_value.Name
 }
 
+// for satisfaction of GongStruct interface
+func (enum_value *ENUM_VALUE) SetName(name string) (){
+	enum_value.Name = name
+}
+
 // Stage puts embeddedjpgimage to the model stage
 func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage {
 
@@ -9661,6 +10016,11 @@ func (embeddedjpgimage *EmbeddedJpgImage) Checkout(stage *Stage) *EmbeddedJpgIma
 // for satisfaction of GongStruct interface
 func (embeddedjpgimage *EmbeddedJpgImage) GetName() (res string) {
 	return embeddedjpgimage.Name
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedjpgimage *EmbeddedJpgImage) SetName(name string) (){
+	embeddedjpgimage.Name = name
 }
 
 // Stage puts embeddedpngimage to the model stage
@@ -9734,6 +10094,11 @@ func (embeddedpngimage *EmbeddedPngImage) GetName() (res string) {
 	return embeddedpngimage.Name
 }
 
+// for satisfaction of GongStruct interface
+func (embeddedpngimage *EmbeddedPngImage) SetName(name string) (){
+	embeddedpngimage.Name = name
+}
+
 // Stage puts embeddedsvgimage to the model stage
 func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage {
 
@@ -9803,6 +10168,11 @@ func (embeddedsvgimage *EmbeddedSvgImage) Checkout(stage *Stage) *EmbeddedSvgIma
 // for satisfaction of GongStruct interface
 func (embeddedsvgimage *EmbeddedSvgImage) GetName() (res string) {
 	return embeddedsvgimage.Name
+}
+
+// for satisfaction of GongStruct interface
+func (embeddedsvgimage *EmbeddedSvgImage) SetName(name string) (){
+	embeddedsvgimage.Name = name
 }
 
 // Stage puts kill to the model stage
@@ -9876,6 +10246,11 @@ func (kill *Kill) GetName() (res string) {
 	return kill.Name
 }
 
+// for satisfaction of GongStruct interface
+func (kill *Kill) SetName(name string) (){
+	kill.Name = name
+}
+
 // Stage puts map_identifier_bool to the model stage
 func (map_identifier_bool *Map_identifier_bool) Stage(stage *Stage) *Map_identifier_bool {
 
@@ -9945,6 +10320,11 @@ func (map_identifier_bool *Map_identifier_bool) Checkout(stage *Stage) *Map_iden
 // for satisfaction of GongStruct interface
 func (map_identifier_bool *Map_identifier_bool) GetName() (res string) {
 	return map_identifier_bool.Name
+}
+
+// for satisfaction of GongStruct interface
+func (map_identifier_bool *Map_identifier_bool) SetName(name string) (){
+	map_identifier_bool.Name = name
 }
 
 // Stage puts relation_group to the model stage
@@ -10018,6 +10398,11 @@ func (relation_group *RELATION_GROUP) GetName() (res string) {
 	return relation_group.Name
 }
 
+// for satisfaction of GongStruct interface
+func (relation_group *RELATION_GROUP) SetName(name string) (){
+	relation_group.Name = name
+}
+
 // Stage puts relation_group_type to the model stage
 func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GROUP_TYPE {
 
@@ -10087,6 +10472,11 @@ func (relation_group_type *RELATION_GROUP_TYPE) Checkout(stage *Stage) *RELATION
 // for satisfaction of GongStruct interface
 func (relation_group_type *RELATION_GROUP_TYPE) GetName() (res string) {
 	return relation_group_type.Name
+}
+
+// for satisfaction of GongStruct interface
+func (relation_group_type *RELATION_GROUP_TYPE) SetName(name string) (){
+	relation_group_type.Name = name
 }
 
 // Stage puts req_if to the model stage
@@ -10160,6 +10550,11 @@ func (req_if *REQ_IF) GetName() (res string) {
 	return req_if.Name
 }
 
+// for satisfaction of GongStruct interface
+func (req_if *REQ_IF) SetName(name string) (){
+	req_if.Name = name
+}
+
 // Stage puts req_if_content to the model stage
 func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
 
@@ -10229,6 +10624,11 @@ func (req_if_content *REQ_IF_CONTENT) Checkout(stage *Stage) *REQ_IF_CONTENT {
 // for satisfaction of GongStruct interface
 func (req_if_content *REQ_IF_CONTENT) GetName() (res string) {
 	return req_if_content.Name
+}
+
+// for satisfaction of GongStruct interface
+func (req_if_content *REQ_IF_CONTENT) SetName(name string) (){
+	req_if_content.Name = name
 }
 
 // Stage puts req_if_header to the model stage
@@ -10302,6 +10702,11 @@ func (req_if_header *REQ_IF_HEADER) GetName() (res string) {
 	return req_if_header.Name
 }
 
+// for satisfaction of GongStruct interface
+func (req_if_header *REQ_IF_HEADER) SetName(name string) (){
+	req_if_header.Name = name
+}
+
 // Stage puts req_if_tool_extension to the model stage
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_TOOL_EXTENSION {
 
@@ -10371,6 +10776,11 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Checkout(stage *Stage) *REQ_
 // for satisfaction of GongStruct interface
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GetName() (res string) {
 	return req_if_tool_extension.Name
+}
+
+// for satisfaction of GongStruct interface
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) (){
+	req_if_tool_extension.Name = name
 }
 
 // Stage puts renderingconfiguration to the model stage
@@ -10444,6 +10854,11 @@ func (renderingconfiguration *RenderingConfiguration) GetName() (res string) {
 	return renderingconfiguration.Name
 }
 
+// for satisfaction of GongStruct interface
+func (renderingconfiguration *RenderingConfiguration) SetName(name string) (){
+	renderingconfiguration.Name = name
+}
+
 // Stage puts specification to the model stage
 func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 
@@ -10513,6 +10928,11 @@ func (specification *SPECIFICATION) Checkout(stage *Stage) *SPECIFICATION {
 // for satisfaction of GongStruct interface
 func (specification *SPECIFICATION) GetName() (res string) {
 	return specification.Name
+}
+
+// for satisfaction of GongStruct interface
+func (specification *SPECIFICATION) SetName(name string) (){
+	specification.Name = name
 }
 
 // Stage puts specification_rendering to the model stage
@@ -10586,6 +11006,11 @@ func (specification_rendering *SPECIFICATION_Rendering) GetName() (res string) {
 	return specification_rendering.Name
 }
 
+// for satisfaction of GongStruct interface
+func (specification_rendering *SPECIFICATION_Rendering) SetName(name string) (){
+	specification_rendering.Name = name
+}
+
 // Stage puts specification_type to the model stage
 func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION_TYPE {
 
@@ -10655,6 +11080,11 @@ func (specification_type *SPECIFICATION_TYPE) Checkout(stage *Stage) *SPECIFICAT
 // for satisfaction of GongStruct interface
 func (specification_type *SPECIFICATION_TYPE) GetName() (res string) {
 	return specification_type.Name
+}
+
+// for satisfaction of GongStruct interface
+func (specification_type *SPECIFICATION_TYPE) SetName(name string) (){
+	specification_type.Name = name
 }
 
 // Stage puts spec_hierarchy to the model stage
@@ -10728,6 +11158,11 @@ func (spec_hierarchy *SPEC_HIERARCHY) GetName() (res string) {
 	return spec_hierarchy.Name
 }
 
+// for satisfaction of GongStruct interface
+func (spec_hierarchy *SPEC_HIERARCHY) SetName(name string) (){
+	spec_hierarchy.Name = name
+}
+
 // Stage puts spec_object to the model stage
 func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
 
@@ -10797,6 +11232,11 @@ func (spec_object *SPEC_OBJECT) Checkout(stage *Stage) *SPEC_OBJECT {
 // for satisfaction of GongStruct interface
 func (spec_object *SPEC_OBJECT) GetName() (res string) {
 	return spec_object.Name
+}
+
+// for satisfaction of GongStruct interface
+func (spec_object *SPEC_OBJECT) SetName(name string) (){
+	spec_object.Name = name
 }
 
 // Stage puts spec_object_type to the model stage
@@ -10870,6 +11310,11 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GetName() (res string) {
 	return spec_object_type.Name
 }
 
+// for satisfaction of GongStruct interface
+func (spec_object_type *SPEC_OBJECT_TYPE) SetName(name string) (){
+	spec_object_type.Name = name
+}
+
 // Stage puts spec_object_type_rendering to the model stage
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Stage(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
 
@@ -10939,6 +11384,11 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Checkout(stage *St
 // for satisfaction of GongStruct interface
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GetName() (res string) {
 	return spec_object_type_rendering.Name
+}
+
+// for satisfaction of GongStruct interface
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) SetName(name string) (){
+	spec_object_type_rendering.Name = name
 }
 
 // Stage puts spec_relation to the model stage
@@ -11012,6 +11462,11 @@ func (spec_relation *SPEC_RELATION) GetName() (res string) {
 	return spec_relation.Name
 }
 
+// for satisfaction of GongStruct interface
+func (spec_relation *SPEC_RELATION) SetName(name string) (){
+	spec_relation.Name = name
+}
+
 // Stage puts spec_relation_type to the model stage
 func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION_TYPE {
 
@@ -11081,6 +11536,11 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Checkout(stage *Stage) *SPEC_RELAT
 // for satisfaction of GongStruct interface
 func (spec_relation_type *SPEC_RELATION_TYPE) GetName() (res string) {
 	return spec_relation_type.Name
+}
+
+// for satisfaction of GongStruct interface
+func (spec_relation_type *SPEC_RELATION_TYPE) SetName(name string) (){
+	spec_relation_type.Name = name
 }
 
 // Stage puts staticwebsite to the model stage
@@ -11154,6 +11614,11 @@ func (staticwebsite *StaticWebSite) GetName() (res string) {
 	return staticwebsite.Name
 }
 
+// for satisfaction of GongStruct interface
+func (staticwebsite *StaticWebSite) SetName(name string) (){
+	staticwebsite.Name = name
+}
+
 // Stage puts staticwebsitechapter to the model stage
 func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWebSiteChapter {
 
@@ -11223,6 +11688,11 @@ func (staticwebsitechapter *StaticWebSiteChapter) Checkout(stage *Stage) *Static
 // for satisfaction of GongStruct interface
 func (staticwebsitechapter *StaticWebSiteChapter) GetName() (res string) {
 	return staticwebsitechapter.Name
+}
+
+// for satisfaction of GongStruct interface
+func (staticwebsitechapter *StaticWebSiteChapter) SetName(name string) (){
+	staticwebsitechapter.Name = name
 }
 
 // Stage puts staticwebsitegeneratedimage to the model stage
@@ -11296,6 +11766,11 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GetName() (res s
 	return staticwebsitegeneratedimage.Name
 }
 
+// for satisfaction of GongStruct interface
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) SetName(name string) (){
+	staticwebsitegeneratedimage.Name = name
+}
+
 // Stage puts staticwebsiteimage to the model stage
 func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSiteImage {
 
@@ -11365,6 +11840,11 @@ func (staticwebsiteimage *StaticWebSiteImage) Checkout(stage *Stage) *StaticWebS
 // for satisfaction of GongStruct interface
 func (staticwebsiteimage *StaticWebSiteImage) GetName() (res string) {
 	return staticwebsiteimage.Name
+}
+
+// for satisfaction of GongStruct interface
+func (staticwebsiteimage *StaticWebSiteImage) SetName(name string) (){
+	staticwebsiteimage.Name = name
 }
 
 // Stage puts staticwebsiteparagraph to the model stage
@@ -11438,6 +11918,11 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GetName() (res string) {
 	return staticwebsiteparagraph.Name
 }
 
+// for satisfaction of GongStruct interface
+func (staticwebsiteparagraph *StaticWebSiteParagraph) SetName(name string) (){
+	staticwebsiteparagraph.Name = name
+}
+
 // Stage puts xhtml_content to the model stage
 func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 
@@ -11507,6 +11992,11 @@ func (xhtml_content *XHTML_CONTENT) Checkout(stage *Stage) *XHTML_CONTENT {
 // for satisfaction of GongStruct interface
 func (xhtml_content *XHTML_CONTENT) GetName() (res string) {
 	return xhtml_content.Name
+}
+
+// for satisfaction of GongStruct interface
+func (xhtml_content *XHTML_CONTENT) SetName(name string) (){
+	xhtml_content.Name = name
 }
 
 // swagger:ignore
@@ -12915,6 +13405,7 @@ type GongtructBasicField interface {
 // - full refactoring of Gongstruct identifiers / fields
 type GongstructIF interface {
 	GetName() string
+	SetName(string)
 	CommitVoid(*Stage)
 	StageVoid(*Stage)
 	UnstageVoid(stage *Stage)
@@ -13172,207 +13663,207 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 
 // GongGetMap returns the map of staged GongstructType instances
 // it is usefull because it allows refactoring of gong struct identifier
-func GongGetMap[Type GongstructMapString](stage *Stage) *Type {
+func GongGetMap[Type GongstructIF](stage *Stage) map[string]GongstructIF {
 	var ret Type
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
 	case map[string]*ALTERNATIVE_ID:
-		return any(&stage.ALTERNATIVE_IDs_mapString).(*Type)
+		return any(&stage.ALTERNATIVE_IDs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_BOOLEAN:
-		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_DATE:
-		return any(&stage.ATTRIBUTE_DEFINITION_DATEs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_DATEs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_ENUMERATION:
-		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_INTEGER:
-		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_REAL:
-		return any(&stage.ATTRIBUTE_DEFINITION_REALs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_REALs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_Rendering:
-		return any(&stage.ATTRIBUTE_DEFINITION_Renderings_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_Renderings_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_STRING:
-		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_DEFINITION_XHTML:
-		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_DATE:
-		return any(&stage.ATTRIBUTE_VALUE_DATEs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_DATEs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.ATTRIBUTE_VALUE_INTEGERs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_INTEGERs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_REAL:
-		return any(&stage.ATTRIBUTE_VALUE_REALs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_REALs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_STRING:
-		return any(&stage.ATTRIBUTE_VALUE_STRINGs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_STRINGs_mapString).(map[string]GongstructIF)
 	case map[string]*ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.ATTRIBUTE_VALUE_XHTMLs_mapString).(*Type)
+		return any(&stage.ATTRIBUTE_VALUE_XHTMLs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ALTERNATIVE_ID:
-		return any(&stage.A_ALTERNATIVE_IDs_mapString).(*Type)
+		return any(&stage.A_ALTERNATIVE_IDs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_DATE:
-		return any(&stage.A_ATTRIBUTE_VALUE_DATEs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_DATEs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_REAL:
-		return any(&stage.A_ATTRIBUTE_VALUE_REALs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_REALs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_STRING:
-		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ATTRIBUTE_VALUE_XHTML_1:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString).(*Type)
+		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString).(map[string]GongstructIF)
 	case map[string]*A_CHILDREN:
-		return any(&stage.A_CHILDRENs_mapString).(*Type)
+		return any(&stage.A_CHILDRENs_mapString).(map[string]GongstructIF)
 	case map[string]*A_CORE_CONTENT:
-		return any(&stage.A_CORE_CONTENTs_mapString).(*Type)
+		return any(&stage.A_CORE_CONTENTs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPES:
-		return any(&stage.A_DATATYPESs_mapString).(*Type)
+		return any(&stage.A_DATATYPESs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_DATE_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_REAL_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_STRING_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_DATATYPE_DEFINITION_XHTML_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString).(*Type)
+		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_EDITABLE_ATTS:
-		return any(&stage.A_EDITABLE_ATTSs_mapString).(*Type)
+		return any(&stage.A_EDITABLE_ATTSs_mapString).(map[string]GongstructIF)
 	case map[string]*A_ENUM_VALUE_REF:
-		return any(&stage.A_ENUM_VALUE_REFs_mapString).(*Type)
+		return any(&stage.A_ENUM_VALUE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_OBJECT:
-		return any(&stage.A_OBJECTs_mapString).(*Type)
+		return any(&stage.A_OBJECTs_mapString).(map[string]GongstructIF)
 	case map[string]*A_PROPERTIES:
-		return any(&stage.A_PROPERTIESs_mapString).(*Type)
+		return any(&stage.A_PROPERTIESs_mapString).(map[string]GongstructIF)
 	case map[string]*A_RELATION_GROUP_TYPE_REF:
-		return any(&stage.A_RELATION_GROUP_TYPE_REFs_mapString).(*Type)
+		return any(&stage.A_RELATION_GROUP_TYPE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SOURCE_1:
-		return any(&stage.A_SOURCE_1s_mapString).(*Type)
+		return any(&stage.A_SOURCE_1s_mapString).(map[string]GongstructIF)
 	case map[string]*A_SOURCE_SPECIFICATION_1:
-		return any(&stage.A_SOURCE_SPECIFICATION_1s_mapString).(*Type)
+		return any(&stage.A_SOURCE_SPECIFICATION_1s_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPECIFICATIONS:
-		return any(&stage.A_SPECIFICATIONSs_mapString).(*Type)
+		return any(&stage.A_SPECIFICATIONSs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPECIFICATION_TYPE_REF:
-		return any(&stage.A_SPECIFICATION_TYPE_REFs_mapString).(*Type)
+		return any(&stage.A_SPECIFICATION_TYPE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPECIFIED_VALUES:
-		return any(&stage.A_SPECIFIED_VALUESs_mapString).(*Type)
+		return any(&stage.A_SPECIFIED_VALUESs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_ATTRIBUTES:
-		return any(&stage.A_SPEC_ATTRIBUTESs_mapString).(*Type)
+		return any(&stage.A_SPEC_ATTRIBUTESs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_OBJECTS:
-		return any(&stage.A_SPEC_OBJECTSs_mapString).(*Type)
+		return any(&stage.A_SPEC_OBJECTSs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_OBJECT_TYPE_REF:
-		return any(&stage.A_SPEC_OBJECT_TYPE_REFs_mapString).(*Type)
+		return any(&stage.A_SPEC_OBJECT_TYPE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_RELATIONS:
-		return any(&stage.A_SPEC_RELATIONSs_mapString).(*Type)
+		return any(&stage.A_SPEC_RELATIONSs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_RELATION_GROUPS:
-		return any(&stage.A_SPEC_RELATION_GROUPSs_mapString).(*Type)
+		return any(&stage.A_SPEC_RELATION_GROUPSs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_RELATION_REF:
-		return any(&stage.A_SPEC_RELATION_REFs_mapString).(*Type)
+		return any(&stage.A_SPEC_RELATION_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_RELATION_TYPE_REF:
-		return any(&stage.A_SPEC_RELATION_TYPE_REFs_mapString).(*Type)
+		return any(&stage.A_SPEC_RELATION_TYPE_REFs_mapString).(map[string]GongstructIF)
 	case map[string]*A_SPEC_TYPES:
-		return any(&stage.A_SPEC_TYPESs_mapString).(*Type)
+		return any(&stage.A_SPEC_TYPESs_mapString).(map[string]GongstructIF)
 	case map[string]*A_THE_HEADER:
-		return any(&stage.A_THE_HEADERs_mapString).(*Type)
+		return any(&stage.A_THE_HEADERs_mapString).(map[string]GongstructIF)
 	case map[string]*A_TOOL_EXTENSIONS:
-		return any(&stage.A_TOOL_EXTENSIONSs_mapString).(*Type)
+		return any(&stage.A_TOOL_EXTENSIONSs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_BOOLEAN:
-		return any(&stage.DATATYPE_DEFINITION_BOOLEANs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_BOOLEANs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_DATE:
-		return any(&stage.DATATYPE_DEFINITION_DATEs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_DATEs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_ENUMERATION:
-		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_INTEGER:
-		return any(&stage.DATATYPE_DEFINITION_INTEGERs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_INTEGERs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_REAL:
-		return any(&stage.DATATYPE_DEFINITION_REALs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_REALs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_STRING:
-		return any(&stage.DATATYPE_DEFINITION_STRINGs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_STRINGs_mapString).(map[string]GongstructIF)
 	case map[string]*DATATYPE_DEFINITION_XHTML:
-		return any(&stage.DATATYPE_DEFINITION_XHTMLs_mapString).(*Type)
+		return any(&stage.DATATYPE_DEFINITION_XHTMLs_mapString).(map[string]GongstructIF)
 	case map[string]*EMBEDDED_VALUE:
-		return any(&stage.EMBEDDED_VALUEs_mapString).(*Type)
+		return any(&stage.EMBEDDED_VALUEs_mapString).(map[string]GongstructIF)
 	case map[string]*ENUM_VALUE:
-		return any(&stage.ENUM_VALUEs_mapString).(*Type)
+		return any(&stage.ENUM_VALUEs_mapString).(map[string]GongstructIF)
 	case map[string]*EmbeddedJpgImage:
-		return any(&stage.EmbeddedJpgImages_mapString).(*Type)
+		return any(&stage.EmbeddedJpgImages_mapString).(map[string]GongstructIF)
 	case map[string]*EmbeddedPngImage:
-		return any(&stage.EmbeddedPngImages_mapString).(*Type)
+		return any(&stage.EmbeddedPngImages_mapString).(map[string]GongstructIF)
 	case map[string]*EmbeddedSvgImage:
-		return any(&stage.EmbeddedSvgImages_mapString).(*Type)
+		return any(&stage.EmbeddedSvgImages_mapString).(map[string]GongstructIF)
 	case map[string]*Kill:
-		return any(&stage.Kills_mapString).(*Type)
+		return any(&stage.Kills_mapString).(map[string]GongstructIF)
 	case map[string]*Map_identifier_bool:
-		return any(&stage.Map_identifier_bools_mapString).(*Type)
+		return any(&stage.Map_identifier_bools_mapString).(map[string]GongstructIF)
 	case map[string]*RELATION_GROUP:
-		return any(&stage.RELATION_GROUPs_mapString).(*Type)
+		return any(&stage.RELATION_GROUPs_mapString).(map[string]GongstructIF)
 	case map[string]*RELATION_GROUP_TYPE:
-		return any(&stage.RELATION_GROUP_TYPEs_mapString).(*Type)
+		return any(&stage.RELATION_GROUP_TYPEs_mapString).(map[string]GongstructIF)
 	case map[string]*REQ_IF:
-		return any(&stage.REQ_IFs_mapString).(*Type)
+		return any(&stage.REQ_IFs_mapString).(map[string]GongstructIF)
 	case map[string]*REQ_IF_CONTENT:
-		return any(&stage.REQ_IF_CONTENTs_mapString).(*Type)
+		return any(&stage.REQ_IF_CONTENTs_mapString).(map[string]GongstructIF)
 	case map[string]*REQ_IF_HEADER:
-		return any(&stage.REQ_IF_HEADERs_mapString).(*Type)
+		return any(&stage.REQ_IF_HEADERs_mapString).(map[string]GongstructIF)
 	case map[string]*REQ_IF_TOOL_EXTENSION:
-		return any(&stage.REQ_IF_TOOL_EXTENSIONs_mapString).(*Type)
+		return any(&stage.REQ_IF_TOOL_EXTENSIONs_mapString).(map[string]GongstructIF)
 	case map[string]*RenderingConfiguration:
-		return any(&stage.RenderingConfigurations_mapString).(*Type)
+		return any(&stage.RenderingConfigurations_mapString).(map[string]GongstructIF)
 	case map[string]*SPECIFICATION:
-		return any(&stage.SPECIFICATIONs_mapString).(*Type)
+		return any(&stage.SPECIFICATIONs_mapString).(map[string]GongstructIF)
 	case map[string]*SPECIFICATION_Rendering:
-		return any(&stage.SPECIFICATION_Renderings_mapString).(*Type)
+		return any(&stage.SPECIFICATION_Renderings_mapString).(map[string]GongstructIF)
 	case map[string]*SPECIFICATION_TYPE:
-		return any(&stage.SPECIFICATION_TYPEs_mapString).(*Type)
+		return any(&stage.SPECIFICATION_TYPEs_mapString).(map[string]GongstructIF)
 	case map[string]*SPEC_HIERARCHY:
-		return any(&stage.SPEC_HIERARCHYs_mapString).(*Type)
+		return any(&stage.SPEC_HIERARCHYs_mapString).(map[string]GongstructIF)
 	case map[string]*SPEC_OBJECT:
-		return any(&stage.SPEC_OBJECTs_mapString).(*Type)
+		return any(&stage.SPEC_OBJECTs_mapString).(map[string]GongstructIF)
 	case map[string]*SPEC_OBJECT_TYPE:
-		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(*Type)
+		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(map[string]GongstructIF)
 	case map[string]*SPEC_OBJECT_TYPE_Rendering:
-		return any(&stage.SPEC_OBJECT_TYPE_Renderings_mapString).(*Type)
+		return any(&stage.SPEC_OBJECT_TYPE_Renderings_mapString).(map[string]GongstructIF)
 	case map[string]*SPEC_RELATION:
-		return any(&stage.SPEC_RELATIONs_mapString).(*Type)
+		return any(&stage.SPEC_RELATIONs_mapString).(map[string]GongstructIF)
 	case map[string]*SPEC_RELATION_TYPE:
-		return any(&stage.SPEC_RELATION_TYPEs_mapString).(*Type)
+		return any(&stage.SPEC_RELATION_TYPEs_mapString).(map[string]GongstructIF)
 	case map[string]*StaticWebSite:
-		return any(&stage.StaticWebSites_mapString).(*Type)
+		return any(&stage.StaticWebSites_mapString).(map[string]GongstructIF)
 	case map[string]*StaticWebSiteChapter:
-		return any(&stage.StaticWebSiteChapters_mapString).(*Type)
+		return any(&stage.StaticWebSiteChapters_mapString).(map[string]GongstructIF)
 	case map[string]*StaticWebSiteGeneratedImage:
-		return any(&stage.StaticWebSiteGeneratedImages_mapString).(*Type)
+		return any(&stage.StaticWebSiteGeneratedImages_mapString).(map[string]GongstructIF)
 	case map[string]*StaticWebSiteImage:
-		return any(&stage.StaticWebSiteImages_mapString).(*Type)
+		return any(&stage.StaticWebSiteImages_mapString).(map[string]GongstructIF)
 	case map[string]*StaticWebSiteParagraph:
-		return any(&stage.StaticWebSiteParagraphs_mapString).(*Type)
+		return any(&stage.StaticWebSiteParagraphs_mapString).(map[string]GongstructIF)
 	case map[string]*XHTML_CONTENT:
-		return any(&stage.XHTML_CONTENTs_mapString).(*Type)
+		return any(&stage.XHTML_CONTENTs_mapString).(map[string]GongstructIF)
 	default:
 		return nil
 	}
@@ -27180,4 +27671,498 @@ func GetGongstructNameFromPointer(instance GongstructIF) (res string) {
 	return
 }
 
+func (stage *Stage) ResetMapStrings() {
+
+	// insertion point for generic get gongstruct name
+	stage.ALTERNATIVE_IDs_mapString = make(map[string]*ALTERNATIVE_ID)
+	for alternative_id := range stage.ALTERNATIVE_IDs {
+		stage.ALTERNATIVE_IDs_mapString[alternative_id.Name] = alternative_id
+	}
+
+	stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_BOOLEAN)
+	for attribute_definition_boolean := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
+		stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString[attribute_definition_boolean.Name] = attribute_definition_boolean
+	}
+
+	stage.ATTRIBUTE_DEFINITION_DATEs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_DATE)
+	for attribute_definition_date := range stage.ATTRIBUTE_DEFINITION_DATEs {
+		stage.ATTRIBUTE_DEFINITION_DATEs_mapString[attribute_definition_date.Name] = attribute_definition_date
+	}
+
+	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_ENUMERATION)
+	for attribute_definition_enumeration := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString[attribute_definition_enumeration.Name] = attribute_definition_enumeration
+	}
+
+	stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_INTEGER)
+	for attribute_definition_integer := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
+		stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString[attribute_definition_integer.Name] = attribute_definition_integer
+	}
+
+	stage.ATTRIBUTE_DEFINITION_REALs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_REAL)
+	for attribute_definition_real := range stage.ATTRIBUTE_DEFINITION_REALs {
+		stage.ATTRIBUTE_DEFINITION_REALs_mapString[attribute_definition_real.Name] = attribute_definition_real
+	}
+
+	stage.ATTRIBUTE_DEFINITION_Renderings_mapString = make(map[string]*ATTRIBUTE_DEFINITION_Rendering)
+	for attribute_definition_rendering := range stage.ATTRIBUTE_DEFINITION_Renderings {
+		stage.ATTRIBUTE_DEFINITION_Renderings_mapString[attribute_definition_rendering.Name] = attribute_definition_rendering
+	}
+
+	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_STRING)
+	for attribute_definition_string := range stage.ATTRIBUTE_DEFINITION_STRINGs {
+		stage.ATTRIBUTE_DEFINITION_STRINGs_mapString[attribute_definition_string.Name] = attribute_definition_string
+	}
+
+	stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString = make(map[string]*ATTRIBUTE_DEFINITION_XHTML)
+	for attribute_definition_xhtml := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
+		stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString[attribute_definition_xhtml.Name] = attribute_definition_xhtml
+	}
+
+	stage.ATTRIBUTE_VALUE_BOOLEANs_mapString = make(map[string]*ATTRIBUTE_VALUE_BOOLEAN)
+	for attribute_value_boolean := range stage.ATTRIBUTE_VALUE_BOOLEANs {
+		stage.ATTRIBUTE_VALUE_BOOLEANs_mapString[attribute_value_boolean.Name] = attribute_value_boolean
+	}
+
+	stage.ATTRIBUTE_VALUE_DATEs_mapString = make(map[string]*ATTRIBUTE_VALUE_DATE)
+	for attribute_value_date := range stage.ATTRIBUTE_VALUE_DATEs {
+		stage.ATTRIBUTE_VALUE_DATEs_mapString[attribute_value_date.Name] = attribute_value_date
+	}
+
+	stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString = make(map[string]*ATTRIBUTE_VALUE_ENUMERATION)
+	for attribute_value_enumeration := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
+		stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString[attribute_value_enumeration.Name] = attribute_value_enumeration
+	}
+
+	stage.ATTRIBUTE_VALUE_INTEGERs_mapString = make(map[string]*ATTRIBUTE_VALUE_INTEGER)
+	for attribute_value_integer := range stage.ATTRIBUTE_VALUE_INTEGERs {
+		stage.ATTRIBUTE_VALUE_INTEGERs_mapString[attribute_value_integer.Name] = attribute_value_integer
+	}
+
+	stage.ATTRIBUTE_VALUE_REALs_mapString = make(map[string]*ATTRIBUTE_VALUE_REAL)
+	for attribute_value_real := range stage.ATTRIBUTE_VALUE_REALs {
+		stage.ATTRIBUTE_VALUE_REALs_mapString[attribute_value_real.Name] = attribute_value_real
+	}
+
+	stage.ATTRIBUTE_VALUE_STRINGs_mapString = make(map[string]*ATTRIBUTE_VALUE_STRING)
+	for attribute_value_string := range stage.ATTRIBUTE_VALUE_STRINGs {
+		stage.ATTRIBUTE_VALUE_STRINGs_mapString[attribute_value_string.Name] = attribute_value_string
+	}
+
+	stage.ATTRIBUTE_VALUE_XHTMLs_mapString = make(map[string]*ATTRIBUTE_VALUE_XHTML)
+	for attribute_value_xhtml := range stage.ATTRIBUTE_VALUE_XHTMLs {
+		stage.ATTRIBUTE_VALUE_XHTMLs_mapString[attribute_value_xhtml.Name] = attribute_value_xhtml
+	}
+
+	stage.A_ALTERNATIVE_IDs_mapString = make(map[string]*A_ALTERNATIVE_ID)
+	for a_alternative_id := range stage.A_ALTERNATIVE_IDs {
+		stage.A_ALTERNATIVE_IDs_mapString[a_alternative_id.Name] = a_alternative_id
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
+	for a_attribute_definition_boolean_ref := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString[a_attribute_definition_boolean_ref.Name] = a_attribute_definition_boolean_ref
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF)
+	for a_attribute_definition_date_ref := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString[a_attribute_definition_date_ref.Name] = a_attribute_definition_date_ref
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
+	for a_attribute_definition_enumeration_ref := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString[a_attribute_definition_enumeration_ref.Name] = a_attribute_definition_enumeration_ref
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
+	for a_attribute_definition_integer_ref := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString[a_attribute_definition_integer_ref.Name] = a_attribute_definition_integer_ref
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF)
+	for a_attribute_definition_real_ref := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString[a_attribute_definition_real_ref.Name] = a_attribute_definition_real_ref
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF)
+	for a_attribute_definition_string_ref := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString[a_attribute_definition_string_ref.Name] = a_attribute_definition_string_ref
+	}
+
+	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString = make(map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF)
+	for a_attribute_definition_xhtml_ref := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs {
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString[a_attribute_definition_xhtml_ref.Name] = a_attribute_definition_xhtml_ref
+	}
+
+	stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_BOOLEAN)
+	for a_attribute_value_boolean := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
+		stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString[a_attribute_value_boolean.Name] = a_attribute_value_boolean
+	}
+
+	stage.A_ATTRIBUTE_VALUE_DATEs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_DATE)
+	for a_attribute_value_date := range stage.A_ATTRIBUTE_VALUE_DATEs {
+		stage.A_ATTRIBUTE_VALUE_DATEs_mapString[a_attribute_value_date.Name] = a_attribute_value_date
+	}
+
+	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_ENUMERATION)
+	for a_attribute_value_enumeration := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString[a_attribute_value_enumeration.Name] = a_attribute_value_enumeration
+	}
+
+	stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_INTEGER)
+	for a_attribute_value_integer := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
+		stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString[a_attribute_value_integer.Name] = a_attribute_value_integer
+	}
+
+	stage.A_ATTRIBUTE_VALUE_REALs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_REAL)
+	for a_attribute_value_real := range stage.A_ATTRIBUTE_VALUE_REALs {
+		stage.A_ATTRIBUTE_VALUE_REALs_mapString[a_attribute_value_real.Name] = a_attribute_value_real
+	}
+
+	stage.A_ATTRIBUTE_VALUE_STRINGs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_STRING)
+	for a_attribute_value_string := range stage.A_ATTRIBUTE_VALUE_STRINGs {
+		stage.A_ATTRIBUTE_VALUE_STRINGs_mapString[a_attribute_value_string.Name] = a_attribute_value_string
+	}
+
+	stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString = make(map[string]*A_ATTRIBUTE_VALUE_XHTML)
+	for a_attribute_value_xhtml := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
+		stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString[a_attribute_value_xhtml.Name] = a_attribute_value_xhtml
+	}
+
+	stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString = make(map[string]*A_ATTRIBUTE_VALUE_XHTML_1)
+	for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
+		stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString[a_attribute_value_xhtml_1.Name] = a_attribute_value_xhtml_1
+	}
+
+	stage.A_CHILDRENs_mapString = make(map[string]*A_CHILDREN)
+	for a_children := range stage.A_CHILDRENs {
+		stage.A_CHILDRENs_mapString[a_children.Name] = a_children
+	}
+
+	stage.A_CORE_CONTENTs_mapString = make(map[string]*A_CORE_CONTENT)
+	for a_core_content := range stage.A_CORE_CONTENTs {
+		stage.A_CORE_CONTENTs_mapString[a_core_content.Name] = a_core_content
+	}
+
+	stage.A_DATATYPESs_mapString = make(map[string]*A_DATATYPES)
+	for a_datatypes := range stage.A_DATATYPESs {
+		stage.A_DATATYPESs_mapString[a_datatypes.Name] = a_datatypes
+	}
+
+	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF)
+	for a_datatype_definition_boolean_ref := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs {
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString[a_datatype_definition_boolean_ref.Name] = a_datatype_definition_boolean_ref
+	}
+
+	stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_DATE_REF)
+	for a_datatype_definition_date_ref := range stage.A_DATATYPE_DEFINITION_DATE_REFs {
+		stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString[a_datatype_definition_date_ref.Name] = a_datatype_definition_date_ref
+	}
+
+	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF)
+	for a_datatype_definition_enumeration_ref := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs {
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString[a_datatype_definition_enumeration_ref.Name] = a_datatype_definition_enumeration_ref
+	}
+
+	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_INTEGER_REF)
+	for a_datatype_definition_integer_ref := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs {
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString[a_datatype_definition_integer_ref.Name] = a_datatype_definition_integer_ref
+	}
+
+	stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_REAL_REF)
+	for a_datatype_definition_real_ref := range stage.A_DATATYPE_DEFINITION_REAL_REFs {
+		stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString[a_datatype_definition_real_ref.Name] = a_datatype_definition_real_ref
+	}
+
+	stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_STRING_REF)
+	for a_datatype_definition_string_ref := range stage.A_DATATYPE_DEFINITION_STRING_REFs {
+		stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString[a_datatype_definition_string_ref.Name] = a_datatype_definition_string_ref
+	}
+
+	stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString = make(map[string]*A_DATATYPE_DEFINITION_XHTML_REF)
+	for a_datatype_definition_xhtml_ref := range stage.A_DATATYPE_DEFINITION_XHTML_REFs {
+		stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString[a_datatype_definition_xhtml_ref.Name] = a_datatype_definition_xhtml_ref
+	}
+
+	stage.A_EDITABLE_ATTSs_mapString = make(map[string]*A_EDITABLE_ATTS)
+	for a_editable_atts := range stage.A_EDITABLE_ATTSs {
+		stage.A_EDITABLE_ATTSs_mapString[a_editable_atts.Name] = a_editable_atts
+	}
+
+	stage.A_ENUM_VALUE_REFs_mapString = make(map[string]*A_ENUM_VALUE_REF)
+	for a_enum_value_ref := range stage.A_ENUM_VALUE_REFs {
+		stage.A_ENUM_VALUE_REFs_mapString[a_enum_value_ref.Name] = a_enum_value_ref
+	}
+
+	stage.A_OBJECTs_mapString = make(map[string]*A_OBJECT)
+	for a_object := range stage.A_OBJECTs {
+		stage.A_OBJECTs_mapString[a_object.Name] = a_object
+	}
+
+	stage.A_PROPERTIESs_mapString = make(map[string]*A_PROPERTIES)
+	for a_properties := range stage.A_PROPERTIESs {
+		stage.A_PROPERTIESs_mapString[a_properties.Name] = a_properties
+	}
+
+	stage.A_RELATION_GROUP_TYPE_REFs_mapString = make(map[string]*A_RELATION_GROUP_TYPE_REF)
+	for a_relation_group_type_ref := range stage.A_RELATION_GROUP_TYPE_REFs {
+		stage.A_RELATION_GROUP_TYPE_REFs_mapString[a_relation_group_type_ref.Name] = a_relation_group_type_ref
+	}
+
+	stage.A_SOURCE_1s_mapString = make(map[string]*A_SOURCE_1)
+	for a_source_1 := range stage.A_SOURCE_1s {
+		stage.A_SOURCE_1s_mapString[a_source_1.Name] = a_source_1
+	}
+
+	stage.A_SOURCE_SPECIFICATION_1s_mapString = make(map[string]*A_SOURCE_SPECIFICATION_1)
+	for a_source_specification_1 := range stage.A_SOURCE_SPECIFICATION_1s {
+		stage.A_SOURCE_SPECIFICATION_1s_mapString[a_source_specification_1.Name] = a_source_specification_1
+	}
+
+	stage.A_SPECIFICATIONSs_mapString = make(map[string]*A_SPECIFICATIONS)
+	for a_specifications := range stage.A_SPECIFICATIONSs {
+		stage.A_SPECIFICATIONSs_mapString[a_specifications.Name] = a_specifications
+	}
+
+	stage.A_SPECIFICATION_TYPE_REFs_mapString = make(map[string]*A_SPECIFICATION_TYPE_REF)
+	for a_specification_type_ref := range stage.A_SPECIFICATION_TYPE_REFs {
+		stage.A_SPECIFICATION_TYPE_REFs_mapString[a_specification_type_ref.Name] = a_specification_type_ref
+	}
+
+	stage.A_SPECIFIED_VALUESs_mapString = make(map[string]*A_SPECIFIED_VALUES)
+	for a_specified_values := range stage.A_SPECIFIED_VALUESs {
+		stage.A_SPECIFIED_VALUESs_mapString[a_specified_values.Name] = a_specified_values
+	}
+
+	stage.A_SPEC_ATTRIBUTESs_mapString = make(map[string]*A_SPEC_ATTRIBUTES)
+	for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
+		stage.A_SPEC_ATTRIBUTESs_mapString[a_spec_attributes.Name] = a_spec_attributes
+	}
+
+	stage.A_SPEC_OBJECTSs_mapString = make(map[string]*A_SPEC_OBJECTS)
+	for a_spec_objects := range stage.A_SPEC_OBJECTSs {
+		stage.A_SPEC_OBJECTSs_mapString[a_spec_objects.Name] = a_spec_objects
+	}
+
+	stage.A_SPEC_OBJECT_TYPE_REFs_mapString = make(map[string]*A_SPEC_OBJECT_TYPE_REF)
+	for a_spec_object_type_ref := range stage.A_SPEC_OBJECT_TYPE_REFs {
+		stage.A_SPEC_OBJECT_TYPE_REFs_mapString[a_spec_object_type_ref.Name] = a_spec_object_type_ref
+	}
+
+	stage.A_SPEC_RELATIONSs_mapString = make(map[string]*A_SPEC_RELATIONS)
+	for a_spec_relations := range stage.A_SPEC_RELATIONSs {
+		stage.A_SPEC_RELATIONSs_mapString[a_spec_relations.Name] = a_spec_relations
+	}
+
+	stage.A_SPEC_RELATION_GROUPSs_mapString = make(map[string]*A_SPEC_RELATION_GROUPS)
+	for a_spec_relation_groups := range stage.A_SPEC_RELATION_GROUPSs {
+		stage.A_SPEC_RELATION_GROUPSs_mapString[a_spec_relation_groups.Name] = a_spec_relation_groups
+	}
+
+	stage.A_SPEC_RELATION_REFs_mapString = make(map[string]*A_SPEC_RELATION_REF)
+	for a_spec_relation_ref := range stage.A_SPEC_RELATION_REFs {
+		stage.A_SPEC_RELATION_REFs_mapString[a_spec_relation_ref.Name] = a_spec_relation_ref
+	}
+
+	stage.A_SPEC_RELATION_TYPE_REFs_mapString = make(map[string]*A_SPEC_RELATION_TYPE_REF)
+	for a_spec_relation_type_ref := range stage.A_SPEC_RELATION_TYPE_REFs {
+		stage.A_SPEC_RELATION_TYPE_REFs_mapString[a_spec_relation_type_ref.Name] = a_spec_relation_type_ref
+	}
+
+	stage.A_SPEC_TYPESs_mapString = make(map[string]*A_SPEC_TYPES)
+	for a_spec_types := range stage.A_SPEC_TYPESs {
+		stage.A_SPEC_TYPESs_mapString[a_spec_types.Name] = a_spec_types
+	}
+
+	stage.A_THE_HEADERs_mapString = make(map[string]*A_THE_HEADER)
+	for a_the_header := range stage.A_THE_HEADERs {
+		stage.A_THE_HEADERs_mapString[a_the_header.Name] = a_the_header
+	}
+
+	stage.A_TOOL_EXTENSIONSs_mapString = make(map[string]*A_TOOL_EXTENSIONS)
+	for a_tool_extensions := range stage.A_TOOL_EXTENSIONSs {
+		stage.A_TOOL_EXTENSIONSs_mapString[a_tool_extensions.Name] = a_tool_extensions
+	}
+
+	stage.DATATYPE_DEFINITION_BOOLEANs_mapString = make(map[string]*DATATYPE_DEFINITION_BOOLEAN)
+	for datatype_definition_boolean := range stage.DATATYPE_DEFINITION_BOOLEANs {
+		stage.DATATYPE_DEFINITION_BOOLEANs_mapString[datatype_definition_boolean.Name] = datatype_definition_boolean
+	}
+
+	stage.DATATYPE_DEFINITION_DATEs_mapString = make(map[string]*DATATYPE_DEFINITION_DATE)
+	for datatype_definition_date := range stage.DATATYPE_DEFINITION_DATEs {
+		stage.DATATYPE_DEFINITION_DATEs_mapString[datatype_definition_date.Name] = datatype_definition_date
+	}
+
+	stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString = make(map[string]*DATATYPE_DEFINITION_ENUMERATION)
+	for datatype_definition_enumeration := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
+		stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString[datatype_definition_enumeration.Name] = datatype_definition_enumeration
+	}
+
+	stage.DATATYPE_DEFINITION_INTEGERs_mapString = make(map[string]*DATATYPE_DEFINITION_INTEGER)
+	for datatype_definition_integer := range stage.DATATYPE_DEFINITION_INTEGERs {
+		stage.DATATYPE_DEFINITION_INTEGERs_mapString[datatype_definition_integer.Name] = datatype_definition_integer
+	}
+
+	stage.DATATYPE_DEFINITION_REALs_mapString = make(map[string]*DATATYPE_DEFINITION_REAL)
+	for datatype_definition_real := range stage.DATATYPE_DEFINITION_REALs {
+		stage.DATATYPE_DEFINITION_REALs_mapString[datatype_definition_real.Name] = datatype_definition_real
+	}
+
+	stage.DATATYPE_DEFINITION_STRINGs_mapString = make(map[string]*DATATYPE_DEFINITION_STRING)
+	for datatype_definition_string := range stage.DATATYPE_DEFINITION_STRINGs {
+		stage.DATATYPE_DEFINITION_STRINGs_mapString[datatype_definition_string.Name] = datatype_definition_string
+	}
+
+	stage.DATATYPE_DEFINITION_XHTMLs_mapString = make(map[string]*DATATYPE_DEFINITION_XHTML)
+	for datatype_definition_xhtml := range stage.DATATYPE_DEFINITION_XHTMLs {
+		stage.DATATYPE_DEFINITION_XHTMLs_mapString[datatype_definition_xhtml.Name] = datatype_definition_xhtml
+	}
+
+	stage.EMBEDDED_VALUEs_mapString = make(map[string]*EMBEDDED_VALUE)
+	for embedded_value := range stage.EMBEDDED_VALUEs {
+		stage.EMBEDDED_VALUEs_mapString[embedded_value.Name] = embedded_value
+	}
+
+	stage.ENUM_VALUEs_mapString = make(map[string]*ENUM_VALUE)
+	for enum_value := range stage.ENUM_VALUEs {
+		stage.ENUM_VALUEs_mapString[enum_value.Name] = enum_value
+	}
+
+	stage.EmbeddedJpgImages_mapString = make(map[string]*EmbeddedJpgImage)
+	for embeddedjpgimage := range stage.EmbeddedJpgImages {
+		stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
+	}
+
+	stage.EmbeddedPngImages_mapString = make(map[string]*EmbeddedPngImage)
+	for embeddedpngimage := range stage.EmbeddedPngImages {
+		stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
+	}
+
+	stage.EmbeddedSvgImages_mapString = make(map[string]*EmbeddedSvgImage)
+	for embeddedsvgimage := range stage.EmbeddedSvgImages {
+		stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
+	}
+
+	stage.Kills_mapString = make(map[string]*Kill)
+	for kill := range stage.Kills {
+		stage.Kills_mapString[kill.Name] = kill
+	}
+
+	stage.Map_identifier_bools_mapString = make(map[string]*Map_identifier_bool)
+	for map_identifier_bool := range stage.Map_identifier_bools {
+		stage.Map_identifier_bools_mapString[map_identifier_bool.Name] = map_identifier_bool
+	}
+
+	stage.RELATION_GROUPs_mapString = make(map[string]*RELATION_GROUP)
+	for relation_group := range stage.RELATION_GROUPs {
+		stage.RELATION_GROUPs_mapString[relation_group.Name] = relation_group
+	}
+
+	stage.RELATION_GROUP_TYPEs_mapString = make(map[string]*RELATION_GROUP_TYPE)
+	for relation_group_type := range stage.RELATION_GROUP_TYPEs {
+		stage.RELATION_GROUP_TYPEs_mapString[relation_group_type.Name] = relation_group_type
+	}
+
+	stage.REQ_IFs_mapString = make(map[string]*REQ_IF)
+	for req_if := range stage.REQ_IFs {
+		stage.REQ_IFs_mapString[req_if.Name] = req_if
+	}
+
+	stage.REQ_IF_CONTENTs_mapString = make(map[string]*REQ_IF_CONTENT)
+	for req_if_content := range stage.REQ_IF_CONTENTs {
+		stage.REQ_IF_CONTENTs_mapString[req_if_content.Name] = req_if_content
+	}
+
+	stage.REQ_IF_HEADERs_mapString = make(map[string]*REQ_IF_HEADER)
+	for req_if_header := range stage.REQ_IF_HEADERs {
+		stage.REQ_IF_HEADERs_mapString[req_if_header.Name] = req_if_header
+	}
+
+	stage.REQ_IF_TOOL_EXTENSIONs_mapString = make(map[string]*REQ_IF_TOOL_EXTENSION)
+	for req_if_tool_extension := range stage.REQ_IF_TOOL_EXTENSIONs {
+		stage.REQ_IF_TOOL_EXTENSIONs_mapString[req_if_tool_extension.Name] = req_if_tool_extension
+	}
+
+	stage.RenderingConfigurations_mapString = make(map[string]*RenderingConfiguration)
+	for renderingconfiguration := range stage.RenderingConfigurations {
+		stage.RenderingConfigurations_mapString[renderingconfiguration.Name] = renderingconfiguration
+	}
+
+	stage.SPECIFICATIONs_mapString = make(map[string]*SPECIFICATION)
+	for specification := range stage.SPECIFICATIONs {
+		stage.SPECIFICATIONs_mapString[specification.Name] = specification
+	}
+
+	stage.SPECIFICATION_Renderings_mapString = make(map[string]*SPECIFICATION_Rendering)
+	for specification_rendering := range stage.SPECIFICATION_Renderings {
+		stage.SPECIFICATION_Renderings_mapString[specification_rendering.Name] = specification_rendering
+	}
+
+	stage.SPECIFICATION_TYPEs_mapString = make(map[string]*SPECIFICATION_TYPE)
+	for specification_type := range stage.SPECIFICATION_TYPEs {
+		stage.SPECIFICATION_TYPEs_mapString[specification_type.Name] = specification_type
+	}
+
+	stage.SPEC_HIERARCHYs_mapString = make(map[string]*SPEC_HIERARCHY)
+	for spec_hierarchy := range stage.SPEC_HIERARCHYs {
+		stage.SPEC_HIERARCHYs_mapString[spec_hierarchy.Name] = spec_hierarchy
+	}
+
+	stage.SPEC_OBJECTs_mapString = make(map[string]*SPEC_OBJECT)
+	for spec_object := range stage.SPEC_OBJECTs {
+		stage.SPEC_OBJECTs_mapString[spec_object.Name] = spec_object
+	}
+
+	stage.SPEC_OBJECT_TYPEs_mapString = make(map[string]*SPEC_OBJECT_TYPE)
+	for spec_object_type := range stage.SPEC_OBJECT_TYPEs {
+		stage.SPEC_OBJECT_TYPEs_mapString[spec_object_type.Name] = spec_object_type
+	}
+
+	stage.SPEC_OBJECT_TYPE_Renderings_mapString = make(map[string]*SPEC_OBJECT_TYPE_Rendering)
+	for spec_object_type_rendering := range stage.SPEC_OBJECT_TYPE_Renderings {
+		stage.SPEC_OBJECT_TYPE_Renderings_mapString[spec_object_type_rendering.Name] = spec_object_type_rendering
+	}
+
+	stage.SPEC_RELATIONs_mapString = make(map[string]*SPEC_RELATION)
+	for spec_relation := range stage.SPEC_RELATIONs {
+		stage.SPEC_RELATIONs_mapString[spec_relation.Name] = spec_relation
+	}
+
+	stage.SPEC_RELATION_TYPEs_mapString = make(map[string]*SPEC_RELATION_TYPE)
+	for spec_relation_type := range stage.SPEC_RELATION_TYPEs {
+		stage.SPEC_RELATION_TYPEs_mapString[spec_relation_type.Name] = spec_relation_type
+	}
+
+	stage.StaticWebSites_mapString = make(map[string]*StaticWebSite)
+	for staticwebsite := range stage.StaticWebSites {
+		stage.StaticWebSites_mapString[staticwebsite.Name] = staticwebsite
+	}
+
+	stage.StaticWebSiteChapters_mapString = make(map[string]*StaticWebSiteChapter)
+	for staticwebsitechapter := range stage.StaticWebSiteChapters {
+		stage.StaticWebSiteChapters_mapString[staticwebsitechapter.Name] = staticwebsitechapter
+	}
+
+	stage.StaticWebSiteGeneratedImages_mapString = make(map[string]*StaticWebSiteGeneratedImage)
+	for staticwebsitegeneratedimage := range stage.StaticWebSiteGeneratedImages {
+		stage.StaticWebSiteGeneratedImages_mapString[staticwebsitegeneratedimage.Name] = staticwebsitegeneratedimage
+	}
+
+	stage.StaticWebSiteImages_mapString = make(map[string]*StaticWebSiteImage)
+	for staticwebsiteimage := range stage.StaticWebSiteImages {
+		stage.StaticWebSiteImages_mapString[staticwebsiteimage.Name] = staticwebsiteimage
+	}
+
+	stage.StaticWebSiteParagraphs_mapString = make(map[string]*StaticWebSiteParagraph)
+	for staticwebsiteparagraph := range stage.StaticWebSiteParagraphs {
+		stage.StaticWebSiteParagraphs_mapString[staticwebsiteparagraph.Name] = staticwebsiteparagraph
+	}
+
+	stage.XHTML_CONTENTs_mapString = make(map[string]*XHTML_CONTENT)
+	for xhtml_content := range stage.XHTML_CONTENTs {
+		stage.XHTML_CONTENTs_mapString[xhtml_content.Name] = xhtml_content
+	}
+
+}
 // Last line of the template
