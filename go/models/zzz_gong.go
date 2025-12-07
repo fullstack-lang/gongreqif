@@ -908,8 +908,6 @@ type Stage struct {
 	RenderingConfigurations_mapString map[string]*RenderingConfiguration
 
 	// insertion point for slice of pointers maps
-	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
 	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
 
 	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
@@ -951,8 +949,6 @@ type Stage struct {
 	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
 
 	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
 
 	OnAfterRenderingConfigurationCreateCallback OnAfterCreateInterface[RenderingConfiguration]
 	OnAfterRenderingConfigurationUpdateCallback OnAfterUpdateInterface[RenderingConfiguration]
@@ -15028,8 +15024,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 		return any(&RenderingConfiguration{
 			// Initialisation of associations
 			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries: []*Map_identifier_bool{{Name: "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
 			Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"}},
 			// field is initialized with an instance of Map_identifier_bool with the name of the field
 			Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"}},
@@ -15071,8 +15065,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"}},
 			// field is initialized with an instance of Map_identifier_bool with the name of the field
 			Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_SPECIFICATION_Nodes_expandedEntries: []*Map_identifier_bool{{Name: "Map_SPECIFICATION_Nodes_expandedEntries"}},
 		}).(*Type)
 	case SPECIFICATION:
 		return any(&SPECIFICATION{
@@ -17862,14 +17854,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 	case RenderingConfiguration:
 		switch fieldname {
 		// insertion point for per direct association field
-		case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
 		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
 			for renderingconfiguration := range stage.RenderingConfigurations {
@@ -18034,14 +18018,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
 			for renderingconfiguration := range stage.RenderingConfigurations {
 				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_SPECIFICATION_Nodes_expandedEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
 					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
 				}
 			}
@@ -18680,9 +18656,6 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		var rf ReverseField
 		_ = rf
 		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
 		res = append(res, rf)
 		rf.GongstructName = "RenderingConfiguration"
@@ -18744,9 +18717,6 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		res = append(res, rf)
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
 		res = append(res, rf)
 	case *RELATION_GROUP:
 		var rf ReverseField
@@ -20813,11 +20783,6 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldHeaders() (res
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 		{
-			Name:                 "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
 			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
 			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
 			TargetGongstructName: "Map_identifier_bool",
@@ -20919,11 +20884,6 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldHeaders() (res
 		},
 		{
 			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_SPECIFICATION_Nodes_expandedEntries",
 			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
 			TargetGongstructName: "Map_identifier_bool",
 		},
@@ -23221,16 +23181,6 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldValue(fieldNam
 	// string value of fields
 	case "Name":
 		res.valueString = renderingconfiguration.Name
-	case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
 	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
 		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
@@ -23434,16 +23384,6 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldValue(fieldNam
 	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
 		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
 		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_SPECIFICATION_Nodes_expandedEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
 			if idx > 0 {
 				res.valueString += "\n"
 				res.ids += ";"
@@ -26269,20 +26209,6 @@ func (renderingconfiguration *RenderingConfiguration) GongSetFieldValue(fieldNam
 	// insertion point for per field code
 	case "Name":
 		renderingconfiguration.Name = value.GetValueString()
-	case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-		renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
 	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
 		ids := strings.Split(value.ids, ";")
@@ -26572,20 +26498,6 @@ func (renderingconfiguration *RenderingConfiguration) GongSetFieldValue(fieldNam
 				for __instance__ := range stage.Map_identifier_bools {
 					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
 						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_SPECIFICATION_Nodes_expandedEntries":
-		renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = append(renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries, __instance__)
 						break
 					}
 				}

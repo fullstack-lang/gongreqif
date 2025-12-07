@@ -3146,9 +3146,6 @@ func (stage *Stage) StageBranchRenderingConfiguration(renderingconfiguration *Re
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
 	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
 		StageBranch(stage, _map_identifier_bool)
 	}
@@ -3210,9 +3207,6 @@ func (stage *Stage) StageBranchRenderingConfiguration(renderingconfiguration *Re
 		StageBranch(stage, _map_identifier_bool)
 	}
 	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
 		StageBranch(stage, _map_identifier_bool)
 	}
 
@@ -5801,9 +5795,6 @@ func CopyBranchRenderingConfiguration(mapOrigCopy map[any]any, renderingconfigur
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
 	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
 		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
 	}
@@ -5866,9 +5857,6 @@ func CopyBranchRenderingConfiguration(mapOrigCopy map[any]any, renderingconfigur
 	}
 	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
 		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_SPECIFICATION_Nodes_expandedEntries {
-		renderingconfigurationTo.Map_SPECIFICATION_Nodes_expandedEntries = append(renderingconfigurationTo.Map_SPECIFICATION_Nodes_expandedEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
 	}
 
 	return
@@ -8084,9 +8072,6 @@ func (stage *Stage) UnstageBranchRenderingConfiguration(renderingconfiguration *
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
 	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
 		UnstageBranch(stage, _map_identifier_bool)
 	}
@@ -8148,9 +8133,6 @@ func (stage *Stage) UnstageBranchRenderingConfiguration(renderingconfiguration *
 		UnstageBranch(stage, _map_identifier_bool)
 	}
 	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
 		UnstageBranch(stage, _map_identifier_bool)
 	}
 

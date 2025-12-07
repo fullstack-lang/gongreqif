@@ -7137,14 +7137,6 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		map_RenderingConfiguration_Identifiers[renderingconfiguration] = id
 
 		// Initialisation of values
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
-			pointersInitializesStatements += setPointerField
-		}
-
 		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
 			setPointerField = SliceOfPointersFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
@@ -7309,14 +7301,6 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			setPointerField = SliceOfPointersFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPECIFICATION_Nodes_expandedEntries")
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
 			pointersInitializesStatements += setPointerField
 		}

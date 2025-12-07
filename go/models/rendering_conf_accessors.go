@@ -29,17 +29,6 @@ func (renderingConf *RenderingConfiguration) setBoolValueInMap(entries *[]*Map_i
 	*entries = append(*entries, newEntry)
 }
 
-// Get_SPEC_OBJECT_TYPE_isNodeExpanded is a wrapper for getBoolValueFromMap
-func (renderingConf *RenderingConfiguration) Get_SPEC_OBJECT_TYPE_isNodeExpanded(instance *SPEC_OBJECT_TYPE) bool {
-	val, _ := renderingConf.getBoolValueFromMap(renderingConf.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, instance.GetIdentifier())
-	return val
-}
-
-// Set_SPEC_OBJECT_TYPE_isNodeExpanded is a wrapper for setBoolValueInMap
-func (renderingConf *RenderingConfiguration) Set_SPEC_OBJECT_TYPE_isNodeExpanded(instance *SPEC_OBJECT_TYPE, value bool) {
-	renderingConf.setBoolValueInMap(&renderingConf.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, instance.GetIdentifier(), value)
-}
-
 // Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle is a wrapper for getBoolValueFromMap
 func (renderingConf *RenderingConfiguration) Get_ATTRIBUTE_DEFINITION_XHTML_ShowInTitle(instance *ATTRIBUTE_DEFINITION_XHTML) bool {
 	val, _ := renderingConf.getBoolValueFromMap(renderingConf.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, instance.GetIdentifier())
@@ -269,15 +258,4 @@ func (renderingConf *RenderingConfiguration) Get_ATTRIBUTE_DEFINITION_ENUMERATIO
 // Set_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject is a wrapper for setBoolValueInMap
 func (renderingConf *RenderingConfiguration) Set_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubject(instance *ATTRIBUTE_DEFINITION_ENUMERATION, value bool) {
 	renderingConf.setBoolValueInMap(&renderingConf.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, instance.GetIdentifier(), value)
-}
-
-// Get_SPECIFICATION_Nodes_expanded is a wrapper for getBoolValueFromMap
-func (renderingConf *RenderingConfiguration) Get_SPECIFICATION_Nodes_expanded(instance *SPECIFICATION) bool {
-	val, _ := renderingConf.getBoolValueFromMap(renderingConf.Map_SPECIFICATION_Nodes_expandedEntries, instance.GetIdentifier())
-	return val
-}
-
-// Set_SPECIFICATION_Nodes_expanded is a wrapper for setBoolValueInMap
-func (renderingConf *RenderingConfiguration) Set_SPECIFICATION_Nodes_expanded(instance *SPECIFICATION, value bool) {
-	renderingConf.setBoolValueInMap(&renderingConf.Map_SPECIFICATION_Nodes_expandedEntries, instance.GetIdentifier(), value)
 }

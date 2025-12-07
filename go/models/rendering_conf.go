@@ -38,8 +38,6 @@ type SPECIFICATION_Rendering struct {
 type RenderingConfiguration struct {
 	Name string
 
-	Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_identifier_bool
-
 	Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries       []*Map_identifier_bool
 	Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries      []*Map_identifier_bool
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries     []*Map_identifier_bool
@@ -63,8 +61,6 @@ type RenderingConfiguration struct {
 	Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries        []*Map_identifier_bool
 	Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries        []*Map_identifier_bool
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries []*Map_identifier_bool
-
-	Map_SPECIFICATION_Nodes_expandedEntries []*Map_identifier_bool
 
 	ShowSpecHierachyIdentifiers bool
 }

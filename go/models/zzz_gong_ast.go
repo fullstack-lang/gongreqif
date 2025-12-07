@@ -2431,16 +2431,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					case "RenderingConfiguration":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
-						case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, instanceToAppend)
-							}
 						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 							// perform the append only when the loop is processing the second argument
 							if argNb == 0 {
@@ -2650,16 +2640,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_SPECIFICATION_Nodes_expandedEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_SPECIFICATION_Nodes_expandedEntries = append(instanceWhoseFieldIsAppended.Map_SPECIFICATION_Nodes_expandedEntries, instanceToAppend)
 							}
 						}
 					case "SPECIFICATION":

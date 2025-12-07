@@ -9058,72 +9058,6 @@ func (map_identifier_boolFormCallback *Map_identifier_boolFormCallback) OnSave()
 			FormDivBasicFieldToField(&(map_identifier_bool_.Name), formDiv)
 		case "Value":
 			FormDivBasicFieldToField(&(map_identifier_bool_.Value), formDiv)
-		case "RenderingConfiguration:Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_identifier_bool" but
-			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
-			//
-			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
-			// association. For those use cases, it is handy to set the source of the assocation with
-			// the form of the target source (when editing an instance of Map_identifier_bool). Setting up a value
-			// will discard the former value is there is one.
-			//
-			// Therefore, the forms works only in ONE particular case:
-			// - there was no association to this target
-			var formerSource *models.RenderingConfiguration
-			{
-				var rf models.ReverseField
-				_ = rf
-				rf.GongstructName = "RenderingConfiguration"
-				rf.Fieldname = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"
-				formerAssociationSource := map_identifier_bool_.GongGetReverseFieldOwner(
-					map_identifier_boolFormCallback.probe.stageOfInterest,
-					&rf)
-
-				var ok bool
-				if formerAssociationSource != nil {
-					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
-					if !ok {
-						log.Fatalln("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_identifier_bool, is not an RenderingConfiguration instance")
-					}
-				}
-			}
-
-			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
-
-			// case when the user set empty for the source value
-			if newSourceName == nil {
-				// That could mean we clear the assocation for all source instances
-				if formerSource != nil {
-					idx := slices.Index(formerSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, map_identifier_bool_)
-					formerSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = slices.Delete(formerSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, idx, idx+1)
-				}
-				break // nothing else to do for this field
-			}
-
-			// the former source is not empty. the new value could
-			// be different but there mught more that one source thet
-			// points to this target
-			if formerSource != nil {
-				break // nothing else to do for this field
-			}
-
-			// (2) find the source
-			var newSource *models.RenderingConfiguration
-			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_identifier_boolFormCallback.probe.stageOfInterest) {
-
-				// the match is base on the name
-				if _renderingconfiguration.GetName() == newSourceName.GetName() {
-					newSource = _renderingconfiguration // we have a match
-					break
-				}
-			}
-			if newSource == nil {
-				log.Println("Source of RenderingConfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries []*Map_identifier_bool, with name", newSourceName, ", does not exist")
-				break
-			}
-
-			// (3) append the new value to the new source field
-			newSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = append(newSource.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, map_identifier_bool_)
 		case "RenderingConfiguration:Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries []*Map_identifier_bool" but
 			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
@@ -10510,72 +10444,6 @@ func (map_identifier_boolFormCallback *Map_identifier_boolFormCallback) OnSave()
 
 			// (3) append the new value to the new source field
 			newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(newSource.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, map_identifier_bool_)
-		case "RenderingConfiguration:Map_SPECIFICATION_Nodes_expandedEntries":
-			// WARNING : this form deals with the N-N association "RenderingConfiguration.Map_SPECIFICATION_Nodes_expandedEntries []*Map_identifier_bool" but
-			// it work only for 1-N associations (TODO: #660, enable this form only for field with //gong:1_N magic code)
-			//
-			// In many use cases, for instance tree structures, the assocation is semanticaly a 1-N
-			// association. For those use cases, it is handy to set the source of the assocation with
-			// the form of the target source (when editing an instance of Map_identifier_bool). Setting up a value
-			// will discard the former value is there is one.
-			//
-			// Therefore, the forms works only in ONE particular case:
-			// - there was no association to this target
-			var formerSource *models.RenderingConfiguration
-			{
-				var rf models.ReverseField
-				_ = rf
-				rf.GongstructName = "RenderingConfiguration"
-				rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
-				formerAssociationSource := map_identifier_bool_.GongGetReverseFieldOwner(
-					map_identifier_boolFormCallback.probe.stageOfInterest,
-					&rf)
-
-				var ok bool
-				if formerAssociationSource != nil {
-					formerSource, ok = formerAssociationSource.(*models.RenderingConfiguration)
-					if !ok {
-						log.Fatalln("Source of RenderingConfiguration.Map_SPECIFICATION_Nodes_expandedEntries []*Map_identifier_bool, is not an RenderingConfiguration instance")
-					}
-				}
-			}
-
-			newSourceName := formDiv.FormFields[0].FormFieldSelect.Value
-
-			// case when the user set empty for the source value
-			if newSourceName == nil {
-				// That could mean we clear the assocation for all source instances
-				if formerSource != nil {
-					idx := slices.Index(formerSource.Map_SPECIFICATION_Nodes_expandedEntries, map_identifier_bool_)
-					formerSource.Map_SPECIFICATION_Nodes_expandedEntries = slices.Delete(formerSource.Map_SPECIFICATION_Nodes_expandedEntries, idx, idx+1)
-				}
-				break // nothing else to do for this field
-			}
-
-			// the former source is not empty. the new value could
-			// be different but there mught more that one source thet
-			// points to this target
-			if formerSource != nil {
-				break // nothing else to do for this field
-			}
-
-			// (2) find the source
-			var newSource *models.RenderingConfiguration
-			for _renderingconfiguration := range *models.GetGongstructInstancesSet[models.RenderingConfiguration](map_identifier_boolFormCallback.probe.stageOfInterest) {
-
-				// the match is base on the name
-				if _renderingconfiguration.GetName() == newSourceName.GetName() {
-					newSource = _renderingconfiguration // we have a match
-					break
-				}
-			}
-			if newSource == nil {
-				log.Println("Source of RenderingConfiguration.Map_SPECIFICATION_Nodes_expandedEntries []*Map_identifier_bool, with name", newSourceName, ", does not exist")
-				break
-			}
-
-			// (3) append the new value to the new source field
-			newSource.Map_SPECIFICATION_Nodes_expandedEntries = append(newSource.Map_SPECIFICATION_Nodes_expandedEntries, map_identifier_bool_)
 		}
 	}
 
@@ -11379,31 +11247,6 @@ func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) On
 		// insertion point per field
 		case "Name":
 			FormDivBasicFieldToField(&(renderingconfiguration_.Name), formDiv)
-		case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_identifier_bool](renderingconfigurationFormCallback.probe.stageOfInterest)
-			instanceSlice := make([]*models.Map_identifier_bool, 0)
-
-			// make a map of all instances by their ID
-			map_id_instances := make(map[uint]*models.Map_identifier_bool)
-
-			for instance := range instanceSet {
-				id := models.GetOrderPointerGongstruct(
-					renderingconfigurationFormCallback.probe.stageOfInterest,
-					instance,
-				)
-				map_id_instances[id] = instance
-			}
-
-			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
-
-			if err != nil {
-				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
-			}
-			for _, id := range ids {
-				instanceSlice = append(instanceSlice, map_id_instances[id])
-			}
-			renderingconfiguration_.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = instanceSlice
-
 		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_identifier_bool](renderingconfigurationFormCallback.probe.stageOfInterest)
 			instanceSlice := make([]*models.Map_identifier_bool, 0)
@@ -11928,31 +11771,6 @@ func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) On
 				instanceSlice = append(instanceSlice, map_id_instances[id])
 			}
 			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = instanceSlice
-
-		case "Map_SPECIFICATION_Nodes_expandedEntries":
-			instanceSet := *models.GetGongstructInstancesSetFromPointerType[*models.Map_identifier_bool](renderingconfigurationFormCallback.probe.stageOfInterest)
-			instanceSlice := make([]*models.Map_identifier_bool, 0)
-
-			// make a map of all instances by their ID
-			map_id_instances := make(map[uint]*models.Map_identifier_bool)
-
-			for instance := range instanceSet {
-				id := models.GetOrderPointerGongstruct(
-					renderingconfigurationFormCallback.probe.stageOfInterest,
-					instance,
-				)
-				map_id_instances[id] = instance
-			}
-
-			ids, err := DecodeStringToIntSlice(formDiv.FormEditAssocButton.AssociationStorage)
-
-			if err != nil {
-				log.Panic("not a good storage", formDiv.FormEditAssocButton.AssociationStorage)
-			}
-			for _, id := range ids {
-				instanceSlice = append(instanceSlice, map_id_instances[id])
-			}
-			renderingconfiguration_.Map_SPECIFICATION_Nodes_expandedEntries = instanceSlice
 
 		case "ShowSpecHierachyIdentifiers":
 			FormDivBasicFieldToField(&(renderingconfiguration_.ShowSpecHierachyIdentifiers), formDiv)

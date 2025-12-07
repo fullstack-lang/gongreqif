@@ -526,13 +526,6 @@ func (stage *Stage) ComputeReverseMaps() {
 
 	// Compute reverse map for named struct RenderingConfiguration
 	// insertion point per field
-	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries {
-			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
 	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
 	for renderingconfiguration := range stage.RenderingConfigurations {
 		_ = renderingconfiguration
@@ -678,13 +671,6 @@ func (stage *Stage) ComputeReverseMaps() {
 		_ = renderingconfiguration
 		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
 			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
-			stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
 		}
 	}
 

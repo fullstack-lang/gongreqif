@@ -52,12 +52,13 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		}
 
 		isSelectedSpecification := specification == selectedSpecification
+		specificationRendering := GetSpecificationRendering(stage, specification)
 
 		specificationNode := &tree.Node{
 			Name:              specification.Name,
 			HasCheckboxButton: true,
 			IsChecked:         isSelectedSpecification,
-			IsExpanded:        stager.RenderingConf.Get_SPECIFICATION_Nodes_expanded(specification),
+			IsExpanded:        specificationRendering.IsNodeExpanded,
 			Impl: &ProxySpecification{
 				stager:        stager,
 				specification: specification,

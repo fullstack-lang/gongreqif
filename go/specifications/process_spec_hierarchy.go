@@ -120,11 +120,12 @@ type ProxySpecification struct {
 
 func (p *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, frontNode *tree.Node) {
 
+	stage := p.stager.GetStage()
 	if frontNode.IsChecked && !stageNode.IsChecked {
 		frontNode.IsChecked = stageNode.IsChecked
 
 		// log.Println("Specification", proxy.specification.Name, "selected")
-		SetSelectedSpecification(p.stager.GetStage(), p.specification)
+		SetSelectedSpecification(stage, p.specification)
 
 		p.stager.Map_SPECIFICATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPECIFICATION_TYPE]()
 		p.stager.Map_SPEC_RELATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_RELATION_TYPE]()
@@ -140,10 +141,14 @@ func (p *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, fro
 	}
 
 	if frontNode.IsExpanded && !stageNode.IsExpanded {
-		p.stager.RenderingConf.Set_SPECIFICATION_Nodes_expanded(p.specification, true)
+		specificationRendering := GetSpecificationRendering(stage, p.specification)
+		stageNode.IsExpanded = frontNode.IsExpanded
+		specificationRendering.IsNodeExpanded = true
 	}
 
 	if !frontNode.IsExpanded && stageNode.IsExpanded {
-		p.stager.RenderingConf.Set_SPECIFICATION_Nodes_expanded(p.specification, false)
+		specificationRendering := GetSpecificationRendering(stage, p.specification)
+		stageNode.IsExpanded = frontNode.IsExpanded
+		specificationRendering.IsNodeExpanded = false
 	}
 }

@@ -623,7 +623,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongClean(stage *Stage) {
 // Clean garbage collect unstaged instances that are referenced by RenderingConfiguration
 func (renderingconfiguration *RenderingConfiguration) GongClean(stage *Stage) {
 	// insertion point per field
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries)
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries)
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries)
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries)
@@ -645,7 +644,6 @@ func (renderingconfiguration *RenderingConfiguration) GongClean(stage *Stage) {
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries)
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries)
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries)
-	renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries)
 	// insertion point per field
 }
 

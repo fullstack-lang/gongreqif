@@ -1361,28 +1361,6 @@ func FillUpForm(
 			var rf models.ReverseField
 			_ = rf
 			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
 			rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
 			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
 			if reverseFieldOwner != nil {
@@ -1841,28 +1819,6 @@ func FillUpForm(
 					probe)
 			}
 		}
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_SPECIFICATION_Nodes_expandedEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_SPECIFICATION_Nodes_expandedEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
 
 	case *models.RELATION_GROUP:
 		// insertion point
@@ -2014,7 +1970,6 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries, formGroup, probe)
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, formGroup, probe)
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, formGroup, probe)
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, formGroup, probe)
@@ -2036,7 +1991,6 @@ func FillUpForm(
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, formGroup, probe)
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, formGroup, probe)
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, formGroup, probe)
-		AssociationSliceToForm("Map_SPECIFICATION_Nodes_expandedEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPECIFICATION_Nodes_expandedEntries, formGroup, probe)
 		BasicFieldtoForm("ShowSpecHierachyIdentifiers", instanceWithInferedType.ShowSpecHierachyIdentifiers, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 

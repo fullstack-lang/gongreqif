@@ -887,10 +887,6 @@ func (inst *Map_identifier_bool) GongGetReverseFieldOwnerName(stage *Stage, reve
 	// insertion point
 		case "RenderingConfiguration":
 			switch reverseField.Fieldname {
-			case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
 			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
@@ -973,10 +969,6 @@ func (inst *Map_identifier_bool) GongGetReverseFieldOwnerName(stage *Stage, reve
 				}
 			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			case "Map_SPECIFICATION_Nodes_expandedEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
 				}
 			}
@@ -2095,8 +2087,6 @@ func (inst *Map_identifier_bool) GongGetReverseFieldOwner(stage *Stage, reverseF
 	// insertion point
 		case "RenderingConfiguration":
 			switch reverseField.Fieldname {
-			case "Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries":
-				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries_reverseMap[inst]
 			case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
 				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[inst]
 			case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
@@ -2139,8 +2129,6 @@ func (inst *Map_identifier_bool) GongGetReverseFieldOwner(stage *Stage, reverseF
 				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[inst]
 			case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
 				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]
-			case "Map_SPECIFICATION_Nodes_expandedEntries":
-				res = stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]
 			}
 	}
 	return res
