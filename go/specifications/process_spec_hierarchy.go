@@ -1,7 +1,6 @@
 package specifications
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -27,12 +26,6 @@ func processSpecHierarchy(
 	if !ok {
 		log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 			"unknown ref")
-	}
-
-	// starting makr bold
-
-	if stager.RenderingConf.ShowSpecHierachyIdentifiers {
-		*markDownContent += fmt.Sprintf("\n\nSH : %s, depth %d\n\n", specHierarchy.IDENTIFIER, outerDepth)
 	}
 
 	markdownBoldStartingMark := `

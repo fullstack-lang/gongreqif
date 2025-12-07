@@ -56,17 +56,32 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_BOOLEAN" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_DATE" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_DATE_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_ENUMERATION" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_INTEGER" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_INTEGER_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_REAL" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_REAL_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_Rendering" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_Rendering](nodeImplGongstruct.probe)
@@ -74,8 +89,14 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_STRING" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_STRING_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_XHTML" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_XHTML_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_VALUE_BOOLEAN" {
 		updateAndCommitTable[*models.ATTRIBUTE_VALUE_BOOLEAN](nodeImplGongstruct.probe)

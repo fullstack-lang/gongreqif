@@ -11,17 +11,32 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_BOOLEAN(target)
 
+	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_BOOLEAN_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_DATE:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_DATE(target)
+
+	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_DATE_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_ENUMERATION(target)
 
+	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_ENUMERATION_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_INTEGER(target)
 
+	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_INTEGER_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_REAL:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_Rendering(target)
@@ -29,8 +44,14 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 	case *ATTRIBUTE_DEFINITION_STRING:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING(target)
 
+	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_XHTML(target)
+
+	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_XHTML_Rendering(target)
 
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		ok = stage.IsStagedATTRIBUTE_VALUE_BOOLEAN(target)
@@ -315,17 +336,32 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_BOOLEAN(target)
 
+	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_BOOLEAN_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_DATE:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_DATE(target)
+
+	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_DATE_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_ENUMERATION(target)
 
+	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_ENUMERATION_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_INTEGER(target)
 
+	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_INTEGER_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_REAL:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_REAL_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_Rendering(target)
@@ -333,8 +369,14 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 	case *ATTRIBUTE_DEFINITION_STRING:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING(target)
 
+	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_STRING_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		ok = stage.IsStagedATTRIBUTE_DEFINITION_XHTML(target)
+
+	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
+		ok = stage.IsStagedATTRIBUTE_DEFINITION_XHTML_Rendering(target)
 
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		ok = stage.IsStagedATTRIBUTE_VALUE_BOOLEAN(target)
@@ -624,9 +666,23 @@ func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_BOOLEAN(attribute_definition_bo
 	return
 }
 
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_BOOLEAN_Rendering(attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering]
+
+	return
+}
+
 func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_DATE(attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) (ok bool) {
 
 	_, ok = stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date]
+
+	return
+}
+
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_DATE_Rendering(attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering]
 
 	return
 }
@@ -638,6 +694,13 @@ func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_ENUMERATION(attribute_definitio
 	return
 }
 
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_ENUMERATION_Rendering(attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering]
+
+	return
+}
+
 func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_INTEGER(attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) (ok bool) {
 
 	_, ok = stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer]
@@ -645,9 +708,23 @@ func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_INTEGER(attribute_definition_in
 	return
 }
 
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_INTEGER_Rendering(attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering]
+
+	return
+}
+
 func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_REAL(attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) (ok bool) {
 
 	_, ok = stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real]
+
+	return
+}
+
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_REAL_Rendering(attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering]
 
 	return
 }
@@ -666,9 +743,23 @@ func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_STRING(attribute_definition_str
 	return
 }
 
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_STRING_Rendering(attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering]
+
+	return
+}
+
 func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_XHTML(attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) (ok bool) {
 
 	_, ok = stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml]
+
+	return
+}
+
+func (stage *Stage) IsStagedATTRIBUTE_DEFINITION_XHTML_Rendering(attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) (ok bool) {
+
+	_, ok = stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering]
 
 	return
 }
@@ -1310,17 +1401,32 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		stage.StageBranchATTRIBUTE_DEFINITION_BOOLEAN(target)
 
+	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_BOOLEAN_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_DATE:
 		stage.StageBranchATTRIBUTE_DEFINITION_DATE(target)
+
+	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_DATE_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		stage.StageBranchATTRIBUTE_DEFINITION_ENUMERATION(target)
 
+	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_ENUMERATION_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		stage.StageBranchATTRIBUTE_DEFINITION_INTEGER(target)
 
+	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_INTEGER_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.StageBranchATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_REAL_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		stage.StageBranchATTRIBUTE_DEFINITION_Rendering(target)
@@ -1328,8 +1434,14 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.StageBranchATTRIBUTE_DEFINITION_STRING(target)
 
+	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_STRING_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		stage.StageBranchATTRIBUTE_DEFINITION_XHTML(target)
+
+	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
+		stage.StageBranchATTRIBUTE_DEFINITION_XHTML_Rendering(target)
 
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		stage.StageBranchATTRIBUTE_VALUE_BOOLEAN(target)
@@ -1643,6 +1755,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_BOOLEAN(attribute_definition
 
 }
 
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_BOOLEAN_Rendering(attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_boolean_rendering) {
+		return
+	}
+
+	attribute_definition_boolean_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_DATE(attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) {
 
 	// check if instance is already staged
@@ -1662,6 +1789,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_DATE(attribute_definition_da
 	if attribute_definition_date.TYPE != nil {
 		StageBranch(stage, attribute_definition_date.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_DATE_Rendering(attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_date_rendering) {
+		return
+	}
+
+	attribute_definition_date_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -1691,6 +1833,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_ENUMERATION(attribute_defini
 
 }
 
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_ENUMERATION_Rendering(attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_enumeration_rendering) {
+		return
+	}
+
+	attribute_definition_enumeration_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_INTEGER(attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) {
 
 	// check if instance is already staged
@@ -1715,6 +1872,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_INTEGER(attribute_definition
 
 }
 
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_INTEGER_Rendering(attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_integer_rendering) {
+		return
+	}
+
+	attribute_definition_integer_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_REAL(attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) {
 
 	// check if instance is already staged
@@ -1734,6 +1906,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_REAL(attribute_definition_re
 	if attribute_definition_real.TYPE != nil {
 		StageBranch(stage, attribute_definition_real.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_REAL_Rendering(attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_real_rendering) {
+		return
+	}
+
+	attribute_definition_real_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -1778,6 +1965,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_STRING(attribute_definition_
 
 }
 
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_STRING_Rendering(attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_string_rendering) {
+		return
+	}
+
+	attribute_definition_string_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_XHTML(attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) {
 
 	// check if instance is already staged
@@ -1797,6 +1999,21 @@ func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_XHTML(attribute_definition_x
 	if attribute_definition_xhtml.TYPE != nil {
 		StageBranch(stage, attribute_definition_xhtml.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) StageBranchATTRIBUTE_DEFINITION_XHTML_Rendering(attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) {
+
+	// check if instance is already staged
+	if IsStaged(stage, attribute_definition_xhtml_rendering) {
+		return
+	}
+
+	attribute_definition_xhtml_rendering.Stage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -3531,20 +3748,40 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchATTRIBUTE_DEFINITION_BOOLEAN(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_BOOLEAN_Rendering(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *ATTRIBUTE_DEFINITION_DATE:
 		toT := CopyBranchATTRIBUTE_DEFINITION_DATE(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_DATE_Rendering(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		toT := CopyBranchATTRIBUTE_DEFINITION_ENUMERATION(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_ENUMERATION_Rendering(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		toT := CopyBranchATTRIBUTE_DEFINITION_INTEGER(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_INTEGER_Rendering(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *ATTRIBUTE_DEFINITION_REAL:
 		toT := CopyBranchATTRIBUTE_DEFINITION_REAL(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_REAL_Rendering(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *ATTRIBUTE_DEFINITION_Rendering:
@@ -3555,8 +3792,16 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 		toT := CopyBranchATTRIBUTE_DEFINITION_STRING(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
+	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_STRING_Rendering(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		toT := CopyBranchATTRIBUTE_DEFINITION_XHTML(mapOrigCopy, fromT)
+		return any(toT).(*Type)
+
+	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
+		toT := CopyBranchATTRIBUTE_DEFINITION_XHTML_Rendering(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *ATTRIBUTE_VALUE_BOOLEAN:
@@ -3969,6 +4214,25 @@ func CopyBranchATTRIBUTE_DEFINITION_BOOLEAN(mapOrigCopy map[any]any, attribute_d
 	return
 }
 
+func CopyBranchATTRIBUTE_DEFINITION_BOOLEAN_Rendering(mapOrigCopy map[any]any, attribute_definition_boolean_renderingFrom *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) (attribute_definition_boolean_renderingTo *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) {
+
+	// attribute_definition_boolean_renderingFrom has already been copied
+	if _attribute_definition_boolean_renderingTo, ok := mapOrigCopy[attribute_definition_boolean_renderingFrom]; ok {
+		attribute_definition_boolean_renderingTo = _attribute_definition_boolean_renderingTo.(*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
+		return
+	}
+
+	attribute_definition_boolean_renderingTo = new(ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
+	mapOrigCopy[attribute_definition_boolean_renderingFrom] = attribute_definition_boolean_renderingTo
+	attribute_definition_boolean_renderingFrom.CopyBasicFields(attribute_definition_boolean_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchATTRIBUTE_DEFINITION_DATE(mapOrigCopy map[any]any, attribute_definition_dateFrom *ATTRIBUTE_DEFINITION_DATE) (attribute_definition_dateTo *ATTRIBUTE_DEFINITION_DATE) {
 
 	// attribute_definition_dateFrom has already been copied
@@ -3991,6 +4255,25 @@ func CopyBranchATTRIBUTE_DEFINITION_DATE(mapOrigCopy map[any]any, attribute_defi
 	if attribute_definition_dateFrom.TYPE != nil {
 		attribute_definition_dateTo.TYPE = CopyBranchA_DATATYPE_DEFINITION_DATE_REF(mapOrigCopy, attribute_definition_dateFrom.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchATTRIBUTE_DEFINITION_DATE_Rendering(mapOrigCopy map[any]any, attribute_definition_date_renderingFrom *ATTRIBUTE_DEFINITION_DATE_Rendering) (attribute_definition_date_renderingTo *ATTRIBUTE_DEFINITION_DATE_Rendering) {
+
+	// attribute_definition_date_renderingFrom has already been copied
+	if _attribute_definition_date_renderingTo, ok := mapOrigCopy[attribute_definition_date_renderingFrom]; ok {
+		attribute_definition_date_renderingTo = _attribute_definition_date_renderingTo.(*ATTRIBUTE_DEFINITION_DATE_Rendering)
+		return
+	}
+
+	attribute_definition_date_renderingTo = new(ATTRIBUTE_DEFINITION_DATE_Rendering)
+	mapOrigCopy[attribute_definition_date_renderingFrom] = attribute_definition_date_renderingTo
+	attribute_definition_date_renderingFrom.CopyBasicFields(attribute_definition_date_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -4025,6 +4308,25 @@ func CopyBranchATTRIBUTE_DEFINITION_ENUMERATION(mapOrigCopy map[any]any, attribu
 	return
 }
 
+func CopyBranchATTRIBUTE_DEFINITION_ENUMERATION_Rendering(mapOrigCopy map[any]any, attribute_definition_enumeration_renderingFrom *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) (attribute_definition_enumeration_renderingTo *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) {
+
+	// attribute_definition_enumeration_renderingFrom has already been copied
+	if _attribute_definition_enumeration_renderingTo, ok := mapOrigCopy[attribute_definition_enumeration_renderingFrom]; ok {
+		attribute_definition_enumeration_renderingTo = _attribute_definition_enumeration_renderingTo.(*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
+		return
+	}
+
+	attribute_definition_enumeration_renderingTo = new(ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
+	mapOrigCopy[attribute_definition_enumeration_renderingFrom] = attribute_definition_enumeration_renderingTo
+	attribute_definition_enumeration_renderingFrom.CopyBasicFields(attribute_definition_enumeration_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchATTRIBUTE_DEFINITION_INTEGER(mapOrigCopy map[any]any, attribute_definition_integerFrom *ATTRIBUTE_DEFINITION_INTEGER) (attribute_definition_integerTo *ATTRIBUTE_DEFINITION_INTEGER) {
 
 	// attribute_definition_integerFrom has already been copied
@@ -4053,6 +4355,25 @@ func CopyBranchATTRIBUTE_DEFINITION_INTEGER(mapOrigCopy map[any]any, attribute_d
 	return
 }
 
+func CopyBranchATTRIBUTE_DEFINITION_INTEGER_Rendering(mapOrigCopy map[any]any, attribute_definition_integer_renderingFrom *ATTRIBUTE_DEFINITION_INTEGER_Rendering) (attribute_definition_integer_renderingTo *ATTRIBUTE_DEFINITION_INTEGER_Rendering) {
+
+	// attribute_definition_integer_renderingFrom has already been copied
+	if _attribute_definition_integer_renderingTo, ok := mapOrigCopy[attribute_definition_integer_renderingFrom]; ok {
+		attribute_definition_integer_renderingTo = _attribute_definition_integer_renderingTo.(*ATTRIBUTE_DEFINITION_INTEGER_Rendering)
+		return
+	}
+
+	attribute_definition_integer_renderingTo = new(ATTRIBUTE_DEFINITION_INTEGER_Rendering)
+	mapOrigCopy[attribute_definition_integer_renderingFrom] = attribute_definition_integer_renderingTo
+	attribute_definition_integer_renderingFrom.CopyBasicFields(attribute_definition_integer_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchATTRIBUTE_DEFINITION_REAL(mapOrigCopy map[any]any, attribute_definition_realFrom *ATTRIBUTE_DEFINITION_REAL) (attribute_definition_realTo *ATTRIBUTE_DEFINITION_REAL) {
 
 	// attribute_definition_realFrom has already been copied
@@ -4075,6 +4396,25 @@ func CopyBranchATTRIBUTE_DEFINITION_REAL(mapOrigCopy map[any]any, attribute_defi
 	if attribute_definition_realFrom.TYPE != nil {
 		attribute_definition_realTo.TYPE = CopyBranchA_DATATYPE_DEFINITION_REAL_REF(mapOrigCopy, attribute_definition_realFrom.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchATTRIBUTE_DEFINITION_REAL_Rendering(mapOrigCopy map[any]any, attribute_definition_real_renderingFrom *ATTRIBUTE_DEFINITION_REAL_Rendering) (attribute_definition_real_renderingTo *ATTRIBUTE_DEFINITION_REAL_Rendering) {
+
+	// attribute_definition_real_renderingFrom has already been copied
+	if _attribute_definition_real_renderingTo, ok := mapOrigCopy[attribute_definition_real_renderingFrom]; ok {
+		attribute_definition_real_renderingTo = _attribute_definition_real_renderingTo.(*ATTRIBUTE_DEFINITION_REAL_Rendering)
+		return
+	}
+
+	attribute_definition_real_renderingTo = new(ATTRIBUTE_DEFINITION_REAL_Rendering)
+	mapOrigCopy[attribute_definition_real_renderingFrom] = attribute_definition_real_renderingTo
+	attribute_definition_real_renderingFrom.CopyBasicFields(attribute_definition_real_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -4128,6 +4468,25 @@ func CopyBranchATTRIBUTE_DEFINITION_STRING(mapOrigCopy map[any]any, attribute_de
 	return
 }
 
+func CopyBranchATTRIBUTE_DEFINITION_STRING_Rendering(mapOrigCopy map[any]any, attribute_definition_string_renderingFrom *ATTRIBUTE_DEFINITION_STRING_Rendering) (attribute_definition_string_renderingTo *ATTRIBUTE_DEFINITION_STRING_Rendering) {
+
+	// attribute_definition_string_renderingFrom has already been copied
+	if _attribute_definition_string_renderingTo, ok := mapOrigCopy[attribute_definition_string_renderingFrom]; ok {
+		attribute_definition_string_renderingTo = _attribute_definition_string_renderingTo.(*ATTRIBUTE_DEFINITION_STRING_Rendering)
+		return
+	}
+
+	attribute_definition_string_renderingTo = new(ATTRIBUTE_DEFINITION_STRING_Rendering)
+	mapOrigCopy[attribute_definition_string_renderingFrom] = attribute_definition_string_renderingTo
+	attribute_definition_string_renderingFrom.CopyBasicFields(attribute_definition_string_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
 func CopyBranchATTRIBUTE_DEFINITION_XHTML(mapOrigCopy map[any]any, attribute_definition_xhtmlFrom *ATTRIBUTE_DEFINITION_XHTML) (attribute_definition_xhtmlTo *ATTRIBUTE_DEFINITION_XHTML) {
 
 	// attribute_definition_xhtmlFrom has already been copied
@@ -4150,6 +4509,25 @@ func CopyBranchATTRIBUTE_DEFINITION_XHTML(mapOrigCopy map[any]any, attribute_def
 	if attribute_definition_xhtmlFrom.TYPE != nil {
 		attribute_definition_xhtmlTo.TYPE = CopyBranchA_DATATYPE_DEFINITION_XHTML_REF(mapOrigCopy, attribute_definition_xhtmlFrom.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+	return
+}
+
+func CopyBranchATTRIBUTE_DEFINITION_XHTML_Rendering(mapOrigCopy map[any]any, attribute_definition_xhtml_renderingFrom *ATTRIBUTE_DEFINITION_XHTML_Rendering) (attribute_definition_xhtml_renderingTo *ATTRIBUTE_DEFINITION_XHTML_Rendering) {
+
+	// attribute_definition_xhtml_renderingFrom has already been copied
+	if _attribute_definition_xhtml_renderingTo, ok := mapOrigCopy[attribute_definition_xhtml_renderingFrom]; ok {
+		attribute_definition_xhtml_renderingTo = _attribute_definition_xhtml_renderingTo.(*ATTRIBUTE_DEFINITION_XHTML_Rendering)
+		return
+	}
+
+	attribute_definition_xhtml_renderingTo = new(ATTRIBUTE_DEFINITION_XHTML_Rendering)
+	mapOrigCopy[attribute_definition_xhtml_renderingFrom] = attribute_definition_xhtml_renderingTo
+	attribute_definition_xhtml_renderingFrom.CopyBasicFields(attribute_definition_xhtml_renderingTo)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -6236,17 +6614,32 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_BOOLEAN(target)
 
+	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_BOOLEAN_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_DATE:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_DATE(target)
+
+	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_DATE_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_ENUMERATION(target)
 
+	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_ENUMERATION_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_INTEGER(target)
 
+	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_INTEGER_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_REAL(target)
+
+	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_REAL_Rendering(target)
 
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_Rendering(target)
@@ -6254,8 +6647,14 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_STRING(target)
 
+	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_STRING_Rendering(target)
+
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		stage.UnstageBranchATTRIBUTE_DEFINITION_XHTML(target)
+
+	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
+		stage.UnstageBranchATTRIBUTE_DEFINITION_XHTML_Rendering(target)
 
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		stage.UnstageBranchATTRIBUTE_VALUE_BOOLEAN(target)
@@ -6569,6 +6968,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_BOOLEAN(attribute_definiti
 
 }
 
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_BOOLEAN_Rendering(attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_boolean_rendering) {
+		return
+	}
+
+	attribute_definition_boolean_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_DATE(attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) {
 
 	// check if instance is already staged
@@ -6588,6 +7002,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_DATE(attribute_definition_
 	if attribute_definition_date.TYPE != nil {
 		UnstageBranch(stage, attribute_definition_date.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_DATE_Rendering(attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_date_rendering) {
+		return
+	}
+
+	attribute_definition_date_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -6617,6 +7046,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_ENUMERATION(attribute_defi
 
 }
 
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_ENUMERATION_Rendering(attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_enumeration_rendering) {
+		return
+	}
+
+	attribute_definition_enumeration_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_INTEGER(attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) {
 
 	// check if instance is already staged
@@ -6641,6 +7085,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_INTEGER(attribute_definiti
 
 }
 
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_INTEGER_Rendering(attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_integer_rendering) {
+		return
+	}
+
+	attribute_definition_integer_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_REAL(attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) {
 
 	// check if instance is already staged
@@ -6660,6 +7119,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_REAL(attribute_definition_
 	if attribute_definition_real.TYPE != nil {
 		UnstageBranch(stage, attribute_definition_real.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_REAL_Rendering(attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_real_rendering) {
+		return
+	}
+
+	attribute_definition_real_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
@@ -6704,6 +7178,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_STRING(attribute_definitio
 
 }
 
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_STRING_Rendering(attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_string_rendering) {
+		return
+	}
+
+	attribute_definition_string_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
 func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_XHTML(attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) {
 
 	// check if instance is already staged
@@ -6723,6 +7212,21 @@ func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_XHTML(attribute_definition
 	if attribute_definition_xhtml.TYPE != nil {
 		UnstageBranch(stage, attribute_definition_xhtml.TYPE)
 	}
+
+	//insertion point for the staging of instances referenced by slice of pointers
+
+}
+
+func (stage *Stage) UnstageBranchATTRIBUTE_DEFINITION_XHTML_Rendering(attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) {
+
+	// check if instance is already staged
+	if !IsStaged(stage, attribute_definition_xhtml_rendering) {
+		return
+	}
+
+	attribute_definition_xhtml_rendering.Unstage(stage)
+
+	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
 

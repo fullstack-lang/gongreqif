@@ -257,6 +257,89 @@ func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANForm
 
 	updateAndCommitTree(attribute_definition_booleanFormCallback.probe)
 }
+func __gong__New__ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback(
+	attribute_definition_boolean_rendering *models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_boolean_renderingFormCallback *ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback) {
+	attribute_definition_boolean_renderingFormCallback = new(ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback)
+	attribute_definition_boolean_renderingFormCallback.probe = probe
+	attribute_definition_boolean_renderingFormCallback.attribute_definition_boolean_rendering = attribute_definition_boolean_rendering
+	attribute_definition_boolean_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_boolean_renderingFormCallback.CreationMode = (attribute_definition_boolean_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback struct {
+	attribute_definition_boolean_rendering *models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_boolean_renderingFormCallback *ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_boolean_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_boolean_renderingFormCallback.attribute_definition_boolean_rendering == nil {
+		attribute_definition_boolean_renderingFormCallback.attribute_definition_boolean_rendering = new(models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering).Stage(attribute_definition_boolean_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_boolean_rendering_ := attribute_definition_boolean_renderingFormCallback.attribute_definition_boolean_rendering
+	_ = attribute_definition_boolean_rendering_
+
+	for _, formDiv := range attribute_definition_boolean_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_boolean_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_boolean_rendering_.Unstage(attribute_definition_boolean_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_boolean_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](
+		attribute_definition_boolean_renderingFormCallback.probe,
+	)
+	attribute_definition_boolean_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_boolean_renderingFormCallback.CreationMode || attribute_definition_boolean_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_boolean_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_boolean_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback(
+			nil,
+			attribute_definition_boolean_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_boolean_rendering := new(models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
+		FillUpForm(attribute_definition_boolean_rendering, newFormGroup, attribute_definition_boolean_renderingFormCallback.probe)
+		attribute_definition_boolean_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_boolean_renderingFormCallback.probe)
+}
 func __gong__New__ATTRIBUTE_DEFINITION_DATEFormCallback(
 	attribute_definition_date *models.ATTRIBUTE_DEFINITION_DATE,
 	probe *Probe,
@@ -415,6 +498,89 @@ func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallba
 	}
 
 	updateAndCommitTree(attribute_definition_dateFormCallback.probe)
+}
+func __gong__New__ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback(
+	attribute_definition_date_rendering *models.ATTRIBUTE_DEFINITION_DATE_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_date_renderingFormCallback *ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback) {
+	attribute_definition_date_renderingFormCallback = new(ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback)
+	attribute_definition_date_renderingFormCallback.probe = probe
+	attribute_definition_date_renderingFormCallback.attribute_definition_date_rendering = attribute_definition_date_rendering
+	attribute_definition_date_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_date_renderingFormCallback.CreationMode = (attribute_definition_date_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback struct {
+	attribute_definition_date_rendering *models.ATTRIBUTE_DEFINITION_DATE_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_date_renderingFormCallback *ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_date_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_date_renderingFormCallback.attribute_definition_date_rendering == nil {
+		attribute_definition_date_renderingFormCallback.attribute_definition_date_rendering = new(models.ATTRIBUTE_DEFINITION_DATE_Rendering).Stage(attribute_definition_date_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_date_rendering_ := attribute_definition_date_renderingFormCallback.attribute_definition_date_rendering
+	_ = attribute_definition_date_rendering_
+
+	for _, formDiv := range attribute_definition_date_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_date_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_date_rendering_.Unstage(attribute_definition_date_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_date_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](
+		attribute_definition_date_renderingFormCallback.probe,
+	)
+	attribute_definition_date_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_date_renderingFormCallback.CreationMode || attribute_definition_date_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_date_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_date_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback(
+			nil,
+			attribute_definition_date_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_date_rendering := new(models.ATTRIBUTE_DEFINITION_DATE_Rendering)
+		FillUpForm(attribute_definition_date_rendering, newFormGroup, attribute_definition_date_renderingFormCallback.probe)
+		attribute_definition_date_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_date_renderingFormCallback.probe)
 }
 func __gong__New__ATTRIBUTE_DEFINITION_ENUMERATIONFormCallback(
 	attribute_definition_enumeration *models.ATTRIBUTE_DEFINITION_ENUMERATION,
@@ -577,6 +743,89 @@ func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERA
 
 	updateAndCommitTree(attribute_definition_enumerationFormCallback.probe)
 }
+func __gong__New__ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback(
+	attribute_definition_enumeration_rendering *models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_enumeration_renderingFormCallback *ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback) {
+	attribute_definition_enumeration_renderingFormCallback = new(ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback)
+	attribute_definition_enumeration_renderingFormCallback.probe = probe
+	attribute_definition_enumeration_renderingFormCallback.attribute_definition_enumeration_rendering = attribute_definition_enumeration_rendering
+	attribute_definition_enumeration_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_enumeration_renderingFormCallback.CreationMode = (attribute_definition_enumeration_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback struct {
+	attribute_definition_enumeration_rendering *models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_enumeration_renderingFormCallback *ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_enumeration_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_enumeration_renderingFormCallback.attribute_definition_enumeration_rendering == nil {
+		attribute_definition_enumeration_renderingFormCallback.attribute_definition_enumeration_rendering = new(models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering).Stage(attribute_definition_enumeration_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_enumeration_rendering_ := attribute_definition_enumeration_renderingFormCallback.attribute_definition_enumeration_rendering
+	_ = attribute_definition_enumeration_rendering_
+
+	for _, formDiv := range attribute_definition_enumeration_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_enumeration_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_enumeration_rendering_.Unstage(attribute_definition_enumeration_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_enumeration_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](
+		attribute_definition_enumeration_renderingFormCallback.probe,
+	)
+	attribute_definition_enumeration_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_enumeration_renderingFormCallback.CreationMode || attribute_definition_enumeration_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_enumeration_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_enumeration_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback(
+			nil,
+			attribute_definition_enumeration_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_enumeration_rendering := new(models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
+		FillUpForm(attribute_definition_enumeration_rendering, newFormGroup, attribute_definition_enumeration_renderingFormCallback.probe)
+		attribute_definition_enumeration_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_enumeration_renderingFormCallback.probe)
+}
 func __gong__New__ATTRIBUTE_DEFINITION_INTEGERFormCallback(
 	attribute_definition_integer *models.ATTRIBUTE_DEFINITION_INTEGER,
 	probe *Probe,
@@ -736,6 +985,89 @@ func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERForm
 
 	updateAndCommitTree(attribute_definition_integerFormCallback.probe)
 }
+func __gong__New__ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback(
+	attribute_definition_integer_rendering *models.ATTRIBUTE_DEFINITION_INTEGER_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_integer_renderingFormCallback *ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback) {
+	attribute_definition_integer_renderingFormCallback = new(ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback)
+	attribute_definition_integer_renderingFormCallback.probe = probe
+	attribute_definition_integer_renderingFormCallback.attribute_definition_integer_rendering = attribute_definition_integer_rendering
+	attribute_definition_integer_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_integer_renderingFormCallback.CreationMode = (attribute_definition_integer_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback struct {
+	attribute_definition_integer_rendering *models.ATTRIBUTE_DEFINITION_INTEGER_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_integer_renderingFormCallback *ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_integer_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_integer_renderingFormCallback.attribute_definition_integer_rendering == nil {
+		attribute_definition_integer_renderingFormCallback.attribute_definition_integer_rendering = new(models.ATTRIBUTE_DEFINITION_INTEGER_Rendering).Stage(attribute_definition_integer_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_integer_rendering_ := attribute_definition_integer_renderingFormCallback.attribute_definition_integer_rendering
+	_ = attribute_definition_integer_rendering_
+
+	for _, formDiv := range attribute_definition_integer_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_integer_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_integer_rendering_.Unstage(attribute_definition_integer_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_integer_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](
+		attribute_definition_integer_renderingFormCallback.probe,
+	)
+	attribute_definition_integer_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_integer_renderingFormCallback.CreationMode || attribute_definition_integer_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_integer_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_integer_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback(
+			nil,
+			attribute_definition_integer_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_integer_rendering := new(models.ATTRIBUTE_DEFINITION_INTEGER_Rendering)
+		FillUpForm(attribute_definition_integer_rendering, newFormGroup, attribute_definition_integer_renderingFormCallback.probe)
+		attribute_definition_integer_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_integer_renderingFormCallback.probe)
+}
 func __gong__New__ATTRIBUTE_DEFINITION_REALFormCallback(
 	attribute_definition_real *models.ATTRIBUTE_DEFINITION_REAL,
 	probe *Probe,
@@ -894,6 +1226,89 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 	}
 
 	updateAndCommitTree(attribute_definition_realFormCallback.probe)
+}
+func __gong__New__ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback(
+	attribute_definition_real_rendering *models.ATTRIBUTE_DEFINITION_REAL_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_real_renderingFormCallback *ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback) {
+	attribute_definition_real_renderingFormCallback = new(ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback)
+	attribute_definition_real_renderingFormCallback.probe = probe
+	attribute_definition_real_renderingFormCallback.attribute_definition_real_rendering = attribute_definition_real_rendering
+	attribute_definition_real_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_real_renderingFormCallback.CreationMode = (attribute_definition_real_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback struct {
+	attribute_definition_real_rendering *models.ATTRIBUTE_DEFINITION_REAL_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_real_renderingFormCallback *ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_real_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_real_renderingFormCallback.attribute_definition_real_rendering == nil {
+		attribute_definition_real_renderingFormCallback.attribute_definition_real_rendering = new(models.ATTRIBUTE_DEFINITION_REAL_Rendering).Stage(attribute_definition_real_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_real_rendering_ := attribute_definition_real_renderingFormCallback.attribute_definition_real_rendering
+	_ = attribute_definition_real_rendering_
+
+	for _, formDiv := range attribute_definition_real_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_real_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_real_rendering_.Unstage(attribute_definition_real_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_real_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](
+		attribute_definition_real_renderingFormCallback.probe,
+	)
+	attribute_definition_real_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_real_renderingFormCallback.CreationMode || attribute_definition_real_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_real_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_real_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback(
+			nil,
+			attribute_definition_real_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_real_rendering := new(models.ATTRIBUTE_DEFINITION_REAL_Rendering)
+		FillUpForm(attribute_definition_real_rendering, newFormGroup, attribute_definition_real_renderingFormCallback.probe)
+		attribute_definition_real_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_real_renderingFormCallback.probe)
 }
 func __gong__New__ATTRIBUTE_DEFINITION_RenderingFormCallback(
 	attribute_definition_rendering *models.ATTRIBUTE_DEFINITION_Rendering,
@@ -1137,6 +1552,89 @@ func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCa
 
 	updateAndCommitTree(attribute_definition_stringFormCallback.probe)
 }
+func __gong__New__ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback(
+	attribute_definition_string_rendering *models.ATTRIBUTE_DEFINITION_STRING_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_string_renderingFormCallback *ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback) {
+	attribute_definition_string_renderingFormCallback = new(ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback)
+	attribute_definition_string_renderingFormCallback.probe = probe
+	attribute_definition_string_renderingFormCallback.attribute_definition_string_rendering = attribute_definition_string_rendering
+	attribute_definition_string_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_string_renderingFormCallback.CreationMode = (attribute_definition_string_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback struct {
+	attribute_definition_string_rendering *models.ATTRIBUTE_DEFINITION_STRING_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_string_renderingFormCallback *ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_string_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_string_renderingFormCallback.attribute_definition_string_rendering == nil {
+		attribute_definition_string_renderingFormCallback.attribute_definition_string_rendering = new(models.ATTRIBUTE_DEFINITION_STRING_Rendering).Stage(attribute_definition_string_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_string_rendering_ := attribute_definition_string_renderingFormCallback.attribute_definition_string_rendering
+	_ = attribute_definition_string_rendering_
+
+	for _, formDiv := range attribute_definition_string_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_string_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_string_rendering_.Unstage(attribute_definition_string_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_string_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](
+		attribute_definition_string_renderingFormCallback.probe,
+	)
+	attribute_definition_string_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_string_renderingFormCallback.CreationMode || attribute_definition_string_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_string_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_string_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback(
+			nil,
+			attribute_definition_string_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_string_rendering := new(models.ATTRIBUTE_DEFINITION_STRING_Rendering)
+		FillUpForm(attribute_definition_string_rendering, newFormGroup, attribute_definition_string_renderingFormCallback.probe)
+		attribute_definition_string_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_string_renderingFormCallback.probe)
+}
 func __gong__New__ATTRIBUTE_DEFINITION_XHTMLFormCallback(
 	attribute_definition_xhtml *models.ATTRIBUTE_DEFINITION_XHTML,
 	probe *Probe,
@@ -1295,6 +1793,89 @@ func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCall
 	}
 
 	updateAndCommitTree(attribute_definition_xhtmlFormCallback.probe)
+}
+func __gong__New__ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback(
+	attribute_definition_xhtml_rendering *models.ATTRIBUTE_DEFINITION_XHTML_Rendering,
+	probe *Probe,
+	formGroup *table.FormGroup,
+) (attribute_definition_xhtml_renderingFormCallback *ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback) {
+	attribute_definition_xhtml_renderingFormCallback = new(ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback)
+	attribute_definition_xhtml_renderingFormCallback.probe = probe
+	attribute_definition_xhtml_renderingFormCallback.attribute_definition_xhtml_rendering = attribute_definition_xhtml_rendering
+	attribute_definition_xhtml_renderingFormCallback.formGroup = formGroup
+
+	attribute_definition_xhtml_renderingFormCallback.CreationMode = (attribute_definition_xhtml_rendering == nil)
+
+	return
+}
+
+type ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback struct {
+	attribute_definition_xhtml_rendering *models.ATTRIBUTE_DEFINITION_XHTML_Rendering
+
+	// If the form call is called on the creation of a new instnace
+	CreationMode bool
+
+	probe *Probe
+
+	formGroup *table.FormGroup
+}
+
+func (attribute_definition_xhtml_renderingFormCallback *ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback) OnSave() {
+
+	// log.Println("ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback, OnSave")
+
+	// checkout formStage to have the form group on the stage synchronized with the
+	// back repo (and front repo)
+	attribute_definition_xhtml_renderingFormCallback.probe.formStage.Checkout()
+
+	if attribute_definition_xhtml_renderingFormCallback.attribute_definition_xhtml_rendering == nil {
+		attribute_definition_xhtml_renderingFormCallback.attribute_definition_xhtml_rendering = new(models.ATTRIBUTE_DEFINITION_XHTML_Rendering).Stage(attribute_definition_xhtml_renderingFormCallback.probe.stageOfInterest)
+	}
+	attribute_definition_xhtml_rendering_ := attribute_definition_xhtml_renderingFormCallback.attribute_definition_xhtml_rendering
+	_ = attribute_definition_xhtml_rendering_
+
+	for _, formDiv := range attribute_definition_xhtml_renderingFormCallback.formGroup.FormDivs {
+		switch formDiv.Name {
+		// insertion point per field
+		case "Name":
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.Name), formDiv)
+		case "ShowInTableEntries":
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTableEntries), formDiv)
+		case "ShowInTitleEntries":
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTitleEntries), formDiv)
+		case "ShowInSubjectEntries":
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInSubjectEntries), formDiv)
+		}
+	}
+
+	// manage the suppress operation
+	if attribute_definition_xhtml_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_xhtml_rendering_.Unstage(attribute_definition_xhtml_renderingFormCallback.probe.stageOfInterest)
+	}
+
+	attribute_definition_xhtml_renderingFormCallback.probe.stageOfInterest.Commit()
+	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](
+		attribute_definition_xhtml_renderingFormCallback.probe,
+	)
+	attribute_definition_xhtml_renderingFormCallback.probe.tableStage.Commit()
+
+	// display a new form by reset the form stage
+	if attribute_definition_xhtml_renderingFormCallback.CreationMode || attribute_definition_xhtml_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
+		attribute_definition_xhtml_renderingFormCallback.probe.formStage.Reset()
+		newFormGroup := (&table.FormGroup{
+			Name: FormName,
+		}).Stage(attribute_definition_xhtml_renderingFormCallback.probe.formStage)
+		newFormGroup.OnSave = __gong__New__ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback(
+			nil,
+			attribute_definition_xhtml_renderingFormCallback.probe,
+			newFormGroup,
+		)
+		attribute_definition_xhtml_rendering := new(models.ATTRIBUTE_DEFINITION_XHTML_Rendering)
+		FillUpForm(attribute_definition_xhtml_rendering, newFormGroup, attribute_definition_xhtml_renderingFormCallback.probe)
+		attribute_definition_xhtml_renderingFormCallback.probe.formStage.Commit()
+	}
+
+	updateAndCommitTree(attribute_definition_xhtml_renderingFormCallback.probe)
 }
 func __gong__New__ATTRIBUTE_VALUE_BOOLEANFormCallback(
 	attribute_value_boolean *models.ATTRIBUTE_VALUE_BOOLEAN,
@@ -11772,8 +12353,6 @@ func (renderingconfigurationFormCallback *RenderingConfigurationFormCallback) On
 			}
 			renderingconfiguration_.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = instanceSlice
 
-		case "ShowSpecHierachyIdentifiers":
-			FormDivBasicFieldToField(&(renderingconfiguration_.ShowSpecHierachyIdentifiers), formDiv)
 		}
 	}
 

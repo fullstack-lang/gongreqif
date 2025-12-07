@@ -11,9 +11,17 @@ package models
 func (stager *Stager) enforceRenderingConfigurationSemantic() {
 
 	stage := stager.stage
-	enforceRendering(
-		stage, stage.SPEC_OBJECT_TYPEs, stage.SPEC_OBJECT_TYPE_Renderings_mapString)
+
+	enforceRendering(stage, stage.SPEC_OBJECT_TYPEs, stage.SPEC_OBJECT_TYPE_Renderings_mapString)
 	enforceRendering(stage, stage.SPECIFICATIONs, stage.SPECIFICATION_Renderings_mapString)
+
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_BOOLEANs, stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString)
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_DATEs, stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString)
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString)
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_INTEGERs, stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString)
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_REALs, stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString)
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_STRINGs, stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString)
+	enforceRendering(stage, stage.ATTRIBUTE_DEFINITION_XHTMLs, stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString)
 }
 
 // enforceRendering is a generic function that ensures rendering configurations exist for source objects

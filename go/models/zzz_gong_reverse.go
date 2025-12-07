@@ -27,6 +27,15 @@ func (inst *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetReverseFieldOwnerName(stage *St
 	return
 }
 
+func (inst *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return
+}
+
 func (inst *ATTRIBUTE_DEFINITION_DATE) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
 
 	res = ""
@@ -39,6 +48,15 @@ func (inst *ATTRIBUTE_DEFINITION_DATE) GongGetReverseFieldOwnerName(stage *Stage
 					res = _a_spec_attributes.Name
 				}
 			}
+	}
+	return
+}
+
+func (inst *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
 	}
 	return
 }
@@ -59,6 +77,15 @@ func (inst *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetReverseFieldOwnerName(stage
 	return
 }
 
+func (inst *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return
+}
+
 func (inst *ATTRIBUTE_DEFINITION_INTEGER) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
 
 	res = ""
@@ -75,6 +102,15 @@ func (inst *ATTRIBUTE_DEFINITION_INTEGER) GongGetReverseFieldOwnerName(stage *St
 	return
 }
 
+func (inst *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return
+}
+
 func (inst *ATTRIBUTE_DEFINITION_REAL) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
 
 	res = ""
@@ -87,6 +123,15 @@ func (inst *ATTRIBUTE_DEFINITION_REAL) GongGetReverseFieldOwnerName(stage *Stage
 					res = _a_spec_attributes.Name
 				}
 			}
+	}
+	return
+}
+
+func (inst *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
 	}
 	return
 }
@@ -116,6 +161,15 @@ func (inst *ATTRIBUTE_DEFINITION_STRING) GongGetReverseFieldOwnerName(stage *Sta
 	return
 }
 
+func (inst *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return
+}
+
 func (inst *ATTRIBUTE_DEFINITION_XHTML) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
 
 	res = ""
@@ -128,6 +182,15 @@ func (inst *ATTRIBUTE_DEFINITION_XHTML) GongGetReverseFieldOwnerName(stage *Stag
 					res = _a_spec_attributes.Name
 				}
 			}
+	}
+	return
+}
+
+func (inst *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) (res string) {
+
+	res = ""
+	switch reverseField.GongstructName {
+	// insertion point
 	}
 	return
 }
@@ -1283,6 +1346,15 @@ func (inst *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetReverseFieldOwner(stage *Stage,
 	return res
 }
 
+func (inst *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return res
+}
+
 func (inst *ATTRIBUTE_DEFINITION_DATE) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
 
 	res = nil
@@ -1293,6 +1365,15 @@ func (inst *ATTRIBUTE_DEFINITION_DATE) GongGetReverseFieldOwner(stage *Stage, re
 			case "ATTRIBUTE_DEFINITION_DATE":
 				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_DATE_reverseMap[inst]
 			}
+	}
+	return res
+}
+
+func (inst *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
 	}
 	return res
 }
@@ -1311,6 +1392,15 @@ func (inst *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetReverseFieldOwner(stage *St
 	return res
 }
 
+func (inst *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return res
+}
+
 func (inst *ATTRIBUTE_DEFINITION_INTEGER) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
 
 	res = nil
@@ -1325,6 +1415,15 @@ func (inst *ATTRIBUTE_DEFINITION_INTEGER) GongGetReverseFieldOwner(stage *Stage,
 	return res
 }
 
+func (inst *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return res
+}
+
 func (inst *ATTRIBUTE_DEFINITION_REAL) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
 
 	res = nil
@@ -1335,6 +1434,15 @@ func (inst *ATTRIBUTE_DEFINITION_REAL) GongGetReverseFieldOwner(stage *Stage, re
 			case "ATTRIBUTE_DEFINITION_REAL":
 				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_REAL_reverseMap[inst]
 			}
+	}
+	return res
+}
+
+func (inst *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
 	}
 	return res
 }
@@ -1362,6 +1470,15 @@ func (inst *ATTRIBUTE_DEFINITION_STRING) GongGetReverseFieldOwner(stage *Stage, 
 	return res
 }
 
+func (inst *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
+	}
+	return res
+}
+
 func (inst *ATTRIBUTE_DEFINITION_XHTML) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
 
 	res = nil
@@ -1372,6 +1489,15 @@ func (inst *ATTRIBUTE_DEFINITION_XHTML) GongGetReverseFieldOwner(stage *Stage, r
 			case "ATTRIBUTE_DEFINITION_XHTML":
 				res = stage.A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_XHTML_reverseMap[inst]
 			}
+	}
+	return res
+}
+
+func (inst *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) (res GongstructIF) {
+
+	res = nil
+	switch reverseField.GongstructName {
+	// insertion point
 	}
 	return res
 }

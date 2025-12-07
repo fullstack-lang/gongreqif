@@ -8,6 +8,34 @@ type ATTRIBUTE_DEFINITION_Rendering struct {
 	ShowInSubjectEntries bool
 }
 
+type ATTRIBUTE_DEFINITION_XHTML_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
+type ATTRIBUTE_DEFINITION_STRING_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
+type ATTRIBUTE_DEFINITION_BOOLEAN_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
+type ATTRIBUTE_DEFINITION_INTEGER_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
+type ATTRIBUTE_DEFINITION_DATE_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
+type ATTRIBUTE_DEFINITION_REAL_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
+type ATTRIBUTE_DEFINITION_ENUMERATION_Rendering struct {
+	ATTRIBUTE_DEFINITION_Rendering
+}
+
 // SPEC_OBJECT_TYPE_Rendering store the rendering choices
 type SPEC_OBJECT_TYPE_Rendering struct {
 	Name           string // the identifier
@@ -61,8 +89,6 @@ type RenderingConfiguration struct {
 	Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries        []*Map_identifier_bool
 	Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries        []*Map_identifier_bool
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries []*Map_identifier_bool
-
-	ShowSpecHierachyIdentifiers bool
 }
 
 type Map_identifier_bool struct {

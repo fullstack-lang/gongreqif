@@ -100,6 +100,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](probe.stageOfInterest)
+			for _attribute_definition_boolean_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_boolean_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_boolean_rendering, "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "ATTRIBUTE_DEFINITION_DATE":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_DATE](probe.stageOfInterest)
@@ -107,6 +117,16 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _attribute_definition_date.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_date, "ATTRIBUTE_DEFINITION_DATE", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "ATTRIBUTE_DEFINITION_DATE_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](probe.stageOfInterest)
+			for _attribute_definition_date_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_date_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_date_rendering, "ATTRIBUTE_DEFINITION_DATE_Rendering", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
@@ -120,6 +140,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](probe.stageOfInterest)
+			for _attribute_definition_enumeration_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_enumeration_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_enumeration_rendering, "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "ATTRIBUTE_DEFINITION_INTEGER":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_INTEGER](probe.stageOfInterest)
@@ -130,6 +160,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "ATTRIBUTE_DEFINITION_INTEGER_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](probe.stageOfInterest)
+			for _attribute_definition_integer_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_integer_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_integer_rendering, "ATTRIBUTE_DEFINITION_INTEGER_Rendering", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "ATTRIBUTE_DEFINITION_REAL":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_REAL](probe.stageOfInterest)
@@ -137,6 +177,16 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _attribute_definition_real.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_real, "ATTRIBUTE_DEFINITION_REAL", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "ATTRIBUTE_DEFINITION_REAL_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](probe.stageOfInterest)
+			for _attribute_definition_real_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_real_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_real_rendering, "ATTRIBUTE_DEFINITION_REAL_Rendering", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
@@ -160,6 +210,16 @@ func updateAndCommitTree(
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}
+		case "ATTRIBUTE_DEFINITION_STRING_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](probe.stageOfInterest)
+			for _attribute_definition_string_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_string_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_string_rendering, "ATTRIBUTE_DEFINITION_STRING_Rendering", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
 		case "ATTRIBUTE_DEFINITION_XHTML":
 			nodeGongstruct.Name = name
 			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_XHTML](probe.stageOfInterest)
@@ -167,6 +227,16 @@ func updateAndCommitTree(
 				nodeInstance := &tree.Node{Name: _attribute_definition_xhtml.GetName()}
 				nodeInstance.IsNodeClickable = true
 				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_xhtml, "ATTRIBUTE_DEFINITION_XHTML", probe)
+
+				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
+			}
+		case "ATTRIBUTE_DEFINITION_XHTML_Rendering":
+			nodeGongstruct.Name = name
+			set := *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](probe.stageOfInterest)
+			for _attribute_definition_xhtml_rendering := range set {
+				nodeInstance := &tree.Node{Name: _attribute_definition_xhtml_rendering.GetName()}
+				nodeInstance.IsNodeClickable = true
+				nodeInstance.Impl = NewInstanceNodeCallback(_attribute_definition_xhtml_rendering, "ATTRIBUTE_DEFINITION_XHTML_Rendering", probe)
 
 				nodeGongstruct.Children = append(nodeGongstruct.Children, nodeInstance)
 			}

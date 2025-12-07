@@ -223,6 +223,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers
+
+	attribute_definition_boolean_renderingOrdered := []*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering{}
+	for attribute_definition_boolean_rendering := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings {
+		attribute_definition_boolean_renderingOrdered = append(attribute_definition_boolean_renderingOrdered, attribute_definition_boolean_rendering)
+	}
+	sort.Slice(attribute_definition_boolean_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_boolean_renderingi := attribute_definition_boolean_renderingOrdered[i]
+		attribute_definition_boolean_renderingj := attribute_definition_boolean_renderingOrdered[j]
+		attribute_definition_boolean_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_renderingi]
+		attribute_definition_boolean_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_boolean_renderingi_order < attribute_definition_boolean_renderingj_order
+	})
+	if len(attribute_definition_boolean_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", idx, attribute_definition_boolean_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers[attribute_definition_boolean_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubjectEntries))
+		initializerStatements += setValueField
+
+	}
+
 	map_ATTRIBUTE_DEFINITION_DATE_Identifiers := make(map[*ATTRIBUTE_DEFINITION_DATE]string)
 	_ = map_ATTRIBUTE_DEFINITION_DATE_Identifiers
 
@@ -290,6 +349,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
+	map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers
+
+	attribute_definition_date_renderingOrdered := []*ATTRIBUTE_DEFINITION_DATE_Rendering{}
+	for attribute_definition_date_rendering := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings {
+		attribute_definition_date_renderingOrdered = append(attribute_definition_date_renderingOrdered, attribute_definition_date_rendering)
+	}
+	sort.Slice(attribute_definition_date_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_date_renderingi := attribute_definition_date_renderingOrdered[i]
+		attribute_definition_date_renderingj := attribute_definition_date_renderingOrdered[j]
+		attribute_definition_date_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_renderingi]
+		attribute_definition_date_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_date_renderingi_order < attribute_definition_date_renderingj_order
+	})
+	if len(attribute_definition_date_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE_Rendering", idx, attribute_definition_date_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers[attribute_definition_date_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_DATE_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubjectEntries))
 		initializerStatements += setValueField
 
 	}
@@ -371,6 +489,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers
+
+	attribute_definition_enumeration_renderingOrdered := []*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering{}
+	for attribute_definition_enumeration_rendering := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings {
+		attribute_definition_enumeration_renderingOrdered = append(attribute_definition_enumeration_renderingOrdered, attribute_definition_enumeration_rendering)
+	}
+	sort.Slice(attribute_definition_enumeration_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_enumeration_renderingi := attribute_definition_enumeration_renderingOrdered[i]
+		attribute_definition_enumeration_renderingj := attribute_definition_enumeration_renderingOrdered[j]
+		attribute_definition_enumeration_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_renderingi]
+		attribute_definition_enumeration_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_enumeration_renderingi_order < attribute_definition_enumeration_renderingj_order
+	})
+	if len(attribute_definition_enumeration_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", idx, attribute_definition_enumeration_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers[attribute_definition_enumeration_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubjectEntries))
+		initializerStatements += setValueField
+
+	}
+
 	map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers := make(map[*ATTRIBUTE_DEFINITION_INTEGER]string)
 	_ = map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers
 
@@ -442,6 +619,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers
+
+	attribute_definition_integer_renderingOrdered := []*ATTRIBUTE_DEFINITION_INTEGER_Rendering{}
+	for attribute_definition_integer_rendering := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings {
+		attribute_definition_integer_renderingOrdered = append(attribute_definition_integer_renderingOrdered, attribute_definition_integer_rendering)
+	}
+	sort.Slice(attribute_definition_integer_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_integer_renderingi := attribute_definition_integer_renderingOrdered[i]
+		attribute_definition_integer_renderingj := attribute_definition_integer_renderingOrdered[j]
+		attribute_definition_integer_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_renderingi]
+		attribute_definition_integer_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_integer_renderingi_order < attribute_definition_integer_renderingj_order
+	})
+	if len(attribute_definition_integer_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER_Rendering", idx, attribute_definition_integer_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers[attribute_definition_integer_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_INTEGER_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubjectEntries))
+		initializerStatements += setValueField
+
+	}
+
 	map_ATTRIBUTE_DEFINITION_REAL_Identifiers := make(map[*ATTRIBUTE_DEFINITION_REAL]string)
 	_ = map_ATTRIBUTE_DEFINITION_REAL_Identifiers
 
@@ -509,6 +745,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
+	map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers
+
+	attribute_definition_real_renderingOrdered := []*ATTRIBUTE_DEFINITION_REAL_Rendering{}
+	for attribute_definition_real_rendering := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings {
+		attribute_definition_real_renderingOrdered = append(attribute_definition_real_renderingOrdered, attribute_definition_real_rendering)
+	}
+	sort.Slice(attribute_definition_real_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_real_renderingi := attribute_definition_real_renderingOrdered[i]
+		attribute_definition_real_renderingj := attribute_definition_real_renderingOrdered[j]
+		attribute_definition_real_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_renderingi]
+		attribute_definition_real_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_real_renderingi_order < attribute_definition_real_renderingj_order
+	})
+	if len(attribute_definition_real_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL_Rendering", idx, attribute_definition_real_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers[attribute_definition_real_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_REAL_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubjectEntries))
 		initializerStatements += setValueField
 
 	}
@@ -643,6 +938,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers
+
+	attribute_definition_string_renderingOrdered := []*ATTRIBUTE_DEFINITION_STRING_Rendering{}
+	for attribute_definition_string_rendering := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings {
+		attribute_definition_string_renderingOrdered = append(attribute_definition_string_renderingOrdered, attribute_definition_string_rendering)
+	}
+	sort.Slice(attribute_definition_string_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_string_renderingi := attribute_definition_string_renderingOrdered[i]
+		attribute_definition_string_renderingj := attribute_definition_string_renderingOrdered[j]
+		attribute_definition_string_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_renderingi]
+		attribute_definition_string_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_string_renderingi_order < attribute_definition_string_renderingj_order
+	})
+	if len(attribute_definition_string_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING_Rendering", idx, attribute_definition_string_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers[attribute_definition_string_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_STRING_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubjectEntries))
+		initializerStatements += setValueField
+
+	}
+
 	map_ATTRIBUTE_DEFINITION_XHTML_Identifiers := make(map[*ATTRIBUTE_DEFINITION_XHTML]string)
 	_ = map_ATTRIBUTE_DEFINITION_XHTML_Identifiers
 
@@ -710,6 +1064,65 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LONG_NAME))
+		initializerStatements += setValueField
+
+	}
+
+	map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]string)
+	_ = map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers
+
+	attribute_definition_xhtml_renderingOrdered := []*ATTRIBUTE_DEFINITION_XHTML_Rendering{}
+	for attribute_definition_xhtml_rendering := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings {
+		attribute_definition_xhtml_renderingOrdered = append(attribute_definition_xhtml_renderingOrdered, attribute_definition_xhtml_rendering)
+	}
+	sort.Slice(attribute_definition_xhtml_renderingOrdered[:], func(i, j int) bool {
+		attribute_definition_xhtml_renderingi := attribute_definition_xhtml_renderingOrdered[i]
+		attribute_definition_xhtml_renderingj := attribute_definition_xhtml_renderingOrdered[j]
+		attribute_definition_xhtml_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_renderingi]
+		attribute_definition_xhtml_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_renderingj]
+		if !oki || !okj {
+			log.Fatalln("unknown pointers")
+		}
+		return attribute_definition_xhtml_renderingi_order < attribute_definition_xhtml_renderingj_order
+	})
+	if len(attribute_definition_xhtml_renderingOrdered) > 0 {
+		identifiersDecl += "\n"
+	}
+	for idx, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML_Rendering", idx, attribute_definition_xhtml_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers[attribute_definition_xhtml_rendering] = id
+
+		decl = IdentifiersDecls
+		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
+		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_XHTML_Rendering")
+		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml_rendering.Name)
+		identifiersDecl += decl
+
+		initializerStatements += "\n"
+		// Initialisation of values
+		setValueField = StringInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml_rendering.Name))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTableEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTableEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitleEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTitleEntries))
+		initializerStatements += setValueField
+
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubjectEntries")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubjectEntries))
 		initializerStatements += setValueField
 
 	}
@@ -4330,12 +4743,6 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(renderingconfiguration.Name))
 		initializerStatements += setValueField
 
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowSpecHierachyIdentifiers")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", renderingconfiguration.ShowSpecHierachyIdentifiers))
-		initializerStatements += setValueField
-
 	}
 
 	map_SPECIFICATION_Identifiers := make(map[*SPECIFICATION]string)
@@ -5310,6 +5717,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	if len(attribute_definition_boolean_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_BOOLEAN_Rendering instances pointers"
+	}
+	for idx, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", idx, attribute_definition_boolean_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers[attribute_definition_boolean_rendering] = id
+
+		// Initialisation of values
+	}
+
 	if len(attribute_definition_dateOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_DATE instances pointers"
 	}
@@ -5345,6 +5765,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			pointersInitializesStatements += setPointerField
 		}
 
+	}
+
+	if len(attribute_definition_date_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_DATE_Rendering instances pointers"
+	}
+	for idx, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE_Rendering", idx, attribute_definition_date_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers[attribute_definition_date_rendering] = id
+
+		// Initialisation of values
 	}
 
 	if len(attribute_definition_enumerationOrdered) > 0 {
@@ -5384,6 +5817,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	if len(attribute_definition_enumeration_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_ENUMERATION_Rendering instances pointers"
+	}
+	for idx, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", idx, attribute_definition_enumeration_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers[attribute_definition_enumeration_rendering] = id
+
+		// Initialisation of values
+	}
+
 	if len(attribute_definition_integerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_INTEGER instances pointers"
 	}
@@ -5421,6 +5867,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	if len(attribute_definition_integer_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_INTEGER_Rendering instances pointers"
+	}
+	for idx, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER_Rendering", idx, attribute_definition_integer_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers[attribute_definition_integer_rendering] = id
+
+		// Initialisation of values
+	}
+
 	if len(attribute_definition_realOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_REAL instances pointers"
 	}
@@ -5456,6 +5915,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			pointersInitializesStatements += setPointerField
 		}
 
+	}
+
+	if len(attribute_definition_real_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_REAL_Rendering instances pointers"
+	}
+	for idx, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL_Rendering", idx, attribute_definition_real_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers[attribute_definition_real_rendering] = id
+
+		// Initialisation of values
 	}
 
 	if len(attribute_definition_renderingOrdered) > 0 {
@@ -5508,6 +5980,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	}
 
+	if len(attribute_definition_string_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_STRING_Rendering instances pointers"
+	}
+	for idx, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING_Rendering", idx, attribute_definition_string_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers[attribute_definition_string_rendering] = id
+
+		// Initialisation of values
+	}
+
 	if len(attribute_definition_xhtmlOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_XHTML instances pointers"
 	}
@@ -5543,6 +6028,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			pointersInitializesStatements += setPointerField
 		}
 
+	}
+
+	if len(attribute_definition_xhtml_renderingOrdered) > 0 {
+		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_XHTML_Rendering instances pointers"
+	}
+	for idx, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
+		var setPointerField string
+		_ = setPointerField
+
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML_Rendering", idx, attribute_definition_xhtml_rendering.Name)
+		map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers[attribute_definition_xhtml_rendering] = id
+
+		// Initialisation of values
 	}
 
 	if len(attribute_value_booleanOrdered) > 0 {

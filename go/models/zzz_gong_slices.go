@@ -11,16 +11,31 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_BOOLEAN
 	// insertion point per field
 
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_BOOLEAN_Rendering
+	// insertion point per field
+
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_DATE
+	// insertion point per field
+
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_DATE_Rendering
 	// insertion point per field
 
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_ENUMERATION
 	// insertion point per field
 
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_ENUMERATION_Rendering
+	// insertion point per field
+
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_INTEGER
 	// insertion point per field
 
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_INTEGER_Rendering
+	// insertion point per field
+
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_REAL
+	// insertion point per field
+
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_REAL_Rendering
 	// insertion point per field
 
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_Rendering
@@ -29,7 +44,13 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_STRING
 	// insertion point per field
 
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_STRING_Rendering
+	// insertion point per field
+
 	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_XHTML
+	// insertion point per field
+
+	// Compute reverse map for named struct ATTRIBUTE_DEFINITION_XHTML_Rendering
 	// insertion point per field
 
 	// Compute reverse map for named struct ATTRIBUTE_VALUE_BOOLEAN
@@ -746,7 +767,15 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 		res = append(res, instance)
 	}
 
+	for instance := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings {
+		res = append(res, instance)
+	}
+
 	for instance := range stage.ATTRIBUTE_DEFINITION_DATEs {
+		res = append(res, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings {
 		res = append(res, instance)
 	}
 
@@ -754,11 +783,23 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 		res = append(res, instance)
 	}
 
+	for instance := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings {
+		res = append(res, instance)
+	}
+
 	for instance := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
 		res = append(res, instance)
 	}
 
+	for instance := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings {
+		res = append(res, instance)
+	}
+
 	for instance := range stage.ATTRIBUTE_DEFINITION_REALs {
+		res = append(res, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings {
 		res = append(res, instance)
 	}
 
@@ -770,7 +811,15 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 		res = append(res, instance)
 	}
 
+	for instance := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings {
+		res = append(res, instance)
+	}
+
 	for instance := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
+		res = append(res, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings {
 		res = append(res, instance)
 	}
 
@@ -1144,8 +1193,18 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongCopy() Gon
 	return &newInstance
 }
 
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_boolean_rendering
+	return &newInstance
+}
+
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongCopy() GongstructIF {
 	newInstance := *attribute_definition_date
+	return &newInstance
+}
+
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_date_rendering
 	return &newInstance
 }
 
@@ -1154,13 +1213,28 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongCo
 	return &newInstance
 }
 
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_enumeration_rendering
+	return &newInstance
+}
+
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongCopy() GongstructIF {
 	newInstance := *attribute_definition_integer
 	return &newInstance
 }
 
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_integer_rendering
+	return &newInstance
+}
+
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongCopy() GongstructIF {
 	newInstance := *attribute_definition_real
+	return &newInstance
+}
+
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_real_rendering
 	return &newInstance
 }
 
@@ -1174,8 +1248,18 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongCopy() Gongs
 	return &newInstance
 }
 
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_string_rendering
+	return &newInstance
+}
+
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongCopy() GongstructIF {
 	newInstance := *attribute_definition_xhtml
+	return &newInstance
+}
+
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongCopy() GongstructIF {
+	newInstance := *attribute_definition_xhtml_rendering
 	return &newInstance
 }
 
