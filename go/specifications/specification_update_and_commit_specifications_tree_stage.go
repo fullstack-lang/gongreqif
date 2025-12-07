@@ -13,6 +13,7 @@ import (
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(stager *m.Stager) {
 	treeStage := stager.GetSpecificationsTreeStage()
 	treeStage.Reset()
+	stage := stager.GetStage()
 
 	sliceOfSpecificationNodes := make([]*tree.Node, 0)
 	nameNode := &tree.Node{
@@ -41,7 +42,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		map_specificationType_node[specificationType] = nodeSpecificationType
 	}
 
-	selectedSpecification := stager.GetSelectedSpecification()
+	selectedSpecification := GetSelectedSpecification(stage)
 	for _, specification := range specifications.SPECIFICATION {
 
 		specificationType, ok := stager.Map_id_SPECIFICATION_TYPE[specification.TYPE.SPECIFICATION_TYPE_REF]

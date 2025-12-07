@@ -124,7 +124,7 @@ func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode,
 		frontNode.IsChecked = stageNode.IsChecked
 
 		// log.Println("Specification", proxy.specification.Name, "selected")
-		proxy.stager.SetSelectedSpecification(proxy.specification)
+		SetSelectedSpecification(proxy.stager.GetStage(), proxy.specification)
 
 		proxy.stager.Map_SPECIFICATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPECIFICATION_TYPE]()
 		proxy.stager.Map_SPEC_RELATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_RELATION_TYPE]()

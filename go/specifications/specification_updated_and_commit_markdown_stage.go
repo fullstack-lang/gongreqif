@@ -13,6 +13,8 @@ import (
 // UpdateAndCommitSpecificationsMarkdownStage implements models.SpecificationsTreeUpdaterInterface.
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownStage(stager *m.Stager) {
 
+	stage := stager.GetStage()
+
 	markdownStage := stager.GetMarkdownStage()
 	markdownStage.Reset()
 
@@ -21,14 +23,16 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		return
 	}
 
+	selectedSpecification := GetSelectedSpecification(stage)
+	if selectedSpecification == nil {
+		markdownStage.Commit()
+		return
+	}
+
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
 	for _, specification := range specifications {
 
-		if stager.GetSelectedSpecification() == nil {
-			continue
-		}
-
-		if stager.GetSelectedSpecification() != specification {
+		if selectedSpecification != specification {
 			continue
 		}
 
