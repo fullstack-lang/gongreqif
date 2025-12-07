@@ -1863,72 +1863,6 @@ func FillUpForm(
 					probe)
 			}
 		}
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_SPEC_OBJECT_TYPE_showIdentifierEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_SPEC_OBJECT_TYPE_showIdentifierEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_SPEC_OBJECT_TYPE_showNameEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_SPEC_OBJECT_TYPE_showNameEntries",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
-		{
-			var rf models.ReverseField
-			_ = rf
-			rf.GongstructName = "RenderingConfiguration"
-			rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showRelations"
-			reverseFieldOwner := instanceWithInferedType.GongGetReverseFieldOwner(probe.stageOfInterest, &rf)
-			if reverseFieldOwner != nil {
-				AssociationReverseFieldToForm(
-					reverseFieldOwner.(*models.RenderingConfiguration),
-					"Map_SPEC_OBJECT_TYPE_showRelations",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			} else {
-				AssociationReverseFieldToForm[*models.RenderingConfiguration](
-					nil,
-					"Map_SPEC_OBJECT_TYPE_showRelations",
-					instanceWithInferedType,
-					formGroup,
-					probe)
-			}
-		}
 
 	case *models.RELATION_GROUP:
 		// insertion point
@@ -2103,9 +2037,6 @@ func FillUpForm(
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, formGroup, probe)
 		AssociationSliceToForm("Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries", instanceWithInferedType, &instanceWithInferedType.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, formGroup, probe)
 		AssociationSliceToForm("Map_SPECIFICATION_Nodes_expandedEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPECIFICATION_Nodes_expandedEntries, formGroup, probe)
-		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showIdentifierEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, formGroup, probe)
-		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showNameEntries", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showNameEntries, formGroup, probe)
-		AssociationSliceToForm("Map_SPEC_OBJECT_TYPE_showRelations", instanceWithInferedType, &instanceWithInferedType.Map_SPEC_OBJECT_TYPE_showRelations, formGroup, probe)
 		BasicFieldtoForm("ShowSpecHierachyIdentifiers", instanceWithInferedType.ShowSpecHierachyIdentifiers, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
@@ -2323,6 +2254,8 @@ func FillUpForm(
 		BasicFieldtoForm("ShowName", instanceWithInferedType.ShowName, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowRelations", instanceWithInferedType.ShowRelations, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("IsHeading", instanceWithInferedType.IsHeading, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.SPEC_RELATION:

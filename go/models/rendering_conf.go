@@ -15,6 +15,7 @@ type SPEC_OBJECT_TYPE_Rendering struct {
 	ShowIdentifier bool
 	ShowName       bool
 	ShowRelations  bool
+	IsHeading      bool
 }
 
 // SPECIFICATION_Rendering store the rendering choices
@@ -64,10 +65,6 @@ type RenderingConfiguration struct {
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries []*Map_identifier_bool
 
 	Map_SPECIFICATION_Nodes_expandedEntries []*Map_identifier_bool
-
-	Map_SPEC_OBJECT_TYPE_showIdentifierEntries []*Map_identifier_bool
-	Map_SPEC_OBJECT_TYPE_showNameEntries       []*Map_identifier_bool
-	Map_SPEC_OBJECT_TYPE_showRelations         []*Map_identifier_bool
 
 	ShowSpecHierachyIdentifiers bool
 }

@@ -4791,6 +4791,12 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowRelations))
 		initializerStatements += setValueField
 
+		setValueField = NumberInitStatement
+		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsHeading")
+		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.IsHeading))
+		initializerStatements += setValueField
+
 	}
 
 	map_SPEC_RELATION_Identifiers := make(map[*SPEC_RELATION]string)
@@ -7311,30 +7317,6 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			setPointerField = SliceOfPointersFieldInitStatement
 			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPECIFICATION_Nodes_expandedEntries")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showIdentifierEntries")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showNameEntries")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Map_SPEC_OBJECT_TYPE_showRelations")
 			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_Map_identifier_bool_Identifiers[_map_identifier_bool])
 			pointersInitializesStatements += setPointerField
 		}

@@ -17,6 +17,7 @@ type SpecTypesTreeStageUpdater struct {
 func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stager *m.Stager) {
 
 	stager.GetSpecTypesTreeStage().Reset()
+	stage := stager.GetStage()
 
 	spectypes := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES
 
@@ -51,11 +52,13 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 		}
 
 		for _, specObjectType := range spectypes.SPEC_OBJECT_TYPE {
+			specObjectTypeRendering := GetSpecObjectTypeRendering(stage, specObjectType)
+
 			specObjectTypeNode := &tree.Node{
 				Name: specObjectType.Name + fmt.Sprintf(" (%d/%d)",
 					stager.Map_SPEC_OBJECT_TYPE_Spec_nbInstance[specObjectType],
 					map_specType_nbInstance[specObjectType]),
-				IsExpanded: stager.RenderingConf.Get_SPEC_OBJECT_TYPE_isNodeExpanded(specObjectType),
+				IsExpanded: specObjectTypeRendering.IsNodeExpanded,
 				Impl: &SpecObjectTypeNodeProxy{
 					stager:         stager,
 					specObjectType: specObjectType,
@@ -66,15 +69,15 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			{
 				button := &tree.Button{
 					Name: "Show/Unshow identifier",
-					Impl: &ButtonToggleShowSpecObjectTypeIdentifierProxy{
-						stager:         stager,
-						specObjectType: specObjectType,
+					Impl: &toggleButtonProxy{
+						stager:      stager,
+						toggleValue: &specObjectTypeRendering.ShowIdentifier,
 					},
 					HasToolTip:      true,
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showIdentifier(specObjectType) {
+				if !specObjectTypeRendering.ShowIdentifier {
 					button.ToolTipText = "Show identifier in title"
 					button.SVGIcon = icons.SvgIconBadge
 				} else {
@@ -86,16 +89,16 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 
 			{
 				button := &tree.Button{
-					Name: "Show/Unshow long name",
-					Impl: &ButtonToggleShowSpecObjectTypeLongNameProxy{
-						stager:         stager,
-						specObjectType: specObjectType,
+					Name: "Show/Unshow name",
+					Impl: &toggleButtonProxy{
+						stager:      stager,
+						toggleValue: &specObjectTypeRendering.ShowName,
 					},
 					HasToolTip:      true,
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showName(specObjectType) {
+				if !specObjectTypeRendering.ShowName {
 					button.ToolTipText = "Show name in title"
 					button.SVGIcon = icons.SvgIconBadge
 				} else {
@@ -108,15 +111,15 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			{
 				button := &tree.Button{
 					Name: "Show/Unshow relation",
-					Impl: &ButtonToggleShowSpecObjectTypeRelationsProxy{
-						stager:         stager,
-						specObjectType: specObjectType,
+					Impl: &toggleButtonProxy{
+						stager:      stager,
+						toggleValue: &specObjectTypeRendering.ShowRelations,
 					},
 					HasToolTip:      true,
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showRelations(specObjectType) {
+				if !specObjectTypeRendering.ShowRelations {
 					button.ToolTipText = "Show relations in object table"
 					button.SVGIcon = icons.SvgIconTable
 				} else {
@@ -129,15 +132,15 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 			{
 				button := &tree.Button{
 					Name: "Is Spec Object Type Heading",
-					Impl: &ButtonToggleShowSpecObjectTypeIsHeadingProxy{
-						stager:         stager,
-						specObjectType: specObjectType,
+					Impl: &toggleButtonProxy{
+						stager:      stager,
+						toggleValue: &specObjectTypeRendering.IsHeading,
 					},
 					HasToolTip:      true,
 					ToolTipPosition: tree.Right,
 				}
 
-				if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+				if !specObjectTypeRendering.IsHeading {
 					button.ToolTipText = "Treat as heading"
 					button.SVGIcon = icons.SvgIconTitle
 				} else {

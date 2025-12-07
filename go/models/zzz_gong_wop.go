@@ -1486,6 +1486,8 @@ type SPEC_OBJECT_TYPE_Rendering_WOP struct {
 	ShowName bool
 
 	ShowRelations bool
+
+	IsHeading bool
 }
 
 func (from *SPEC_OBJECT_TYPE_Rendering) CopyBasicFields(to *SPEC_OBJECT_TYPE_Rendering) {
@@ -1495,6 +1497,7 @@ func (from *SPEC_OBJECT_TYPE_Rendering) CopyBasicFields(to *SPEC_OBJECT_TYPE_Ren
 	to.ShowIdentifier = from.ShowIdentifier
 	to.ShowName = from.ShowName
 	to.ShowRelations = from.ShowRelations
+	to.IsHeading = from.IsHeading
 }
 
 type SPEC_RELATION_WOP struct {

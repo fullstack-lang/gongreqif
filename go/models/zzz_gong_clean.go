@@ -646,9 +646,6 @@ func (renderingconfiguration *RenderingConfiguration) GongClean(stage *Stage) {
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries)
 	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries)
 	renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries)
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries)
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries)
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations)
 	// insertion point per field
 }
 

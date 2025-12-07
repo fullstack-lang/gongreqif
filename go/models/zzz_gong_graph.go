@@ -3215,15 +3215,6 @@ func (stage *Stage) StageBranchRenderingConfiguration(renderingconfiguration *Re
 	for _, _map_identifier_bool := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
 		StageBranch(stage, _map_identifier_bool)
 	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
-		StageBranch(stage, _map_identifier_bool)
-	}
 
 }
 
@@ -5879,15 +5870,6 @@ func CopyBranchRenderingConfiguration(mapOrigCopy map[any]any, renderingconfigur
 	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_SPECIFICATION_Nodes_expandedEntries {
 		renderingconfigurationTo.Map_SPECIFICATION_Nodes_expandedEntries = append(renderingconfigurationTo.Map_SPECIFICATION_Nodes_expandedEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
 	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showNameEntries {
-		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showNameEntries = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showNameEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_SPEC_OBJECT_TYPE_showRelations {
-		renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showRelations = append(renderingconfigurationTo.Map_SPEC_OBJECT_TYPE_showRelations, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
 
 	return
 }
@@ -8169,15 +8151,6 @@ func (stage *Stage) UnstageBranchRenderingConfiguration(renderingconfiguration *
 		UnstageBranch(stage, _map_identifier_bool)
 	}
 	for _, _map_identifier_bool := range renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
 		UnstageBranch(stage, _map_identifier_bool)
 	}
 

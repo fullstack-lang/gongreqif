@@ -954,12 +954,6 @@ type Stage struct {
 
 	RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
 
-	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
 	OnAfterRenderingConfigurationCreateCallback OnAfterCreateInterface[RenderingConfiguration]
 	OnAfterRenderingConfigurationUpdateCallback OnAfterUpdateInterface[RenderingConfiguration]
 	OnAfterRenderingConfigurationDeleteCallback OnAfterDeleteInterface[RenderingConfiguration]
@@ -13661,209 +13655,209 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 	}
 }
 
-// GongGetMap returns the map of staged GongstructType instances
-// it is usefull because it allows refactoring of gong struct identifier
-func GongGetMap[Type GongstructIF](stage *Stage) map[string]GongstructIF {
+// GongGetMap returns the map of staged Gonstruct instance by their name
+// Can be usefull if names are unique
+func GongGetMap[Type GongstructIF](stage *Stage) map[string]Type {
 	var ret Type
 
 	switch any(ret).(type) {
 	// insertion point for generic get functions
-	case map[string]*ALTERNATIVE_ID:
-		return any(&stage.ALTERNATIVE_IDs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_BOOLEAN:
-		return any(&stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_DATE:
-		return any(&stage.ATTRIBUTE_DEFINITION_DATEs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_ENUMERATION:
-		return any(&stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_INTEGER:
-		return any(&stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_REAL:
-		return any(&stage.ATTRIBUTE_DEFINITION_REALs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_Rendering:
-		return any(&stage.ATTRIBUTE_DEFINITION_Renderings_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_STRING:
-		return any(&stage.ATTRIBUTE_DEFINITION_STRINGs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_DEFINITION_XHTML:
-		return any(&stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.ATTRIBUTE_VALUE_BOOLEANs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_DATE:
-		return any(&stage.ATTRIBUTE_VALUE_DATEs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.ATTRIBUTE_VALUE_INTEGERs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_REAL:
-		return any(&stage.ATTRIBUTE_VALUE_REALs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_STRING:
-		return any(&stage.ATTRIBUTE_VALUE_STRINGs_mapString).(map[string]GongstructIF)
-	case map[string]*ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.ATTRIBUTE_VALUE_XHTMLs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ALTERNATIVE_ID:
-		return any(&stage.A_ALTERNATIVE_IDs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF:
-		return any(&stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_BOOLEAN:
-		return any(&stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_DATE:
-		return any(&stage.A_ATTRIBUTE_VALUE_DATEs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_ENUMERATION:
-		return any(&stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_INTEGER:
-		return any(&stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_REAL:
-		return any(&stage.A_ATTRIBUTE_VALUE_REALs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_STRING:
-		return any(&stage.A_ATTRIBUTE_VALUE_STRINGs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_XHTML:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ATTRIBUTE_VALUE_XHTML_1:
-		return any(&stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString).(map[string]GongstructIF)
-	case map[string]*A_CHILDREN:
-		return any(&stage.A_CHILDRENs_mapString).(map[string]GongstructIF)
-	case map[string]*A_CORE_CONTENT:
-		return any(&stage.A_CORE_CONTENTs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPES:
-		return any(&stage.A_DATATYPESs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_DATE_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_INTEGER_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_REAL_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_STRING_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_DATATYPE_DEFINITION_XHTML_REF:
-		return any(&stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_EDITABLE_ATTS:
-		return any(&stage.A_EDITABLE_ATTSs_mapString).(map[string]GongstructIF)
-	case map[string]*A_ENUM_VALUE_REF:
-		return any(&stage.A_ENUM_VALUE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_OBJECT:
-		return any(&stage.A_OBJECTs_mapString).(map[string]GongstructIF)
-	case map[string]*A_PROPERTIES:
-		return any(&stage.A_PROPERTIESs_mapString).(map[string]GongstructIF)
-	case map[string]*A_RELATION_GROUP_TYPE_REF:
-		return any(&stage.A_RELATION_GROUP_TYPE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SOURCE_1:
-		return any(&stage.A_SOURCE_1s_mapString).(map[string]GongstructIF)
-	case map[string]*A_SOURCE_SPECIFICATION_1:
-		return any(&stage.A_SOURCE_SPECIFICATION_1s_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPECIFICATIONS:
-		return any(&stage.A_SPECIFICATIONSs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPECIFICATION_TYPE_REF:
-		return any(&stage.A_SPECIFICATION_TYPE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPECIFIED_VALUES:
-		return any(&stage.A_SPECIFIED_VALUESs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_ATTRIBUTES:
-		return any(&stage.A_SPEC_ATTRIBUTESs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_OBJECTS:
-		return any(&stage.A_SPEC_OBJECTSs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_OBJECT_TYPE_REF:
-		return any(&stage.A_SPEC_OBJECT_TYPE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_RELATIONS:
-		return any(&stage.A_SPEC_RELATIONSs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_RELATION_GROUPS:
-		return any(&stage.A_SPEC_RELATION_GROUPSs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_RELATION_REF:
-		return any(&stage.A_SPEC_RELATION_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_RELATION_TYPE_REF:
-		return any(&stage.A_SPEC_RELATION_TYPE_REFs_mapString).(map[string]GongstructIF)
-	case map[string]*A_SPEC_TYPES:
-		return any(&stage.A_SPEC_TYPESs_mapString).(map[string]GongstructIF)
-	case map[string]*A_THE_HEADER:
-		return any(&stage.A_THE_HEADERs_mapString).(map[string]GongstructIF)
-	case map[string]*A_TOOL_EXTENSIONS:
-		return any(&stage.A_TOOL_EXTENSIONSs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_BOOLEAN:
-		return any(&stage.DATATYPE_DEFINITION_BOOLEANs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_DATE:
-		return any(&stage.DATATYPE_DEFINITION_DATEs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_ENUMERATION:
-		return any(&stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_INTEGER:
-		return any(&stage.DATATYPE_DEFINITION_INTEGERs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_REAL:
-		return any(&stage.DATATYPE_DEFINITION_REALs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_STRING:
-		return any(&stage.DATATYPE_DEFINITION_STRINGs_mapString).(map[string]GongstructIF)
-	case map[string]*DATATYPE_DEFINITION_XHTML:
-		return any(&stage.DATATYPE_DEFINITION_XHTMLs_mapString).(map[string]GongstructIF)
-	case map[string]*EMBEDDED_VALUE:
-		return any(&stage.EMBEDDED_VALUEs_mapString).(map[string]GongstructIF)
-	case map[string]*ENUM_VALUE:
-		return any(&stage.ENUM_VALUEs_mapString).(map[string]GongstructIF)
-	case map[string]*EmbeddedJpgImage:
-		return any(&stage.EmbeddedJpgImages_mapString).(map[string]GongstructIF)
-	case map[string]*EmbeddedPngImage:
-		return any(&stage.EmbeddedPngImages_mapString).(map[string]GongstructIF)
-	case map[string]*EmbeddedSvgImage:
-		return any(&stage.EmbeddedSvgImages_mapString).(map[string]GongstructIF)
-	case map[string]*Kill:
-		return any(&stage.Kills_mapString).(map[string]GongstructIF)
-	case map[string]*Map_identifier_bool:
-		return any(&stage.Map_identifier_bools_mapString).(map[string]GongstructIF)
-	case map[string]*RELATION_GROUP:
-		return any(&stage.RELATION_GROUPs_mapString).(map[string]GongstructIF)
-	case map[string]*RELATION_GROUP_TYPE:
-		return any(&stage.RELATION_GROUP_TYPEs_mapString).(map[string]GongstructIF)
-	case map[string]*REQ_IF:
-		return any(&stage.REQ_IFs_mapString).(map[string]GongstructIF)
-	case map[string]*REQ_IF_CONTENT:
-		return any(&stage.REQ_IF_CONTENTs_mapString).(map[string]GongstructIF)
-	case map[string]*REQ_IF_HEADER:
-		return any(&stage.REQ_IF_HEADERs_mapString).(map[string]GongstructIF)
-	case map[string]*REQ_IF_TOOL_EXTENSION:
-		return any(&stage.REQ_IF_TOOL_EXTENSIONs_mapString).(map[string]GongstructIF)
-	case map[string]*RenderingConfiguration:
-		return any(&stage.RenderingConfigurations_mapString).(map[string]GongstructIF)
-	case map[string]*SPECIFICATION:
-		return any(&stage.SPECIFICATIONs_mapString).(map[string]GongstructIF)
-	case map[string]*SPECIFICATION_Rendering:
-		return any(&stage.SPECIFICATION_Renderings_mapString).(map[string]GongstructIF)
-	case map[string]*SPECIFICATION_TYPE:
-		return any(&stage.SPECIFICATION_TYPEs_mapString).(map[string]GongstructIF)
-	case map[string]*SPEC_HIERARCHY:
-		return any(&stage.SPEC_HIERARCHYs_mapString).(map[string]GongstructIF)
-	case map[string]*SPEC_OBJECT:
-		return any(&stage.SPEC_OBJECTs_mapString).(map[string]GongstructIF)
-	case map[string]*SPEC_OBJECT_TYPE:
-		return any(&stage.SPEC_OBJECT_TYPEs_mapString).(map[string]GongstructIF)
-	case map[string]*SPEC_OBJECT_TYPE_Rendering:
-		return any(&stage.SPEC_OBJECT_TYPE_Renderings_mapString).(map[string]GongstructIF)
-	case map[string]*SPEC_RELATION:
-		return any(&stage.SPEC_RELATIONs_mapString).(map[string]GongstructIF)
-	case map[string]*SPEC_RELATION_TYPE:
-		return any(&stage.SPEC_RELATION_TYPEs_mapString).(map[string]GongstructIF)
-	case map[string]*StaticWebSite:
-		return any(&stage.StaticWebSites_mapString).(map[string]GongstructIF)
-	case map[string]*StaticWebSiteChapter:
-		return any(&stage.StaticWebSiteChapters_mapString).(map[string]GongstructIF)
-	case map[string]*StaticWebSiteGeneratedImage:
-		return any(&stage.StaticWebSiteGeneratedImages_mapString).(map[string]GongstructIF)
-	case map[string]*StaticWebSiteImage:
-		return any(&stage.StaticWebSiteImages_mapString).(map[string]GongstructIF)
-	case map[string]*StaticWebSiteParagraph:
-		return any(&stage.StaticWebSiteParagraphs_mapString).(map[string]GongstructIF)
-	case map[string]*XHTML_CONTENT:
-		return any(&stage.XHTML_CONTENTs_mapString).(map[string]GongstructIF)
+	case *ALTERNATIVE_ID:
+		return any(stage.ALTERNATIVE_IDs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_BOOLEAN:
+		return any(stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_DATE:
+		return any(stage.ATTRIBUTE_DEFINITION_DATEs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_ENUMERATION:
+		return any(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_INTEGER:
+		return any(stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_REAL:
+		return any(stage.ATTRIBUTE_DEFINITION_REALs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_Rendering:
+		return any(stage.ATTRIBUTE_DEFINITION_Renderings_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_STRING:
+		return any(stage.ATTRIBUTE_DEFINITION_STRINGs_mapString).(map[string]Type)
+	case *ATTRIBUTE_DEFINITION_XHTML:
+		return any(stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_BOOLEAN:
+		return any(stage.ATTRIBUTE_VALUE_BOOLEANs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_DATE:
+		return any(stage.ATTRIBUTE_VALUE_DATEs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_ENUMERATION:
+		return any(stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_INTEGER:
+		return any(stage.ATTRIBUTE_VALUE_INTEGERs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_REAL:
+		return any(stage.ATTRIBUTE_VALUE_REALs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_STRING:
+		return any(stage.ATTRIBUTE_VALUE_STRINGs_mapString).(map[string]Type)
+	case *ATTRIBUTE_VALUE_XHTML:
+		return any(stage.ATTRIBUTE_VALUE_XHTMLs_mapString).(map[string]Type)
+	case *A_ALTERNATIVE_ID:
+		return any(stage.A_ALTERNATIVE_IDs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
+		return any(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_BOOLEAN:
+		return any(stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_DATE:
+		return any(stage.A_ATTRIBUTE_VALUE_DATEs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_ENUMERATION:
+		return any(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_INTEGER:
+		return any(stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_REAL:
+		return any(stage.A_ATTRIBUTE_VALUE_REALs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_STRING:
+		return any(stage.A_ATTRIBUTE_VALUE_STRINGs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_XHTML:
+		return any(stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString).(map[string]Type)
+	case *A_ATTRIBUTE_VALUE_XHTML_1:
+		return any(stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString).(map[string]Type)
+	case *A_CHILDREN:
+		return any(stage.A_CHILDRENs_mapString).(map[string]Type)
+	case *A_CORE_CONTENT:
+		return any(stage.A_CORE_CONTENTs_mapString).(map[string]Type)
+	case *A_DATATYPES:
+		return any(stage.A_DATATYPESs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
+		return any(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_DATE_REF:
+		return any(stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
+		return any(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_INTEGER_REF:
+		return any(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_REAL_REF:
+		return any(stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_STRING_REF:
+		return any(stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString).(map[string]Type)
+	case *A_DATATYPE_DEFINITION_XHTML_REF:
+		return any(stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString).(map[string]Type)
+	case *A_EDITABLE_ATTS:
+		return any(stage.A_EDITABLE_ATTSs_mapString).(map[string]Type)
+	case *A_ENUM_VALUE_REF:
+		return any(stage.A_ENUM_VALUE_REFs_mapString).(map[string]Type)
+	case *A_OBJECT:
+		return any(stage.A_OBJECTs_mapString).(map[string]Type)
+	case *A_PROPERTIES:
+		return any(stage.A_PROPERTIESs_mapString).(map[string]Type)
+	case *A_RELATION_GROUP_TYPE_REF:
+		return any(stage.A_RELATION_GROUP_TYPE_REFs_mapString).(map[string]Type)
+	case *A_SOURCE_1:
+		return any(stage.A_SOURCE_1s_mapString).(map[string]Type)
+	case *A_SOURCE_SPECIFICATION_1:
+		return any(stage.A_SOURCE_SPECIFICATION_1s_mapString).(map[string]Type)
+	case *A_SPECIFICATIONS:
+		return any(stage.A_SPECIFICATIONSs_mapString).(map[string]Type)
+	case *A_SPECIFICATION_TYPE_REF:
+		return any(stage.A_SPECIFICATION_TYPE_REFs_mapString).(map[string]Type)
+	case *A_SPECIFIED_VALUES:
+		return any(stage.A_SPECIFIED_VALUESs_mapString).(map[string]Type)
+	case *A_SPEC_ATTRIBUTES:
+		return any(stage.A_SPEC_ATTRIBUTESs_mapString).(map[string]Type)
+	case *A_SPEC_OBJECTS:
+		return any(stage.A_SPEC_OBJECTSs_mapString).(map[string]Type)
+	case *A_SPEC_OBJECT_TYPE_REF:
+		return any(stage.A_SPEC_OBJECT_TYPE_REFs_mapString).(map[string]Type)
+	case *A_SPEC_RELATIONS:
+		return any(stage.A_SPEC_RELATIONSs_mapString).(map[string]Type)
+	case *A_SPEC_RELATION_GROUPS:
+		return any(stage.A_SPEC_RELATION_GROUPSs_mapString).(map[string]Type)
+	case *A_SPEC_RELATION_REF:
+		return any(stage.A_SPEC_RELATION_REFs_mapString).(map[string]Type)
+	case *A_SPEC_RELATION_TYPE_REF:
+		return any(stage.A_SPEC_RELATION_TYPE_REFs_mapString).(map[string]Type)
+	case *A_SPEC_TYPES:
+		return any(stage.A_SPEC_TYPESs_mapString).(map[string]Type)
+	case *A_THE_HEADER:
+		return any(stage.A_THE_HEADERs_mapString).(map[string]Type)
+	case *A_TOOL_EXTENSIONS:
+		return any(stage.A_TOOL_EXTENSIONSs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_BOOLEAN:
+		return any(stage.DATATYPE_DEFINITION_BOOLEANs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_DATE:
+		return any(stage.DATATYPE_DEFINITION_DATEs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_ENUMERATION:
+		return any(stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_INTEGER:
+		return any(stage.DATATYPE_DEFINITION_INTEGERs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_REAL:
+		return any(stage.DATATYPE_DEFINITION_REALs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_STRING:
+		return any(stage.DATATYPE_DEFINITION_STRINGs_mapString).(map[string]Type)
+	case *DATATYPE_DEFINITION_XHTML:
+		return any(stage.DATATYPE_DEFINITION_XHTMLs_mapString).(map[string]Type)
+	case *EMBEDDED_VALUE:
+		return any(stage.EMBEDDED_VALUEs_mapString).(map[string]Type)
+	case *ENUM_VALUE:
+		return any(stage.ENUM_VALUEs_mapString).(map[string]Type)
+	case *EmbeddedJpgImage:
+		return any(stage.EmbeddedJpgImages_mapString).(map[string]Type)
+	case *EmbeddedPngImage:
+		return any(stage.EmbeddedPngImages_mapString).(map[string]Type)
+	case *EmbeddedSvgImage:
+		return any(stage.EmbeddedSvgImages_mapString).(map[string]Type)
+	case *Kill:
+		return any(stage.Kills_mapString).(map[string]Type)
+	case *Map_identifier_bool:
+		return any(stage.Map_identifier_bools_mapString).(map[string]Type)
+	case *RELATION_GROUP:
+		return any(stage.RELATION_GROUPs_mapString).(map[string]Type)
+	case *RELATION_GROUP_TYPE:
+		return any(stage.RELATION_GROUP_TYPEs_mapString).(map[string]Type)
+	case *REQ_IF:
+		return any(stage.REQ_IFs_mapString).(map[string]Type)
+	case *REQ_IF_CONTENT:
+		return any(stage.REQ_IF_CONTENTs_mapString).(map[string]Type)
+	case *REQ_IF_HEADER:
+		return any(stage.REQ_IF_HEADERs_mapString).(map[string]Type)
+	case *REQ_IF_TOOL_EXTENSION:
+		return any(stage.REQ_IF_TOOL_EXTENSIONs_mapString).(map[string]Type)
+	case *RenderingConfiguration:
+		return any(stage.RenderingConfigurations_mapString).(map[string]Type)
+	case *SPECIFICATION:
+		return any(stage.SPECIFICATIONs_mapString).(map[string]Type)
+	case *SPECIFICATION_Rendering:
+		return any(stage.SPECIFICATION_Renderings_mapString).(map[string]Type)
+	case *SPECIFICATION_TYPE:
+		return any(stage.SPECIFICATION_TYPEs_mapString).(map[string]Type)
+	case *SPEC_HIERARCHY:
+		return any(stage.SPEC_HIERARCHYs_mapString).(map[string]Type)
+	case *SPEC_OBJECT:
+		return any(stage.SPEC_OBJECTs_mapString).(map[string]Type)
+	case *SPEC_OBJECT_TYPE:
+		return any(stage.SPEC_OBJECT_TYPEs_mapString).(map[string]Type)
+	case *SPEC_OBJECT_TYPE_Rendering:
+		return any(stage.SPEC_OBJECT_TYPE_Renderings_mapString).(map[string]Type)
+	case *SPEC_RELATION:
+		return any(stage.SPEC_RELATIONs_mapString).(map[string]Type)
+	case *SPEC_RELATION_TYPE:
+		return any(stage.SPEC_RELATION_TYPEs_mapString).(map[string]Type)
+	case *StaticWebSite:
+		return any(stage.StaticWebSites_mapString).(map[string]Type)
+	case *StaticWebSiteChapter:
+		return any(stage.StaticWebSiteChapters_mapString).(map[string]Type)
+	case *StaticWebSiteGeneratedImage:
+		return any(stage.StaticWebSiteGeneratedImages_mapString).(map[string]Type)
+	case *StaticWebSiteImage:
+		return any(stage.StaticWebSiteImages_mapString).(map[string]Type)
+	case *StaticWebSiteParagraph:
+		return any(stage.StaticWebSiteParagraphs_mapString).(map[string]Type)
+	case *XHTML_CONTENT:
+		return any(stage.XHTML_CONTENTs_mapString).(map[string]Type)
 	default:
 		return nil
 	}
@@ -15079,12 +15073,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 			Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"}},
 			// field is initialized with an instance of Map_identifier_bool with the name of the field
 			Map_SPECIFICATION_Nodes_expandedEntries: []*Map_identifier_bool{{Name: "Map_SPECIFICATION_Nodes_expandedEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_SPEC_OBJECT_TYPE_showIdentifierEntries: []*Map_identifier_bool{{Name: "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_SPEC_OBJECT_TYPE_showNameEntries: []*Map_identifier_bool{{Name: "Map_SPEC_OBJECT_TYPE_showNameEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_SPEC_OBJECT_TYPE_showRelations: []*Map_identifier_bool{{Name: "Map_SPEC_OBJECT_TYPE_showRelations"}},
 		}).(*Type)
 	case SPECIFICATION:
 		return any(&SPECIFICATION{
@@ -18058,30 +18046,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 				}
 			}
 			return any(res).(map[*End][]*Start)
-		case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_SPEC_OBJECT_TYPE_showRelations":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
 		}
 	// reverse maps of direct associations of SPECIFICATION
 	case SPECIFICATION:
@@ -18783,15 +18747,6 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		res = append(res, rf)
 		rf.GongstructName = "RenderingConfiguration"
 		rf.Fieldname = "Map_SPECIFICATION_Nodes_expandedEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showIdentifierEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showNameEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_SPEC_OBJECT_TYPE_showRelations"
 		res = append(res, rf)
 	case *RELATION_GROUP:
 		var rf ReverseField
@@ -20973,21 +20928,6 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldHeaders() (res
 			TargetGongstructName: "Map_identifier_bool",
 		},
 		{
-			Name:                 "Map_SPEC_OBJECT_TYPE_showIdentifierEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_SPEC_OBJECT_TYPE_showNameEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_SPEC_OBJECT_TYPE_showRelations",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
 			Name:               "ShowSpecHierachyIdentifiers",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
@@ -21253,6 +21193,10 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetFieldHeader
 		},
 		{
 			Name:               "ShowRelations",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "IsHeading",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
@@ -23507,36 +23451,6 @@ func (renderingconfiguration *RenderingConfiguration) GongGetFieldValue(fieldNam
 			res.valueString += __instance__.Name
 			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
 		}
-	case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_SPEC_OBJECT_TYPE_showRelations":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
 	case "ShowSpecHierachyIdentifiers":
 		res.valueString = fmt.Sprintf("%t", renderingconfiguration.ShowSpecHierachyIdentifiers)
 		res.valueBool = renderingconfiguration.ShowSpecHierachyIdentifiers
@@ -23758,6 +23672,10 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetFieldValue(
 	case "ShowRelations":
 		res.valueString = fmt.Sprintf("%t", spec_object_type_rendering.ShowRelations)
 		res.valueBool = spec_object_type_rendering.ShowRelations
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "IsHeading":
+		res.valueString = fmt.Sprintf("%t", spec_object_type_rendering.IsHeading)
+		res.valueBool = spec_object_type_rendering.IsHeading
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -26673,48 +26591,6 @@ func (renderingconfiguration *RenderingConfiguration) GongSetFieldValue(fieldNam
 				}
 			}
 		}
-	case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-		renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-		renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_SPEC_OBJECT_TYPE_showRelations":
-		renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = append(renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations, __instance__)
-						break
-					}
-				}
-			}
-		}
 	case "ShowSpecHierachyIdentifiers":
 		renderingconfiguration.ShowSpecHierachyIdentifiers = value.GetValueBool()
 	default:
@@ -27015,6 +26891,8 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongSetFieldValue(
 		spec_object_type_rendering.ShowName = value.GetValueBool()
 	case "ShowRelations":
 		spec_object_type_rendering.ShowRelations = value.GetValueBool()
+	case "IsHeading":
+		spec_object_type_rendering.IsHeading = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}

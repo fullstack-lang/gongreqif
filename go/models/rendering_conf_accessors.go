@@ -281,36 +281,3 @@ func (renderingConf *RenderingConfiguration) Get_SPECIFICATION_Nodes_expanded(in
 func (renderingConf *RenderingConfiguration) Set_SPECIFICATION_Nodes_expanded(instance *SPECIFICATION, value bool) {
 	renderingConf.setBoolValueInMap(&renderingConf.Map_SPECIFICATION_Nodes_expandedEntries, instance.GetIdentifier(), value)
 }
-
-// Get_SPEC_OBJECT_TYPE_showIdentifier is a wrapper for getBoolValueFromMap
-func (renderingConf *RenderingConfiguration) Get_SPEC_OBJECT_TYPE_showIdentifier(instance *SPEC_OBJECT_TYPE) bool {
-	val, _ := renderingConf.getBoolValueFromMap(renderingConf.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, instance.GetIdentifier())
-	return val
-}
-
-// Set_SPEC_OBJECT_TYPE_showIdentifier is a wrapper for setBoolValueInMap
-func (renderingConf *RenderingConfiguration) Set_SPEC_OBJECT_TYPE_showIdentifier(instance *SPEC_OBJECT_TYPE, value bool) {
-	renderingConf.setBoolValueInMap(&renderingConf.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, instance.GetIdentifier(), value)
-}
-
-// Get_SPEC_OBJECT_TYPE_showName is a wrapper for getBoolValueFromMap
-func (renderingConf *RenderingConfiguration) Get_SPEC_OBJECT_TYPE_showName(instance *SPEC_OBJECT_TYPE) bool {
-	val, _ := renderingConf.getBoolValueFromMap(renderingConf.Map_SPEC_OBJECT_TYPE_showNameEntries, instance.GetIdentifier())
-	return val
-}
-
-// Set_SPEC_OBJECT_TYPE_showName is a wrapper for setBoolValueInMap
-func (renderingConf *RenderingConfiguration) Set_SPEC_OBJECT_TYPE_showName(instance *SPEC_OBJECT_TYPE, value bool) {
-	renderingConf.setBoolValueInMap(&renderingConf.Map_SPEC_OBJECT_TYPE_showNameEntries, instance.GetIdentifier(), value)
-}
-
-// Get_SPEC_OBJECT_TYPE_showRelations is a wrapper for getBoolValueFromMap
-func (renderingConf *RenderingConfiguration) Get_SPEC_OBJECT_TYPE_showRelations(instance *SPEC_OBJECT_TYPE) bool {
-	val, _ := renderingConf.getBoolValueFromMap(renderingConf.Map_SPEC_OBJECT_TYPE_showRelations, instance.GetIdentifier())
-	return val
-}
-
-// Set_SPEC_OBJECT_TYPE_showRelations is a wrapper for setBoolValueInMap
-func (renderingConf *RenderingConfiguration) Set_SPEC_OBJECT_TYPE_showRelations(instance *SPEC_OBJECT_TYPE, value bool) {
-	renderingConf.setBoolValueInMap(&renderingConf.Map_SPEC_OBJECT_TYPE_showRelations, instance.GetIdentifier(), value)
-}

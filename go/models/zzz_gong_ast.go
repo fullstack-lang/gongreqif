@@ -2661,36 +2661,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
 								instanceWhoseFieldIsAppended.Map_SPECIFICATION_Nodes_expandedEntries = append(instanceWhoseFieldIsAppended.Map_SPECIFICATION_Nodes_expandedEntries, instanceToAppend)
 							}
-						case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showIdentifierEntries, instanceToAppend)
-							}
-						case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showNameEntries = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showNameEntries, instanceToAppend)
-							}
-						case "Map_SPEC_OBJECT_TYPE_showRelations":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showRelations = append(instanceWhoseFieldIsAppended.Map_SPEC_OBJECT_TYPE_showRelations, instanceToAppend)
-							}
 						}
 					case "SPECIFICATION":
 						switch fieldName {
@@ -5074,6 +5044,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].ShowRelations = fielValue
+				case "IsHeading":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPEC_OBJECT_TYPE_Rendering[identifier].IsHeading = fielValue
 				}
 			case "SPEC_RELATION":
 				switch fieldName {

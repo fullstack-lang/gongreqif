@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	m "github.com/fullstack-lang/gongreqif/go/models"
+	"github.com/fullstack-lang/gongreqif/go/spectypes"
 )
 
 // Pre-compile regexes for efficiency.
@@ -208,7 +209,8 @@ func appendAttributeRelations(stager *m.Stager, specObject *m.SPEC_OBJECT, table
 			"unknown ref")
 	}
 
-	if !stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showRelations(specObjectType) {
+	specObjectTypeRendering := spectypes.GetSpecObjectTypeRendering(stager.GetStage(), specObjectType)
+	if !specObjectTypeRendering.ShowRelations {
 		return
 	}
 

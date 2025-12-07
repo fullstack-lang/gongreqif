@@ -687,27 +687,6 @@ func (stage *Stage) ComputeReverseMaps() {
 			stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
 		}
 	}
-	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries {
-			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries {
-			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations {
-			stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
 
 	// Compute reverse map for named struct SPECIFICATION
 	// insertion point per field

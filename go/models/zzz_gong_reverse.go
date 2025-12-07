@@ -979,18 +979,6 @@ func (inst *Map_identifier_bool) GongGetReverseFieldOwnerName(stage *Stage, reve
 				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]; ok {
 					res = _renderingconfiguration.Name
 				}
-			case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
-			case "Map_SPEC_OBJECT_TYPE_showRelations":
-				if _renderingconfiguration, ok := stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[inst]; ok {
-					res = _renderingconfiguration.Name
-				}
 			}
 	}
 	return
@@ -2153,12 +2141,6 @@ func (inst *Map_identifier_bool) GongGetReverseFieldOwner(stage *Stage, reverseF
 				res = stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[inst]
 			case "Map_SPECIFICATION_Nodes_expandedEntries":
 				res = stage.RenderingConfiguration_Map_SPECIFICATION_Nodes_expandedEntries_reverseMap[inst]
-			case "Map_SPEC_OBJECT_TYPE_showIdentifierEntries":
-				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showIdentifierEntries_reverseMap[inst]
-			case "Map_SPEC_OBJECT_TYPE_showNameEntries":
-				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showNameEntries_reverseMap[inst]
-			case "Map_SPEC_OBJECT_TYPE_showRelations":
-				res = stage.RenderingConfiguration_Map_SPEC_OBJECT_TYPE_showRelations_reverseMap[inst]
 			}
 	}
 	return res
