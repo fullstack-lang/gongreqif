@@ -70,7 +70,7 @@ type SpecificationsTreeUpdaterInterface interface {
 
 type Exporter interface {
 	ExportReqif(stager *Stager)
-	ExportRenderingConf(renderingConf *RenderingConfiguration, stager *Stager)
+	ExportRenderingConf(stager *Stager)
 	ExportAnonymousReqif(stager *Stager)
 }
 
@@ -99,7 +99,7 @@ type Stager struct {
 	markdownStage *markdown.Stage
 
 	rootReqif             *REQ_IF
-	pathToReqifFile       string
+	PathToReqifFile       string
 	pathToRenderingConf   string
 	pathToOutputReqifFile string
 
@@ -250,7 +250,7 @@ func (stager *Stager) GetPathToOutputReqifFile() string {
 }
 
 func (stager *Stager) GetPathToReqifFile() string {
-	return stager.pathToReqifFile
+	return stager.PathToReqifFile
 }
 
 // OTHERS
@@ -294,7 +294,7 @@ func NewStager(
 
 	stager.stage = stage
 	stager.splitStage = splitStage
-	stager.pathToReqifFile = pathToReqifFile
+	stager.PathToReqifFile = pathToReqifFile
 	stager.pathToRenderingConf = pathToRenderingConf
 	stager.pathToOutputReqifFile = pathToOutputReqifFile
 
@@ -658,7 +658,7 @@ func NewStager(
 func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSvgImage, jpgImages []*EmbeddedJpgImage, pngImages []*EmbeddedPngImage, pathToReqifFile string) {
 
 	stager.stage.Reset()
-	stager.pathToReqifFile = pathToReqifFile
+	stager.PathToReqifFile = pathToReqifFile
 
 	// Unmarshal the XML into the Reqif struct
 	var req_if REQ_IF

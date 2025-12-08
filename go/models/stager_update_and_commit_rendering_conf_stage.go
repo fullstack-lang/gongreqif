@@ -21,16 +21,70 @@ func (proxy *RenderingConfFileToUploadProxy) OnFileUpload(uploadedFile *load.Fil
 		return fmt.Errorf("base64.StdEncoding.DecodeString failed: %w", err)
 	}
 
-	stageForRenderinfConf := NewStage("renderingConf")
-	ParseAstFromBytes(stageForRenderinfConf, decodedBytes)
+	stageForRenderingConf := NewStage("renderingConf")
+	ParseAstFromBytes(stageForRenderingConf, decodedBytes)
 
-	// get the rendering configuration
-	var renderingConf *RenderingConfiguration
-	for _, _conf := range GetGongstrucsSorted[*RenderingConfiguration](stageForRenderinfConf) {
-		renderingConf = _conf
+	stage := proxy.stager.GetStage()
+
+	// remove existing
+	for o := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stage) {
+		o.Unstage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stage) {
+		o.Unstage(stage)
 	}
 
-	proxy.stager.RenderingConf = renderingConf
+	// stage those in storage
+	for o := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stageForRenderingConf) {
+		o.Stage(stage)
+	}
+
+	proxy.stager.enforceRenderingConfigurationSemantic()
 
 	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
 	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)

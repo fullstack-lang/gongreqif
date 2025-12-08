@@ -43,8 +43,8 @@ func (e *ExportRenderingConfButtonProxy) GetButtonsStage() *button.Stage {
 func (e *ExportRenderingConfButtonProxy) OnAfterUpdateButton() {
 
 	conf := e.stager.RenderingConf
-	conf.Name = e.stager.pathToReqifFile
+	conf.Name = e.stager.PathToReqifFile
 
-	e.stager.reqifExporter.ExportRenderingConf(conf, e.stager)
+	e.stager.reqifExporter.ExportRenderingConf(e.stager)
 
 }

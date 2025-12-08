@@ -54,11 +54,11 @@ type ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) {
@@ -100,11 +100,11 @@ type ATTRIBUTE_DEFINITION_DATE_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_DATE_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_DATE_Rendering) {
@@ -149,11 +149,11 @@ type ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) {
@@ -195,11 +195,11 @@ type ATTRIBUTE_DEFINITION_INTEGER_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_INTEGER_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_INTEGER_Rendering) {
@@ -241,11 +241,11 @@ type ATTRIBUTE_DEFINITION_REAL_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_REAL_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_REAL_Rendering) {
@@ -261,11 +261,11 @@ type ATTRIBUTE_DEFINITION_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_Rendering) {
@@ -307,11 +307,11 @@ type ATTRIBUTE_DEFINITION_STRING_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_STRING_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_STRING_Rendering) {
@@ -353,11 +353,11 @@ type ATTRIBUTE_DEFINITION_XHTML_Rendering_WOP struct {
 
 	Name string
 
-	ShowInTableEntries bool
+	ShowInTable bool
 
-	ShowInTitleEntries bool
+	ShowInTitle bool
 
-	ShowInSubjectEntries bool
+	ShowInSubject bool
 }
 
 func (from *ATTRIBUTE_DEFINITION_XHTML_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_XHTML_Rendering) {
@@ -1790,3 +1790,4 @@ func (from *XHTML_CONTENT) CopyBasicFields(to *XHTML_CONTENT) {
 	to.EnclosedText = from.EnclosedText
 	to.PureText = from.PureText
 }
+

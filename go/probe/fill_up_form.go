@@ -68,11 +68,11 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_DATE:
@@ -119,11 +119,11 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_ENUMERATION:
@@ -172,11 +172,11 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_INTEGER:
@@ -223,11 +223,11 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_REAL:
@@ -274,22 +274,22 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_Rendering:
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_STRING:
@@ -336,11 +336,11 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_XHTML:
@@ -387,11 +387,11 @@ func FillUpForm(
 		// insertion point
 		BasicFieldtoForm("Name", instanceWithInferedType.Name, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTableEntries", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTable", instanceWithInferedType.ShowInTable, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInTitleEntries", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
-		BasicFieldtoForm("ShowInSubjectEntries", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_VALUE_BOOLEAN:

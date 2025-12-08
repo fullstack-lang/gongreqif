@@ -12,7 +12,7 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/models"
 )
 
-func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingConfiguration, stager *models.Stager) {
+func (exporter *Exporter) ExportRenderingConf(stager *models.Stager) {
 
 	log.Println("Exporting the rendering configuration")
 
@@ -20,12 +20,39 @@ func (exporter *Exporter) ExportRenderingConf(renderingConf *models.RenderingCon
 
 	fileToDownload := new(load.FileToDownload).Stage(stager.GetLoadStage())
 
-	fileToDownload.Name = strings.TrimSuffix(renderingConf.Name, ".reqif") + "-renderingConf.go"
+	fileToDownload.Name = strings.TrimSuffix(stager.PathToReqifFile, ".reqif") + "-renderingConf.go"
 
 	// 0. we create a new stage for just the marshall of the rendering configuration
 	stageForRenderinfConf := models.NewStage("renderingConf")
 
-	models.StageBranch(stageForRenderinfConf, renderingConf)
+	stage := stager.GetStage()
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.SPECIFICATION_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_OBJECT_TYPE_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
+	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](stage) {
+		o.Stage(stageForRenderinfConf)
+	}
 
 	fileName := filepath.Base(fileToDownload.Name)
 
