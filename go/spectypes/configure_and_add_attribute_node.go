@@ -25,57 +25,19 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 	nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 	m.AddIconForEditabilityOfAttribute(isEditable, longName, nodeAttribute)
 
+	attrDefRendering := GetAttrDefRendering(stager, attributeDefinition)
 	{
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in title",
-			Impl: &ButtonToggleShowAttributeFieldInTitleProxy[AttrDef]{
-				stager:              stager,
-				attributeDefinition: attributeDefinition,
+			Impl: &toggleButtonProxy{
+				stager:      stager,
+				toggleValue: attrDefRendering.GetShowInTitlePtr(),
 			},
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
 
-		var showInTitle bool
-		switch any(attributeDefinition).(type) {
-		case *m.ATTRIBUTE_DEFINITION_XHTML:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_XHTML_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		case *m.ATTRIBUTE_DEFINITION_STRING:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_STRING_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		case *m.ATTRIBUTE_DEFINITION_INTEGER:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_INTEGER_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		case *m.ATTRIBUTE_DEFINITION_DATE:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_DATE_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		case *m.ATTRIBUTE_DEFINITION_REAL:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_REAL_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTitle = attrDefRendering.ShowInTitle
-		}
-
-		if showInTitle {
+		if *attrDefRendering.GetShowInTitlePtr() {
 			button.SVGIcon = icons.SvgIconTitleOff
 			button.ToolTipText = "Click to remove attributes from the title"
 		} else {
@@ -90,54 +52,15 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 	{
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in table",
-			Impl: &ButtonToggleShowAttributeFieldInTableProxy[AttrDef]{
-				stager:              stager,
-				attributeDefinition: attributeDefinition,
+			Impl: &toggleButtonProxy{
+				stager:      stager,
+				toggleValue: attrDefRendering.GetShowInTablePtr(),
 			},
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
 
-		var showInTable bool
-		switch any(attributeDefinition).(type) {
-		case *m.ATTRIBUTE_DEFINITION_XHTML:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_XHTML_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		case *m.ATTRIBUTE_DEFINITION_STRING:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_STRING_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		case *m.ATTRIBUTE_DEFINITION_INTEGER:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_INTEGER_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		case *m.ATTRIBUTE_DEFINITION_DATE:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_DATE_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		case *m.ATTRIBUTE_DEFINITION_REAL:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_REAL_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInTable = attrDefRendering.ShowInTable
-		}
-
-		if showInTable {
+		if *attrDefRendering.GetShowInTablePtr() {
 			button.SVGIcon = icons.SvgIconTableOff
 			button.ToolTipText = "Click to remove attributes from the table"
 		} else {
@@ -152,54 +75,15 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 	{
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in subject",
-			Impl: &ButtonToggleShowAttributeFieldInSubjectProxy[AttrDef]{
-				stager:              stager,
-				attributeDefinition: attributeDefinition,
+			Impl: &toggleButtonProxy{
+				stager:      stager,
+				toggleValue: attrDefRendering.GetShowInSubjectPtr(),
 			},
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 		}
 
-		var showInSubject bool
-		switch any(attributeDefinition).(type) {
-		case *m.ATTRIBUTE_DEFINITION_XHTML:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_XHTML_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		case *m.ATTRIBUTE_DEFINITION_STRING:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_STRING_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		case *m.ATTRIBUTE_DEFINITION_BOOLEAN:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		case *m.ATTRIBUTE_DEFINITION_INTEGER:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_INTEGER_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		case *m.ATTRIBUTE_DEFINITION_DATE:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_DATE_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		case *m.ATTRIBUTE_DEFINITION_REAL:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_REAL_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		case *m.ATTRIBUTE_DEFINITION_ENUMERATION:
-			attrDefRendering := GetSpecAttributeDefinitionRendering[
-				AttrDef, *m.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stager.GetStage(),
-				attributeDefinition)
-			showInSubject = attrDefRendering.ShowInSubject
-		}
-
-		if showInSubject {
+		if *attrDefRendering.GetShowInSubjectPtr() {
 			button.SVGIcon = icons.SvgIconSubjectOff
 			button.ToolTipText = "Click to remove attributes from the subject"
 		} else {

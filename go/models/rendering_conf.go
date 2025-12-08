@@ -8,6 +8,18 @@ type ATTRIBUTE_DEFINITION_Rendering struct {
 	ShowInSubject bool
 }
 
+func (r *ATTRIBUTE_DEFINITION_Rendering) GetShowInTitlePtr() *bool {
+	return &r.ShowInTitle
+}
+
+func (r *ATTRIBUTE_DEFINITION_Rendering) GetShowInTablePtr() *bool {
+	return &r.ShowInTable
+}
+
+func (r *ATTRIBUTE_DEFINITION_Rendering) GetShowInSubjectPtr() *bool {
+	return &r.ShowInSubject
+}
+
 type ATTRIBUTE_DEFINITION_XHTML_Rendering struct {
 	ATTRIBUTE_DEFINITION_Rendering
 }

@@ -45,8 +45,8 @@ func enforceRendering[T Identifiable, R Gongstruct,
 		if _, ok := renderingCongMap[instance.GetIdentifier()]; !ok {
 			var r R
 			pr := PR(&r)
-			pr.StageVoid(stage)
 			pr.SetName(instance.GetIdentifier())
+			pr.StageVoid(stage) // because the name is set with the identifier, the map is
 		}
 	}
 
@@ -63,5 +63,5 @@ func enforceRendering[T Identifiable, R Gongstruct,
 			renderingConf.UnstageVoid(stage)
 		}
 	}
-	stage.ResetMapStrings()
+	// stage.ResetMapStrings()
 }
