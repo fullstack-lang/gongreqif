@@ -108,7 +108,6 @@ func SerializeStage2(stage *Stage, filename string, addIDs bool) {
 		SerializeExcelizePointerToGongstruct2[*REQ_IF_CONTENT](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*REQ_IF_HEADER](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*REQ_IF_TOOL_EXTENSION](stage, f, addIDs)
-		SerializeExcelizePointerToGongstruct2[*RenderingConfiguration](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*SPECIFICATION](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*SPECIFICATION_Rendering](stage, f, addIDs)
 		SerializeExcelizePointerToGongstruct2[*SPECIFICATION_TYPE](stage, f, addIDs)

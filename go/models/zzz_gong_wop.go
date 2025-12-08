@@ -1462,17 +1462,6 @@ func (from *REQ_IF_TOOL_EXTENSION) CopyBasicFields(to *REQ_IF_TOOL_EXTENSION) {
 	to.Name = from.Name
 }
 
-type RenderingConfiguration_WOP struct {
-	// insertion point
-
-	Name string
-}
-
-func (from *RenderingConfiguration) CopyBasicFields(to *RenderingConfiguration) {
-	// insertion point
-	to.Name = from.Name
-}
-
 type SPECIFICATION_WOP struct {
 	// insertion point
 

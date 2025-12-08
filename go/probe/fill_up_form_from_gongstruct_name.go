@@ -1182,19 +1182,6 @@ func FillUpFormFromGongstructName(
 		req_if_tool_extension := new(models.REQ_IF_TOOL_EXTENSION)
 		formGroup.HasSuppressButton = !isNewInstance
 		FillUpForm(req_if_tool_extension, formGroup, probe)
-	case "RenderingConfiguration":
-		formGroup := (&form.FormGroup{
-			Name:  FormName,
-			Label: prefix + "RenderingConfiguration Form",
-		}).Stage(formStage)
-		formGroup.OnSave = __gong__New__RenderingConfigurationFormCallback(
-			nil,
-			probe,
-			formGroup,
-		)
-		renderingconfiguration := new(models.RenderingConfiguration)
-		formGroup.HasSuppressButton = !isNewInstance
-		FillUpForm(renderingconfiguration, formGroup, probe)
 	case "SPECIFICATION":
 		formGroup := (&form.FormGroup{
 			Name:  FormName,

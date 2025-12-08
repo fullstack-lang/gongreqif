@@ -545,156 +545,6 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct REQ_IF_TOOL_EXTENSION
 	// insertion point per field
 
-	// Compute reverse map for named struct RenderingConfiguration
-	// insertion point per field
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-	stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap = make(map[*Map_identifier_bool]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		_ = renderingconfiguration
-		for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-			stage.RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap[_map_identifier_bool] = renderingconfiguration
-		}
-	}
-
 	// Compute reverse map for named struct SPECIFICATION
 	// insertion point per field
 
@@ -1112,10 +962,6 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 	}
 
 	for instance := range stage.REQ_IF_TOOL_EXTENSIONs {
-		res = append(res, instance)
-	}
-
-	for instance := range stage.RenderingConfigurations {
 		res = append(res, instance)
 	}
 
@@ -1625,11 +1471,6 @@ func (req_if_header *REQ_IF_HEADER) GongCopy() GongstructIF {
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongCopy() GongstructIF {
 	newInstance := *req_if_tool_extension
-	return &newInstance
-}
-
-func (renderingconfiguration *RenderingConfiguration) GongCopy() GongstructIF {
-	newInstance := *renderingconfiguration
 	return &newInstance
 }
 

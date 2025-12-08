@@ -317,9 +317,6 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "REQ_IF_TOOL_EXTENSION" {
 		updateAndCommitTable[*models.REQ_IF_TOOL_EXTENSION](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "RenderingConfiguration" {
-		updateAndCommitTable[*models.RenderingConfiguration](nodeImplGongstruct.probe)
-	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION" {
 		updateAndCommitTable[*models.SPECIFICATION](nodeImplGongstruct.probe)
 	}

@@ -156,9 +156,6 @@ type Stager struct {
 
 	Map_ENUM_VALUE_Spec_nbInstance map[*ENUM_VALUE]int
 
-	// RenderingConf is the rendering configuration that is persisted
-	RenderingConf *RenderingConfiguration
-
 	Map_id_ENUM_VALUE map[string]*ENUM_VALUE
 
 	Map_id_SPEC_RELATION_TYPE map[string]*SPEC_RELATION_TYPE
@@ -285,7 +282,6 @@ func NewStager(
 ) {
 
 	stager = new(Stager)
-	stager.RenderingConf = new(RenderingConfiguration)
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
@@ -633,14 +629,6 @@ func NewStager(
 
 		stageForRenderinfConf := NewStage("renderingConf")
 		ParseAstFromBytes(stageForRenderinfConf, renderingConf)
-
-		// get the rendering configuration
-		var conf *RenderingConfiguration
-		for _, _conf := range GetGongstrucsSorted[*RenderingConfiguration](stageForRenderinfConf) {
-			conf = _conf
-		}
-
-		stager.RenderingConf = conf
 	}
 
 	stager.UpdateAndCommitLoadReqifStage()

@@ -967,57 +967,6 @@ type Stage struct {
 	OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONReadCallback   OnAfterReadInterface[REQ_IF_TOOL_EXTENSION]
 
-	RenderingConfigurations           map[*RenderingConfiguration]struct{}
-	RenderingConfigurations_mapString map[string]*RenderingConfiguration
-
-	// insertion point for slice of pointers maps
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	RenderingConfiguration_Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries_reverseMap map[*Map_identifier_bool]*RenderingConfiguration
-
-	OnAfterRenderingConfigurationCreateCallback OnAfterCreateInterface[RenderingConfiguration]
-	OnAfterRenderingConfigurationUpdateCallback OnAfterUpdateInterface[RenderingConfiguration]
-	OnAfterRenderingConfigurationDeleteCallback OnAfterDeleteInterface[RenderingConfiguration]
-	OnAfterRenderingConfigurationReadCallback   OnAfterReadInterface[RenderingConfiguration]
-
 	SPECIFICATIONs           map[*SPECIFICATION]struct{}
 	SPECIFICATIONs_mapString map[string]*SPECIFICATION
 
@@ -1449,9 +1398,6 @@ type Stage struct {
 
 	REQ_IF_TOOL_EXTENSIONOrder            uint
 	REQ_IF_TOOL_EXTENSIONMap_Staged_Order map[*REQ_IF_TOOL_EXTENSION]uint
-
-	RenderingConfigurationOrder            uint
-	RenderingConfigurationMap_Staged_Order map[*RenderingConfiguration]uint
 
 	SPECIFICATIONOrder            uint
 	SPECIFICATIONMap_Staged_Order map[*SPECIFICATION]uint
@@ -2809,20 +2755,6 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 			res = append(res, any(v).(T))
 		}
 		return res
-	case *RenderingConfiguration:
-		tmp := GetStructInstancesByOrder(stage.RenderingConfigurations, stage.RenderingConfigurationMap_Staged_Order)
-
-		// Create a new slice of the generic type T with the same capacity.
-		res = make([]T, 0, len(tmp))
-
-		// Iterate over the source slice and perform a type assertion on each element.
-		for _, v := range tmp {
-			// Assert that the element 'v' can be treated as type 'T'.
-			// Note: This relies on the constraint that PointerToGongstruct
-			// is an interface that *RenderingConfiguration implements.
-			res = append(res, any(v).(T))
-		}
-		return res
 	case *SPECIFICATION:
 		tmp := GetStructInstancesByOrder(stage.SPECIFICATIONs, stage.SPECIFICATIONMap_Staged_Order)
 
@@ -3242,8 +3174,6 @@ func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []st
 		res = GetNamedStructInstances(stage.REQ_IF_HEADERs, stage.REQ_IF_HEADERMap_Staged_Order)
 	case "REQ_IF_TOOL_EXTENSION":
 		res = GetNamedStructInstances(stage.REQ_IF_TOOL_EXTENSIONs, stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order)
-	case "RenderingConfiguration":
-		res = GetNamedStructInstances(stage.RenderingConfigurations, stage.RenderingConfigurationMap_Staged_Order)
 	case "SPECIFICATION":
 		res = GetNamedStructInstances(stage.SPECIFICATIONs, stage.SPECIFICATIONMap_Staged_Order)
 	case "SPECIFICATION_Rendering":
@@ -3521,8 +3451,6 @@ type BackRepoInterface interface {
 	CheckoutREQ_IF_HEADER(req_if_header *REQ_IF_HEADER)
 	CommitREQ_IF_TOOL_EXTENSION(req_if_tool_extension *REQ_IF_TOOL_EXTENSION)
 	CheckoutREQ_IF_TOOL_EXTENSION(req_if_tool_extension *REQ_IF_TOOL_EXTENSION)
-	CommitRenderingConfiguration(renderingconfiguration *RenderingConfiguration)
-	CheckoutRenderingConfiguration(renderingconfiguration *RenderingConfiguration)
 	CommitSPECIFICATION(specification *SPECIFICATION)
 	CheckoutSPECIFICATION(specification *SPECIFICATION)
 	CommitSPECIFICATION_Rendering(specification_rendering *SPECIFICATION_Rendering)
@@ -3827,9 +3755,6 @@ func NewStage(name string) (stage *Stage) {
 		REQ_IF_TOOL_EXTENSIONs:           make(map[*REQ_IF_TOOL_EXTENSION]struct{}),
 		REQ_IF_TOOL_EXTENSIONs_mapString: make(map[string]*REQ_IF_TOOL_EXTENSION),
 
-		RenderingConfigurations:           make(map[*RenderingConfiguration]struct{}),
-		RenderingConfigurations_mapString: make(map[string]*RenderingConfiguration),
-
 		SPECIFICATIONs:           make(map[*SPECIFICATION]struct{}),
 		SPECIFICATIONs_mapString: make(map[string]*SPECIFICATION),
 
@@ -4063,8 +3988,6 @@ func NewStage(name string) (stage *Stage) {
 
 		REQ_IF_TOOL_EXTENSIONMap_Staged_Order: make(map[*REQ_IF_TOOL_EXTENSION]uint),
 
-		RenderingConfigurationMap_Staged_Order: make(map[*RenderingConfiguration]uint),
-
 		SPECIFICATIONMap_Staged_Order: make(map[*SPECIFICATION]uint),
 
 		SPECIFICATION_RenderingMap_Staged_Order: make(map[*SPECIFICATION_Rendering]uint),
@@ -4187,7 +4110,6 @@ func NewStage(name string) (stage *Stage) {
 			{name: "REQ_IF_CONTENT"},
 			{name: "REQ_IF_HEADER"},
 			{name: "REQ_IF_TOOL_EXTENSION"},
-			{name: "RenderingConfiguration"},
 			{name: "SPECIFICATION"},
 			{name: "SPECIFICATION_Rendering"},
 			{name: "SPECIFICATION_TYPE"},
@@ -4396,8 +4318,6 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 		return stage.REQ_IF_HEADERMap_Staged_Order[instance]
 	case *REQ_IF_TOOL_EXTENSION:
 		return stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[instance]
-	case *RenderingConfiguration:
-		return stage.RenderingConfigurationMap_Staged_Order[instance]
 	case *SPECIFICATION:
 		return stage.SPECIFICATIONMap_Staged_Order[instance]
 	case *SPECIFICATION_Rendering:
@@ -4615,8 +4535,6 @@ func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance 
 		return stage.REQ_IF_HEADERMap_Staged_Order[instance]
 	case *REQ_IF_TOOL_EXTENSION:
 		return stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[instance]
-	case *RenderingConfiguration:
-		return stage.RenderingConfigurationMap_Staged_Order[instance]
 	case *SPECIFICATION:
 		return stage.SPECIFICATIONMap_Staged_Order[instance]
 	case *SPECIFICATION_Rendering:
@@ -4772,7 +4690,6 @@ func (stage *Stage) ComputeInstancesNb() {
 	stage.Map_GongStructName_InstancesNb["REQ_IF_CONTENT"] = len(stage.REQ_IF_CONTENTs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_HEADER"] = len(stage.REQ_IF_HEADERs)
 	stage.Map_GongStructName_InstancesNb["REQ_IF_TOOL_EXTENSION"] = len(stage.REQ_IF_TOOL_EXTENSIONs)
-	stage.Map_GongStructName_InstancesNb["RenderingConfiguration"] = len(stage.RenderingConfigurations)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION"] = len(stage.SPECIFICATIONs)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION_Rendering"] = len(stage.SPECIFICATION_Renderings)
 	stage.Map_GongStructName_InstancesNb["SPECIFICATION_TYPE"] = len(stage.SPECIFICATION_TYPEs)
@@ -11592,82 +11509,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) (){
 	req_if_tool_extension.Name = name
 }
 
-// Stage puts renderingconfiguration to the model stage
-func (renderingconfiguration *RenderingConfiguration) Stage(stage *Stage) *RenderingConfiguration {
-
-	if _, ok := stage.RenderingConfigurations[renderingconfiguration]; !ok {
-		stage.RenderingConfigurations[renderingconfiguration] = struct{}{}
-		stage.RenderingConfigurationMap_Staged_Order[renderingconfiguration] = stage.RenderingConfigurationOrder
-		stage.RenderingConfigurationOrder++
-		stage.new[renderingconfiguration] = struct{}{}
-		delete(stage.deleted, renderingconfiguration)
-	} else {
-		if _, ok := stage.new[renderingconfiguration]; !ok {
-			stage.modified[renderingconfiguration] = struct{}{}
-		}
-	}
-	stage.RenderingConfigurations_mapString[renderingconfiguration.Name] = renderingconfiguration
-
-	return renderingconfiguration
-}
-
-// Unstage removes renderingconfiguration off the model stage
-func (renderingconfiguration *RenderingConfiguration) Unstage(stage *Stage) *RenderingConfiguration {
-	delete(stage.RenderingConfigurations, renderingconfiguration)
-	delete(stage.RenderingConfigurations_mapString, renderingconfiguration.Name)
-
-	if _, ok := stage.reference[renderingconfiguration]; ok {
-		stage.deleted[renderingconfiguration] = struct{}{}
-	} else {
-		delete(stage.new, renderingconfiguration)
-	}
-	return renderingconfiguration
-}
-
-// UnstageVoid removes renderingconfiguration off the model stage
-func (renderingconfiguration *RenderingConfiguration) UnstageVoid(stage *Stage) {
-	delete(stage.RenderingConfigurations, renderingconfiguration)
-	delete(stage.RenderingConfigurations_mapString, renderingconfiguration.Name)
-}
-
-// commit renderingconfiguration to the back repo (if it is already staged)
-func (renderingconfiguration *RenderingConfiguration) Commit(stage *Stage) *RenderingConfiguration {
-	if _, ok := stage.RenderingConfigurations[renderingconfiguration]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CommitRenderingConfiguration(renderingconfiguration)
-		}
-	}
-	return renderingconfiguration
-}
-
-func (renderingconfiguration *RenderingConfiguration) CommitVoid(stage *Stage) {
-	renderingconfiguration.Commit(stage)
-}
-
-func (renderingconfiguration *RenderingConfiguration) StageVoid(stage *Stage) {
-	renderingconfiguration.Stage(stage)
-}
-
-// Checkout renderingconfiguration to the back repo (if it is already staged)
-func (renderingconfiguration *RenderingConfiguration) Checkout(stage *Stage) *RenderingConfiguration {
-	if _, ok := stage.RenderingConfigurations[renderingconfiguration]; ok {
-		if stage.BackRepo != nil {
-			stage.BackRepo.CheckoutRenderingConfiguration(renderingconfiguration)
-		}
-	}
-	return renderingconfiguration
-}
-
-// for satisfaction of GongStruct interface
-func (renderingconfiguration *RenderingConfiguration) GetName() (res string) {
-	return renderingconfiguration.Name
-}
-
-// for satisfaction of GongStruct interface
-func (renderingconfiguration *RenderingConfiguration) SetName(name string) (){
-	renderingconfiguration.Name = name
-}
-
 // Stage puts specification to the model stage
 func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 
@@ -12899,7 +12740,6 @@ type AllModelsStructCreateInterface interface { // insertion point for Callbacks
 	CreateORMREQ_IF_CONTENT(REQ_IF_CONTENT *REQ_IF_CONTENT)
 	CreateORMREQ_IF_HEADER(REQ_IF_HEADER *REQ_IF_HEADER)
 	CreateORMREQ_IF_TOOL_EXTENSION(REQ_IF_TOOL_EXTENSION *REQ_IF_TOOL_EXTENSION)
-	CreateORMRenderingConfiguration(RenderingConfiguration *RenderingConfiguration)
 	CreateORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
 	CreateORMSPECIFICATION_Rendering(SPECIFICATION_Rendering *SPECIFICATION_Rendering)
 	CreateORMSPECIFICATION_TYPE(SPECIFICATION_TYPE *SPECIFICATION_TYPE)
@@ -13007,7 +12847,6 @@ type AllModelsStructDeleteInterface interface { // insertion point for Callbacks
 	DeleteORMREQ_IF_CONTENT(REQ_IF_CONTENT *REQ_IF_CONTENT)
 	DeleteORMREQ_IF_HEADER(REQ_IF_HEADER *REQ_IF_HEADER)
 	DeleteORMREQ_IF_TOOL_EXTENSION(REQ_IF_TOOL_EXTENSION *REQ_IF_TOOL_EXTENSION)
-	DeleteORMRenderingConfiguration(RenderingConfiguration *RenderingConfiguration)
 	DeleteORMSPECIFICATION(SPECIFICATION *SPECIFICATION)
 	DeleteORMSPECIFICATION_Rendering(SPECIFICATION_Rendering *SPECIFICATION_Rendering)
 	DeleteORMSPECIFICATION_TYPE(SPECIFICATION_TYPE *SPECIFICATION_TYPE)
@@ -13471,11 +13310,6 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order = make(map[*REQ_IF_TOOL_EXTENSION]uint)
 	stage.REQ_IF_TOOL_EXTENSIONOrder = 0
 
-	stage.RenderingConfigurations = make(map[*RenderingConfiguration]struct{})
-	stage.RenderingConfigurations_mapString = make(map[string]*RenderingConfiguration)
-	stage.RenderingConfigurationMap_Staged_Order = make(map[*RenderingConfiguration]uint)
-	stage.RenderingConfigurationOrder = 0
-
 	stage.SPECIFICATIONs = make(map[*SPECIFICATION]struct{})
 	stage.SPECIFICATIONs_mapString = make(map[string]*SPECIFICATION)
 	stage.SPECIFICATIONMap_Staged_Order = make(map[*SPECIFICATION]uint)
@@ -13821,9 +13655,6 @@ func (stage *Stage) Nil() { // insertion point for array nil
 
 	stage.REQ_IF_TOOL_EXTENSIONs = nil
 	stage.REQ_IF_TOOL_EXTENSIONs_mapString = nil
-
-	stage.RenderingConfigurations = nil
-	stage.RenderingConfigurations_mapString = nil
 
 	stage.SPECIFICATIONs = nil
 	stage.SPECIFICATIONs_mapString = nil
@@ -14229,10 +14060,6 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		req_if_tool_extension.Unstage(stage)
 	}
 
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		renderingconfiguration.Unstage(stage)
-	}
-
 	for specification := range stage.SPECIFICATIONs {
 		specification.Unstage(stage)
 	}
@@ -14545,8 +14372,6 @@ func GongGetSet[Type GongstructSet](stage *Stage) *Type {
 		return any(&stage.REQ_IF_HEADERs).(*Type)
 	case map[*REQ_IF_TOOL_EXTENSION]any:
 		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*Type)
-	case map[*RenderingConfiguration]any:
-		return any(&stage.RenderingConfigurations).(*Type)
 	case map[*SPECIFICATION]any:
 		return any(&stage.SPECIFICATIONs).(*Type)
 	case map[*SPECIFICATION_Rendering]any:
@@ -14767,8 +14592,6 @@ func GongGetMap[Type GongstructIF](stage *Stage) map[string]Type {
 		return any(stage.REQ_IF_HEADERs_mapString).(map[string]Type)
 	case *REQ_IF_TOOL_EXTENSION:
 		return any(stage.REQ_IF_TOOL_EXTENSIONs_mapString).(map[string]Type)
-	case *RenderingConfiguration:
-		return any(stage.RenderingConfigurations_mapString).(map[string]Type)
 	case *SPECIFICATION:
 		return any(stage.SPECIFICATIONs_mapString).(map[string]Type)
 	case *SPECIFICATION_Rendering:
@@ -14989,8 +14812,6 @@ func GetGongstructInstancesSet[Type Gongstruct](stage *Stage) *map[*Type]struct{
 		return any(&stage.REQ_IF_HEADERs).(*map[*Type]struct{})
 	case REQ_IF_TOOL_EXTENSION:
 		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*map[*Type]struct{})
-	case RenderingConfiguration:
-		return any(&stage.RenderingConfigurations).(*map[*Type]struct{})
 	case SPECIFICATION:
 		return any(&stage.SPECIFICATIONs).(*map[*Type]struct{})
 	case SPECIFICATION_Rendering:
@@ -15211,8 +15032,6 @@ func GetGongstructInstancesSetFromPointerType[Type PointerToGongstruct](stage *S
 		return any(&stage.REQ_IF_HEADERs).(*map[Type]struct{})
 	case *REQ_IF_TOOL_EXTENSION:
 		return any(&stage.REQ_IF_TOOL_EXTENSIONs).(*map[Type]struct{})
-	case *RenderingConfiguration:
-		return any(&stage.RenderingConfigurations).(*map[Type]struct{})
 	case *SPECIFICATION:
 		return any(&stage.SPECIFICATIONs).(*map[Type]struct{})
 	case *SPECIFICATION_Rendering:
@@ -15433,8 +15252,6 @@ func GetGongstructInstancesMap[Type Gongstruct](stage *Stage) *map[string]*Type 
 		return any(&stage.REQ_IF_HEADERs_mapString).(*map[string]*Type)
 	case REQ_IF_TOOL_EXTENSION:
 		return any(&stage.REQ_IF_TOOL_EXTENSIONs_mapString).(*map[string]*Type)
-	case RenderingConfiguration:
-		return any(&stage.RenderingConfigurations_mapString).(*map[string]*Type)
 	case SPECIFICATION:
 		return any(&stage.SPECIFICATIONs_mapString).(*map[string]*Type)
 	case SPECIFICATION_Rendering:
@@ -16034,52 +15851,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 	case REQ_IF_TOOL_EXTENSION:
 		return any(&REQ_IF_TOOL_EXTENSION{
 			// Initialisation of associations
-		}).(*Type)
-	case RenderingConfiguration:
-		return any(&RenderingConfiguration{
-			// Initialisation of associations
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"}},
-			// field is initialized with an instance of Map_identifier_bool with the name of the field
-			Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries: []*Map_identifier_bool{{Name: "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"}},
 		}).(*Type)
 	case SPECIFICATION:
 		return any(&SPECIFICATION{
@@ -17691,11 +17462,6 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of RenderingConfiguration
-	case RenderingConfiguration:
-		switch fieldname {
-		// insertion point for per direct association field
-		}
 	// reverse maps of direct associations of SPECIFICATION
 	case SPECIFICATION:
 		switch fieldname {
@@ -18935,179 +18701,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 		switch fieldname {
 		// insertion point for per direct association field
 		}
-	// reverse maps of direct associations of RenderingConfiguration
-	case RenderingConfiguration:
-		switch fieldname {
-		// insertion point for per direct association field
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-			res := make(map[*Map_identifier_bool][]*RenderingConfiguration)
-			for renderingconfiguration := range stage.RenderingConfigurations {
-				for _, map_identifier_bool_ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-					res[map_identifier_bool_] = append(res[map_identifier_bool_], renderingconfiguration)
-				}
-			}
-			return any(res).(map[*End][]*Start)
-		}
 	// reverse maps of direct associations of SPECIFICATION
 	case SPECIFICATION:
 		switch fieldname {
@@ -19389,8 +18982,6 @@ func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
 		res = "REQ_IF_HEADER"
 	case *REQ_IF_TOOL_EXTENSION:
 		res = "REQ_IF_TOOL_EXTENSION"
-	case *RenderingConfiguration:
-		res = "RenderingConfiguration"
 	case *SPECIFICATION:
 		res = "SPECIFICATION"
 	case *SPECIFICATION_Rendering:
@@ -19775,69 +19366,6 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 	case *Map_identifier_bool:
 		var rf ReverseField
 		_ = rf
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries"
-		res = append(res, rf)
-		rf.GongstructName = "RenderingConfiguration"
-		rf.Fieldname = "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries"
-		res = append(res, rf)
 	case *RELATION_GROUP:
 		var rf ReverseField
 		_ = rf
@@ -19865,9 +19393,6 @@ func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
 		rf.GongstructName = "A_TOOL_EXTENSIONS"
 		rf.Fieldname = "REQ_IF_TOOL_EXTENSION"
 		res = append(res, rf)
-	case *RenderingConfiguration:
-		var rf ReverseField
-		_ = rf
 	case *SPECIFICATION:
 		var rf ReverseField
 		_ = rf
@@ -22051,122 +21576,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetFieldHeaders() (res [
 		{
 			Name:               "Name",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
-		},
-	}
-	return
-}
-
-func (renderingconfiguration *RenderingConfiguration) GongGetFieldHeaders() (res []GongFieldHeader) {
-	// insertion point for list of field headers
-	res = []GongFieldHeader{
-		{
-			Name:               "Name",
-			GongFieldValueType: GongFieldValueTypeBasicKind,
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
-		},
-		{
-			Name:                 "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries",
-			GongFieldValueType:   GongFieldValueTypeSliceOfPointers,
-			TargetGongstructName: "Map_identifier_bool",
 		},
 	}
 	return
@@ -24590,224 +23999,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetFieldValue(fieldName 
 	// string value of fields
 	case "Name":
 		res.valueString = req_if_tool_extension.Name
-	}
-	return
-}
-func (renderingconfiguration *RenderingConfiguration) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
-	switch fieldName {
-	// string value of fields
-	case "Name":
-		res.valueString = renderingconfiguration.Name
-	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
-	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-		res.GongFieldValueType = GongFieldValueTypeSliceOfPointers
-		for idx, __instance__ := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-			if idx > 0 {
-				res.valueString += "\n"
-				res.ids += ";"
-			}
-			res.valueString += __instance__.Name
-			res.ids += fmt.Sprintf("%d", GetOrderPointerGongstruct(stage, __instance__))
-		}
 	}
 	return
 }
@@ -27736,311 +26927,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongSetFieldValue(fieldName 
 	return nil
 }
 
-func (renderingconfiguration *RenderingConfiguration) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
-	switch fieldName {
-	// insertion point for per field code
-	case "Name":
-		renderingconfiguration.Name = value.GetValueString()
-	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-		renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = make([]*Map_identifier_bool, 0)
-		ids := strings.Split(value.ids, ";")
-		for _, idStr := range ids {
-			var id int
-			if _, err := fmt.Sscanf(idStr, "%d", &id); err == nil {
-				for __instance__ := range stage.Map_identifier_bools {
-					if stage.Map_identifier_boolMap_Staged_Order[__instance__] == uint(id) {
-						renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, __instance__)
-						break
-					}
-				}
-			}
-		}
-	default:
-		return fmt.Errorf("unknown field %s", fieldName)
-	}
-	return nil
-}
-
 func (specification *SPECIFICATION) GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error {
 	switch fieldName {
 	// insertion point for per field code
@@ -28950,10 +27836,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetGongstructName() stri
 	return "REQ_IF_TOOL_EXTENSION"
 }
 
-func (renderingconfiguration *RenderingConfiguration) GongGetGongstructName() string {
-	return "RenderingConfiguration"
-}
-
 func (specification *SPECIFICATION) GongGetGongstructName() string {
 	return "SPECIFICATION"
 }
@@ -29465,11 +28347,6 @@ func (stage *Stage) ResetMapStrings() {
 	stage.REQ_IF_TOOL_EXTENSIONs_mapString = make(map[string]*REQ_IF_TOOL_EXTENSION)
 	for req_if_tool_extension := range stage.REQ_IF_TOOL_EXTENSIONs {
 		stage.REQ_IF_TOOL_EXTENSIONs_mapString[req_if_tool_extension.Name] = req_if_tool_extension
-	}
-
-	stage.RenderingConfigurations_mapString = make(map[string]*RenderingConfiguration)
-	for renderingconfiguration := range stage.RenderingConfigurations {
-		stage.RenderingConfigurations_mapString[renderingconfiguration.Name] = renderingconfiguration
 	}
 
 	stage.SPECIFICATIONs_mapString = make(map[string]*SPECIFICATION)

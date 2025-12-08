@@ -362,10 +362,6 @@ func AfterCreateFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback.OnAfterCreate(stage, target)
 		}
-	case *RenderingConfiguration:
-		if stage.OnAfterRenderingConfigurationCreateCallback != nil {
-			stage.OnAfterRenderingConfigurationCreateCallback.OnAfterCreate(stage, target)
-		}
 	case *SPECIFICATION:
 		if stage.OnAfterSPECIFICATIONCreateCallback != nil {
 			stage.OnAfterSPECIFICATIONCreateCallback.OnAfterCreate(stage, target)
@@ -884,11 +880,6 @@ func OnAfterUpdateFromFront[Type Gongstruct](stage *Stage, old, new *Type) {
 		newTarget := any(new).(*REQ_IF_TOOL_EXTENSION)
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
-		}
-	case *RenderingConfiguration:
-		newTarget := any(new).(*RenderingConfiguration)
-		if stage.OnAfterRenderingConfigurationUpdateCallback != nil {
-			stage.OnAfterRenderingConfigurationUpdateCallback.OnAfterUpdate(stage, oldTarget, newTarget)
 		}
 	case *SPECIFICATION:
 		newTarget := any(new).(*SPECIFICATION)
@@ -1420,11 +1411,6 @@ func AfterDeleteFromFront[Type Gongstruct](stage *Stage, staged, front *Type) {
 			staged := any(staged).(*REQ_IF_TOOL_EXTENSION)
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback.OnAfterDelete(stage, staged, front)
 		}
-	case *RenderingConfiguration:
-		if stage.OnAfterRenderingConfigurationDeleteCallback != nil {
-			staged := any(staged).(*RenderingConfiguration)
-			stage.OnAfterRenderingConfigurationDeleteCallback.OnAfterDelete(stage, staged, front)
-		}
 	case *SPECIFICATION:
 		if stage.OnAfterSPECIFICATIONDeleteCallback != nil {
 			staged := any(staged).(*SPECIFICATION)
@@ -1866,10 +1852,6 @@ func AfterReadFromFront[Type Gongstruct](stage *Stage, instance *Type) {
 		if stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback != nil {
 			stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback.OnAfterRead(stage, target)
 		}
-	case *RenderingConfiguration:
-		if stage.OnAfterRenderingConfigurationReadCallback != nil {
-			stage.OnAfterRenderingConfigurationReadCallback.OnAfterRead(stage, target)
-		}
 	case *SPECIFICATION:
 		if stage.OnAfterSPECIFICATIONReadCallback != nil {
 			stage.OnAfterSPECIFICATIONReadCallback.OnAfterRead(stage, target)
@@ -2208,9 +2190,6 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_TOOL_EXTENSION])
 	
-	case *RenderingConfiguration:
-		stage.OnAfterRenderingConfigurationUpdateCallback = any(callback).(OnAfterUpdateInterface[RenderingConfiguration])
-	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION])
 	
@@ -2529,9 +2508,6 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_TOOL_EXTENSION])
-	
-	case *RenderingConfiguration:
-		stage.OnAfterRenderingConfigurationCreateCallback = any(callback).(OnAfterCreateInterface[RenderingConfiguration])
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION])
@@ -2852,9 +2828,6 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION])
 	
-	case *RenderingConfiguration:
-		stage.OnAfterRenderingConfigurationDeleteCallback = any(callback).(OnAfterDeleteInterface[RenderingConfiguration])
-	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION])
 	
@@ -3173,9 +3146,6 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_TOOL_EXTENSION])
-	
-	case *RenderingConfiguration:
-		stage.OnAfterRenderingConfigurationReadCallback = any(callback).(OnAfterReadInterface[RenderingConfiguration])
 	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION])

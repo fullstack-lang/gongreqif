@@ -191,7 +191,6 @@ func NewLevel1Stack(
 	models.SetOrchestratorOnAfterUpdate[models.REQ_IF_CONTENT](stage)
 	models.SetOrchestratorOnAfterUpdate[models.REQ_IF_HEADER](stage)
 	models.SetOrchestratorOnAfterUpdate[models.REQ_IF_TOOL_EXTENSION](stage)
-	models.SetOrchestratorOnAfterUpdate[models.RenderingConfiguration](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SPECIFICATION](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SPECIFICATION_Rendering](stage)
 	models.SetOrchestratorOnAfterUpdate[models.SPECIFICATION_TYPE](stage)

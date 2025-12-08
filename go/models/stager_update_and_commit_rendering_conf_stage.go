@@ -8,6 +8,20 @@ import (
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 )
 
+// StageAllOfType stages all instances of type T from source to dest stage
+func StageAllOfType[T PointerToGongstruct](source, dest *Stage) {
+	for o := range *GetGongstructInstancesSetFromPointerType[T](source) {
+		o.StageVoid(dest)
+	}
+}
+
+// UnstageAllOfType unstages all instances of type T from a stage
+func UnstageAllOfType[T PointerToGongstruct](stage *Stage) {
+	for o := range *GetGongstructInstancesSetFromPointerType[T](stage) {
+		o.UnstageVoid(stage)
+	}
+}
+
 type RenderingConfFileToUploadProxy struct {
 	stager *Stager
 }
@@ -27,62 +41,26 @@ func (proxy *RenderingConfFileToUploadProxy) OnFileUpload(uploadedFile *load.Fil
 	stage := proxy.stager.GetStage()
 
 	// remove existing
-	for o := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stage) {
-		o.Unstage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stage) {
-		o.Unstage(stage)
-	}
+	UnstageAllOfType[*SPECIFICATION_Rendering](stage)
+	UnstageAllOfType[*SPEC_OBJECT_TYPE_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stage)
 
 	// stage those in storage
-	for o := range *GetGongstructInstancesSetFromPointerType[*SPECIFICATION_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*SPEC_OBJECT_TYPE_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
-	for o := range *GetGongstructInstancesSetFromPointerType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stageForRenderingConf) {
-		o.Stage(stage)
-	}
+	StageAllOfType[*SPECIFICATION_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*SPEC_OBJECT_TYPE_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stageForRenderingConf, stage)
+	StageAllOfType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stageForRenderingConf, stage)
 
 	proxy.stager.enforceRenderingConfigurationSemantic()
 

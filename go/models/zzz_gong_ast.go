@@ -450,7 +450,6 @@ var __gong__map_REQ_IF = make(map[string]*REQ_IF)
 var __gong__map_REQ_IF_CONTENT = make(map[string]*REQ_IF_CONTENT)
 var __gong__map_REQ_IF_HEADER = make(map[string]*REQ_IF_HEADER)
 var __gong__map_REQ_IF_TOOL_EXTENSION = make(map[string]*REQ_IF_TOOL_EXTENSION)
-var __gong__map_RenderingConfiguration = make(map[string]*RenderingConfiguration)
 var __gong__map_SPECIFICATION = make(map[string]*SPECIFICATION)
 var __gong__map_SPECIFICATION_Rendering = make(map[string]*SPECIFICATION_Rendering)
 var __gong__map_SPECIFICATION_TYPE = make(map[string]*SPECIFICATION_TYPE)
@@ -1172,12 +1171,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 										instanceREQ_IF_TOOL_EXTENSION.Stage(stage)
 										instance = any(instanceREQ_IF_TOOL_EXTENSION)
 										__gong__map_REQ_IF_TOOL_EXTENSION[identifier] = instanceREQ_IF_TOOL_EXTENSION
-									case "RenderingConfiguration":
-										instanceRenderingConfiguration := new(RenderingConfiguration)
-										instanceRenderingConfiguration.Name = instanceName
-										instanceRenderingConfiguration.Stage(stage)
-										instance = any(instanceRenderingConfiguration)
-										__gong__map_RenderingConfiguration[identifier] = instanceRenderingConfiguration
 									case "SPECIFICATION":
 										instanceSPECIFICATION := new(SPECIFICATION)
 										instanceSPECIFICATION.Name = instanceName
@@ -1658,10 +1651,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// insertion point for date assign code
 							}
 						case "REQ_IF_TOOL_EXTENSION":
-							switch fieldName {
-							// insertion point for date assign code
-							}
-						case "RenderingConfiguration":
 							switch fieldName {
 							// insertion point for date assign code
 							}
@@ -2532,220 +2521,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					case "REQ_IF_TOOL_EXTENSION":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
-						}
-					case "RenderingConfiguration":
-						switch fieldName {
-						// insertion point for slice of pointers assign code
-						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, instanceToAppend)
-							}
-						case "Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
-							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_Map_identifier_bool[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_RenderingConfiguration[identifier]
-								instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(instanceWhoseFieldIsAppended.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, instanceToAppend)
-							}
 						}
 					case "SPECIFICATION":
 						switch fieldName {
@@ -4114,14 +3889,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_REQ_IF_TOOL_EXTENSION[identifier].Name = fielValue
 				}
-			case "RenderingConfiguration":
-				switch fieldName {
-				// insertion point for field dependant code
-				case "Name":
-					// remove first and last char
-					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
-					__gong__map_RenderingConfiguration[identifier].Name = fielValue
-				}
 			case "SPECIFICATION":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -5221,10 +4988,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 				switch fieldName {
 				// insertion point for field dependant code
 				}
-			case "RenderingConfiguration":
-				switch fieldName {
-				// insertion point for field dependant code
-				}
 			case "SPECIFICATION":
 				switch fieldName {
 				// insertion point for field dependant code
@@ -5835,10 +5598,6 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// insertion point for selector expr assign code
 					}
 				case "REQ_IF_TOOL_EXTENSION":
-					switch fieldName {
-					// insertion point for selector expr assign code
-					}
-				case "RenderingConfiguration":
 					switch fieldName {
 					// insertion point for selector expr assign code
 					}

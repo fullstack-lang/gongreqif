@@ -272,9 +272,6 @@ func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instanc
 	case *REQ_IF_TOOL_EXTENSION:
 		ok = stage.IsStagedREQ_IF_TOOL_EXTENSION(target)
 
-	case *RenderingConfiguration:
-		ok = stage.IsStagedRenderingConfiguration(target)
-
 	case *SPECIFICATION:
 		ok = stage.IsStagedSPECIFICATION(target)
 
@@ -596,9 +593,6 @@ func IsStaged[Type Gongstruct](stage *Stage, instance *Type) (ok bool) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		ok = stage.IsStagedREQ_IF_TOOL_EXTENSION(target)
-
-	case *RenderingConfiguration:
-		ok = stage.IsStagedRenderingConfiguration(target)
 
 	case *SPECIFICATION:
 		ok = stage.IsStagedSPECIFICATION(target)
@@ -1275,13 +1269,6 @@ func (stage *Stage) IsStagedREQ_IF_TOOL_EXTENSION(req_if_tool_extension *REQ_IF_
 	return
 }
 
-func (stage *Stage) IsStagedRenderingConfiguration(renderingconfiguration *RenderingConfiguration) (ok bool) {
-
-	_, ok = stage.RenderingConfigurations[renderingconfiguration]
-
-	return
-}
-
 func (stage *Stage) IsStagedSPECIFICATION(specification *SPECIFICATION) (ok bool) {
 
 	_, ok = stage.SPECIFICATIONs[specification]
@@ -1661,9 +1648,6 @@ func StageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.StageBranchREQ_IF_TOOL_EXTENSION(target)
-
-	case *RenderingConfiguration:
-		stage.StageBranchRenderingConfiguration(target)
 
 	case *SPECIFICATION:
 		stage.StageBranchSPECIFICATION(target)
@@ -3351,84 +3335,6 @@ func (stage *Stage) StageBranchREQ_IF_TOOL_EXTENSION(req_if_tool_extension *REQ_
 
 }
 
-func (stage *Stage) StageBranchRenderingConfiguration(renderingconfiguration *RenderingConfiguration) {
-
-	// check if instance is already staged
-	if IsStaged(stage, renderingconfiguration) {
-		return
-	}
-
-	renderingconfiguration.Stage(stage)
-
-	//insertion point for the staging of instances referenced by pointers
-
-	//insertion point for the staging of instances referenced by slice of pointers
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-		StageBranch(stage, _map_identifier_bool)
-	}
-
-}
-
 func (stage *Stage) StageBranchSPECIFICATION(specification *SPECIFICATION) {
 
 	// check if instance is already staged
@@ -4094,10 +4000,6 @@ func CopyBranch[Type Gongstruct](from *Type) (to *Type) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		toT := CopyBranchREQ_IF_TOOL_EXTENSION(mapOrigCopy, fromT)
-		return any(toT).(*Type)
-
-	case *RenderingConfiguration:
-		toT := CopyBranchRenderingConfiguration(mapOrigCopy, fromT)
 		return any(toT).(*Type)
 
 	case *SPECIFICATION:
@@ -6158,88 +6060,6 @@ func CopyBranchREQ_IF_TOOL_EXTENSION(mapOrigCopy map[any]any, req_if_tool_extens
 	return
 }
 
-func CopyBranchRenderingConfiguration(mapOrigCopy map[any]any, renderingconfigurationFrom *RenderingConfiguration) (renderingconfigurationTo *RenderingConfiguration) {
-
-	// renderingconfigurationFrom has already been copied
-	if _renderingconfigurationTo, ok := mapOrigCopy[renderingconfigurationFrom]; ok {
-		renderingconfigurationTo = _renderingconfigurationTo.(*RenderingConfiguration)
-		return
-	}
-
-	renderingconfigurationTo = new(RenderingConfiguration)
-	mapOrigCopy[renderingconfigurationFrom] = renderingconfigurationTo
-	renderingconfigurationFrom.CopyBasicFields(renderingconfigurationTo)
-
-	//insertion point for the staging of instances referenced by pointers
-
-	//insertion point for the staging of instances referenced by slice of pointers
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-	for _, _map_identifier_bool := range renderingconfigurationFrom.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-		renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = append(renderingconfigurationTo.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries, CopyBranchMap_identifier_bool(mapOrigCopy, _map_identifier_bool))
-	}
-
-	return
-}
-
 func CopyBranchSPECIFICATION(mapOrigCopy map[any]any, specificationFrom *SPECIFICATION) (specificationTo *SPECIFICATION) {
 
 	// specificationFrom has already been copied
@@ -6874,9 +6694,6 @@ func UnstageBranch[Type Gongstruct](stage *Stage, instance *Type) {
 
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.UnstageBranchREQ_IF_TOOL_EXTENSION(target)
-
-	case *RenderingConfiguration:
-		stage.UnstageBranchRenderingConfiguration(target)
 
 	case *SPECIFICATION:
 		stage.UnstageBranchSPECIFICATION(target)
@@ -8561,84 +8378,6 @@ func (stage *Stage) UnstageBranchREQ_IF_TOOL_EXTENSION(req_if_tool_extension *RE
 	//insertion point for the staging of instances referenced by pointers
 
 	//insertion point for the staging of instances referenced by slice of pointers
-
-}
-
-func (stage *Stage) UnstageBranchRenderingConfiguration(renderingconfiguration *RenderingConfiguration) {
-
-	// check if instance is already staged
-	if !IsStaged(stage, renderingconfiguration) {
-		return
-	}
-
-	renderingconfiguration.Unstage(stage)
-
-	//insertion point for the staging of instances referenced by pointers
-
-	//insertion point for the staging of instances referenced by slice of pointers
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
-	for _, _map_identifier_bool := range renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries {
-		UnstageBranch(stage, _map_identifier_bool)
-	}
 
 }
 
