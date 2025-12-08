@@ -28,7 +28,7 @@ func (stager *Stager) updateAndCommitSummaryTableStage() {
 					},
 					{
 						CellString: &table.CellString{
-							Value: stager.pathToReqifFile,
+							Value: stager.PathToReqifFile,
 						},
 					},
 				},

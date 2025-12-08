@@ -10,8 +10,9 @@ import (
 func (o *SpecificationsTreeStageUpdater) UpdateAttributeDefinitionNb(
 	stager *m.Stager,
 ) {
+	stage := stager.GetStage()
 
-	specification := stager.GetSelectedSpecification()
+	specification := GetSelectedSpecification(stage)
 
 	if specification == nil {
 		return

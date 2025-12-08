@@ -13,6 +13,7 @@ import (
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(stager *m.Stager) {
 	treeStage := stager.GetSpecificationsTreeStage()
 	treeStage.Reset()
+	stage := stager.GetStage()
 
 	sliceOfSpecificationNodes := make([]*tree.Node, 0)
 	nameNode := &tree.Node{
@@ -41,6 +42,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		map_specificationType_node[specificationType] = nodeSpecificationType
 	}
 
+	selectedSpecification := GetSelectedSpecification(stage)
 	for _, specification := range specifications.SPECIFICATION {
 
 		specificationType, ok := stager.Map_id_SPECIFICATION_TYPE[specification.TYPE.SPECIFICATION_TYPE_REF]
@@ -49,13 +51,14 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				"unknown relation type")
 		}
 
-		isSelectedSpecification := stager.GetSelectedSpecification() == specification
+		isSelectedSpecification := specification == selectedSpecification
+		specificationRendering := GetSpecificationRendering(stage, specification)
 
 		specificationNode := &tree.Node{
 			Name:              specification.Name,
 			HasCheckboxButton: true,
 			IsChecked:         isSelectedSpecification,
-			IsExpanded:        stager.RenderingConf.Get_SPECIFICATION_Nodes_expanded(specification),
+			IsExpanded:        specificationRendering.IsNodeExpanded,
 			Impl: &ProxySpecification{
 				stager:        stager,
 				specification: specification,

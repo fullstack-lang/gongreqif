@@ -43,6 +43,12 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongClean(stag
 	attribute_definition_boolean.TYPE = GongCleanPointer(stage, attribute_definition_boolean.TYPE)
 }
 
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_BOOLEAN_Rendering
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_DATE
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongClean(stage *Stage) {
 	// insertion point per field
@@ -50,6 +56,12 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongClean(stage *Sta
 	attribute_definition_date.ALTERNATIVE_ID = GongCleanPointer(stage, attribute_definition_date.ALTERNATIVE_ID)
 	attribute_definition_date.DEFAULT_VALUE = GongCleanPointer(stage, attribute_definition_date.DEFAULT_VALUE)
 	attribute_definition_date.TYPE = GongCleanPointer(stage, attribute_definition_date.TYPE)
+}
+
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_DATE_Rendering
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
 }
 
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_ENUMERATION
@@ -61,6 +73,12 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongCl
 	attribute_definition_enumeration.TYPE = GongCleanPointer(stage, attribute_definition_enumeration.TYPE)
 }
 
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_ENUMERATION_Rendering
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_INTEGER
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongClean(stage *Stage) {
 	// insertion point per field
@@ -68,6 +86,12 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongClean(stag
 	attribute_definition_integer.ALTERNATIVE_ID = GongCleanPointer(stage, attribute_definition_integer.ALTERNATIVE_ID)
 	attribute_definition_integer.DEFAULT_VALUE = GongCleanPointer(stage, attribute_definition_integer.DEFAULT_VALUE)
 	attribute_definition_integer.TYPE = GongCleanPointer(stage, attribute_definition_integer.TYPE)
+}
+
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_INTEGER_Rendering
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
 }
 
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_REAL
@@ -79,6 +103,18 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongClean(stage *Sta
 	attribute_definition_real.TYPE = GongCleanPointer(stage, attribute_definition_real.TYPE)
 }
 
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_REAL_Rendering
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_Rendering
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_STRING
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongClean(stage *Stage) {
 	// insertion point per field
@@ -88,6 +124,12 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongClean(stage 
 	attribute_definition_string.TYPE = GongCleanPointer(stage, attribute_definition_string.TYPE)
 }
 
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_STRING_Rendering
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
+}
+
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_XHTML
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongClean(stage *Stage) {
 	// insertion point per field
@@ -95,6 +137,12 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongClean(stage *S
 	attribute_definition_xhtml.ALTERNATIVE_ID = GongCleanPointer(stage, attribute_definition_xhtml.ALTERNATIVE_ID)
 	attribute_definition_xhtml.DEFAULT_VALUE = GongCleanPointer(stage, attribute_definition_xhtml.DEFAULT_VALUE)
 	attribute_definition_xhtml.TYPE = GongCleanPointer(stage, attribute_definition_xhtml.TYPE)
+}
+
+// Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_DEFINITION_XHTML_Rendering
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
 }
 
 // Clean garbage collect unstaged instances that are referenced by ATTRIBUTE_VALUE_BOOLEAN
@@ -614,38 +662,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongClean(stage *Stage) {
 	// insertion point per field
 }
 
-// Clean garbage collect unstaged instances that are referenced by RenderingConfiguration
-func (renderingconfiguration *RenderingConfiguration) GongClean(stage *Stage) {
-	// insertion point per field
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_isNodeExpandedEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTitleEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInTableEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_XHTML_ShowInSubjectEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_STRING_ShowInSubjectEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_BOOLEAN_ShowInSubjectEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_INTEGER_ShowInSubjectEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_DATE_ShowInSubjectEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_REAL_ShowInSubjectEntries)
-	renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries = GongCleanSlice(stage, renderingconfiguration.Map_ATTRIBUTE_DEFINITION_ENUMERATION_ShowInSubjectEntries)
-	renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPECIFICATION_Nodes_expandedEntries)
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showIdentifierEntries)
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showNameEntries)
-	renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations = GongCleanSlice(stage, renderingconfiguration.Map_SPEC_OBJECT_TYPE_showRelations)
-	// insertion point per field
-}
-
 // Clean garbage collect unstaged instances that are referenced by SPECIFICATION
 func (specification *SPECIFICATION) GongClean(stage *Stage) {
 	// insertion point per field
@@ -654,6 +670,12 @@ func (specification *SPECIFICATION) GongClean(stage *Stage) {
 	specification.TYPE = GongCleanPointer(stage, specification.TYPE)
 	specification.CHILDREN = GongCleanPointer(stage, specification.CHILDREN)
 	specification.VALUES = GongCleanPointer(stage, specification.VALUES)
+}
+
+// Clean garbage collect unstaged instances that are referenced by SPECIFICATION_Rendering
+func (specification_rendering *SPECIFICATION_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
 }
 
 // Clean garbage collect unstaged instances that are referenced by SPECIFICATION_TYPE
@@ -689,6 +711,12 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongClean(stage *Stage) {
 	// insertion point per field
 	spec_object_type.ALTERNATIVE_ID = GongCleanPointer(stage, spec_object_type.ALTERNATIVE_ID)
 	spec_object_type.SPEC_ATTRIBUTES = GongCleanPointer(stage, spec_object_type.SPEC_ATTRIBUTES)
+}
+
+// Clean garbage collect unstaged instances that are referenced by SPEC_OBJECT_TYPE_Rendering
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongClean(stage *Stage) {
+	// insertion point per field
+	// insertion point per field
 }
 
 // Clean garbage collect unstaged instances that are referenced by SPEC_RELATION

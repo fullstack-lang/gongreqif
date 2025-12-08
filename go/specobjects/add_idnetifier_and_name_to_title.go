@@ -2,24 +2,28 @@ package specobjects
 
 import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
+	"github.com/fullstack-lang/gongreqif/go/spectypes"
 )
 
 func AddIdentifierAndNameToTitle(stager *m.Stager, specObjectType *m.SPEC_OBJECT_TYPE, markDownContent *string, specObject *m.SPEC_OBJECT) {
-	if stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showIdentifier(specObjectType) {
+
+	specObjectTypeRendering := spectypes.GetSpecObjectTypeRendering(stager.GetStage(), specObjectType)
+
+	if specObjectTypeRendering.ShowIdentifier {
 		*markDownContent += specObject.IDENTIFIER
 	}
 
-	if stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showIdentifier(specObjectType) &&
-		stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showName(specObjectType) {
+	if specObjectTypeRendering.ShowIdentifier &&
+		specObjectTypeRendering.ShowName {
 		*markDownContent += " - "
 	}
 
-	if stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showName(specObjectType) {
+	if specObjectTypeRendering.ShowName {
 		*markDownContent += specObject.Name
 	}
 
-	if stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showIdentifier(specObjectType) ||
-		stager.RenderingConf.Get_SPEC_OBJECT_TYPE_showName(specObjectType) {
+	if specObjectTypeRendering.ShowIdentifier ||
+		specObjectTypeRendering.ShowName {
 		*markDownContent += " "
 	}
 }

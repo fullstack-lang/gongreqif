@@ -16,8 +16,7 @@ func (proxy *SpecObjectTypeNodeProxy) OnAfterUpdate(
 	staged, front *tree.Node) {
 
 	if staged.IsExpanded != front.IsExpanded {
-		isNodeExpanded := proxy.stager.RenderingConf.Get_SPEC_OBJECT_TYPE_isNodeExpanded(proxy.specObjectType)
-
-		proxy.stager.RenderingConf.Set_SPEC_OBJECT_TYPE_isNodeExpanded(proxy.specObjectType, !isNodeExpanded)
+		specObjectTypeRendering := GetSpecObjectTypeRendering(proxy.stager.GetStage(), proxy.specObjectType)
+		specObjectTypeRendering.IsNodeExpanded = !specObjectTypeRendering.IsNodeExpanded
 	}
 }

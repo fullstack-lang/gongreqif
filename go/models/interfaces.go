@@ -6,7 +6,6 @@ package models
 //
 // DATATYPE_DEFINITION...
 // ATTRIBUTE_DEFINITION...
-//
 type Identifiable interface {
 	PointerToGongstruct
 	GetIdentifier() string
@@ -19,6 +18,14 @@ type AttributeDefinition interface {
 	GetLongName() string
 }
 
+type AttributeDefinitionRendering interface {
+	GongstructIF
+	GetName() string
+	GetShowInTablePtr() *bool
+	GetShowInTitlePtr() *bool
+	GetShowInSubjectPtr() *bool
+}
+
 // Things like A_ATTRIBUTE_DEFINITION_XHTML_REF
 type AttributeDefinitionRef interface {
 	PointerToGongstruct
@@ -29,6 +36,7 @@ type AttributeDefinitionRef interface {
 type Attribute interface {
 	GetValue() string
 	GetAttributeDefinitionRef() string
+	// GetAttributeDefinition() AttributeDefinition
 }
 
 type DatatypeDefinition interface {

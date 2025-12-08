@@ -1,7 +1,6 @@
 package specifications
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -27,12 +26,6 @@ func processSpecHierarchy(
 	if !ok {
 		log.Panic("specObject.TYPE.SPEC_OBJECT_TYPE_REF", specObject.TYPE.SPEC_OBJECT_TYPE_REF,
 			"unknown ref")
-	}
-
-	// starting makr bold
-
-	if stager.RenderingConf.ShowSpecHierachyIdentifiers {
-		*markDownContent += fmt.Sprintf("\n\nSH : %s, depth %d\n\n", specHierarchy.IDENTIFIER, outerDepth)
 	}
 
 	markdownBoldStartingMark := `
@@ -118,21 +111,22 @@ type ProxySpecification struct {
 	specification *m.SPECIFICATION
 }
 
-func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, frontNode *tree.Node) {
+func (p *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, frontNode *tree.Node) {
 
+	stage := p.stager.GetStage()
 	if frontNode.IsChecked && !stageNode.IsChecked {
 		frontNode.IsChecked = stageNode.IsChecked
 
 		// log.Println("Specification", proxy.specification.Name, "selected")
-		proxy.stager.SetSelectedSpecification(proxy.specification)
+		SetSelectedSpecification(stage, p.specification)
 
-		proxy.stager.Map_SPECIFICATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPECIFICATION_TYPE]()
-		proxy.stager.Map_SPEC_RELATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_RELATION_TYPE]()
+		p.stager.Map_SPECIFICATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPECIFICATION_TYPE]()
+		p.stager.Map_SPEC_RELATION_TYPE_Spec_nbInstance = initializeNbInstanceMap[m.SPEC_RELATION_TYPE]()
 
-		proxy.stager.GetSpecificationsTreeUpdater().UpdateAttributeDefinitionNb(proxy.stager)
-		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
-		proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(proxy.stager)
-		proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
+		p.stager.GetSpecificationsTreeUpdater().UpdateAttributeDefinitionNb(p.stager)
+		p.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(p.stager)
+		p.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(p.stager)
+		p.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(p.stager)
 	}
 
 	if !frontNode.IsChecked && stageNode.IsChecked {
@@ -140,10 +134,14 @@ func (proxy *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode,
 	}
 
 	if frontNode.IsExpanded && !stageNode.IsExpanded {
-		proxy.stager.RenderingConf.Set_SPECIFICATION_Nodes_expanded(proxy.specification, true)
+		specificationRendering := GetSpecificationRendering(stage, p.specification)
+		stageNode.IsExpanded = frontNode.IsExpanded
+		specificationRendering.IsNodeExpanded = true
 	}
 
 	if !frontNode.IsExpanded && stageNode.IsExpanded {
-		proxy.stager.RenderingConf.Set_SPECIFICATION_Nodes_expanded(proxy.specification, false)
+		specificationRendering := GetSpecificationRendering(stage, p.specification)
+		stageNode.IsExpanded = frontNode.IsExpanded
+		specificationRendering.IsNodeExpanded = false
 	}
 }

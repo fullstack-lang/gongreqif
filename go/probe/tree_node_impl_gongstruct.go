@@ -56,23 +56,47 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_BOOLEAN" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_DATE" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_DATE_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_ENUMERATION" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_INTEGER" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_INTEGER_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_REAL" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_REAL_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_STRING" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING](nodeImplGongstruct.probe)
 	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_STRING_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](nodeImplGongstruct.probe)
+	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_XHTML" {
 		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_DEFINITION_XHTML_Rendering" {
+		updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "ATTRIBUTE_VALUE_BOOLEAN" {
 		updateAndCommitTable[*models.ATTRIBUTE_VALUE_BOOLEAN](nodeImplGongstruct.probe)
@@ -293,11 +317,11 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	if nodeImplGongstruct.gongStruct.GetName() == "REQ_IF_TOOL_EXTENSION" {
 		updateAndCommitTable[*models.REQ_IF_TOOL_EXTENSION](nodeImplGongstruct.probe)
 	}
-	if nodeImplGongstruct.gongStruct.GetName() == "RenderingConfiguration" {
-		updateAndCommitTable[*models.RenderingConfiguration](nodeImplGongstruct.probe)
-	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION" {
 		updateAndCommitTable[*models.SPECIFICATION](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION_Rendering" {
+		updateAndCommitTable[*models.SPECIFICATION_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPECIFICATION_TYPE" {
 		updateAndCommitTable[*models.SPECIFICATION_TYPE](nodeImplGongstruct.probe)
@@ -310,6 +334,9 @@ func (nodeImplGongstruct *TreeNodeImplGongstruct) OnAfterUpdate(
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_OBJECT_TYPE" {
 		updateAndCommitTable[*models.SPEC_OBJECT_TYPE](nodeImplGongstruct.probe)
+	}
+	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_OBJECT_TYPE_Rendering" {
+		updateAndCommitTable[*models.SPEC_OBJECT_TYPE_Rendering](nodeImplGongstruct.probe)
 	}
 	if nodeImplGongstruct.gongStruct.GetName() == "SPEC_RELATION" {
 		updateAndCommitTable[*models.SPEC_RELATION](nodeImplGongstruct.probe)

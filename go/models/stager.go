@@ -70,7 +70,7 @@ type SpecificationsTreeUpdaterInterface interface {
 
 type Exporter interface {
 	ExportReqif(stager *Stager)
-	ExportRenderingConf(renderingConf *RenderingConfiguration, stager *Stager)
+	ExportRenderingConf(stager *Stager)
 	ExportAnonymousReqif(stager *Stager)
 }
 
@@ -99,7 +99,7 @@ type Stager struct {
 	markdownStage *markdown.Stage
 
 	rootReqif             *REQ_IF
-	pathToReqifFile       string
+	PathToReqifFile       string
 	pathToRenderingConf   string
 	pathToOutputReqifFile string
 
@@ -111,13 +111,13 @@ type Stager struct {
 	// package where modification will be compiled in a much faster time
 	modelGenerator ModelGeneratorInterface
 
-	dataTypesTreeUpdater      DataTypesTreeUpdaterInterface
-	specTypesTreeUpdater      SpecTypesTreeUpdaterInterface
-	specObjectsTreeUpdater    SpecObjectsTreeUpdaterInterface
-	specRelationsTreeUpdater  SpecRelationsTreeUpdaterInterface
-	specificationsTreeUpdater SpecificationsTreeUpdaterInterface
-	reqifExporter             Exporter
-	objectNamer               ObjectNamerInterface
+	dataTypesTreeUpdater DataTypesTreeUpdaterInterface
+	specTypesTreeUpdater SpecTypesTreeUpdaterInterface
+	specObjectsUX        SpecObjectsTreeUpdaterInterface
+	specRelationsUX      SpecRelationsTreeUpdaterInterface
+	specificationsUX     SpecificationsTreeUpdaterInterface
+	reqifExporter        Exporter
+	objectNamer          ObjectNamerInterface
 
 	// maps for navigating the ReqIF data
 	Map_id_DATATYPE_DEFINITION_XHTML       map[string]*DATATYPE_DEFINITION_XHTML
@@ -144,8 +144,8 @@ type Stager struct {
 	Map_SPECIFICATION_TYPE_Spec_nbInstance map[*SPECIFICATION_TYPE]int
 	Map_SPEC_RELATION_TYPE_Spec_nbInstance map[*SPEC_RELATION_TYPE]int
 
-	Map_SPEC_OBJECT_TYPE_isHeading      map[*SPEC_OBJECT_TYPE]bool
-	
+	Map_SPEC_OBJECT_TYPE_isHeading map[*SPEC_OBJECT_TYPE]bool
+
 	Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance       map[*ATTRIBUTE_DEFINITION_XHTML]int
 	Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance      map[*ATTRIBUTE_DEFINITION_STRING]int
 	Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance     map[*ATTRIBUTE_DEFINITION_BOOLEAN]int
@@ -155,9 +155,6 @@ type Stager struct {
 	Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance map[*ATTRIBUTE_DEFINITION_ENUMERATION]int
 
 	Map_ENUM_VALUE_Spec_nbInstance map[*ENUM_VALUE]int
-
-	// RenderingConf is the rendering configuration that is persisted
-	RenderingConf *RenderingConfiguration
 
 	Map_id_ENUM_VALUE map[string]*ENUM_VALUE
 
@@ -185,19 +182,9 @@ type Stager struct {
 	loadReqifStage         *load.Stage // load the reqif file
 	loadRenderingConfStage *load.Stage // load the rendering conf file
 
-	selectedSpecification *SPECIFICATION
-
 	// allow for navigation from spec object to their relations
 	Map_SPEC_OBJECT_relations_sources map[*SPEC_OBJECT][]*SPEC_RELATION
 	Map_SPEC_OBJECT_relations_targets map[*SPEC_OBJECT][]*SPEC_RELATION
-}
-
-func (stager *Stager) SetSelectedSpecification(selectedSpecification *SPECIFICATION) {
-	stager.selectedSpecification = selectedSpecification
-}
-
-func (stager *Stager) GetSelectedSpecification() (selectedSpecification *SPECIFICATION) {
-	return stager.selectedSpecification
 }
 
 func (stager *Stager) GetStage() (stage *Stage) {
@@ -260,7 +247,7 @@ func (stager *Stager) GetPathToOutputReqifFile() string {
 }
 
 func (stager *Stager) GetPathToReqifFile() string {
-	return stager.pathToReqifFile
+	return stager.PathToReqifFile
 }
 
 // OTHERS
@@ -295,7 +282,6 @@ func NewStager(
 ) {
 
 	stager = new(Stager)
-	stager.RenderingConf = new(RenderingConfiguration)
 
 	// the root split name is "" by convention. Is is the same for all gong applications
 	// that do not develop their specific angular component
@@ -304,15 +290,15 @@ func NewStager(
 
 	stager.stage = stage
 	stager.splitStage = splitStage
-	stager.pathToReqifFile = pathToReqifFile
+	stager.PathToReqifFile = pathToReqifFile
 	stager.pathToRenderingConf = pathToRenderingConf
 	stager.pathToOutputReqifFile = pathToOutputReqifFile
 
 	stager.dataTypesTreeUpdater = dataTypesTreeUpdater
 	stager.specTypesTreeUpdater = specTypesTreeUpdater
-	stager.specObjectsTreeUpdater = specObjectsTreeUpdater
-	stager.specRelationsTreeUpdater = specRelationsTreeUpdater
-	stager.specificationsTreeUpdater = specificationsTreeUpdater
+	stager.specObjectsUX = specObjectsTreeUpdater
+	stager.specRelationsUX = specRelationsTreeUpdater
+	stager.specificationsUX = specificationsTreeUpdater
 
 	stager.reqifExporter = exporter
 
@@ -643,14 +629,6 @@ func NewStager(
 
 		stageForRenderinfConf := NewStage("renderingConf")
 		ParseAstFromBytes(stageForRenderinfConf, renderingConf)
-
-		// get the rendering configuration
-		var conf *RenderingConfiguration
-		for _, _conf := range GetGongstrucsSorted[*RenderingConfiguration](stageForRenderinfConf) {
-			conf = _conf
-		}
-
-		stager.RenderingConf = conf
 	}
 
 	stager.UpdateAndCommitLoadReqifStage()
@@ -668,7 +646,7 @@ func NewStager(
 func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSvgImage, jpgImages []*EmbeddedJpgImage, pngImages []*EmbeddedPngImage, pathToReqifFile string) {
 
 	stager.stage.Reset()
-	stager.pathToReqifFile = pathToReqifFile
+	stager.PathToReqifFile = pathToReqifFile
 
 	// Unmarshal the XML into the Reqif struct
 	var req_if REQ_IF
@@ -701,7 +679,7 @@ func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSv
 
 	stager.objectNamer.SetNamesToElements(stager.stage, &req_if)
 
-	stager.initMaps()
+	stager.enforceModelSemantic()
 
 	stager.stage.Commit()
 
@@ -710,17 +688,17 @@ func (stager *Stager) processReqifData(reqifData []byte, svgImages []*EmbeddedSv
 	stager.dataTypesTreeUpdater.UpdateAndCommitDataTypeTreeStage(stager)
 	stager.specTypesTreeUpdater.UpdateAndCommitSpecTypesTreeStage(stager)
 
-	stager.specObjectsTreeUpdater.UpdateAndCommitSpecObjectsTreeStage(stager)
-	stager.specRelationsTreeUpdater.UpdateAndCommitSpecRelationsTreeStage(stager)
-	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsTreeStage(stager)
-	stager.specificationsTreeUpdater.UpdateAndCommitSpecificationsMarkdownStage(stager)
+	stager.specObjectsUX.UpdateAndCommitSpecObjectsTreeStage(stager)
+	stager.specRelationsUX.UpdateAndCommitSpecRelationsTreeStage(stager)
+	stager.specificationsUX.UpdateAndCommitSpecificationsTreeStage(stager)
+	stager.specificationsUX.UpdateAndCommitSpecificationsMarkdownStage(stager)
 
 	// stager.UpdateAndCommitButtonStage()
 
 }
 
 func (stager *Stager) GetSpecificationsTreeUpdater() (specificationsTreeUpdater SpecificationsTreeUpdaterInterface) {
-	return stager.specificationsTreeUpdater
+	return stager.specificationsUX
 }
 
 func (stager *Stager) GetSpecTypesTreeUpdater() (specTypesTreeUpdater SpecTypesTreeUpdaterInterface) {
