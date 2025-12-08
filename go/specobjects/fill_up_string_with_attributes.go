@@ -34,9 +34,9 @@ func parseXHTMLAttributes(stager *m.Stager, attributes []*m.ATTRIBUTE_VALUE_XHTM
 		var isIn bool
 		switch target {
 		case Title:
-			isIn = m.GetAttributeDefinitionIsDisplayedInTitle(stager, attr)
+			isIn = *GetAttributeDefinition(stager, attr).GetShowInTitlePtr()
 		case Subject:
-			isIn = m.GetAttributeDefinitionIsDisplayedInSubject(stager, attr)
+			isIn = *GetAttributeDefinition(stager, attr).GetShowInSubjectPtr()
 		}
 
 		if isIn {
@@ -71,9 +71,9 @@ func parseAttributes[Attr m.Attribute](stager *m.Stager, attributes []Attr, targ
 		// if yes, append to attributesString
 		switch target {
 		case Title:
-			isIn = m.GetAttributeDefinitionIsDisplayedInTitle(stager, attr)
+			isIn = *GetAttributeDefinition(stager, attr).GetShowInTitlePtr()
 		case Subject:
-			isIn = m.GetAttributeDefinitionIsDisplayedInSubject(stager, attr)
+			isIn = *GetAttributeDefinition(stager, attr).GetShowInSubjectPtr()
 		}
 
 		if isIn {

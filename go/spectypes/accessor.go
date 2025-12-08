@@ -44,3 +44,55 @@ func GetSpecAttributeDefinitionRendering[
 
 	return
 }
+
+func GetATTRIBUTE_DEFINITION[
+	Attr models.Attribute,
+	AttrDef models.AttributeDefinition](stager *models.Stager, attribute Attr) (attributeDefinition AttrDef) {
+
+	ref := attribute.GetAttributeDefinitionRef()
+	var ok bool
+
+	switch any(*new(AttrDef)).(type) {
+	case *models.ATTRIBUTE_DEFINITION_XHTML:
+		var ad *models.ATTRIBUTE_DEFINITION_XHTML
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_XHTML[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	case *models.ATTRIBUTE_DEFINITION_STRING:
+		var ad *models.ATTRIBUTE_DEFINITION_STRING
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_STRING[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	case *models.ATTRIBUTE_DEFINITION_BOOLEAN:
+		var ad *models.ATTRIBUTE_DEFINITION_BOOLEAN
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_BOOLEAN[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	case *models.ATTRIBUTE_DEFINITION_INTEGER:
+		var ad *models.ATTRIBUTE_DEFINITION_INTEGER
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_INTEGER[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	case *models.ATTRIBUTE_DEFINITION_DATE:
+		var ad *models.ATTRIBUTE_DEFINITION_DATE
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_DATE[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	case *models.ATTRIBUTE_DEFINITION_REAL:
+		var ad *models.ATTRIBUTE_DEFINITION_REAL
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_REAL[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	case *models.ATTRIBUTE_DEFINITION_ENUMERATION:
+		var ad *models.ATTRIBUTE_DEFINITION_ENUMERATION
+		if ad, ok = stager.Map_id_ATTRIBUTE_DEFINITION_ENUMERATION[ref]; ok {
+			attributeDefinition = any(ad).(AttrDef)
+		}
+	}
+
+	if !ok {
+		log.Panic("unknown ref ", ref)
+	}
+
+	return
+}
