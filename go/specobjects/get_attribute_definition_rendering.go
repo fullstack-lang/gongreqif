@@ -5,7 +5,7 @@ import (
 	"github.com/fullstack-lang/gongreqif/go/spectypes"
 )
 
-func GetAttributeDefinition[Attr models.Attribute](stager *models.Stager, attribute Attr) (
+func GetAttributeDefinitionRendering[Attr models.Attribute](stager *models.Stager, attribute Attr) (
 	attrDefRendering models.AttributeDefinitionRendering) {
 
 	switch any(attribute).(type) {
