@@ -4900,7 +4900,7 @@ func (alternative_id *ALTERNATIVE_ID) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (alternative_id *ALTERNATIVE_ID) SetName(name string) (){
+func (alternative_id *ALTERNATIVE_ID) SetName(name string) {
 	alternative_id.Name = name
 }
 
@@ -4976,7 +4976,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GetName() (res
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) SetName(name string) (){
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) SetName(name string) {
 	attribute_definition_boolean.Name = name
 }
 
@@ -5052,7 +5052,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) SetName(name string) (){
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) SetName(name string) {
 	attribute_definition_boolean_rendering.Name = name
 }
 
@@ -5128,7 +5128,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) SetName(name string) (){
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) SetName(name string) {
 	attribute_definition_date.Name = name
 }
 
@@ -5204,7 +5204,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) SetName(name string) (){
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) SetName(name string) {
 	attribute_definition_date_rendering.Name = name
 }
 
@@ -5280,7 +5280,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GetNam
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) SetName(name string) (){
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) SetName(name string) {
 	attribute_definition_enumeration.Name = name
 }
 
@@ -5356,7 +5356,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) SetName(name string) (){
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) SetName(name string) {
 	attribute_definition_enumeration_rendering.Name = name
 }
 
@@ -5432,7 +5432,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GetName() (res
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) SetName(name string) (){
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) SetName(name string) {
 	attribute_definition_integer.Name = name
 }
 
@@ -5508,7 +5508,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) SetName(name string) (){
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) SetName(name string) {
 	attribute_definition_integer_rendering.Name = name
 }
 
@@ -5584,7 +5584,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) SetName(name string) (){
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) SetName(name string) {
 	attribute_definition_real.Name = name
 }
 
@@ -5660,7 +5660,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) SetName(name string) (){
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) SetName(name string) {
 	attribute_definition_real_rendering.Name = name
 }
 
@@ -5736,7 +5736,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GetName() 
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) SetName(name string) (){
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) SetName(name string) {
 	attribute_definition_rendering.Name = name
 }
 
@@ -5812,7 +5812,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) SetName(name string) (){
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) SetName(name string) {
 	attribute_definition_string.Name = name
 }
 
@@ -5888,7 +5888,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) SetName(name string) (){
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) SetName(name string) {
 	attribute_definition_string_rendering.Name = name
 }
 
@@ -5964,7 +5964,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GetName() (res str
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) SetName(name string) (){
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) SetName(name string) {
 	attribute_definition_xhtml.Name = name
 }
 
@@ -6040,7 +6040,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) SetName(name string) (){
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) SetName(name string) {
 	attribute_definition_xhtml_rendering.Name = name
 }
 
@@ -6116,7 +6116,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) (){
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) {
 	attribute_value_boolean.Name = name
 }
 
@@ -6192,7 +6192,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_date *ATTRIBUTE_VALUE_DATE) SetName(name string) (){
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) SetName(name string) {
 	attribute_value_date.Name = name
 }
 
@@ -6268,7 +6268,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) (){
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) {
 	attribute_value_enumeration.Name = name
 }
 
@@ -6344,7 +6344,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) SetName(name string) (){
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) SetName(name string) {
 	attribute_value_integer.Name = name
 }
 
@@ -6420,7 +6420,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_real *ATTRIBUTE_VALUE_REAL) SetName(name string) (){
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) SetName(name string) {
 	attribute_value_real.Name = name
 }
 
@@ -6496,7 +6496,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_string *ATTRIBUTE_VALUE_STRING) SetName(name string) (){
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) SetName(name string) {
 	attribute_value_string.Name = name
 }
 
@@ -6572,7 +6572,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) SetName(name string) (){
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) SetName(name string) {
 	attribute_value_xhtml.Name = name
 }
 
@@ -6648,7 +6648,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_alternative_id *A_ALTERNATIVE_ID) SetName(name string) (){
+func (a_alternative_id *A_ALTERNATIVE_ID) SetName(name string) {
 	a_alternative_id.Name = name
 }
 
@@ -6724,7 +6724,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Ge
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) SetName(name string) (){
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) SetName(name string) {
 	a_attribute_definition_boolean_ref.Name = name
 }
 
@@ -6800,7 +6800,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) SetName(name string) (){
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) SetName(name string) {
 	a_attribute_definition_date_ref.Name = name
 }
 
@@ -6876,7 +6876,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) SetName(name string) (){
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) SetName(name string) {
 	a_attribute_definition_enumeration_ref.Name = name
 }
 
@@ -6952,7 +6952,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Ge
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) SetName(name string) (){
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) SetName(name string) {
 	a_attribute_definition_integer_ref.Name = name
 }
 
@@ -7028,7 +7028,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) SetName(name string) (){
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) SetName(name string) {
 	a_attribute_definition_real_ref.Name = name
 }
 
@@ -7104,7 +7104,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GetN
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) SetName(name string) (){
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) SetName(name string) {
 	a_attribute_definition_string_ref.Name = name
 }
 
@@ -7180,7 +7180,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GetNam
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) SetName(name string) (){
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) SetName(name string) {
 	a_attribute_definition_xhtml_ref.Name = name
 }
 
@@ -7256,7 +7256,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) (){
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) {
 	a_attribute_value_boolean.Name = name
 }
 
@@ -7332,7 +7332,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) SetName(name string) (){
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) SetName(name string) {
 	a_attribute_value_date.Name = name
 }
 
@@ -7408,7 +7408,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GetName() (r
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) (){
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) {
 	a_attribute_value_enumeration.Name = name
 }
 
@@ -7484,7 +7484,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) SetName(name string) (){
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) SetName(name string) {
 	a_attribute_value_integer.Name = name
 }
 
@@ -7560,7 +7560,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) SetName(name string) (){
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) SetName(name string) {
 	a_attribute_value_real.Name = name
 }
 
@@ -7636,7 +7636,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) SetName(name string) (){
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) SetName(name string) {
 	a_attribute_value_string.Name = name
 }
 
@@ -7712,7 +7712,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) SetName(name string) (){
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) SetName(name string) {
 	a_attribute_value_xhtml.Name = name
 }
 
@@ -7788,7 +7788,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) SetName(name string) (){
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) SetName(name string) {
 	a_attribute_value_xhtml_1.Name = name
 }
 
@@ -7864,7 +7864,7 @@ func (a_children *A_CHILDREN) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_children *A_CHILDREN) SetName(name string) (){
+func (a_children *A_CHILDREN) SetName(name string) {
 	a_children.Name = name
 }
 
@@ -7940,7 +7940,7 @@ func (a_core_content *A_CORE_CONTENT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_core_content *A_CORE_CONTENT) SetName(name string) (){
+func (a_core_content *A_CORE_CONTENT) SetName(name string) {
 	a_core_content.Name = name
 }
 
@@ -8016,7 +8016,7 @@ func (a_datatypes *A_DATATYPES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatypes *A_DATATYPES) SetName(name string) (){
+func (a_datatypes *A_DATATYPES) SetName(name string) {
 	a_datatypes.Name = name
 }
 
@@ -8092,7 +8092,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GetN
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) SetName(name string) (){
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) SetName(name string) {
 	a_datatype_definition_boolean_ref.Name = name
 }
 
@@ -8168,7 +8168,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GetName() 
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) SetName(name string) (){
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) SetName(name string) {
 	a_datatype_definition_date_ref.Name = name
 }
 
@@ -8244,7 +8244,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) SetName(name string) (){
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) SetName(name string) {
 	a_datatype_definition_enumeration_ref.Name = name
 }
 
@@ -8320,7 +8320,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GetN
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) SetName(name string) (){
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) SetName(name string) {
 	a_datatype_definition_integer_ref.Name = name
 }
 
@@ -8396,7 +8396,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GetName() 
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) SetName(name string) (){
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) SetName(name string) {
 	a_datatype_definition_real_ref.Name = name
 }
 
@@ -8472,7 +8472,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GetNam
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) SetName(name string) (){
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) SetName(name string) {
 	a_datatype_definition_string_ref.Name = name
 }
 
@@ -8548,7 +8548,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) SetName(name string) (){
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) SetName(name string) {
 	a_datatype_definition_xhtml_ref.Name = name
 }
 
@@ -8624,7 +8624,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_editable_atts *A_EDITABLE_ATTS) SetName(name string) (){
+func (a_editable_atts *A_EDITABLE_ATTS) SetName(name string) {
 	a_editable_atts.Name = name
 }
 
@@ -8700,7 +8700,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_enum_value_ref *A_ENUM_VALUE_REF) SetName(name string) (){
+func (a_enum_value_ref *A_ENUM_VALUE_REF) SetName(name string) {
 	a_enum_value_ref.Name = name
 }
 
@@ -8776,7 +8776,7 @@ func (a_object *A_OBJECT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_object *A_OBJECT) SetName(name string) (){
+func (a_object *A_OBJECT) SetName(name string) {
 	a_object.Name = name
 }
 
@@ -8852,7 +8852,7 @@ func (a_properties *A_PROPERTIES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_properties *A_PROPERTIES) SetName(name string) (){
+func (a_properties *A_PROPERTIES) SetName(name string) {
 	a_properties.Name = name
 }
 
@@ -8928,7 +8928,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) SetName(name string) (){
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) SetName(name string) {
 	a_relation_group_type_ref.Name = name
 }
 
@@ -9004,7 +9004,7 @@ func (a_source_1 *A_SOURCE_1) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_source_1 *A_SOURCE_1) SetName(name string) (){
+func (a_source_1 *A_SOURCE_1) SetName(name string) {
 	a_source_1.Name = name
 }
 
@@ -9080,7 +9080,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) SetName(name string) (){
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) SetName(name string) {
 	a_source_specification_1.Name = name
 }
 
@@ -9156,7 +9156,7 @@ func (a_specifications *A_SPECIFICATIONS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_specifications *A_SPECIFICATIONS) SetName(name string) (){
+func (a_specifications *A_SPECIFICATIONS) SetName(name string) {
 	a_specifications.Name = name
 }
 
@@ -9232,7 +9232,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) SetName(name string) (){
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) SetName(name string) {
 	a_specification_type_ref.Name = name
 }
 
@@ -9308,7 +9308,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_specified_values *A_SPECIFIED_VALUES) SetName(name string) (){
+func (a_specified_values *A_SPECIFIED_VALUES) SetName(name string) {
 	a_specified_values.Name = name
 }
 
@@ -9384,7 +9384,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_attributes *A_SPEC_ATTRIBUTES) SetName(name string) (){
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) SetName(name string) {
 	a_spec_attributes.Name = name
 }
 
@@ -9460,7 +9460,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_objects *A_SPEC_OBJECTS) SetName(name string) (){
+func (a_spec_objects *A_SPEC_OBJECTS) SetName(name string) {
 	a_spec_objects.Name = name
 }
 
@@ -9536,7 +9536,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) SetName(name string) (){
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) SetName(name string) {
 	a_spec_object_type_ref.Name = name
 }
 
@@ -9612,7 +9612,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relations *A_SPEC_RELATIONS) SetName(name string) (){
+func (a_spec_relations *A_SPEC_RELATIONS) SetName(name string) {
 	a_spec_relations.Name = name
 }
 
@@ -9688,7 +9688,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) SetName(name string) (){
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) SetName(name string) {
 	a_spec_relation_groups.Name = name
 }
 
@@ -9764,7 +9764,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relation_ref *A_SPEC_RELATION_REF) SetName(name string) (){
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) SetName(name string) {
 	a_spec_relation_ref.Name = name
 }
 
@@ -9840,7 +9840,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) SetName(name string) (){
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) SetName(name string) {
 	a_spec_relation_type_ref.Name = name
 }
 
@@ -9916,7 +9916,7 @@ func (a_spec_types *A_SPEC_TYPES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_types *A_SPEC_TYPES) SetName(name string) (){
+func (a_spec_types *A_SPEC_TYPES) SetName(name string) {
 	a_spec_types.Name = name
 }
 
@@ -9992,7 +9992,7 @@ func (a_the_header *A_THE_HEADER) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_the_header *A_THE_HEADER) SetName(name string) (){
+func (a_the_header *A_THE_HEADER) SetName(name string) {
 	a_the_header.Name = name
 }
 
@@ -10068,7 +10068,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_tool_extensions *A_TOOL_EXTENSIONS) SetName(name string) (){
+func (a_tool_extensions *A_TOOL_EXTENSIONS) SetName(name string) {
 	a_tool_extensions.Name = name
 }
 
@@ -10144,7 +10144,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) SetName(name string) (){
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) SetName(name string) {
 	datatype_definition_boolean.Name = name
 }
 
@@ -10220,7 +10220,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_date *DATATYPE_DEFINITION_DATE) SetName(name string) (){
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) SetName(name string) {
 	datatype_definition_date.Name = name
 }
 
@@ -10296,7 +10296,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) SetName(name string) (){
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) SetName(name string) {
 	datatype_definition_enumeration.Name = name
 }
 
@@ -10372,7 +10372,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) SetName(name string) (){
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) SetName(name string) {
 	datatype_definition_integer.Name = name
 }
 
@@ -10448,7 +10448,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_real *DATATYPE_DEFINITION_REAL) SetName(name string) (){
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) SetName(name string) {
 	datatype_definition_real.Name = name
 }
 
@@ -10524,7 +10524,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GetName() (res str
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_string *DATATYPE_DEFINITION_STRING) SetName(name string) (){
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) SetName(name string) {
 	datatype_definition_string.Name = name
 }
 
@@ -10600,7 +10600,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) SetName(name string) (){
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) SetName(name string) {
 	datatype_definition_xhtml.Name = name
 }
 
@@ -10676,7 +10676,7 @@ func (embedded_value *EMBEDDED_VALUE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embedded_value *EMBEDDED_VALUE) SetName(name string) (){
+func (embedded_value *EMBEDDED_VALUE) SetName(name string) {
 	embedded_value.Name = name
 }
 
@@ -10752,7 +10752,7 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (enum_value *ENUM_VALUE) SetName(name string) (){
+func (enum_value *ENUM_VALUE) SetName(name string) {
 	enum_value.Name = name
 }
 
@@ -10828,7 +10828,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embeddedjpgimage *EmbeddedJpgImage) SetName(name string) (){
+func (embeddedjpgimage *EmbeddedJpgImage) SetName(name string) {
 	embeddedjpgimage.Name = name
 }
 
@@ -10904,7 +10904,7 @@ func (embeddedpngimage *EmbeddedPngImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embeddedpngimage *EmbeddedPngImage) SetName(name string) (){
+func (embeddedpngimage *EmbeddedPngImage) SetName(name string) {
 	embeddedpngimage.Name = name
 }
 
@@ -10980,7 +10980,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embeddedsvgimage *EmbeddedSvgImage) SetName(name string) (){
+func (embeddedsvgimage *EmbeddedSvgImage) SetName(name string) {
 	embeddedsvgimage.Name = name
 }
 
@@ -11056,7 +11056,7 @@ func (kill *Kill) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (kill *Kill) SetName(name string) (){
+func (kill *Kill) SetName(name string) {
 	kill.Name = name
 }
 
@@ -11132,7 +11132,7 @@ func (map_identifier_bool *Map_identifier_bool) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (map_identifier_bool *Map_identifier_bool) SetName(name string) (){
+func (map_identifier_bool *Map_identifier_bool) SetName(name string) {
 	map_identifier_bool.Name = name
 }
 
@@ -11208,7 +11208,7 @@ func (relation_group *RELATION_GROUP) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (relation_group *RELATION_GROUP) SetName(name string) (){
+func (relation_group *RELATION_GROUP) SetName(name string) {
 	relation_group.Name = name
 }
 
@@ -11284,7 +11284,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (relation_group_type *RELATION_GROUP_TYPE) SetName(name string) (){
+func (relation_group_type *RELATION_GROUP_TYPE) SetName(name string) {
 	relation_group_type.Name = name
 }
 
@@ -11360,7 +11360,7 @@ func (req_if *REQ_IF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if *REQ_IF) SetName(name string) (){
+func (req_if *REQ_IF) SetName(name string) {
 	req_if.Name = name
 }
 
@@ -11436,7 +11436,7 @@ func (req_if_content *REQ_IF_CONTENT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if_content *REQ_IF_CONTENT) SetName(name string) (){
+func (req_if_content *REQ_IF_CONTENT) SetName(name string) {
 	req_if_content.Name = name
 }
 
@@ -11512,7 +11512,7 @@ func (req_if_header *REQ_IF_HEADER) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if_header *REQ_IF_HEADER) SetName(name string) (){
+func (req_if_header *REQ_IF_HEADER) SetName(name string) {
 	req_if_header.Name = name
 }
 
@@ -11588,7 +11588,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) (){
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) {
 	req_if_tool_extension.Name = name
 }
 
@@ -11664,7 +11664,7 @@ func (renderingconfiguration *RenderingConfiguration) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (renderingconfiguration *RenderingConfiguration) SetName(name string) (){
+func (renderingconfiguration *RenderingConfiguration) SetName(name string) {
 	renderingconfiguration.Name = name
 }
 
@@ -11740,7 +11740,7 @@ func (specification *SPECIFICATION) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (specification *SPECIFICATION) SetName(name string) (){
+func (specification *SPECIFICATION) SetName(name string) {
 	specification.Name = name
 }
 
@@ -11816,7 +11816,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (specification_rendering *SPECIFICATION_Rendering) SetName(name string) (){
+func (specification_rendering *SPECIFICATION_Rendering) SetName(name string) {
 	specification_rendering.Name = name
 }
 
@@ -11892,7 +11892,7 @@ func (specification_type *SPECIFICATION_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (specification_type *SPECIFICATION_TYPE) SetName(name string) (){
+func (specification_type *SPECIFICATION_TYPE) SetName(name string) {
 	specification_type.Name = name
 }
 
@@ -11968,7 +11968,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_hierarchy *SPEC_HIERARCHY) SetName(name string) (){
+func (spec_hierarchy *SPEC_HIERARCHY) SetName(name string) {
 	spec_hierarchy.Name = name
 }
 
@@ -12044,7 +12044,7 @@ func (spec_object *SPEC_OBJECT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_object *SPEC_OBJECT) SetName(name string) (){
+func (spec_object *SPEC_OBJECT) SetName(name string) {
 	spec_object.Name = name
 }
 
@@ -12120,7 +12120,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_object_type *SPEC_OBJECT_TYPE) SetName(name string) (){
+func (spec_object_type *SPEC_OBJECT_TYPE) SetName(name string) {
 	spec_object_type.Name = name
 }
 
@@ -12196,7 +12196,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GetName() (res str
 }
 
 // for satisfaction of GongStruct interface
-func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) SetName(name string) (){
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) SetName(name string) {
 	spec_object_type_rendering.Name = name
 }
 
@@ -12272,7 +12272,7 @@ func (spec_relation *SPEC_RELATION) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_relation *SPEC_RELATION) SetName(name string) (){
+func (spec_relation *SPEC_RELATION) SetName(name string) {
 	spec_relation.Name = name
 }
 
@@ -12348,7 +12348,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_relation_type *SPEC_RELATION_TYPE) SetName(name string) (){
+func (spec_relation_type *SPEC_RELATION_TYPE) SetName(name string) {
 	spec_relation_type.Name = name
 }
 
@@ -12424,7 +12424,7 @@ func (staticwebsite *StaticWebSite) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsite *StaticWebSite) SetName(name string) (){
+func (staticwebsite *StaticWebSite) SetName(name string) {
 	staticwebsite.Name = name
 }
 
@@ -12500,7 +12500,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsitechapter *StaticWebSiteChapter) SetName(name string) (){
+func (staticwebsitechapter *StaticWebSiteChapter) SetName(name string) {
 	staticwebsitechapter.Name = name
 }
 
@@ -12576,7 +12576,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) SetName(name string) (){
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) SetName(name string) {
 	staticwebsitegeneratedimage.Name = name
 }
 
@@ -12652,7 +12652,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsiteimage *StaticWebSiteImage) SetName(name string) (){
+func (staticwebsiteimage *StaticWebSiteImage) SetName(name string) {
 	staticwebsiteimage.Name = name
 }
 
@@ -12728,7 +12728,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsiteparagraph *StaticWebSiteParagraph) SetName(name string) (){
+func (staticwebsiteparagraph *StaticWebSiteParagraph) SetName(name string) {
 	staticwebsiteparagraph.Name = name
 }
 
@@ -12804,7 +12804,7 @@ func (xhtml_content *XHTML_CONTENT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (xhtml_content *XHTML_CONTENT) SetName(name string) (){
+func (xhtml_content *XHTML_CONTENT) SetName(name string) {
 	xhtml_content.Name = name
 }
 
@@ -22774,16 +22774,16 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	case "Name":
 		res.valueString = attribute_definition_boolean_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_boolean_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTable)
+		res.valueBool = attribute_definition_boolean_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_boolean_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_boolean_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_boolean_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_boolean_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -22832,16 +22832,16 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	case "Name":
 		res.valueString = attribute_definition_date_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_date_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTable)
+		res.valueBool = attribute_definition_date_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_date_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_date_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_date_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_date_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -22894,16 +22894,16 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	case "Name":
 		res.valueString = attribute_definition_enumeration_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_enumeration_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTable)
+		res.valueBool = attribute_definition_enumeration_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_enumeration_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_enumeration_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_enumeration_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_enumeration_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -22952,16 +22952,16 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	case "Name":
 		res.valueString = attribute_definition_integer_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_integer_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTable)
+		res.valueBool = attribute_definition_integer_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_integer_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_integer_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_integer_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_integer_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -23010,16 +23010,16 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	case "Name":
 		res.valueString = attribute_definition_real_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_real_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTable)
+		res.valueBool = attribute_definition_real_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_real_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_real_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_real_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_real_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -23030,16 +23030,16 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFie
 	case "Name":
 		res.valueString = attribute_definition_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInTable)
+		res.valueBool = attribute_definition_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -23088,16 +23088,16 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	case "Name":
 		res.valueString = attribute_definition_string_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_string_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTable)
+		res.valueBool = attribute_definition_string_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_string_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_string_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_string_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_string_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -23146,16 +23146,16 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	case "Name":
 		res.valueString = attribute_definition_xhtml_rendering.Name
 	case "ShowInTableEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTableEntries)
-		res.valueBool = attribute_definition_xhtml_rendering.ShowInTableEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTable)
+		res.valueBool = attribute_definition_xhtml_rendering.ShowInTable
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInTitleEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTitleEntries)
-		res.valueBool = attribute_definition_xhtml_rendering.ShowInTitleEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTitle)
+		res.valueBool = attribute_definition_xhtml_rendering.ShowInTitle
 		res.GongFieldValueType = GongFieldValueTypeBool
 	case "ShowInSubjectEntries":
-		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubjectEntries)
-		res.valueBool = attribute_definition_xhtml_rendering.ShowInSubjectEntries
+		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubject)
+		res.valueBool = attribute_definition_xhtml_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -25297,11 +25297,11 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	case "Name":
 		attribute_definition_boolean_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_boolean_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_boolean_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_boolean_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_boolean_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_boolean_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_boolean_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25368,11 +25368,11 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	case "Name":
 		attribute_definition_date_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_date_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_date_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_date_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_date_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_date_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_date_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25441,11 +25441,11 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	case "Name":
 		attribute_definition_enumeration_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_enumeration_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_enumeration_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_enumeration_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_enumeration_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_enumeration_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_enumeration_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25512,11 +25512,11 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	case "Name":
 		attribute_definition_integer_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_integer_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_integer_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_integer_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_integer_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_integer_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_integer_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25583,11 +25583,11 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	case "Name":
 		attribute_definition_real_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_real_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_real_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_real_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_real_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_real_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_real_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25600,11 +25600,11 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongSetFie
 	case "Name":
 		attribute_definition_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25671,11 +25671,11 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	case "Name":
 		attribute_definition_string_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_string_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_string_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_string_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_string_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_string_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_string_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -25742,11 +25742,11 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	case "Name":
 		attribute_definition_xhtml_rendering.Name = value.GetValueString()
 	case "ShowInTableEntries":
-		attribute_definition_xhtml_rendering.ShowInTableEntries = value.GetValueBool()
+		attribute_definition_xhtml_rendering.ShowInTable = value.GetValueBool()
 	case "ShowInTitleEntries":
-		attribute_definition_xhtml_rendering.ShowInTitleEntries = value.GetValueBool()
+		attribute_definition_xhtml_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubjectEntries":
-		attribute_definition_xhtml_rendering.ShowInSubjectEntries = value.GetValueBool()
+		attribute_definition_xhtml_rendering.ShowInSubject = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -29548,4 +29548,5 @@ func (stage *Stage) ResetMapStrings() {
 	}
 
 }
+
 // Last line of the template

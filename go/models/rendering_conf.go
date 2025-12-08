@@ -2,10 +2,10 @@ package models
 
 // ATTRIBUTE_DEFINITION_Rendering store the rendering choices
 type ATTRIBUTE_DEFINITION_Rendering struct {
-	Name                 string // the identifier
-	ShowInTableEntries   bool
-	ShowInTitleEntries   bool
-	ShowInSubjectEntries bool
+	Name          string // the identifier
+	ShowInTable   bool
+	ShowInTitle   bool
+	ShowInSubject bool
 }
 
 type ATTRIBUTE_DEFINITION_XHTML_Rendering struct {

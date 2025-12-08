@@ -6,7 +6,6 @@ package models
 //
 // DATATYPE_DEFINITION...
 // ATTRIBUTE_DEFINITION...
-//
 type Identifiable interface {
 	PointerToGongstruct
 	GetIdentifier() string
@@ -17,6 +16,10 @@ type AttributeDefinition interface {
 	GetDatatypeDefinitionRef() string
 	GetIsEditable() bool
 	GetLongName() string
+}
+
+type AttributeDefinitionRendering interface {
+	GongstructIF
 }
 
 // Things like A_ATTRIBUTE_DEFINITION_XHTML_REF

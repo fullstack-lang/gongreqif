@@ -64,9 +64,9 @@ type ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_DATE_WOP struct {
@@ -110,9 +110,9 @@ type ATTRIBUTE_DEFINITION_DATE_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_DATE_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_DATE_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_ENUMERATION_WOP struct {
@@ -159,9 +159,9 @@ type ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_INTEGER_WOP struct {
@@ -205,9 +205,9 @@ type ATTRIBUTE_DEFINITION_INTEGER_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_INTEGER_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_INTEGER_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_REAL_WOP struct {
@@ -251,9 +251,9 @@ type ATTRIBUTE_DEFINITION_REAL_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_REAL_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_REAL_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_Rendering_WOP struct {
@@ -271,9 +271,9 @@ type ATTRIBUTE_DEFINITION_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_STRING_WOP struct {
@@ -317,9 +317,9 @@ type ATTRIBUTE_DEFINITION_STRING_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_STRING_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_STRING_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_DEFINITION_XHTML_WOP struct {
@@ -363,9 +363,9 @@ type ATTRIBUTE_DEFINITION_XHTML_Rendering_WOP struct {
 func (from *ATTRIBUTE_DEFINITION_XHTML_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_XHTML_Rendering) {
 	// insertion point
 	to.Name = from.Name
-	to.ShowInTableEntries = from.ShowInTableEntries
-	to.ShowInTitleEntries = from.ShowInTitleEntries
-	to.ShowInSubjectEntries = from.ShowInSubjectEntries
+	to.ShowInTable = from.ShowInTable
+	to.ShowInTitle = from.ShowInTitle
+	to.ShowInSubject = from.ShowInSubject
 }
 
 type ATTRIBUTE_VALUE_BOOLEAN_WOP struct {
@@ -1790,4 +1790,3 @@ func (from *XHTML_CONTENT) CopyBasicFields(to *XHTML_CONTENT) {
 	to.EnclosedText = from.EnclosedText
 	to.PureText = from.PureText
 }
-

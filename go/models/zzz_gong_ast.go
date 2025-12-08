@@ -4470,21 +4470,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_DATE":
 				switch fieldName {
@@ -4515,21 +4515,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_ENUMERATION":
 				switch fieldName {
@@ -4567,21 +4567,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_INTEGER":
 				switch fieldName {
@@ -4612,21 +4612,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_REAL":
 				switch fieldName {
@@ -4657,21 +4657,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_Rendering":
 				switch fieldName {
@@ -4682,21 +4682,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_STRING":
 				switch fieldName {
@@ -4727,21 +4727,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_DEFINITION_XHTML":
 				switch fieldName {
@@ -4772,21 +4772,21 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].ShowInTableEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].ShowInTable = fielValue
 				case "ShowInTitleEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].ShowInTitleEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].ShowInTitle = fielValue
 				case "ShowInSubjectEntries":
 					// convert string to boolean
 					fielValue, err := strconv.ParseBool(ident.Name)
 					if err != nil {
 						log.Fatalln(err)
 					}
-					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].ShowInSubjectEntries = fielValue
+					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].ShowInSubject = fielValue
 				}
 			case "ATTRIBUTE_VALUE_BOOLEAN":
 				switch fieldName {

@@ -303,11 +303,11 @@ func (attribute_definition_boolean_renderingFormCallback *ATTRIBUTE_DEFINITION_B
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -545,11 +545,11 @@ func (attribute_definition_date_renderingFormCallback *ATTRIBUTE_DEFINITION_DATE
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -789,11 +789,11 @@ func (attribute_definition_enumeration_renderingFormCallback *ATTRIBUTE_DEFINITI
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -1031,11 +1031,11 @@ func (attribute_definition_integer_renderingFormCallback *ATTRIBUTE_DEFINITION_I
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -1273,11 +1273,11 @@ func (attribute_definition_real_renderingFormCallback *ATTRIBUTE_DEFINITION_REAL
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -1356,11 +1356,11 @@ func (attribute_definition_renderingFormCallback *ATTRIBUTE_DEFINITION_Rendering
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -1598,11 +1598,11 @@ func (attribute_definition_string_renderingFormCallback *ATTRIBUTE_DEFINITION_ST
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInSubject), formDiv)
 		}
 	}
 
@@ -1840,11 +1840,11 @@ func (attribute_definition_xhtml_renderingFormCallback *ATTRIBUTE_DEFINITION_XHT
 		case "Name":
 			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.Name), formDiv)
 		case "ShowInTableEntries":
-			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTableEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTable), formDiv)
 		case "ShowInTitleEntries":
-			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTitleEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubjectEntries":
-			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInSubjectEntries), formDiv)
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInSubject), formDiv)
 		}
 	}
 

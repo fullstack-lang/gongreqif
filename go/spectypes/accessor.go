@@ -25,16 +25,17 @@ func GetSpecObjectTypeRendering(
 	return
 }
 
-func GetSpecAttributeDefinitionRendering[Type models.AttributeDefinition](
+func GetSpecAttributeDefinitionRendering[
+	AttrDef models.AttributeDefinition, AttrDefRendering models.AttributeDefinitionRendering](
 	stage *models.Stage,
-	specAttributeDefinition Type,
+	specAttributeDefinition AttrDef,
 ) (
-	specAttributeDefinitionRendering *models.ATTRIBUTE_DEFINITION_Rendering) {
+	specAttributeDefinitionRendering AttrDefRendering) {
 
 	// ATTRIBUTE_DEFINITION_Rendering instances Names are the identifiers of the
 	// ATTRIBUTE_DEFINITION instance. Since, by ReqIF design, those identifiers are unique,
 	// we can use the gong map of those instances
-	map_ := models.GongGetMap[*models.ATTRIBUTE_DEFINITION_Rendering](stage)
+	map_ := models.GongGetMap[AttrDefRendering](stage)
 
 	var ok bool
 	if specAttributeDefinitionRendering, ok = map_[specAttributeDefinition.GetIdentifier()]; !ok {
