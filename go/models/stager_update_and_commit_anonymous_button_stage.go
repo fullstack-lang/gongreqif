@@ -16,16 +16,25 @@ func (stager *Stager) UpdateAndCommitAnonymousButtonStage() {
 	group1.Percentage = 100
 	layout.Groups = append(layout.Groups, group1)
 
-	buttonExportRenderingCong := button.NewButton(
-		&AnonymousButtonProxy{
-			stager: stager,
-		},
-		"Export blanked version",
-		string(buttons.BUTTON_shuffle),
-		"Export blanked version",
-	)
+	group1.Buttons = append(group1.Buttons,
+		button.NewButton(
+			&AnonymousButtonProxy{
+				stager: stager,
+			},
+			"Export blanked version",
+			string(buttons.BUTTON_shuffle),
+			"Export blanked version",
+		))
 
-	group1.Buttons = append(group1.Buttons, buttonExportRenderingCong)
+	group1.Buttons = append(group1.Buttons,
+		button.NewButton(
+			&LoadSampleButtonProxy{
+				stager: stager,
+			},
+			"Load sample (collecting drone)",
+			string(buttons.BUTTON_shuffle),
+			"Load sample (collecting drone)",
+		))
 
 	stage.Commit()
 }
@@ -34,14 +43,23 @@ type AnonymousButtonProxy struct {
 	stager *Stager
 }
 
-// GetButtonsStage implements models.Target.
 func (e *AnonymousButtonProxy) GetButtonsStage() *button.Stage {
 	return e.stager.anonymousButtonStage
 }
 
-// OnAfterUpdateButton implements models.Target.
 func (e *AnonymousButtonProxy) OnAfterUpdateButton() {
-
 	e.stager.reqifExporter.ExportAnonymousReqif(e.stager)
+}
+
+type LoadSampleButtonProxy struct {
+	stager *Stager
+}
+
+func (e *LoadSampleButtonProxy) GetButtonsStage() *button.Stage {
+	return e.stager.anonymousButtonStage
+}
+
+func (e *LoadSampleButtonProxy) OnAfterUpdateButton() {
+	// e.stager.reqifExporter.ExportLoadSampleReqif(e.stager)
 
 }
