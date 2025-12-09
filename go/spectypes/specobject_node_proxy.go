@@ -18,5 +18,6 @@ func (proxy *SpecObjectTypeNodeProxy) OnAfterUpdate(
 	if staged.IsExpanded != front.IsExpanded {
 		specObjectTypeRendering := GetSpecObjectTypeRendering(proxy.stager.GetStage(), proxy.specObjectType)
 		specObjectTypeRendering.IsNodeExpanded = !specObjectTypeRendering.IsNodeExpanded
+		staged.IsExpanded = front.IsExpanded
 	}
 }
