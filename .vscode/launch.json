@@ -62,7 +62,7 @@
             "args": []
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 1.reqif`",
+            "name": "go server -pathToReqifFile=`samples/DOORS export sample 1.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -71,12 +71,12 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/DOORS export sample 1.reqif",
+                "samples/DOORS export sample 1.reqif",
                 "-marshallOnCommit=data/doors_sample_1.go"
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif`",
+            "name": "go server -pathToReqifFile=`samples/ReqIF for Wheeled Tennis Ball Drone.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -85,11 +85,11 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
+                "samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
             ]
         },
                 {
-            "name": "go server -pathToReqifFile=`reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqifz`",
+            "name": "go server -pathToReqifFile=`samples/ReqIF for Wheeled Tennis Ball Drone.reqifz`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -98,13 +98,13 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqifz",
+                "samples/ReqIF for Wheeled Tennis Ball Drone.reqifz",
                 "-pathToRenderingConf",
-                "reqif samples/reqif samples_ReqIF for Wheeled Tennis Ball Drone-renderingConf.go",
+                "samples/reqif samples_ReqIF for Wheeled Tennis Ball Drone-renderingConf.go",
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/embedded image.reqif`",
+            "name": "go server -pathToReqifFile=`samples/embedded image.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -113,11 +113,11 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/embedded image.reqif",
+                "samples/embedded image.reqif",
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/xhtml cases.reqif`",
+            "name": "go server -pathToReqifFile=`samples/xhtml cases.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -126,11 +126,11 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/xhtml cases.reqif",
+                "samples/xhtml cases.reqif",
             ]
         },
                 {
-            "name": "go server -pathToReqifFile=`reqif samples/embedded image.reqifz`",
+            "name": "go server -pathToReqifFile=`samples/embedded image.reqifz`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -139,11 +139,11 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/embedded image.reqifz",
+                "samples/embedded image.reqifz",
             ]
         },
         {
-            "name": "go server -port=8081 -pathToReqifFile=`reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif`",
+            "name": "go server -port=8081 -pathToReqifFile=`samples/ReqIF for Wheeled Tennis Ball Drone.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -153,12 +153,12 @@
                 "-port=8081",
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
+                "samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
 
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 2.reqif`",
+            "name": "go server -pathToReqifFile=`samples/DOORS export sample 2.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -167,12 +167,12 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/DOORS export sample 2.reqif",
+                "samples/DOORS export sample 2.reqif",
                 "-marshallOnCommit=data/doors_sample_2.go"
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 3.reqif`",
+            "name": "go server -pathToReqifFile=`samples/DOORS export sample 3.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -181,12 +181,12 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/DOORS export sample 3.reqif",
+                "samples/DOORS export sample 3.reqif",
                 "-marshallOnCommit=data/doors_sample_3.go"
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/DOORS export sample 4.reqif`",
+            "name": "go server -pathToReqifFile=`samples/DOORS export sample 4.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -195,12 +195,12 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/DOORS export sample 4.reqif",
+                "samples/DOORS export sample 4.reqif",
                 "-marshallOnCommit=data/doors_sample_4.go"
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/Unknown tool export sample 1.reqif`",
+            "name": "go server -pathToReqifFile=`samples/Unknown tool export sample 1.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -209,7 +209,7 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/Unknown tool export sample 1.reqif",
+                "samples/Unknown tool export sample 1.reqif",
                 "-marshallOnCommit=data/Unknown tool export sample 1.go"
             ]
         },
@@ -223,11 +223,11 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/empty.reqif",
+                "samples/empty.reqif",
             ]
         },
         {
-            "name": "go server -pathToReqifFile=`reqif samples/update sample v1.reqif`",
+            "name": "go server -pathToReqifFile=`samples/update sample v1.reqif`",
             "type": "go",
             "request": "launch",
             "mode": "debug",
@@ -236,9 +236,9 @@
             "args": [
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
-                "reqif samples/update sample v1.reqif",
+                "samples/update sample v1.reqif",
                 "-pathToRenderingConf",
-                "reqif samples/update sample v1-renderingConf.go1",
+                "samples/update sample v1-renderingConf.go1",
             ]
         },
     ]
