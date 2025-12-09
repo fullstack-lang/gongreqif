@@ -8,8 +8,8 @@ import (
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 )
 
-// StageAllOfType stages all instances of type T from source to dest stage
-func StageAllOfType[T PointerToGongstruct](source, dest *Stage) {
+// StageAllOfTypeToAnotherStage stages all instances of type T from source to dest stage
+func StageAllOfTypeToAnotherStage[T PointerToGongstruct](source, dest *Stage) {
 	for o := range *GetGongstructInstancesSetFromPointerType[T](source) {
 		o.StageVoid(dest)
 	}
@@ -38,36 +38,7 @@ func (proxy *RenderingConfFileToUploadProxy) OnFileUpload(uploadedFile *load.Fil
 	stageForRenderingConf := NewStage("renderingConf")
 	ParseAstFromBytes(stageForRenderingConf, decodedBytes)
 
-	stage := proxy.stager.GetStage()
-
-	// remove existing
-	UnstageAllOfType[*SPECIFICATION_Rendering](stage)
-	UnstageAllOfType[*SPEC_OBJECT_TYPE_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stage)
-	UnstageAllOfType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stage)
-
-	// stage those in storage
-	StageAllOfType[*SPECIFICATION_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*SPEC_OBJECT_TYPE_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stageForRenderingConf, stage)
-	StageAllOfType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stageForRenderingConf, stage)
-
-	proxy.stager.enforceRenderingConfigurationSemantic()
-
-	proxy.stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(proxy.stager)
-	proxy.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(proxy.stager)
-	proxy.stager.updateAndCommitLoadRenderingConfStage()
-	proxy.stager.UpdateAndCommitLoadReqifStage()
+	proxy.stager.processRenderingConf(stageForRenderingConf)
 
 	return nil
 }
@@ -123,4 +94,39 @@ func ParseAstFromBytes(stage *Stage, input []byte) error {
 
 	// 5. Now, call your original function with the path to our new temp file.
 	return ParseAstFile(stage, tempFile.Name())
+}
+
+func (stager *Stager) processRenderingConf(stageForRenderingConf *Stage) {
+
+	stage := stager.GetStage()
+
+	// remove existing
+	UnstageAllOfType[*SPECIFICATION_Rendering](stage)
+	UnstageAllOfType[*SPEC_OBJECT_TYPE_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_DATE_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_REAL_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_STRING_Rendering](stage)
+	UnstageAllOfType[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stage)
+
+	// stage those in storage
+	StageAllOfTypeToAnotherStage[*SPECIFICATION_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*SPEC_OBJECT_TYPE_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_DATE_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_INTEGER_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_REAL_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_STRING_Rendering](stageForRenderingConf, stage)
+	StageAllOfTypeToAnotherStage[*ATTRIBUTE_DEFINITION_XHTML_Rendering](stageForRenderingConf, stage)
+
+	stager.enforceRenderingConfigurationSemantic()
+
+	stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(stager)
+	stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(stager)
+	stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(stager)
+	stager.updateAndCommitLoadRenderingConfStage()
+	stager.UpdateAndCommitLoadReqifStage()
 }

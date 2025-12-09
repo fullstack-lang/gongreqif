@@ -23,36 +23,18 @@ func (exporter *Exporter) ExportRenderingConf(stager *models.Stager) {
 	fileToDownload.Name = strings.TrimSuffix(stager.PathToReqifFile, ".reqif") + "-renderingConf.go"
 
 	// 0. we create a new stage for just the marshall of the rendering configuration
-	stageForRenderinfConf := models.NewStage("renderingConf")
+	stageForRenderingConf := models.NewStage("renderingConf")
 
 	stage := stager.GetStage()
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.SPECIFICATION_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.SPEC_OBJECT_TYPE_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
-	for o := range *models.GetGongstructInstancesSetFromPointerType[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](stage) {
-		o.Stage(stageForRenderinfConf)
-	}
+	models.StageAllOfTypeToAnotherStage[*models.SPECIFICATION_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.SPEC_OBJECT_TYPE_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](stage, stageForRenderingConf)
+	models.StageAllOfTypeToAnotherStage[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](stage, stageForRenderingConf)
 
 	fileName := filepath.Base(fileToDownload.Name)
 
@@ -65,7 +47,7 @@ func (exporter *Exporter) ExportRenderingConf(stager *models.Stager) {
 	defer os.Remove(tempFile.Name())
 
 	// 3. Marshall the data into the temporary file.
-	stageForRenderinfConf.Marshall(tempFile, "github.com/fullstack-lang/gongreqif/go/models", "main")
+	stageForRenderingConf.Marshall(tempFile, "github.com/fullstack-lang/gongreqif/go/models", "main")
 
 	// 4. Read the content back from the file.
 	// os.ReadFile needs a file path, so we use the name.

@@ -627,8 +627,10 @@ func NewStager(
 			fmt.Printf("Error reading file %s: %v\n", pathToRenderingConf, err)
 		}
 
-		stageForRenderinfConf := NewStage("renderingConf")
-		ParseAstFromBytes(stageForRenderinfConf, renderingConf)
+		stageForRenderingConf := NewStage("renderingConf")
+		ParseAstFromBytes(stageForRenderingConf, renderingConf)
+
+		stager.processRenderingConf(stageForRenderingConf)
 	}
 
 	stager.UpdateAndCommitLoadReqifStage()
