@@ -1,6 +1,10 @@
 package models
 
 import (
+	"fmt"
+
+	samples "github.com/fullstack-lang/gongreqif/go/cmd/gongreqif/samples"
+
 	button "github.com/fullstack-lang/gong/lib/button/go/models"
 
 	buttons "github.com/fullstack-lang/gong/lib/tree/go/buttons"
@@ -60,6 +64,18 @@ func (e *LoadSampleButtonProxy) GetButtonsStage() *button.Stage {
 }
 
 func (e *LoadSampleButtonProxy) OnAfterUpdateButton() {
-	// e.stager.reqifExporter.ExportLoadSampleReqif(e.stager)
+	// 1. Load the reqifz file embedded in data samples
+	content, svgImages, jpgImages, pngImages, err := extractReqifFromZip(samples.SampleReqIFz)
+	if err != nil {
+		fmt.Println("Error extracting reqif from zip:", err)
+		return
+	}
 
+	e.stager.processReqifData(content, svgImages, jpgImages, pngImages, "ReqIF for Wheeled Tennis Ball Drone.reqifz")
+
+	// 2. Load the rendering conf embedded in data samples
+	stageForRenderingConf := NewStage("renderingConf")
+	ParseAstFromBytes(stageForRenderingConf, samples.SampleRenderingConf)
+
+	e.stager.processRenderingConf(stageForRenderingConf)
 }
