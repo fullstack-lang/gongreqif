@@ -1,6 +1,7 @@
 package exporter
 
 import (
+	"encoding/base64"
 	"encoding/xml"
 	"fmt"
 	"log"
@@ -285,7 +286,7 @@ func (exporter *Exporter) ExportAnonymousReqif(stager *models.Stager) {
 	filename += "-scrambled.reqif"
 
 	fileToDownload.Name = filename
-	fileToDownload.Content = string(outputData)
+	fileToDownload.Base64EncodedContent = base64.StdEncoding.EncodeToString(outputData)
 
 	stager.GetLoadStage().Commit()
 

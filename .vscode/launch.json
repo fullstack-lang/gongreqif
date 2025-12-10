@@ -100,7 +100,7 @@
                 "-pathToReqifFile",
                 "samples/ReqIF for Wheeled Tennis Ball Drone.reqifz",
                 "-pathToRenderingConf",
-                "samples/reqif samples_ReqIF for Wheeled Tennis Ball Drone-renderingConf.go",
+                "samples/reqif samples_ReqIF for Wheeled Tennis Ball Drone-renderingConf.go1",
             ]
         },
         {

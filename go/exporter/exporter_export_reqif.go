@@ -1,6 +1,7 @@
 package exporter
 
 import (
+	"encoding/base64"
 	"encoding/xml"
 	"fmt"
 	"log"
@@ -189,7 +190,7 @@ func (exporter *Exporter) ExportReqif(stager *models.Stager) {
 	fileToDownload := new(load.FileToDownload).Stage(stager.GetLoadStage())
 
 	fileToDownload.Name = stager.GetPathToOutputReqifFile()
-	fileToDownload.Content = string(outputData)
+	fileToDownload.Base64EncodedContent = base64.StdEncoding.EncodeToString(outputData)
 
 	stager.GetLoadStage().Commit()
 

@@ -1,6 +1,7 @@
 package exporter
 
 import (
+	"encoding/base64"
 	"log"
 	"os"
 	"path/filepath"
@@ -62,8 +63,7 @@ func (exporter *Exporter) ExportRenderingConf(stager *models.Stager) {
 	}
 
 	// 5. The content is now a string in memory, and the file will be deleted.
-	resultString := string(content)
-	fileToDownload.Content = resultString
+	fileToDownload.Base64EncodedContent = base64.StdEncoding.EncodeToString(content)
 
 	stager.GetLoadStage().Commit()
 
