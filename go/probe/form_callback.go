@@ -75,10 +75,9 @@ func (alternative_idFormCallback *ALTERNATIVE_IDFormCallback) OnSave() {
 	}
 
 	alternative_idFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ALTERNATIVE_ID](
+	updateProbeTable[*models.ALTERNATIVE_ID](
 		alternative_idFormCallback.probe,
 	)
-	alternative_idFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if alternative_idFormCallback.CreationMode || alternative_idFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -234,10 +233,9 @@ func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANForm
 	}
 
 	attribute_definition_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN](
 		attribute_definition_booleanFormCallback.probe,
 	)
-	attribute_definition_booleanFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_booleanFormCallback.CreationMode || attribute_definition_booleanFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -317,10 +315,9 @@ func (attribute_definition_boolean_renderingFormCallback *ATTRIBUTE_DEFINITION_B
 	}
 
 	attribute_definition_boolean_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](
 		attribute_definition_boolean_renderingFormCallback.probe,
 	)
-	attribute_definition_boolean_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_boolean_renderingFormCallback.CreationMode || attribute_definition_boolean_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -476,10 +473,9 @@ func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallba
 	}
 
 	attribute_definition_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_DATE](
 		attribute_definition_dateFormCallback.probe,
 	)
-	attribute_definition_dateFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_dateFormCallback.CreationMode || attribute_definition_dateFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -559,10 +555,9 @@ func (attribute_definition_date_renderingFormCallback *ATTRIBUTE_DEFINITION_DATE
 	}
 
 	attribute_definition_date_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](
 		attribute_definition_date_renderingFormCallback.probe,
 	)
-	attribute_definition_date_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_date_renderingFormCallback.CreationMode || attribute_definition_date_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -720,10 +715,9 @@ func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERA
 	}
 
 	attribute_definition_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION](
 		attribute_definition_enumerationFormCallback.probe,
 	)
-	attribute_definition_enumerationFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_enumerationFormCallback.CreationMode || attribute_definition_enumerationFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -803,10 +797,9 @@ func (attribute_definition_enumeration_renderingFormCallback *ATTRIBUTE_DEFINITI
 	}
 
 	attribute_definition_enumeration_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](
 		attribute_definition_enumeration_renderingFormCallback.probe,
 	)
-	attribute_definition_enumeration_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_enumeration_renderingFormCallback.CreationMode || attribute_definition_enumeration_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -962,10 +955,9 @@ func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERForm
 	}
 
 	attribute_definition_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_INTEGER](
 		attribute_definition_integerFormCallback.probe,
 	)
-	attribute_definition_integerFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_integerFormCallback.CreationMode || attribute_definition_integerFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1045,10 +1037,9 @@ func (attribute_definition_integer_renderingFormCallback *ATTRIBUTE_DEFINITION_I
 	}
 
 	attribute_definition_integer_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](
 		attribute_definition_integer_renderingFormCallback.probe,
 	)
-	attribute_definition_integer_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_integer_renderingFormCallback.CreationMode || attribute_definition_integer_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1204,10 +1195,9 @@ func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallba
 	}
 
 	attribute_definition_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_REAL](
 		attribute_definition_realFormCallback.probe,
 	)
-	attribute_definition_realFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_realFormCallback.CreationMode || attribute_definition_realFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1287,10 +1277,9 @@ func (attribute_definition_real_renderingFormCallback *ATTRIBUTE_DEFINITION_REAL
 	}
 
 	attribute_definition_real_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](
 		attribute_definition_real_renderingFormCallback.probe,
 	)
-	attribute_definition_real_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_real_renderingFormCallback.CreationMode || attribute_definition_real_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1370,10 +1359,9 @@ func (attribute_definition_renderingFormCallback *ATTRIBUTE_DEFINITION_Rendering
 	}
 
 	attribute_definition_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_Rendering](
 		attribute_definition_renderingFormCallback.probe,
 	)
-	attribute_definition_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_renderingFormCallback.CreationMode || attribute_definition_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1529,10 +1517,9 @@ func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCa
 	}
 
 	attribute_definition_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_STRING](
 		attribute_definition_stringFormCallback.probe,
 	)
-	attribute_definition_stringFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_stringFormCallback.CreationMode || attribute_definition_stringFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1612,10 +1599,9 @@ func (attribute_definition_string_renderingFormCallback *ATTRIBUTE_DEFINITION_ST
 	}
 
 	attribute_definition_string_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](
 		attribute_definition_string_renderingFormCallback.probe,
 	)
-	attribute_definition_string_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_string_renderingFormCallback.CreationMode || attribute_definition_string_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1771,10 +1757,9 @@ func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCall
 	}
 
 	attribute_definition_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_XHTML](
 		attribute_definition_xhtmlFormCallback.probe,
 	)
-	attribute_definition_xhtmlFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_xhtmlFormCallback.CreationMode || attribute_definition_xhtmlFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -1854,10 +1839,9 @@ func (attribute_definition_xhtml_renderingFormCallback *ATTRIBUTE_DEFINITION_XHT
 	}
 
 	attribute_definition_xhtml_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](
+	updateProbeTable[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](
 		attribute_definition_xhtml_renderingFormCallback.probe,
 	)
-	attribute_definition_xhtml_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_definition_xhtml_renderingFormCallback.CreationMode || attribute_definition_xhtml_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -2067,10 +2051,9 @@ func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) 
 	}
 
 	attribute_value_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_BOOLEAN](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_BOOLEAN](
 		attribute_value_booleanFormCallback.probe,
 	)
-	attribute_value_booleanFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_booleanFormCallback.CreationMode || attribute_value_booleanFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -2280,10 +2263,9 @@ func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave
 	}
 
 	attribute_value_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_DATE](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_DATE](
 		attribute_value_dateFormCallback.probe,
 	)
-	attribute_value_dateFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_dateFormCallback.CreationMode || attribute_value_dateFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -2493,10 +2475,9 @@ func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCa
 	}
 
 	attribute_value_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_ENUMERATION](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_ENUMERATION](
 		attribute_value_enumerationFormCallback.probe,
 	)
-	attribute_value_enumerationFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_enumerationFormCallback.CreationMode || attribute_value_enumerationFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -2706,10 +2687,9 @@ func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) 
 	}
 
 	attribute_value_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_INTEGER](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_INTEGER](
 		attribute_value_integerFormCallback.probe,
 	)
-	attribute_value_integerFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_integerFormCallback.CreationMode || attribute_value_integerFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -2919,10 +2899,9 @@ func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave
 	}
 
 	attribute_value_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_REAL](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_REAL](
 		attribute_value_realFormCallback.probe,
 	)
-	attribute_value_realFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_realFormCallback.CreationMode || attribute_value_realFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3132,10 +3111,9 @@ func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) On
 	}
 
 	attribute_value_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_STRING](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_STRING](
 		attribute_value_stringFormCallback.probe,
 	)
-	attribute_value_stringFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_stringFormCallback.CreationMode || attribute_value_stringFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3349,10 +3327,9 @@ func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSa
 	}
 
 	attribute_value_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ATTRIBUTE_VALUE_XHTML](
+	updateProbeTable[*models.ATTRIBUTE_VALUE_XHTML](
 		attribute_value_xhtmlFormCallback.probe,
 	)
-	attribute_value_xhtmlFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if attribute_value_xhtmlFormCallback.CreationMode || attribute_value_xhtmlFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3428,10 +3405,9 @@ func (a_alternative_idFormCallback *A_ALTERNATIVE_IDFormCallback) OnSave() {
 	}
 
 	a_alternative_idFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ALTERNATIVE_ID](
+	updateProbeTable[*models.A_ALTERNATIVE_ID](
 		a_alternative_idFormCallback.probe,
 	)
-	a_alternative_idFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_alternative_idFormCallback.CreationMode || a_alternative_idFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3507,10 +3483,9 @@ func (a_attribute_definition_boolean_refFormCallback *A_ATTRIBUTE_DEFINITION_BOO
 	}
 
 	a_attribute_definition_boolean_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](
 		a_attribute_definition_boolean_refFormCallback.probe,
 	)
-	a_attribute_definition_boolean_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_boolean_refFormCallback.CreationMode || a_attribute_definition_boolean_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3586,10 +3561,9 @@ func (a_attribute_definition_date_refFormCallback *A_ATTRIBUTE_DEFINITION_DATE_R
 	}
 
 	a_attribute_definition_date_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_DATE_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_DATE_REF](
 		a_attribute_definition_date_refFormCallback.probe,
 	)
-	a_attribute_definition_date_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_date_refFormCallback.CreationMode || a_attribute_definition_date_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3665,10 +3639,9 @@ func (a_attribute_definition_enumeration_refFormCallback *A_ATTRIBUTE_DEFINITION
 	}
 
 	a_attribute_definition_enumeration_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](
 		a_attribute_definition_enumeration_refFormCallback.probe,
 	)
-	a_attribute_definition_enumeration_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_enumeration_refFormCallback.CreationMode || a_attribute_definition_enumeration_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3744,10 +3717,9 @@ func (a_attribute_definition_integer_refFormCallback *A_ATTRIBUTE_DEFINITION_INT
 	}
 
 	a_attribute_definition_integer_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](
 		a_attribute_definition_integer_refFormCallback.probe,
 	)
-	a_attribute_definition_integer_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_integer_refFormCallback.CreationMode || a_attribute_definition_integer_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3823,10 +3795,9 @@ func (a_attribute_definition_real_refFormCallback *A_ATTRIBUTE_DEFINITION_REAL_R
 	}
 
 	a_attribute_definition_real_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_REAL_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_REAL_REF](
 		a_attribute_definition_real_refFormCallback.probe,
 	)
-	a_attribute_definition_real_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_real_refFormCallback.CreationMode || a_attribute_definition_real_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3902,10 +3873,9 @@ func (a_attribute_definition_string_refFormCallback *A_ATTRIBUTE_DEFINITION_STRI
 	}
 
 	a_attribute_definition_string_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_STRING_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_STRING_REF](
 		a_attribute_definition_string_refFormCallback.probe,
 	)
-	a_attribute_definition_string_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_string_refFormCallback.CreationMode || a_attribute_definition_string_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -3981,10 +3951,9 @@ func (a_attribute_definition_xhtml_refFormCallback *A_ATTRIBUTE_DEFINITION_XHTML
 	}
 
 	a_attribute_definition_xhtml_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_DEFINITION_XHTML_REF](
+	updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_XHTML_REF](
 		a_attribute_definition_xhtml_refFormCallback.probe,
 	)
-	a_attribute_definition_xhtml_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_definition_xhtml_refFormCallback.CreationMode || a_attribute_definition_xhtml_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4083,10 +4052,9 @@ func (a_attribute_value_booleanFormCallback *A_ATTRIBUTE_VALUE_BOOLEANFormCallba
 	}
 
 	a_attribute_value_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_BOOLEAN](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_BOOLEAN](
 		a_attribute_value_booleanFormCallback.probe,
 	)
-	a_attribute_value_booleanFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_booleanFormCallback.CreationMode || a_attribute_value_booleanFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4185,10 +4153,9 @@ func (a_attribute_value_dateFormCallback *A_ATTRIBUTE_VALUE_DATEFormCallback) On
 	}
 
 	a_attribute_value_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_DATE](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_DATE](
 		a_attribute_value_dateFormCallback.probe,
 	)
-	a_attribute_value_dateFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_dateFormCallback.CreationMode || a_attribute_value_dateFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4287,10 +4254,9 @@ func (a_attribute_value_enumerationFormCallback *A_ATTRIBUTE_VALUE_ENUMERATIONFo
 	}
 
 	a_attribute_value_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_ENUMERATION](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_ENUMERATION](
 		a_attribute_value_enumerationFormCallback.probe,
 	)
-	a_attribute_value_enumerationFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_enumerationFormCallback.CreationMode || a_attribute_value_enumerationFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4389,10 +4355,9 @@ func (a_attribute_value_integerFormCallback *A_ATTRIBUTE_VALUE_INTEGERFormCallba
 	}
 
 	a_attribute_value_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_INTEGER](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_INTEGER](
 		a_attribute_value_integerFormCallback.probe,
 	)
-	a_attribute_value_integerFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_integerFormCallback.CreationMode || a_attribute_value_integerFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4491,10 +4456,9 @@ func (a_attribute_value_realFormCallback *A_ATTRIBUTE_VALUE_REALFormCallback) On
 	}
 
 	a_attribute_value_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_REAL](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_REAL](
 		a_attribute_value_realFormCallback.probe,
 	)
-	a_attribute_value_realFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_realFormCallback.CreationMode || a_attribute_value_realFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4593,10 +4557,9 @@ func (a_attribute_value_stringFormCallback *A_ATTRIBUTE_VALUE_STRINGFormCallback
 	}
 
 	a_attribute_value_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_STRING](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_STRING](
 		a_attribute_value_stringFormCallback.probe,
 	)
-	a_attribute_value_stringFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_stringFormCallback.CreationMode || a_attribute_value_stringFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4695,10 +4658,9 @@ func (a_attribute_value_xhtmlFormCallback *A_ATTRIBUTE_VALUE_XHTMLFormCallback) 
 	}
 
 	a_attribute_value_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_XHTML](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_XHTML](
 		a_attribute_value_xhtmlFormCallback.probe,
 	)
-	a_attribute_value_xhtmlFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_xhtmlFormCallback.CreationMode || a_attribute_value_xhtmlFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -4947,10 +4909,9 @@ func (a_attribute_value_xhtml_1FormCallback *A_ATTRIBUTE_VALUE_XHTML_1FormCallba
 	}
 
 	a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ATTRIBUTE_VALUE_XHTML_1](
+	updateProbeTable[*models.A_ATTRIBUTE_VALUE_XHTML_1](
 		a_attribute_value_xhtml_1FormCallback.probe,
 	)
-	a_attribute_value_xhtml_1FormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_attribute_value_xhtml_1FormCallback.CreationMode || a_attribute_value_xhtml_1FormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5049,10 +5010,9 @@ func (a_childrenFormCallback *A_CHILDRENFormCallback) OnSave() {
 	}
 
 	a_childrenFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_CHILDREN](
+	updateProbeTable[*models.A_CHILDREN](
 		a_childrenFormCallback.probe,
 	)
-	a_childrenFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_childrenFormCallback.CreationMode || a_childrenFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5128,10 +5088,9 @@ func (a_core_contentFormCallback *A_CORE_CONTENTFormCallback) OnSave() {
 	}
 
 	a_core_contentFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_CORE_CONTENT](
+	updateProbeTable[*models.A_CORE_CONTENT](
 		a_core_contentFormCallback.probe,
 	)
-	a_core_contentFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_core_contentFormCallback.CreationMode || a_core_contentFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5380,10 +5339,9 @@ func (a_datatypesFormCallback *A_DATATYPESFormCallback) OnSave() {
 	}
 
 	a_datatypesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPES](
+	updateProbeTable[*models.A_DATATYPES](
 		a_datatypesFormCallback.probe,
 	)
-	a_datatypesFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatypesFormCallback.CreationMode || a_datatypesFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5459,10 +5417,9 @@ func (a_datatype_definition_boolean_refFormCallback *A_DATATYPE_DEFINITION_BOOLE
 	}
 
 	a_datatype_definition_boolean_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_BOOLEAN_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_BOOLEAN_REF](
 		a_datatype_definition_boolean_refFormCallback.probe,
 	)
-	a_datatype_definition_boolean_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_boolean_refFormCallback.CreationMode || a_datatype_definition_boolean_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5538,10 +5495,9 @@ func (a_datatype_definition_date_refFormCallback *A_DATATYPE_DEFINITION_DATE_REF
 	}
 
 	a_datatype_definition_date_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_DATE_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_DATE_REF](
 		a_datatype_definition_date_refFormCallback.probe,
 	)
-	a_datatype_definition_date_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_date_refFormCallback.CreationMode || a_datatype_definition_date_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5617,10 +5573,9 @@ func (a_datatype_definition_enumeration_refFormCallback *A_DATATYPE_DEFINITION_E
 	}
 
 	a_datatype_definition_enumeration_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_ENUMERATION_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_ENUMERATION_REF](
 		a_datatype_definition_enumeration_refFormCallback.probe,
 	)
-	a_datatype_definition_enumeration_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_enumeration_refFormCallback.CreationMode || a_datatype_definition_enumeration_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5696,10 +5651,9 @@ func (a_datatype_definition_integer_refFormCallback *A_DATATYPE_DEFINITION_INTEG
 	}
 
 	a_datatype_definition_integer_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_INTEGER_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_INTEGER_REF](
 		a_datatype_definition_integer_refFormCallback.probe,
 	)
-	a_datatype_definition_integer_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_integer_refFormCallback.CreationMode || a_datatype_definition_integer_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5775,10 +5729,9 @@ func (a_datatype_definition_real_refFormCallback *A_DATATYPE_DEFINITION_REAL_REF
 	}
 
 	a_datatype_definition_real_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_REAL_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_REAL_REF](
 		a_datatype_definition_real_refFormCallback.probe,
 	)
-	a_datatype_definition_real_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_real_refFormCallback.CreationMode || a_datatype_definition_real_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5854,10 +5807,9 @@ func (a_datatype_definition_string_refFormCallback *A_DATATYPE_DEFINITION_STRING
 	}
 
 	a_datatype_definition_string_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_STRING_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_STRING_REF](
 		a_datatype_definition_string_refFormCallback.probe,
 	)
-	a_datatype_definition_string_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_string_refFormCallback.CreationMode || a_datatype_definition_string_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -5933,10 +5885,9 @@ func (a_datatype_definition_xhtml_refFormCallback *A_DATATYPE_DEFINITION_XHTML_R
 	}
 
 	a_datatype_definition_xhtml_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_DATATYPE_DEFINITION_XHTML_REF](
+	updateProbeTable[*models.A_DATATYPE_DEFINITION_XHTML_REF](
 		a_datatype_definition_xhtml_refFormCallback.probe,
 	)
-	a_datatype_definition_xhtml_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_datatype_definition_xhtml_refFormCallback.CreationMode || a_datatype_definition_xhtml_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6024,10 +5975,9 @@ func (a_editable_attsFormCallback *A_EDITABLE_ATTSFormCallback) OnSave() {
 	}
 
 	a_editable_attsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_EDITABLE_ATTS](
+	updateProbeTable[*models.A_EDITABLE_ATTS](
 		a_editable_attsFormCallback.probe,
 	)
-	a_editable_attsFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_editable_attsFormCallback.CreationMode || a_editable_attsFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6103,10 +6053,9 @@ func (a_enum_value_refFormCallback *A_ENUM_VALUE_REFFormCallback) OnSave() {
 	}
 
 	a_enum_value_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_ENUM_VALUE_REF](
+	updateProbeTable[*models.A_ENUM_VALUE_REF](
 		a_enum_value_refFormCallback.probe,
 	)
-	a_enum_value_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_enum_value_refFormCallback.CreationMode || a_enum_value_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6182,10 +6131,9 @@ func (a_objectFormCallback *A_OBJECTFormCallback) OnSave() {
 	}
 
 	a_objectFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_OBJECT](
+	updateProbeTable[*models.A_OBJECT](
 		a_objectFormCallback.probe,
 	)
-	a_objectFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_objectFormCallback.CreationMode || a_objectFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6261,10 +6209,9 @@ func (a_propertiesFormCallback *A_PROPERTIESFormCallback) OnSave() {
 	}
 
 	a_propertiesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_PROPERTIES](
+	updateProbeTable[*models.A_PROPERTIES](
 		a_propertiesFormCallback.probe,
 	)
-	a_propertiesFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_propertiesFormCallback.CreationMode || a_propertiesFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6340,10 +6287,9 @@ func (a_relation_group_type_refFormCallback *A_RELATION_GROUP_TYPE_REFFormCallba
 	}
 
 	a_relation_group_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_RELATION_GROUP_TYPE_REF](
+	updateProbeTable[*models.A_RELATION_GROUP_TYPE_REF](
 		a_relation_group_type_refFormCallback.probe,
 	)
-	a_relation_group_type_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_relation_group_type_refFormCallback.CreationMode || a_relation_group_type_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6419,10 +6365,9 @@ func (a_source_1FormCallback *A_SOURCE_1FormCallback) OnSave() {
 	}
 
 	a_source_1FormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SOURCE_1](
+	updateProbeTable[*models.A_SOURCE_1](
 		a_source_1FormCallback.probe,
 	)
-	a_source_1FormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_source_1FormCallback.CreationMode || a_source_1FormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6498,10 +6443,9 @@ func (a_source_specification_1FormCallback *A_SOURCE_SPECIFICATION_1FormCallback
 	}
 
 	a_source_specification_1FormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SOURCE_SPECIFICATION_1](
+	updateProbeTable[*models.A_SOURCE_SPECIFICATION_1](
 		a_source_specification_1FormCallback.probe,
 	)
-	a_source_specification_1FormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_source_specification_1FormCallback.CreationMode || a_source_specification_1FormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6600,10 +6544,9 @@ func (a_specificationsFormCallback *A_SPECIFICATIONSFormCallback) OnSave() {
 	}
 
 	a_specificationsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPECIFICATIONS](
+	updateProbeTable[*models.A_SPECIFICATIONS](
 		a_specificationsFormCallback.probe,
 	)
-	a_specificationsFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_specificationsFormCallback.CreationMode || a_specificationsFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6679,10 +6622,9 @@ func (a_specification_type_refFormCallback *A_SPECIFICATION_TYPE_REFFormCallback
 	}
 
 	a_specification_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPECIFICATION_TYPE_REF](
+	updateProbeTable[*models.A_SPECIFICATION_TYPE_REF](
 		a_specification_type_refFormCallback.probe,
 	)
-	a_specification_type_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_specification_type_refFormCallback.CreationMode || a_specification_type_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -6781,10 +6723,9 @@ func (a_specified_valuesFormCallback *A_SPECIFIED_VALUESFormCallback) OnSave() {
 	}
 
 	a_specified_valuesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPECIFIED_VALUES](
+	updateProbeTable[*models.A_SPECIFIED_VALUES](
 		a_specified_valuesFormCallback.probe,
 	)
-	a_specified_valuesFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_specified_valuesFormCallback.CreationMode || a_specified_valuesFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7033,10 +6974,9 @@ func (a_spec_attributesFormCallback *A_SPEC_ATTRIBUTESFormCallback) OnSave() {
 	}
 
 	a_spec_attributesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_ATTRIBUTES](
+	updateProbeTable[*models.A_SPEC_ATTRIBUTES](
 		a_spec_attributesFormCallback.probe,
 	)
-	a_spec_attributesFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_attributesFormCallback.CreationMode || a_spec_attributesFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7135,10 +7075,9 @@ func (a_spec_objectsFormCallback *A_SPEC_OBJECTSFormCallback) OnSave() {
 	}
 
 	a_spec_objectsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_OBJECTS](
+	updateProbeTable[*models.A_SPEC_OBJECTS](
 		a_spec_objectsFormCallback.probe,
 	)
-	a_spec_objectsFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_objectsFormCallback.CreationMode || a_spec_objectsFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7214,10 +7153,9 @@ func (a_spec_object_type_refFormCallback *A_SPEC_OBJECT_TYPE_REFFormCallback) On
 	}
 
 	a_spec_object_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_OBJECT_TYPE_REF](
+	updateProbeTable[*models.A_SPEC_OBJECT_TYPE_REF](
 		a_spec_object_type_refFormCallback.probe,
 	)
-	a_spec_object_type_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_object_type_refFormCallback.CreationMode || a_spec_object_type_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7316,10 +7254,9 @@ func (a_spec_relationsFormCallback *A_SPEC_RELATIONSFormCallback) OnSave() {
 	}
 
 	a_spec_relationsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_RELATIONS](
+	updateProbeTable[*models.A_SPEC_RELATIONS](
 		a_spec_relationsFormCallback.probe,
 	)
-	a_spec_relationsFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_relationsFormCallback.CreationMode || a_spec_relationsFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7418,10 +7355,9 @@ func (a_spec_relation_groupsFormCallback *A_SPEC_RELATION_GROUPSFormCallback) On
 	}
 
 	a_spec_relation_groupsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_RELATION_GROUPS](
+	updateProbeTable[*models.A_SPEC_RELATION_GROUPS](
 		a_spec_relation_groupsFormCallback.probe,
 	)
-	a_spec_relation_groupsFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_relation_groupsFormCallback.CreationMode || a_spec_relation_groupsFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7497,10 +7433,9 @@ func (a_spec_relation_refFormCallback *A_SPEC_RELATION_REFFormCallback) OnSave()
 	}
 
 	a_spec_relation_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_RELATION_REF](
+	updateProbeTable[*models.A_SPEC_RELATION_REF](
 		a_spec_relation_refFormCallback.probe,
 	)
-	a_spec_relation_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_relation_refFormCallback.CreationMode || a_spec_relation_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7576,10 +7511,9 @@ func (a_spec_relation_type_refFormCallback *A_SPEC_RELATION_TYPE_REFFormCallback
 	}
 
 	a_spec_relation_type_refFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_RELATION_TYPE_REF](
+	updateProbeTable[*models.A_SPEC_RELATION_TYPE_REF](
 		a_spec_relation_type_refFormCallback.probe,
 	)
-	a_spec_relation_type_refFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_relation_type_refFormCallback.CreationMode || a_spec_relation_type_refFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7753,10 +7687,9 @@ func (a_spec_typesFormCallback *A_SPEC_TYPESFormCallback) OnSave() {
 	}
 
 	a_spec_typesFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_SPEC_TYPES](
+	updateProbeTable[*models.A_SPEC_TYPES](
 		a_spec_typesFormCallback.probe,
 	)
-	a_spec_typesFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_spec_typesFormCallback.CreationMode || a_spec_typesFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7832,10 +7765,9 @@ func (a_the_headerFormCallback *A_THE_HEADERFormCallback) OnSave() {
 	}
 
 	a_the_headerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_THE_HEADER](
+	updateProbeTable[*models.A_THE_HEADER](
 		a_the_headerFormCallback.probe,
 	)
-	a_the_headerFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_the_headerFormCallback.CreationMode || a_the_headerFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -7934,10 +7866,9 @@ func (a_tool_extensionsFormCallback *A_TOOL_EXTENSIONSFormCallback) OnSave() {
 	}
 
 	a_tool_extensionsFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.A_TOOL_EXTENSIONS](
+	updateProbeTable[*models.A_TOOL_EXTENSIONS](
 		a_tool_extensionsFormCallback.probe,
 	)
-	a_tool_extensionsFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if a_tool_extensionsFormCallback.CreationMode || a_tool_extensionsFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -8087,10 +8018,9 @@ func (datatype_definition_booleanFormCallback *DATATYPE_DEFINITION_BOOLEANFormCa
 	}
 
 	datatype_definition_booleanFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_BOOLEAN](
+	updateProbeTable[*models.DATATYPE_DEFINITION_BOOLEAN](
 		datatype_definition_booleanFormCallback.probe,
 	)
-	datatype_definition_booleanFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_booleanFormCallback.CreationMode || datatype_definition_booleanFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -8240,10 +8170,9 @@ func (datatype_definition_dateFormCallback *DATATYPE_DEFINITION_DATEFormCallback
 	}
 
 	datatype_definition_dateFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_DATE](
+	updateProbeTable[*models.DATATYPE_DEFINITION_DATE](
 		datatype_definition_dateFormCallback.probe,
 	)
-	datatype_definition_dateFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_dateFormCallback.CreationMode || datatype_definition_dateFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -8395,10 +8324,9 @@ func (datatype_definition_enumerationFormCallback *DATATYPE_DEFINITION_ENUMERATI
 	}
 
 	datatype_definition_enumerationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_ENUMERATION](
+	updateProbeTable[*models.DATATYPE_DEFINITION_ENUMERATION](
 		datatype_definition_enumerationFormCallback.probe,
 	)
-	datatype_definition_enumerationFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_enumerationFormCallback.CreationMode || datatype_definition_enumerationFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -8552,10 +8480,9 @@ func (datatype_definition_integerFormCallback *DATATYPE_DEFINITION_INTEGERFormCa
 	}
 
 	datatype_definition_integerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_INTEGER](
+	updateProbeTable[*models.DATATYPE_DEFINITION_INTEGER](
 		datatype_definition_integerFormCallback.probe,
 	)
-	datatype_definition_integerFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_integerFormCallback.CreationMode || datatype_definition_integerFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -8711,10 +8638,9 @@ func (datatype_definition_realFormCallback *DATATYPE_DEFINITION_REALFormCallback
 	}
 
 	datatype_definition_realFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_REAL](
+	updateProbeTable[*models.DATATYPE_DEFINITION_REAL](
 		datatype_definition_realFormCallback.probe,
 	)
-	datatype_definition_realFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_realFormCallback.CreationMode || datatype_definition_realFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -8866,10 +8792,9 @@ func (datatype_definition_stringFormCallback *DATATYPE_DEFINITION_STRINGFormCall
 	}
 
 	datatype_definition_stringFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_STRING](
+	updateProbeTable[*models.DATATYPE_DEFINITION_STRING](
 		datatype_definition_stringFormCallback.probe,
 	)
-	datatype_definition_stringFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_stringFormCallback.CreationMode || datatype_definition_stringFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9019,10 +8944,9 @@ func (datatype_definition_xhtmlFormCallback *DATATYPE_DEFINITION_XHTMLFormCallba
 	}
 
 	datatype_definition_xhtmlFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.DATATYPE_DEFINITION_XHTML](
+	updateProbeTable[*models.DATATYPE_DEFINITION_XHTML](
 		datatype_definition_xhtmlFormCallback.probe,
 	)
-	datatype_definition_xhtmlFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if datatype_definition_xhtmlFormCallback.CreationMode || datatype_definition_xhtmlFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9100,10 +9024,9 @@ func (embedded_valueFormCallback *EMBEDDED_VALUEFormCallback) OnSave() {
 	}
 
 	embedded_valueFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.EMBEDDED_VALUE](
+	updateProbeTable[*models.EMBEDDED_VALUE](
 		embedded_valueFormCallback.probe,
 	)
-	embedded_valueFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if embedded_valueFormCallback.CreationMode || embedded_valueFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9255,10 +9178,9 @@ func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
 	}
 
 	enum_valueFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.ENUM_VALUE](
+	updateProbeTable[*models.ENUM_VALUE](
 		enum_valueFormCallback.probe,
 	)
-	enum_valueFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if enum_valueFormCallback.CreationMode || enum_valueFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9334,10 +9256,9 @@ func (embeddedjpgimageFormCallback *EmbeddedJpgImageFormCallback) OnSave() {
 	}
 
 	embeddedjpgimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.EmbeddedJpgImage](
+	updateProbeTable[*models.EmbeddedJpgImage](
 		embeddedjpgimageFormCallback.probe,
 	)
-	embeddedjpgimageFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if embeddedjpgimageFormCallback.CreationMode || embeddedjpgimageFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9413,10 +9334,9 @@ func (embeddedpngimageFormCallback *EmbeddedPngImageFormCallback) OnSave() {
 	}
 
 	embeddedpngimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.EmbeddedPngImage](
+	updateProbeTable[*models.EmbeddedPngImage](
 		embeddedpngimageFormCallback.probe,
 	)
-	embeddedpngimageFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if embeddedpngimageFormCallback.CreationMode || embeddedpngimageFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9492,10 +9412,9 @@ func (embeddedsvgimageFormCallback *EmbeddedSvgImageFormCallback) OnSave() {
 	}
 
 	embeddedsvgimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.EmbeddedSvgImage](
+	updateProbeTable[*models.EmbeddedSvgImage](
 		embeddedsvgimageFormCallback.probe,
 	)
-	embeddedsvgimageFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if embeddedsvgimageFormCallback.CreationMode || embeddedsvgimageFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9569,10 +9488,9 @@ func (killFormCallback *KillFormCallback) OnSave() {
 	}
 
 	killFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.Kill](
+	updateProbeTable[*models.Kill](
 		killFormCallback.probe,
 	)
-	killFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if killFormCallback.CreationMode || killFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9648,10 +9566,9 @@ func (map_identifier_boolFormCallback *Map_identifier_boolFormCallback) OnSave()
 	}
 
 	map_identifier_boolFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.Map_identifier_bool](
+	updateProbeTable[*models.Map_identifier_bool](
 		map_identifier_boolFormCallback.probe,
 	)
-	map_identifier_boolFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if map_identifier_boolFormCallback.CreationMode || map_identifier_boolFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9809,10 +9726,9 @@ func (relation_groupFormCallback *RELATION_GROUPFormCallback) OnSave() {
 	}
 
 	relation_groupFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.RELATION_GROUP](
+	updateProbeTable[*models.RELATION_GROUP](
 		relation_groupFormCallback.probe,
 	)
-	relation_groupFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if relation_groupFormCallback.CreationMode || relation_groupFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -9964,10 +9880,9 @@ func (relation_group_typeFormCallback *RELATION_GROUP_TYPEFormCallback) OnSave()
 	}
 
 	relation_group_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.RELATION_GROUP_TYPE](
+	updateProbeTable[*models.RELATION_GROUP_TYPE](
 		relation_group_typeFormCallback.probe,
 	)
-	relation_group_typeFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if relation_group_typeFormCallback.CreationMode || relation_group_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10049,10 +9964,9 @@ func (req_ifFormCallback *REQ_IFFormCallback) OnSave() {
 	}
 
 	req_ifFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.REQ_IF](
+	updateProbeTable[*models.REQ_IF](
 		req_ifFormCallback.probe,
 	)
-	req_ifFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if req_ifFormCallback.CreationMode || req_ifFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10138,10 +10052,9 @@ func (req_if_contentFormCallback *REQ_IF_CONTENTFormCallback) OnSave() {
 	}
 
 	req_if_contentFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.REQ_IF_CONTENT](
+	updateProbeTable[*models.REQ_IF_CONTENT](
 		req_if_contentFormCallback.probe,
 	)
-	req_if_contentFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if req_if_contentFormCallback.CreationMode || req_if_contentFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10231,10 +10144,9 @@ func (req_if_headerFormCallback *REQ_IF_HEADERFormCallback) OnSave() {
 	}
 
 	req_if_headerFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.REQ_IF_HEADER](
+	updateProbeTable[*models.REQ_IF_HEADER](
 		req_if_headerFormCallback.probe,
 	)
-	req_if_headerFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if req_if_headerFormCallback.CreationMode || req_if_headerFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10374,10 +10286,9 @@ func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSa
 	}
 
 	req_if_tool_extensionFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.REQ_IF_TOOL_EXTENSION](
+	updateProbeTable[*models.REQ_IF_TOOL_EXTENSION](
 		req_if_tool_extensionFormCallback.probe,
 	)
-	req_if_tool_extensionFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if req_if_tool_extensionFormCallback.CreationMode || req_if_tool_extensionFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10533,10 +10444,9 @@ func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
 	}
 
 	specificationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPECIFICATION](
+	updateProbeTable[*models.SPECIFICATION](
 		specificationFormCallback.probe,
 	)
-	specificationFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if specificationFormCallback.CreationMode || specificationFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10614,10 +10524,9 @@ func (specification_renderingFormCallback *SPECIFICATION_RenderingFormCallback) 
 	}
 
 	specification_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPECIFICATION_Rendering](
+	updateProbeTable[*models.SPECIFICATION_Rendering](
 		specification_renderingFormCallback.probe,
 	)
-	specification_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if specification_renderingFormCallback.CreationMode || specification_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10769,10 +10678,9 @@ func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
 	}
 
 	specification_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPECIFICATION_TYPE](
+	updateProbeTable[*models.SPECIFICATION_TYPE](
 		specification_typeFormCallback.probe,
 	)
-	specification_typeFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if specification_typeFormCallback.CreationMode || specification_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -10932,10 +10840,9 @@ func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
 	}
 
 	spec_hierarchyFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPEC_HIERARCHY](
+	updateProbeTable[*models.SPEC_HIERARCHY](
 		spec_hierarchyFormCallback.probe,
 	)
-	spec_hierarchyFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if spec_hierarchyFormCallback.CreationMode || spec_hierarchyFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11089,10 +10996,9 @@ func (spec_objectFormCallback *SPEC_OBJECTFormCallback) OnSave() {
 	}
 
 	spec_objectFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPEC_OBJECT](
+	updateProbeTable[*models.SPEC_OBJECT](
 		spec_objectFormCallback.probe,
 	)
-	spec_objectFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if spec_objectFormCallback.CreationMode || spec_objectFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11244,10 +11150,9 @@ func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
 	}
 
 	spec_object_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPEC_OBJECT_TYPE](
+	updateProbeTable[*models.SPEC_OBJECT_TYPE](
 		spec_object_typeFormCallback.probe,
 	)
-	spec_object_typeFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if spec_object_typeFormCallback.CreationMode || spec_object_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11331,10 +11236,9 @@ func (spec_object_type_renderingFormCallback *SPEC_OBJECT_TYPE_RenderingFormCall
 	}
 
 	spec_object_type_renderingFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPEC_OBJECT_TYPE_Rendering](
+	updateProbeTable[*models.SPEC_OBJECT_TYPE_Rendering](
 		spec_object_type_renderingFormCallback.probe,
 	)
-	spec_object_type_renderingFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if spec_object_type_renderingFormCallback.CreationMode || spec_object_type_renderingFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11492,10 +11396,9 @@ func (spec_relationFormCallback *SPEC_RELATIONFormCallback) OnSave() {
 	}
 
 	spec_relationFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPEC_RELATION](
+	updateProbeTable[*models.SPEC_RELATION](
 		spec_relationFormCallback.probe,
 	)
-	spec_relationFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if spec_relationFormCallback.CreationMode || spec_relationFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11647,10 +11550,9 @@ func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
 	}
 
 	spec_relation_typeFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.SPEC_RELATION_TYPE](
+	updateProbeTable[*models.SPEC_RELATION_TYPE](
 		spec_relation_typeFormCallback.probe,
 	)
-	spec_relation_typeFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if spec_relation_typeFormCallback.CreationMode || spec_relation_typeFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11757,10 +11659,9 @@ func (staticwebsiteFormCallback *StaticWebSiteFormCallback) OnSave() {
 	}
 
 	staticwebsiteFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.StaticWebSite](
+	updateProbeTable[*models.StaticWebSite](
 		staticwebsiteFormCallback.probe,
 	)
-	staticwebsiteFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if staticwebsiteFormCallback.CreationMode || staticwebsiteFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -11927,10 +11828,9 @@ func (staticwebsitechapterFormCallback *StaticWebSiteChapterFormCallback) OnSave
 	}
 
 	staticwebsitechapterFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.StaticWebSiteChapter](
+	updateProbeTable[*models.StaticWebSiteChapter](
 		staticwebsitechapterFormCallback.probe,
 	)
-	staticwebsitechapterFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if staticwebsitechapterFormCallback.CreationMode || staticwebsitechapterFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -12010,10 +11910,9 @@ func (staticwebsitegeneratedimageFormCallback *StaticWebSiteGeneratedImageFormCa
 	}
 
 	staticwebsitegeneratedimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.StaticWebSiteGeneratedImage](
+	updateProbeTable[*models.StaticWebSiteGeneratedImage](
 		staticwebsitegeneratedimageFormCallback.probe,
 	)
-	staticwebsitegeneratedimageFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if staticwebsitegeneratedimageFormCallback.CreationMode || staticwebsitegeneratedimageFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -12093,10 +11992,9 @@ func (staticwebsiteimageFormCallback *StaticWebSiteImageFormCallback) OnSave() {
 	}
 
 	staticwebsiteimageFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.StaticWebSiteImage](
+	updateProbeTable[*models.StaticWebSiteImage](
 		staticwebsiteimageFormCallback.probe,
 	)
-	staticwebsiteimageFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if staticwebsiteimageFormCallback.CreationMode || staticwebsiteimageFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -12240,10 +12138,9 @@ func (staticwebsiteparagraphFormCallback *StaticWebSiteParagraphFormCallback) On
 	}
 
 	staticwebsiteparagraphFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.StaticWebSiteParagraph](
+	updateProbeTable[*models.StaticWebSiteParagraph](
 		staticwebsiteparagraphFormCallback.probe,
 	)
-	staticwebsiteparagraphFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if staticwebsiteparagraphFormCallback.CreationMode || staticwebsiteparagraphFormCallback.formGroup.HasSuppressButtonBeenPressed {
@@ -12321,10 +12218,9 @@ func (xhtml_contentFormCallback *XHTML_CONTENTFormCallback) OnSave() {
 	}
 
 	xhtml_contentFormCallback.probe.stageOfInterest.Commit()
-	updateAndCommitTable[*models.XHTML_CONTENT](
+	updateProbeTable[*models.XHTML_CONTENT](
 		xhtml_contentFormCallback.probe,
 	)
-	xhtml_contentFormCallback.probe.tableStage.Commit()
 
 	// display a new form by reset the form stage
 	if xhtml_contentFormCallback.CreationMode || xhtml_contentFormCallback.formGroup.HasSuppressButtonBeenPressed {

@@ -14,7 +14,7 @@ import (
 
 const TableName = "Table"
 
-func updateAndCommitTable[T models.PointerToGongstruct](
+func updateProbeTable[T models.PointerToGongstruct](
 	probe *Probe,
 ) {
 
@@ -32,11 +32,6 @@ func updateAndCommitTable[T models.PointerToGongstruct](
 	reverseFields := models.GetReverseFields[T]()
 
 	table.NbOfStickyColumns = 3
-
-	// after a delete of an instance, the stage might be dirty if a pointer or a slice of pointer
-	// reference the deleted instance. 
-	// therefore, it is mandatory to clean the stage of interest
-	probe.stageOfInterest.Clean()
 
 	setOfStructs := (*models.GetGongstructInstancesSetFromPointerType[T](probe.stageOfInterest))
 	sliceOfGongStructsSorted := make([]T, len(setOfStructs))
@@ -171,6 +166,7 @@ func updateAndCommitTable[T models.PointerToGongstruct](
 
 	gongtable.StageBranch(probe.tableStage, table)
 
+	probe.tableStage.Commit()
 }
 
 func NewRowUpdate[T models.PointerToGongstruct](

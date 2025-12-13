@@ -22,8 +22,8 @@ import (
 	button "github.com/fullstack-lang/gong/lib/button/go/models"
 	button_stack "github.com/fullstack-lang/gong/lib/button/go/stack"
 
+	ssg_level1stack "github.com/fullstack-lang/gong/lib/ssg/go/level1stack"
 	ssg "github.com/fullstack-lang/gong/lib/ssg/go/models"
-	ssg_stack "github.com/fullstack-lang/gong/lib/ssg/go/stack"
 
 	load "github.com/fullstack-lang/gong/lib/load/go/models"
 	load_stack "github.com/fullstack-lang/gong/lib/load/go/stack"
@@ -304,7 +304,7 @@ func NewStager(
 
 	stager.objectNamer = objectNamer
 
-	stager.ssgStage = ssg_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
+	stager.ssgStage = ssg_level1stack.NewLevel1Stack(stage.GetName(), "", "", true, true).Stage
 	stager.loadReqifStage = load_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage
 	stager.loadRenderingConfStage = load_stack.NewStack(r, stage.GetName()+"-rendering", "", "", "", true, true).Stage
 	stager.markdownStage = markdown_stack.NewStack(r, stage.GetName(), "", "", "", true, true).Stage

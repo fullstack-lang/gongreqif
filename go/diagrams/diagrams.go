@@ -3,7 +3,7 @@ package diagrams
 import (
 	"time"
 
-	"github.com/fullstack-lang/gong/lib/doc2/go/models"
+	"github.com/fullstack-lang/gong/lib/doc/go/models"
 	// injection point for ident package import declaration
 	ref_models "github.com/fullstack-lang/gongreqif/go/models"
 )
@@ -22,11 +22,6 @@ var _ map[string]any = map[string]any{
 
 // function will stage objects
 func _(stage *models.Stage) {
-
-	const __write__local_time = "2025-09-27 20:07:23.957910 CEST"
-	const __write__utc_time__ = "2025-09-27 18:07:23.957910 UTC"
-
-	const __commitId__ = "0000001335"
 
 	// Declaration of instances to stage
 
@@ -302,6 +297,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000000_1_Top_Level.Name = `1. Top Level`
 	__Classdiagram__000000_1_Top_Level.Description = `fsdfqksdjhfdskfsqd`
 	__Classdiagram__000000_1_Top_Level.IsIncludedInStaticWebSite = false
+	__Classdiagram__000000_1_Top_Level.ShowNbInstances = false
+	__Classdiagram__000000_1_Top_Level.ShowMultiplicity = false
+	__Classdiagram__000000_1_Top_Level.ShowLinkNames = false
 	__Classdiagram__000000_1_Top_Level.IsInRenameMode = false
 	__Classdiagram__000000_1_Top_Level.IsExpanded = false
 	__Classdiagram__000000_1_Top_Level.NodeGongStructsIsExpanded = true
@@ -314,6 +312,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000001_2_Datatypes.Name = `2. Datatypes`
 	__Classdiagram__000001_2_Datatypes.Description = ``
 	__Classdiagram__000001_2_Datatypes.IsIncludedInStaticWebSite = false
+	__Classdiagram__000001_2_Datatypes.ShowNbInstances = false
+	__Classdiagram__000001_2_Datatypes.ShowMultiplicity = false
+	__Classdiagram__000001_2_Datatypes.ShowLinkNames = false
 	__Classdiagram__000001_2_Datatypes.IsInRenameMode = false
 	__Classdiagram__000001_2_Datatypes.IsExpanded = false
 	__Classdiagram__000001_2_Datatypes.NodeGongStructsIsExpanded = true
@@ -326,6 +327,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000002_3_Spectype_1.Name = `3. Spectype 1`
 	__Classdiagram__000002_3_Spectype_1.Description = ``
 	__Classdiagram__000002_3_Spectype_1.IsIncludedInStaticWebSite = false
+	__Classdiagram__000002_3_Spectype_1.ShowNbInstances = false
+	__Classdiagram__000002_3_Spectype_1.ShowMultiplicity = false
+	__Classdiagram__000002_3_Spectype_1.ShowLinkNames = false
 	__Classdiagram__000002_3_Spectype_1.IsInRenameMode = false
 	__Classdiagram__000002_3_Spectype_1.IsExpanded = false
 	__Classdiagram__000002_3_Spectype_1.NodeGongStructsIsExpanded = true
@@ -338,6 +342,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000003_4_Spec_Objects_1.Name = `4. Spec Objects 1`
 	__Classdiagram__000003_4_Spec_Objects_1.Description = `DEscription du package Specs`
 	__Classdiagram__000003_4_Spec_Objects_1.IsIncludedInStaticWebSite = false
+	__Classdiagram__000003_4_Spec_Objects_1.ShowNbInstances = false
+	__Classdiagram__000003_4_Spec_Objects_1.ShowMultiplicity = false
+	__Classdiagram__000003_4_Spec_Objects_1.ShowLinkNames = false
 	__Classdiagram__000003_4_Spec_Objects_1.IsInRenameMode = false
 	__Classdiagram__000003_4_Spec_Objects_1.IsExpanded = false
 	__Classdiagram__000003_4_Spec_Objects_1.NodeGongStructsIsExpanded = true
@@ -350,6 +357,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000004_4_Specs_Objects_2.Name = `4. Specs Objects 2`
 	__Classdiagram__000004_4_Specs_Objects_2.Description = `DEscription du package Specs`
 	__Classdiagram__000004_4_Specs_Objects_2.IsIncludedInStaticWebSite = false
+	__Classdiagram__000004_4_Specs_Objects_2.ShowNbInstances = false
+	__Classdiagram__000004_4_Specs_Objects_2.ShowMultiplicity = false
+	__Classdiagram__000004_4_Specs_Objects_2.ShowLinkNames = false
 	__Classdiagram__000004_4_Specs_Objects_2.IsInRenameMode = false
 	__Classdiagram__000004_4_Specs_Objects_2.IsExpanded = false
 	__Classdiagram__000004_4_Specs_Objects_2.NodeGongStructsIsExpanded = true
@@ -362,6 +372,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000005_6_Specifications.Name = `6. Specifications`
 	__Classdiagram__000005_6_Specifications.Description = ``
 	__Classdiagram__000005_6_Specifications.IsIncludedInStaticWebSite = false
+	__Classdiagram__000005_6_Specifications.ShowNbInstances = false
+	__Classdiagram__000005_6_Specifications.ShowMultiplicity = false
+	__Classdiagram__000005_6_Specifications.ShowLinkNames = false
 	__Classdiagram__000005_6_Specifications.IsInRenameMode = false
 	__Classdiagram__000005_6_Specifications.IsExpanded = false
 	__Classdiagram__000005_6_Specifications.NodeGongStructsIsExpanded = false
@@ -374,6 +387,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000006_3_Spectype_2.Name = `3. Spectype 2`
 	__Classdiagram__000006_3_Spectype_2.Description = ``
 	__Classdiagram__000006_3_Spectype_2.IsIncludedInStaticWebSite = false
+	__Classdiagram__000006_3_Spectype_2.ShowNbInstances = false
+	__Classdiagram__000006_3_Spectype_2.ShowMultiplicity = false
+	__Classdiagram__000006_3_Spectype_2.ShowLinkNames = false
 	__Classdiagram__000006_3_Spectype_2.IsInRenameMode = false
 	__Classdiagram__000006_3_Spectype_2.IsExpanded = false
 	__Classdiagram__000006_3_Spectype_2.NodeGongStructsIsExpanded = true
@@ -386,6 +402,9 @@ func _(stage *models.Stage) {
 	__Classdiagram__000007_5_Spec_Relation.Name = `5. Spec Relation`
 	__Classdiagram__000007_5_Spec_Relation.Description = ``
 	__Classdiagram__000007_5_Spec_Relation.IsIncludedInStaticWebSite = false
+	__Classdiagram__000007_5_Spec_Relation.ShowNbInstances = false
+	__Classdiagram__000007_5_Spec_Relation.ShowMultiplicity = false
+	__Classdiagram__000007_5_Spec_Relation.ShowLinkNames = false
 	__Classdiagram__000007_5_Spec_Relation.IsInRenameMode = false
 	__Classdiagram__000007_5_Spec_Relation.IsExpanded = false
 	__Classdiagram__000007_5_Spec_Relation.NodeGongStructsIsExpanded = true
@@ -2093,7 +2112,7 @@ by <a href="/models#A_ENUM_VALUE_REF">models.A_ENUM_VALUE_REF</a> when used as a
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000005_6_Specifications)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000006_3_Spectype_2)
 	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams = append(__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.Classdiagrams, __Classdiagram__000007_5_Spec_Relation)
-	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000001_2_Datatypes
+	__DiagramPackage__000000_Diagram_Package_created_the_2025_05_07T07_33_18Z.SelectedClassdiagram = __Classdiagram__000006_3_Spectype_2
 	// setup of GongNoteShape instances pointers
 	// setup of GongStructShape instances pointers
 	__GongStructShape__000000_Default_REQ_IF.LinkShapes = append(__GongStructShape__000000_Default_REQ_IF.LinkShapes, __LinkShape__000008_THE_HEADER)
