@@ -1450,9 +1450,6 @@ type Stage struct {
 
 	// for the computation of the diff at each commit we need
 	reference map[GongstructIF]GongstructIF
-	modified  map[GongstructIF]struct{}
-	new       map[GongstructIF]struct{}
-	deleted   map[GongstructIF]struct{}
 }
 
 // GetNamedStructs implements models.ProbebStage.
@@ -1467,18 +1464,6 @@ func (stage *Stage) GetNamedStructsNames() (res []string) {
 
 func (stage *Stage) GetReference() map[GongstructIF]GongstructIF {
 	return stage.reference
-}
-
-func (stage *Stage) GetModified() map[GongstructIF]struct{} {
-	return stage.modified
-}
-
-func (stage *Stage) GetNew() map[GongstructIF]struct{} {
-	return stage.new
-}
-
-func (stage *Stage) GetDeleted() map[GongstructIF]struct{} {
-	return stage.deleted
 }
 
 func GetNamedStructInstances[T PointerToGongstruct](set map[T]struct{}, order map[T]uint) (res []string) {
@@ -4128,9 +4113,6 @@ func NewStage(name string) (stage *Stage) {
 		}, // end of insertion point
 
 		reference: make(map[GongstructIF]GongstructIF),
-		new:       make(map[GongstructIF]struct{}),
-		modified:  make(map[GongstructIF]struct{}),
-		deleted:   make(map[GongstructIF]struct{}),
 	}
 
 	return
@@ -4752,16 +4734,29 @@ func (alternative_id *ALTERNATIVE_ID) Stage(stage *Stage) *ALTERNATIVE_ID {
 		stage.ALTERNATIVE_IDs[alternative_id] = struct{}{}
 		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = stage.ALTERNATIVE_IDOrder
 		stage.ALTERNATIVE_IDOrder++
-		stage.new[alternative_id] = struct{}{}
-		delete(stage.deleted, alternative_id)
-	} else {
-		if _, ok := stage.new[alternative_id]; !ok {
-			stage.modified[alternative_id] = struct{}{}
-		}
 	}
 	stage.ALTERNATIVE_IDs_mapString[alternative_id.Name] = alternative_id
 
 	return alternative_id
+}
+
+// StagePreserveOrder puts alternative_id to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ALTERNATIVE_IDOrder
+// - update stage.ALTERNATIVE_IDOrder accordingly
+func (alternative_id *ALTERNATIVE_ID) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ALTERNATIVE_IDs[alternative_id]; !ok {
+		stage.ALTERNATIVE_IDs[alternative_id] = struct{}{}
+
+		if order > stage.ALTERNATIVE_IDOrder {
+			stage.ALTERNATIVE_IDOrder = order
+		}
+		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = stage.ALTERNATIVE_IDOrder
+		stage.ALTERNATIVE_IDOrder++
+	}
+	stage.ALTERNATIVE_IDs_mapString[alternative_id.Name] = alternative_id
 }
 
 // Unstage removes alternative_id off the model stage
@@ -4769,11 +4764,6 @@ func (alternative_id *ALTERNATIVE_ID) Unstage(stage *Stage) *ALTERNATIVE_ID {
 	delete(stage.ALTERNATIVE_IDs, alternative_id)
 	delete(stage.ALTERNATIVE_IDs_mapString, alternative_id.Name)
 
-	if _, ok := stage.reference[alternative_id]; ok {
-		stage.deleted[alternative_id] = struct{}{}
-	} else {
-		delete(stage.new, alternative_id)
-	}
 	return alternative_id
 }
 
@@ -4828,16 +4818,29 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *S
 		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
 		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder++
-		stage.new[attribute_definition_boolean] = struct{}{}
-		delete(stage.deleted, attribute_definition_boolean)
-	} else {
-		if _, ok := stage.new[attribute_definition_boolean]; !ok {
-			stage.modified[attribute_definition_boolean] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString[attribute_definition_boolean.Name] = attribute_definition_boolean
 
 	return attribute_definition_boolean
+}
+
+// StagePreserveOrder puts attribute_definition_boolean to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
+// - update stage.ATTRIBUTE_DEFINITION_BOOLEANOrder accordingly
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean]; !ok {
+		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_BOOLEANOrder {
+			stage.ATTRIBUTE_DEFINITION_BOOLEANOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
+		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString[attribute_definition_boolean.Name] = attribute_definition_boolean
 }
 
 // Unstage removes attribute_definition_boolean off the model stage
@@ -4845,11 +4848,6 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Unstage(stage 
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs, attribute_definition_boolean)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString, attribute_definition_boolean.Name)
 
-	if _, ok := stage.reference[attribute_definition_boolean]; ok {
-		stage.deleted[attribute_definition_boolean] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_boolean)
-	}
 	return attribute_definition_boolean
 }
 
@@ -4904,16 +4902,29 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder++
-		stage.new[attribute_definition_boolean_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_boolean_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_boolean_rendering]; !ok {
-			stage.modified[attribute_definition_boolean_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString[attribute_definition_boolean_rendering.Name] = attribute_definition_boolean_rendering
 
 	return attribute_definition_boolean_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_boolean_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder accordingly
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString[attribute_definition_boolean_rendering.Name] = attribute_definition_boolean_rendering
 }
 
 // Unstage removes attribute_definition_boolean_rendering off the model stage
@@ -4921,11 +4932,6 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings, attribute_definition_boolean_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString, attribute_definition_boolean_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_boolean_rendering]; ok {
-		stage.deleted[attribute_definition_boolean_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_boolean_rendering)
-	}
 	return attribute_definition_boolean_rendering
 }
 
@@ -4980,16 +4986,29 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Stage(stage *Stage) 
 		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEOrder
 		stage.ATTRIBUTE_DEFINITION_DATEOrder++
-		stage.new[attribute_definition_date] = struct{}{}
-		delete(stage.deleted, attribute_definition_date)
-	} else {
-		if _, ok := stage.new[attribute_definition_date]; !ok {
-			stage.modified[attribute_definition_date] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_DATEs_mapString[attribute_definition_date.Name] = attribute_definition_date
 
 	return attribute_definition_date
+}
+
+// StagePreserveOrder puts attribute_definition_date to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_DATEOrder
+// - update stage.ATTRIBUTE_DEFINITION_DATEOrder accordingly
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date]; !ok {
+		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_DATEOrder {
+			stage.ATTRIBUTE_DEFINITION_DATEOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEOrder
+		stage.ATTRIBUTE_DEFINITION_DATEOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_DATEs_mapString[attribute_definition_date.Name] = attribute_definition_date
 }
 
 // Unstage removes attribute_definition_date off the model stage
@@ -4997,11 +5016,6 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Unstage(stage *Stage
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs, attribute_definition_date)
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs_mapString, attribute_definition_date.Name)
 
-	if _, ok := stage.reference[attribute_definition_date]; ok {
-		stage.deleted[attribute_definition_date] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_date)
-	}
 	return attribute_definition_date
 }
 
@@ -5056,16 +5070,29 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder++
-		stage.new[attribute_definition_date_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_date_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_date_rendering]; !ok {
-			stage.modified[attribute_definition_date_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString[attribute_definition_date_rendering.Name] = attribute_definition_date_rendering
 
 	return attribute_definition_date_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_date_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder accordingly
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString[attribute_definition_date_rendering.Name] = attribute_definition_date_rendering
 }
 
 // Unstage removes attribute_definition_date_rendering off the model stage
@@ -5073,11 +5100,6 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings, attribute_definition_date_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString, attribute_definition_date_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_date_rendering]; ok {
-		stage.deleted[attribute_definition_date_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_date_rendering)
-	}
 	return attribute_definition_date_rendering
 }
 
@@ -5132,16 +5154,29 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder++
-		stage.new[attribute_definition_enumeration] = struct{}{}
-		delete(stage.deleted, attribute_definition_enumeration)
-	} else {
-		if _, ok := stage.new[attribute_definition_enumeration]; !ok {
-			stage.modified[attribute_definition_enumeration] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString[attribute_definition_enumeration.Name] = attribute_definition_enumeration
 
 	return attribute_definition_enumeration
+}
+
+// StagePreserveOrder puts attribute_definition_enumeration to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
+// - update stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder accordingly
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration]; !ok {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder {
+			stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString[attribute_definition_enumeration.Name] = attribute_definition_enumeration
 }
 
 // Unstage removes attribute_definition_enumeration off the model stage
@@ -5149,11 +5184,6 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Unstag
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, attribute_definition_enumeration)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString, attribute_definition_enumeration.Name)
 
-	if _, ok := stage.reference[attribute_definition_enumeration]; ok {
-		stage.deleted[attribute_definition_enumeration] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_enumeration)
-	}
 	return attribute_definition_enumeration
 }
 
@@ -5208,16 +5238,29 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder++
-		stage.new[attribute_definition_enumeration_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_enumeration_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_enumeration_rendering]; !ok {
-			stage.modified[attribute_definition_enumeration_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString[attribute_definition_enumeration_rendering.Name] = attribute_definition_enumeration_rendering
 
 	return attribute_definition_enumeration_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_enumeration_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder accordingly
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString[attribute_definition_enumeration_rendering.Name] = attribute_definition_enumeration_rendering
 }
 
 // Unstage removes attribute_definition_enumeration_rendering off the model stage
@@ -5225,11 +5268,6 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings, attribute_definition_enumeration_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString, attribute_definition_enumeration_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_enumeration_rendering]; ok {
-		stage.deleted[attribute_definition_enumeration_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_enumeration_rendering)
-	}
 	return attribute_definition_enumeration_rendering
 }
 
@@ -5284,16 +5322,29 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Stage(stage *S
 		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGEROrder
 		stage.ATTRIBUTE_DEFINITION_INTEGEROrder++
-		stage.new[attribute_definition_integer] = struct{}{}
-		delete(stage.deleted, attribute_definition_integer)
-	} else {
-		if _, ok := stage.new[attribute_definition_integer]; !ok {
-			stage.modified[attribute_definition_integer] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString[attribute_definition_integer.Name] = attribute_definition_integer
 
 	return attribute_definition_integer
+}
+
+// StagePreserveOrder puts attribute_definition_integer to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_INTEGEROrder
+// - update stage.ATTRIBUTE_DEFINITION_INTEGEROrder accordingly
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer]; !ok {
+		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_INTEGEROrder {
+			stage.ATTRIBUTE_DEFINITION_INTEGEROrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGEROrder
+		stage.ATTRIBUTE_DEFINITION_INTEGEROrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString[attribute_definition_integer.Name] = attribute_definition_integer
 }
 
 // Unstage removes attribute_definition_integer off the model stage
@@ -5301,11 +5352,6 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Unstage(stage 
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs, attribute_definition_integer)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString, attribute_definition_integer.Name)
 
-	if _, ok := stage.reference[attribute_definition_integer]; ok {
-		stage.deleted[attribute_definition_integer] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_integer)
-	}
 	return attribute_definition_integer
 }
 
@@ -5360,16 +5406,29 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder++
-		stage.new[attribute_definition_integer_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_integer_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_integer_rendering]; !ok {
-			stage.modified[attribute_definition_integer_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString[attribute_definition_integer_rendering.Name] = attribute_definition_integer_rendering
 
 	return attribute_definition_integer_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_integer_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder accordingly
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString[attribute_definition_integer_rendering.Name] = attribute_definition_integer_rendering
 }
 
 // Unstage removes attribute_definition_integer_rendering off the model stage
@@ -5377,11 +5436,6 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings, attribute_definition_integer_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString, attribute_definition_integer_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_integer_rendering]; ok {
-		stage.deleted[attribute_definition_integer_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_integer_rendering)
-	}
 	return attribute_definition_integer_rendering
 }
 
@@ -5436,16 +5490,29 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) 
 		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALOrder
 		stage.ATTRIBUTE_DEFINITION_REALOrder++
-		stage.new[attribute_definition_real] = struct{}{}
-		delete(stage.deleted, attribute_definition_real)
-	} else {
-		if _, ok := stage.new[attribute_definition_real]; !ok {
-			stage.modified[attribute_definition_real] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_REALs_mapString[attribute_definition_real.Name] = attribute_definition_real
 
 	return attribute_definition_real
+}
+
+// StagePreserveOrder puts attribute_definition_real to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_REALOrder
+// - update stage.ATTRIBUTE_DEFINITION_REALOrder accordingly
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real]; !ok {
+		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_REALOrder {
+			stage.ATTRIBUTE_DEFINITION_REALOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALOrder
+		stage.ATTRIBUTE_DEFINITION_REALOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_REALs_mapString[attribute_definition_real.Name] = attribute_definition_real
 }
 
 // Unstage removes attribute_definition_real off the model stage
@@ -5453,11 +5520,6 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Unstage(stage *Stage
 	delete(stage.ATTRIBUTE_DEFINITION_REALs, attribute_definition_real)
 	delete(stage.ATTRIBUTE_DEFINITION_REALs_mapString, attribute_definition_real.Name)
 
-	if _, ok := stage.reference[attribute_definition_real]; ok {
-		stage.deleted[attribute_definition_real] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_real)
-	}
 	return attribute_definition_real
 }
 
@@ -5512,16 +5574,29 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 		stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder++
-		stage.new[attribute_definition_real_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_real_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_real_rendering]; !ok {
-			stage.modified[attribute_definition_real_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString[attribute_definition_real_rendering.Name] = attribute_definition_real_rendering
 
 	return attribute_definition_real_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_real_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder accordingly
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString[attribute_definition_real_rendering.Name] = attribute_definition_real_rendering
 }
 
 // Unstage removes attribute_definition_real_rendering off the model stage
@@ -5529,11 +5604,6 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings, attribute_definition_real_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString, attribute_definition_real_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_real_rendering]; ok {
-		stage.deleted[attribute_definition_real_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_real_rendering)
-	}
 	return attribute_definition_real_rendering
 }
 
@@ -5588,16 +5658,29 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Stage(stag
 		stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_RenderingOrder++
-		stage.new[attribute_definition_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_rendering]; !ok {
-			stage.modified[attribute_definition_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_Renderings_mapString[attribute_definition_rendering.Name] = attribute_definition_rendering
 
 	return attribute_definition_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_RenderingOrder accordingly
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_Renderings_mapString[attribute_definition_rendering.Name] = attribute_definition_rendering
 }
 
 // Unstage removes attribute_definition_rendering off the model stage
@@ -5605,11 +5688,6 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Unstage(st
 	delete(stage.ATTRIBUTE_DEFINITION_Renderings, attribute_definition_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_Renderings_mapString, attribute_definition_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_rendering]; ok {
-		stage.deleted[attribute_definition_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_rendering)
-	}
 	return attribute_definition_rendering
 }
 
@@ -5664,16 +5742,29 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Sta
 		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGOrder
 		stage.ATTRIBUTE_DEFINITION_STRINGOrder++
-		stage.new[attribute_definition_string] = struct{}{}
-		delete(stage.deleted, attribute_definition_string)
-	} else {
-		if _, ok := stage.new[attribute_definition_string]; !ok {
-			stage.modified[attribute_definition_string] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString[attribute_definition_string.Name] = attribute_definition_string
 
 	return attribute_definition_string
+}
+
+// StagePreserveOrder puts attribute_definition_string to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_STRINGOrder
+// - update stage.ATTRIBUTE_DEFINITION_STRINGOrder accordingly
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string]; !ok {
+		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_STRINGOrder {
+			stage.ATTRIBUTE_DEFINITION_STRINGOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGOrder
+		stage.ATTRIBUTE_DEFINITION_STRINGOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString[attribute_definition_string.Name] = attribute_definition_string
 }
 
 // Unstage removes attribute_definition_string off the model stage
@@ -5681,11 +5772,6 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Unstage(stage *S
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs, attribute_definition_string)
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs_mapString, attribute_definition_string.Name)
 
-	if _, ok := stage.reference[attribute_definition_string]; ok {
-		stage.deleted[attribute_definition_string] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_string)
-	}
 	return attribute_definition_string
 }
 
@@ -5740,16 +5826,29 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 		stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder++
-		stage.new[attribute_definition_string_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_string_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_string_rendering]; !ok {
-			stage.modified[attribute_definition_string_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString[attribute_definition_string_rendering.Name] = attribute_definition_string_rendering
 
 	return attribute_definition_string_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_string_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder accordingly
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString[attribute_definition_string_rendering.Name] = attribute_definition_string_rendering
 }
 
 // Unstage removes attribute_definition_string_rendering off the model stage
@@ -5757,11 +5856,6 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings, attribute_definition_string_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString, attribute_definition_string_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_string_rendering]; ok {
-		stage.deleted[attribute_definition_string_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_string_rendering)
-	}
 	return attribute_definition_string_rendering
 }
 
@@ -5816,16 +5910,29 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Stage(stage *Stage
 		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLOrder
 		stage.ATTRIBUTE_DEFINITION_XHTMLOrder++
-		stage.new[attribute_definition_xhtml] = struct{}{}
-		delete(stage.deleted, attribute_definition_xhtml)
-	} else {
-		if _, ok := stage.new[attribute_definition_xhtml]; !ok {
-			stage.modified[attribute_definition_xhtml] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString[attribute_definition_xhtml.Name] = attribute_definition_xhtml
 
 	return attribute_definition_xhtml
+}
+
+// StagePreserveOrder puts attribute_definition_xhtml to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_XHTMLOrder
+// - update stage.ATTRIBUTE_DEFINITION_XHTMLOrder accordingly
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml]; !ok {
+		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_XHTMLOrder {
+			stage.ATTRIBUTE_DEFINITION_XHTMLOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLOrder
+		stage.ATTRIBUTE_DEFINITION_XHTMLOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString[attribute_definition_xhtml.Name] = attribute_definition_xhtml
 }
 
 // Unstage removes attribute_definition_xhtml off the model stage
@@ -5833,11 +5940,6 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Unstage(stage *Sta
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs, attribute_definition_xhtml)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString, attribute_definition_xhtml.Name)
 
-	if _, ok := stage.reference[attribute_definition_xhtml]; ok {
-		stage.deleted[attribute_definition_xhtml] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_xhtml)
-	}
 	return attribute_definition_xhtml
 }
 
@@ -5892,16 +5994,29 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder
 		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder++
-		stage.new[attribute_definition_xhtml_rendering] = struct{}{}
-		delete(stage.deleted, attribute_definition_xhtml_rendering)
-	} else {
-		if _, ok := stage.new[attribute_definition_xhtml_rendering]; !ok {
-			stage.modified[attribute_definition_xhtml_rendering] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString[attribute_definition_xhtml_rendering.Name] = attribute_definition_xhtml_rendering
 
 	return attribute_definition_xhtml_rendering
+}
+
+// StagePreserveOrder puts attribute_definition_xhtml_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder
+// - update stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder accordingly
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering]; !ok {
+		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering] = struct{}{}
+
+		if order > stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder {
+			stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder = order
+		}
+		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder++
+	}
+	stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString[attribute_definition_xhtml_rendering.Name] = attribute_definition_xhtml_rendering
 }
 
 // Unstage removes attribute_definition_xhtml_rendering off the model stage
@@ -5909,11 +6024,6 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings, attribute_definition_xhtml_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString, attribute_definition_xhtml_rendering.Name)
 
-	if _, ok := stage.reference[attribute_definition_xhtml_rendering]; ok {
-		stage.deleted[attribute_definition_xhtml_rendering] = struct{}{}
-	} else {
-		delete(stage.new, attribute_definition_xhtml_rendering)
-	}
 	return attribute_definition_xhtml_rendering
 }
 
@@ -5968,16 +6078,29 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATT
 		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = struct{}{}
 		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANOrder
 		stage.ATTRIBUTE_VALUE_BOOLEANOrder++
-		stage.new[attribute_value_boolean] = struct{}{}
-		delete(stage.deleted, attribute_value_boolean)
-	} else {
-		if _, ok := stage.new[attribute_value_boolean]; !ok {
-			stage.modified[attribute_value_boolean] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_BOOLEANs_mapString[attribute_value_boolean.Name] = attribute_value_boolean
 
 	return attribute_value_boolean
+}
+
+// StagePreserveOrder puts attribute_value_boolean to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_BOOLEANOrder
+// - update stage.ATTRIBUTE_VALUE_BOOLEANOrder accordingly
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean]; !ok {
+		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_BOOLEANOrder {
+			stage.ATTRIBUTE_VALUE_BOOLEANOrder = order
+		}
+		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANOrder
+		stage.ATTRIBUTE_VALUE_BOOLEANOrder++
+	}
+	stage.ATTRIBUTE_VALUE_BOOLEANs_mapString[attribute_value_boolean.Name] = attribute_value_boolean
 }
 
 // Unstage removes attribute_value_boolean off the model stage
@@ -5985,11 +6108,6 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage) *A
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs, attribute_value_boolean)
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs_mapString, attribute_value_boolean.Name)
 
-	if _, ok := stage.reference[attribute_value_boolean]; ok {
-		stage.deleted[attribute_value_boolean] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_boolean)
-	}
 	return attribute_value_boolean
 }
 
@@ -6044,16 +6162,29 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *ATTRIBUTE
 		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = struct{}{}
 		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEOrder
 		stage.ATTRIBUTE_VALUE_DATEOrder++
-		stage.new[attribute_value_date] = struct{}{}
-		delete(stage.deleted, attribute_value_date)
-	} else {
-		if _, ok := stage.new[attribute_value_date]; !ok {
-			stage.modified[attribute_value_date] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_DATEs_mapString[attribute_value_date.Name] = attribute_value_date
 
 	return attribute_value_date
+}
+
+// StagePreserveOrder puts attribute_value_date to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_DATEOrder
+// - update stage.ATTRIBUTE_VALUE_DATEOrder accordingly
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date]; !ok {
+		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_DATEOrder {
+			stage.ATTRIBUTE_VALUE_DATEOrder = order
+		}
+		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEOrder
+		stage.ATTRIBUTE_VALUE_DATEOrder++
+	}
+	stage.ATTRIBUTE_VALUE_DATEs_mapString[attribute_value_date.Name] = attribute_value_date
 }
 
 // Unstage removes attribute_value_date off the model stage
@@ -6061,11 +6192,6 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *ATTRIBU
 	delete(stage.ATTRIBUTE_VALUE_DATEs, attribute_value_date)
 	delete(stage.ATTRIBUTE_VALUE_DATEs_mapString, attribute_value_date.Name)
 
-	if _, ok := stage.reference[attribute_value_date]; ok {
-		stage.deleted[attribute_value_date] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_date)
-	}
 	return attribute_value_date
 }
 
@@ -6120,16 +6246,29 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Sta
 		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = struct{}{}
 		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
 		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder++
-		stage.new[attribute_value_enumeration] = struct{}{}
-		delete(stage.deleted, attribute_value_enumeration)
-	} else {
-		if _, ok := stage.new[attribute_value_enumeration]; !ok {
-			stage.modified[attribute_value_enumeration] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString[attribute_value_enumeration.Name] = attribute_value_enumeration
 
 	return attribute_value_enumeration
+}
+
+// StagePreserveOrder puts attribute_value_enumeration to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
+// - update stage.ATTRIBUTE_VALUE_ENUMERATIONOrder accordingly
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration]; !ok {
+		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_ENUMERATIONOrder {
+			stage.ATTRIBUTE_VALUE_ENUMERATIONOrder = order
+		}
+		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
+		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder++
+	}
+	stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString[attribute_value_enumeration.Name] = attribute_value_enumeration
 }
 
 // Unstage removes attribute_value_enumeration off the model stage
@@ -6137,11 +6276,6 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Unstage(stage *S
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs, attribute_value_enumeration)
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString, attribute_value_enumeration.Name)
 
-	if _, ok := stage.reference[attribute_value_enumeration]; ok {
-		stage.deleted[attribute_value_enumeration] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_enumeration)
-	}
 	return attribute_value_enumeration
 }
 
@@ -6196,16 +6330,29 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *ATT
 		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = struct{}{}
 		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGEROrder
 		stage.ATTRIBUTE_VALUE_INTEGEROrder++
-		stage.new[attribute_value_integer] = struct{}{}
-		delete(stage.deleted, attribute_value_integer)
-	} else {
-		if _, ok := stage.new[attribute_value_integer]; !ok {
-			stage.modified[attribute_value_integer] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_INTEGERs_mapString[attribute_value_integer.Name] = attribute_value_integer
 
 	return attribute_value_integer
+}
+
+// StagePreserveOrder puts attribute_value_integer to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_INTEGEROrder
+// - update stage.ATTRIBUTE_VALUE_INTEGEROrder accordingly
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer]; !ok {
+		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_INTEGEROrder {
+			stage.ATTRIBUTE_VALUE_INTEGEROrder = order
+		}
+		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGEROrder
+		stage.ATTRIBUTE_VALUE_INTEGEROrder++
+	}
+	stage.ATTRIBUTE_VALUE_INTEGERs_mapString[attribute_value_integer.Name] = attribute_value_integer
 }
 
 // Unstage removes attribute_value_integer off the model stage
@@ -6213,11 +6360,6 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage) *A
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs, attribute_value_integer)
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs_mapString, attribute_value_integer.Name)
 
-	if _, ok := stage.reference[attribute_value_integer]; ok {
-		stage.deleted[attribute_value_integer] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_integer)
-	}
 	return attribute_value_integer
 }
 
@@ -6272,16 +6414,29 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE
 		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = struct{}{}
 		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALOrder
 		stage.ATTRIBUTE_VALUE_REALOrder++
-		stage.new[attribute_value_real] = struct{}{}
-		delete(stage.deleted, attribute_value_real)
-	} else {
-		if _, ok := stage.new[attribute_value_real]; !ok {
-			stage.modified[attribute_value_real] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_REALs_mapString[attribute_value_real.Name] = attribute_value_real
 
 	return attribute_value_real
+}
+
+// StagePreserveOrder puts attribute_value_real to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_REALOrder
+// - update stage.ATTRIBUTE_VALUE_REALOrder accordingly
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_REALs[attribute_value_real]; !ok {
+		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_REALOrder {
+			stage.ATTRIBUTE_VALUE_REALOrder = order
+		}
+		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALOrder
+		stage.ATTRIBUTE_VALUE_REALOrder++
+	}
+	stage.ATTRIBUTE_VALUE_REALs_mapString[attribute_value_real.Name] = attribute_value_real
 }
 
 // Unstage removes attribute_value_real off the model stage
@@ -6289,11 +6444,6 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *ATTRIBU
 	delete(stage.ATTRIBUTE_VALUE_REALs, attribute_value_real)
 	delete(stage.ATTRIBUTE_VALUE_REALs_mapString, attribute_value_real.Name)
 
-	if _, ok := stage.reference[attribute_value_real]; ok {
-		stage.deleted[attribute_value_real] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_real)
-	}
 	return attribute_value_real
 }
 
@@ -6348,16 +6498,29 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *ATTRI
 		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = struct{}{}
 		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGOrder
 		stage.ATTRIBUTE_VALUE_STRINGOrder++
-		stage.new[attribute_value_string] = struct{}{}
-		delete(stage.deleted, attribute_value_string)
-	} else {
-		if _, ok := stage.new[attribute_value_string]; !ok {
-			stage.modified[attribute_value_string] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_STRINGs_mapString[attribute_value_string.Name] = attribute_value_string
 
 	return attribute_value_string
+}
+
+// StagePreserveOrder puts attribute_value_string to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_STRINGOrder
+// - update stage.ATTRIBUTE_VALUE_STRINGOrder accordingly
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string]; !ok {
+		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_STRINGOrder {
+			stage.ATTRIBUTE_VALUE_STRINGOrder = order
+		}
+		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGOrder
+		stage.ATTRIBUTE_VALUE_STRINGOrder++
+	}
+	stage.ATTRIBUTE_VALUE_STRINGs_mapString[attribute_value_string.Name] = attribute_value_string
 }
 
 // Unstage removes attribute_value_string off the model stage
@@ -6365,11 +6528,6 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) *ATT
 	delete(stage.ATTRIBUTE_VALUE_STRINGs, attribute_value_string)
 	delete(stage.ATTRIBUTE_VALUE_STRINGs_mapString, attribute_value_string.Name)
 
-	if _, ok := stage.reference[attribute_value_string]; ok {
-		stage.deleted[attribute_value_string] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_string)
-	}
 	return attribute_value_string
 }
 
@@ -6424,16 +6582,29 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBU
 		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = struct{}{}
 		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLOrder
 		stage.ATTRIBUTE_VALUE_XHTMLOrder++
-		stage.new[attribute_value_xhtml] = struct{}{}
-		delete(stage.deleted, attribute_value_xhtml)
-	} else {
-		if _, ok := stage.new[attribute_value_xhtml]; !ok {
-			stage.modified[attribute_value_xhtml] = struct{}{}
-		}
 	}
 	stage.ATTRIBUTE_VALUE_XHTMLs_mapString[attribute_value_xhtml.Name] = attribute_value_xhtml
 
 	return attribute_value_xhtml
+}
+
+// StagePreserveOrder puts attribute_value_xhtml to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_XHTMLOrder
+// - update stage.ATTRIBUTE_VALUE_XHTMLOrder accordingly
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml]; !ok {
+		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = struct{}{}
+
+		if order > stage.ATTRIBUTE_VALUE_XHTMLOrder {
+			stage.ATTRIBUTE_VALUE_XHTMLOrder = order
+		}
+		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLOrder
+		stage.ATTRIBUTE_VALUE_XHTMLOrder++
+	}
+	stage.ATTRIBUTE_VALUE_XHTMLs_mapString[attribute_value_xhtml.Name] = attribute_value_xhtml
 }
 
 // Unstage removes attribute_value_xhtml off the model stage
@@ -6441,11 +6612,6 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *ATTRI
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs, attribute_value_xhtml)
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs_mapString, attribute_value_xhtml.Name)
 
-	if _, ok := stage.reference[attribute_value_xhtml]; ok {
-		stage.deleted[attribute_value_xhtml] = struct{}{}
-	} else {
-		delete(stage.new, attribute_value_xhtml)
-	}
 	return attribute_value_xhtml
 }
 
@@ -6500,16 +6666,29 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Stage(stage *Stage) *A_ALTERNATIVE_ID 
 		stage.A_ALTERNATIVE_IDs[a_alternative_id] = struct{}{}
 		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = stage.A_ALTERNATIVE_IDOrder
 		stage.A_ALTERNATIVE_IDOrder++
-		stage.new[a_alternative_id] = struct{}{}
-		delete(stage.deleted, a_alternative_id)
-	} else {
-		if _, ok := stage.new[a_alternative_id]; !ok {
-			stage.modified[a_alternative_id] = struct{}{}
-		}
 	}
 	stage.A_ALTERNATIVE_IDs_mapString[a_alternative_id.Name] = a_alternative_id
 
 	return a_alternative_id
+}
+
+// StagePreserveOrder puts a_alternative_id to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ALTERNATIVE_IDOrder
+// - update stage.A_ALTERNATIVE_IDOrder accordingly
+func (a_alternative_id *A_ALTERNATIVE_ID) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ALTERNATIVE_IDs[a_alternative_id]; !ok {
+		stage.A_ALTERNATIVE_IDs[a_alternative_id] = struct{}{}
+
+		if order > stage.A_ALTERNATIVE_IDOrder {
+			stage.A_ALTERNATIVE_IDOrder = order
+		}
+		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = stage.A_ALTERNATIVE_IDOrder
+		stage.A_ALTERNATIVE_IDOrder++
+	}
+	stage.A_ALTERNATIVE_IDs_mapString[a_alternative_id.Name] = a_alternative_id
 }
 
 // Unstage removes a_alternative_id off the model stage
@@ -6517,11 +6696,6 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Unstage(stage *Stage) *A_ALTERNATIVE_I
 	delete(stage.A_ALTERNATIVE_IDs, a_alternative_id)
 	delete(stage.A_ALTERNATIVE_IDs_mapString, a_alternative_id.Name)
 
-	if _, ok := stage.reference[a_alternative_id]; ok {
-		stage.deleted[a_alternative_id] = struct{}{}
-	} else {
-		delete(stage.new, a_alternative_id)
-	}
 	return a_alternative_id
 }
 
@@ -6576,16 +6750,29 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) St
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder++
-		stage.new[a_attribute_definition_boolean_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_boolean_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_boolean_ref]; !ok {
-			stage.modified[a_attribute_definition_boolean_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString[a_attribute_definition_boolean_ref.Name] = a_attribute_definition_boolean_ref
 
 	return a_attribute_definition_boolean_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_boolean_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder accordingly
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString[a_attribute_definition_boolean_ref.Name] = a_attribute_definition_boolean_ref
 }
 
 // Unstage removes a_attribute_definition_boolean_ref off the model stage
@@ -6593,11 +6780,6 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Un
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs, a_attribute_definition_boolean_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString, a_attribute_definition_boolean_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_boolean_ref]; ok {
-		stage.deleted[a_attribute_definition_boolean_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_boolean_ref)
-	}
 	return a_attribute_definition_boolean_ref
 }
 
@@ -6652,16 +6834,29 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Stage(st
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder++
-		stage.new[a_attribute_definition_date_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_date_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_date_ref]; !ok {
-			stage.modified[a_attribute_definition_date_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString[a_attribute_definition_date_ref.Name] = a_attribute_definition_date_ref
 
 	return a_attribute_definition_date_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_date_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder accordingly
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString[a_attribute_definition_date_ref.Name] = a_attribute_definition_date_ref
 }
 
 // Unstage removes a_attribute_definition_date_ref off the model stage
@@ -6669,11 +6864,6 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Unstage(
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs, a_attribute_definition_date_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString, a_attribute_definition_date_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_date_ref]; ok {
-		stage.deleted[a_attribute_definition_date_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_date_ref)
-	}
 	return a_attribute_definition_date_ref
 }
 
@@ -6728,16 +6918,29 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder++
-		stage.new[a_attribute_definition_enumeration_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_enumeration_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_enumeration_ref]; !ok {
-			stage.modified[a_attribute_definition_enumeration_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString[a_attribute_definition_enumeration_ref.Name] = a_attribute_definition_enumeration_ref
 
 	return a_attribute_definition_enumeration_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_enumeration_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder accordingly
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString[a_attribute_definition_enumeration_ref.Name] = a_attribute_definition_enumeration_ref
 }
 
 // Unstage removes a_attribute_definition_enumeration_ref off the model stage
@@ -6745,11 +6948,6 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs, a_attribute_definition_enumeration_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString, a_attribute_definition_enumeration_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_enumeration_ref]; ok {
-		stage.deleted[a_attribute_definition_enumeration_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_enumeration_ref)
-	}
 	return a_attribute_definition_enumeration_ref
 }
 
@@ -6804,16 +7002,29 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) St
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder++
-		stage.new[a_attribute_definition_integer_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_integer_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_integer_ref]; !ok {
-			stage.modified[a_attribute_definition_integer_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString[a_attribute_definition_integer_ref.Name] = a_attribute_definition_integer_ref
 
 	return a_attribute_definition_integer_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_integer_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder accordingly
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString[a_attribute_definition_integer_ref.Name] = a_attribute_definition_integer_ref
 }
 
 // Unstage removes a_attribute_definition_integer_ref off the model stage
@@ -6821,11 +7032,6 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Un
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs, a_attribute_definition_integer_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString, a_attribute_definition_integer_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_integer_ref]; ok {
-		stage.deleted[a_attribute_definition_integer_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_integer_ref)
-	}
 	return a_attribute_definition_integer_ref
 }
 
@@ -6880,16 +7086,29 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(st
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder++
-		stage.new[a_attribute_definition_real_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_real_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_real_ref]; !ok {
-			stage.modified[a_attribute_definition_real_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString[a_attribute_definition_real_ref.Name] = a_attribute_definition_real_ref
 
 	return a_attribute_definition_real_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_real_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder accordingly
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString[a_attribute_definition_real_ref.Name] = a_attribute_definition_real_ref
 }
 
 // Unstage removes a_attribute_definition_real_ref off the model stage
@@ -6897,11 +7116,6 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Unstage(
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs, a_attribute_definition_real_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString, a_attribute_definition_real_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_real_ref]; ok {
-		stage.deleted[a_attribute_definition_real_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_real_ref)
-	}
 	return a_attribute_definition_real_ref
 }
 
@@ -6956,16 +7170,29 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stag
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder++
-		stage.new[a_attribute_definition_string_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_string_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_string_ref]; !ok {
-			stage.modified[a_attribute_definition_string_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString[a_attribute_definition_string_ref.Name] = a_attribute_definition_string_ref
 
 	return a_attribute_definition_string_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_string_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder accordingly
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString[a_attribute_definition_string_ref.Name] = a_attribute_definition_string_ref
 }
 
 // Unstage removes a_attribute_definition_string_ref off the model stage
@@ -6973,11 +7200,6 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Unst
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs, a_attribute_definition_string_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString, a_attribute_definition_string_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_string_ref]; ok {
-		stage.deleted[a_attribute_definition_string_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_string_ref)
-	}
 	return a_attribute_definition_string_ref
 }
 
@@ -7032,16 +7254,29 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder++
-		stage.new[a_attribute_definition_xhtml_ref] = struct{}{}
-		delete(stage.deleted, a_attribute_definition_xhtml_ref)
-	} else {
-		if _, ok := stage.new[a_attribute_definition_xhtml_ref]; !ok {
-			stage.modified[a_attribute_definition_xhtml_ref] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString[a_attribute_definition_xhtml_ref.Name] = a_attribute_definition_xhtml_ref
 
 	return a_attribute_definition_xhtml_ref
+}
+
+// StagePreserveOrder puts a_attribute_definition_xhtml_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
+// - update stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder accordingly
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref]; !ok {
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder {
+			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder = order
+		}
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder++
+	}
+	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString[a_attribute_definition_xhtml_ref.Name] = a_attribute_definition_xhtml_ref
 }
 
 // Unstage removes a_attribute_definition_xhtml_ref off the model stage
@@ -7049,11 +7284,6 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Unstag
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs, a_attribute_definition_xhtml_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString, a_attribute_definition_xhtml_ref.Name)
 
-	if _, ok := stage.reference[a_attribute_definition_xhtml_ref]; ok {
-		stage.deleted[a_attribute_definition_xhtml_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_definition_xhtml_ref)
-	}
 	return a_attribute_definition_xhtml_ref
 }
 
@@ -7108,16 +7338,29 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) 
 		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
 		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder++
-		stage.new[a_attribute_value_boolean] = struct{}{}
-		delete(stage.deleted, a_attribute_value_boolean)
-	} else {
-		if _, ok := stage.new[a_attribute_value_boolean]; !ok {
-			stage.modified[a_attribute_value_boolean] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString[a_attribute_value_boolean.Name] = a_attribute_value_boolean
 
 	return a_attribute_value_boolean
+}
+
+// StagePreserveOrder puts a_attribute_value_boolean to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
+// - update stage.A_ATTRIBUTE_VALUE_BOOLEANOrder accordingly
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean]; !ok {
+		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_BOOLEANOrder {
+			stage.A_ATTRIBUTE_VALUE_BOOLEANOrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
+		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString[a_attribute_value_boolean.Name] = a_attribute_value_boolean
 }
 
 // Unstage removes a_attribute_value_boolean off the model stage
@@ -7125,11 +7368,6 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs, a_attribute_value_boolean)
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString, a_attribute_value_boolean.Name)
 
-	if _, ok := stage.reference[a_attribute_value_boolean]; ok {
-		stage.deleted[a_attribute_value_boolean] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_boolean)
-	}
 	return a_attribute_value_boolean
 }
 
@@ -7184,16 +7422,29 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATT
 		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEOrder
 		stage.A_ATTRIBUTE_VALUE_DATEOrder++
-		stage.new[a_attribute_value_date] = struct{}{}
-		delete(stage.deleted, a_attribute_value_date)
-	} else {
-		if _, ok := stage.new[a_attribute_value_date]; !ok {
-			stage.modified[a_attribute_value_date] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_DATEs_mapString[a_attribute_value_date.Name] = a_attribute_value_date
 
 	return a_attribute_value_date
+}
+
+// StagePreserveOrder puts a_attribute_value_date to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_DATEOrder
+// - update stage.A_ATTRIBUTE_VALUE_DATEOrder accordingly
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date]; !ok {
+		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_DATEOrder {
+			stage.A_ATTRIBUTE_VALUE_DATEOrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEOrder
+		stage.A_ATTRIBUTE_VALUE_DATEOrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_DATEs_mapString[a_attribute_value_date.Name] = a_attribute_value_date
 }
 
 // Unstage removes a_attribute_value_date off the model stage
@@ -7201,11 +7452,6 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *A_A
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs, a_attribute_value_date)
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs_mapString, a_attribute_value_date.Name)
 
-	if _, ok := stage.reference[a_attribute_value_date]; ok {
-		stage.deleted[a_attribute_value_date] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_date)
-	}
 	return a_attribute_value_date
 }
 
@@ -7260,16 +7506,29 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Stage(stage 
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder++
-		stage.new[a_attribute_value_enumeration] = struct{}{}
-		delete(stage.deleted, a_attribute_value_enumeration)
-	} else {
-		if _, ok := stage.new[a_attribute_value_enumeration]; !ok {
-			stage.modified[a_attribute_value_enumeration] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString[a_attribute_value_enumeration.Name] = a_attribute_value_enumeration
 
 	return a_attribute_value_enumeration
+}
+
+// StagePreserveOrder puts a_attribute_value_enumeration to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
+// - update stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder accordingly
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration]; !ok {
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder {
+			stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString[a_attribute_value_enumeration.Name] = a_attribute_value_enumeration
 }
 
 // Unstage removes a_attribute_value_enumeration off the model stage
@@ -7277,11 +7536,6 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Unstage(stag
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs, a_attribute_value_enumeration)
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString, a_attribute_value_enumeration.Name)
 
-	if _, ok := stage.reference[a_attribute_value_enumeration]; ok {
-		stage.deleted[a_attribute_value_enumeration] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_enumeration)
-	}
 	return a_attribute_value_enumeration
 }
 
@@ -7336,16 +7590,29 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) 
 		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGEROrder
 		stage.A_ATTRIBUTE_VALUE_INTEGEROrder++
-		stage.new[a_attribute_value_integer] = struct{}{}
-		delete(stage.deleted, a_attribute_value_integer)
-	} else {
-		if _, ok := stage.new[a_attribute_value_integer]; !ok {
-			stage.modified[a_attribute_value_integer] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString[a_attribute_value_integer.Name] = a_attribute_value_integer
 
 	return a_attribute_value_integer
+}
+
+// StagePreserveOrder puts a_attribute_value_integer to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_INTEGEROrder
+// - update stage.A_ATTRIBUTE_VALUE_INTEGEROrder accordingly
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer]; !ok {
+		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_INTEGEROrder {
+			stage.A_ATTRIBUTE_VALUE_INTEGEROrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGEROrder
+		stage.A_ATTRIBUTE_VALUE_INTEGEROrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString[a_attribute_value_integer.Name] = a_attribute_value_integer
 }
 
 // Unstage removes a_attribute_value_integer off the model stage
@@ -7353,11 +7620,6 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs, a_attribute_value_integer)
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString, a_attribute_value_integer.Name)
 
-	if _, ok := stage.reference[a_attribute_value_integer]; ok {
-		stage.deleted[a_attribute_value_integer] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_integer)
-	}
 	return a_attribute_value_integer
 }
 
@@ -7412,16 +7674,29 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *A_ATT
 		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALOrder
 		stage.A_ATTRIBUTE_VALUE_REALOrder++
-		stage.new[a_attribute_value_real] = struct{}{}
-		delete(stage.deleted, a_attribute_value_real)
-	} else {
-		if _, ok := stage.new[a_attribute_value_real]; !ok {
-			stage.modified[a_attribute_value_real] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_REALs_mapString[a_attribute_value_real.Name] = a_attribute_value_real
 
 	return a_attribute_value_real
+}
+
+// StagePreserveOrder puts a_attribute_value_real to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_REALOrder
+// - update stage.A_ATTRIBUTE_VALUE_REALOrder accordingly
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real]; !ok {
+		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_REALOrder {
+			stage.A_ATTRIBUTE_VALUE_REALOrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALOrder
+		stage.A_ATTRIBUTE_VALUE_REALOrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_REALs_mapString[a_attribute_value_real.Name] = a_attribute_value_real
 }
 
 // Unstage removes a_attribute_value_real off the model stage
@@ -7429,11 +7704,6 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *A_A
 	delete(stage.A_ATTRIBUTE_VALUE_REALs, a_attribute_value_real)
 	delete(stage.A_ATTRIBUTE_VALUE_REALs_mapString, a_attribute_value_real.Name)
 
-	if _, ok := stage.reference[a_attribute_value_real]; ok {
-		stage.deleted[a_attribute_value_real] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_real)
-	}
 	return a_attribute_value_real
 }
 
@@ -7488,16 +7758,29 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A
 		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGOrder
 		stage.A_ATTRIBUTE_VALUE_STRINGOrder++
-		stage.new[a_attribute_value_string] = struct{}{}
-		delete(stage.deleted, a_attribute_value_string)
-	} else {
-		if _, ok := stage.new[a_attribute_value_string]; !ok {
-			stage.modified[a_attribute_value_string] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_STRINGs_mapString[a_attribute_value_string.Name] = a_attribute_value_string
 
 	return a_attribute_value_string
+}
+
+// StagePreserveOrder puts a_attribute_value_string to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_STRINGOrder
+// - update stage.A_ATTRIBUTE_VALUE_STRINGOrder accordingly
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string]; !ok {
+		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_STRINGOrder {
+			stage.A_ATTRIBUTE_VALUE_STRINGOrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGOrder
+		stage.A_ATTRIBUTE_VALUE_STRINGOrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_STRINGs_mapString[a_attribute_value_string.Name] = a_attribute_value_string
 }
 
 // Unstage removes a_attribute_value_string off the model stage
@@ -7505,11 +7788,6 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) 
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs, a_attribute_value_string)
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs_mapString, a_attribute_value_string.Name)
 
-	if _, ok := stage.reference[a_attribute_value_string]; ok {
-		stage.deleted[a_attribute_value_string] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_string)
-	}
 	return a_attribute_value_string
 }
 
@@ -7564,16 +7842,29 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *A_A
 		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLOrder
 		stage.A_ATTRIBUTE_VALUE_XHTMLOrder++
-		stage.new[a_attribute_value_xhtml] = struct{}{}
-		delete(stage.deleted, a_attribute_value_xhtml)
-	} else {
-		if _, ok := stage.new[a_attribute_value_xhtml]; !ok {
-			stage.modified[a_attribute_value_xhtml] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString[a_attribute_value_xhtml.Name] = a_attribute_value_xhtml
 
 	return a_attribute_value_xhtml
+}
+
+// StagePreserveOrder puts a_attribute_value_xhtml to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_XHTMLOrder
+// - update stage.A_ATTRIBUTE_VALUE_XHTMLOrder accordingly
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml]; !ok {
+		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_XHTMLOrder {
+			stage.A_ATTRIBUTE_VALUE_XHTMLOrder = order
+		}
+		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLOrder
+		stage.A_ATTRIBUTE_VALUE_XHTMLOrder++
+	}
+	stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString[a_attribute_value_xhtml.Name] = a_attribute_value_xhtml
 }
 
 // Unstage removes a_attribute_value_xhtml off the model stage
@@ -7581,11 +7872,6 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *A
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs, a_attribute_value_xhtml)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString, a_attribute_value_xhtml.Name)
 
-	if _, ok := stage.reference[a_attribute_value_xhtml]; ok {
-		stage.deleted[a_attribute_value_xhtml] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_xhtml)
-	}
 	return a_attribute_value_xhtml
 }
 
@@ -7640,16 +7926,29 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) 
 		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Order
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Order++
-		stage.new[a_attribute_value_xhtml_1] = struct{}{}
-		delete(stage.deleted, a_attribute_value_xhtml_1)
-	} else {
-		if _, ok := stage.new[a_attribute_value_xhtml_1]; !ok {
-			stage.modified[a_attribute_value_xhtml_1] = struct{}{}
-		}
 	}
 	stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString[a_attribute_value_xhtml_1.Name] = a_attribute_value_xhtml_1
 
 	return a_attribute_value_xhtml_1
+}
+
+// StagePreserveOrder puts a_attribute_value_xhtml_1 to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_XHTML_1Order
+// - update stage.A_ATTRIBUTE_VALUE_XHTML_1Order accordingly
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1]; !ok {
+		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = struct{}{}
+
+		if order > stage.A_ATTRIBUTE_VALUE_XHTML_1Order {
+			stage.A_ATTRIBUTE_VALUE_XHTML_1Order = order
+		}
+		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Order
+		stage.A_ATTRIBUTE_VALUE_XHTML_1Order++
+	}
+	stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString[a_attribute_value_xhtml_1.Name] = a_attribute_value_xhtml_1
 }
 
 // Unstage removes a_attribute_value_xhtml_1 off the model stage
@@ -7657,11 +7956,6 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Unstage(stage *Stage
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s, a_attribute_value_xhtml_1)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString, a_attribute_value_xhtml_1.Name)
 
-	if _, ok := stage.reference[a_attribute_value_xhtml_1]; ok {
-		stage.deleted[a_attribute_value_xhtml_1] = struct{}{}
-	} else {
-		delete(stage.new, a_attribute_value_xhtml_1)
-	}
 	return a_attribute_value_xhtml_1
 }
 
@@ -7716,16 +8010,29 @@ func (a_children *A_CHILDREN) Stage(stage *Stage) *A_CHILDREN {
 		stage.A_CHILDRENs[a_children] = struct{}{}
 		stage.A_CHILDRENMap_Staged_Order[a_children] = stage.A_CHILDRENOrder
 		stage.A_CHILDRENOrder++
-		stage.new[a_children] = struct{}{}
-		delete(stage.deleted, a_children)
-	} else {
-		if _, ok := stage.new[a_children]; !ok {
-			stage.modified[a_children] = struct{}{}
-		}
 	}
 	stage.A_CHILDRENs_mapString[a_children.Name] = a_children
 
 	return a_children
+}
+
+// StagePreserveOrder puts a_children to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_CHILDRENOrder
+// - update stage.A_CHILDRENOrder accordingly
+func (a_children *A_CHILDREN) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_CHILDRENs[a_children]; !ok {
+		stage.A_CHILDRENs[a_children] = struct{}{}
+
+		if order > stage.A_CHILDRENOrder {
+			stage.A_CHILDRENOrder = order
+		}
+		stage.A_CHILDRENMap_Staged_Order[a_children] = stage.A_CHILDRENOrder
+		stage.A_CHILDRENOrder++
+	}
+	stage.A_CHILDRENs_mapString[a_children.Name] = a_children
 }
 
 // Unstage removes a_children off the model stage
@@ -7733,11 +8040,6 @@ func (a_children *A_CHILDREN) Unstage(stage *Stage) *A_CHILDREN {
 	delete(stage.A_CHILDRENs, a_children)
 	delete(stage.A_CHILDRENs_mapString, a_children.Name)
 
-	if _, ok := stage.reference[a_children]; ok {
-		stage.deleted[a_children] = struct{}{}
-	} else {
-		delete(stage.new, a_children)
-	}
 	return a_children
 }
 
@@ -7792,16 +8094,29 @@ func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
 		stage.A_CORE_CONTENTs[a_core_content] = struct{}{}
 		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = stage.A_CORE_CONTENTOrder
 		stage.A_CORE_CONTENTOrder++
-		stage.new[a_core_content] = struct{}{}
-		delete(stage.deleted, a_core_content)
-	} else {
-		if _, ok := stage.new[a_core_content]; !ok {
-			stage.modified[a_core_content] = struct{}{}
-		}
 	}
 	stage.A_CORE_CONTENTs_mapString[a_core_content.Name] = a_core_content
 
 	return a_core_content
+}
+
+// StagePreserveOrder puts a_core_content to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_CORE_CONTENTOrder
+// - update stage.A_CORE_CONTENTOrder accordingly
+func (a_core_content *A_CORE_CONTENT) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_CORE_CONTENTs[a_core_content]; !ok {
+		stage.A_CORE_CONTENTs[a_core_content] = struct{}{}
+
+		if order > stage.A_CORE_CONTENTOrder {
+			stage.A_CORE_CONTENTOrder = order
+		}
+		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = stage.A_CORE_CONTENTOrder
+		stage.A_CORE_CONTENTOrder++
+	}
+	stage.A_CORE_CONTENTs_mapString[a_core_content.Name] = a_core_content
 }
 
 // Unstage removes a_core_content off the model stage
@@ -7809,11 +8124,6 @@ func (a_core_content *A_CORE_CONTENT) Unstage(stage *Stage) *A_CORE_CONTENT {
 	delete(stage.A_CORE_CONTENTs, a_core_content)
 	delete(stage.A_CORE_CONTENTs_mapString, a_core_content.Name)
 
-	if _, ok := stage.reference[a_core_content]; ok {
-		stage.deleted[a_core_content] = struct{}{}
-	} else {
-		delete(stage.new, a_core_content)
-	}
 	return a_core_content
 }
 
@@ -7868,16 +8178,29 @@ func (a_datatypes *A_DATATYPES) Stage(stage *Stage) *A_DATATYPES {
 		stage.A_DATATYPESs[a_datatypes] = struct{}{}
 		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = stage.A_DATATYPESOrder
 		stage.A_DATATYPESOrder++
-		stage.new[a_datatypes] = struct{}{}
-		delete(stage.deleted, a_datatypes)
-	} else {
-		if _, ok := stage.new[a_datatypes]; !ok {
-			stage.modified[a_datatypes] = struct{}{}
-		}
 	}
 	stage.A_DATATYPESs_mapString[a_datatypes.Name] = a_datatypes
 
 	return a_datatypes
+}
+
+// StagePreserveOrder puts a_datatypes to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPESOrder
+// - update stage.A_DATATYPESOrder accordingly
+func (a_datatypes *A_DATATYPES) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPESs[a_datatypes]; !ok {
+		stage.A_DATATYPESs[a_datatypes] = struct{}{}
+
+		if order > stage.A_DATATYPESOrder {
+			stage.A_DATATYPESOrder = order
+		}
+		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = stage.A_DATATYPESOrder
+		stage.A_DATATYPESOrder++
+	}
+	stage.A_DATATYPESs_mapString[a_datatypes.Name] = a_datatypes
 }
 
 // Unstage removes a_datatypes off the model stage
@@ -7885,11 +8208,6 @@ func (a_datatypes *A_DATATYPES) Unstage(stage *Stage) *A_DATATYPES {
 	delete(stage.A_DATATYPESs, a_datatypes)
 	delete(stage.A_DATATYPESs_mapString, a_datatypes.Name)
 
-	if _, ok := stage.reference[a_datatypes]; ok {
-		stage.deleted[a_datatypes] = struct{}{}
-	} else {
-		delete(stage.new, a_datatypes)
-	}
 	return a_datatypes
 }
 
@@ -7944,16 +8262,29 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stag
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder++
-		stage.new[a_datatype_definition_boolean_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_boolean_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_boolean_ref]; !ok {
-			stage.modified[a_datatype_definition_boolean_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString[a_datatype_definition_boolean_ref.Name] = a_datatype_definition_boolean_ref
 
 	return a_datatype_definition_boolean_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_boolean_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder accordingly
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder {
+			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString[a_datatype_definition_boolean_ref.Name] = a_datatype_definition_boolean_ref
 }
 
 // Unstage removes a_datatype_definition_boolean_ref off the model stage
@@ -7961,11 +8292,6 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Unst
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs, a_datatype_definition_boolean_ref)
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString, a_datatype_definition_boolean_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_boolean_ref]; ok {
-		stage.deleted[a_datatype_definition_boolean_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_boolean_ref)
-	}
 	return a_datatype_definition_boolean_ref
 }
 
@@ -8020,16 +8346,29 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Stage(stag
 		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFOrder
 		stage.A_DATATYPE_DEFINITION_DATE_REFOrder++
-		stage.new[a_datatype_definition_date_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_date_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_date_ref]; !ok {
-			stage.modified[a_datatype_definition_date_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString[a_datatype_definition_date_ref.Name] = a_datatype_definition_date_ref
 
 	return a_datatype_definition_date_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_date_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_DATE_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_DATE_REFOrder accordingly
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_DATE_REFOrder {
+			stage.A_DATATYPE_DEFINITION_DATE_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFOrder
+		stage.A_DATATYPE_DEFINITION_DATE_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString[a_datatype_definition_date_ref.Name] = a_datatype_definition_date_ref
 }
 
 // Unstage removes a_datatype_definition_date_ref off the model stage
@@ -8037,11 +8376,6 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Unstage(st
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs, a_datatype_definition_date_ref)
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString, a_datatype_definition_date_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_date_ref]; ok {
-		stage.deleted[a_datatype_definition_date_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_date_ref)
-	}
 	return a_datatype_definition_date_ref
 }
 
@@ -8096,16 +8430,29 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder++
-		stage.new[a_datatype_definition_enumeration_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_enumeration_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_enumeration_ref]; !ok {
-			stage.modified[a_datatype_definition_enumeration_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString[a_datatype_definition_enumeration_ref.Name] = a_datatype_definition_enumeration_ref
 
 	return a_datatype_definition_enumeration_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_enumeration_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder accordingly
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder {
+			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString[a_datatype_definition_enumeration_ref.Name] = a_datatype_definition_enumeration_ref
 }
 
 // Unstage removes a_datatype_definition_enumeration_ref off the model stage
@@ -8113,11 +8460,6 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs, a_datatype_definition_enumeration_ref)
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString, a_datatype_definition_enumeration_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_enumeration_ref]; ok {
-		stage.deleted[a_datatype_definition_enumeration_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_enumeration_ref)
-	}
 	return a_datatype_definition_enumeration_ref
 }
 
@@ -8172,16 +8514,29 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stag
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder++
-		stage.new[a_datatype_definition_integer_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_integer_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_integer_ref]; !ok {
-			stage.modified[a_datatype_definition_integer_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString[a_datatype_definition_integer_ref.Name] = a_datatype_definition_integer_ref
 
 	return a_datatype_definition_integer_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_integer_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder accordingly
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder {
+			stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString[a_datatype_definition_integer_ref.Name] = a_datatype_definition_integer_ref
 }
 
 // Unstage removes a_datatype_definition_integer_ref off the model stage
@@ -8189,11 +8544,6 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Unst
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs, a_datatype_definition_integer_ref)
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString, a_datatype_definition_integer_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_integer_ref]; ok {
-		stage.deleted[a_datatype_definition_integer_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_integer_ref)
-	}
 	return a_datatype_definition_integer_ref
 }
 
@@ -8248,16 +8598,29 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stag
 		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFOrder
 		stage.A_DATATYPE_DEFINITION_REAL_REFOrder++
-		stage.new[a_datatype_definition_real_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_real_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_real_ref]; !ok {
-			stage.modified[a_datatype_definition_real_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString[a_datatype_definition_real_ref.Name] = a_datatype_definition_real_ref
 
 	return a_datatype_definition_real_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_real_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_REAL_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_REAL_REFOrder accordingly
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_REAL_REFOrder {
+			stage.A_DATATYPE_DEFINITION_REAL_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFOrder
+		stage.A_DATATYPE_DEFINITION_REAL_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString[a_datatype_definition_real_ref.Name] = a_datatype_definition_real_ref
 }
 
 // Unstage removes a_datatype_definition_real_ref off the model stage
@@ -8265,11 +8628,6 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Unstage(st
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs, a_datatype_definition_real_ref)
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString, a_datatype_definition_real_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_real_ref]; ok {
-		stage.deleted[a_datatype_definition_real_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_real_ref)
-	}
 	return a_datatype_definition_real_ref
 }
 
@@ -8324,16 +8682,29 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Stage(
 		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFOrder
 		stage.A_DATATYPE_DEFINITION_STRING_REFOrder++
-		stage.new[a_datatype_definition_string_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_string_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_string_ref]; !ok {
-			stage.modified[a_datatype_definition_string_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString[a_datatype_definition_string_ref.Name] = a_datatype_definition_string_ref
 
 	return a_datatype_definition_string_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_string_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_STRING_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_STRING_REFOrder accordingly
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_STRING_REFOrder {
+			stage.A_DATATYPE_DEFINITION_STRING_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFOrder
+		stage.A_DATATYPE_DEFINITION_STRING_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString[a_datatype_definition_string_ref.Name] = a_datatype_definition_string_ref
 }
 
 // Unstage removes a_datatype_definition_string_ref off the model stage
@@ -8341,11 +8712,6 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Unstag
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs, a_datatype_definition_string_ref)
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString, a_datatype_definition_string_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_string_ref]; ok {
-		stage.deleted[a_datatype_definition_string_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_string_ref)
-	}
 	return a_datatype_definition_string_ref
 }
 
@@ -8400,16 +8766,29 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(st
 		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
 		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder++
-		stage.new[a_datatype_definition_xhtml_ref] = struct{}{}
-		delete(stage.deleted, a_datatype_definition_xhtml_ref)
-	} else {
-		if _, ok := stage.new[a_datatype_definition_xhtml_ref]; !ok {
-			stage.modified[a_datatype_definition_xhtml_ref] = struct{}{}
-		}
 	}
 	stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString[a_datatype_definition_xhtml_ref.Name] = a_datatype_definition_xhtml_ref
 
 	return a_datatype_definition_xhtml_ref
+}
+
+// StagePreserveOrder puts a_datatype_definition_xhtml_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
+// - update stage.A_DATATYPE_DEFINITION_XHTML_REFOrder accordingly
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref]; !ok {
+		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = struct{}{}
+
+		if order > stage.A_DATATYPE_DEFINITION_XHTML_REFOrder {
+			stage.A_DATATYPE_DEFINITION_XHTML_REFOrder = order
+		}
+		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
+		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder++
+	}
+	stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString[a_datatype_definition_xhtml_ref.Name] = a_datatype_definition_xhtml_ref
 }
 
 // Unstage removes a_datatype_definition_xhtml_ref off the model stage
@@ -8417,11 +8796,6 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Unstage(
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs, a_datatype_definition_xhtml_ref)
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString, a_datatype_definition_xhtml_ref.Name)
 
-	if _, ok := stage.reference[a_datatype_definition_xhtml_ref]; ok {
-		stage.deleted[a_datatype_definition_xhtml_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_datatype_definition_xhtml_ref)
-	}
 	return a_datatype_definition_xhtml_ref
 }
 
@@ -8476,16 +8850,29 @@ func (a_editable_atts *A_EDITABLE_ATTS) Stage(stage *Stage) *A_EDITABLE_ATTS {
 		stage.A_EDITABLE_ATTSs[a_editable_atts] = struct{}{}
 		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = stage.A_EDITABLE_ATTSOrder
 		stage.A_EDITABLE_ATTSOrder++
-		stage.new[a_editable_atts] = struct{}{}
-		delete(stage.deleted, a_editable_atts)
-	} else {
-		if _, ok := stage.new[a_editable_atts]; !ok {
-			stage.modified[a_editable_atts] = struct{}{}
-		}
 	}
 	stage.A_EDITABLE_ATTSs_mapString[a_editable_atts.Name] = a_editable_atts
 
 	return a_editable_atts
+}
+
+// StagePreserveOrder puts a_editable_atts to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_EDITABLE_ATTSOrder
+// - update stage.A_EDITABLE_ATTSOrder accordingly
+func (a_editable_atts *A_EDITABLE_ATTS) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_EDITABLE_ATTSs[a_editable_atts]; !ok {
+		stage.A_EDITABLE_ATTSs[a_editable_atts] = struct{}{}
+
+		if order > stage.A_EDITABLE_ATTSOrder {
+			stage.A_EDITABLE_ATTSOrder = order
+		}
+		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = stage.A_EDITABLE_ATTSOrder
+		stage.A_EDITABLE_ATTSOrder++
+	}
+	stage.A_EDITABLE_ATTSs_mapString[a_editable_atts.Name] = a_editable_atts
 }
 
 // Unstage removes a_editable_atts off the model stage
@@ -8493,11 +8880,6 @@ func (a_editable_atts *A_EDITABLE_ATTS) Unstage(stage *Stage) *A_EDITABLE_ATTS {
 	delete(stage.A_EDITABLE_ATTSs, a_editable_atts)
 	delete(stage.A_EDITABLE_ATTSs_mapString, a_editable_atts.Name)
 
-	if _, ok := stage.reference[a_editable_atts]; ok {
-		stage.deleted[a_editable_atts] = struct{}{}
-	} else {
-		delete(stage.new, a_editable_atts)
-	}
 	return a_editable_atts
 }
 
@@ -8552,16 +8934,29 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF 
 		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = struct{}{}
 		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = stage.A_ENUM_VALUE_REFOrder
 		stage.A_ENUM_VALUE_REFOrder++
-		stage.new[a_enum_value_ref] = struct{}{}
-		delete(stage.deleted, a_enum_value_ref)
-	} else {
-		if _, ok := stage.new[a_enum_value_ref]; !ok {
-			stage.modified[a_enum_value_ref] = struct{}{}
-		}
 	}
 	stage.A_ENUM_VALUE_REFs_mapString[a_enum_value_ref.Name] = a_enum_value_ref
 
 	return a_enum_value_ref
+}
+
+// StagePreserveOrder puts a_enum_value_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_ENUM_VALUE_REFOrder
+// - update stage.A_ENUM_VALUE_REFOrder accordingly
+func (a_enum_value_ref *A_ENUM_VALUE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_ENUM_VALUE_REFs[a_enum_value_ref]; !ok {
+		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = struct{}{}
+
+		if order > stage.A_ENUM_VALUE_REFOrder {
+			stage.A_ENUM_VALUE_REFOrder = order
+		}
+		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = stage.A_ENUM_VALUE_REFOrder
+		stage.A_ENUM_VALUE_REFOrder++
+	}
+	stage.A_ENUM_VALUE_REFs_mapString[a_enum_value_ref.Name] = a_enum_value_ref
 }
 
 // Unstage removes a_enum_value_ref off the model stage
@@ -8569,11 +8964,6 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Unstage(stage *Stage) *A_ENUM_VALUE_RE
 	delete(stage.A_ENUM_VALUE_REFs, a_enum_value_ref)
 	delete(stage.A_ENUM_VALUE_REFs_mapString, a_enum_value_ref.Name)
 
-	if _, ok := stage.reference[a_enum_value_ref]; ok {
-		stage.deleted[a_enum_value_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_enum_value_ref)
-	}
 	return a_enum_value_ref
 }
 
@@ -8628,16 +9018,29 @@ func (a_object *A_OBJECT) Stage(stage *Stage) *A_OBJECT {
 		stage.A_OBJECTs[a_object] = struct{}{}
 		stage.A_OBJECTMap_Staged_Order[a_object] = stage.A_OBJECTOrder
 		stage.A_OBJECTOrder++
-		stage.new[a_object] = struct{}{}
-		delete(stage.deleted, a_object)
-	} else {
-		if _, ok := stage.new[a_object]; !ok {
-			stage.modified[a_object] = struct{}{}
-		}
 	}
 	stage.A_OBJECTs_mapString[a_object.Name] = a_object
 
 	return a_object
+}
+
+// StagePreserveOrder puts a_object to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_OBJECTOrder
+// - update stage.A_OBJECTOrder accordingly
+func (a_object *A_OBJECT) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_OBJECTs[a_object]; !ok {
+		stage.A_OBJECTs[a_object] = struct{}{}
+
+		if order > stage.A_OBJECTOrder {
+			stage.A_OBJECTOrder = order
+		}
+		stage.A_OBJECTMap_Staged_Order[a_object] = stage.A_OBJECTOrder
+		stage.A_OBJECTOrder++
+	}
+	stage.A_OBJECTs_mapString[a_object.Name] = a_object
 }
 
 // Unstage removes a_object off the model stage
@@ -8645,11 +9048,6 @@ func (a_object *A_OBJECT) Unstage(stage *Stage) *A_OBJECT {
 	delete(stage.A_OBJECTs, a_object)
 	delete(stage.A_OBJECTs_mapString, a_object.Name)
 
-	if _, ok := stage.reference[a_object]; ok {
-		stage.deleted[a_object] = struct{}{}
-	} else {
-		delete(stage.new, a_object)
-	}
 	return a_object
 }
 
@@ -8704,16 +9102,29 @@ func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
 		stage.A_PROPERTIESs[a_properties] = struct{}{}
 		stage.A_PROPERTIESMap_Staged_Order[a_properties] = stage.A_PROPERTIESOrder
 		stage.A_PROPERTIESOrder++
-		stage.new[a_properties] = struct{}{}
-		delete(stage.deleted, a_properties)
-	} else {
-		if _, ok := stage.new[a_properties]; !ok {
-			stage.modified[a_properties] = struct{}{}
-		}
 	}
 	stage.A_PROPERTIESs_mapString[a_properties.Name] = a_properties
 
 	return a_properties
+}
+
+// StagePreserveOrder puts a_properties to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_PROPERTIESOrder
+// - update stage.A_PROPERTIESOrder accordingly
+func (a_properties *A_PROPERTIES) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_PROPERTIESs[a_properties]; !ok {
+		stage.A_PROPERTIESs[a_properties] = struct{}{}
+
+		if order > stage.A_PROPERTIESOrder {
+			stage.A_PROPERTIESOrder = order
+		}
+		stage.A_PROPERTIESMap_Staged_Order[a_properties] = stage.A_PROPERTIESOrder
+		stage.A_PROPERTIESOrder++
+	}
+	stage.A_PROPERTIESs_mapString[a_properties.Name] = a_properties
 }
 
 // Unstage removes a_properties off the model stage
@@ -8721,11 +9132,6 @@ func (a_properties *A_PROPERTIES) Unstage(stage *Stage) *A_PROPERTIES {
 	delete(stage.A_PROPERTIESs, a_properties)
 	delete(stage.A_PROPERTIESs_mapString, a_properties.Name)
 
-	if _, ok := stage.reference[a_properties]; ok {
-		stage.deleted[a_properties] = struct{}{}
-	} else {
-		delete(stage.new, a_properties)
-	}
 	return a_properties
 }
 
@@ -8780,16 +9186,29 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Stage(stage *Stage) 
 		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = struct{}{}
 		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFOrder
 		stage.A_RELATION_GROUP_TYPE_REFOrder++
-		stage.new[a_relation_group_type_ref] = struct{}{}
-		delete(stage.deleted, a_relation_group_type_ref)
-	} else {
-		if _, ok := stage.new[a_relation_group_type_ref]; !ok {
-			stage.modified[a_relation_group_type_ref] = struct{}{}
-		}
 	}
 	stage.A_RELATION_GROUP_TYPE_REFs_mapString[a_relation_group_type_ref.Name] = a_relation_group_type_ref
 
 	return a_relation_group_type_ref
+}
+
+// StagePreserveOrder puts a_relation_group_type_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_RELATION_GROUP_TYPE_REFOrder
+// - update stage.A_RELATION_GROUP_TYPE_REFOrder accordingly
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref]; !ok {
+		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = struct{}{}
+
+		if order > stage.A_RELATION_GROUP_TYPE_REFOrder {
+			stage.A_RELATION_GROUP_TYPE_REFOrder = order
+		}
+		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFOrder
+		stage.A_RELATION_GROUP_TYPE_REFOrder++
+	}
+	stage.A_RELATION_GROUP_TYPE_REFs_mapString[a_relation_group_type_ref.Name] = a_relation_group_type_ref
 }
 
 // Unstage removes a_relation_group_type_ref off the model stage
@@ -8797,11 +9216,6 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Unstage(stage *Stage
 	delete(stage.A_RELATION_GROUP_TYPE_REFs, a_relation_group_type_ref)
 	delete(stage.A_RELATION_GROUP_TYPE_REFs_mapString, a_relation_group_type_ref.Name)
 
-	if _, ok := stage.reference[a_relation_group_type_ref]; ok {
-		stage.deleted[a_relation_group_type_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_relation_group_type_ref)
-	}
 	return a_relation_group_type_ref
 }
 
@@ -8856,16 +9270,29 @@ func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
 		stage.A_SOURCE_1s[a_source_1] = struct{}{}
 		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = stage.A_SOURCE_1Order
 		stage.A_SOURCE_1Order++
-		stage.new[a_source_1] = struct{}{}
-		delete(stage.deleted, a_source_1)
-	} else {
-		if _, ok := stage.new[a_source_1]; !ok {
-			stage.modified[a_source_1] = struct{}{}
-		}
 	}
 	stage.A_SOURCE_1s_mapString[a_source_1.Name] = a_source_1
 
 	return a_source_1
+}
+
+// StagePreserveOrder puts a_source_1 to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SOURCE_1Order
+// - update stage.A_SOURCE_1Order accordingly
+func (a_source_1 *A_SOURCE_1) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SOURCE_1s[a_source_1]; !ok {
+		stage.A_SOURCE_1s[a_source_1] = struct{}{}
+
+		if order > stage.A_SOURCE_1Order {
+			stage.A_SOURCE_1Order = order
+		}
+		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = stage.A_SOURCE_1Order
+		stage.A_SOURCE_1Order++
+	}
+	stage.A_SOURCE_1s_mapString[a_source_1.Name] = a_source_1
 }
 
 // Unstage removes a_source_1 off the model stage
@@ -8873,11 +9300,6 @@ func (a_source_1 *A_SOURCE_1) Unstage(stage *Stage) *A_SOURCE_1 {
 	delete(stage.A_SOURCE_1s, a_source_1)
 	delete(stage.A_SOURCE_1s_mapString, a_source_1.Name)
 
-	if _, ok := stage.reference[a_source_1]; ok {
-		stage.deleted[a_source_1] = struct{}{}
-	} else {
-		delete(stage.new, a_source_1)
-	}
 	return a_source_1
 }
 
@@ -8932,16 +9354,29 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Stage(stage *Stage) *A
 		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = struct{}{}
 		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Order
 		stage.A_SOURCE_SPECIFICATION_1Order++
-		stage.new[a_source_specification_1] = struct{}{}
-		delete(stage.deleted, a_source_specification_1)
-	} else {
-		if _, ok := stage.new[a_source_specification_1]; !ok {
-			stage.modified[a_source_specification_1] = struct{}{}
-		}
 	}
 	stage.A_SOURCE_SPECIFICATION_1s_mapString[a_source_specification_1.Name] = a_source_specification_1
 
 	return a_source_specification_1
+}
+
+// StagePreserveOrder puts a_source_specification_1 to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SOURCE_SPECIFICATION_1Order
+// - update stage.A_SOURCE_SPECIFICATION_1Order accordingly
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1]; !ok {
+		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = struct{}{}
+
+		if order > stage.A_SOURCE_SPECIFICATION_1Order {
+			stage.A_SOURCE_SPECIFICATION_1Order = order
+		}
+		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Order
+		stage.A_SOURCE_SPECIFICATION_1Order++
+	}
+	stage.A_SOURCE_SPECIFICATION_1s_mapString[a_source_specification_1.Name] = a_source_specification_1
 }
 
 // Unstage removes a_source_specification_1 off the model stage
@@ -8949,11 +9384,6 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Unstage(stage *Stage) 
 	delete(stage.A_SOURCE_SPECIFICATION_1s, a_source_specification_1)
 	delete(stage.A_SOURCE_SPECIFICATION_1s_mapString, a_source_specification_1.Name)
 
-	if _, ok := stage.reference[a_source_specification_1]; ok {
-		stage.deleted[a_source_specification_1] = struct{}{}
-	} else {
-		delete(stage.new, a_source_specification_1)
-	}
 	return a_source_specification_1
 }
 
@@ -9008,16 +9438,29 @@ func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS 
 		stage.A_SPECIFICATIONSs[a_specifications] = struct{}{}
 		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = stage.A_SPECIFICATIONSOrder
 		stage.A_SPECIFICATIONSOrder++
-		stage.new[a_specifications] = struct{}{}
-		delete(stage.deleted, a_specifications)
-	} else {
-		if _, ok := stage.new[a_specifications]; !ok {
-			stage.modified[a_specifications] = struct{}{}
-		}
 	}
 	stage.A_SPECIFICATIONSs_mapString[a_specifications.Name] = a_specifications
 
 	return a_specifications
+}
+
+// StagePreserveOrder puts a_specifications to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPECIFICATIONSOrder
+// - update stage.A_SPECIFICATIONSOrder accordingly
+func (a_specifications *A_SPECIFICATIONS) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPECIFICATIONSs[a_specifications]; !ok {
+		stage.A_SPECIFICATIONSs[a_specifications] = struct{}{}
+
+		if order > stage.A_SPECIFICATIONSOrder {
+			stage.A_SPECIFICATIONSOrder = order
+		}
+		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = stage.A_SPECIFICATIONSOrder
+		stage.A_SPECIFICATIONSOrder++
+	}
+	stage.A_SPECIFICATIONSs_mapString[a_specifications.Name] = a_specifications
 }
 
 // Unstage removes a_specifications off the model stage
@@ -9025,11 +9468,6 @@ func (a_specifications *A_SPECIFICATIONS) Unstage(stage *Stage) *A_SPECIFICATION
 	delete(stage.A_SPECIFICATIONSs, a_specifications)
 	delete(stage.A_SPECIFICATIONSs_mapString, a_specifications.Name)
 
-	if _, ok := stage.reference[a_specifications]; ok {
-		stage.deleted[a_specifications] = struct{}{}
-	} else {
-		delete(stage.new, a_specifications)
-	}
 	return a_specifications
 }
 
@@ -9084,16 +9522,29 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Stage(stage *Stage) *A
 		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = struct{}{}
 		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFOrder
 		stage.A_SPECIFICATION_TYPE_REFOrder++
-		stage.new[a_specification_type_ref] = struct{}{}
-		delete(stage.deleted, a_specification_type_ref)
-	} else {
-		if _, ok := stage.new[a_specification_type_ref]; !ok {
-			stage.modified[a_specification_type_ref] = struct{}{}
-		}
 	}
 	stage.A_SPECIFICATION_TYPE_REFs_mapString[a_specification_type_ref.Name] = a_specification_type_ref
 
 	return a_specification_type_ref
+}
+
+// StagePreserveOrder puts a_specification_type_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPECIFICATION_TYPE_REFOrder
+// - update stage.A_SPECIFICATION_TYPE_REFOrder accordingly
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref]; !ok {
+		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = struct{}{}
+
+		if order > stage.A_SPECIFICATION_TYPE_REFOrder {
+			stage.A_SPECIFICATION_TYPE_REFOrder = order
+		}
+		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFOrder
+		stage.A_SPECIFICATION_TYPE_REFOrder++
+	}
+	stage.A_SPECIFICATION_TYPE_REFs_mapString[a_specification_type_ref.Name] = a_specification_type_ref
 }
 
 // Unstage removes a_specification_type_ref off the model stage
@@ -9101,11 +9552,6 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Unstage(stage *Stage) 
 	delete(stage.A_SPECIFICATION_TYPE_REFs, a_specification_type_ref)
 	delete(stage.A_SPECIFICATION_TYPE_REFs_mapString, a_specification_type_ref.Name)
 
-	if _, ok := stage.reference[a_specification_type_ref]; ok {
-		stage.deleted[a_specification_type_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_specification_type_ref)
-	}
 	return a_specification_type_ref
 }
 
@@ -9160,16 +9606,29 @@ func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_V
 		stage.A_SPECIFIED_VALUESs[a_specified_values] = struct{}{}
 		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = stage.A_SPECIFIED_VALUESOrder
 		stage.A_SPECIFIED_VALUESOrder++
-		stage.new[a_specified_values] = struct{}{}
-		delete(stage.deleted, a_specified_values)
-	} else {
-		if _, ok := stage.new[a_specified_values]; !ok {
-			stage.modified[a_specified_values] = struct{}{}
-		}
 	}
 	stage.A_SPECIFIED_VALUESs_mapString[a_specified_values.Name] = a_specified_values
 
 	return a_specified_values
+}
+
+// StagePreserveOrder puts a_specified_values to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPECIFIED_VALUESOrder
+// - update stage.A_SPECIFIED_VALUESOrder accordingly
+func (a_specified_values *A_SPECIFIED_VALUES) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPECIFIED_VALUESs[a_specified_values]; !ok {
+		stage.A_SPECIFIED_VALUESs[a_specified_values] = struct{}{}
+
+		if order > stage.A_SPECIFIED_VALUESOrder {
+			stage.A_SPECIFIED_VALUESOrder = order
+		}
+		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = stage.A_SPECIFIED_VALUESOrder
+		stage.A_SPECIFIED_VALUESOrder++
+	}
+	stage.A_SPECIFIED_VALUESs_mapString[a_specified_values.Name] = a_specified_values
 }
 
 // Unstage removes a_specified_values off the model stage
@@ -9177,11 +9636,6 @@ func (a_specified_values *A_SPECIFIED_VALUES) Unstage(stage *Stage) *A_SPECIFIED
 	delete(stage.A_SPECIFIED_VALUESs, a_specified_values)
 	delete(stage.A_SPECIFIED_VALUESs_mapString, a_specified_values.Name)
 
-	if _, ok := stage.reference[a_specified_values]; ok {
-		stage.deleted[a_specified_values] = struct{}{}
-	} else {
-		delete(stage.new, a_specified_values)
-	}
 	return a_specified_values
 }
 
@@ -9236,16 +9690,29 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Stage(stage *Stage) *A_SPEC_ATTRIBUT
 		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = struct{}{}
 		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESOrder
 		stage.A_SPEC_ATTRIBUTESOrder++
-		stage.new[a_spec_attributes] = struct{}{}
-		delete(stage.deleted, a_spec_attributes)
-	} else {
-		if _, ok := stage.new[a_spec_attributes]; !ok {
-			stage.modified[a_spec_attributes] = struct{}{}
-		}
 	}
 	stage.A_SPEC_ATTRIBUTESs_mapString[a_spec_attributes.Name] = a_spec_attributes
 
 	return a_spec_attributes
+}
+
+// StagePreserveOrder puts a_spec_attributes to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_ATTRIBUTESOrder
+// - update stage.A_SPEC_ATTRIBUTESOrder accordingly
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_ATTRIBUTESs[a_spec_attributes]; !ok {
+		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = struct{}{}
+
+		if order > stage.A_SPEC_ATTRIBUTESOrder {
+			stage.A_SPEC_ATTRIBUTESOrder = order
+		}
+		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESOrder
+		stage.A_SPEC_ATTRIBUTESOrder++
+	}
+	stage.A_SPEC_ATTRIBUTESs_mapString[a_spec_attributes.Name] = a_spec_attributes
 }
 
 // Unstage removes a_spec_attributes off the model stage
@@ -9253,11 +9720,6 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Unstage(stage *Stage) *A_SPEC_ATTRIB
 	delete(stage.A_SPEC_ATTRIBUTESs, a_spec_attributes)
 	delete(stage.A_SPEC_ATTRIBUTESs_mapString, a_spec_attributes.Name)
 
-	if _, ok := stage.reference[a_spec_attributes]; ok {
-		stage.deleted[a_spec_attributes] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_attributes)
-	}
 	return a_spec_attributes
 }
 
@@ -9312,16 +9774,29 @@ func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
 		stage.A_SPEC_OBJECTSs[a_spec_objects] = struct{}{}
 		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = stage.A_SPEC_OBJECTSOrder
 		stage.A_SPEC_OBJECTSOrder++
-		stage.new[a_spec_objects] = struct{}{}
-		delete(stage.deleted, a_spec_objects)
-	} else {
-		if _, ok := stage.new[a_spec_objects]; !ok {
-			stage.modified[a_spec_objects] = struct{}{}
-		}
 	}
 	stage.A_SPEC_OBJECTSs_mapString[a_spec_objects.Name] = a_spec_objects
 
 	return a_spec_objects
+}
+
+// StagePreserveOrder puts a_spec_objects to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_OBJECTSOrder
+// - update stage.A_SPEC_OBJECTSOrder accordingly
+func (a_spec_objects *A_SPEC_OBJECTS) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_OBJECTSs[a_spec_objects]; !ok {
+		stage.A_SPEC_OBJECTSs[a_spec_objects] = struct{}{}
+
+		if order > stage.A_SPEC_OBJECTSOrder {
+			stage.A_SPEC_OBJECTSOrder = order
+		}
+		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = stage.A_SPEC_OBJECTSOrder
+		stage.A_SPEC_OBJECTSOrder++
+	}
+	stage.A_SPEC_OBJECTSs_mapString[a_spec_objects.Name] = a_spec_objects
 }
 
 // Unstage removes a_spec_objects off the model stage
@@ -9329,11 +9804,6 @@ func (a_spec_objects *A_SPEC_OBJECTS) Unstage(stage *Stage) *A_SPEC_OBJECTS {
 	delete(stage.A_SPEC_OBJECTSs, a_spec_objects)
 	delete(stage.A_SPEC_OBJECTSs_mapString, a_spec_objects.Name)
 
-	if _, ok := stage.reference[a_spec_objects]; ok {
-		stage.deleted[a_spec_objects] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_objects)
-	}
 	return a_spec_objects
 }
 
@@ -9388,16 +9858,29 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Stage(stage *Stage) *A_SPE
 		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = struct{}{}
 		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFOrder
 		stage.A_SPEC_OBJECT_TYPE_REFOrder++
-		stage.new[a_spec_object_type_ref] = struct{}{}
-		delete(stage.deleted, a_spec_object_type_ref)
-	} else {
-		if _, ok := stage.new[a_spec_object_type_ref]; !ok {
-			stage.modified[a_spec_object_type_ref] = struct{}{}
-		}
 	}
 	stage.A_SPEC_OBJECT_TYPE_REFs_mapString[a_spec_object_type_ref.Name] = a_spec_object_type_ref
 
 	return a_spec_object_type_ref
+}
+
+// StagePreserveOrder puts a_spec_object_type_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_OBJECT_TYPE_REFOrder
+// - update stage.A_SPEC_OBJECT_TYPE_REFOrder accordingly
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref]; !ok {
+		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = struct{}{}
+
+		if order > stage.A_SPEC_OBJECT_TYPE_REFOrder {
+			stage.A_SPEC_OBJECT_TYPE_REFOrder = order
+		}
+		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFOrder
+		stage.A_SPEC_OBJECT_TYPE_REFOrder++
+	}
+	stage.A_SPEC_OBJECT_TYPE_REFs_mapString[a_spec_object_type_ref.Name] = a_spec_object_type_ref
 }
 
 // Unstage removes a_spec_object_type_ref off the model stage
@@ -9405,11 +9888,6 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Unstage(stage *Stage) *A_S
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs, a_spec_object_type_ref)
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs_mapString, a_spec_object_type_ref.Name)
 
-	if _, ok := stage.reference[a_spec_object_type_ref]; ok {
-		stage.deleted[a_spec_object_type_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_object_type_ref)
-	}
 	return a_spec_object_type_ref
 }
 
@@ -9464,16 +9942,29 @@ func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS 
 		stage.A_SPEC_RELATIONSs[a_spec_relations] = struct{}{}
 		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = stage.A_SPEC_RELATIONSOrder
 		stage.A_SPEC_RELATIONSOrder++
-		stage.new[a_spec_relations] = struct{}{}
-		delete(stage.deleted, a_spec_relations)
-	} else {
-		if _, ok := stage.new[a_spec_relations]; !ok {
-			stage.modified[a_spec_relations] = struct{}{}
-		}
 	}
 	stage.A_SPEC_RELATIONSs_mapString[a_spec_relations.Name] = a_spec_relations
 
 	return a_spec_relations
+}
+
+// StagePreserveOrder puts a_spec_relations to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_RELATIONSOrder
+// - update stage.A_SPEC_RELATIONSOrder accordingly
+func (a_spec_relations *A_SPEC_RELATIONS) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_RELATIONSs[a_spec_relations]; !ok {
+		stage.A_SPEC_RELATIONSs[a_spec_relations] = struct{}{}
+
+		if order > stage.A_SPEC_RELATIONSOrder {
+			stage.A_SPEC_RELATIONSOrder = order
+		}
+		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = stage.A_SPEC_RELATIONSOrder
+		stage.A_SPEC_RELATIONSOrder++
+	}
+	stage.A_SPEC_RELATIONSs_mapString[a_spec_relations.Name] = a_spec_relations
 }
 
 // Unstage removes a_spec_relations off the model stage
@@ -9481,11 +9972,6 @@ func (a_spec_relations *A_SPEC_RELATIONS) Unstage(stage *Stage) *A_SPEC_RELATION
 	delete(stage.A_SPEC_RELATIONSs, a_spec_relations)
 	delete(stage.A_SPEC_RELATIONSs_mapString, a_spec_relations.Name)
 
-	if _, ok := stage.reference[a_spec_relations]; ok {
-		stage.deleted[a_spec_relations] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_relations)
-	}
 	return a_spec_relations
 }
 
@@ -9540,16 +10026,29 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Stage(stage *Stage) *A_SPE
 		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = struct{}{}
 		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSOrder
 		stage.A_SPEC_RELATION_GROUPSOrder++
-		stage.new[a_spec_relation_groups] = struct{}{}
-		delete(stage.deleted, a_spec_relation_groups)
-	} else {
-		if _, ok := stage.new[a_spec_relation_groups]; !ok {
-			stage.modified[a_spec_relation_groups] = struct{}{}
-		}
 	}
 	stage.A_SPEC_RELATION_GROUPSs_mapString[a_spec_relation_groups.Name] = a_spec_relation_groups
 
 	return a_spec_relation_groups
+}
+
+// StagePreserveOrder puts a_spec_relation_groups to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_RELATION_GROUPSOrder
+// - update stage.A_SPEC_RELATION_GROUPSOrder accordingly
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups]; !ok {
+		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = struct{}{}
+
+		if order > stage.A_SPEC_RELATION_GROUPSOrder {
+			stage.A_SPEC_RELATION_GROUPSOrder = order
+		}
+		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSOrder
+		stage.A_SPEC_RELATION_GROUPSOrder++
+	}
+	stage.A_SPEC_RELATION_GROUPSs_mapString[a_spec_relation_groups.Name] = a_spec_relation_groups
 }
 
 // Unstage removes a_spec_relation_groups off the model stage
@@ -9557,11 +10056,6 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Unstage(stage *Stage) *A_S
 	delete(stage.A_SPEC_RELATION_GROUPSs, a_spec_relation_groups)
 	delete(stage.A_SPEC_RELATION_GROUPSs_mapString, a_spec_relation_groups.Name)
 
-	if _, ok := stage.reference[a_spec_relation_groups]; ok {
-		stage.deleted[a_spec_relation_groups] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_relation_groups)
-	}
 	return a_spec_relation_groups
 }
 
@@ -9616,16 +10110,29 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELA
 		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = struct{}{}
 		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFOrder
 		stage.A_SPEC_RELATION_REFOrder++
-		stage.new[a_spec_relation_ref] = struct{}{}
-		delete(stage.deleted, a_spec_relation_ref)
-	} else {
-		if _, ok := stage.new[a_spec_relation_ref]; !ok {
-			stage.modified[a_spec_relation_ref] = struct{}{}
-		}
 	}
 	stage.A_SPEC_RELATION_REFs_mapString[a_spec_relation_ref.Name] = a_spec_relation_ref
 
 	return a_spec_relation_ref
+}
+
+// StagePreserveOrder puts a_spec_relation_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_RELATION_REFOrder
+// - update stage.A_SPEC_RELATION_REFOrder accordingly
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_RELATION_REFs[a_spec_relation_ref]; !ok {
+		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = struct{}{}
+
+		if order > stage.A_SPEC_RELATION_REFOrder {
+			stage.A_SPEC_RELATION_REFOrder = order
+		}
+		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFOrder
+		stage.A_SPEC_RELATION_REFOrder++
+	}
+	stage.A_SPEC_RELATION_REFs_mapString[a_spec_relation_ref.Name] = a_spec_relation_ref
 }
 
 // Unstage removes a_spec_relation_ref off the model stage
@@ -9633,11 +10140,6 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Unstage(stage *Stage) *A_SPEC_RE
 	delete(stage.A_SPEC_RELATION_REFs, a_spec_relation_ref)
 	delete(stage.A_SPEC_RELATION_REFs_mapString, a_spec_relation_ref.Name)
 
-	if _, ok := stage.reference[a_spec_relation_ref]; ok {
-		stage.deleted[a_spec_relation_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_relation_ref)
-	}
 	return a_spec_relation_ref
 }
 
@@ -9692,16 +10194,29 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Stage(stage *Stage) *A
 		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = struct{}{}
 		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFOrder
 		stage.A_SPEC_RELATION_TYPE_REFOrder++
-		stage.new[a_spec_relation_type_ref] = struct{}{}
-		delete(stage.deleted, a_spec_relation_type_ref)
-	} else {
-		if _, ok := stage.new[a_spec_relation_type_ref]; !ok {
-			stage.modified[a_spec_relation_type_ref] = struct{}{}
-		}
 	}
 	stage.A_SPEC_RELATION_TYPE_REFs_mapString[a_spec_relation_type_ref.Name] = a_spec_relation_type_ref
 
 	return a_spec_relation_type_ref
+}
+
+// StagePreserveOrder puts a_spec_relation_type_ref to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_RELATION_TYPE_REFOrder
+// - update stage.A_SPEC_RELATION_TYPE_REFOrder accordingly
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref]; !ok {
+		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = struct{}{}
+
+		if order > stage.A_SPEC_RELATION_TYPE_REFOrder {
+			stage.A_SPEC_RELATION_TYPE_REFOrder = order
+		}
+		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFOrder
+		stage.A_SPEC_RELATION_TYPE_REFOrder++
+	}
+	stage.A_SPEC_RELATION_TYPE_REFs_mapString[a_spec_relation_type_ref.Name] = a_spec_relation_type_ref
 }
 
 // Unstage removes a_spec_relation_type_ref off the model stage
@@ -9709,11 +10224,6 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Unstage(stage *Stage) 
 	delete(stage.A_SPEC_RELATION_TYPE_REFs, a_spec_relation_type_ref)
 	delete(stage.A_SPEC_RELATION_TYPE_REFs_mapString, a_spec_relation_type_ref.Name)
 
-	if _, ok := stage.reference[a_spec_relation_type_ref]; ok {
-		stage.deleted[a_spec_relation_type_ref] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_relation_type_ref)
-	}
 	return a_spec_relation_type_ref
 }
 
@@ -9768,16 +10278,29 @@ func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
 		stage.A_SPEC_TYPESs[a_spec_types] = struct{}{}
 		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = stage.A_SPEC_TYPESOrder
 		stage.A_SPEC_TYPESOrder++
-		stage.new[a_spec_types] = struct{}{}
-		delete(stage.deleted, a_spec_types)
-	} else {
-		if _, ok := stage.new[a_spec_types]; !ok {
-			stage.modified[a_spec_types] = struct{}{}
-		}
 	}
 	stage.A_SPEC_TYPESs_mapString[a_spec_types.Name] = a_spec_types
 
 	return a_spec_types
+}
+
+// StagePreserveOrder puts a_spec_types to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_SPEC_TYPESOrder
+// - update stage.A_SPEC_TYPESOrder accordingly
+func (a_spec_types *A_SPEC_TYPES) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_SPEC_TYPESs[a_spec_types]; !ok {
+		stage.A_SPEC_TYPESs[a_spec_types] = struct{}{}
+
+		if order > stage.A_SPEC_TYPESOrder {
+			stage.A_SPEC_TYPESOrder = order
+		}
+		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = stage.A_SPEC_TYPESOrder
+		stage.A_SPEC_TYPESOrder++
+	}
+	stage.A_SPEC_TYPESs_mapString[a_spec_types.Name] = a_spec_types
 }
 
 // Unstage removes a_spec_types off the model stage
@@ -9785,11 +10308,6 @@ func (a_spec_types *A_SPEC_TYPES) Unstage(stage *Stage) *A_SPEC_TYPES {
 	delete(stage.A_SPEC_TYPESs, a_spec_types)
 	delete(stage.A_SPEC_TYPESs_mapString, a_spec_types.Name)
 
-	if _, ok := stage.reference[a_spec_types]; ok {
-		stage.deleted[a_spec_types] = struct{}{}
-	} else {
-		delete(stage.new, a_spec_types)
-	}
 	return a_spec_types
 }
 
@@ -9844,16 +10362,29 @@ func (a_the_header *A_THE_HEADER) Stage(stage *Stage) *A_THE_HEADER {
 		stage.A_THE_HEADERs[a_the_header] = struct{}{}
 		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = stage.A_THE_HEADEROrder
 		stage.A_THE_HEADEROrder++
-		stage.new[a_the_header] = struct{}{}
-		delete(stage.deleted, a_the_header)
-	} else {
-		if _, ok := stage.new[a_the_header]; !ok {
-			stage.modified[a_the_header] = struct{}{}
-		}
 	}
 	stage.A_THE_HEADERs_mapString[a_the_header.Name] = a_the_header
 
 	return a_the_header
+}
+
+// StagePreserveOrder puts a_the_header to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_THE_HEADEROrder
+// - update stage.A_THE_HEADEROrder accordingly
+func (a_the_header *A_THE_HEADER) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_THE_HEADERs[a_the_header]; !ok {
+		stage.A_THE_HEADERs[a_the_header] = struct{}{}
+
+		if order > stage.A_THE_HEADEROrder {
+			stage.A_THE_HEADEROrder = order
+		}
+		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = stage.A_THE_HEADEROrder
+		stage.A_THE_HEADEROrder++
+	}
+	stage.A_THE_HEADERs_mapString[a_the_header.Name] = a_the_header
 }
 
 // Unstage removes a_the_header off the model stage
@@ -9861,11 +10392,6 @@ func (a_the_header *A_THE_HEADER) Unstage(stage *Stage) *A_THE_HEADER {
 	delete(stage.A_THE_HEADERs, a_the_header)
 	delete(stage.A_THE_HEADERs_mapString, a_the_header.Name)
 
-	if _, ok := stage.reference[a_the_header]; ok {
-		stage.deleted[a_the_header] = struct{}{}
-	} else {
-		delete(stage.new, a_the_header)
-	}
 	return a_the_header
 }
 
@@ -9920,16 +10446,29 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIO
 		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = struct{}{}
 		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = stage.A_TOOL_EXTENSIONSOrder
 		stage.A_TOOL_EXTENSIONSOrder++
-		stage.new[a_tool_extensions] = struct{}{}
-		delete(stage.deleted, a_tool_extensions)
-	} else {
-		if _, ok := stage.new[a_tool_extensions]; !ok {
-			stage.modified[a_tool_extensions] = struct{}{}
-		}
 	}
 	stage.A_TOOL_EXTENSIONSs_mapString[a_tool_extensions.Name] = a_tool_extensions
 
 	return a_tool_extensions
+}
+
+// StagePreserveOrder puts a_tool_extensions to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.A_TOOL_EXTENSIONSOrder
+// - update stage.A_TOOL_EXTENSIONSOrder accordingly
+func (a_tool_extensions *A_TOOL_EXTENSIONS) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.A_TOOL_EXTENSIONSs[a_tool_extensions]; !ok {
+		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = struct{}{}
+
+		if order > stage.A_TOOL_EXTENSIONSOrder {
+			stage.A_TOOL_EXTENSIONSOrder = order
+		}
+		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = stage.A_TOOL_EXTENSIONSOrder
+		stage.A_TOOL_EXTENSIONSOrder++
+	}
+	stage.A_TOOL_EXTENSIONSs_mapString[a_tool_extensions.Name] = a_tool_extensions
 }
 
 // Unstage removes a_tool_extensions off the model stage
@@ -9937,11 +10476,6 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Unstage(stage *Stage) *A_TOOL_EXTENS
 	delete(stage.A_TOOL_EXTENSIONSs, a_tool_extensions)
 	delete(stage.A_TOOL_EXTENSIONSs_mapString, a_tool_extensions.Name)
 
-	if _, ok := stage.reference[a_tool_extensions]; ok {
-		stage.deleted[a_tool_extensions] = struct{}{}
-	} else {
-		delete(stage.new, a_tool_extensions)
-	}
 	return a_tool_extensions
 }
 
@@ -9996,16 +10530,29 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Stage(stage *Sta
 		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = struct{}{}
 		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANOrder
 		stage.DATATYPE_DEFINITION_BOOLEANOrder++
-		stage.new[datatype_definition_boolean] = struct{}{}
-		delete(stage.deleted, datatype_definition_boolean)
-	} else {
-		if _, ok := stage.new[datatype_definition_boolean]; !ok {
-			stage.modified[datatype_definition_boolean] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_BOOLEANs_mapString[datatype_definition_boolean.Name] = datatype_definition_boolean
 
 	return datatype_definition_boolean
+}
+
+// StagePreserveOrder puts datatype_definition_boolean to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_BOOLEANOrder
+// - update stage.DATATYPE_DEFINITION_BOOLEANOrder accordingly
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean]; !ok {
+		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_BOOLEANOrder {
+			stage.DATATYPE_DEFINITION_BOOLEANOrder = order
+		}
+		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANOrder
+		stage.DATATYPE_DEFINITION_BOOLEANOrder++
+	}
+	stage.DATATYPE_DEFINITION_BOOLEANs_mapString[datatype_definition_boolean.Name] = datatype_definition_boolean
 }
 
 // Unstage removes datatype_definition_boolean off the model stage
@@ -10013,11 +10560,6 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Unstage(stage *S
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs, datatype_definition_boolean)
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs_mapString, datatype_definition_boolean.Name)
 
-	if _, ok := stage.reference[datatype_definition_boolean]; ok {
-		stage.deleted[datatype_definition_boolean] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_boolean)
-	}
 	return datatype_definition_boolean
 }
 
@@ -10072,16 +10614,29 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *D
 		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = struct{}{}
 		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEOrder
 		stage.DATATYPE_DEFINITION_DATEOrder++
-		stage.new[datatype_definition_date] = struct{}{}
-		delete(stage.deleted, datatype_definition_date)
-	} else {
-		if _, ok := stage.new[datatype_definition_date]; !ok {
-			stage.modified[datatype_definition_date] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_DATEs_mapString[datatype_definition_date.Name] = datatype_definition_date
 
 	return datatype_definition_date
+}
+
+// StagePreserveOrder puts datatype_definition_date to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_DATEOrder
+// - update stage.DATATYPE_DEFINITION_DATEOrder accordingly
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date]; !ok {
+		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_DATEOrder {
+			stage.DATATYPE_DEFINITION_DATEOrder = order
+		}
+		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEOrder
+		stage.DATATYPE_DEFINITION_DATEOrder++
+	}
+	stage.DATATYPE_DEFINITION_DATEs_mapString[datatype_definition_date.Name] = datatype_definition_date
 }
 
 // Unstage removes datatype_definition_date off the model stage
@@ -10089,11 +10644,6 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Unstage(stage *Stage) 
 	delete(stage.DATATYPE_DEFINITION_DATEs, datatype_definition_date)
 	delete(stage.DATATYPE_DEFINITION_DATEs_mapString, datatype_definition_date.Name)
 
-	if _, ok := stage.reference[datatype_definition_date]; ok {
-		stage.deleted[datatype_definition_date] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_date)
-	}
 	return datatype_definition_date
 }
 
@@ -10148,16 +10698,29 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Stage(st
 		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = struct{}{}
 		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONOrder
 		stage.DATATYPE_DEFINITION_ENUMERATIONOrder++
-		stage.new[datatype_definition_enumeration] = struct{}{}
-		delete(stage.deleted, datatype_definition_enumeration)
-	} else {
-		if _, ok := stage.new[datatype_definition_enumeration]; !ok {
-			stage.modified[datatype_definition_enumeration] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString[datatype_definition_enumeration.Name] = datatype_definition_enumeration
 
 	return datatype_definition_enumeration
+}
+
+// StagePreserveOrder puts datatype_definition_enumeration to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_ENUMERATIONOrder
+// - update stage.DATATYPE_DEFINITION_ENUMERATIONOrder accordingly
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration]; !ok {
+		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_ENUMERATIONOrder {
+			stage.DATATYPE_DEFINITION_ENUMERATIONOrder = order
+		}
+		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONOrder
+		stage.DATATYPE_DEFINITION_ENUMERATIONOrder++
+	}
+	stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString[datatype_definition_enumeration.Name] = datatype_definition_enumeration
 }
 
 // Unstage removes datatype_definition_enumeration off the model stage
@@ -10165,11 +10728,6 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Unstage(
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs, datatype_definition_enumeration)
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString, datatype_definition_enumeration.Name)
 
-	if _, ok := stage.reference[datatype_definition_enumeration]; ok {
-		stage.deleted[datatype_definition_enumeration] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_enumeration)
-	}
 	return datatype_definition_enumeration
 }
 
@@ -10224,16 +10782,29 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Sta
 		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = struct{}{}
 		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGEROrder
 		stage.DATATYPE_DEFINITION_INTEGEROrder++
-		stage.new[datatype_definition_integer] = struct{}{}
-		delete(stage.deleted, datatype_definition_integer)
-	} else {
-		if _, ok := stage.new[datatype_definition_integer]; !ok {
-			stage.modified[datatype_definition_integer] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_INTEGERs_mapString[datatype_definition_integer.Name] = datatype_definition_integer
 
 	return datatype_definition_integer
+}
+
+// StagePreserveOrder puts datatype_definition_integer to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_INTEGEROrder
+// - update stage.DATATYPE_DEFINITION_INTEGEROrder accordingly
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer]; !ok {
+		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_INTEGEROrder {
+			stage.DATATYPE_DEFINITION_INTEGEROrder = order
+		}
+		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGEROrder
+		stage.DATATYPE_DEFINITION_INTEGEROrder++
+	}
+	stage.DATATYPE_DEFINITION_INTEGERs_mapString[datatype_definition_integer.Name] = datatype_definition_integer
 }
 
 // Unstage removes datatype_definition_integer off the model stage
@@ -10241,11 +10812,6 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Unstage(stage *S
 	delete(stage.DATATYPE_DEFINITION_INTEGERs, datatype_definition_integer)
 	delete(stage.DATATYPE_DEFINITION_INTEGERs_mapString, datatype_definition_integer.Name)
 
-	if _, ok := stage.reference[datatype_definition_integer]; ok {
-		stage.deleted[datatype_definition_integer] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_integer)
-	}
 	return datatype_definition_integer
 }
 
@@ -10300,16 +10866,29 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Stage(stage *Stage) *D
 		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = struct{}{}
 		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALOrder
 		stage.DATATYPE_DEFINITION_REALOrder++
-		stage.new[datatype_definition_real] = struct{}{}
-		delete(stage.deleted, datatype_definition_real)
-	} else {
-		if _, ok := stage.new[datatype_definition_real]; !ok {
-			stage.modified[datatype_definition_real] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_REALs_mapString[datatype_definition_real.Name] = datatype_definition_real
 
 	return datatype_definition_real
+}
+
+// StagePreserveOrder puts datatype_definition_real to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_REALOrder
+// - update stage.DATATYPE_DEFINITION_REALOrder accordingly
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_REALs[datatype_definition_real]; !ok {
+		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_REALOrder {
+			stage.DATATYPE_DEFINITION_REALOrder = order
+		}
+		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALOrder
+		stage.DATATYPE_DEFINITION_REALOrder++
+	}
+	stage.DATATYPE_DEFINITION_REALs_mapString[datatype_definition_real.Name] = datatype_definition_real
 }
 
 // Unstage removes datatype_definition_real off the model stage
@@ -10317,11 +10896,6 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Unstage(stage *Stage) 
 	delete(stage.DATATYPE_DEFINITION_REALs, datatype_definition_real)
 	delete(stage.DATATYPE_DEFINITION_REALs_mapString, datatype_definition_real.Name)
 
-	if _, ok := stage.reference[datatype_definition_real]; ok {
-		stage.deleted[datatype_definition_real] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_real)
-	}
 	return datatype_definition_real
 }
 
@@ -10376,16 +10950,29 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage
 		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = struct{}{}
 		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGOrder
 		stage.DATATYPE_DEFINITION_STRINGOrder++
-		stage.new[datatype_definition_string] = struct{}{}
-		delete(stage.deleted, datatype_definition_string)
-	} else {
-		if _, ok := stage.new[datatype_definition_string]; !ok {
-			stage.modified[datatype_definition_string] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_STRINGs_mapString[datatype_definition_string.Name] = datatype_definition_string
 
 	return datatype_definition_string
+}
+
+// StagePreserveOrder puts datatype_definition_string to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_STRINGOrder
+// - update stage.DATATYPE_DEFINITION_STRINGOrder accordingly
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string]; !ok {
+		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_STRINGOrder {
+			stage.DATATYPE_DEFINITION_STRINGOrder = order
+		}
+		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGOrder
+		stage.DATATYPE_DEFINITION_STRINGOrder++
+	}
+	stage.DATATYPE_DEFINITION_STRINGs_mapString[datatype_definition_string.Name] = datatype_definition_string
 }
 
 // Unstage removes datatype_definition_string off the model stage
@@ -10393,11 +10980,6 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Unstage(stage *Sta
 	delete(stage.DATATYPE_DEFINITION_STRINGs, datatype_definition_string)
 	delete(stage.DATATYPE_DEFINITION_STRINGs_mapString, datatype_definition_string.Name)
 
-	if _, ok := stage.reference[datatype_definition_string]; ok {
-		stage.deleted[datatype_definition_string] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_string)
-	}
 	return datatype_definition_string
 }
 
@@ -10452,16 +11034,29 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Stage(stage *Stage) 
 		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = struct{}{}
 		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLOrder
 		stage.DATATYPE_DEFINITION_XHTMLOrder++
-		stage.new[datatype_definition_xhtml] = struct{}{}
-		delete(stage.deleted, datatype_definition_xhtml)
-	} else {
-		if _, ok := stage.new[datatype_definition_xhtml]; !ok {
-			stage.modified[datatype_definition_xhtml] = struct{}{}
-		}
 	}
 	stage.DATATYPE_DEFINITION_XHTMLs_mapString[datatype_definition_xhtml.Name] = datatype_definition_xhtml
 
 	return datatype_definition_xhtml
+}
+
+// StagePreserveOrder puts datatype_definition_xhtml to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_XHTMLOrder
+// - update stage.DATATYPE_DEFINITION_XHTMLOrder accordingly
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml]; !ok {
+		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = struct{}{}
+
+		if order > stage.DATATYPE_DEFINITION_XHTMLOrder {
+			stage.DATATYPE_DEFINITION_XHTMLOrder = order
+		}
+		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLOrder
+		stage.DATATYPE_DEFINITION_XHTMLOrder++
+	}
+	stage.DATATYPE_DEFINITION_XHTMLs_mapString[datatype_definition_xhtml.Name] = datatype_definition_xhtml
 }
 
 // Unstage removes datatype_definition_xhtml off the model stage
@@ -10469,11 +11064,6 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Unstage(stage *Stage
 	delete(stage.DATATYPE_DEFINITION_XHTMLs, datatype_definition_xhtml)
 	delete(stage.DATATYPE_DEFINITION_XHTMLs_mapString, datatype_definition_xhtml.Name)
 
-	if _, ok := stage.reference[datatype_definition_xhtml]; ok {
-		stage.deleted[datatype_definition_xhtml] = struct{}{}
-	} else {
-		delete(stage.new, datatype_definition_xhtml)
-	}
 	return datatype_definition_xhtml
 }
 
@@ -10528,16 +11118,29 @@ func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
 		stage.EMBEDDED_VALUEs[embedded_value] = struct{}{}
 		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = stage.EMBEDDED_VALUEOrder
 		stage.EMBEDDED_VALUEOrder++
-		stage.new[embedded_value] = struct{}{}
-		delete(stage.deleted, embedded_value)
-	} else {
-		if _, ok := stage.new[embedded_value]; !ok {
-			stage.modified[embedded_value] = struct{}{}
-		}
 	}
 	stage.EMBEDDED_VALUEs_mapString[embedded_value.Name] = embedded_value
 
 	return embedded_value
+}
+
+// StagePreserveOrder puts embedded_value to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.EMBEDDED_VALUEOrder
+// - update stage.EMBEDDED_VALUEOrder accordingly
+func (embedded_value *EMBEDDED_VALUE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.EMBEDDED_VALUEs[embedded_value]; !ok {
+		stage.EMBEDDED_VALUEs[embedded_value] = struct{}{}
+
+		if order > stage.EMBEDDED_VALUEOrder {
+			stage.EMBEDDED_VALUEOrder = order
+		}
+		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = stage.EMBEDDED_VALUEOrder
+		stage.EMBEDDED_VALUEOrder++
+	}
+	stage.EMBEDDED_VALUEs_mapString[embedded_value.Name] = embedded_value
 }
 
 // Unstage removes embedded_value off the model stage
@@ -10545,11 +11148,6 @@ func (embedded_value *EMBEDDED_VALUE) Unstage(stage *Stage) *EMBEDDED_VALUE {
 	delete(stage.EMBEDDED_VALUEs, embedded_value)
 	delete(stage.EMBEDDED_VALUEs_mapString, embedded_value.Name)
 
-	if _, ok := stage.reference[embedded_value]; ok {
-		stage.deleted[embedded_value] = struct{}{}
-	} else {
-		delete(stage.new, embedded_value)
-	}
 	return embedded_value
 }
 
@@ -10604,16 +11202,29 @@ func (enum_value *ENUM_VALUE) Stage(stage *Stage) *ENUM_VALUE {
 		stage.ENUM_VALUEs[enum_value] = struct{}{}
 		stage.ENUM_VALUEMap_Staged_Order[enum_value] = stage.ENUM_VALUEOrder
 		stage.ENUM_VALUEOrder++
-		stage.new[enum_value] = struct{}{}
-		delete(stage.deleted, enum_value)
-	} else {
-		if _, ok := stage.new[enum_value]; !ok {
-			stage.modified[enum_value] = struct{}{}
-		}
 	}
 	stage.ENUM_VALUEs_mapString[enum_value.Name] = enum_value
 
 	return enum_value
+}
+
+// StagePreserveOrder puts enum_value to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.ENUM_VALUEOrder
+// - update stage.ENUM_VALUEOrder accordingly
+func (enum_value *ENUM_VALUE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.ENUM_VALUEs[enum_value]; !ok {
+		stage.ENUM_VALUEs[enum_value] = struct{}{}
+
+		if order > stage.ENUM_VALUEOrder {
+			stage.ENUM_VALUEOrder = order
+		}
+		stage.ENUM_VALUEMap_Staged_Order[enum_value] = stage.ENUM_VALUEOrder
+		stage.ENUM_VALUEOrder++
+	}
+	stage.ENUM_VALUEs_mapString[enum_value.Name] = enum_value
 }
 
 // Unstage removes enum_value off the model stage
@@ -10621,11 +11232,6 @@ func (enum_value *ENUM_VALUE) Unstage(stage *Stage) *ENUM_VALUE {
 	delete(stage.ENUM_VALUEs, enum_value)
 	delete(stage.ENUM_VALUEs_mapString, enum_value.Name)
 
-	if _, ok := stage.reference[enum_value]; ok {
-		stage.deleted[enum_value] = struct{}{}
-	} else {
-		delete(stage.new, enum_value)
-	}
 	return enum_value
 }
 
@@ -10680,16 +11286,29 @@ func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage 
 		stage.EmbeddedJpgImages[embeddedjpgimage] = struct{}{}
 		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
 		stage.EmbeddedJpgImageOrder++
-		stage.new[embeddedjpgimage] = struct{}{}
-		delete(stage.deleted, embeddedjpgimage)
-	} else {
-		if _, ok := stage.new[embeddedjpgimage]; !ok {
-			stage.modified[embeddedjpgimage] = struct{}{}
-		}
 	}
 	stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
 
 	return embeddedjpgimage
+}
+
+// StagePreserveOrder puts embeddedjpgimage to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.EmbeddedJpgImageOrder
+// - update stage.EmbeddedJpgImageOrder accordingly
+func (embeddedjpgimage *EmbeddedJpgImage) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; !ok {
+		stage.EmbeddedJpgImages[embeddedjpgimage] = struct{}{}
+
+		if order > stage.EmbeddedJpgImageOrder {
+			stage.EmbeddedJpgImageOrder = order
+		}
+		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
+		stage.EmbeddedJpgImageOrder++
+	}
+	stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
 }
 
 // Unstage removes embeddedjpgimage off the model stage
@@ -10697,11 +11316,6 @@ func (embeddedjpgimage *EmbeddedJpgImage) Unstage(stage *Stage) *EmbeddedJpgImag
 	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
 	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
 
-	if _, ok := stage.reference[embeddedjpgimage]; ok {
-		stage.deleted[embeddedjpgimage] = struct{}{}
-	} else {
-		delete(stage.new, embeddedjpgimage)
-	}
 	return embeddedjpgimage
 }
 
@@ -10756,16 +11370,29 @@ func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage 
 		stage.EmbeddedPngImages[embeddedpngimage] = struct{}{}
 		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
 		stage.EmbeddedPngImageOrder++
-		stage.new[embeddedpngimage] = struct{}{}
-		delete(stage.deleted, embeddedpngimage)
-	} else {
-		if _, ok := stage.new[embeddedpngimage]; !ok {
-			stage.modified[embeddedpngimage] = struct{}{}
-		}
 	}
 	stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
 
 	return embeddedpngimage
+}
+
+// StagePreserveOrder puts embeddedpngimage to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.EmbeddedPngImageOrder
+// - update stage.EmbeddedPngImageOrder accordingly
+func (embeddedpngimage *EmbeddedPngImage) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; !ok {
+		stage.EmbeddedPngImages[embeddedpngimage] = struct{}{}
+
+		if order > stage.EmbeddedPngImageOrder {
+			stage.EmbeddedPngImageOrder = order
+		}
+		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
+		stage.EmbeddedPngImageOrder++
+	}
+	stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
 }
 
 // Unstage removes embeddedpngimage off the model stage
@@ -10773,11 +11400,6 @@ func (embeddedpngimage *EmbeddedPngImage) Unstage(stage *Stage) *EmbeddedPngImag
 	delete(stage.EmbeddedPngImages, embeddedpngimage)
 	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
 
-	if _, ok := stage.reference[embeddedpngimage]; ok {
-		stage.deleted[embeddedpngimage] = struct{}{}
-	} else {
-		delete(stage.new, embeddedpngimage)
-	}
 	return embeddedpngimage
 }
 
@@ -10832,16 +11454,29 @@ func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage 
 		stage.EmbeddedSvgImages[embeddedsvgimage] = struct{}{}
 		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
 		stage.EmbeddedSvgImageOrder++
-		stage.new[embeddedsvgimage] = struct{}{}
-		delete(stage.deleted, embeddedsvgimage)
-	} else {
-		if _, ok := stage.new[embeddedsvgimage]; !ok {
-			stage.modified[embeddedsvgimage] = struct{}{}
-		}
 	}
 	stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
 
 	return embeddedsvgimage
+}
+
+// StagePreserveOrder puts embeddedsvgimage to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.EmbeddedSvgImageOrder
+// - update stage.EmbeddedSvgImageOrder accordingly
+func (embeddedsvgimage *EmbeddedSvgImage) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; !ok {
+		stage.EmbeddedSvgImages[embeddedsvgimage] = struct{}{}
+
+		if order > stage.EmbeddedSvgImageOrder {
+			stage.EmbeddedSvgImageOrder = order
+		}
+		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
+		stage.EmbeddedSvgImageOrder++
+	}
+	stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
 }
 
 // Unstage removes embeddedsvgimage off the model stage
@@ -10849,11 +11484,6 @@ func (embeddedsvgimage *EmbeddedSvgImage) Unstage(stage *Stage) *EmbeddedSvgImag
 	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
 	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
 
-	if _, ok := stage.reference[embeddedsvgimage]; ok {
-		stage.deleted[embeddedsvgimage] = struct{}{}
-	} else {
-		delete(stage.new, embeddedsvgimage)
-	}
 	return embeddedsvgimage
 }
 
@@ -10908,16 +11538,29 @@ func (kill *Kill) Stage(stage *Stage) *Kill {
 		stage.Kills[kill] = struct{}{}
 		stage.KillMap_Staged_Order[kill] = stage.KillOrder
 		stage.KillOrder++
-		stage.new[kill] = struct{}{}
-		delete(stage.deleted, kill)
-	} else {
-		if _, ok := stage.new[kill]; !ok {
-			stage.modified[kill] = struct{}{}
-		}
 	}
 	stage.Kills_mapString[kill.Name] = kill
 
 	return kill
+}
+
+// StagePreserveOrder puts kill to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.KillOrder
+// - update stage.KillOrder accordingly
+func (kill *Kill) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.Kills[kill]; !ok {
+		stage.Kills[kill] = struct{}{}
+
+		if order > stage.KillOrder {
+			stage.KillOrder = order
+		}
+		stage.KillMap_Staged_Order[kill] = stage.KillOrder
+		stage.KillOrder++
+	}
+	stage.Kills_mapString[kill.Name] = kill
 }
 
 // Unstage removes kill off the model stage
@@ -10925,11 +11568,6 @@ func (kill *Kill) Unstage(stage *Stage) *Kill {
 	delete(stage.Kills, kill)
 	delete(stage.Kills_mapString, kill.Name)
 
-	if _, ok := stage.reference[kill]; ok {
-		stage.deleted[kill] = struct{}{}
-	} else {
-		delete(stage.new, kill)
-	}
 	return kill
 }
 
@@ -10984,16 +11622,29 @@ func (map_identifier_bool *Map_identifier_bool) Stage(stage *Stage) *Map_identif
 		stage.Map_identifier_bools[map_identifier_bool] = struct{}{}
 		stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool] = stage.Map_identifier_boolOrder
 		stage.Map_identifier_boolOrder++
-		stage.new[map_identifier_bool] = struct{}{}
-		delete(stage.deleted, map_identifier_bool)
-	} else {
-		if _, ok := stage.new[map_identifier_bool]; !ok {
-			stage.modified[map_identifier_bool] = struct{}{}
-		}
 	}
 	stage.Map_identifier_bools_mapString[map_identifier_bool.Name] = map_identifier_bool
 
 	return map_identifier_bool
+}
+
+// StagePreserveOrder puts map_identifier_bool to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.Map_identifier_boolOrder
+// - update stage.Map_identifier_boolOrder accordingly
+func (map_identifier_bool *Map_identifier_bool) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.Map_identifier_bools[map_identifier_bool]; !ok {
+		stage.Map_identifier_bools[map_identifier_bool] = struct{}{}
+
+		if order > stage.Map_identifier_boolOrder {
+			stage.Map_identifier_boolOrder = order
+		}
+		stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool] = stage.Map_identifier_boolOrder
+		stage.Map_identifier_boolOrder++
+	}
+	stage.Map_identifier_bools_mapString[map_identifier_bool.Name] = map_identifier_bool
 }
 
 // Unstage removes map_identifier_bool off the model stage
@@ -11001,11 +11652,6 @@ func (map_identifier_bool *Map_identifier_bool) Unstage(stage *Stage) *Map_ident
 	delete(stage.Map_identifier_bools, map_identifier_bool)
 	delete(stage.Map_identifier_bools_mapString, map_identifier_bool.Name)
 
-	if _, ok := stage.reference[map_identifier_bool]; ok {
-		stage.deleted[map_identifier_bool] = struct{}{}
-	} else {
-		delete(stage.new, map_identifier_bool)
-	}
 	return map_identifier_bool
 }
 
@@ -11060,16 +11706,29 @@ func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 		stage.RELATION_GROUPs[relation_group] = struct{}{}
 		stage.RELATION_GROUPMap_Staged_Order[relation_group] = stage.RELATION_GROUPOrder
 		stage.RELATION_GROUPOrder++
-		stage.new[relation_group] = struct{}{}
-		delete(stage.deleted, relation_group)
-	} else {
-		if _, ok := stage.new[relation_group]; !ok {
-			stage.modified[relation_group] = struct{}{}
-		}
 	}
 	stage.RELATION_GROUPs_mapString[relation_group.Name] = relation_group
 
 	return relation_group
+}
+
+// StagePreserveOrder puts relation_group to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.RELATION_GROUPOrder
+// - update stage.RELATION_GROUPOrder accordingly
+func (relation_group *RELATION_GROUP) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.RELATION_GROUPs[relation_group]; !ok {
+		stage.RELATION_GROUPs[relation_group] = struct{}{}
+
+		if order > stage.RELATION_GROUPOrder {
+			stage.RELATION_GROUPOrder = order
+		}
+		stage.RELATION_GROUPMap_Staged_Order[relation_group] = stage.RELATION_GROUPOrder
+		stage.RELATION_GROUPOrder++
+	}
+	stage.RELATION_GROUPs_mapString[relation_group.Name] = relation_group
 }
 
 // Unstage removes relation_group off the model stage
@@ -11077,11 +11736,6 @@ func (relation_group *RELATION_GROUP) Unstage(stage *Stage) *RELATION_GROUP {
 	delete(stage.RELATION_GROUPs, relation_group)
 	delete(stage.RELATION_GROUPs_mapString, relation_group.Name)
 
-	if _, ok := stage.reference[relation_group]; ok {
-		stage.deleted[relation_group] = struct{}{}
-	} else {
-		delete(stage.new, relation_group)
-	}
 	return relation_group
 }
 
@@ -11136,16 +11790,29 @@ func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GR
 		stage.RELATION_GROUP_TYPEs[relation_group_type] = struct{}{}
 		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = stage.RELATION_GROUP_TYPEOrder
 		stage.RELATION_GROUP_TYPEOrder++
-		stage.new[relation_group_type] = struct{}{}
-		delete(stage.deleted, relation_group_type)
-	} else {
-		if _, ok := stage.new[relation_group_type]; !ok {
-			stage.modified[relation_group_type] = struct{}{}
-		}
 	}
 	stage.RELATION_GROUP_TYPEs_mapString[relation_group_type.Name] = relation_group_type
 
 	return relation_group_type
+}
+
+// StagePreserveOrder puts relation_group_type to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.RELATION_GROUP_TYPEOrder
+// - update stage.RELATION_GROUP_TYPEOrder accordingly
+func (relation_group_type *RELATION_GROUP_TYPE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.RELATION_GROUP_TYPEs[relation_group_type]; !ok {
+		stage.RELATION_GROUP_TYPEs[relation_group_type] = struct{}{}
+
+		if order > stage.RELATION_GROUP_TYPEOrder {
+			stage.RELATION_GROUP_TYPEOrder = order
+		}
+		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = stage.RELATION_GROUP_TYPEOrder
+		stage.RELATION_GROUP_TYPEOrder++
+	}
+	stage.RELATION_GROUP_TYPEs_mapString[relation_group_type.Name] = relation_group_type
 }
 
 // Unstage removes relation_group_type off the model stage
@@ -11153,11 +11820,6 @@ func (relation_group_type *RELATION_GROUP_TYPE) Unstage(stage *Stage) *RELATION_
 	delete(stage.RELATION_GROUP_TYPEs, relation_group_type)
 	delete(stage.RELATION_GROUP_TYPEs_mapString, relation_group_type.Name)
 
-	if _, ok := stage.reference[relation_group_type]; ok {
-		stage.deleted[relation_group_type] = struct{}{}
-	} else {
-		delete(stage.new, relation_group_type)
-	}
 	return relation_group_type
 }
 
@@ -11212,16 +11874,29 @@ func (req_if *REQ_IF) Stage(stage *Stage) *REQ_IF {
 		stage.REQ_IFs[req_if] = struct{}{}
 		stage.REQ_IFMap_Staged_Order[req_if] = stage.REQ_IFOrder
 		stage.REQ_IFOrder++
-		stage.new[req_if] = struct{}{}
-		delete(stage.deleted, req_if)
-	} else {
-		if _, ok := stage.new[req_if]; !ok {
-			stage.modified[req_if] = struct{}{}
-		}
 	}
 	stage.REQ_IFs_mapString[req_if.Name] = req_if
 
 	return req_if
+}
+
+// StagePreserveOrder puts req_if to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.REQ_IFOrder
+// - update stage.REQ_IFOrder accordingly
+func (req_if *REQ_IF) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.REQ_IFs[req_if]; !ok {
+		stage.REQ_IFs[req_if] = struct{}{}
+
+		if order > stage.REQ_IFOrder {
+			stage.REQ_IFOrder = order
+		}
+		stage.REQ_IFMap_Staged_Order[req_if] = stage.REQ_IFOrder
+		stage.REQ_IFOrder++
+	}
+	stage.REQ_IFs_mapString[req_if.Name] = req_if
 }
 
 // Unstage removes req_if off the model stage
@@ -11229,11 +11904,6 @@ func (req_if *REQ_IF) Unstage(stage *Stage) *REQ_IF {
 	delete(stage.REQ_IFs, req_if)
 	delete(stage.REQ_IFs_mapString, req_if.Name)
 
-	if _, ok := stage.reference[req_if]; ok {
-		stage.deleted[req_if] = struct{}{}
-	} else {
-		delete(stage.new, req_if)
-	}
 	return req_if
 }
 
@@ -11288,16 +11958,29 @@ func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
 		stage.REQ_IF_CONTENTs[req_if_content] = struct{}{}
 		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = stage.REQ_IF_CONTENTOrder
 		stage.REQ_IF_CONTENTOrder++
-		stage.new[req_if_content] = struct{}{}
-		delete(stage.deleted, req_if_content)
-	} else {
-		if _, ok := stage.new[req_if_content]; !ok {
-			stage.modified[req_if_content] = struct{}{}
-		}
 	}
 	stage.REQ_IF_CONTENTs_mapString[req_if_content.Name] = req_if_content
 
 	return req_if_content
+}
+
+// StagePreserveOrder puts req_if_content to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.REQ_IF_CONTENTOrder
+// - update stage.REQ_IF_CONTENTOrder accordingly
+func (req_if_content *REQ_IF_CONTENT) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.REQ_IF_CONTENTs[req_if_content]; !ok {
+		stage.REQ_IF_CONTENTs[req_if_content] = struct{}{}
+
+		if order > stage.REQ_IF_CONTENTOrder {
+			stage.REQ_IF_CONTENTOrder = order
+		}
+		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = stage.REQ_IF_CONTENTOrder
+		stage.REQ_IF_CONTENTOrder++
+	}
+	stage.REQ_IF_CONTENTs_mapString[req_if_content.Name] = req_if_content
 }
 
 // Unstage removes req_if_content off the model stage
@@ -11305,11 +11988,6 @@ func (req_if_content *REQ_IF_CONTENT) Unstage(stage *Stage) *REQ_IF_CONTENT {
 	delete(stage.REQ_IF_CONTENTs, req_if_content)
 	delete(stage.REQ_IF_CONTENTs_mapString, req_if_content.Name)
 
-	if _, ok := stage.reference[req_if_content]; ok {
-		stage.deleted[req_if_content] = struct{}{}
-	} else {
-		delete(stage.new, req_if_content)
-	}
 	return req_if_content
 }
 
@@ -11364,16 +12042,29 @@ func (req_if_header *REQ_IF_HEADER) Stage(stage *Stage) *REQ_IF_HEADER {
 		stage.REQ_IF_HEADERs[req_if_header] = struct{}{}
 		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = stage.REQ_IF_HEADEROrder
 		stage.REQ_IF_HEADEROrder++
-		stage.new[req_if_header] = struct{}{}
-		delete(stage.deleted, req_if_header)
-	} else {
-		if _, ok := stage.new[req_if_header]; !ok {
-			stage.modified[req_if_header] = struct{}{}
-		}
 	}
 	stage.REQ_IF_HEADERs_mapString[req_if_header.Name] = req_if_header
 
 	return req_if_header
+}
+
+// StagePreserveOrder puts req_if_header to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.REQ_IF_HEADEROrder
+// - update stage.REQ_IF_HEADEROrder accordingly
+func (req_if_header *REQ_IF_HEADER) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.REQ_IF_HEADERs[req_if_header]; !ok {
+		stage.REQ_IF_HEADERs[req_if_header] = struct{}{}
+
+		if order > stage.REQ_IF_HEADEROrder {
+			stage.REQ_IF_HEADEROrder = order
+		}
+		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = stage.REQ_IF_HEADEROrder
+		stage.REQ_IF_HEADEROrder++
+	}
+	stage.REQ_IF_HEADERs_mapString[req_if_header.Name] = req_if_header
 }
 
 // Unstage removes req_if_header off the model stage
@@ -11381,11 +12072,6 @@ func (req_if_header *REQ_IF_HEADER) Unstage(stage *Stage) *REQ_IF_HEADER {
 	delete(stage.REQ_IF_HEADERs, req_if_header)
 	delete(stage.REQ_IF_HEADERs_mapString, req_if_header.Name)
 
-	if _, ok := stage.reference[req_if_header]; ok {
-		stage.deleted[req_if_header] = struct{}{}
-	} else {
-		delete(stage.new, req_if_header)
-	}
 	return req_if_header
 }
 
@@ -11440,16 +12126,29 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_
 		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = struct{}{}
 		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONOrder
 		stage.REQ_IF_TOOL_EXTENSIONOrder++
-		stage.new[req_if_tool_extension] = struct{}{}
-		delete(stage.deleted, req_if_tool_extension)
-	} else {
-		if _, ok := stage.new[req_if_tool_extension]; !ok {
-			stage.modified[req_if_tool_extension] = struct{}{}
-		}
 	}
 	stage.REQ_IF_TOOL_EXTENSIONs_mapString[req_if_tool_extension.Name] = req_if_tool_extension
 
 	return req_if_tool_extension
+}
+
+// StagePreserveOrder puts req_if_tool_extension to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.REQ_IF_TOOL_EXTENSIONOrder
+// - update stage.REQ_IF_TOOL_EXTENSIONOrder accordingly
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension]; !ok {
+		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = struct{}{}
+
+		if order > stage.REQ_IF_TOOL_EXTENSIONOrder {
+			stage.REQ_IF_TOOL_EXTENSIONOrder = order
+		}
+		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONOrder
+		stage.REQ_IF_TOOL_EXTENSIONOrder++
+	}
+	stage.REQ_IF_TOOL_EXTENSIONs_mapString[req_if_tool_extension.Name] = req_if_tool_extension
 }
 
 // Unstage removes req_if_tool_extension off the model stage
@@ -11457,11 +12156,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Unstage(stage *Stage) *REQ_I
 	delete(stage.REQ_IF_TOOL_EXTENSIONs, req_if_tool_extension)
 	delete(stage.REQ_IF_TOOL_EXTENSIONs_mapString, req_if_tool_extension.Name)
 
-	if _, ok := stage.reference[req_if_tool_extension]; ok {
-		stage.deleted[req_if_tool_extension] = struct{}{}
-	} else {
-		delete(stage.new, req_if_tool_extension)
-	}
 	return req_if_tool_extension
 }
 
@@ -11516,16 +12210,29 @@ func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 		stage.SPECIFICATIONs[specification] = struct{}{}
 		stage.SPECIFICATIONMap_Staged_Order[specification] = stage.SPECIFICATIONOrder
 		stage.SPECIFICATIONOrder++
-		stage.new[specification] = struct{}{}
-		delete(stage.deleted, specification)
-	} else {
-		if _, ok := stage.new[specification]; !ok {
-			stage.modified[specification] = struct{}{}
-		}
 	}
 	stage.SPECIFICATIONs_mapString[specification.Name] = specification
 
 	return specification
+}
+
+// StagePreserveOrder puts specification to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPECIFICATIONOrder
+// - update stage.SPECIFICATIONOrder accordingly
+func (specification *SPECIFICATION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPECIFICATIONs[specification]; !ok {
+		stage.SPECIFICATIONs[specification] = struct{}{}
+
+		if order > stage.SPECIFICATIONOrder {
+			stage.SPECIFICATIONOrder = order
+		}
+		stage.SPECIFICATIONMap_Staged_Order[specification] = stage.SPECIFICATIONOrder
+		stage.SPECIFICATIONOrder++
+	}
+	stage.SPECIFICATIONs_mapString[specification.Name] = specification
 }
 
 // Unstage removes specification off the model stage
@@ -11533,11 +12240,6 @@ func (specification *SPECIFICATION) Unstage(stage *Stage) *SPECIFICATION {
 	delete(stage.SPECIFICATIONs, specification)
 	delete(stage.SPECIFICATIONs_mapString, specification.Name)
 
-	if _, ok := stage.reference[specification]; ok {
-		stage.deleted[specification] = struct{}{}
-	} else {
-		delete(stage.new, specification)
-	}
 	return specification
 }
 
@@ -11592,16 +12294,29 @@ func (specification_rendering *SPECIFICATION_Rendering) Stage(stage *Stage) *SPE
 		stage.SPECIFICATION_Renderings[specification_rendering] = struct{}{}
 		stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering] = stage.SPECIFICATION_RenderingOrder
 		stage.SPECIFICATION_RenderingOrder++
-		stage.new[specification_rendering] = struct{}{}
-		delete(stage.deleted, specification_rendering)
-	} else {
-		if _, ok := stage.new[specification_rendering]; !ok {
-			stage.modified[specification_rendering] = struct{}{}
-		}
 	}
 	stage.SPECIFICATION_Renderings_mapString[specification_rendering.Name] = specification_rendering
 
 	return specification_rendering
+}
+
+// StagePreserveOrder puts specification_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPECIFICATION_RenderingOrder
+// - update stage.SPECIFICATION_RenderingOrder accordingly
+func (specification_rendering *SPECIFICATION_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPECIFICATION_Renderings[specification_rendering]; !ok {
+		stage.SPECIFICATION_Renderings[specification_rendering] = struct{}{}
+
+		if order > stage.SPECIFICATION_RenderingOrder {
+			stage.SPECIFICATION_RenderingOrder = order
+		}
+		stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering] = stage.SPECIFICATION_RenderingOrder
+		stage.SPECIFICATION_RenderingOrder++
+	}
+	stage.SPECIFICATION_Renderings_mapString[specification_rendering.Name] = specification_rendering
 }
 
 // Unstage removes specification_rendering off the model stage
@@ -11609,11 +12324,6 @@ func (specification_rendering *SPECIFICATION_Rendering) Unstage(stage *Stage) *S
 	delete(stage.SPECIFICATION_Renderings, specification_rendering)
 	delete(stage.SPECIFICATION_Renderings_mapString, specification_rendering.Name)
 
-	if _, ok := stage.reference[specification_rendering]; ok {
-		stage.deleted[specification_rendering] = struct{}{}
-	} else {
-		delete(stage.new, specification_rendering)
-	}
 	return specification_rendering
 }
 
@@ -11668,16 +12378,29 @@ func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION
 		stage.SPECIFICATION_TYPEs[specification_type] = struct{}{}
 		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = stage.SPECIFICATION_TYPEOrder
 		stage.SPECIFICATION_TYPEOrder++
-		stage.new[specification_type] = struct{}{}
-		delete(stage.deleted, specification_type)
-	} else {
-		if _, ok := stage.new[specification_type]; !ok {
-			stage.modified[specification_type] = struct{}{}
-		}
 	}
 	stage.SPECIFICATION_TYPEs_mapString[specification_type.Name] = specification_type
 
 	return specification_type
+}
+
+// StagePreserveOrder puts specification_type to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPECIFICATION_TYPEOrder
+// - update stage.SPECIFICATION_TYPEOrder accordingly
+func (specification_type *SPECIFICATION_TYPE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPECIFICATION_TYPEs[specification_type]; !ok {
+		stage.SPECIFICATION_TYPEs[specification_type] = struct{}{}
+
+		if order > stage.SPECIFICATION_TYPEOrder {
+			stage.SPECIFICATION_TYPEOrder = order
+		}
+		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = stage.SPECIFICATION_TYPEOrder
+		stage.SPECIFICATION_TYPEOrder++
+	}
+	stage.SPECIFICATION_TYPEs_mapString[specification_type.Name] = specification_type
 }
 
 // Unstage removes specification_type off the model stage
@@ -11685,11 +12408,6 @@ func (specification_type *SPECIFICATION_TYPE) Unstage(stage *Stage) *SPECIFICATI
 	delete(stage.SPECIFICATION_TYPEs, specification_type)
 	delete(stage.SPECIFICATION_TYPEs_mapString, specification_type.Name)
 
-	if _, ok := stage.reference[specification_type]; ok {
-		stage.deleted[specification_type] = struct{}{}
-	} else {
-		delete(stage.new, specification_type)
-	}
 	return specification_type
 }
 
@@ -11744,16 +12462,29 @@ func (spec_hierarchy *SPEC_HIERARCHY) Stage(stage *Stage) *SPEC_HIERARCHY {
 		stage.SPEC_HIERARCHYs[spec_hierarchy] = struct{}{}
 		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = stage.SPEC_HIERARCHYOrder
 		stage.SPEC_HIERARCHYOrder++
-		stage.new[spec_hierarchy] = struct{}{}
-		delete(stage.deleted, spec_hierarchy)
-	} else {
-		if _, ok := stage.new[spec_hierarchy]; !ok {
-			stage.modified[spec_hierarchy] = struct{}{}
-		}
 	}
 	stage.SPEC_HIERARCHYs_mapString[spec_hierarchy.Name] = spec_hierarchy
 
 	return spec_hierarchy
+}
+
+// StagePreserveOrder puts spec_hierarchy to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPEC_HIERARCHYOrder
+// - update stage.SPEC_HIERARCHYOrder accordingly
+func (spec_hierarchy *SPEC_HIERARCHY) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPEC_HIERARCHYs[spec_hierarchy]; !ok {
+		stage.SPEC_HIERARCHYs[spec_hierarchy] = struct{}{}
+
+		if order > stage.SPEC_HIERARCHYOrder {
+			stage.SPEC_HIERARCHYOrder = order
+		}
+		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = stage.SPEC_HIERARCHYOrder
+		stage.SPEC_HIERARCHYOrder++
+	}
+	stage.SPEC_HIERARCHYs_mapString[spec_hierarchy.Name] = spec_hierarchy
 }
 
 // Unstage removes spec_hierarchy off the model stage
@@ -11761,11 +12492,6 @@ func (spec_hierarchy *SPEC_HIERARCHY) Unstage(stage *Stage) *SPEC_HIERARCHY {
 	delete(stage.SPEC_HIERARCHYs, spec_hierarchy)
 	delete(stage.SPEC_HIERARCHYs_mapString, spec_hierarchy.Name)
 
-	if _, ok := stage.reference[spec_hierarchy]; ok {
-		stage.deleted[spec_hierarchy] = struct{}{}
-	} else {
-		delete(stage.new, spec_hierarchy)
-	}
 	return spec_hierarchy
 }
 
@@ -11820,16 +12546,29 @@ func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
 		stage.SPEC_OBJECTs[spec_object] = struct{}{}
 		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = stage.SPEC_OBJECTOrder
 		stage.SPEC_OBJECTOrder++
-		stage.new[spec_object] = struct{}{}
-		delete(stage.deleted, spec_object)
-	} else {
-		if _, ok := stage.new[spec_object]; !ok {
-			stage.modified[spec_object] = struct{}{}
-		}
 	}
 	stage.SPEC_OBJECTs_mapString[spec_object.Name] = spec_object
 
 	return spec_object
+}
+
+// StagePreserveOrder puts spec_object to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPEC_OBJECTOrder
+// - update stage.SPEC_OBJECTOrder accordingly
+func (spec_object *SPEC_OBJECT) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPEC_OBJECTs[spec_object]; !ok {
+		stage.SPEC_OBJECTs[spec_object] = struct{}{}
+
+		if order > stage.SPEC_OBJECTOrder {
+			stage.SPEC_OBJECTOrder = order
+		}
+		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = stage.SPEC_OBJECTOrder
+		stage.SPEC_OBJECTOrder++
+	}
+	stage.SPEC_OBJECTs_mapString[spec_object.Name] = spec_object
 }
 
 // Unstage removes spec_object off the model stage
@@ -11837,11 +12576,6 @@ func (spec_object *SPEC_OBJECT) Unstage(stage *Stage) *SPEC_OBJECT {
 	delete(stage.SPEC_OBJECTs, spec_object)
 	delete(stage.SPEC_OBJECTs_mapString, spec_object.Name)
 
-	if _, ok := stage.reference[spec_object]; ok {
-		stage.deleted[spec_object] = struct{}{}
-	} else {
-		delete(stage.new, spec_object)
-	}
 	return spec_object
 }
 
@@ -11896,16 +12630,29 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *Stage) *SPEC_OBJECT_TYPE 
 		stage.SPEC_OBJECT_TYPEs[spec_object_type] = struct{}{}
 		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = stage.SPEC_OBJECT_TYPEOrder
 		stage.SPEC_OBJECT_TYPEOrder++
-		stage.new[spec_object_type] = struct{}{}
-		delete(stage.deleted, spec_object_type)
-	} else {
-		if _, ok := stage.new[spec_object_type]; !ok {
-			stage.modified[spec_object_type] = struct{}{}
-		}
 	}
 	stage.SPEC_OBJECT_TYPEs_mapString[spec_object_type.Name] = spec_object_type
 
 	return spec_object_type
+}
+
+// StagePreserveOrder puts spec_object_type to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPEC_OBJECT_TYPEOrder
+// - update stage.SPEC_OBJECT_TYPEOrder accordingly
+func (spec_object_type *SPEC_OBJECT_TYPE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPEC_OBJECT_TYPEs[spec_object_type]; !ok {
+		stage.SPEC_OBJECT_TYPEs[spec_object_type] = struct{}{}
+
+		if order > stage.SPEC_OBJECT_TYPEOrder {
+			stage.SPEC_OBJECT_TYPEOrder = order
+		}
+		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = stage.SPEC_OBJECT_TYPEOrder
+		stage.SPEC_OBJECT_TYPEOrder++
+	}
+	stage.SPEC_OBJECT_TYPEs_mapString[spec_object_type.Name] = spec_object_type
 }
 
 // Unstage removes spec_object_type off the model stage
@@ -11913,11 +12660,6 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Unstage(stage *Stage) *SPEC_OBJECT_TYP
 	delete(stage.SPEC_OBJECT_TYPEs, spec_object_type)
 	delete(stage.SPEC_OBJECT_TYPEs_mapString, spec_object_type.Name)
 
-	if _, ok := stage.reference[spec_object_type]; ok {
-		stage.deleted[spec_object_type] = struct{}{}
-	} else {
-		delete(stage.new, spec_object_type)
-	}
 	return spec_object_type
 }
 
@@ -11972,16 +12714,29 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Stage(stage *Stage
 		stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering] = struct{}{}
 		stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingOrder
 		stage.SPEC_OBJECT_TYPE_RenderingOrder++
-		stage.new[spec_object_type_rendering] = struct{}{}
-		delete(stage.deleted, spec_object_type_rendering)
-	} else {
-		if _, ok := stage.new[spec_object_type_rendering]; !ok {
-			stage.modified[spec_object_type_rendering] = struct{}{}
-		}
 	}
 	stage.SPEC_OBJECT_TYPE_Renderings_mapString[spec_object_type_rendering.Name] = spec_object_type_rendering
 
 	return spec_object_type_rendering
+}
+
+// StagePreserveOrder puts spec_object_type_rendering to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPEC_OBJECT_TYPE_RenderingOrder
+// - update stage.SPEC_OBJECT_TYPE_RenderingOrder accordingly
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]; !ok {
+		stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering] = struct{}{}
+
+		if order > stage.SPEC_OBJECT_TYPE_RenderingOrder {
+			stage.SPEC_OBJECT_TYPE_RenderingOrder = order
+		}
+		stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingOrder
+		stage.SPEC_OBJECT_TYPE_RenderingOrder++
+	}
+	stage.SPEC_OBJECT_TYPE_Renderings_mapString[spec_object_type_rendering.Name] = spec_object_type_rendering
 }
 
 // Unstage removes spec_object_type_rendering off the model stage
@@ -11989,11 +12744,6 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Unstage(stage *Sta
 	delete(stage.SPEC_OBJECT_TYPE_Renderings, spec_object_type_rendering)
 	delete(stage.SPEC_OBJECT_TYPE_Renderings_mapString, spec_object_type_rendering.Name)
 
-	if _, ok := stage.reference[spec_object_type_rendering]; ok {
-		stage.deleted[spec_object_type_rendering] = struct{}{}
-	} else {
-		delete(stage.new, spec_object_type_rendering)
-	}
 	return spec_object_type_rendering
 }
 
@@ -12048,16 +12798,29 @@ func (spec_relation *SPEC_RELATION) Stage(stage *Stage) *SPEC_RELATION {
 		stage.SPEC_RELATIONs[spec_relation] = struct{}{}
 		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = stage.SPEC_RELATIONOrder
 		stage.SPEC_RELATIONOrder++
-		stage.new[spec_relation] = struct{}{}
-		delete(stage.deleted, spec_relation)
-	} else {
-		if _, ok := stage.new[spec_relation]; !ok {
-			stage.modified[spec_relation] = struct{}{}
-		}
 	}
 	stage.SPEC_RELATIONs_mapString[spec_relation.Name] = spec_relation
 
 	return spec_relation
+}
+
+// StagePreserveOrder puts spec_relation to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPEC_RELATIONOrder
+// - update stage.SPEC_RELATIONOrder accordingly
+func (spec_relation *SPEC_RELATION) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPEC_RELATIONs[spec_relation]; !ok {
+		stage.SPEC_RELATIONs[spec_relation] = struct{}{}
+
+		if order > stage.SPEC_RELATIONOrder {
+			stage.SPEC_RELATIONOrder = order
+		}
+		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = stage.SPEC_RELATIONOrder
+		stage.SPEC_RELATIONOrder++
+	}
+	stage.SPEC_RELATIONs_mapString[spec_relation.Name] = spec_relation
 }
 
 // Unstage removes spec_relation off the model stage
@@ -12065,11 +12828,6 @@ func (spec_relation *SPEC_RELATION) Unstage(stage *Stage) *SPEC_RELATION {
 	delete(stage.SPEC_RELATIONs, spec_relation)
 	delete(stage.SPEC_RELATIONs_mapString, spec_relation.Name)
 
-	if _, ok := stage.reference[spec_relation]; ok {
-		stage.deleted[spec_relation] = struct{}{}
-	} else {
-		delete(stage.new, spec_relation)
-	}
 	return spec_relation
 }
 
@@ -12124,16 +12882,29 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION
 		stage.SPEC_RELATION_TYPEs[spec_relation_type] = struct{}{}
 		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = stage.SPEC_RELATION_TYPEOrder
 		stage.SPEC_RELATION_TYPEOrder++
-		stage.new[spec_relation_type] = struct{}{}
-		delete(stage.deleted, spec_relation_type)
-	} else {
-		if _, ok := stage.new[spec_relation_type]; !ok {
-			stage.modified[spec_relation_type] = struct{}{}
-		}
 	}
 	stage.SPEC_RELATION_TYPEs_mapString[spec_relation_type.Name] = spec_relation_type
 
 	return spec_relation_type
+}
+
+// StagePreserveOrder puts spec_relation_type to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.SPEC_RELATION_TYPEOrder
+// - update stage.SPEC_RELATION_TYPEOrder accordingly
+func (spec_relation_type *SPEC_RELATION_TYPE) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.SPEC_RELATION_TYPEs[spec_relation_type]; !ok {
+		stage.SPEC_RELATION_TYPEs[spec_relation_type] = struct{}{}
+
+		if order > stage.SPEC_RELATION_TYPEOrder {
+			stage.SPEC_RELATION_TYPEOrder = order
+		}
+		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = stage.SPEC_RELATION_TYPEOrder
+		stage.SPEC_RELATION_TYPEOrder++
+	}
+	stage.SPEC_RELATION_TYPEs_mapString[spec_relation_type.Name] = spec_relation_type
 }
 
 // Unstage removes spec_relation_type off the model stage
@@ -12141,11 +12912,6 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Unstage(stage *Stage) *SPEC_RELATI
 	delete(stage.SPEC_RELATION_TYPEs, spec_relation_type)
 	delete(stage.SPEC_RELATION_TYPEs_mapString, spec_relation_type.Name)
 
-	if _, ok := stage.reference[spec_relation_type]; ok {
-		stage.deleted[spec_relation_type] = struct{}{}
-	} else {
-		delete(stage.new, spec_relation_type)
-	}
 	return spec_relation_type
 }
 
@@ -12200,16 +12966,29 @@ func (staticwebsite *StaticWebSite) Stage(stage *Stage) *StaticWebSite {
 		stage.StaticWebSites[staticwebsite] = struct{}{}
 		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = stage.StaticWebSiteOrder
 		stage.StaticWebSiteOrder++
-		stage.new[staticwebsite] = struct{}{}
-		delete(stage.deleted, staticwebsite)
-	} else {
-		if _, ok := stage.new[staticwebsite]; !ok {
-			stage.modified[staticwebsite] = struct{}{}
-		}
 	}
 	stage.StaticWebSites_mapString[staticwebsite.Name] = staticwebsite
 
 	return staticwebsite
+}
+
+// StagePreserveOrder puts staticwebsite to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.StaticWebSiteOrder
+// - update stage.StaticWebSiteOrder accordingly
+func (staticwebsite *StaticWebSite) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.StaticWebSites[staticwebsite]; !ok {
+		stage.StaticWebSites[staticwebsite] = struct{}{}
+
+		if order > stage.StaticWebSiteOrder {
+			stage.StaticWebSiteOrder = order
+		}
+		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = stage.StaticWebSiteOrder
+		stage.StaticWebSiteOrder++
+	}
+	stage.StaticWebSites_mapString[staticwebsite.Name] = staticwebsite
 }
 
 // Unstage removes staticwebsite off the model stage
@@ -12217,11 +12996,6 @@ func (staticwebsite *StaticWebSite) Unstage(stage *Stage) *StaticWebSite {
 	delete(stage.StaticWebSites, staticwebsite)
 	delete(stage.StaticWebSites_mapString, staticwebsite.Name)
 
-	if _, ok := stage.reference[staticwebsite]; ok {
-		stage.deleted[staticwebsite] = struct{}{}
-	} else {
-		delete(stage.new, staticwebsite)
-	}
 	return staticwebsite
 }
 
@@ -12276,16 +13050,29 @@ func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWeb
 		stage.StaticWebSiteChapters[staticwebsitechapter] = struct{}{}
 		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = stage.StaticWebSiteChapterOrder
 		stage.StaticWebSiteChapterOrder++
-		stage.new[staticwebsitechapter] = struct{}{}
-		delete(stage.deleted, staticwebsitechapter)
-	} else {
-		if _, ok := stage.new[staticwebsitechapter]; !ok {
-			stage.modified[staticwebsitechapter] = struct{}{}
-		}
 	}
 	stage.StaticWebSiteChapters_mapString[staticwebsitechapter.Name] = staticwebsitechapter
 
 	return staticwebsitechapter
+}
+
+// StagePreserveOrder puts staticwebsitechapter to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.StaticWebSiteChapterOrder
+// - update stage.StaticWebSiteChapterOrder accordingly
+func (staticwebsitechapter *StaticWebSiteChapter) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.StaticWebSiteChapters[staticwebsitechapter]; !ok {
+		stage.StaticWebSiteChapters[staticwebsitechapter] = struct{}{}
+
+		if order > stage.StaticWebSiteChapterOrder {
+			stage.StaticWebSiteChapterOrder = order
+		}
+		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = stage.StaticWebSiteChapterOrder
+		stage.StaticWebSiteChapterOrder++
+	}
+	stage.StaticWebSiteChapters_mapString[staticwebsitechapter.Name] = staticwebsitechapter
 }
 
 // Unstage removes staticwebsitechapter off the model stage
@@ -12293,11 +13080,6 @@ func (staticwebsitechapter *StaticWebSiteChapter) Unstage(stage *Stage) *StaticW
 	delete(stage.StaticWebSiteChapters, staticwebsitechapter)
 	delete(stage.StaticWebSiteChapters_mapString, staticwebsitechapter.Name)
 
-	if _, ok := stage.reference[staticwebsitechapter]; ok {
-		stage.deleted[staticwebsitechapter] = struct{}{}
-	} else {
-		delete(stage.new, staticwebsitechapter)
-	}
 	return staticwebsitechapter
 }
 
@@ -12352,16 +13134,29 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Sta
 		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = struct{}{}
 		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
 		stage.StaticWebSiteGeneratedImageOrder++
-		stage.new[staticwebsitegeneratedimage] = struct{}{}
-		delete(stage.deleted, staticwebsitegeneratedimage)
-	} else {
-		if _, ok := stage.new[staticwebsitegeneratedimage]; !ok {
-			stage.modified[staticwebsitegeneratedimage] = struct{}{}
-		}
 	}
 	stage.StaticWebSiteGeneratedImages_mapString[staticwebsitegeneratedimage.Name] = staticwebsitegeneratedimage
 
 	return staticwebsitegeneratedimage
+}
+
+// StagePreserveOrder puts staticwebsitegeneratedimage to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.StaticWebSiteGeneratedImageOrder
+// - update stage.StaticWebSiteGeneratedImageOrder accordingly
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; !ok {
+		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = struct{}{}
+
+		if order > stage.StaticWebSiteGeneratedImageOrder {
+			stage.StaticWebSiteGeneratedImageOrder = order
+		}
+		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
+		stage.StaticWebSiteGeneratedImageOrder++
+	}
+	stage.StaticWebSiteGeneratedImages_mapString[staticwebsitegeneratedimage.Name] = staticwebsitegeneratedimage
 }
 
 // Unstage removes staticwebsitegeneratedimage off the model stage
@@ -12369,11 +13164,6 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Unstage(stage *S
 	delete(stage.StaticWebSiteGeneratedImages, staticwebsitegeneratedimage)
 	delete(stage.StaticWebSiteGeneratedImages_mapString, staticwebsitegeneratedimage.Name)
 
-	if _, ok := stage.reference[staticwebsitegeneratedimage]; ok {
-		stage.deleted[staticwebsitegeneratedimage] = struct{}{}
-	} else {
-		delete(stage.new, staticwebsitegeneratedimage)
-	}
 	return staticwebsitegeneratedimage
 }
 
@@ -12428,16 +13218,29 @@ func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSite
 		stage.StaticWebSiteImages[staticwebsiteimage] = struct{}{}
 		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
 		stage.StaticWebSiteImageOrder++
-		stage.new[staticwebsiteimage] = struct{}{}
-		delete(stage.deleted, staticwebsiteimage)
-	} else {
-		if _, ok := stage.new[staticwebsiteimage]; !ok {
-			stage.modified[staticwebsiteimage] = struct{}{}
-		}
 	}
 	stage.StaticWebSiteImages_mapString[staticwebsiteimage.Name] = staticwebsiteimage
 
 	return staticwebsiteimage
+}
+
+// StagePreserveOrder puts staticwebsiteimage to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.StaticWebSiteImageOrder
+// - update stage.StaticWebSiteImageOrder accordingly
+func (staticwebsiteimage *StaticWebSiteImage) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; !ok {
+		stage.StaticWebSiteImages[staticwebsiteimage] = struct{}{}
+
+		if order > stage.StaticWebSiteImageOrder {
+			stage.StaticWebSiteImageOrder = order
+		}
+		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
+		stage.StaticWebSiteImageOrder++
+	}
+	stage.StaticWebSiteImages_mapString[staticwebsiteimage.Name] = staticwebsiteimage
 }
 
 // Unstage removes staticwebsiteimage off the model stage
@@ -12445,11 +13248,6 @@ func (staticwebsiteimage *StaticWebSiteImage) Unstage(stage *Stage) *StaticWebSi
 	delete(stage.StaticWebSiteImages, staticwebsiteimage)
 	delete(stage.StaticWebSiteImages_mapString, staticwebsiteimage.Name)
 
-	if _, ok := stage.reference[staticwebsiteimage]; ok {
-		stage.deleted[staticwebsiteimage] = struct{}{}
-	} else {
-		delete(stage.new, staticwebsiteimage)
-	}
 	return staticwebsiteimage
 }
 
@@ -12504,16 +13302,29 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *Stati
 		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = struct{}{}
 		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
 		stage.StaticWebSiteParagraphOrder++
-		stage.new[staticwebsiteparagraph] = struct{}{}
-		delete(stage.deleted, staticwebsiteparagraph)
-	} else {
-		if _, ok := stage.new[staticwebsiteparagraph]; !ok {
-			stage.modified[staticwebsiteparagraph] = struct{}{}
-		}
 	}
 	stage.StaticWebSiteParagraphs_mapString[staticwebsiteparagraph.Name] = staticwebsiteparagraph
 
 	return staticwebsiteparagraph
+}
+
+// StagePreserveOrder puts staticwebsiteparagraph to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.StaticWebSiteParagraphOrder
+// - update stage.StaticWebSiteParagraphOrder accordingly
+func (staticwebsiteparagraph *StaticWebSiteParagraph) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; !ok {
+		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = struct{}{}
+
+		if order > stage.StaticWebSiteParagraphOrder {
+			stage.StaticWebSiteParagraphOrder = order
+		}
+		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
+		stage.StaticWebSiteParagraphOrder++
+	}
+	stage.StaticWebSiteParagraphs_mapString[staticwebsiteparagraph.Name] = staticwebsiteparagraph
 }
 
 // Unstage removes staticwebsiteparagraph off the model stage
@@ -12521,11 +13332,6 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Unstage(stage *Stage) *Sta
 	delete(stage.StaticWebSiteParagraphs, staticwebsiteparagraph)
 	delete(stage.StaticWebSiteParagraphs_mapString, staticwebsiteparagraph.Name)
 
-	if _, ok := stage.reference[staticwebsiteparagraph]; ok {
-		stage.deleted[staticwebsiteparagraph] = struct{}{}
-	} else {
-		delete(stage.new, staticwebsiteparagraph)
-	}
 	return staticwebsiteparagraph
 }
 
@@ -12580,16 +13386,29 @@ func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 		stage.XHTML_CONTENTs[xhtml_content] = struct{}{}
 		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = stage.XHTML_CONTENTOrder
 		stage.XHTML_CONTENTOrder++
-		stage.new[xhtml_content] = struct{}{}
-		delete(stage.deleted, xhtml_content)
-	} else {
-		if _, ok := stage.new[xhtml_content]; !ok {
-			stage.modified[xhtml_content] = struct{}{}
-		}
 	}
 	stage.XHTML_CONTENTs_mapString[xhtml_content.Name] = xhtml_content
 
 	return xhtml_content
+}
+
+// StagePreserveOrder puts xhtml_content to the model stage, and if the astrtuct
+// was not staged before:
+//
+// - force the order if the order is equal or greater than the stage.XHTML_CONTENTOrder
+// - update stage.XHTML_CONTENTOrder accordingly
+func (xhtml_content *XHTML_CONTENT) StagePreserveOrder(stage *Stage, order uint) {
+
+	if _, ok := stage.XHTML_CONTENTs[xhtml_content]; !ok {
+		stage.XHTML_CONTENTs[xhtml_content] = struct{}{}
+
+		if order > stage.XHTML_CONTENTOrder {
+			stage.XHTML_CONTENTOrder = order
+		}
+		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = stage.XHTML_CONTENTOrder
+		stage.XHTML_CONTENTOrder++
+	}
+	stage.XHTML_CONTENTs_mapString[xhtml_content.Name] = xhtml_content
 }
 
 // Unstage removes xhtml_content off the model stage
@@ -12597,11 +13416,6 @@ func (xhtml_content *XHTML_CONTENT) Unstage(stage *Stage) *XHTML_CONTENT {
 	delete(stage.XHTML_CONTENTs, xhtml_content)
 	delete(stage.XHTML_CONTENTs_mapString, xhtml_content.Name)
 
-	if _, ok := stage.reference[xhtml_content]; ok {
-		stage.deleted[xhtml_content] = struct{}{}
-	} else {
-		delete(stage.new, xhtml_content)
-	}
 	return xhtml_content
 }
 

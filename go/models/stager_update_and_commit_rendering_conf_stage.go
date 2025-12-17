@@ -93,7 +93,7 @@ func ParseAstFromBytes(stage *Stage, input []byte) error {
 	}
 
 	// 5. Now, call your original function with the path to our new temp file.
-	return ParseAstFile(stage, tempFile.Name())
+	return ParseAstFile(stage, tempFile.Name(), false)
 }
 
 func (stager *Stager) processRenderingConf(stageForRenderingConf *Stage) {
