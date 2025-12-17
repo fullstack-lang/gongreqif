@@ -5,6 +5,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/fullstack-lang/gong/lib/tree/go/buttons"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 	m "github.com/fullstack-lang/gongreqif/go/models"
 	"github.com/fullstack-lang/gongreqif/go/specobjects"
@@ -63,6 +64,27 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				stager:        stager,
 				specification: specification,
 			},
+		}
+
+		{
+			button := &tree.Button{
+				Name: "Show/Unshow Numbering",
+				Impl: &toggleButtonProxy{
+					stager:      stager,
+					toggleValue: &specificationRendering.IsWithHeadingNumbering,
+				},
+				HasToolTip:      true,
+				ToolTipPosition: tree.Right,
+			}
+
+			if !specificationRendering.IsWithHeadingNumbering {
+				button.ToolTipText = "Show numbering"
+				button.Icon = string(buttons.BUTTON_format_list_numbered)
+			} else {
+				button.ToolTipText = "Hide numbering"
+				button.Icon = string(buttons.BUTTON_subject)
+			}
+			specificationNode.Buttons = append(specificationNode.Buttons, button)
 		}
 
 		markDownContent := "# *" + specification.Name + "*"

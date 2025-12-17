@@ -60,9 +60,10 @@ type SPEC_OBJECT_TYPE_Rendering struct {
 
 // SPECIFICATION_Rendering store the rendering choices
 type SPECIFICATION_Rendering struct {
-	Name           string // the identifier
-	IsNodeExpanded bool
-	IsSelected     bool
+	Name                   string // the identifier
+	IsNodeExpanded         bool
+	IsSelected             bool
+	IsWithHeadingNumbering bool // ReqIF Heading has usually no rendereing. This allows automatic numbering
 }
 
 type Map_identifier_bool struct {

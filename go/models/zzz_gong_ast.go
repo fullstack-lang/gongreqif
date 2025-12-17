@@ -5958,6 +5958,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						log.Fatalln(err)
 					}
 					__gong__map_SPECIFICATION_Rendering[identifier].IsSelected = fielValue
+				case "IsWithHeadingNumbering":
+					// convert string to boolean
+					fielValue, err := strconv.ParseBool(ident.Name)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_SPECIFICATION_Rendering[identifier].IsWithHeadingNumbering = fielValue
 				}
 			case "SPECIFICATION_TYPE":
 				switch fieldName {
