@@ -5,6 +5,7 @@ import (
 	"log"
 	"strings"
 
+	"github.com/fullstack-lang/gong/lib/tree/go/buttons"
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 	m "github.com/fullstack-lang/gongreqif/go/models"
 	"github.com/fullstack-lang/gongreqif/go/specobjects"
@@ -65,6 +66,27 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 			},
 		}
 
+		{
+			button := &tree.Button{
+				Name: "Show/Unshow Numbering",
+				Impl: &toggleButtonProxy{
+					stager:      stager,
+					toggleValue: &specificationRendering.IsWithHeadingNumbering,
+				},
+				HasToolTip:      true,
+				ToolTipPosition: tree.Right,
+			}
+
+			if !specificationRendering.IsWithHeadingNumbering {
+				button.ToolTipText = "Show numbering"
+				button.Icon = string(buttons.BUTTON_format_list_numbered)
+			} else {
+				button.ToolTipText = "Hide numbering"
+				button.Icon = string(buttons.BUTTON_subject)
+			}
+			specificationNode.Buttons = append(specificationNode.Buttons, button)
+		}
+
 		markDownContent := "# *" + specification.Name + "*"
 		map_specificationType_node[specificationType].Children =
 			append(map_specificationType_node[specificationType].Children, specificationNode)
@@ -113,14 +135,19 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 			depth := 0 // depth of chapters
 
-			for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
+			for i, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 
+				digitPrefix := ""
+				if specificationRendering.IsWithHeadingNumbering {
+					digitPrefix = fmt.Sprintf("%d", i+1)
+				}
 				processSpecHierarchy(
 					stager,
 					specHierarchy,
 					hierarchyParentNode,
 					depth,
-					&markDownContent)
+					&markDownContent,
+					digitPrefix)
 			}
 
 			// log.Println(markDownContent)

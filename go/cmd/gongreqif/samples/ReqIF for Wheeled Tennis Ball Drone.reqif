@@ -282,27 +282,27 @@
 
                   <xhtml:table>
                     <xhtml:thead>
-                        <xhtml:tr>
-                            <xhtml:th>Component Status Summary</xhtml:th>
-                        </xhtml:tr>
+                      <xhtml:tr>
+                        <xhtml:th>Component Status Summary</xhtml:th>
+                      </xhtml:tr>
                     </xhtml:thead>
                     <xhtml:tbody>
-                        <xhtml:tr>
-                            <xhtml:td>Database Service</xhtml:td>
-                            <xhtml:td>Online</xhtml:td>
-                            <xhtml:td>Uptime: 99.98%</xhtml:td>
-                        </xhtml:tr>
-                        <xhtml:tr>
-                            <xhtml:td>API Gateway</xhtml:td>
-                            <xhtml:td>Degraded</xhtml:td>
-                        </xhtml:tr>
-                        <xhtml:tr>
-                            <xhtml:td>Authentication Service</xhtml:td>
-                            <xhtml:td>Online</xhtml:td>
-                            <xhtml:td>Uptime: 99.99%</xhtml:td>
-                        </xhtml:tr>
+                      <xhtml:tr>
+                        <xhtml:td>Database Service</xhtml:td>
+                        <xhtml:td>Online</xhtml:td>
+                        <xhtml:td>Uptime: 99.98%</xhtml:td>
+                      </xhtml:tr>
+                      <xhtml:tr>
+                        <xhtml:td>API Gateway</xhtml:td>
+                        <xhtml:td>Degraded</xhtml:td>
+                      </xhtml:tr>
+                      <xhtml:tr>
+                        <xhtml:td>Authentication Service</xhtml:td>
+                        <xhtml:td>Online</xhtml:td>
+                        <xhtml:td>Uptime: 99.99%</xhtml:td>
+                      </xhtml:tr>
                     </xhtml:tbody>
-                </xhtml:table>
+                  </xhtml:table>
 
                   <xhtml:h3>3. Deployment Steps</xhtml:h3>
                   <xhtml:ol>
@@ -314,8 +314,7 @@
 
                   <xhtml:p>For more details, consult the <xhtml:a
                       href="https://example.com/deployment-guide">Official Deployment Guide</xhtml:a>
-                    .
-    <xhtml:br /> All changes must be logged.</xhtml:p>
+                    . <xhtml:br /> All changes must be logged.</xhtml:p>
                 </xhtml:div>
               </THE-VALUE>
               <DEFINITION>
@@ -384,6 +383,47 @@
             <SPEC-OBJECT-TYPE-REF>st-descriptive-text</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_1_1" LAST-CHANGE="2025-08-27T19:00:00+02:00"
+          LONG-NAME="Physical Attributes">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Physical Attributes">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_1_2" LAST-CHANGE="2025-08-27T19:00:00+02:00"
+          LONG-NAME="Chassis and Protection">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Chassis and Protection">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_1_3" LAST-CHANGE="2025-08-27T19:00:00+02:00"
+          LONG-NAME="Drive System">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Drive System">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
         <SPEC-OBJECT IDENTIFIER="TXT_INTRO_SYS_CHAP3" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="System Chapter 3 Intro">
           <VALUES>
@@ -441,7 +481,7 @@
             <ATTRIBUTE-VALUE-XHTML>
               <THE-VALUE>
                 <xhtml:p>This chapter details <xhtml:strong>non-functional and lifecycle
-                  requirements</xhtml:strong> such as noise levels, cost, and maintainability.</xhtml:p>
+                    requirements</xhtml:strong> such as noise levels, cost, and maintainability.</xhtml:p>
               </THE-VALUE>
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-XHTML-REF>ats-text-content</ATTRIBUTE-DEFINITION-XHTML-REF>
@@ -1952,10 +1992,23 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_0" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Requirements Specification">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="System Requirements Specification">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
         <SPEC-OBJECT IDENTIFIER="SYS_HD_1" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Hardware and Mechanical Design">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="1. Hardware and Mechanical Design">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Hardware and Mechanical Design">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -1968,7 +2021,7 @@
         <SPEC-OBJECT IDENTIFIER="SYS_HD_2" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Power and Battery System">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="2. Power and Battery System">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Power and Battery System">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -1981,7 +2034,7 @@
         <SPEC-OBJECT IDENTIFIER="SYS_HD_3" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Ball Collection System">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="3. Ball Collection System">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Ball Collection System">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -1994,7 +2047,7 @@
         <SPEC-OBJECT IDENTIFIER="SYS_HD_4" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Navigation and Safety">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="4. Navigation and Safety">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Navigation and Safety">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -2007,7 +2060,7 @@
         <SPEC-OBJECT IDENTIFIER="SYS_HD_5" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Software, Control, and UI">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="5. Software, Control, and UI">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Software, Control, and UI">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -2020,7 +2073,7 @@
         <SPEC-OBJECT IDENTIFIER="SYS_HD_6" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Lifecycle and Non-Functional Requirements">
           <VALUES>
-            <ATTRIBUTE-VALUE-STRING THE-VALUE="6. Lifecycle and Non-Functional Requirements">
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="Lifecycle and Non-Functional Requirements">
               <DEFINITION>
                 <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
@@ -2971,8 +3024,15 @@
           <CHILDREN>
             <SPEC-HIERARCHY>
               <OBJECT>
-                <SPEC-OBJECT-REF>TXT_INTRO_SYSTEM</SPEC-OBJECT-REF>
+                <SPEC-OBJECT-REF>SYS_HD_0</SPEC-OBJECT-REF>
               </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY>
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>TXT_INTRO_SYSTEM</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
             </SPEC-HIERARCHY>
             <SPEC-HIERARCHY>
               <OBJECT>
@@ -2984,45 +3044,69 @@
                     <SPEC-OBJECT-REF>TXT_INTRO_SYS_CHAP1</SPEC-OBJECT-REF>
                   </OBJECT>
                 </SPEC-HIERARCHY>
+
                 <SPEC-HIERARCHY>
                   <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF>
+                    <SPEC-OBJECT-REF>SYS_HD_1_1</SPEC-OBJECT-REF>
                   </OBJECT>
+                  <CHILDREN>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_012</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                  </CHILDREN>
                 </SPEC-HIERARCHY>
+
                 <SPEC-HIERARCHY>
                   <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_013</SPEC-OBJECT-REF>
+                    <SPEC-OBJECT-REF>SYS_HD_1_2</SPEC-OBJECT-REF>
                   </OBJECT>
+                  <CHILDREN>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_040</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                  </CHILDREN>
                 </SPEC-HIERARCHY>
+
                 <SPEC-HIERARCHY>
                   <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_015</SPEC-OBJECT-REF>
+                    <SPEC-OBJECT-REF>SYS_HD_1_3</SPEC-OBJECT-REF>
                   </OBJECT>
-                </SPEC-HIERARCHY>
-                <SPEC-HIERARCHY>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_022</SPEC-OBJECT-REF>
-                  </OBJECT>
-                </SPEC-HIERARCHY>
-                <SPEC-HIERARCHY>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF>
-                  </OBJECT>
-                </SPEC-HIERARCHY>
-                <SPEC-HIERARCHY>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF>
-                  </OBJECT>
-                </SPEC-HIERARCHY>
-                <SPEC-HIERARCHY>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_035</SPEC-OBJECT-REF>
-                  </OBJECT>
-                </SPEC-HIERARCHY>
-                <SPEC-HIERARCHY>
-                  <OBJECT>
-                    <SPEC-OBJECT-REF>SYS_040</SPEC-OBJECT-REF>
-                  </OBJECT>
+                  <CHILDREN>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_023</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_026</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                    <SPEC-HIERARCHY>
+                      <OBJECT>
+                        <SPEC-OBJECT-REF>SYS_035</SPEC-OBJECT-REF>
+                      </OBJECT>
+                    </SPEC-HIERARCHY>
+                  </CHILDREN>
                 </SPEC-HIERARCHY>
               </CHILDREN>
             </SPEC-HIERARCHY>

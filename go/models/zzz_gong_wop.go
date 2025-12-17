@@ -1493,6 +1493,8 @@ type SPECIFICATION_Rendering_WOP struct {
 	IsNodeExpanded bool
 
 	IsSelected bool
+
+	IsWithHeadingNumbering bool
 }
 
 func (from *SPECIFICATION_Rendering) CopyBasicFields(to *SPECIFICATION_Rendering) {
@@ -1500,6 +1502,7 @@ func (from *SPECIFICATION_Rendering) CopyBasicFields(to *SPECIFICATION_Rendering
 	to.Name = from.Name
 	to.IsNodeExpanded = from.IsNodeExpanded
 	to.IsSelected = from.IsSelected
+	to.IsWithHeadingNumbering = from.IsWithHeadingNumbering
 }
 
 type SPECIFICATION_TYPE_WOP struct {

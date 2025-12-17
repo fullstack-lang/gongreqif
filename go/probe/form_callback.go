@@ -10515,6 +10515,8 @@ func (specification_renderingFormCallback *SPECIFICATION_RenderingFormCallback) 
 			FormDivBasicFieldToField(&(specification_rendering_.IsNodeExpanded), formDiv)
 		case "IsSelected":
 			FormDivBasicFieldToField(&(specification_rendering_.IsSelected), formDiv)
+		case "IsWithHeadingNumbering":
+			FormDivBasicFieldToField(&(specification_rendering_.IsWithHeadingNumbering), formDiv)
 		}
 	}
 

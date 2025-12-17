@@ -22457,6 +22457,10 @@ func (specification_rendering *SPECIFICATION_Rendering) GongGetFieldHeaders() (r
 			Name:               "IsSelected",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
+		{
+			Name:               "IsWithHeadingNumbering",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
 	}
 	return
 }
@@ -24868,6 +24872,10 @@ func (specification_rendering *SPECIFICATION_Rendering) GongGetFieldValue(fieldN
 	case "IsSelected":
 		res.valueString = fmt.Sprintf("%t", specification_rendering.IsSelected)
 		res.valueBool = specification_rendering.IsSelected
+		res.GongFieldValueType = GongFieldValueTypeBool
+	case "IsWithHeadingNumbering":
+		res.valueString = fmt.Sprintf("%t", specification_rendering.IsWithHeadingNumbering)
+		res.valueBool = specification_rendering.IsWithHeadingNumbering
 		res.GongFieldValueType = GongFieldValueTypeBool
 	}
 	return
@@ -27813,6 +27821,8 @@ func (specification_rendering *SPECIFICATION_Rendering) GongSetFieldValue(fieldN
 		specification_rendering.IsNodeExpanded = value.GetValueBool()
 	case "IsSelected":
 		specification_rendering.IsSelected = value.GetValueBool()
+	case "IsWithHeadingNumbering":
+		specification_rendering.IsWithHeadingNumbering = value.GetValueBool()
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}

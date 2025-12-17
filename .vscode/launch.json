@@ -86,6 +86,8 @@
                 "-embeddedDiagrams=false",
                 "-pathToReqifFile",
                 "samples/ReqIF for Wheeled Tennis Ball Drone.reqif",
+                "-pathToRenderingConf",
+                "samples/reqif samples_ReqIF for Wheeled Tennis Ball Drone-renderingConf.go1",
             ]
         },
                 {

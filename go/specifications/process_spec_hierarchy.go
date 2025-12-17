@@ -1,12 +1,14 @@
 package specifications
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 	m "github.com/fullstack-lang/gongreqif/go/models"
 	"github.com/fullstack-lang/gongreqif/go/specobjects"
+	"github.com/fullstack-lang/gongreqif/go/spectypes"
 )
 
 func processSpecHierarchy(
@@ -14,7 +16,10 @@ func processSpecHierarchy(
 	specHierarchy *m.SPEC_HIERARCHY,
 	hierarchyParentNode *tree.Node,
 	outerDepth int,
-	markDownContent *string) {
+	markDownContent *string,
+	digitPrefix string) {
+
+	stage := stager.GetStage()
 
 	specObject, ok := stager.Map_id_SPEC_OBJECT[specHierarchy.OBJECT.SPEC_OBJECT_REF]
 	if !ok {
@@ -33,7 +38,9 @@ func processSpecHierarchy(
 	markdownBoldEndingMark := `**
 `
 
-	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+	specObjectTypeRendering := spectypes.GetSpecObjectTypeRendering(stage, specObjectType)
+
+	if specObjectTypeRendering.IsHeading {
 
 		*markDownContent += `
 `
@@ -47,6 +54,10 @@ func processSpecHierarchy(
 				*markDownContent += "#"
 			}
 			*markDownContent += " "
+
+			if digitPrefix != "" {
+				*markDownContent += digitPrefix + " "
+			}
 		}
 	} else {
 		*markDownContent += markdownBoldStartingMark
@@ -58,13 +69,13 @@ func processSpecHierarchy(
 
 	subjectComplement := specobjects.FillUpStringWithAttributes(stager, specObject, specobjects.Subject)
 
-	if !stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] && !strings.HasSuffix(*markDownContent, "**") && titleComplement != "" {
+	if !specObjectTypeRendering.IsHeading && !strings.HasSuffix(*markDownContent, "**") && titleComplement != "" {
 		*markDownContent += " - "
 	}
 
 	*markDownContent += titleComplement
 
-	if stager.Map_SPEC_OBJECT_TYPE_isHeading[specObjectType] {
+	if specObjectTypeRendering.IsHeading {
 		*markDownContent += `
 `
 	} else {
@@ -95,13 +106,18 @@ func processSpecHierarchy(
 	m.AddIconForEditabilityOfAttribute(specHierarchy.IS_EDITABLE, specObject.Name, specObjectNode)
 
 	if specHierarchy.CHILDREN != nil {
-		for _, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
+		for i, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
+			childPrefix := ""
+			if digitPrefix != "" {
+				childPrefix = digitPrefix + "." + fmt.Sprintf("%d", i+1)
+			}
 			processSpecHierarchy(
 				stager,
 				specHierarchyChildren,
 				specObjectNode,
 				outerDepth+1,
-				markDownContent)
+				markDownContent,
+				childPrefix)
 		}
 	}
 }
