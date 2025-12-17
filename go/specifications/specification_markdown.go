@@ -1,7 +1,7 @@
 package specifications
 
 import (
-
+	"fmt"
 	// Corrected path
 	"github.com/fullstack-lang/gongreqif/go/models"
 	m "github.com/fullstack-lang/gongreqif/go/models"
@@ -28,6 +28,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		markdownStage.Commit()
 		return
 	}
+	isWithHeadingNumbering := GetSpecificationRendering(stage, selectedSpecification).IsWithHeadingNumbering
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
 	for _, specification := range specifications {
@@ -47,13 +48,18 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		depth := 1 // initial depth for chapters
 
 		// 3. Recursively process spec hierarchies to build the markdown string
-		for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
+		for i, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
+			digitPrefix := ""
+			if isWithHeadingNumbering {
+				digitPrefix = fmt.Sprintf("%d", i+1)
+			}
 			processSpecHierarchy(
 				stager,
 				specHierarchy,
 				hierarchyParentNode,
 				depth,
-				&markDownContent)
+				&markDownContent,
+				digitPrefix)
 		}
 		// --- end of update ---
 

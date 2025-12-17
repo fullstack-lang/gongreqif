@@ -135,14 +135,19 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 			depth := 0 // depth of chapters
 
-			for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
+			for i, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 
+				digitPrefix := ""
+				if specificationRendering.IsWithHeadingNumbering {
+					digitPrefix = fmt.Sprintf("%d", i+1)
+				}
 				processSpecHierarchy(
 					stager,
 					specHierarchy,
 					hierarchyParentNode,
 					depth,
-					&markDownContent)
+					&markDownContent,
+					digitPrefix)
 			}
 
 			// log.Println(markDownContent)

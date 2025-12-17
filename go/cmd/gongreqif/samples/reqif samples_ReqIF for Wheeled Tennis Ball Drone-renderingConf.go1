@@ -157,11 +157,11 @@ func _(stage *models.Stage) {
 
 	__SPECIFICATION_Rendering__000000_spec_stakeholder.Name = `spec-stakeholder`
 	__SPECIFICATION_Rendering__000000_spec_stakeholder.IsNodeExpanded = false
-	__SPECIFICATION_Rendering__000000_spec_stakeholder.IsSelected = true
+	__SPECIFICATION_Rendering__000000_spec_stakeholder.IsSelected = false
 
 	__SPECIFICATION_Rendering__000001_spec_system.Name = `spec-system`
 	__SPECIFICATION_Rendering__000001_spec_system.IsNodeExpanded = false
-	__SPECIFICATION_Rendering__000001_spec_system.IsSelected = false
+	__SPECIFICATION_Rendering__000001_spec_system.IsSelected = true
 
 	__SPECIFICATION_Rendering__000002_spec_traceability_matrix.Name = `spec-traceability-matrix`
 	__SPECIFICATION_Rendering__000002_spec_traceability_matrix.IsNodeExpanded = false

@@ -1992,6 +1992,19 @@
             <SPEC-OBJECT-TYPE-REF>st-system-req</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
+        <SPEC-OBJECT IDENTIFIER="SYS_HD_0" LAST-CHANGE="2025-06-25T14:30:00+02:00"
+          LONG-NAME="System Requirements Specification">
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="System Requirements Specification">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>ats-heading-title</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>st-heading</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
         <SPEC-OBJECT IDENTIFIER="SYS_HD_1" LAST-CHANGE="2025-06-25T14:30:00+02:00"
           LONG-NAME="Hardware and Mechanical Design">
           <VALUES>
@@ -3011,8 +3024,15 @@
           <CHILDREN>
             <SPEC-HIERARCHY>
               <OBJECT>
-                <SPEC-OBJECT-REF>TXT_INTRO_SYSTEM</SPEC-OBJECT-REF>
+                <SPEC-OBJECT-REF>SYS_HD_0</SPEC-OBJECT-REF>
               </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY>
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>TXT_INTRO_SYSTEM</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
             </SPEC-HIERARCHY>
             <SPEC-HIERARCHY>
               <OBJECT>
