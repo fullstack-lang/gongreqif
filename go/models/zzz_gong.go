@@ -4762,6 +4762,7 @@ func (alternative_id *ALTERNATIVE_ID) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes alternative_id off the model stage
 func (alternative_id *ALTERNATIVE_ID) Unstage(stage *Stage) *ALTERNATIVE_ID {
 	delete(stage.ALTERNATIVE_IDs, alternative_id)
+	delete(stage.ALTERNATIVE_IDMap_Staged_Order, alternative_id)
 	delete(stage.ALTERNATIVE_IDs_mapString, alternative_id.Name)
 
 	return alternative_id
@@ -4770,6 +4771,7 @@ func (alternative_id *ALTERNATIVE_ID) Unstage(stage *Stage) *ALTERNATIVE_ID {
 // UnstageVoid removes alternative_id off the model stage
 func (alternative_id *ALTERNATIVE_ID) UnstageVoid(stage *Stage) {
 	delete(stage.ALTERNATIVE_IDs, alternative_id)
+	delete(stage.ALTERNATIVE_IDMap_Staged_Order, alternative_id)
 	delete(stage.ALTERNATIVE_IDs_mapString, alternative_id.Name)
 }
 
@@ -4846,6 +4848,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) StagePreserveO
 // Unstage removes attribute_definition_boolean off the model stage
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN {
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs, attribute_definition_boolean)
+	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order, attribute_definition_boolean)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString, attribute_definition_boolean.Name)
 
 	return attribute_definition_boolean
@@ -4854,6 +4857,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Unstage(stage 
 // UnstageVoid removes attribute_definition_boolean off the model stage
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs, attribute_definition_boolean)
+	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order, attribute_definition_boolean)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString, attribute_definition_boolean.Name)
 }
 
@@ -4930,6 +4934,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 // Unstage removes attribute_definition_boolean_rendering off the model stage
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings, attribute_definition_boolean_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order, attribute_definition_boolean_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString, attribute_definition_boolean_rendering.Name)
 
 	return attribute_definition_boolean_rendering
@@ -4938,6 +4943,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 // UnstageVoid removes attribute_definition_boolean_rendering off the model stage
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings, attribute_definition_boolean_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order, attribute_definition_boolean_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString, attribute_definition_boolean_rendering.Name)
 }
 
@@ -5014,6 +5020,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) StagePreserveOrder(s
 // Unstage removes attribute_definition_date off the model stage
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_DATE {
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs, attribute_definition_date)
+	delete(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order, attribute_definition_date)
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs_mapString, attribute_definition_date.Name)
 
 	return attribute_definition_date
@@ -5022,6 +5029,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Unstage(stage *Stage
 // UnstageVoid removes attribute_definition_date off the model stage
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs, attribute_definition_date)
+	delete(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order, attribute_definition_date)
 	delete(stage.ATTRIBUTE_DEFINITION_DATEs_mapString, attribute_definition_date.Name)
 }
 
@@ -5098,6 +5106,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 // Unstage removes attribute_definition_date_rendering off the model stage
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_DATE_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings, attribute_definition_date_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order, attribute_definition_date_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString, attribute_definition_date_rendering.Name)
 
 	return attribute_definition_date_rendering
@@ -5106,6 +5115,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 // UnstageVoid removes attribute_definition_date_rendering off the model stage
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings, attribute_definition_date_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order, attribute_definition_date_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString, attribute_definition_date_rendering.Name)
 }
 
@@ -5182,6 +5192,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) StageP
 // Unstage removes attribute_definition_enumeration off the model stage
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION {
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, attribute_definition_enumeration)
+	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order, attribute_definition_enumeration)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString, attribute_definition_enumeration.Name)
 
 	return attribute_definition_enumeration
@@ -5190,6 +5201,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Unstag
 // UnstageVoid removes attribute_definition_enumeration off the model stage
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs, attribute_definition_enumeration)
+	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order, attribute_definition_enumeration)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString, attribute_definition_enumeration.Name)
 }
 
@@ -5266,6 +5278,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 // Unstage removes attribute_definition_enumeration_rendering off the model stage
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings, attribute_definition_enumeration_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order, attribute_definition_enumeration_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString, attribute_definition_enumeration_rendering.Name)
 
 	return attribute_definition_enumeration_rendering
@@ -5274,6 +5287,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 // UnstageVoid removes attribute_definition_enumeration_rendering off the model stage
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings, attribute_definition_enumeration_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order, attribute_definition_enumeration_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString, attribute_definition_enumeration_rendering.Name)
 }
 
@@ -5350,6 +5364,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) StagePreserveO
 // Unstage removes attribute_definition_integer off the model stage
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_INTEGER {
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs, attribute_definition_integer)
+	delete(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order, attribute_definition_integer)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString, attribute_definition_integer.Name)
 
 	return attribute_definition_integer
@@ -5358,6 +5373,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Unstage(stage 
 // UnstageVoid removes attribute_definition_integer off the model stage
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs, attribute_definition_integer)
+	delete(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order, attribute_definition_integer)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString, attribute_definition_integer.Name)
 }
 
@@ -5434,6 +5450,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 // Unstage removes attribute_definition_integer_rendering off the model stage
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_INTEGER_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings, attribute_definition_integer_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order, attribute_definition_integer_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString, attribute_definition_integer_rendering.Name)
 
 	return attribute_definition_integer_rendering
@@ -5442,6 +5459,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 // UnstageVoid removes attribute_definition_integer_rendering off the model stage
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings, attribute_definition_integer_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order, attribute_definition_integer_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString, attribute_definition_integer_rendering.Name)
 }
 
@@ -5518,6 +5536,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) StagePreserveOrder(s
 // Unstage removes attribute_definition_real off the model stage
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL {
 	delete(stage.ATTRIBUTE_DEFINITION_REALs, attribute_definition_real)
+	delete(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order, attribute_definition_real)
 	delete(stage.ATTRIBUTE_DEFINITION_REALs_mapString, attribute_definition_real.Name)
 
 	return attribute_definition_real
@@ -5526,6 +5545,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Unstage(stage *Stage
 // UnstageVoid removes attribute_definition_real off the model stage
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_REALs, attribute_definition_real)
+	delete(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order, attribute_definition_real)
 	delete(stage.ATTRIBUTE_DEFINITION_REALs_mapString, attribute_definition_real.Name)
 }
 
@@ -5602,6 +5622,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 // Unstage removes attribute_definition_real_rendering off the model stage
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings, attribute_definition_real_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order, attribute_definition_real_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString, attribute_definition_real_rendering.Name)
 
 	return attribute_definition_real_rendering
@@ -5610,6 +5631,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 // UnstageVoid removes attribute_definition_real_rendering off the model stage
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings, attribute_definition_real_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order, attribute_definition_real_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString, attribute_definition_real_rendering.Name)
 }
 
@@ -5686,6 +5708,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) StagePrese
 // Unstage removes attribute_definition_rendering off the model stage
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_Renderings, attribute_definition_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order, attribute_definition_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_Renderings_mapString, attribute_definition_rendering.Name)
 
 	return attribute_definition_rendering
@@ -5694,6 +5717,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Unstage(st
 // UnstageVoid removes attribute_definition_rendering off the model stage
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_Renderings, attribute_definition_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order, attribute_definition_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_Renderings_mapString, attribute_definition_rendering.Name)
 }
 
@@ -5770,6 +5794,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) StagePreserveOrd
 // Unstage removes attribute_definition_string off the model stage
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING {
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs, attribute_definition_string)
+	delete(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order, attribute_definition_string)
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs_mapString, attribute_definition_string.Name)
 
 	return attribute_definition_string
@@ -5778,6 +5803,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Unstage(stage *S
 // UnstageVoid removes attribute_definition_string off the model stage
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs, attribute_definition_string)
+	delete(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order, attribute_definition_string)
 	delete(stage.ATTRIBUTE_DEFINITION_STRINGs_mapString, attribute_definition_string.Name)
 }
 
@@ -5854,6 +5880,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 // Unstage removes attribute_definition_string_rendering off the model stage
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings, attribute_definition_string_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order, attribute_definition_string_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString, attribute_definition_string_rendering.Name)
 
 	return attribute_definition_string_rendering
@@ -5862,6 +5889,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 // UnstageVoid removes attribute_definition_string_rendering off the model stage
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings, attribute_definition_string_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order, attribute_definition_string_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString, attribute_definition_string_rendering.Name)
 }
 
@@ -5938,6 +5966,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) StagePreserveOrder
 // Unstage removes attribute_definition_xhtml off the model stage
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_XHTML {
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs, attribute_definition_xhtml)
+	delete(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order, attribute_definition_xhtml)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString, attribute_definition_xhtml.Name)
 
 	return attribute_definition_xhtml
@@ -5946,6 +5975,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Unstage(stage *Sta
 // UnstageVoid removes attribute_definition_xhtml off the model stage
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs, attribute_definition_xhtml)
+	delete(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order, attribute_definition_xhtml)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString, attribute_definition_xhtml.Name)
 }
 
@@ -6022,6 +6052,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 // Unstage removes attribute_definition_xhtml_rendering off the model stage
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) Unstage(stage *Stage) *ATTRIBUTE_DEFINITION_XHTML_Rendering {
 	delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings, attribute_definition_xhtml_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order, attribute_definition_xhtml_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString, attribute_definition_xhtml_rendering.Name)
 
 	return attribute_definition_xhtml_rendering
@@ -6030,6 +6061,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 // UnstageVoid removes attribute_definition_xhtml_rendering off the model stage
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings, attribute_definition_xhtml_rendering)
+	delete(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order, attribute_definition_xhtml_rendering)
 	delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString, attribute_definition_xhtml_rendering.Name)
 }
 
@@ -6106,6 +6138,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) StagePreserveOrder(stage
 // Unstage removes attribute_value_boolean off the model stage
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage) *ATTRIBUTE_VALUE_BOOLEAN {
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs, attribute_value_boolean)
+	delete(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, attribute_value_boolean)
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs_mapString, attribute_value_boolean.Name)
 
 	return attribute_value_boolean
@@ -6114,6 +6147,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage) *A
 // UnstageVoid removes attribute_value_boolean off the model stage
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs, attribute_value_boolean)
+	delete(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, attribute_value_boolean)
 	delete(stage.ATTRIBUTE_VALUE_BOOLEANs_mapString, attribute_value_boolean.Name)
 }
 
@@ -6190,6 +6224,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) StagePreserveOrder(stage *Stag
 // Unstage removes attribute_value_date off the model stage
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *ATTRIBUTE_VALUE_DATE {
 	delete(stage.ATTRIBUTE_VALUE_DATEs, attribute_value_date)
+	delete(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order, attribute_value_date)
 	delete(stage.ATTRIBUTE_VALUE_DATEs_mapString, attribute_value_date.Name)
 
 	return attribute_value_date
@@ -6198,6 +6233,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *ATTRIBU
 // UnstageVoid removes attribute_value_date off the model stage
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_DATEs, attribute_value_date)
+	delete(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order, attribute_value_date)
 	delete(stage.ATTRIBUTE_VALUE_DATEs_mapString, attribute_value_date.Name)
 }
 
@@ -6274,6 +6310,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) StagePreserveOrd
 // Unstage removes attribute_value_enumeration off the model stage
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Unstage(stage *Stage) *ATTRIBUTE_VALUE_ENUMERATION {
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs, attribute_value_enumeration)
+	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, attribute_value_enumeration)
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString, attribute_value_enumeration.Name)
 
 	return attribute_value_enumeration
@@ -6282,6 +6319,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Unstage(stage *S
 // UnstageVoid removes attribute_value_enumeration off the model stage
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs, attribute_value_enumeration)
+	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, attribute_value_enumeration)
 	delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString, attribute_value_enumeration.Name)
 }
 
@@ -6358,6 +6396,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) StagePreserveOrder(stage
 // Unstage removes attribute_value_integer off the model stage
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage) *ATTRIBUTE_VALUE_INTEGER {
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs, attribute_value_integer)
+	delete(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, attribute_value_integer)
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs_mapString, attribute_value_integer.Name)
 
 	return attribute_value_integer
@@ -6366,6 +6405,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage) *A
 // UnstageVoid removes attribute_value_integer off the model stage
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs, attribute_value_integer)
+	delete(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, attribute_value_integer)
 	delete(stage.ATTRIBUTE_VALUE_INTEGERs_mapString, attribute_value_integer.Name)
 }
 
@@ -6442,6 +6482,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) StagePreserveOrder(stage *Stag
 // Unstage removes attribute_value_real off the model stage
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *ATTRIBUTE_VALUE_REAL {
 	delete(stage.ATTRIBUTE_VALUE_REALs, attribute_value_real)
+	delete(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order, attribute_value_real)
 	delete(stage.ATTRIBUTE_VALUE_REALs_mapString, attribute_value_real.Name)
 
 	return attribute_value_real
@@ -6450,6 +6491,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *ATTRIBU
 // UnstageVoid removes attribute_value_real off the model stage
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_REALs, attribute_value_real)
+	delete(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order, attribute_value_real)
 	delete(stage.ATTRIBUTE_VALUE_REALs_mapString, attribute_value_real.Name)
 }
 
@@ -6526,6 +6568,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) StagePreserveOrder(stage *
 // Unstage removes attribute_value_string off the model stage
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) *ATTRIBUTE_VALUE_STRING {
 	delete(stage.ATTRIBUTE_VALUE_STRINGs, attribute_value_string)
+	delete(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order, attribute_value_string)
 	delete(stage.ATTRIBUTE_VALUE_STRINGs_mapString, attribute_value_string.Name)
 
 	return attribute_value_string
@@ -6534,6 +6577,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) *ATT
 // UnstageVoid removes attribute_value_string off the model stage
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_STRINGs, attribute_value_string)
+	delete(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order, attribute_value_string)
 	delete(stage.ATTRIBUTE_VALUE_STRINGs_mapString, attribute_value_string.Name)
 }
 
@@ -6610,6 +6654,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) StagePreserveOrder(stage *St
 // Unstage removes attribute_value_xhtml off the model stage
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *ATTRIBUTE_VALUE_XHTML {
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs, attribute_value_xhtml)
+	delete(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, attribute_value_xhtml)
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs_mapString, attribute_value_xhtml.Name)
 
 	return attribute_value_xhtml
@@ -6618,6 +6663,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *ATTRI
 // UnstageVoid removes attribute_value_xhtml off the model stage
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) UnstageVoid(stage *Stage) {
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs, attribute_value_xhtml)
+	delete(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, attribute_value_xhtml)
 	delete(stage.ATTRIBUTE_VALUE_XHTMLs_mapString, attribute_value_xhtml.Name)
 }
 
@@ -6694,6 +6740,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) StagePreserveOrder(stage *Stage, order
 // Unstage removes a_alternative_id off the model stage
 func (a_alternative_id *A_ALTERNATIVE_ID) Unstage(stage *Stage) *A_ALTERNATIVE_ID {
 	delete(stage.A_ALTERNATIVE_IDs, a_alternative_id)
+	delete(stage.A_ALTERNATIVE_IDMap_Staged_Order, a_alternative_id)
 	delete(stage.A_ALTERNATIVE_IDs_mapString, a_alternative_id.Name)
 
 	return a_alternative_id
@@ -6702,6 +6749,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Unstage(stage *Stage) *A_ALTERNATIVE_I
 // UnstageVoid removes a_alternative_id off the model stage
 func (a_alternative_id *A_ALTERNATIVE_ID) UnstageVoid(stage *Stage) {
 	delete(stage.A_ALTERNATIVE_IDs, a_alternative_id)
+	delete(stage.A_ALTERNATIVE_IDMap_Staged_Order, a_alternative_id)
 	delete(stage.A_ALTERNATIVE_IDs_mapString, a_alternative_id.Name)
 }
 
@@ -6778,6 +6826,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) St
 // Unstage removes a_attribute_definition_boolean_ref off the model stage
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs, a_attribute_definition_boolean_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order, a_attribute_definition_boolean_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString, a_attribute_definition_boolean_ref.Name)
 
 	return a_attribute_definition_boolean_ref
@@ -6786,6 +6835,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Un
 // UnstageVoid removes a_attribute_definition_boolean_ref off the model stage
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs, a_attribute_definition_boolean_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order, a_attribute_definition_boolean_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString, a_attribute_definition_boolean_ref.Name)
 }
 
@@ -6862,6 +6912,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) StagePre
 // Unstage removes a_attribute_definition_date_ref off the model stage
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_DATE_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs, a_attribute_definition_date_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order, a_attribute_definition_date_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString, a_attribute_definition_date_ref.Name)
 
 	return a_attribute_definition_date_ref
@@ -6870,6 +6921,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Unstage(
 // UnstageVoid removes a_attribute_definition_date_ref off the model stage
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs, a_attribute_definition_date_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order, a_attribute_definition_date_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString, a_attribute_definition_date_ref.Name)
 }
 
@@ -6946,6 +6998,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 // Unstage removes a_attribute_definition_enumeration_ref off the model stage
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs, a_attribute_definition_enumeration_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order, a_attribute_definition_enumeration_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString, a_attribute_definition_enumeration_ref.Name)
 
 	return a_attribute_definition_enumeration_ref
@@ -6954,6 +7007,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 // UnstageVoid removes a_attribute_definition_enumeration_ref off the model stage
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs, a_attribute_definition_enumeration_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order, a_attribute_definition_enumeration_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString, a_attribute_definition_enumeration_ref.Name)
 }
 
@@ -7030,6 +7084,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) St
 // Unstage removes a_attribute_definition_integer_ref off the model stage
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_INTEGER_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs, a_attribute_definition_integer_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order, a_attribute_definition_integer_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString, a_attribute_definition_integer_ref.Name)
 
 	return a_attribute_definition_integer_ref
@@ -7038,6 +7093,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Un
 // UnstageVoid removes a_attribute_definition_integer_ref off the model stage
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs, a_attribute_definition_integer_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order, a_attribute_definition_integer_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString, a_attribute_definition_integer_ref.Name)
 }
 
@@ -7114,6 +7170,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) StagePre
 // Unstage removes a_attribute_definition_real_ref off the model stage
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_REAL_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs, a_attribute_definition_real_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order, a_attribute_definition_real_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString, a_attribute_definition_real_ref.Name)
 
 	return a_attribute_definition_real_ref
@@ -7122,6 +7179,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Unstage(
 // UnstageVoid removes a_attribute_definition_real_ref off the model stage
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs, a_attribute_definition_real_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order, a_attribute_definition_real_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString, a_attribute_definition_real_ref.Name)
 }
 
@@ -7198,6 +7256,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stag
 // Unstage removes a_attribute_definition_string_ref off the model stage
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_STRING_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs, a_attribute_definition_string_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order, a_attribute_definition_string_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString, a_attribute_definition_string_ref.Name)
 
 	return a_attribute_definition_string_ref
@@ -7206,6 +7265,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Unst
 // UnstageVoid removes a_attribute_definition_string_ref off the model stage
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs, a_attribute_definition_string_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order, a_attribute_definition_string_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString, a_attribute_definition_string_ref.Name)
 }
 
@@ -7282,6 +7342,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) StageP
 // Unstage removes a_attribute_definition_xhtml_ref off the model stage
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Unstage(stage *Stage) *A_ATTRIBUTE_DEFINITION_XHTML_REF {
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs, a_attribute_definition_xhtml_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order, a_attribute_definition_xhtml_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString, a_attribute_definition_xhtml_ref.Name)
 
 	return a_attribute_definition_xhtml_ref
@@ -7290,6 +7351,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Unstag
 // UnstageVoid removes a_attribute_definition_xhtml_ref off the model stage
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs, a_attribute_definition_xhtml_ref)
+	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order, a_attribute_definition_xhtml_ref)
 	delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString, a_attribute_definition_xhtml_ref.Name)
 }
 
@@ -7366,6 +7428,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) StagePreserveOrder(s
 // Unstage removes a_attribute_value_boolean off the model stage
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_BOOLEAN {
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs, a_attribute_value_boolean)
+	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, a_attribute_value_boolean)
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString, a_attribute_value_boolean.Name)
 
 	return a_attribute_value_boolean
@@ -7374,6 +7437,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Unstage(stage *Stage
 // UnstageVoid removes a_attribute_value_boolean off the model stage
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs, a_attribute_value_boolean)
+	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, a_attribute_value_boolean)
 	delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString, a_attribute_value_boolean.Name)
 }
 
@@ -7450,6 +7514,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) StagePreserveOrder(stage *
 // Unstage removes a_attribute_value_date off the model stage
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_DATE {
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs, a_attribute_value_date)
+	delete(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order, a_attribute_value_date)
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs_mapString, a_attribute_value_date.Name)
 
 	return a_attribute_value_date
@@ -7458,6 +7523,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Unstage(stage *Stage) *A_A
 // UnstageVoid removes a_attribute_value_date off the model stage
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs, a_attribute_value_date)
+	delete(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order, a_attribute_value_date)
 	delete(stage.A_ATTRIBUTE_VALUE_DATEs_mapString, a_attribute_value_date.Name)
 }
 
@@ -7534,6 +7600,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) StagePreserv
 // Unstage removes a_attribute_value_enumeration off the model stage
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_ENUMERATION {
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs, a_attribute_value_enumeration)
+	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, a_attribute_value_enumeration)
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString, a_attribute_value_enumeration.Name)
 
 	return a_attribute_value_enumeration
@@ -7542,6 +7609,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Unstage(stag
 // UnstageVoid removes a_attribute_value_enumeration off the model stage
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs, a_attribute_value_enumeration)
+	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, a_attribute_value_enumeration)
 	delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString, a_attribute_value_enumeration.Name)
 }
 
@@ -7618,6 +7686,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) StagePreserveOrder(s
 // Unstage removes a_attribute_value_integer off the model stage
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_INTEGER {
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs, a_attribute_value_integer)
+	delete(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, a_attribute_value_integer)
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString, a_attribute_value_integer.Name)
 
 	return a_attribute_value_integer
@@ -7626,6 +7695,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Unstage(stage *Stage
 // UnstageVoid removes a_attribute_value_integer off the model stage
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs, a_attribute_value_integer)
+	delete(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, a_attribute_value_integer)
 	delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString, a_attribute_value_integer.Name)
 }
 
@@ -7702,6 +7772,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) StagePreserveOrder(stage *
 // Unstage removes a_attribute_value_real off the model stage
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_REAL {
 	delete(stage.A_ATTRIBUTE_VALUE_REALs, a_attribute_value_real)
+	delete(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order, a_attribute_value_real)
 	delete(stage.A_ATTRIBUTE_VALUE_REALs_mapString, a_attribute_value_real.Name)
 
 	return a_attribute_value_real
@@ -7710,6 +7781,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Unstage(stage *Stage) *A_A
 // UnstageVoid removes a_attribute_value_real off the model stage
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_REALs, a_attribute_value_real)
+	delete(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order, a_attribute_value_real)
 	delete(stage.A_ATTRIBUTE_VALUE_REALs_mapString, a_attribute_value_real.Name)
 }
 
@@ -7786,6 +7858,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) StagePreserveOrder(sta
 // Unstage removes a_attribute_value_string off the model stage
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_STRING {
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs, a_attribute_value_string)
+	delete(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order, a_attribute_value_string)
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs_mapString, a_attribute_value_string.Name)
 
 	return a_attribute_value_string
@@ -7794,6 +7867,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Unstage(stage *Stage) 
 // UnstageVoid removes a_attribute_value_string off the model stage
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs, a_attribute_value_string)
+	delete(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order, a_attribute_value_string)
 	delete(stage.A_ATTRIBUTE_VALUE_STRINGs_mapString, a_attribute_value_string.Name)
 }
 
@@ -7870,6 +7944,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) StagePreserveOrder(stage
 // Unstage removes a_attribute_value_xhtml off the model stage
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML {
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs, a_attribute_value_xhtml)
+	delete(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, a_attribute_value_xhtml)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString, a_attribute_value_xhtml.Name)
 
 	return a_attribute_value_xhtml
@@ -7878,6 +7953,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Unstage(stage *Stage) *A
 // UnstageVoid removes a_attribute_value_xhtml off the model stage
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs, a_attribute_value_xhtml)
+	delete(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, a_attribute_value_xhtml)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString, a_attribute_value_xhtml.Name)
 }
 
@@ -7954,6 +8030,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) StagePreserveOrder(s
 // Unstage removes a_attribute_value_xhtml_1 off the model stage
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Unstage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML_1 {
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s, a_attribute_value_xhtml_1)
+	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order, a_attribute_value_xhtml_1)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString, a_attribute_value_xhtml_1.Name)
 
 	return a_attribute_value_xhtml_1
@@ -7962,6 +8039,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Unstage(stage *Stage
 // UnstageVoid removes a_attribute_value_xhtml_1 off the model stage
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) UnstageVoid(stage *Stage) {
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s, a_attribute_value_xhtml_1)
+	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order, a_attribute_value_xhtml_1)
 	delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString, a_attribute_value_xhtml_1.Name)
 }
 
@@ -8038,6 +8116,7 @@ func (a_children *A_CHILDREN) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_children off the model stage
 func (a_children *A_CHILDREN) Unstage(stage *Stage) *A_CHILDREN {
 	delete(stage.A_CHILDRENs, a_children)
+	delete(stage.A_CHILDRENMap_Staged_Order, a_children)
 	delete(stage.A_CHILDRENs_mapString, a_children.Name)
 
 	return a_children
@@ -8046,6 +8125,7 @@ func (a_children *A_CHILDREN) Unstage(stage *Stage) *A_CHILDREN {
 // UnstageVoid removes a_children off the model stage
 func (a_children *A_CHILDREN) UnstageVoid(stage *Stage) {
 	delete(stage.A_CHILDRENs, a_children)
+	delete(stage.A_CHILDRENMap_Staged_Order, a_children)
 	delete(stage.A_CHILDRENs_mapString, a_children.Name)
 }
 
@@ -8122,6 +8202,7 @@ func (a_core_content *A_CORE_CONTENT) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes a_core_content off the model stage
 func (a_core_content *A_CORE_CONTENT) Unstage(stage *Stage) *A_CORE_CONTENT {
 	delete(stage.A_CORE_CONTENTs, a_core_content)
+	delete(stage.A_CORE_CONTENTMap_Staged_Order, a_core_content)
 	delete(stage.A_CORE_CONTENTs_mapString, a_core_content.Name)
 
 	return a_core_content
@@ -8130,6 +8211,7 @@ func (a_core_content *A_CORE_CONTENT) Unstage(stage *Stage) *A_CORE_CONTENT {
 // UnstageVoid removes a_core_content off the model stage
 func (a_core_content *A_CORE_CONTENT) UnstageVoid(stage *Stage) {
 	delete(stage.A_CORE_CONTENTs, a_core_content)
+	delete(stage.A_CORE_CONTENTMap_Staged_Order, a_core_content)
 	delete(stage.A_CORE_CONTENTs_mapString, a_core_content.Name)
 }
 
@@ -8206,6 +8288,7 @@ func (a_datatypes *A_DATATYPES) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_datatypes off the model stage
 func (a_datatypes *A_DATATYPES) Unstage(stage *Stage) *A_DATATYPES {
 	delete(stage.A_DATATYPESs, a_datatypes)
+	delete(stage.A_DATATYPESMap_Staged_Order, a_datatypes)
 	delete(stage.A_DATATYPESs_mapString, a_datatypes.Name)
 
 	return a_datatypes
@@ -8214,6 +8297,7 @@ func (a_datatypes *A_DATATYPES) Unstage(stage *Stage) *A_DATATYPES {
 // UnstageVoid removes a_datatypes off the model stage
 func (a_datatypes *A_DATATYPES) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPESs, a_datatypes)
+	delete(stage.A_DATATYPESMap_Staged_Order, a_datatypes)
 	delete(stage.A_DATATYPESs_mapString, a_datatypes.Name)
 }
 
@@ -8290,6 +8374,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stag
 // Unstage removes a_datatype_definition_boolean_ref off the model stage
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_BOOLEAN_REF {
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs, a_datatype_definition_boolean_ref)
+	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order, a_datatype_definition_boolean_ref)
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString, a_datatype_definition_boolean_ref.Name)
 
 	return a_datatype_definition_boolean_ref
@@ -8298,6 +8383,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Unst
 // UnstageVoid removes a_datatype_definition_boolean_ref off the model stage
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs, a_datatype_definition_boolean_ref)
+	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order, a_datatype_definition_boolean_ref)
 	delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString, a_datatype_definition_boolean_ref.Name)
 }
 
@@ -8374,6 +8460,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) StagePrese
 // Unstage removes a_datatype_definition_date_ref off the model stage
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_DATE_REF {
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs, a_datatype_definition_date_ref)
+	delete(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order, a_datatype_definition_date_ref)
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString, a_datatype_definition_date_ref.Name)
 
 	return a_datatype_definition_date_ref
@@ -8382,6 +8469,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Unstage(st
 // UnstageVoid removes a_datatype_definition_date_ref off the model stage
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs, a_datatype_definition_date_ref)
+	delete(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order, a_datatype_definition_date_ref)
 	delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString, a_datatype_definition_date_ref.Name)
 }
 
@@ -8458,6 +8546,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 // Unstage removes a_datatype_definition_enumeration_ref off the model stage
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_ENUMERATION_REF {
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs, a_datatype_definition_enumeration_ref)
+	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order, a_datatype_definition_enumeration_ref)
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString, a_datatype_definition_enumeration_ref.Name)
 
 	return a_datatype_definition_enumeration_ref
@@ -8466,6 +8555,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 // UnstageVoid removes a_datatype_definition_enumeration_ref off the model stage
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs, a_datatype_definition_enumeration_ref)
+	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order, a_datatype_definition_enumeration_ref)
 	delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString, a_datatype_definition_enumeration_ref.Name)
 }
 
@@ -8542,6 +8632,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stag
 // Unstage removes a_datatype_definition_integer_ref off the model stage
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_INTEGER_REF {
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs, a_datatype_definition_integer_ref)
+	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order, a_datatype_definition_integer_ref)
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString, a_datatype_definition_integer_ref.Name)
 
 	return a_datatype_definition_integer_ref
@@ -8550,6 +8641,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Unst
 // UnstageVoid removes a_datatype_definition_integer_ref off the model stage
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs, a_datatype_definition_integer_ref)
+	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order, a_datatype_definition_integer_ref)
 	delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString, a_datatype_definition_integer_ref.Name)
 }
 
@@ -8626,6 +8718,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) StagePrese
 // Unstage removes a_datatype_definition_real_ref off the model stage
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_REAL_REF {
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs, a_datatype_definition_real_ref)
+	delete(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order, a_datatype_definition_real_ref)
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString, a_datatype_definition_real_ref.Name)
 
 	return a_datatype_definition_real_ref
@@ -8634,6 +8727,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Unstage(st
 // UnstageVoid removes a_datatype_definition_real_ref off the model stage
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs, a_datatype_definition_real_ref)
+	delete(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order, a_datatype_definition_real_ref)
 	delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString, a_datatype_definition_real_ref.Name)
 }
 
@@ -8710,6 +8804,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) StageP
 // Unstage removes a_datatype_definition_string_ref off the model stage
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_STRING_REF {
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs, a_datatype_definition_string_ref)
+	delete(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order, a_datatype_definition_string_ref)
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString, a_datatype_definition_string_ref.Name)
 
 	return a_datatype_definition_string_ref
@@ -8718,6 +8813,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Unstag
 // UnstageVoid removes a_datatype_definition_string_ref off the model stage
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs, a_datatype_definition_string_ref)
+	delete(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order, a_datatype_definition_string_ref)
 	delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString, a_datatype_definition_string_ref.Name)
 }
 
@@ -8794,6 +8890,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) StagePre
 // Unstage removes a_datatype_definition_xhtml_ref off the model stage
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Unstage(stage *Stage) *A_DATATYPE_DEFINITION_XHTML_REF {
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs, a_datatype_definition_xhtml_ref)
+	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order, a_datatype_definition_xhtml_ref)
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString, a_datatype_definition_xhtml_ref.Name)
 
 	return a_datatype_definition_xhtml_ref
@@ -8802,6 +8899,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Unstage(
 // UnstageVoid removes a_datatype_definition_xhtml_ref off the model stage
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs, a_datatype_definition_xhtml_ref)
+	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order, a_datatype_definition_xhtml_ref)
 	delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString, a_datatype_definition_xhtml_ref.Name)
 }
 
@@ -8878,6 +8976,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) StagePreserveOrder(stage *Stage, order u
 // Unstage removes a_editable_atts off the model stage
 func (a_editable_atts *A_EDITABLE_ATTS) Unstage(stage *Stage) *A_EDITABLE_ATTS {
 	delete(stage.A_EDITABLE_ATTSs, a_editable_atts)
+	delete(stage.A_EDITABLE_ATTSMap_Staged_Order, a_editable_atts)
 	delete(stage.A_EDITABLE_ATTSs_mapString, a_editable_atts.Name)
 
 	return a_editable_atts
@@ -8886,6 +8985,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) Unstage(stage *Stage) *A_EDITABLE_ATTS {
 // UnstageVoid removes a_editable_atts off the model stage
 func (a_editable_atts *A_EDITABLE_ATTS) UnstageVoid(stage *Stage) {
 	delete(stage.A_EDITABLE_ATTSs, a_editable_atts)
+	delete(stage.A_EDITABLE_ATTSMap_Staged_Order, a_editable_atts)
 	delete(stage.A_EDITABLE_ATTSs_mapString, a_editable_atts.Name)
 }
 
@@ -8962,6 +9062,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) StagePreserveOrder(stage *Stage, order
 // Unstage removes a_enum_value_ref off the model stage
 func (a_enum_value_ref *A_ENUM_VALUE_REF) Unstage(stage *Stage) *A_ENUM_VALUE_REF {
 	delete(stage.A_ENUM_VALUE_REFs, a_enum_value_ref)
+	delete(stage.A_ENUM_VALUE_REFMap_Staged_Order, a_enum_value_ref)
 	delete(stage.A_ENUM_VALUE_REFs_mapString, a_enum_value_ref.Name)
 
 	return a_enum_value_ref
@@ -8970,6 +9071,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Unstage(stage *Stage) *A_ENUM_VALUE_RE
 // UnstageVoid removes a_enum_value_ref off the model stage
 func (a_enum_value_ref *A_ENUM_VALUE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_ENUM_VALUE_REFs, a_enum_value_ref)
+	delete(stage.A_ENUM_VALUE_REFMap_Staged_Order, a_enum_value_ref)
 	delete(stage.A_ENUM_VALUE_REFs_mapString, a_enum_value_ref.Name)
 }
 
@@ -9046,6 +9148,7 @@ func (a_object *A_OBJECT) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_object off the model stage
 func (a_object *A_OBJECT) Unstage(stage *Stage) *A_OBJECT {
 	delete(stage.A_OBJECTs, a_object)
+	delete(stage.A_OBJECTMap_Staged_Order, a_object)
 	delete(stage.A_OBJECTs_mapString, a_object.Name)
 
 	return a_object
@@ -9054,6 +9157,7 @@ func (a_object *A_OBJECT) Unstage(stage *Stage) *A_OBJECT {
 // UnstageVoid removes a_object off the model stage
 func (a_object *A_OBJECT) UnstageVoid(stage *Stage) {
 	delete(stage.A_OBJECTs, a_object)
+	delete(stage.A_OBJECTMap_Staged_Order, a_object)
 	delete(stage.A_OBJECTs_mapString, a_object.Name)
 }
 
@@ -9130,6 +9234,7 @@ func (a_properties *A_PROPERTIES) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_properties off the model stage
 func (a_properties *A_PROPERTIES) Unstage(stage *Stage) *A_PROPERTIES {
 	delete(stage.A_PROPERTIESs, a_properties)
+	delete(stage.A_PROPERTIESMap_Staged_Order, a_properties)
 	delete(stage.A_PROPERTIESs_mapString, a_properties.Name)
 
 	return a_properties
@@ -9138,6 +9243,7 @@ func (a_properties *A_PROPERTIES) Unstage(stage *Stage) *A_PROPERTIES {
 // UnstageVoid removes a_properties off the model stage
 func (a_properties *A_PROPERTIES) UnstageVoid(stage *Stage) {
 	delete(stage.A_PROPERTIESs, a_properties)
+	delete(stage.A_PROPERTIESMap_Staged_Order, a_properties)
 	delete(stage.A_PROPERTIESs_mapString, a_properties.Name)
 }
 
@@ -9214,6 +9320,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) StagePreserveOrder(s
 // Unstage removes a_relation_group_type_ref off the model stage
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Unstage(stage *Stage) *A_RELATION_GROUP_TYPE_REF {
 	delete(stage.A_RELATION_GROUP_TYPE_REFs, a_relation_group_type_ref)
+	delete(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order, a_relation_group_type_ref)
 	delete(stage.A_RELATION_GROUP_TYPE_REFs_mapString, a_relation_group_type_ref.Name)
 
 	return a_relation_group_type_ref
@@ -9222,6 +9329,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Unstage(stage *Stage
 // UnstageVoid removes a_relation_group_type_ref off the model stage
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_RELATION_GROUP_TYPE_REFs, a_relation_group_type_ref)
+	delete(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order, a_relation_group_type_ref)
 	delete(stage.A_RELATION_GROUP_TYPE_REFs_mapString, a_relation_group_type_ref.Name)
 }
 
@@ -9298,6 +9406,7 @@ func (a_source_1 *A_SOURCE_1) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_source_1 off the model stage
 func (a_source_1 *A_SOURCE_1) Unstage(stage *Stage) *A_SOURCE_1 {
 	delete(stage.A_SOURCE_1s, a_source_1)
+	delete(stage.A_SOURCE_1Map_Staged_Order, a_source_1)
 	delete(stage.A_SOURCE_1s_mapString, a_source_1.Name)
 
 	return a_source_1
@@ -9306,6 +9415,7 @@ func (a_source_1 *A_SOURCE_1) Unstage(stage *Stage) *A_SOURCE_1 {
 // UnstageVoid removes a_source_1 off the model stage
 func (a_source_1 *A_SOURCE_1) UnstageVoid(stage *Stage) {
 	delete(stage.A_SOURCE_1s, a_source_1)
+	delete(stage.A_SOURCE_1Map_Staged_Order, a_source_1)
 	delete(stage.A_SOURCE_1s_mapString, a_source_1.Name)
 }
 
@@ -9382,6 +9492,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) StagePreserveOrder(sta
 // Unstage removes a_source_specification_1 off the model stage
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Unstage(stage *Stage) *A_SOURCE_SPECIFICATION_1 {
 	delete(stage.A_SOURCE_SPECIFICATION_1s, a_source_specification_1)
+	delete(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order, a_source_specification_1)
 	delete(stage.A_SOURCE_SPECIFICATION_1s_mapString, a_source_specification_1.Name)
 
 	return a_source_specification_1
@@ -9390,6 +9501,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Unstage(stage *Stage) 
 // UnstageVoid removes a_source_specification_1 off the model stage
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) UnstageVoid(stage *Stage) {
 	delete(stage.A_SOURCE_SPECIFICATION_1s, a_source_specification_1)
+	delete(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order, a_source_specification_1)
 	delete(stage.A_SOURCE_SPECIFICATION_1s_mapString, a_source_specification_1.Name)
 }
 
@@ -9466,6 +9578,7 @@ func (a_specifications *A_SPECIFICATIONS) StagePreserveOrder(stage *Stage, order
 // Unstage removes a_specifications off the model stage
 func (a_specifications *A_SPECIFICATIONS) Unstage(stage *Stage) *A_SPECIFICATIONS {
 	delete(stage.A_SPECIFICATIONSs, a_specifications)
+	delete(stage.A_SPECIFICATIONSMap_Staged_Order, a_specifications)
 	delete(stage.A_SPECIFICATIONSs_mapString, a_specifications.Name)
 
 	return a_specifications
@@ -9474,6 +9587,7 @@ func (a_specifications *A_SPECIFICATIONS) Unstage(stage *Stage) *A_SPECIFICATION
 // UnstageVoid removes a_specifications off the model stage
 func (a_specifications *A_SPECIFICATIONS) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPECIFICATIONSs, a_specifications)
+	delete(stage.A_SPECIFICATIONSMap_Staged_Order, a_specifications)
 	delete(stage.A_SPECIFICATIONSs_mapString, a_specifications.Name)
 }
 
@@ -9550,6 +9664,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) StagePreserveOrder(sta
 // Unstage removes a_specification_type_ref off the model stage
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Unstage(stage *Stage) *A_SPECIFICATION_TYPE_REF {
 	delete(stage.A_SPECIFICATION_TYPE_REFs, a_specification_type_ref)
+	delete(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order, a_specification_type_ref)
 	delete(stage.A_SPECIFICATION_TYPE_REFs_mapString, a_specification_type_ref.Name)
 
 	return a_specification_type_ref
@@ -9558,6 +9673,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Unstage(stage *Stage) 
 // UnstageVoid removes a_specification_type_ref off the model stage
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPECIFICATION_TYPE_REFs, a_specification_type_ref)
+	delete(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order, a_specification_type_ref)
 	delete(stage.A_SPECIFICATION_TYPE_REFs_mapString, a_specification_type_ref.Name)
 }
 
@@ -9634,6 +9750,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) StagePreserveOrder(stage *Stage, o
 // Unstage removes a_specified_values off the model stage
 func (a_specified_values *A_SPECIFIED_VALUES) Unstage(stage *Stage) *A_SPECIFIED_VALUES {
 	delete(stage.A_SPECIFIED_VALUESs, a_specified_values)
+	delete(stage.A_SPECIFIED_VALUESMap_Staged_Order, a_specified_values)
 	delete(stage.A_SPECIFIED_VALUESs_mapString, a_specified_values.Name)
 
 	return a_specified_values
@@ -9642,6 +9759,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) Unstage(stage *Stage) *A_SPECIFIED
 // UnstageVoid removes a_specified_values off the model stage
 func (a_specified_values *A_SPECIFIED_VALUES) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPECIFIED_VALUESs, a_specified_values)
+	delete(stage.A_SPECIFIED_VALUESMap_Staged_Order, a_specified_values)
 	delete(stage.A_SPECIFIED_VALUESs_mapString, a_specified_values.Name)
 }
 
@@ -9718,6 +9836,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) StagePreserveOrder(stage *Stage, ord
 // Unstage removes a_spec_attributes off the model stage
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) Unstage(stage *Stage) *A_SPEC_ATTRIBUTES {
 	delete(stage.A_SPEC_ATTRIBUTESs, a_spec_attributes)
+	delete(stage.A_SPEC_ATTRIBUTESMap_Staged_Order, a_spec_attributes)
 	delete(stage.A_SPEC_ATTRIBUTESs_mapString, a_spec_attributes.Name)
 
 	return a_spec_attributes
@@ -9726,6 +9845,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Unstage(stage *Stage) *A_SPEC_ATTRIB
 // UnstageVoid removes a_spec_attributes off the model stage
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_ATTRIBUTESs, a_spec_attributes)
+	delete(stage.A_SPEC_ATTRIBUTESMap_Staged_Order, a_spec_attributes)
 	delete(stage.A_SPEC_ATTRIBUTESs_mapString, a_spec_attributes.Name)
 }
 
@@ -9802,6 +9922,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes a_spec_objects off the model stage
 func (a_spec_objects *A_SPEC_OBJECTS) Unstage(stage *Stage) *A_SPEC_OBJECTS {
 	delete(stage.A_SPEC_OBJECTSs, a_spec_objects)
+	delete(stage.A_SPEC_OBJECTSMap_Staged_Order, a_spec_objects)
 	delete(stage.A_SPEC_OBJECTSs_mapString, a_spec_objects.Name)
 
 	return a_spec_objects
@@ -9810,6 +9931,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) Unstage(stage *Stage) *A_SPEC_OBJECTS {
 // UnstageVoid removes a_spec_objects off the model stage
 func (a_spec_objects *A_SPEC_OBJECTS) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_OBJECTSs, a_spec_objects)
+	delete(stage.A_SPEC_OBJECTSMap_Staged_Order, a_spec_objects)
 	delete(stage.A_SPEC_OBJECTSs_mapString, a_spec_objects.Name)
 }
 
@@ -9886,6 +10008,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) StagePreserveOrder(stage *
 // Unstage removes a_spec_object_type_ref off the model stage
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Unstage(stage *Stage) *A_SPEC_OBJECT_TYPE_REF {
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs, a_spec_object_type_ref)
+	delete(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order, a_spec_object_type_ref)
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs_mapString, a_spec_object_type_ref.Name)
 
 	return a_spec_object_type_ref
@@ -9894,6 +10017,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Unstage(stage *Stage) *A_S
 // UnstageVoid removes a_spec_object_type_ref off the model stage
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs, a_spec_object_type_ref)
+	delete(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order, a_spec_object_type_ref)
 	delete(stage.A_SPEC_OBJECT_TYPE_REFs_mapString, a_spec_object_type_ref.Name)
 }
 
@@ -9970,6 +10094,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) StagePreserveOrder(stage *Stage, order
 // Unstage removes a_spec_relations off the model stage
 func (a_spec_relations *A_SPEC_RELATIONS) Unstage(stage *Stage) *A_SPEC_RELATIONS {
 	delete(stage.A_SPEC_RELATIONSs, a_spec_relations)
+	delete(stage.A_SPEC_RELATIONSMap_Staged_Order, a_spec_relations)
 	delete(stage.A_SPEC_RELATIONSs_mapString, a_spec_relations.Name)
 
 	return a_spec_relations
@@ -9978,6 +10103,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) Unstage(stage *Stage) *A_SPEC_RELATION
 // UnstageVoid removes a_spec_relations off the model stage
 func (a_spec_relations *A_SPEC_RELATIONS) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_RELATIONSs, a_spec_relations)
+	delete(stage.A_SPEC_RELATIONSMap_Staged_Order, a_spec_relations)
 	delete(stage.A_SPEC_RELATIONSs_mapString, a_spec_relations.Name)
 }
 
@@ -10054,6 +10180,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) StagePreserveOrder(stage *
 // Unstage removes a_spec_relation_groups off the model stage
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Unstage(stage *Stage) *A_SPEC_RELATION_GROUPS {
 	delete(stage.A_SPEC_RELATION_GROUPSs, a_spec_relation_groups)
+	delete(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order, a_spec_relation_groups)
 	delete(stage.A_SPEC_RELATION_GROUPSs_mapString, a_spec_relation_groups.Name)
 
 	return a_spec_relation_groups
@@ -10062,6 +10189,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Unstage(stage *Stage) *A_S
 // UnstageVoid removes a_spec_relation_groups off the model stage
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_RELATION_GROUPSs, a_spec_relation_groups)
+	delete(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order, a_spec_relation_groups)
 	delete(stage.A_SPEC_RELATION_GROUPSs_mapString, a_spec_relation_groups.Name)
 }
 
@@ -10138,6 +10266,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) StagePreserveOrder(stage *Stage,
 // Unstage removes a_spec_relation_ref off the model stage
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) Unstage(stage *Stage) *A_SPEC_RELATION_REF {
 	delete(stage.A_SPEC_RELATION_REFs, a_spec_relation_ref)
+	delete(stage.A_SPEC_RELATION_REFMap_Staged_Order, a_spec_relation_ref)
 	delete(stage.A_SPEC_RELATION_REFs_mapString, a_spec_relation_ref.Name)
 
 	return a_spec_relation_ref
@@ -10146,6 +10275,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Unstage(stage *Stage) *A_SPEC_RE
 // UnstageVoid removes a_spec_relation_ref off the model stage
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_RELATION_REFs, a_spec_relation_ref)
+	delete(stage.A_SPEC_RELATION_REFMap_Staged_Order, a_spec_relation_ref)
 	delete(stage.A_SPEC_RELATION_REFs_mapString, a_spec_relation_ref.Name)
 }
 
@@ -10222,6 +10352,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) StagePreserveOrder(sta
 // Unstage removes a_spec_relation_type_ref off the model stage
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Unstage(stage *Stage) *A_SPEC_RELATION_TYPE_REF {
 	delete(stage.A_SPEC_RELATION_TYPE_REFs, a_spec_relation_type_ref)
+	delete(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order, a_spec_relation_type_ref)
 	delete(stage.A_SPEC_RELATION_TYPE_REFs_mapString, a_spec_relation_type_ref.Name)
 
 	return a_spec_relation_type_ref
@@ -10230,6 +10361,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Unstage(stage *Stage) 
 // UnstageVoid removes a_spec_relation_type_ref off the model stage
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_RELATION_TYPE_REFs, a_spec_relation_type_ref)
+	delete(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order, a_spec_relation_type_ref)
 	delete(stage.A_SPEC_RELATION_TYPE_REFs_mapString, a_spec_relation_type_ref.Name)
 }
 
@@ -10306,6 +10438,7 @@ func (a_spec_types *A_SPEC_TYPES) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_spec_types off the model stage
 func (a_spec_types *A_SPEC_TYPES) Unstage(stage *Stage) *A_SPEC_TYPES {
 	delete(stage.A_SPEC_TYPESs, a_spec_types)
+	delete(stage.A_SPEC_TYPESMap_Staged_Order, a_spec_types)
 	delete(stage.A_SPEC_TYPESs_mapString, a_spec_types.Name)
 
 	return a_spec_types
@@ -10314,6 +10447,7 @@ func (a_spec_types *A_SPEC_TYPES) Unstage(stage *Stage) *A_SPEC_TYPES {
 // UnstageVoid removes a_spec_types off the model stage
 func (a_spec_types *A_SPEC_TYPES) UnstageVoid(stage *Stage) {
 	delete(stage.A_SPEC_TYPESs, a_spec_types)
+	delete(stage.A_SPEC_TYPESMap_Staged_Order, a_spec_types)
 	delete(stage.A_SPEC_TYPESs_mapString, a_spec_types.Name)
 }
 
@@ -10390,6 +10524,7 @@ func (a_the_header *A_THE_HEADER) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes a_the_header off the model stage
 func (a_the_header *A_THE_HEADER) Unstage(stage *Stage) *A_THE_HEADER {
 	delete(stage.A_THE_HEADERs, a_the_header)
+	delete(stage.A_THE_HEADERMap_Staged_Order, a_the_header)
 	delete(stage.A_THE_HEADERs_mapString, a_the_header.Name)
 
 	return a_the_header
@@ -10398,6 +10533,7 @@ func (a_the_header *A_THE_HEADER) Unstage(stage *Stage) *A_THE_HEADER {
 // UnstageVoid removes a_the_header off the model stage
 func (a_the_header *A_THE_HEADER) UnstageVoid(stage *Stage) {
 	delete(stage.A_THE_HEADERs, a_the_header)
+	delete(stage.A_THE_HEADERMap_Staged_Order, a_the_header)
 	delete(stage.A_THE_HEADERs_mapString, a_the_header.Name)
 }
 
@@ -10474,6 +10610,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) StagePreserveOrder(stage *Stage, ord
 // Unstage removes a_tool_extensions off the model stage
 func (a_tool_extensions *A_TOOL_EXTENSIONS) Unstage(stage *Stage) *A_TOOL_EXTENSIONS {
 	delete(stage.A_TOOL_EXTENSIONSs, a_tool_extensions)
+	delete(stage.A_TOOL_EXTENSIONSMap_Staged_Order, a_tool_extensions)
 	delete(stage.A_TOOL_EXTENSIONSs_mapString, a_tool_extensions.Name)
 
 	return a_tool_extensions
@@ -10482,6 +10619,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Unstage(stage *Stage) *A_TOOL_EXTENS
 // UnstageVoid removes a_tool_extensions off the model stage
 func (a_tool_extensions *A_TOOL_EXTENSIONS) UnstageVoid(stage *Stage) {
 	delete(stage.A_TOOL_EXTENSIONSs, a_tool_extensions)
+	delete(stage.A_TOOL_EXTENSIONSMap_Staged_Order, a_tool_extensions)
 	delete(stage.A_TOOL_EXTENSIONSs_mapString, a_tool_extensions.Name)
 }
 
@@ -10558,6 +10696,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) StagePreserveOrd
 // Unstage removes datatype_definition_boolean off the model stage
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Unstage(stage *Stage) *DATATYPE_DEFINITION_BOOLEAN {
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs, datatype_definition_boolean)
+	delete(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order, datatype_definition_boolean)
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs_mapString, datatype_definition_boolean.Name)
 
 	return datatype_definition_boolean
@@ -10566,6 +10705,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Unstage(stage *S
 // UnstageVoid removes datatype_definition_boolean off the model stage
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs, datatype_definition_boolean)
+	delete(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order, datatype_definition_boolean)
 	delete(stage.DATATYPE_DEFINITION_BOOLEANs_mapString, datatype_definition_boolean.Name)
 }
 
@@ -10642,6 +10782,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) StagePreserveOrder(sta
 // Unstage removes datatype_definition_date off the model stage
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Unstage(stage *Stage) *DATATYPE_DEFINITION_DATE {
 	delete(stage.DATATYPE_DEFINITION_DATEs, datatype_definition_date)
+	delete(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order, datatype_definition_date)
 	delete(stage.DATATYPE_DEFINITION_DATEs_mapString, datatype_definition_date.Name)
 
 	return datatype_definition_date
@@ -10650,6 +10791,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Unstage(stage *Stage) 
 // UnstageVoid removes datatype_definition_date off the model stage
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_DATEs, datatype_definition_date)
+	delete(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order, datatype_definition_date)
 	delete(stage.DATATYPE_DEFINITION_DATEs_mapString, datatype_definition_date.Name)
 }
 
@@ -10726,6 +10868,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) StagePre
 // Unstage removes datatype_definition_enumeration off the model stage
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Unstage(stage *Stage) *DATATYPE_DEFINITION_ENUMERATION {
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs, datatype_definition_enumeration)
+	delete(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order, datatype_definition_enumeration)
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString, datatype_definition_enumeration.Name)
 
 	return datatype_definition_enumeration
@@ -10734,6 +10877,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Unstage(
 // UnstageVoid removes datatype_definition_enumeration off the model stage
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs, datatype_definition_enumeration)
+	delete(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order, datatype_definition_enumeration)
 	delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString, datatype_definition_enumeration.Name)
 }
 
@@ -10810,6 +10954,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) StagePreserveOrd
 // Unstage removes datatype_definition_integer off the model stage
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Unstage(stage *Stage) *DATATYPE_DEFINITION_INTEGER {
 	delete(stage.DATATYPE_DEFINITION_INTEGERs, datatype_definition_integer)
+	delete(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order, datatype_definition_integer)
 	delete(stage.DATATYPE_DEFINITION_INTEGERs_mapString, datatype_definition_integer.Name)
 
 	return datatype_definition_integer
@@ -10818,6 +10963,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Unstage(stage *S
 // UnstageVoid removes datatype_definition_integer off the model stage
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_INTEGERs, datatype_definition_integer)
+	delete(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order, datatype_definition_integer)
 	delete(stage.DATATYPE_DEFINITION_INTEGERs_mapString, datatype_definition_integer.Name)
 }
 
@@ -10894,6 +11040,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) StagePreserveOrder(sta
 // Unstage removes datatype_definition_real off the model stage
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Unstage(stage *Stage) *DATATYPE_DEFINITION_REAL {
 	delete(stage.DATATYPE_DEFINITION_REALs, datatype_definition_real)
+	delete(stage.DATATYPE_DEFINITION_REALMap_Staged_Order, datatype_definition_real)
 	delete(stage.DATATYPE_DEFINITION_REALs_mapString, datatype_definition_real.Name)
 
 	return datatype_definition_real
@@ -10902,6 +11049,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Unstage(stage *Stage) 
 // UnstageVoid removes datatype_definition_real off the model stage
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_REALs, datatype_definition_real)
+	delete(stage.DATATYPE_DEFINITION_REALMap_Staged_Order, datatype_definition_real)
 	delete(stage.DATATYPE_DEFINITION_REALs_mapString, datatype_definition_real.Name)
 }
 
@@ -10978,6 +11126,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) StagePreserveOrder
 // Unstage removes datatype_definition_string off the model stage
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Unstage(stage *Stage) *DATATYPE_DEFINITION_STRING {
 	delete(stage.DATATYPE_DEFINITION_STRINGs, datatype_definition_string)
+	delete(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order, datatype_definition_string)
 	delete(stage.DATATYPE_DEFINITION_STRINGs_mapString, datatype_definition_string.Name)
 
 	return datatype_definition_string
@@ -10986,6 +11135,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Unstage(stage *Sta
 // UnstageVoid removes datatype_definition_string off the model stage
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_STRINGs, datatype_definition_string)
+	delete(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order, datatype_definition_string)
 	delete(stage.DATATYPE_DEFINITION_STRINGs_mapString, datatype_definition_string.Name)
 }
 
@@ -11062,6 +11212,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) StagePreserveOrder(s
 // Unstage removes datatype_definition_xhtml off the model stage
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Unstage(stage *Stage) *DATATYPE_DEFINITION_XHTML {
 	delete(stage.DATATYPE_DEFINITION_XHTMLs, datatype_definition_xhtml)
+	delete(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order, datatype_definition_xhtml)
 	delete(stage.DATATYPE_DEFINITION_XHTMLs_mapString, datatype_definition_xhtml.Name)
 
 	return datatype_definition_xhtml
@@ -11070,6 +11221,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Unstage(stage *Stage
 // UnstageVoid removes datatype_definition_xhtml off the model stage
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) UnstageVoid(stage *Stage) {
 	delete(stage.DATATYPE_DEFINITION_XHTMLs, datatype_definition_xhtml)
+	delete(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order, datatype_definition_xhtml)
 	delete(stage.DATATYPE_DEFINITION_XHTMLs_mapString, datatype_definition_xhtml.Name)
 }
 
@@ -11146,6 +11298,7 @@ func (embedded_value *EMBEDDED_VALUE) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes embedded_value off the model stage
 func (embedded_value *EMBEDDED_VALUE) Unstage(stage *Stage) *EMBEDDED_VALUE {
 	delete(stage.EMBEDDED_VALUEs, embedded_value)
+	delete(stage.EMBEDDED_VALUEMap_Staged_Order, embedded_value)
 	delete(stage.EMBEDDED_VALUEs_mapString, embedded_value.Name)
 
 	return embedded_value
@@ -11154,6 +11307,7 @@ func (embedded_value *EMBEDDED_VALUE) Unstage(stage *Stage) *EMBEDDED_VALUE {
 // UnstageVoid removes embedded_value off the model stage
 func (embedded_value *EMBEDDED_VALUE) UnstageVoid(stage *Stage) {
 	delete(stage.EMBEDDED_VALUEs, embedded_value)
+	delete(stage.EMBEDDED_VALUEMap_Staged_Order, embedded_value)
 	delete(stage.EMBEDDED_VALUEs_mapString, embedded_value.Name)
 }
 
@@ -11230,6 +11384,7 @@ func (enum_value *ENUM_VALUE) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes enum_value off the model stage
 func (enum_value *ENUM_VALUE) Unstage(stage *Stage) *ENUM_VALUE {
 	delete(stage.ENUM_VALUEs, enum_value)
+	delete(stage.ENUM_VALUEMap_Staged_Order, enum_value)
 	delete(stage.ENUM_VALUEs_mapString, enum_value.Name)
 
 	return enum_value
@@ -11238,6 +11393,7 @@ func (enum_value *ENUM_VALUE) Unstage(stage *Stage) *ENUM_VALUE {
 // UnstageVoid removes enum_value off the model stage
 func (enum_value *ENUM_VALUE) UnstageVoid(stage *Stage) {
 	delete(stage.ENUM_VALUEs, enum_value)
+	delete(stage.ENUM_VALUEMap_Staged_Order, enum_value)
 	delete(stage.ENUM_VALUEs_mapString, enum_value.Name)
 }
 
@@ -11314,6 +11470,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) StagePreserveOrder(stage *Stage, order
 // Unstage removes embeddedjpgimage off the model stage
 func (embeddedjpgimage *EmbeddedJpgImage) Unstage(stage *Stage) *EmbeddedJpgImage {
 	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
+	delete(stage.EmbeddedJpgImageMap_Staged_Order, embeddedjpgimage)
 	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
 
 	return embeddedjpgimage
@@ -11322,6 +11479,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) Unstage(stage *Stage) *EmbeddedJpgImag
 // UnstageVoid removes embeddedjpgimage off the model stage
 func (embeddedjpgimage *EmbeddedJpgImage) UnstageVoid(stage *Stage) {
 	delete(stage.EmbeddedJpgImages, embeddedjpgimage)
+	delete(stage.EmbeddedJpgImageMap_Staged_Order, embeddedjpgimage)
 	delete(stage.EmbeddedJpgImages_mapString, embeddedjpgimage.Name)
 }
 
@@ -11398,6 +11556,7 @@ func (embeddedpngimage *EmbeddedPngImage) StagePreserveOrder(stage *Stage, order
 // Unstage removes embeddedpngimage off the model stage
 func (embeddedpngimage *EmbeddedPngImage) Unstage(stage *Stage) *EmbeddedPngImage {
 	delete(stage.EmbeddedPngImages, embeddedpngimage)
+	delete(stage.EmbeddedPngImageMap_Staged_Order, embeddedpngimage)
 	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
 
 	return embeddedpngimage
@@ -11406,6 +11565,7 @@ func (embeddedpngimage *EmbeddedPngImage) Unstage(stage *Stage) *EmbeddedPngImag
 // UnstageVoid removes embeddedpngimage off the model stage
 func (embeddedpngimage *EmbeddedPngImage) UnstageVoid(stage *Stage) {
 	delete(stage.EmbeddedPngImages, embeddedpngimage)
+	delete(stage.EmbeddedPngImageMap_Staged_Order, embeddedpngimage)
 	delete(stage.EmbeddedPngImages_mapString, embeddedpngimage.Name)
 }
 
@@ -11482,6 +11642,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) StagePreserveOrder(stage *Stage, order
 // Unstage removes embeddedsvgimage off the model stage
 func (embeddedsvgimage *EmbeddedSvgImage) Unstage(stage *Stage) *EmbeddedSvgImage {
 	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
+	delete(stage.EmbeddedSvgImageMap_Staged_Order, embeddedsvgimage)
 	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
 
 	return embeddedsvgimage
@@ -11490,6 +11651,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) Unstage(stage *Stage) *EmbeddedSvgImag
 // UnstageVoid removes embeddedsvgimage off the model stage
 func (embeddedsvgimage *EmbeddedSvgImage) UnstageVoid(stage *Stage) {
 	delete(stage.EmbeddedSvgImages, embeddedsvgimage)
+	delete(stage.EmbeddedSvgImageMap_Staged_Order, embeddedsvgimage)
 	delete(stage.EmbeddedSvgImages_mapString, embeddedsvgimage.Name)
 }
 
@@ -11566,6 +11728,7 @@ func (kill *Kill) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes kill off the model stage
 func (kill *Kill) Unstage(stage *Stage) *Kill {
 	delete(stage.Kills, kill)
+	delete(stage.KillMap_Staged_Order, kill)
 	delete(stage.Kills_mapString, kill.Name)
 
 	return kill
@@ -11574,6 +11737,7 @@ func (kill *Kill) Unstage(stage *Stage) *Kill {
 // UnstageVoid removes kill off the model stage
 func (kill *Kill) UnstageVoid(stage *Stage) {
 	delete(stage.Kills, kill)
+	delete(stage.KillMap_Staged_Order, kill)
 	delete(stage.Kills_mapString, kill.Name)
 }
 
@@ -11650,6 +11814,7 @@ func (map_identifier_bool *Map_identifier_bool) StagePreserveOrder(stage *Stage,
 // Unstage removes map_identifier_bool off the model stage
 func (map_identifier_bool *Map_identifier_bool) Unstage(stage *Stage) *Map_identifier_bool {
 	delete(stage.Map_identifier_bools, map_identifier_bool)
+	delete(stage.Map_identifier_boolMap_Staged_Order, map_identifier_bool)
 	delete(stage.Map_identifier_bools_mapString, map_identifier_bool.Name)
 
 	return map_identifier_bool
@@ -11658,6 +11823,7 @@ func (map_identifier_bool *Map_identifier_bool) Unstage(stage *Stage) *Map_ident
 // UnstageVoid removes map_identifier_bool off the model stage
 func (map_identifier_bool *Map_identifier_bool) UnstageVoid(stage *Stage) {
 	delete(stage.Map_identifier_bools, map_identifier_bool)
+	delete(stage.Map_identifier_boolMap_Staged_Order, map_identifier_bool)
 	delete(stage.Map_identifier_bools_mapString, map_identifier_bool.Name)
 }
 
@@ -11734,6 +11900,7 @@ func (relation_group *RELATION_GROUP) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes relation_group off the model stage
 func (relation_group *RELATION_GROUP) Unstage(stage *Stage) *RELATION_GROUP {
 	delete(stage.RELATION_GROUPs, relation_group)
+	delete(stage.RELATION_GROUPMap_Staged_Order, relation_group)
 	delete(stage.RELATION_GROUPs_mapString, relation_group.Name)
 
 	return relation_group
@@ -11742,6 +11909,7 @@ func (relation_group *RELATION_GROUP) Unstage(stage *Stage) *RELATION_GROUP {
 // UnstageVoid removes relation_group off the model stage
 func (relation_group *RELATION_GROUP) UnstageVoid(stage *Stage) {
 	delete(stage.RELATION_GROUPs, relation_group)
+	delete(stage.RELATION_GROUPMap_Staged_Order, relation_group)
 	delete(stage.RELATION_GROUPs_mapString, relation_group.Name)
 }
 
@@ -11818,6 +11986,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) StagePreserveOrder(stage *Stage,
 // Unstage removes relation_group_type off the model stage
 func (relation_group_type *RELATION_GROUP_TYPE) Unstage(stage *Stage) *RELATION_GROUP_TYPE {
 	delete(stage.RELATION_GROUP_TYPEs, relation_group_type)
+	delete(stage.RELATION_GROUP_TYPEMap_Staged_Order, relation_group_type)
 	delete(stage.RELATION_GROUP_TYPEs_mapString, relation_group_type.Name)
 
 	return relation_group_type
@@ -11826,6 +11995,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) Unstage(stage *Stage) *RELATION_
 // UnstageVoid removes relation_group_type off the model stage
 func (relation_group_type *RELATION_GROUP_TYPE) UnstageVoid(stage *Stage) {
 	delete(stage.RELATION_GROUP_TYPEs, relation_group_type)
+	delete(stage.RELATION_GROUP_TYPEMap_Staged_Order, relation_group_type)
 	delete(stage.RELATION_GROUP_TYPEs_mapString, relation_group_type.Name)
 }
 
@@ -11902,6 +12072,7 @@ func (req_if *REQ_IF) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes req_if off the model stage
 func (req_if *REQ_IF) Unstage(stage *Stage) *REQ_IF {
 	delete(stage.REQ_IFs, req_if)
+	delete(stage.REQ_IFMap_Staged_Order, req_if)
 	delete(stage.REQ_IFs_mapString, req_if.Name)
 
 	return req_if
@@ -11910,6 +12081,7 @@ func (req_if *REQ_IF) Unstage(stage *Stage) *REQ_IF {
 // UnstageVoid removes req_if off the model stage
 func (req_if *REQ_IF) UnstageVoid(stage *Stage) {
 	delete(stage.REQ_IFs, req_if)
+	delete(stage.REQ_IFMap_Staged_Order, req_if)
 	delete(stage.REQ_IFs_mapString, req_if.Name)
 }
 
@@ -11986,6 +12158,7 @@ func (req_if_content *REQ_IF_CONTENT) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes req_if_content off the model stage
 func (req_if_content *REQ_IF_CONTENT) Unstage(stage *Stage) *REQ_IF_CONTENT {
 	delete(stage.REQ_IF_CONTENTs, req_if_content)
+	delete(stage.REQ_IF_CONTENTMap_Staged_Order, req_if_content)
 	delete(stage.REQ_IF_CONTENTs_mapString, req_if_content.Name)
 
 	return req_if_content
@@ -11994,6 +12167,7 @@ func (req_if_content *REQ_IF_CONTENT) Unstage(stage *Stage) *REQ_IF_CONTENT {
 // UnstageVoid removes req_if_content off the model stage
 func (req_if_content *REQ_IF_CONTENT) UnstageVoid(stage *Stage) {
 	delete(stage.REQ_IF_CONTENTs, req_if_content)
+	delete(stage.REQ_IF_CONTENTMap_Staged_Order, req_if_content)
 	delete(stage.REQ_IF_CONTENTs_mapString, req_if_content.Name)
 }
 
@@ -12070,6 +12244,7 @@ func (req_if_header *REQ_IF_HEADER) StagePreserveOrder(stage *Stage, order uint)
 // Unstage removes req_if_header off the model stage
 func (req_if_header *REQ_IF_HEADER) Unstage(stage *Stage) *REQ_IF_HEADER {
 	delete(stage.REQ_IF_HEADERs, req_if_header)
+	delete(stage.REQ_IF_HEADERMap_Staged_Order, req_if_header)
 	delete(stage.REQ_IF_HEADERs_mapString, req_if_header.Name)
 
 	return req_if_header
@@ -12078,6 +12253,7 @@ func (req_if_header *REQ_IF_HEADER) Unstage(stage *Stage) *REQ_IF_HEADER {
 // UnstageVoid removes req_if_header off the model stage
 func (req_if_header *REQ_IF_HEADER) UnstageVoid(stage *Stage) {
 	delete(stage.REQ_IF_HEADERs, req_if_header)
+	delete(stage.REQ_IF_HEADERMap_Staged_Order, req_if_header)
 	delete(stage.REQ_IF_HEADERs_mapString, req_if_header.Name)
 }
 
@@ -12154,6 +12330,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) StagePreserveOrder(stage *St
 // Unstage removes req_if_tool_extension off the model stage
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Unstage(stage *Stage) *REQ_IF_TOOL_EXTENSION {
 	delete(stage.REQ_IF_TOOL_EXTENSIONs, req_if_tool_extension)
+	delete(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order, req_if_tool_extension)
 	delete(stage.REQ_IF_TOOL_EXTENSIONs_mapString, req_if_tool_extension.Name)
 
 	return req_if_tool_extension
@@ -12162,6 +12339,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Unstage(stage *Stage) *REQ_I
 // UnstageVoid removes req_if_tool_extension off the model stage
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) UnstageVoid(stage *Stage) {
 	delete(stage.REQ_IF_TOOL_EXTENSIONs, req_if_tool_extension)
+	delete(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order, req_if_tool_extension)
 	delete(stage.REQ_IF_TOOL_EXTENSIONs_mapString, req_if_tool_extension.Name)
 }
 
@@ -12238,6 +12416,7 @@ func (specification *SPECIFICATION) StagePreserveOrder(stage *Stage, order uint)
 // Unstage removes specification off the model stage
 func (specification *SPECIFICATION) Unstage(stage *Stage) *SPECIFICATION {
 	delete(stage.SPECIFICATIONs, specification)
+	delete(stage.SPECIFICATIONMap_Staged_Order, specification)
 	delete(stage.SPECIFICATIONs_mapString, specification.Name)
 
 	return specification
@@ -12246,6 +12425,7 @@ func (specification *SPECIFICATION) Unstage(stage *Stage) *SPECIFICATION {
 // UnstageVoid removes specification off the model stage
 func (specification *SPECIFICATION) UnstageVoid(stage *Stage) {
 	delete(stage.SPECIFICATIONs, specification)
+	delete(stage.SPECIFICATIONMap_Staged_Order, specification)
 	delete(stage.SPECIFICATIONs_mapString, specification.Name)
 }
 
@@ -12322,6 +12502,7 @@ func (specification_rendering *SPECIFICATION_Rendering) StagePreserveOrder(stage
 // Unstage removes specification_rendering off the model stage
 func (specification_rendering *SPECIFICATION_Rendering) Unstage(stage *Stage) *SPECIFICATION_Rendering {
 	delete(stage.SPECIFICATION_Renderings, specification_rendering)
+	delete(stage.SPECIFICATION_RenderingMap_Staged_Order, specification_rendering)
 	delete(stage.SPECIFICATION_Renderings_mapString, specification_rendering.Name)
 
 	return specification_rendering
@@ -12330,6 +12511,7 @@ func (specification_rendering *SPECIFICATION_Rendering) Unstage(stage *Stage) *S
 // UnstageVoid removes specification_rendering off the model stage
 func (specification_rendering *SPECIFICATION_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.SPECIFICATION_Renderings, specification_rendering)
+	delete(stage.SPECIFICATION_RenderingMap_Staged_Order, specification_rendering)
 	delete(stage.SPECIFICATION_Renderings_mapString, specification_rendering.Name)
 }
 
@@ -12406,6 +12588,7 @@ func (specification_type *SPECIFICATION_TYPE) StagePreserveOrder(stage *Stage, o
 // Unstage removes specification_type off the model stage
 func (specification_type *SPECIFICATION_TYPE) Unstage(stage *Stage) *SPECIFICATION_TYPE {
 	delete(stage.SPECIFICATION_TYPEs, specification_type)
+	delete(stage.SPECIFICATION_TYPEMap_Staged_Order, specification_type)
 	delete(stage.SPECIFICATION_TYPEs_mapString, specification_type.Name)
 
 	return specification_type
@@ -12414,6 +12597,7 @@ func (specification_type *SPECIFICATION_TYPE) Unstage(stage *Stage) *SPECIFICATI
 // UnstageVoid removes specification_type off the model stage
 func (specification_type *SPECIFICATION_TYPE) UnstageVoid(stage *Stage) {
 	delete(stage.SPECIFICATION_TYPEs, specification_type)
+	delete(stage.SPECIFICATION_TYPEMap_Staged_Order, specification_type)
 	delete(stage.SPECIFICATION_TYPEs_mapString, specification_type.Name)
 }
 
@@ -12490,6 +12674,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) StagePreserveOrder(stage *Stage, order uin
 // Unstage removes spec_hierarchy off the model stage
 func (spec_hierarchy *SPEC_HIERARCHY) Unstage(stage *Stage) *SPEC_HIERARCHY {
 	delete(stage.SPEC_HIERARCHYs, spec_hierarchy)
+	delete(stage.SPEC_HIERARCHYMap_Staged_Order, spec_hierarchy)
 	delete(stage.SPEC_HIERARCHYs_mapString, spec_hierarchy.Name)
 
 	return spec_hierarchy
@@ -12498,6 +12683,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) Unstage(stage *Stage) *SPEC_HIERARCHY {
 // UnstageVoid removes spec_hierarchy off the model stage
 func (spec_hierarchy *SPEC_HIERARCHY) UnstageVoid(stage *Stage) {
 	delete(stage.SPEC_HIERARCHYs, spec_hierarchy)
+	delete(stage.SPEC_HIERARCHYMap_Staged_Order, spec_hierarchy)
 	delete(stage.SPEC_HIERARCHYs_mapString, spec_hierarchy.Name)
 }
 
@@ -12574,6 +12760,7 @@ func (spec_object *SPEC_OBJECT) StagePreserveOrder(stage *Stage, order uint) {
 // Unstage removes spec_object off the model stage
 func (spec_object *SPEC_OBJECT) Unstage(stage *Stage) *SPEC_OBJECT {
 	delete(stage.SPEC_OBJECTs, spec_object)
+	delete(stage.SPEC_OBJECTMap_Staged_Order, spec_object)
 	delete(stage.SPEC_OBJECTs_mapString, spec_object.Name)
 
 	return spec_object
@@ -12582,6 +12769,7 @@ func (spec_object *SPEC_OBJECT) Unstage(stage *Stage) *SPEC_OBJECT {
 // UnstageVoid removes spec_object off the model stage
 func (spec_object *SPEC_OBJECT) UnstageVoid(stage *Stage) {
 	delete(stage.SPEC_OBJECTs, spec_object)
+	delete(stage.SPEC_OBJECTMap_Staged_Order, spec_object)
 	delete(stage.SPEC_OBJECTs_mapString, spec_object.Name)
 }
 
@@ -12658,6 +12846,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) StagePreserveOrder(stage *Stage, order
 // Unstage removes spec_object_type off the model stage
 func (spec_object_type *SPEC_OBJECT_TYPE) Unstage(stage *Stage) *SPEC_OBJECT_TYPE {
 	delete(stage.SPEC_OBJECT_TYPEs, spec_object_type)
+	delete(stage.SPEC_OBJECT_TYPEMap_Staged_Order, spec_object_type)
 	delete(stage.SPEC_OBJECT_TYPEs_mapString, spec_object_type.Name)
 
 	return spec_object_type
@@ -12666,6 +12855,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Unstage(stage *Stage) *SPEC_OBJECT_TYP
 // UnstageVoid removes spec_object_type off the model stage
 func (spec_object_type *SPEC_OBJECT_TYPE) UnstageVoid(stage *Stage) {
 	delete(stage.SPEC_OBJECT_TYPEs, spec_object_type)
+	delete(stage.SPEC_OBJECT_TYPEMap_Staged_Order, spec_object_type)
 	delete(stage.SPEC_OBJECT_TYPEs_mapString, spec_object_type.Name)
 }
 
@@ -12742,6 +12932,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) StagePreserveOrder
 // Unstage removes spec_object_type_rendering off the model stage
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Unstage(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
 	delete(stage.SPEC_OBJECT_TYPE_Renderings, spec_object_type_rendering)
+	delete(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order, spec_object_type_rendering)
 	delete(stage.SPEC_OBJECT_TYPE_Renderings_mapString, spec_object_type_rendering.Name)
 
 	return spec_object_type_rendering
@@ -12750,6 +12941,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Unstage(stage *Sta
 // UnstageVoid removes spec_object_type_rendering off the model stage
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) UnstageVoid(stage *Stage) {
 	delete(stage.SPEC_OBJECT_TYPE_Renderings, spec_object_type_rendering)
+	delete(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order, spec_object_type_rendering)
 	delete(stage.SPEC_OBJECT_TYPE_Renderings_mapString, spec_object_type_rendering.Name)
 }
 
@@ -12826,6 +13018,7 @@ func (spec_relation *SPEC_RELATION) StagePreserveOrder(stage *Stage, order uint)
 // Unstage removes spec_relation off the model stage
 func (spec_relation *SPEC_RELATION) Unstage(stage *Stage) *SPEC_RELATION {
 	delete(stage.SPEC_RELATIONs, spec_relation)
+	delete(stage.SPEC_RELATIONMap_Staged_Order, spec_relation)
 	delete(stage.SPEC_RELATIONs_mapString, spec_relation.Name)
 
 	return spec_relation
@@ -12834,6 +13027,7 @@ func (spec_relation *SPEC_RELATION) Unstage(stage *Stage) *SPEC_RELATION {
 // UnstageVoid removes spec_relation off the model stage
 func (spec_relation *SPEC_RELATION) UnstageVoid(stage *Stage) {
 	delete(stage.SPEC_RELATIONs, spec_relation)
+	delete(stage.SPEC_RELATIONMap_Staged_Order, spec_relation)
 	delete(stage.SPEC_RELATIONs_mapString, spec_relation.Name)
 }
 
@@ -12910,6 +13104,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) StagePreserveOrder(stage *Stage, o
 // Unstage removes spec_relation_type off the model stage
 func (spec_relation_type *SPEC_RELATION_TYPE) Unstage(stage *Stage) *SPEC_RELATION_TYPE {
 	delete(stage.SPEC_RELATION_TYPEs, spec_relation_type)
+	delete(stage.SPEC_RELATION_TYPEMap_Staged_Order, spec_relation_type)
 	delete(stage.SPEC_RELATION_TYPEs_mapString, spec_relation_type.Name)
 
 	return spec_relation_type
@@ -12918,6 +13113,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Unstage(stage *Stage) *SPEC_RELATI
 // UnstageVoid removes spec_relation_type off the model stage
 func (spec_relation_type *SPEC_RELATION_TYPE) UnstageVoid(stage *Stage) {
 	delete(stage.SPEC_RELATION_TYPEs, spec_relation_type)
+	delete(stage.SPEC_RELATION_TYPEMap_Staged_Order, spec_relation_type)
 	delete(stage.SPEC_RELATION_TYPEs_mapString, spec_relation_type.Name)
 }
 
@@ -12994,6 +13190,7 @@ func (staticwebsite *StaticWebSite) StagePreserveOrder(stage *Stage, order uint)
 // Unstage removes staticwebsite off the model stage
 func (staticwebsite *StaticWebSite) Unstage(stage *Stage) *StaticWebSite {
 	delete(stage.StaticWebSites, staticwebsite)
+	delete(stage.StaticWebSiteMap_Staged_Order, staticwebsite)
 	delete(stage.StaticWebSites_mapString, staticwebsite.Name)
 
 	return staticwebsite
@@ -13002,6 +13199,7 @@ func (staticwebsite *StaticWebSite) Unstage(stage *Stage) *StaticWebSite {
 // UnstageVoid removes staticwebsite off the model stage
 func (staticwebsite *StaticWebSite) UnstageVoid(stage *Stage) {
 	delete(stage.StaticWebSites, staticwebsite)
+	delete(stage.StaticWebSiteMap_Staged_Order, staticwebsite)
 	delete(stage.StaticWebSites_mapString, staticwebsite.Name)
 }
 
@@ -13078,6 +13276,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) StagePreserveOrder(stage *Stag
 // Unstage removes staticwebsitechapter off the model stage
 func (staticwebsitechapter *StaticWebSiteChapter) Unstage(stage *Stage) *StaticWebSiteChapter {
 	delete(stage.StaticWebSiteChapters, staticwebsitechapter)
+	delete(stage.StaticWebSiteChapterMap_Staged_Order, staticwebsitechapter)
 	delete(stage.StaticWebSiteChapters_mapString, staticwebsitechapter.Name)
 
 	return staticwebsitechapter
@@ -13086,6 +13285,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) Unstage(stage *Stage) *StaticW
 // UnstageVoid removes staticwebsitechapter off the model stage
 func (staticwebsitechapter *StaticWebSiteChapter) UnstageVoid(stage *Stage) {
 	delete(stage.StaticWebSiteChapters, staticwebsitechapter)
+	delete(stage.StaticWebSiteChapterMap_Staged_Order, staticwebsitechapter)
 	delete(stage.StaticWebSiteChapters_mapString, staticwebsitechapter.Name)
 }
 
@@ -13162,6 +13362,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) StagePreserveOrd
 // Unstage removes staticwebsitegeneratedimage off the model stage
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Unstage(stage *Stage) *StaticWebSiteGeneratedImage {
 	delete(stage.StaticWebSiteGeneratedImages, staticwebsitegeneratedimage)
+	delete(stage.StaticWebSiteGeneratedImageMap_Staged_Order, staticwebsitegeneratedimage)
 	delete(stage.StaticWebSiteGeneratedImages_mapString, staticwebsitegeneratedimage.Name)
 
 	return staticwebsitegeneratedimage
@@ -13170,6 +13371,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Unstage(stage *S
 // UnstageVoid removes staticwebsitegeneratedimage off the model stage
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) UnstageVoid(stage *Stage) {
 	delete(stage.StaticWebSiteGeneratedImages, staticwebsitegeneratedimage)
+	delete(stage.StaticWebSiteGeneratedImageMap_Staged_Order, staticwebsitegeneratedimage)
 	delete(stage.StaticWebSiteGeneratedImages_mapString, staticwebsitegeneratedimage.Name)
 }
 
@@ -13246,6 +13448,7 @@ func (staticwebsiteimage *StaticWebSiteImage) StagePreserveOrder(stage *Stage, o
 // Unstage removes staticwebsiteimage off the model stage
 func (staticwebsiteimage *StaticWebSiteImage) Unstage(stage *Stage) *StaticWebSiteImage {
 	delete(stage.StaticWebSiteImages, staticwebsiteimage)
+	delete(stage.StaticWebSiteImageMap_Staged_Order, staticwebsiteimage)
 	delete(stage.StaticWebSiteImages_mapString, staticwebsiteimage.Name)
 
 	return staticwebsiteimage
@@ -13254,6 +13457,7 @@ func (staticwebsiteimage *StaticWebSiteImage) Unstage(stage *Stage) *StaticWebSi
 // UnstageVoid removes staticwebsiteimage off the model stage
 func (staticwebsiteimage *StaticWebSiteImage) UnstageVoid(stage *Stage) {
 	delete(stage.StaticWebSiteImages, staticwebsiteimage)
+	delete(stage.StaticWebSiteImageMap_Staged_Order, staticwebsiteimage)
 	delete(stage.StaticWebSiteImages_mapString, staticwebsiteimage.Name)
 }
 
@@ -13330,6 +13534,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) StagePreserveOrder(stage *
 // Unstage removes staticwebsiteparagraph off the model stage
 func (staticwebsiteparagraph *StaticWebSiteParagraph) Unstage(stage *Stage) *StaticWebSiteParagraph {
 	delete(stage.StaticWebSiteParagraphs, staticwebsiteparagraph)
+	delete(stage.StaticWebSiteParagraphMap_Staged_Order, staticwebsiteparagraph)
 	delete(stage.StaticWebSiteParagraphs_mapString, staticwebsiteparagraph.Name)
 
 	return staticwebsiteparagraph
@@ -13338,6 +13543,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Unstage(stage *Stage) *Sta
 // UnstageVoid removes staticwebsiteparagraph off the model stage
 func (staticwebsiteparagraph *StaticWebSiteParagraph) UnstageVoid(stage *Stage) {
 	delete(stage.StaticWebSiteParagraphs, staticwebsiteparagraph)
+	delete(stage.StaticWebSiteParagraphMap_Staged_Order, staticwebsiteparagraph)
 	delete(stage.StaticWebSiteParagraphs_mapString, staticwebsiteparagraph.Name)
 }
 
@@ -13414,6 +13620,7 @@ func (xhtml_content *XHTML_CONTENT) StagePreserveOrder(stage *Stage, order uint)
 // Unstage removes xhtml_content off the model stage
 func (xhtml_content *XHTML_CONTENT) Unstage(stage *Stage) *XHTML_CONTENT {
 	delete(stage.XHTML_CONTENTs, xhtml_content)
+	delete(stage.XHTML_CONTENTMap_Staged_Order, xhtml_content)
 	delete(stage.XHTML_CONTENTs_mapString, xhtml_content.Name)
 
 	return xhtml_content
@@ -13422,6 +13629,7 @@ func (xhtml_content *XHTML_CONTENT) Unstage(stage *Stage) *XHTML_CONTENT {
 // UnstageVoid removes xhtml_content off the model stage
 func (xhtml_content *XHTML_CONTENT) UnstageVoid(stage *Stage) {
 	delete(stage.XHTML_CONTENTs, xhtml_content)
+	delete(stage.XHTML_CONTENTMap_Staged_Order, xhtml_content)
 	delete(stage.XHTML_CONTENTs_mapString, xhtml_content.Name)
 }
 

@@ -5635,11 +5635,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(alternative_idOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ALTERNATIVE_ID instances pointers"
 	}
-	for idx, alternative_id := range alternative_idOrdered {
+	for _, alternative_id := range alternative_idOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ALTERNATIVE_ID", idx, alternative_id.Name)
+		id = generatesIdentifier("ALTERNATIVE_ID", int(stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]), alternative_id.Name)
 		map_ALTERNATIVE_ID_Identifiers[alternative_id] = id
 
 		// Initialisation of values
@@ -5648,11 +5648,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_booleanOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_BOOLEAN instances pointers"
 	}
-	for idx, attribute_definition_boolean := range attribute_definition_booleanOrdered {
+	for _, attribute_definition_boolean := range attribute_definition_booleanOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN", idx, attribute_definition_boolean.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN", int(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]), attribute_definition_boolean.Name)
 		map_ATTRIBUTE_DEFINITION_BOOLEAN_Identifiers[attribute_definition_boolean] = id
 
 		// Initialisation of values
@@ -5685,11 +5685,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_boolean_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_BOOLEAN_Rendering instances pointers"
 	}
-	for idx, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
+	for _, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", idx, attribute_definition_boolean_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", int(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]), attribute_definition_boolean_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers[attribute_definition_boolean_rendering] = id
 
 		// Initialisation of values
@@ -5698,11 +5698,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_dateOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_DATE instances pointers"
 	}
-	for idx, attribute_definition_date := range attribute_definition_dateOrdered {
+	for _, attribute_definition_date := range attribute_definition_dateOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE", idx, attribute_definition_date.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE", int(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]), attribute_definition_date.Name)
 		map_ATTRIBUTE_DEFINITION_DATE_Identifiers[attribute_definition_date] = id
 
 		// Initialisation of values
@@ -5735,11 +5735,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_date_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_DATE_Rendering instances pointers"
 	}
-	for idx, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
+	for _, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE_Rendering", idx, attribute_definition_date_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE_Rendering", int(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]), attribute_definition_date_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers[attribute_definition_date_rendering] = id
 
 		// Initialisation of values
@@ -5748,11 +5748,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_enumerationOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_ENUMERATION instances pointers"
 	}
-	for idx, attribute_definition_enumeration := range attribute_definition_enumerationOrdered {
+	for _, attribute_definition_enumeration := range attribute_definition_enumerationOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION", idx, attribute_definition_enumeration.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION", int(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]), attribute_definition_enumeration.Name)
 		map_ATTRIBUTE_DEFINITION_ENUMERATION_Identifiers[attribute_definition_enumeration] = id
 
 		// Initialisation of values
@@ -5785,11 +5785,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_enumeration_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_ENUMERATION_Rendering instances pointers"
 	}
-	for idx, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
+	for _, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", idx, attribute_definition_enumeration_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", int(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]), attribute_definition_enumeration_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers[attribute_definition_enumeration_rendering] = id
 
 		// Initialisation of values
@@ -5798,11 +5798,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_integerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_INTEGER instances pointers"
 	}
-	for idx, attribute_definition_integer := range attribute_definition_integerOrdered {
+	for _, attribute_definition_integer := range attribute_definition_integerOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER", idx, attribute_definition_integer.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER", int(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]), attribute_definition_integer.Name)
 		map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers[attribute_definition_integer] = id
 
 		// Initialisation of values
@@ -5835,11 +5835,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_integer_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_INTEGER_Rendering instances pointers"
 	}
-	for idx, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
+	for _, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER_Rendering", idx, attribute_definition_integer_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER_Rendering", int(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]), attribute_definition_integer_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers[attribute_definition_integer_rendering] = id
 
 		// Initialisation of values
@@ -5848,11 +5848,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_realOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_REAL instances pointers"
 	}
-	for idx, attribute_definition_real := range attribute_definition_realOrdered {
+	for _, attribute_definition_real := range attribute_definition_realOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL", idx, attribute_definition_real.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL", int(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]), attribute_definition_real.Name)
 		map_ATTRIBUTE_DEFINITION_REAL_Identifiers[attribute_definition_real] = id
 
 		// Initialisation of values
@@ -5885,11 +5885,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_real_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_REAL_Rendering instances pointers"
 	}
-	for idx, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
+	for _, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL_Rendering", idx, attribute_definition_real_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL_Rendering", int(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]), attribute_definition_real_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers[attribute_definition_real_rendering] = id
 
 		// Initialisation of values
@@ -5898,11 +5898,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_Rendering instances pointers"
 	}
-	for idx, attribute_definition_rendering := range attribute_definition_renderingOrdered {
+	for _, attribute_definition_rendering := range attribute_definition_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_Rendering", idx, attribute_definition_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_Rendering", int(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]), attribute_definition_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_Rendering_Identifiers[attribute_definition_rendering] = id
 
 		// Initialisation of values
@@ -5911,11 +5911,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_stringOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_STRING instances pointers"
 	}
-	for idx, attribute_definition_string := range attribute_definition_stringOrdered {
+	for _, attribute_definition_string := range attribute_definition_stringOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING", idx, attribute_definition_string.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING", int(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]), attribute_definition_string.Name)
 		map_ATTRIBUTE_DEFINITION_STRING_Identifiers[attribute_definition_string] = id
 
 		// Initialisation of values
@@ -5948,11 +5948,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_string_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_STRING_Rendering instances pointers"
 	}
-	for idx, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
+	for _, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING_Rendering", idx, attribute_definition_string_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING_Rendering", int(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]), attribute_definition_string_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers[attribute_definition_string_rendering] = id
 
 		// Initialisation of values
@@ -5961,11 +5961,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_xhtmlOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_XHTML instances pointers"
 	}
-	for idx, attribute_definition_xhtml := range attribute_definition_xhtmlOrdered {
+	for _, attribute_definition_xhtml := range attribute_definition_xhtmlOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML", idx, attribute_definition_xhtml.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML", int(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]), attribute_definition_xhtml.Name)
 		map_ATTRIBUTE_DEFINITION_XHTML_Identifiers[attribute_definition_xhtml] = id
 
 		// Initialisation of values
@@ -5998,11 +5998,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_definition_xhtml_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_XHTML_Rendering instances pointers"
 	}
-	for idx, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
+	for _, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML_Rendering", idx, attribute_definition_xhtml_rendering.Name)
+		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML_Rendering", int(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]), attribute_definition_xhtml_rendering.Name)
 		map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers[attribute_definition_xhtml_rendering] = id
 
 		// Initialisation of values
@@ -6011,11 +6011,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_booleanOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_BOOLEAN instances pointers"
 	}
-	for idx, attribute_value_boolean := range attribute_value_booleanOrdered {
+	for _, attribute_value_boolean := range attribute_value_booleanOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_BOOLEAN", idx, attribute_value_boolean.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_BOOLEAN", int(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]), attribute_value_boolean.Name)
 		map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[attribute_value_boolean] = id
 
 		// Initialisation of values
@@ -6032,11 +6032,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_dateOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_DATE instances pointers"
 	}
-	for idx, attribute_value_date := range attribute_value_dateOrdered {
+	for _, attribute_value_date := range attribute_value_dateOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_DATE", idx, attribute_value_date.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_DATE", int(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]), attribute_value_date.Name)
 		map_ATTRIBUTE_VALUE_DATE_Identifiers[attribute_value_date] = id
 
 		// Initialisation of values
@@ -6053,11 +6053,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_enumerationOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_ENUMERATION instances pointers"
 	}
-	for idx, attribute_value_enumeration := range attribute_value_enumerationOrdered {
+	for _, attribute_value_enumeration := range attribute_value_enumerationOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_ENUMERATION", idx, attribute_value_enumeration.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_ENUMERATION", int(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]), attribute_value_enumeration.Name)
 		map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[attribute_value_enumeration] = id
 
 		// Initialisation of values
@@ -6082,11 +6082,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_integerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_INTEGER instances pointers"
 	}
-	for idx, attribute_value_integer := range attribute_value_integerOrdered {
+	for _, attribute_value_integer := range attribute_value_integerOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_INTEGER", idx, attribute_value_integer.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_INTEGER", int(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]), attribute_value_integer.Name)
 		map_ATTRIBUTE_VALUE_INTEGER_Identifiers[attribute_value_integer] = id
 
 		// Initialisation of values
@@ -6103,11 +6103,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_realOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_REAL instances pointers"
 	}
-	for idx, attribute_value_real := range attribute_value_realOrdered {
+	for _, attribute_value_real := range attribute_value_realOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_REAL", idx, attribute_value_real.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_REAL", int(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]), attribute_value_real.Name)
 		map_ATTRIBUTE_VALUE_REAL_Identifiers[attribute_value_real] = id
 
 		// Initialisation of values
@@ -6124,11 +6124,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_stringOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_STRING instances pointers"
 	}
-	for idx, attribute_value_string := range attribute_value_stringOrdered {
+	for _, attribute_value_string := range attribute_value_stringOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_STRING", idx, attribute_value_string.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_STRING", int(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]), attribute_value_string.Name)
 		map_ATTRIBUTE_VALUE_STRING_Identifiers[attribute_value_string] = id
 
 		// Initialisation of values
@@ -6145,11 +6145,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(attribute_value_xhtmlOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_XHTML instances pointers"
 	}
-	for idx, attribute_value_xhtml := range attribute_value_xhtmlOrdered {
+	for _, attribute_value_xhtml := range attribute_value_xhtmlOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_XHTML", idx, attribute_value_xhtml.Name)
+		id = generatesIdentifier("ATTRIBUTE_VALUE_XHTML", int(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]), attribute_value_xhtml.Name)
 		map_ATTRIBUTE_VALUE_XHTML_Identifiers[attribute_value_xhtml] = id
 
 		// Initialisation of values
@@ -6182,11 +6182,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_alternative_idOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ALTERNATIVE_ID instances pointers"
 	}
-	for idx, a_alternative_id := range a_alternative_idOrdered {
+	for _, a_alternative_id := range a_alternative_idOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ALTERNATIVE_ID", idx, a_alternative_id.Name)
+		id = generatesIdentifier("A_ALTERNATIVE_ID", int(stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]), a_alternative_id.Name)
 		map_A_ALTERNATIVE_ID_Identifiers[a_alternative_id] = id
 
 		// Initialisation of values
@@ -6203,11 +6203,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_boolean_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_BOOLEAN_REF instances pointers"
 	}
-	for idx, a_attribute_definition_boolean_ref := range a_attribute_definition_boolean_refOrdered {
+	for _, a_attribute_definition_boolean_ref := range a_attribute_definition_boolean_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", idx, a_attribute_definition_boolean_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", int(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]), a_attribute_definition_boolean_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_Identifiers[a_attribute_definition_boolean_ref] = id
 
 		// Initialisation of values
@@ -6216,11 +6216,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_date_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_DATE_REF instances pointers"
 	}
-	for idx, a_attribute_definition_date_ref := range a_attribute_definition_date_refOrdered {
+	for _, a_attribute_definition_date_ref := range a_attribute_definition_date_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_DATE_REF", idx, a_attribute_definition_date_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_DATE_REF", int(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]), a_attribute_definition_date_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_DATE_REF_Identifiers[a_attribute_definition_date_ref] = id
 
 		// Initialisation of values
@@ -6229,11 +6229,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_enumeration_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_ENUMERATION_REF instances pointers"
 	}
-	for idx, a_attribute_definition_enumeration_ref := range a_attribute_definition_enumeration_refOrdered {
+	for _, a_attribute_definition_enumeration_ref := range a_attribute_definition_enumeration_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", idx, a_attribute_definition_enumeration_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", int(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]), a_attribute_definition_enumeration_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_Identifiers[a_attribute_definition_enumeration_ref] = id
 
 		// Initialisation of values
@@ -6242,11 +6242,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_integer_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_INTEGER_REF instances pointers"
 	}
-	for idx, a_attribute_definition_integer_ref := range a_attribute_definition_integer_refOrdered {
+	for _, a_attribute_definition_integer_ref := range a_attribute_definition_integer_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_INTEGER_REF", idx, a_attribute_definition_integer_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_INTEGER_REF", int(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]), a_attribute_definition_integer_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_INTEGER_REF_Identifiers[a_attribute_definition_integer_ref] = id
 
 		// Initialisation of values
@@ -6255,11 +6255,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_real_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_REAL_REF instances pointers"
 	}
-	for idx, a_attribute_definition_real_ref := range a_attribute_definition_real_refOrdered {
+	for _, a_attribute_definition_real_ref := range a_attribute_definition_real_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_REAL_REF", idx, a_attribute_definition_real_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_REAL_REF", int(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]), a_attribute_definition_real_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_REAL_REF_Identifiers[a_attribute_definition_real_ref] = id
 
 		// Initialisation of values
@@ -6268,11 +6268,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_string_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_STRING_REF instances pointers"
 	}
-	for idx, a_attribute_definition_string_ref := range a_attribute_definition_string_refOrdered {
+	for _, a_attribute_definition_string_ref := range a_attribute_definition_string_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_STRING_REF", idx, a_attribute_definition_string_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_STRING_REF", int(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]), a_attribute_definition_string_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_STRING_REF_Identifiers[a_attribute_definition_string_ref] = id
 
 		// Initialisation of values
@@ -6281,11 +6281,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_definition_xhtml_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_XHTML_REF instances pointers"
 	}
-	for idx, a_attribute_definition_xhtml_ref := range a_attribute_definition_xhtml_refOrdered {
+	for _, a_attribute_definition_xhtml_ref := range a_attribute_definition_xhtml_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_XHTML_REF", idx, a_attribute_definition_xhtml_ref.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_XHTML_REF", int(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]), a_attribute_definition_xhtml_ref.Name)
 		map_A_ATTRIBUTE_DEFINITION_XHTML_REF_Identifiers[a_attribute_definition_xhtml_ref] = id
 
 		// Initialisation of values
@@ -6294,11 +6294,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_booleanOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_BOOLEAN instances pointers"
 	}
-	for idx, a_attribute_value_boolean := range a_attribute_value_booleanOrdered {
+	for _, a_attribute_value_boolean := range a_attribute_value_booleanOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_BOOLEAN", idx, a_attribute_value_boolean.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_BOOLEAN", int(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]), a_attribute_value_boolean.Name)
 		map_A_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[a_attribute_value_boolean] = id
 
 		// Initialisation of values
@@ -6315,11 +6315,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_dateOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_DATE instances pointers"
 	}
-	for idx, a_attribute_value_date := range a_attribute_value_dateOrdered {
+	for _, a_attribute_value_date := range a_attribute_value_dateOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_DATE", idx, a_attribute_value_date.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_DATE", int(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]), a_attribute_value_date.Name)
 		map_A_ATTRIBUTE_VALUE_DATE_Identifiers[a_attribute_value_date] = id
 
 		// Initialisation of values
@@ -6336,11 +6336,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_enumerationOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_ENUMERATION instances pointers"
 	}
-	for idx, a_attribute_value_enumeration := range a_attribute_value_enumerationOrdered {
+	for _, a_attribute_value_enumeration := range a_attribute_value_enumerationOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_ENUMERATION", idx, a_attribute_value_enumeration.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_ENUMERATION", int(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]), a_attribute_value_enumeration.Name)
 		map_A_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[a_attribute_value_enumeration] = id
 
 		// Initialisation of values
@@ -6357,11 +6357,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_integerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_INTEGER instances pointers"
 	}
-	for idx, a_attribute_value_integer := range a_attribute_value_integerOrdered {
+	for _, a_attribute_value_integer := range a_attribute_value_integerOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_INTEGER", idx, a_attribute_value_integer.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_INTEGER", int(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]), a_attribute_value_integer.Name)
 		map_A_ATTRIBUTE_VALUE_INTEGER_Identifiers[a_attribute_value_integer] = id
 
 		// Initialisation of values
@@ -6378,11 +6378,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_realOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_REAL instances pointers"
 	}
-	for idx, a_attribute_value_real := range a_attribute_value_realOrdered {
+	for _, a_attribute_value_real := range a_attribute_value_realOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_REAL", idx, a_attribute_value_real.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_REAL", int(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]), a_attribute_value_real.Name)
 		map_A_ATTRIBUTE_VALUE_REAL_Identifiers[a_attribute_value_real] = id
 
 		// Initialisation of values
@@ -6399,11 +6399,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_stringOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_STRING instances pointers"
 	}
-	for idx, a_attribute_value_string := range a_attribute_value_stringOrdered {
+	for _, a_attribute_value_string := range a_attribute_value_stringOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_STRING", idx, a_attribute_value_string.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_STRING", int(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]), a_attribute_value_string.Name)
 		map_A_ATTRIBUTE_VALUE_STRING_Identifiers[a_attribute_value_string] = id
 
 		// Initialisation of values
@@ -6420,11 +6420,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_xhtmlOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_XHTML instances pointers"
 	}
-	for idx, a_attribute_value_xhtml := range a_attribute_value_xhtmlOrdered {
+	for _, a_attribute_value_xhtml := range a_attribute_value_xhtmlOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML", idx, a_attribute_value_xhtml.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML", int(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]), a_attribute_value_xhtml.Name)
 		map_A_ATTRIBUTE_VALUE_XHTML_Identifiers[a_attribute_value_xhtml] = id
 
 		// Initialisation of values
@@ -6441,11 +6441,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_attribute_value_xhtml_1Ordered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_XHTML_1 instances pointers"
 	}
-	for idx, a_attribute_value_xhtml_1 := range a_attribute_value_xhtml_1Ordered {
+	for _, a_attribute_value_xhtml_1 := range a_attribute_value_xhtml_1Ordered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML_1", idx, a_attribute_value_xhtml_1.Name)
+		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML_1", int(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]), a_attribute_value_xhtml_1.Name)
 		map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers[a_attribute_value_xhtml_1] = id
 
 		// Initialisation of values
@@ -6510,11 +6510,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_childrenOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_CHILDREN instances pointers"
 	}
-	for idx, a_children := range a_childrenOrdered {
+	for _, a_children := range a_childrenOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_CHILDREN", idx, a_children.Name)
+		id = generatesIdentifier("A_CHILDREN", int(stage.A_CHILDRENMap_Staged_Order[a_children]), a_children.Name)
 		map_A_CHILDREN_Identifiers[a_children] = id
 
 		// Initialisation of values
@@ -6531,11 +6531,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_core_contentOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_CORE_CONTENT instances pointers"
 	}
-	for idx, a_core_content := range a_core_contentOrdered {
+	for _, a_core_content := range a_core_contentOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_CORE_CONTENT", idx, a_core_content.Name)
+		id = generatesIdentifier("A_CORE_CONTENT", int(stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]), a_core_content.Name)
 		map_A_CORE_CONTENT_Identifiers[a_core_content] = id
 
 		// Initialisation of values
@@ -6552,11 +6552,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatypesOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPES instances pointers"
 	}
-	for idx, a_datatypes := range a_datatypesOrdered {
+	for _, a_datatypes := range a_datatypesOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPES", idx, a_datatypes.Name)
+		id = generatesIdentifier("A_DATATYPES", int(stage.A_DATATYPESMap_Staged_Order[a_datatypes]), a_datatypes.Name)
 		map_A_DATATYPES_Identifiers[a_datatypes] = id
 
 		// Initialisation of values
@@ -6621,11 +6621,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_boolean_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_BOOLEAN_REF instances pointers"
 	}
-	for idx, a_datatype_definition_boolean_ref := range a_datatype_definition_boolean_refOrdered {
+	for _, a_datatype_definition_boolean_ref := range a_datatype_definition_boolean_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_BOOLEAN_REF", idx, a_datatype_definition_boolean_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_BOOLEAN_REF", int(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]), a_datatype_definition_boolean_ref.Name)
 		map_A_DATATYPE_DEFINITION_BOOLEAN_REF_Identifiers[a_datatype_definition_boolean_ref] = id
 
 		// Initialisation of values
@@ -6634,11 +6634,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_date_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_DATE_REF instances pointers"
 	}
-	for idx, a_datatype_definition_date_ref := range a_datatype_definition_date_refOrdered {
+	for _, a_datatype_definition_date_ref := range a_datatype_definition_date_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_DATE_REF", idx, a_datatype_definition_date_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_DATE_REF", int(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]), a_datatype_definition_date_ref.Name)
 		map_A_DATATYPE_DEFINITION_DATE_REF_Identifiers[a_datatype_definition_date_ref] = id
 
 		// Initialisation of values
@@ -6647,11 +6647,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_enumeration_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_ENUMERATION_REF instances pointers"
 	}
-	for idx, a_datatype_definition_enumeration_ref := range a_datatype_definition_enumeration_refOrdered {
+	for _, a_datatype_definition_enumeration_ref := range a_datatype_definition_enumeration_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_ENUMERATION_REF", idx, a_datatype_definition_enumeration_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_ENUMERATION_REF", int(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]), a_datatype_definition_enumeration_ref.Name)
 		map_A_DATATYPE_DEFINITION_ENUMERATION_REF_Identifiers[a_datatype_definition_enumeration_ref] = id
 
 		// Initialisation of values
@@ -6660,11 +6660,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_integer_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_INTEGER_REF instances pointers"
 	}
-	for idx, a_datatype_definition_integer_ref := range a_datatype_definition_integer_refOrdered {
+	for _, a_datatype_definition_integer_ref := range a_datatype_definition_integer_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_INTEGER_REF", idx, a_datatype_definition_integer_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_INTEGER_REF", int(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]), a_datatype_definition_integer_ref.Name)
 		map_A_DATATYPE_DEFINITION_INTEGER_REF_Identifiers[a_datatype_definition_integer_ref] = id
 
 		// Initialisation of values
@@ -6673,11 +6673,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_real_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_REAL_REF instances pointers"
 	}
-	for idx, a_datatype_definition_real_ref := range a_datatype_definition_real_refOrdered {
+	for _, a_datatype_definition_real_ref := range a_datatype_definition_real_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_REAL_REF", idx, a_datatype_definition_real_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_REAL_REF", int(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]), a_datatype_definition_real_ref.Name)
 		map_A_DATATYPE_DEFINITION_REAL_REF_Identifiers[a_datatype_definition_real_ref] = id
 
 		// Initialisation of values
@@ -6686,11 +6686,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_string_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_STRING_REF instances pointers"
 	}
-	for idx, a_datatype_definition_string_ref := range a_datatype_definition_string_refOrdered {
+	for _, a_datatype_definition_string_ref := range a_datatype_definition_string_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_STRING_REF", idx, a_datatype_definition_string_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_STRING_REF", int(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]), a_datatype_definition_string_ref.Name)
 		map_A_DATATYPE_DEFINITION_STRING_REF_Identifiers[a_datatype_definition_string_ref] = id
 
 		// Initialisation of values
@@ -6699,11 +6699,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_datatype_definition_xhtml_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_XHTML_REF instances pointers"
 	}
-	for idx, a_datatype_definition_xhtml_ref := range a_datatype_definition_xhtml_refOrdered {
+	for _, a_datatype_definition_xhtml_ref := range a_datatype_definition_xhtml_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_XHTML_REF", idx, a_datatype_definition_xhtml_ref.Name)
+		id = generatesIdentifier("A_DATATYPE_DEFINITION_XHTML_REF", int(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]), a_datatype_definition_xhtml_ref.Name)
 		map_A_DATATYPE_DEFINITION_XHTML_REF_Identifiers[a_datatype_definition_xhtml_ref] = id
 
 		// Initialisation of values
@@ -6712,11 +6712,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_editable_attsOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_EDITABLE_ATTS instances pointers"
 	}
-	for idx, a_editable_atts := range a_editable_attsOrdered {
+	for _, a_editable_atts := range a_editable_attsOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_EDITABLE_ATTS", idx, a_editable_atts.Name)
+		id = generatesIdentifier("A_EDITABLE_ATTS", int(stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]), a_editable_atts.Name)
 		map_A_EDITABLE_ATTS_Identifiers[a_editable_atts] = id
 
 		// Initialisation of values
@@ -6725,11 +6725,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_enum_value_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_ENUM_VALUE_REF instances pointers"
 	}
-	for idx, a_enum_value_ref := range a_enum_value_refOrdered {
+	for _, a_enum_value_ref := range a_enum_value_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ENUM_VALUE_REF", idx, a_enum_value_ref.Name)
+		id = generatesIdentifier("A_ENUM_VALUE_REF", int(stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]), a_enum_value_ref.Name)
 		map_A_ENUM_VALUE_REF_Identifiers[a_enum_value_ref] = id
 
 		// Initialisation of values
@@ -6738,11 +6738,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_objectOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_OBJECT instances pointers"
 	}
-	for idx, a_object := range a_objectOrdered {
+	for _, a_object := range a_objectOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_OBJECT", idx, a_object.Name)
+		id = generatesIdentifier("A_OBJECT", int(stage.A_OBJECTMap_Staged_Order[a_object]), a_object.Name)
 		map_A_OBJECT_Identifiers[a_object] = id
 
 		// Initialisation of values
@@ -6751,11 +6751,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_propertiesOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_PROPERTIES instances pointers"
 	}
-	for idx, a_properties := range a_propertiesOrdered {
+	for _, a_properties := range a_propertiesOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_PROPERTIES", idx, a_properties.Name)
+		id = generatesIdentifier("A_PROPERTIES", int(stage.A_PROPERTIESMap_Staged_Order[a_properties]), a_properties.Name)
 		map_A_PROPERTIES_Identifiers[a_properties] = id
 
 		// Initialisation of values
@@ -6772,11 +6772,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_relation_group_type_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_RELATION_GROUP_TYPE_REF instances pointers"
 	}
-	for idx, a_relation_group_type_ref := range a_relation_group_type_refOrdered {
+	for _, a_relation_group_type_ref := range a_relation_group_type_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_RELATION_GROUP_TYPE_REF", idx, a_relation_group_type_ref.Name)
+		id = generatesIdentifier("A_RELATION_GROUP_TYPE_REF", int(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]), a_relation_group_type_ref.Name)
 		map_A_RELATION_GROUP_TYPE_REF_Identifiers[a_relation_group_type_ref] = id
 
 		// Initialisation of values
@@ -6785,11 +6785,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_source_1Ordered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SOURCE_1 instances pointers"
 	}
-	for idx, a_source_1 := range a_source_1Ordered {
+	for _, a_source_1 := range a_source_1Ordered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SOURCE_1", idx, a_source_1.Name)
+		id = generatesIdentifier("A_SOURCE_1", int(stage.A_SOURCE_1Map_Staged_Order[a_source_1]), a_source_1.Name)
 		map_A_SOURCE_1_Identifiers[a_source_1] = id
 
 		// Initialisation of values
@@ -6798,11 +6798,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_source_specification_1Ordered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SOURCE_SPECIFICATION_1 instances pointers"
 	}
-	for idx, a_source_specification_1 := range a_source_specification_1Ordered {
+	for _, a_source_specification_1 := range a_source_specification_1Ordered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SOURCE_SPECIFICATION_1", idx, a_source_specification_1.Name)
+		id = generatesIdentifier("A_SOURCE_SPECIFICATION_1", int(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]), a_source_specification_1.Name)
 		map_A_SOURCE_SPECIFICATION_1_Identifiers[a_source_specification_1] = id
 
 		// Initialisation of values
@@ -6811,11 +6811,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_specificationsOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPECIFICATIONS instances pointers"
 	}
-	for idx, a_specifications := range a_specificationsOrdered {
+	for _, a_specifications := range a_specificationsOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPECIFICATIONS", idx, a_specifications.Name)
+		id = generatesIdentifier("A_SPECIFICATIONS", int(stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]), a_specifications.Name)
 		map_A_SPECIFICATIONS_Identifiers[a_specifications] = id
 
 		// Initialisation of values
@@ -6832,11 +6832,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_specification_type_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPECIFICATION_TYPE_REF instances pointers"
 	}
-	for idx, a_specification_type_ref := range a_specification_type_refOrdered {
+	for _, a_specification_type_ref := range a_specification_type_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPECIFICATION_TYPE_REF", idx, a_specification_type_ref.Name)
+		id = generatesIdentifier("A_SPECIFICATION_TYPE_REF", int(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]), a_specification_type_ref.Name)
 		map_A_SPECIFICATION_TYPE_REF_Identifiers[a_specification_type_ref] = id
 
 		// Initialisation of values
@@ -6845,11 +6845,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_specified_valuesOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPECIFIED_VALUES instances pointers"
 	}
-	for idx, a_specified_values := range a_specified_valuesOrdered {
+	for _, a_specified_values := range a_specified_valuesOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPECIFIED_VALUES", idx, a_specified_values.Name)
+		id = generatesIdentifier("A_SPECIFIED_VALUES", int(stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]), a_specified_values.Name)
 		map_A_SPECIFIED_VALUES_Identifiers[a_specified_values] = id
 
 		// Initialisation of values
@@ -6866,11 +6866,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_attributesOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_ATTRIBUTES instances pointers"
 	}
-	for idx, a_spec_attributes := range a_spec_attributesOrdered {
+	for _, a_spec_attributes := range a_spec_attributesOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_ATTRIBUTES", idx, a_spec_attributes.Name)
+		id = generatesIdentifier("A_SPEC_ATTRIBUTES", int(stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]), a_spec_attributes.Name)
 		map_A_SPEC_ATTRIBUTES_Identifiers[a_spec_attributes] = id
 
 		// Initialisation of values
@@ -6935,11 +6935,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_objectsOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_OBJECTS instances pointers"
 	}
-	for idx, a_spec_objects := range a_spec_objectsOrdered {
+	for _, a_spec_objects := range a_spec_objectsOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_OBJECTS", idx, a_spec_objects.Name)
+		id = generatesIdentifier("A_SPEC_OBJECTS", int(stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]), a_spec_objects.Name)
 		map_A_SPEC_OBJECTS_Identifiers[a_spec_objects] = id
 
 		// Initialisation of values
@@ -6956,11 +6956,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_object_type_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_OBJECT_TYPE_REF instances pointers"
 	}
-	for idx, a_spec_object_type_ref := range a_spec_object_type_refOrdered {
+	for _, a_spec_object_type_ref := range a_spec_object_type_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_OBJECT_TYPE_REF", idx, a_spec_object_type_ref.Name)
+		id = generatesIdentifier("A_SPEC_OBJECT_TYPE_REF", int(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]), a_spec_object_type_ref.Name)
 		map_A_SPEC_OBJECT_TYPE_REF_Identifiers[a_spec_object_type_ref] = id
 
 		// Initialisation of values
@@ -6969,11 +6969,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_relationsOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATIONS instances pointers"
 	}
-	for idx, a_spec_relations := range a_spec_relationsOrdered {
+	for _, a_spec_relations := range a_spec_relationsOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATIONS", idx, a_spec_relations.Name)
+		id = generatesIdentifier("A_SPEC_RELATIONS", int(stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]), a_spec_relations.Name)
 		map_A_SPEC_RELATIONS_Identifiers[a_spec_relations] = id
 
 		// Initialisation of values
@@ -6990,11 +6990,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_relation_groupsOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATION_GROUPS instances pointers"
 	}
-	for idx, a_spec_relation_groups := range a_spec_relation_groupsOrdered {
+	for _, a_spec_relation_groups := range a_spec_relation_groupsOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATION_GROUPS", idx, a_spec_relation_groups.Name)
+		id = generatesIdentifier("A_SPEC_RELATION_GROUPS", int(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]), a_spec_relation_groups.Name)
 		map_A_SPEC_RELATION_GROUPS_Identifiers[a_spec_relation_groups] = id
 
 		// Initialisation of values
@@ -7011,11 +7011,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_relation_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATION_REF instances pointers"
 	}
-	for idx, a_spec_relation_ref := range a_spec_relation_refOrdered {
+	for _, a_spec_relation_ref := range a_spec_relation_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATION_REF", idx, a_spec_relation_ref.Name)
+		id = generatesIdentifier("A_SPEC_RELATION_REF", int(stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]), a_spec_relation_ref.Name)
 		map_A_SPEC_RELATION_REF_Identifiers[a_spec_relation_ref] = id
 
 		// Initialisation of values
@@ -7024,11 +7024,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_relation_type_refOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATION_TYPE_REF instances pointers"
 	}
-	for idx, a_spec_relation_type_ref := range a_spec_relation_type_refOrdered {
+	for _, a_spec_relation_type_ref := range a_spec_relation_type_refOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATION_TYPE_REF", idx, a_spec_relation_type_ref.Name)
+		id = generatesIdentifier("A_SPEC_RELATION_TYPE_REF", int(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]), a_spec_relation_type_ref.Name)
 		map_A_SPEC_RELATION_TYPE_REF_Identifiers[a_spec_relation_type_ref] = id
 
 		// Initialisation of values
@@ -7037,11 +7037,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_spec_typesOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_SPEC_TYPES instances pointers"
 	}
-	for idx, a_spec_types := range a_spec_typesOrdered {
+	for _, a_spec_types := range a_spec_typesOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_TYPES", idx, a_spec_types.Name)
+		id = generatesIdentifier("A_SPEC_TYPES", int(stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]), a_spec_types.Name)
 		map_A_SPEC_TYPES_Identifiers[a_spec_types] = id
 
 		// Initialisation of values
@@ -7082,11 +7082,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_the_headerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_THE_HEADER instances pointers"
 	}
-	for idx, a_the_header := range a_the_headerOrdered {
+	for _, a_the_header := range a_the_headerOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_THE_HEADER", idx, a_the_header.Name)
+		id = generatesIdentifier("A_THE_HEADER", int(stage.A_THE_HEADERMap_Staged_Order[a_the_header]), a_the_header.Name)
 		map_A_THE_HEADER_Identifiers[a_the_header] = id
 
 		// Initialisation of values
@@ -7103,11 +7103,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(a_tool_extensionsOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of A_TOOL_EXTENSIONS instances pointers"
 	}
-	for idx, a_tool_extensions := range a_tool_extensionsOrdered {
+	for _, a_tool_extensions := range a_tool_extensionsOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_TOOL_EXTENSIONS", idx, a_tool_extensions.Name)
+		id = generatesIdentifier("A_TOOL_EXTENSIONS", int(stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]), a_tool_extensions.Name)
 		map_A_TOOL_EXTENSIONS_Identifiers[a_tool_extensions] = id
 
 		// Initialisation of values
@@ -7124,11 +7124,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_booleanOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_BOOLEAN instances pointers"
 	}
-	for idx, datatype_definition_boolean := range datatype_definition_booleanOrdered {
+	for _, datatype_definition_boolean := range datatype_definition_booleanOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_BOOLEAN", idx, datatype_definition_boolean.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_BOOLEAN", int(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]), datatype_definition_boolean.Name)
 		map_DATATYPE_DEFINITION_BOOLEAN_Identifiers[datatype_definition_boolean] = id
 
 		// Initialisation of values
@@ -7145,11 +7145,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_dateOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_DATE instances pointers"
 	}
-	for idx, datatype_definition_date := range datatype_definition_dateOrdered {
+	for _, datatype_definition_date := range datatype_definition_dateOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_DATE", idx, datatype_definition_date.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_DATE", int(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]), datatype_definition_date.Name)
 		map_DATATYPE_DEFINITION_DATE_Identifiers[datatype_definition_date] = id
 
 		// Initialisation of values
@@ -7166,11 +7166,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_enumerationOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_ENUMERATION instances pointers"
 	}
-	for idx, datatype_definition_enumeration := range datatype_definition_enumerationOrdered {
+	for _, datatype_definition_enumeration := range datatype_definition_enumerationOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_ENUMERATION", idx, datatype_definition_enumeration.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_ENUMERATION", int(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]), datatype_definition_enumeration.Name)
 		map_DATATYPE_DEFINITION_ENUMERATION_Identifiers[datatype_definition_enumeration] = id
 
 		// Initialisation of values
@@ -7195,11 +7195,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_integerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_INTEGER instances pointers"
 	}
-	for idx, datatype_definition_integer := range datatype_definition_integerOrdered {
+	for _, datatype_definition_integer := range datatype_definition_integerOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_INTEGER", idx, datatype_definition_integer.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_INTEGER", int(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]), datatype_definition_integer.Name)
 		map_DATATYPE_DEFINITION_INTEGER_Identifiers[datatype_definition_integer] = id
 
 		// Initialisation of values
@@ -7216,11 +7216,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_realOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_REAL instances pointers"
 	}
-	for idx, datatype_definition_real := range datatype_definition_realOrdered {
+	for _, datatype_definition_real := range datatype_definition_realOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_REAL", idx, datatype_definition_real.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_REAL", int(stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]), datatype_definition_real.Name)
 		map_DATATYPE_DEFINITION_REAL_Identifiers[datatype_definition_real] = id
 
 		// Initialisation of values
@@ -7237,11 +7237,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_stringOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_STRING instances pointers"
 	}
-	for idx, datatype_definition_string := range datatype_definition_stringOrdered {
+	for _, datatype_definition_string := range datatype_definition_stringOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_STRING", idx, datatype_definition_string.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_STRING", int(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]), datatype_definition_string.Name)
 		map_DATATYPE_DEFINITION_STRING_Identifiers[datatype_definition_string] = id
 
 		// Initialisation of values
@@ -7258,11 +7258,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(datatype_definition_xhtmlOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_XHTML instances pointers"
 	}
-	for idx, datatype_definition_xhtml := range datatype_definition_xhtmlOrdered {
+	for _, datatype_definition_xhtml := range datatype_definition_xhtmlOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_XHTML", idx, datatype_definition_xhtml.Name)
+		id = generatesIdentifier("DATATYPE_DEFINITION_XHTML", int(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]), datatype_definition_xhtml.Name)
 		map_DATATYPE_DEFINITION_XHTML_Identifiers[datatype_definition_xhtml] = id
 
 		// Initialisation of values
@@ -7279,11 +7279,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(embedded_valueOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of EMBEDDED_VALUE instances pointers"
 	}
-	for idx, embedded_value := range embedded_valueOrdered {
+	for _, embedded_value := range embedded_valueOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EMBEDDED_VALUE", idx, embedded_value.Name)
+		id = generatesIdentifier("EMBEDDED_VALUE", int(stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]), embedded_value.Name)
 		map_EMBEDDED_VALUE_Identifiers[embedded_value] = id
 
 		// Initialisation of values
@@ -7292,11 +7292,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(enum_valueOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of ENUM_VALUE instances pointers"
 	}
-	for idx, enum_value := range enum_valueOrdered {
+	for _, enum_value := range enum_valueOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ENUM_VALUE", idx, enum_value.Name)
+		id = generatesIdentifier("ENUM_VALUE", int(stage.ENUM_VALUEMap_Staged_Order[enum_value]), enum_value.Name)
 		map_ENUM_VALUE_Identifiers[enum_value] = id
 
 		// Initialisation of values
@@ -7321,11 +7321,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(embeddedjpgimageOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of EmbeddedJpgImage instances pointers"
 	}
-	for idx, embeddedjpgimage := range embeddedjpgimageOrdered {
+	for _, embeddedjpgimage := range embeddedjpgimageOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EmbeddedJpgImage", idx, embeddedjpgimage.Name)
+		id = generatesIdentifier("EmbeddedJpgImage", int(stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]), embeddedjpgimage.Name)
 		map_EmbeddedJpgImage_Identifiers[embeddedjpgimage] = id
 
 		// Initialisation of values
@@ -7334,11 +7334,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(embeddedpngimageOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of EmbeddedPngImage instances pointers"
 	}
-	for idx, embeddedpngimage := range embeddedpngimageOrdered {
+	for _, embeddedpngimage := range embeddedpngimageOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EmbeddedPngImage", idx, embeddedpngimage.Name)
+		id = generatesIdentifier("EmbeddedPngImage", int(stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]), embeddedpngimage.Name)
 		map_EmbeddedPngImage_Identifiers[embeddedpngimage] = id
 
 		// Initialisation of values
@@ -7347,11 +7347,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(embeddedsvgimageOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of EmbeddedSvgImage instances pointers"
 	}
-	for idx, embeddedsvgimage := range embeddedsvgimageOrdered {
+	for _, embeddedsvgimage := range embeddedsvgimageOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EmbeddedSvgImage", idx, embeddedsvgimage.Name)
+		id = generatesIdentifier("EmbeddedSvgImage", int(stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]), embeddedsvgimage.Name)
 		map_EmbeddedSvgImage_Identifiers[embeddedsvgimage] = id
 
 		// Initialisation of values
@@ -7360,11 +7360,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(killOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of Kill instances pointers"
 	}
-	for idx, kill := range killOrdered {
+	for _, kill := range killOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("Kill", idx, kill.Name)
+		id = generatesIdentifier("Kill", int(stage.KillMap_Staged_Order[kill]), kill.Name)
 		map_Kill_Identifiers[kill] = id
 
 		// Initialisation of values
@@ -7373,11 +7373,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(map_identifier_boolOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of Map_identifier_bool instances pointers"
 	}
-	for idx, map_identifier_bool := range map_identifier_boolOrdered {
+	for _, map_identifier_bool := range map_identifier_boolOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("Map_identifier_bool", idx, map_identifier_bool.Name)
+		id = generatesIdentifier("Map_identifier_bool", int(stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]), map_identifier_bool.Name)
 		map_Map_identifier_bool_Identifiers[map_identifier_bool] = id
 
 		// Initialisation of values
@@ -7386,11 +7386,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(relation_groupOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP instances pointers"
 	}
-	for idx, relation_group := range relation_groupOrdered {
+	for _, relation_group := range relation_groupOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("RELATION_GROUP", idx, relation_group.Name)
+		id = generatesIdentifier("RELATION_GROUP", int(stage.RELATION_GROUPMap_Staged_Order[relation_group]), relation_group.Name)
 		map_RELATION_GROUP_Identifiers[relation_group] = id
 
 		// Initialisation of values
@@ -7439,11 +7439,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(relation_group_typeOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP_TYPE instances pointers"
 	}
-	for idx, relation_group_type := range relation_group_typeOrdered {
+	for _, relation_group_type := range relation_group_typeOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("RELATION_GROUP_TYPE", idx, relation_group_type.Name)
+		id = generatesIdentifier("RELATION_GROUP_TYPE", int(stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]), relation_group_type.Name)
 		map_RELATION_GROUP_TYPE_Identifiers[relation_group_type] = id
 
 		// Initialisation of values
@@ -7468,11 +7468,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(req_ifOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of REQ_IF instances pointers"
 	}
-	for idx, req_if := range req_ifOrdered {
+	for _, req_if := range req_ifOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF", idx, req_if.Name)
+		id = generatesIdentifier("REQ_IF", int(stage.REQ_IFMap_Staged_Order[req_if]), req_if.Name)
 		map_REQ_IF_Identifiers[req_if] = id
 
 		// Initialisation of values
@@ -7505,11 +7505,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(req_if_contentOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of REQ_IF_CONTENT instances pointers"
 	}
-	for idx, req_if_content := range req_if_contentOrdered {
+	for _, req_if_content := range req_if_contentOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF_CONTENT", idx, req_if_content.Name)
+		id = generatesIdentifier("REQ_IF_CONTENT", int(stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]), req_if_content.Name)
 		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
 
 		// Initialisation of values
@@ -7566,11 +7566,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(req_if_headerOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of REQ_IF_HEADER instances pointers"
 	}
-	for idx, req_if_header := range req_if_headerOrdered {
+	for _, req_if_header := range req_if_headerOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF_HEADER", idx, req_if_header.Name)
+		id = generatesIdentifier("REQ_IF_HEADER", int(stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]), req_if_header.Name)
 		map_REQ_IF_HEADER_Identifiers[req_if_header] = id
 
 		// Initialisation of values
@@ -7579,11 +7579,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(req_if_tool_extensionOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of REQ_IF_TOOL_EXTENSION instances pointers"
 	}
-	for idx, req_if_tool_extension := range req_if_tool_extensionOrdered {
+	for _, req_if_tool_extension := range req_if_tool_extensionOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF_TOOL_EXTENSION", idx, req_if_tool_extension.Name)
+		id = generatesIdentifier("REQ_IF_TOOL_EXTENSION", int(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]), req_if_tool_extension.Name)
 		map_REQ_IF_TOOL_EXTENSION_Identifiers[req_if_tool_extension] = id
 
 		// Initialisation of values
@@ -7592,11 +7592,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(specificationOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPECIFICATION instances pointers"
 	}
-	for idx, specification := range specificationOrdered {
+	for _, specification := range specificationOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPECIFICATION", idx, specification.Name)
+		id = generatesIdentifier("SPECIFICATION", int(stage.SPECIFICATIONMap_Staged_Order[specification]), specification.Name)
 		map_SPECIFICATION_Identifiers[specification] = id
 
 		// Initialisation of values
@@ -7637,11 +7637,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(specification_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPECIFICATION_Rendering instances pointers"
 	}
-	for idx, specification_rendering := range specification_renderingOrdered {
+	for _, specification_rendering := range specification_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPECIFICATION_Rendering", idx, specification_rendering.Name)
+		id = generatesIdentifier("SPECIFICATION_Rendering", int(stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]), specification_rendering.Name)
 		map_SPECIFICATION_Rendering_Identifiers[specification_rendering] = id
 
 		// Initialisation of values
@@ -7650,11 +7650,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(specification_typeOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPECIFICATION_TYPE instances pointers"
 	}
-	for idx, specification_type := range specification_typeOrdered {
+	for _, specification_type := range specification_typeOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPECIFICATION_TYPE", idx, specification_type.Name)
+		id = generatesIdentifier("SPECIFICATION_TYPE", int(stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]), specification_type.Name)
 		map_SPECIFICATION_TYPE_Identifiers[specification_type] = id
 
 		// Initialisation of values
@@ -7679,11 +7679,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(spec_hierarchyOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPEC_HIERARCHY instances pointers"
 	}
-	for idx, spec_hierarchy := range spec_hierarchyOrdered {
+	for _, spec_hierarchy := range spec_hierarchyOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_HIERARCHY", idx, spec_hierarchy.Name)
+		id = generatesIdentifier("SPEC_HIERARCHY", int(stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]), spec_hierarchy.Name)
 		map_SPEC_HIERARCHY_Identifiers[spec_hierarchy] = id
 
 		// Initialisation of values
@@ -7724,11 +7724,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(spec_objectOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPEC_OBJECT instances pointers"
 	}
-	for idx, spec_object := range spec_objectOrdered {
+	for _, spec_object := range spec_objectOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_OBJECT", idx, spec_object.Name)
+		id = generatesIdentifier("SPEC_OBJECT", int(stage.SPEC_OBJECTMap_Staged_Order[spec_object]), spec_object.Name)
 		map_SPEC_OBJECT_Identifiers[spec_object] = id
 
 		// Initialisation of values
@@ -7761,11 +7761,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(spec_object_typeOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPEC_OBJECT_TYPE instances pointers"
 	}
-	for idx, spec_object_type := range spec_object_typeOrdered {
+	for _, spec_object_type := range spec_object_typeOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_OBJECT_TYPE", idx, spec_object_type.Name)
+		id = generatesIdentifier("SPEC_OBJECT_TYPE", int(stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]), spec_object_type.Name)
 		map_SPEC_OBJECT_TYPE_Identifiers[spec_object_type] = id
 
 		// Initialisation of values
@@ -7790,11 +7790,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(spec_object_type_renderingOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPEC_OBJECT_TYPE_Rendering instances pointers"
 	}
-	for idx, spec_object_type_rendering := range spec_object_type_renderingOrdered {
+	for _, spec_object_type_rendering := range spec_object_type_renderingOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_OBJECT_TYPE_Rendering", idx, spec_object_type_rendering.Name)
+		id = generatesIdentifier("SPEC_OBJECT_TYPE_Rendering", int(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]), spec_object_type_rendering.Name)
 		map_SPEC_OBJECT_TYPE_Rendering_Identifiers[spec_object_type_rendering] = id
 
 		// Initialisation of values
@@ -7803,11 +7803,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(spec_relationOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPEC_RELATION instances pointers"
 	}
-	for idx, spec_relation := range spec_relationOrdered {
+	for _, spec_relation := range spec_relationOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_RELATION", idx, spec_relation.Name)
+		id = generatesIdentifier("SPEC_RELATION", int(stage.SPEC_RELATIONMap_Staged_Order[spec_relation]), spec_relation.Name)
 		map_SPEC_RELATION_Identifiers[spec_relation] = id
 
 		// Initialisation of values
@@ -7856,11 +7856,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(spec_relation_typeOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of SPEC_RELATION_TYPE instances pointers"
 	}
-	for idx, spec_relation_type := range spec_relation_typeOrdered {
+	for _, spec_relation_type := range spec_relation_typeOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_RELATION_TYPE", idx, spec_relation_type.Name)
+		id = generatesIdentifier("SPEC_RELATION_TYPE", int(stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]), spec_relation_type.Name)
 		map_SPEC_RELATION_TYPE_Identifiers[spec_relation_type] = id
 
 		// Initialisation of values
@@ -7885,11 +7885,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(staticwebsiteOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of StaticWebSite instances pointers"
 	}
-	for idx, staticwebsite := range staticwebsiteOrdered {
+	for _, staticwebsite := range staticwebsiteOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSite", idx, staticwebsite.Name)
+		id = generatesIdentifier("StaticWebSite", int(stage.StaticWebSiteMap_Staged_Order[staticwebsite]), staticwebsite.Name)
 		map_StaticWebSite_Identifiers[staticwebsite] = id
 
 		// Initialisation of values
@@ -7906,11 +7906,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(staticwebsitechapterOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of StaticWebSiteChapter instances pointers"
 	}
-	for idx, staticwebsitechapter := range staticwebsitechapterOrdered {
+	for _, staticwebsitechapter := range staticwebsitechapterOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteChapter", idx, staticwebsitechapter.Name)
+		id = generatesIdentifier("StaticWebSiteChapter", int(stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]), staticwebsitechapter.Name)
 		map_StaticWebSiteChapter_Identifiers[staticwebsitechapter] = id
 
 		// Initialisation of values
@@ -7927,11 +7927,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(staticwebsitegeneratedimageOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of StaticWebSiteGeneratedImage instances pointers"
 	}
-	for idx, staticwebsitegeneratedimage := range staticwebsitegeneratedimageOrdered {
+	for _, staticwebsitegeneratedimage := range staticwebsitegeneratedimageOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteGeneratedImage", idx, staticwebsitegeneratedimage.Name)
+		id = generatesIdentifier("StaticWebSiteGeneratedImage", int(stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]), staticwebsitegeneratedimage.Name)
 		map_StaticWebSiteGeneratedImage_Identifiers[staticwebsitegeneratedimage] = id
 
 		// Initialisation of values
@@ -7940,11 +7940,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(staticwebsiteimageOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of StaticWebSiteImage instances pointers"
 	}
-	for idx, staticwebsiteimage := range staticwebsiteimageOrdered {
+	for _, staticwebsiteimage := range staticwebsiteimageOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteImage", idx, staticwebsiteimage.Name)
+		id = generatesIdentifier("StaticWebSiteImage", int(stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]), staticwebsiteimage.Name)
 		map_StaticWebSiteImage_Identifiers[staticwebsiteimage] = id
 
 		// Initialisation of values
@@ -7953,11 +7953,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(staticwebsiteparagraphOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of StaticWebSiteParagraph instances pointers"
 	}
-	for idx, staticwebsiteparagraph := range staticwebsiteparagraphOrdered {
+	for _, staticwebsiteparagraph := range staticwebsiteparagraphOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteParagraph", idx, staticwebsiteparagraph.Name)
+		id = generatesIdentifier("StaticWebSiteParagraph", int(stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]), staticwebsiteparagraph.Name)
 		map_StaticWebSiteParagraph_Identifiers[staticwebsiteparagraph] = id
 
 		// Initialisation of values
@@ -7974,11 +7974,11 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	if len(xhtml_contentOrdered) > 0 {
 		pointersInitializesStatements += "\n\t// setup of XHTML_CONTENT instances pointers"
 	}
-	for idx, xhtml_content := range xhtml_contentOrdered {
+	for _, xhtml_content := range xhtml_contentOrdered {
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("XHTML_CONTENT", idx, xhtml_content.Name)
+		id = generatesIdentifier("XHTML_CONTENT", int(stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]), xhtml_content.Name)
 		map_XHTML_CONTENT_Identifiers[xhtml_content] = id
 
 		// Initialisation of values
