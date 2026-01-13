@@ -27,6 +27,10 @@ func (r *ATTRIBUTE_DEFINITION_Rendering) GetRank() int {
 	return r.Rank
 }
 
+func (r *ATTRIBUTE_DEFINITION_Rendering) GetRankPtr() *int {
+	return &r.Rank
+}
+
 type ATTRIBUTE_DEFINITION_XHTML_Rendering struct {
 	ATTRIBUTE_DEFINITION_Rendering
 }

@@ -3,6 +3,7 @@ package spectypes
 import (
 	"fmt"
 	"log"
+	"sort"
 
 	tree "github.com/fullstack-lang/gong/lib/tree/go/models"
 
@@ -10,11 +11,9 @@ import (
 	m "github.com/fullstack-lang/gongreqif/go/models"
 )
 
-type SpecTypesTreeStageUpdater struct {
-}
+type SpecTypesTreeStageUpdater struct{}
 
 func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stager *m.Stager) {
-
 	stager.GetSpecTypesTreeStage().Reset()
 	stage := stager.GetStage()
 
@@ -208,11 +207,13 @@ func (updater *SpecTypesTreeStageUpdater) UpdateAndCommitSpecTypesTreeStage(stag
 func addAttibutesNodes(
 	stager *m.Stager,
 	nodeSpecType *tree.Node,
-	specAttributes *m.A_SPEC_ATTRIBUTES) {
-
+	specAttributes *m.A_SPEC_ATTRIBUTES,
+) {
 	if specAttributes == nil {
 		return
 	}
+
+	var collectedAttributes []nodeWithRank
 
 	addAttributeNode(
 		stager,
@@ -221,7 +222,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_XHTML_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_XHTML_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_XHTML,
-		nodeSpecType)
+		&collectedAttributes)
 
 	addAttributeNode(
 		stager,
@@ -230,7 +231,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_STRING_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_STRING_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_STRING,
-		nodeSpecType)
+		&collectedAttributes)
 
 	addAttributeNode(
 		stager,
@@ -239,7 +240,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_BOOLEAN_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_BOOLEAN,
-		nodeSpecType)
+		&collectedAttributes)
 
 	addAttributeNode(
 		stager,
@@ -248,7 +249,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_INTEGER_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_INTEGER_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_INTEGER,
-		nodeSpecType)
+		&collectedAttributes)
 
 	addAttributeNode(
 		stager,
@@ -257,7 +258,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_REAL_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_REAL_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_REAL,
-		nodeSpecType)
+		&collectedAttributes)
 
 	addAttributeNode(
 		stager,
@@ -266,7 +267,7 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_DATE_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_DATE_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_DATE,
-		nodeSpecType)
+		&collectedAttributes)
 
 	addAttributeNode(
 		stager,
@@ -275,5 +276,13 @@ func addAttibutesNodes(
 		stager.Map_ATTRIBUTE_DEFINITION_ENUMERATION_Spec_nbInstance,
 		*m.GetGongstructInstancesSetFromPointerType[*m.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](stager.GetStage()),
 		stager.Map_id_DATATYPE_DEFINITION_ENUMERATION,
-		nodeSpecType)
+		&collectedAttributes)
+
+	sort.Slice(collectedAttributes, func(i, j int) bool {
+		return collectedAttributes[i].Rank < collectedAttributes[j].Rank
+	})
+
+	for _, item := range collectedAttributes {
+		nodeSpecType.Children = append(nodeSpecType.Children, item.Node)
+	}
 }

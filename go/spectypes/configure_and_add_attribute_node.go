@@ -8,24 +8,25 @@ import (
 )
 
 // configureAndAddAttributeNode configures a new attribute node, sets its icon,
-// and adds it to the parent node in the tree.
+// and returns the rank for sorting.
+// It DOES NOT add the node to the parent 'nodeSpecType' anymore.
 func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 	stager *m.Stager,
-	nodeSpecType *tree.Node,
 	nodeAttribute *tree.Node,
 	nbInstances int,
 	isEditable bool,
 	longName string,
 	attributeDefinition AttrDef,
-) {
+) (rank int) {
 	if nbInstances > 0 {
 		nodeAttribute.IsWithPreceedingIcon = true
 		nodeAttribute.PreceedingIcon = string(buttons.BUTTON_check_circle)
 	}
-	nodeSpecType.Children = append(nodeSpecType.Children, nodeAttribute)
 	m.AddIconForEditabilityOfAttribute(isEditable, longName, nodeAttribute)
 
 	attrDefRendering := GetAttrDefRendering(stager, attributeDefinition)
+	rank = *attrDefRendering.GetRankPtr()
+
 	{
 		button := &tree.Button{
 			Name: longName + ": show attribute on/off in title",
@@ -94,4 +95,6 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 			button,
 		)
 	}
+
+	return
 }

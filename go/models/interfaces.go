@@ -24,6 +24,7 @@ type AttributeDefinitionRendering interface {
 	GetShowInTablePtr() *bool
 	GetShowInTitlePtr() *bool
 	GetShowInSubjectPtr() *bool
+	GetRankPtr() *int
 }
 
 // Things like A_ATTRIBUTE_DEFINITION_XHTML_REF
