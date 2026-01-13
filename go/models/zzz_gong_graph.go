@@ -8761,6 +8761,9 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	if attribute_definition_boolean_rendering.ShowInSubject != attribute_definition_boolean_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject"))
 	}
+	if attribute_definition_boolean_rendering.Rank != attribute_definition_boolean_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank"))
+	}
 
 	return
 }
@@ -8827,6 +8830,9 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	}
 	if attribute_definition_date_rendering.ShowInSubject != attribute_definition_date_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+	if attribute_definition_date_rendering.Rank != attribute_definition_date_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_date_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	return
@@ -8898,6 +8904,9 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	if attribute_definition_enumeration_rendering.ShowInSubject != attribute_definition_enumeration_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject"))
 	}
+	if attribute_definition_enumeration_rendering.Rank != attribute_definition_enumeration_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank"))
+	}
 
 	return
 }
@@ -8964,6 +8973,9 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	}
 	if attribute_definition_integer_rendering.ShowInSubject != attribute_definition_integer_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+	if attribute_definition_integer_rendering.Rank != attribute_definition_integer_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_integer_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	return
@@ -9032,6 +9044,9 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	if attribute_definition_real_rendering.ShowInSubject != attribute_definition_real_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject"))
 	}
+	if attribute_definition_real_rendering.Rank != attribute_definition_real_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_real_rendering.GongMarshallField(stage, "Rank"))
+	}
 
 	return
 }
@@ -9051,6 +9066,9 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongDiff(s
 	}
 	if attribute_definition_rendering.ShowInSubject != attribute_definition_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+	if attribute_definition_rendering.Rank != attribute_definition_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	return
@@ -9119,6 +9137,9 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	if attribute_definition_string_rendering.ShowInSubject != attribute_definition_string_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject"))
 	}
+	if attribute_definition_string_rendering.Rank != attribute_definition_string_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_string_rendering.GongMarshallField(stage, "Rank"))
+	}
 
 	return
 }
@@ -9185,6 +9206,9 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	}
 	if attribute_definition_xhtml_rendering.ShowInSubject != attribute_definition_xhtml_renderingOther.ShowInSubject {
 		diffs = append(diffs, attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+	if attribute_definition_xhtml_rendering.Rank != attribute_definition_xhtml_renderingOther.Rank {
+		diffs = append(diffs, attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	return

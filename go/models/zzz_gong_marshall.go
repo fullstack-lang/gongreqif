@@ -197,6 +197,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_dateOrdered := []*ATTRIBUTE_DEFINITION_DATE{}
@@ -260,6 +261,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_enumerationOrdered := []*ATTRIBUTE_DEFINITION_ENUMERATION{}
@@ -324,6 +326,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_integerOrdered := []*ATTRIBUTE_DEFINITION_INTEGER{}
@@ -387,6 +390,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_realOrdered := []*ATTRIBUTE_DEFINITION_REAL{}
@@ -450,6 +454,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_renderingOrdered := []*ATTRIBUTE_DEFINITION_Rendering{}
@@ -479,6 +484,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_stringOrdered := []*ATTRIBUTE_DEFINITION_STRING{}
@@ -542,6 +548,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_definition_xhtmlOrdered := []*ATTRIBUTE_DEFINITION_XHTML{}
@@ -605,6 +612,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank")
 	}
 
 	attribute_value_booleanOrdered := []*ATTRIBUTE_VALUE_BOOLEAN{}
@@ -4157,6 +4165,11 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_boolean_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", fieldName)
@@ -4266,6 +4279,11 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_date_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_DATE_Rendering", fieldName)
@@ -4380,6 +4398,11 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_enumeration_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", fieldName)
@@ -4489,6 +4512,11 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_integer_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_INTEGER_Rendering", fieldName)
@@ -4598,6 +4626,11 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_real_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_REAL_Rendering", fieldName)
@@ -4628,6 +4661,11 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarsha
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_Rendering", fieldName)
@@ -4737,6 +4775,11 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_string_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_STRING_Rendering", fieldName)
@@ -4846,6 +4889,11 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubject))
+	case "Rank":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Rank")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_definition_xhtml_rendering.Rank))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_XHTML_Rendering", fieldName)
@@ -8104,6 +8152,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8129,6 +8178,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8155,6 +8205,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8180,6 +8231,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8205,6 +8257,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8215,6 +8268,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarsha
 		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8240,6 +8294,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }
@@ -8265,6 +8320,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable")
 		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle")
 		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank")
 	}
 	return
 }

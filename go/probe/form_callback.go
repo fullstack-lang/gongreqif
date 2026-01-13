@@ -306,6 +306,8 @@ func (attribute_definition_boolean_renderingFormCallback *ATTRIBUTE_DEFINITION_B
 			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_boolean_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -546,6 +548,8 @@ func (attribute_definition_date_renderingFormCallback *ATTRIBUTE_DEFINITION_DATE
 			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_date_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -788,6 +792,8 @@ func (attribute_definition_enumeration_renderingFormCallback *ATTRIBUTE_DEFINITI
 			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_enumeration_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -1028,6 +1034,8 @@ func (attribute_definition_integer_renderingFormCallback *ATTRIBUTE_DEFINITION_I
 			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_integer_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -1268,6 +1276,8 @@ func (attribute_definition_real_renderingFormCallback *ATTRIBUTE_DEFINITION_REAL
 			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_real_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -1350,6 +1360,8 @@ func (attribute_definition_renderingFormCallback *ATTRIBUTE_DEFINITION_Rendering
 			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -1590,6 +1602,8 @@ func (attribute_definition_string_renderingFormCallback *ATTRIBUTE_DEFINITION_ST
 			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_string_rendering_.Rank), formDiv)
 		}
 	}
 
@@ -1830,6 +1844,8 @@ func (attribute_definition_xhtml_renderingFormCallback *ATTRIBUTE_DEFINITION_XHT
 			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInTitle), formDiv)
 		case "ShowInSubject":
 			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.ShowInSubject), formDiv)
+		case "Rank":
+			FormDivBasicFieldToField(&(attribute_definition_xhtml_rendering_.Rank), formDiv)
 		}
 	}
 

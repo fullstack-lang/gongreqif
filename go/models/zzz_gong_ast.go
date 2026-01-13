@@ -4746,6 +4746,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_DATE":
 				switch fieldName {
@@ -4778,6 +4785,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_DATE_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_ENUMERATION":
 				switch fieldName {
@@ -4810,6 +4824,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_INTEGER":
 				switch fieldName {
@@ -4842,6 +4863,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_INTEGER_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_REAL":
 				switch fieldName {
@@ -4874,6 +4902,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_REAL_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_Rendering":
 				switch fieldName {
@@ -4882,6 +4917,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_STRING":
 				switch fieldName {
@@ -4914,6 +4956,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_STRING_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_DEFINITION_XHTML":
 				switch fieldName {
@@ -4946,6 +4995,13 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 					// remove first and last char
 					fielValue := basicLit.Value[1 : len(basicLit.Value)-1]
 					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].Name = fielValue
+				case "Rank":
+					// convert string to int
+					fielValue, err := strconv.ParseInt(basicLit.Value, 10, 64)
+					if err != nil {
+						log.Fatalln(err)
+					}
+					__gong__map_ATTRIBUTE_DEFINITION_XHTML_Rendering[identifier].Rank = int(exprSign) * int(fielValue)
 				}
 			case "ATTRIBUTE_VALUE_BOOLEAN":
 				switch fieldName {

@@ -358,6 +358,8 @@ func (u *ATTRIBUTE_DEFINITION_BOOLEAN_RenderingUnmarshaller) UnmarshallField(sta
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -428,6 +430,8 @@ func (u *ATTRIBUTE_DEFINITION_DATE_RenderingUnmarshaller) UnmarshallField(stage 
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -500,6 +504,8 @@ func (u *ATTRIBUTE_DEFINITION_ENUMERATION_RenderingUnmarshaller) UnmarshallField
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -570,6 +576,8 @@ func (u *ATTRIBUTE_DEFINITION_INTEGER_RenderingUnmarshaller) UnmarshallField(sta
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -640,6 +648,8 @@ func (u *ATTRIBUTE_DEFINITION_REAL_RenderingUnmarshaller) UnmarshallField(stage 
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -670,6 +680,8 @@ func (u *ATTRIBUTE_DEFINITION_RenderingUnmarshaller) UnmarshallField(stage *Stag
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -740,6 +752,8 @@ func (u *ATTRIBUTE_DEFINITION_STRING_RenderingUnmarshaller) UnmarshallField(stag
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }
@@ -810,6 +824,8 @@ func (u *ATTRIBUTE_DEFINITION_XHTML_RenderingUnmarshaller) UnmarshallField(stage
 		instance.ShowInTitle = GongExtractBool(valueExpr)
 	case "ShowInSubject":
 		instance.ShowInSubject = GongExtractBool(valueExpr)
+	case "Rank":
+		instance.Rank = GongExtractInt(valueExpr)
 	}
 	return nil
 }

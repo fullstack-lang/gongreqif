@@ -6,6 +6,9 @@ type ATTRIBUTE_DEFINITION_Rendering struct {
 	ShowInTable   bool
 	ShowInTitle   bool
 	ShowInSubject bool
+
+	// Rank determines the sort order of attributes in the tree
+	Rank int
 }
 
 func (r *ATTRIBUTE_DEFINITION_Rendering) GetShowInTitlePtr() *bool {
@@ -18,6 +21,10 @@ func (r *ATTRIBUTE_DEFINITION_Rendering) GetShowInTablePtr() *bool {
 
 func (r *ATTRIBUTE_DEFINITION_Rendering) GetShowInSubjectPtr() *bool {
 	return &r.ShowInSubject
+}
+
+func (r *ATTRIBUTE_DEFINITION_Rendering) GetRank() int {
+	return r.Rank
 }
 
 type ATTRIBUTE_DEFINITION_XHTML_Rendering struct {

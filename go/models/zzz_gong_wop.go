@@ -59,6 +59,8 @@ type ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) {
@@ -67,6 +69,7 @@ func (from *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) CopyBasicFields(to *ATTRIBUT
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_DATE_WOP struct {
@@ -105,6 +108,8 @@ type ATTRIBUTE_DEFINITION_DATE_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_DATE_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_DATE_Rendering) {
@@ -113,6 +118,7 @@ func (from *ATTRIBUTE_DEFINITION_DATE_Rendering) CopyBasicFields(to *ATTRIBUTE_D
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_ENUMERATION_WOP struct {
@@ -154,6 +160,8 @@ type ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) {
@@ -162,6 +170,7 @@ func (from *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) CopyBasicFields(to *ATTR
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_INTEGER_WOP struct {
@@ -200,6 +209,8 @@ type ATTRIBUTE_DEFINITION_INTEGER_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_INTEGER_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_INTEGER_Rendering) {
@@ -208,6 +219,7 @@ func (from *ATTRIBUTE_DEFINITION_INTEGER_Rendering) CopyBasicFields(to *ATTRIBUT
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_REAL_WOP struct {
@@ -246,6 +258,8 @@ type ATTRIBUTE_DEFINITION_REAL_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_REAL_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_REAL_Rendering) {
@@ -254,6 +268,7 @@ func (from *ATTRIBUTE_DEFINITION_REAL_Rendering) CopyBasicFields(to *ATTRIBUTE_D
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_Rendering_WOP struct {
@@ -266,6 +281,8 @@ type ATTRIBUTE_DEFINITION_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_Rendering) {
@@ -274,6 +291,7 @@ func (from *ATTRIBUTE_DEFINITION_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINI
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_STRING_WOP struct {
@@ -312,6 +330,8 @@ type ATTRIBUTE_DEFINITION_STRING_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_STRING_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_STRING_Rendering) {
@@ -320,6 +340,7 @@ func (from *ATTRIBUTE_DEFINITION_STRING_Rendering) CopyBasicFields(to *ATTRIBUTE
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_DEFINITION_XHTML_WOP struct {
@@ -358,6 +379,8 @@ type ATTRIBUTE_DEFINITION_XHTML_Rendering_WOP struct {
 	ShowInTitle bool
 
 	ShowInSubject bool
+
+	Rank int
 }
 
 func (from *ATTRIBUTE_DEFINITION_XHTML_Rendering) CopyBasicFields(to *ATTRIBUTE_DEFINITION_XHTML_Rendering) {
@@ -366,6 +389,7 @@ func (from *ATTRIBUTE_DEFINITION_XHTML_Rendering) CopyBasicFields(to *ATTRIBUTE_
 	to.ShowInTable = from.ShowInTable
 	to.ShowInTitle = from.ShowInTitle
 	to.ShowInSubject = from.ShowInSubject
+	to.Rank = from.Rank
 }
 
 type ATTRIBUTE_VALUE_BOOLEAN_WOP struct {

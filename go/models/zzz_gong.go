@@ -21031,6 +21031,10 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 			Name:               "ShowInSubject",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
+		{
+			Name:               "Rank",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
 	}
 	return
 }
@@ -21098,6 +21102,10 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		},
 		{
 			Name:               "ShowInSubject",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Rank",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
@@ -21173,6 +21181,10 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 			Name:               "ShowInSubject",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
+		{
+			Name:               "Rank",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
 	}
 	return
 }
@@ -21240,6 +21252,10 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		},
 		{
 			Name:               "ShowInSubject",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Rank",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
@@ -21311,6 +21327,10 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 			Name:               "ShowInSubject",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
+		{
+			Name:               "Rank",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
 	}
 	return
 }
@@ -21332,6 +21352,10 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFie
 		},
 		{
 			Name:               "ShowInSubject",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Rank",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
@@ -21403,6 +21427,10 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 			Name:               "ShowInSubject",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
+		{
+			Name:               "Rank",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
 	}
 	return
 }
@@ -21470,6 +21498,10 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		},
 		{
 			Name:               "ShowInSubject",
+			GongFieldValueType: GongFieldValueTypeBasicKind,
+		},
+		{
+			Name:               "Rank",
 			GongFieldValueType: GongFieldValueTypeBasicKind,
 		},
 	}
@@ -23679,6 +23711,10 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 		res.valueString = fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_boolean_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_boolean_rendering.Rank)
+		res.valueInt = attribute_definition_boolean_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -23737,6 +23773,10 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		res.valueString = fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_date_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_date_rendering.Rank)
+		res.valueInt = attribute_definition_date_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -23799,6 +23839,10 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 		res.valueString = fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_enumeration_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_enumeration_rendering.Rank)
+		res.valueInt = attribute_definition_enumeration_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -23857,6 +23901,10 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		res.valueString = fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_integer_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_integer_rendering.Rank)
+		res.valueInt = attribute_definition_integer_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -23915,6 +23963,10 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 		res.valueString = fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_real_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_real_rendering.Rank)
+		res.valueInt = attribute_definition_real_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -23935,6 +23987,10 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFie
 		res.valueString = fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_rendering.Rank)
+		res.valueInt = attribute_definition_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -23993,6 +24049,10 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 		res.valueString = fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_string_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_string_rendering.Rank)
+		res.valueInt = attribute_definition_string_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -24051,6 +24111,10 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		res.valueString = fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubject)
 		res.valueBool = attribute_definition_xhtml_rendering.ShowInSubject
 		res.GongFieldValueType = GongFieldValueTypeBool
+	case "Rank":
+		res.valueString = fmt.Sprintf("%d", attribute_definition_xhtml_rendering.Rank)
+		res.valueInt = attribute_definition_xhtml_rendering.Rank
+		res.GongFieldValueType = GongFieldValueTypeInt
 	}
 	return
 }
@@ -25982,6 +26046,8 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 		attribute_definition_boolean_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_boolean_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_boolean_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26053,6 +26119,8 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		attribute_definition_date_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_date_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_date_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26126,6 +26194,8 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 		attribute_definition_enumeration_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_enumeration_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_enumeration_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26197,6 +26267,8 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		attribute_definition_integer_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_integer_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_integer_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26268,6 +26340,8 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 		attribute_definition_real_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_real_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_real_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26285,6 +26359,8 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongSetFie
 		attribute_definition_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26356,6 +26432,8 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 		attribute_definition_string_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_string_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_string_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}
@@ -26427,6 +26505,8 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		attribute_definition_xhtml_rendering.ShowInTitle = value.GetValueBool()
 	case "ShowInSubject":
 		attribute_definition_xhtml_rendering.ShowInSubject = value.GetValueBool()
+	case "Rank":
+		attribute_definition_xhtml_rendering.Rank = int(value.GetValueInt())
 	default:
 		return fmt.Errorf("unknown field %s", fieldName)
 	}

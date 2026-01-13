@@ -74,6 +74,8 @@ func FillUpForm(
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_DATE:
 		// insertion point
@@ -124,6 +126,8 @@ func FillUpForm(
 		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_ENUMERATION:
@@ -178,6 +182,8 @@ func FillUpForm(
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_INTEGER:
 		// insertion point
@@ -228,6 +234,8 @@ func FillUpForm(
 		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_REAL:
@@ -280,6 +288,8 @@ func FillUpForm(
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_Rendering:
 		// insertion point
@@ -290,6 +300,8 @@ func FillUpForm(
 		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_STRING:
@@ -342,6 +354,8 @@ func FillUpForm(
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_DEFINITION_XHTML:
 		// insertion point
@@ -392,6 +406,8 @@ func FillUpForm(
 		BasicFieldtoForm("ShowInTitle", instanceWithInferedType.ShowInTitle, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 		BasicFieldtoForm("ShowInSubject", instanceWithInferedType.ShowInSubject, instanceWithInferedType, probe.formStage, formGroup,
+			false, false, 0, false, 0)
+		BasicFieldtoForm("Rank", instanceWithInferedType.Rank, instanceWithInferedType, probe.formStage, formGroup,
 			false, false, 0, false, 0)
 
 	case *models.ATTRIBUTE_VALUE_BOOLEAN:
