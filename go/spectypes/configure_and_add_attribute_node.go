@@ -95,6 +95,38 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 			button,
 		)
 	}
+	{
+		button := &tree.Button{
+			Name: longName + ": increase rank",
+			Impl: &increaseButtonProxy{
+				stager:      stager,
+				targetValue: attrDefRendering.GetRankPtr(),
+			},
+			HasToolTip:      true,
+			ToolTipPosition: tree.Right,
+			ToolTipText:     "Increase the display order (less priority)",
+			Icon:            string(buttons.BUTTON_arrow_upward),
+		}
+		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
+			button,
+		)
+	}
+	{
+		button := &tree.Button{
+			Name: longName + ": decrease rank",
+			Impl: &decreaseButtonProxy{
+				stager:      stager,
+				targetValue: attrDefRendering.GetRankPtr(),
+			},
+			HasToolTip:      true,
+			ToolTipPosition: tree.Right,
+			ToolTipText:     "Decrease the display order (more priority)",
+			Icon:            string(buttons.BUTTON_arrow_downward),
+		}
+		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
+			button,
+		)
+	}
 
 	return
 }
