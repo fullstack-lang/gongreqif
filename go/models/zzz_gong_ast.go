@@ -14,6 +14,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -23,6 +24,8 @@ var dummy_strconv_import strconv.NumError
 var _ = dummy_strconv_import
 var dummy_time_import time.Time
 var _ = dummy_time_import
+var dummy_slices_import = slices.Insert([]int{0}, 0)
+var _ = dummy_slices_import
 
 // swagger:ignore
 type GONG__ExpressionType string
@@ -105,13 +108,25 @@ func ParseAstEmbeddedFile(stage *Stage, directory embed.FS, pathToFile string) e
 // ParseAstFile Parse pathToFile and stages all instances
 // declared in the file
 func ParseAstFileFromAst(stage *Stage, inFile *ast.File, fset *token.FileSet, preserveOrder bool) error {
-	// if there is a meta package import, it is the third import
-	if len(inFile.Imports) > 3 {
-		log.Fatalln("Too many imports in file", inFile.Name)
-	}
-	if len(inFile.Imports) == 3 {
-		stage.MetaPackageImportAlias = inFile.Imports[2].Name.Name
-		stage.MetaPackageImportPath = inFile.Imports[2].Path.Value
+	// Robust parsing of imports to identify the meta package.
+	// We ignore standard imports and the primary models package import.
+	stage.MetaPackageImportAlias = ""
+	stage.MetaPackageImportPath = ""
+	for _, imp := range inFile.Imports {
+		path := strings.Trim(imp.Path.Value, "\"")
+
+		// Skip known standard packages and the main models package for this stage
+		if path == "time" || path == "slices" || path == stage.GetType() {
+			continue
+		}
+
+		// The remaining import is the meta package used for docLink renaming.
+		// Capture the alias if it exists.
+		if imp.Name != nil {
+			stage.MetaPackageImportAlias = imp.Name.Name
+		}
+		// Store the path (including quotes for the marshaller)
+		stage.MetaPackageImportPath = imp.Path.Value
 	}
 
 	// astCoordinate := "File "
@@ -567,6 +582,675 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 			var basicLit *ast.BasicLit
 
 			callExpr := expr
+
+			// 1. Detect the function call type
+			var isAppend bool
+			_ = isAppend
+			var isSlicesInsert bool
+			var isSlicesDelete bool
+
+			if id, ok := callExpr.Fun.(*ast.Ident); ok && id.Name == "append" {
+				isAppend = true
+			} else if se, ok := callExpr.Fun.(*ast.SelectorExpr); ok {
+				if id, ok := se.X.(*ast.Ident); ok && id.Name == "slices" {
+					if se.Sel.Name == "Insert" {
+						isSlicesInsert = true
+					} else if se.Sel.Name == "Delete" {
+						isSlicesDelete = true
+					}
+				}
+			}
+
+			// 2. Handle slices.Delete immediately
+			if isSlicesDelete {
+				var start, end int
+				_, _ = start, end
+				if bl, ok := callExpr.Args[1].(*ast.BasicLit); ok && bl.Kind == token.INT {
+					start, _ = strconv.Atoi(bl.Value)
+				}
+				if bl, ok := callExpr.Args[2].(*ast.BasicLit); ok && bl.Kind == token.INT {
+					end, _ = strconv.Atoi(bl.Value)
+				}
+				var ok bool
+				gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
+				if ok {
+					switch gongstructName {
+					// insertion point for slices.Delete code
+					case "ALTERNATIVE_ID":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_BOOLEAN":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_DATE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_DATE_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_ENUMERATION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_INTEGER":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_INTEGER_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_REAL":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_REAL_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_STRING":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_STRING_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_XHTML":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_DEFINITION_XHTML_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_BOOLEAN":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_DATE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_ENUMERATION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_INTEGER":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_REAL":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_STRING":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ATTRIBUTE_VALUE_XHTML":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ALTERNATIVE_ID":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_DATE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_INTEGER_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_REAL_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_STRING_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_DEFINITION_XHTML_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ATTRIBUTE_VALUE_BOOLEAN":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_BOOLEAN":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_BOOLEAN) && end <= len(instance.ATTRIBUTE_VALUE_BOOLEAN) && start < end {
+								instance.ATTRIBUTE_VALUE_BOOLEAN = slices.Delete(instance.ATTRIBUTE_VALUE_BOOLEAN, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_DATE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_DATE":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_DATE[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_DATE) && end <= len(instance.ATTRIBUTE_VALUE_DATE) && start < end {
+								instance.ATTRIBUTE_VALUE_DATE = slices.Delete(instance.ATTRIBUTE_VALUE_DATE, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_ENUMERATION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_ENUMERATION":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_ENUMERATION) && end <= len(instance.ATTRIBUTE_VALUE_ENUMERATION) && start < end {
+								instance.ATTRIBUTE_VALUE_ENUMERATION = slices.Delete(instance.ATTRIBUTE_VALUE_ENUMERATION, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_INTEGER":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_INTEGER":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_INTEGER) && end <= len(instance.ATTRIBUTE_VALUE_INTEGER) && start < end {
+								instance.ATTRIBUTE_VALUE_INTEGER = slices.Delete(instance.ATTRIBUTE_VALUE_INTEGER, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_REAL":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_REAL":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_REAL[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_REAL) && end <= len(instance.ATTRIBUTE_VALUE_REAL) && start < end {
+								instance.ATTRIBUTE_VALUE_REAL = slices.Delete(instance.ATTRIBUTE_VALUE_REAL, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_STRING":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_STRING":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_STRING[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_STRING) && end <= len(instance.ATTRIBUTE_VALUE_STRING) && start < end {
+								instance.ATTRIBUTE_VALUE_STRING = slices.Delete(instance.ATTRIBUTE_VALUE_STRING, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_XHTML":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_XHTML":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_XHTML) && end <= len(instance.ATTRIBUTE_VALUE_XHTML) && start < end {
+								instance.ATTRIBUTE_VALUE_XHTML = slices.Delete(instance.ATTRIBUTE_VALUE_XHTML, start, end)
+							}
+						}
+					case "A_ATTRIBUTE_VALUE_XHTML_1":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_VALUE_BOOLEAN":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_BOOLEAN) && end <= len(instance.ATTRIBUTE_VALUE_BOOLEAN) && start < end {
+								instance.ATTRIBUTE_VALUE_BOOLEAN = slices.Delete(instance.ATTRIBUTE_VALUE_BOOLEAN, start, end)
+							}
+						case "ATTRIBUTE_VALUE_DATE":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_DATE) && end <= len(instance.ATTRIBUTE_VALUE_DATE) && start < end {
+								instance.ATTRIBUTE_VALUE_DATE = slices.Delete(instance.ATTRIBUTE_VALUE_DATE, start, end)
+							}
+						case "ATTRIBUTE_VALUE_ENUMERATION":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_ENUMERATION) && end <= len(instance.ATTRIBUTE_VALUE_ENUMERATION) && start < end {
+								instance.ATTRIBUTE_VALUE_ENUMERATION = slices.Delete(instance.ATTRIBUTE_VALUE_ENUMERATION, start, end)
+							}
+						case "ATTRIBUTE_VALUE_INTEGER":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_INTEGER) && end <= len(instance.ATTRIBUTE_VALUE_INTEGER) && start < end {
+								instance.ATTRIBUTE_VALUE_INTEGER = slices.Delete(instance.ATTRIBUTE_VALUE_INTEGER, start, end)
+							}
+						case "ATTRIBUTE_VALUE_REAL":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_REAL) && end <= len(instance.ATTRIBUTE_VALUE_REAL) && start < end {
+								instance.ATTRIBUTE_VALUE_REAL = slices.Delete(instance.ATTRIBUTE_VALUE_REAL, start, end)
+							}
+						case "ATTRIBUTE_VALUE_STRING":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_STRING) && end <= len(instance.ATTRIBUTE_VALUE_STRING) && start < end {
+								instance.ATTRIBUTE_VALUE_STRING = slices.Delete(instance.ATTRIBUTE_VALUE_STRING, start, end)
+							}
+						case "ATTRIBUTE_VALUE_XHTML":
+							instance := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+							if start < len(instance.ATTRIBUTE_VALUE_XHTML) && end <= len(instance.ATTRIBUTE_VALUE_XHTML) && start < end {
+								instance.ATTRIBUTE_VALUE_XHTML = slices.Delete(instance.ATTRIBUTE_VALUE_XHTML, start, end)
+							}
+						}
+					case "A_CHILDREN":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "SPEC_HIERARCHY":
+							instance := __gong__map_A_CHILDREN[identifier]
+							if start < len(instance.SPEC_HIERARCHY) && end <= len(instance.SPEC_HIERARCHY) && start < end {
+								instance.SPEC_HIERARCHY = slices.Delete(instance.SPEC_HIERARCHY, start, end)
+							}
+						}
+					case "A_CORE_CONTENT":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPES":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "DATATYPE_DEFINITION_BOOLEAN":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_BOOLEAN) && end <= len(instance.DATATYPE_DEFINITION_BOOLEAN) && start < end {
+								instance.DATATYPE_DEFINITION_BOOLEAN = slices.Delete(instance.DATATYPE_DEFINITION_BOOLEAN, start, end)
+							}
+						case "DATATYPE_DEFINITION_DATE":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_DATE) && end <= len(instance.DATATYPE_DEFINITION_DATE) && start < end {
+								instance.DATATYPE_DEFINITION_DATE = slices.Delete(instance.DATATYPE_DEFINITION_DATE, start, end)
+							}
+						case "DATATYPE_DEFINITION_ENUMERATION":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_ENUMERATION) && end <= len(instance.DATATYPE_DEFINITION_ENUMERATION) && start < end {
+								instance.DATATYPE_DEFINITION_ENUMERATION = slices.Delete(instance.DATATYPE_DEFINITION_ENUMERATION, start, end)
+							}
+						case "DATATYPE_DEFINITION_INTEGER":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_INTEGER) && end <= len(instance.DATATYPE_DEFINITION_INTEGER) && start < end {
+								instance.DATATYPE_DEFINITION_INTEGER = slices.Delete(instance.DATATYPE_DEFINITION_INTEGER, start, end)
+							}
+						case "DATATYPE_DEFINITION_REAL":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_REAL) && end <= len(instance.DATATYPE_DEFINITION_REAL) && start < end {
+								instance.DATATYPE_DEFINITION_REAL = slices.Delete(instance.DATATYPE_DEFINITION_REAL, start, end)
+							}
+						case "DATATYPE_DEFINITION_STRING":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_STRING) && end <= len(instance.DATATYPE_DEFINITION_STRING) && start < end {
+								instance.DATATYPE_DEFINITION_STRING = slices.Delete(instance.DATATYPE_DEFINITION_STRING, start, end)
+							}
+						case "DATATYPE_DEFINITION_XHTML":
+							instance := __gong__map_A_DATATYPES[identifier]
+							if start < len(instance.DATATYPE_DEFINITION_XHTML) && end <= len(instance.DATATYPE_DEFINITION_XHTML) && start < end {
+								instance.DATATYPE_DEFINITION_XHTML = slices.Delete(instance.DATATYPE_DEFINITION_XHTML, start, end)
+							}
+						}
+					case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPE_DEFINITION_DATE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPE_DEFINITION_ENUMERATION_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPE_DEFINITION_INTEGER_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPE_DEFINITION_REAL_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPE_DEFINITION_STRING_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_DATATYPE_DEFINITION_XHTML_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_EDITABLE_ATTS":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_ENUM_VALUE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_OBJECT":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_PROPERTIES":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_RELATION_GROUP_TYPE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SOURCE_1":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SOURCE_SPECIFICATION_1":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SPECIFICATIONS":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "SPECIFICATION":
+							instance := __gong__map_A_SPECIFICATIONS[identifier]
+							if start < len(instance.SPECIFICATION) && end <= len(instance.SPECIFICATION) && start < end {
+								instance.SPECIFICATION = slices.Delete(instance.SPECIFICATION, start, end)
+							}
+						}
+					case "A_SPECIFICATION_TYPE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SPECIFIED_VALUES":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ENUM_VALUE":
+							instance := __gong__map_A_SPECIFIED_VALUES[identifier]
+							if start < len(instance.ENUM_VALUE) && end <= len(instance.ENUM_VALUE) && start < end {
+								instance.ENUM_VALUE = slices.Delete(instance.ENUM_VALUE, start, end)
+							}
+						}
+					case "A_SPEC_ATTRIBUTES":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "ATTRIBUTE_DEFINITION_BOOLEAN":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_BOOLEAN) && end <= len(instance.ATTRIBUTE_DEFINITION_BOOLEAN) && start < end {
+								instance.ATTRIBUTE_DEFINITION_BOOLEAN = slices.Delete(instance.ATTRIBUTE_DEFINITION_BOOLEAN, start, end)
+							}
+						case "ATTRIBUTE_DEFINITION_DATE":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_DATE) && end <= len(instance.ATTRIBUTE_DEFINITION_DATE) && start < end {
+								instance.ATTRIBUTE_DEFINITION_DATE = slices.Delete(instance.ATTRIBUTE_DEFINITION_DATE, start, end)
+							}
+						case "ATTRIBUTE_DEFINITION_ENUMERATION":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_ENUMERATION) && end <= len(instance.ATTRIBUTE_DEFINITION_ENUMERATION) && start < end {
+								instance.ATTRIBUTE_DEFINITION_ENUMERATION = slices.Delete(instance.ATTRIBUTE_DEFINITION_ENUMERATION, start, end)
+							}
+						case "ATTRIBUTE_DEFINITION_INTEGER":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_INTEGER) && end <= len(instance.ATTRIBUTE_DEFINITION_INTEGER) && start < end {
+								instance.ATTRIBUTE_DEFINITION_INTEGER = slices.Delete(instance.ATTRIBUTE_DEFINITION_INTEGER, start, end)
+							}
+						case "ATTRIBUTE_DEFINITION_REAL":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_REAL) && end <= len(instance.ATTRIBUTE_DEFINITION_REAL) && start < end {
+								instance.ATTRIBUTE_DEFINITION_REAL = slices.Delete(instance.ATTRIBUTE_DEFINITION_REAL, start, end)
+							}
+						case "ATTRIBUTE_DEFINITION_STRING":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_STRING) && end <= len(instance.ATTRIBUTE_DEFINITION_STRING) && start < end {
+								instance.ATTRIBUTE_DEFINITION_STRING = slices.Delete(instance.ATTRIBUTE_DEFINITION_STRING, start, end)
+							}
+						case "ATTRIBUTE_DEFINITION_XHTML":
+							instance := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+							if start < len(instance.ATTRIBUTE_DEFINITION_XHTML) && end <= len(instance.ATTRIBUTE_DEFINITION_XHTML) && start < end {
+								instance.ATTRIBUTE_DEFINITION_XHTML = slices.Delete(instance.ATTRIBUTE_DEFINITION_XHTML, start, end)
+							}
+						}
+					case "A_SPEC_OBJECTS":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "SPEC_OBJECT":
+							instance := __gong__map_A_SPEC_OBJECTS[identifier]
+							if start < len(instance.SPEC_OBJECT) && end <= len(instance.SPEC_OBJECT) && start < end {
+								instance.SPEC_OBJECT = slices.Delete(instance.SPEC_OBJECT, start, end)
+							}
+						}
+					case "A_SPEC_OBJECT_TYPE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SPEC_RELATIONS":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "SPEC_RELATION":
+							instance := __gong__map_A_SPEC_RELATIONS[identifier]
+							if start < len(instance.SPEC_RELATION) && end <= len(instance.SPEC_RELATION) && start < end {
+								instance.SPEC_RELATION = slices.Delete(instance.SPEC_RELATION, start, end)
+							}
+						}
+					case "A_SPEC_RELATION_GROUPS":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "RELATION_GROUP":
+							instance := __gong__map_A_SPEC_RELATION_GROUPS[identifier]
+							if start < len(instance.RELATION_GROUP) && end <= len(instance.RELATION_GROUP) && start < end {
+								instance.RELATION_GROUP = slices.Delete(instance.RELATION_GROUP, start, end)
+							}
+						}
+					case "A_SPEC_RELATION_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SPEC_RELATION_TYPE_REF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_SPEC_TYPES":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "RELATION_GROUP_TYPE":
+							instance := __gong__map_A_SPEC_TYPES[identifier]
+							if start < len(instance.RELATION_GROUP_TYPE) && end <= len(instance.RELATION_GROUP_TYPE) && start < end {
+								instance.RELATION_GROUP_TYPE = slices.Delete(instance.RELATION_GROUP_TYPE, start, end)
+							}
+						case "SPEC_OBJECT_TYPE":
+							instance := __gong__map_A_SPEC_TYPES[identifier]
+							if start < len(instance.SPEC_OBJECT_TYPE) && end <= len(instance.SPEC_OBJECT_TYPE) && start < end {
+								instance.SPEC_OBJECT_TYPE = slices.Delete(instance.SPEC_OBJECT_TYPE, start, end)
+							}
+						case "SPEC_RELATION_TYPE":
+							instance := __gong__map_A_SPEC_TYPES[identifier]
+							if start < len(instance.SPEC_RELATION_TYPE) && end <= len(instance.SPEC_RELATION_TYPE) && start < end {
+								instance.SPEC_RELATION_TYPE = slices.Delete(instance.SPEC_RELATION_TYPE, start, end)
+							}
+						case "SPECIFICATION_TYPE":
+							instance := __gong__map_A_SPEC_TYPES[identifier]
+							if start < len(instance.SPECIFICATION_TYPE) && end <= len(instance.SPECIFICATION_TYPE) && start < end {
+								instance.SPECIFICATION_TYPE = slices.Delete(instance.SPECIFICATION_TYPE, start, end)
+							}
+						}
+					case "A_THE_HEADER":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "A_TOOL_EXTENSIONS":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "REQ_IF_TOOL_EXTENSION":
+							instance := __gong__map_A_TOOL_EXTENSIONS[identifier]
+							if start < len(instance.REQ_IF_TOOL_EXTENSION) && end <= len(instance.REQ_IF_TOOL_EXTENSION) && start < end {
+								instance.REQ_IF_TOOL_EXTENSION = slices.Delete(instance.REQ_IF_TOOL_EXTENSION, start, end)
+							}
+						}
+					case "DATATYPE_DEFINITION_BOOLEAN":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "DATATYPE_DEFINITION_DATE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "DATATYPE_DEFINITION_ENUMERATION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "DATATYPE_DEFINITION_INTEGER":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "DATATYPE_DEFINITION_REAL":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "DATATYPE_DEFINITION_STRING":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "DATATYPE_DEFINITION_XHTML":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "EMBEDDED_VALUE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "ENUM_VALUE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "EmbeddedJpgImage":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "EmbeddedPngImage":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "EmbeddedSvgImage":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "Kill":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "Map_identifier_bool":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "RELATION_GROUP":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "RELATION_GROUP_TYPE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "REQ_IF":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "REQ_IF_CONTENT":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "REQ_IF_HEADER":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "REQ_IF_TOOL_EXTENSION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPECIFICATION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPECIFICATION_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPECIFICATION_TYPE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPEC_HIERARCHY":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPEC_OBJECT":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPEC_OBJECT_TYPE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPEC_OBJECT_TYPE_Rendering":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPEC_RELATION":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "SPEC_RELATION_TYPE":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "StaticWebSite":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "Chapters":
+							instance := __gong__map_StaticWebSite[identifier]
+							if start < len(instance.Chapters) && end <= len(instance.Chapters) && start < end {
+								instance.Chapters = slices.Delete(instance.Chapters, start, end)
+							}
+						}
+					case "StaticWebSiteChapter":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						case "Paragraphs":
+							instance := __gong__map_StaticWebSiteChapter[identifier]
+							if start < len(instance.Paragraphs) && end <= len(instance.Paragraphs) && start < end {
+								instance.Paragraphs = slices.Delete(instance.Paragraphs, start, end)
+							}
+						}
+					case "StaticWebSiteGeneratedImage":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "StaticWebSiteImage":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "StaticWebSiteParagraph":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					case "XHTML_CONTENT":
+						switch fieldName {
+						// insertion point for slices.Delete field code
+						}
+					}
+				}
+				return
+			}
+
+			// 3. Prepare index for slices.Insert
+			var insertIndex int
+			_ = insertIndex
+			if isSlicesInsert {
+				if bl, ok := callExpr.Args[1].(*ast.BasicLit); ok && bl.Kind == token.INT {
+					insertIndex, _ = strconv.Atoi(bl.Value)
+				}
+			}
+
 			// astCoordinate := astCoordinate + "\tFun"
 			switch fun := callExpr.Fun.(type) {
 			// the is Fun      Expr
@@ -2224,7 +2908,14 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						}
 
 						// remove first and last char
-						date := basicLit.Value[1 : len(basicLit.Value)-1]
+						// Only remove first and last char if it is a STRING literal
+						// Indices in slices.Insert/Delete are INT literals and must not be trimmed
+						var date string
+						if basicLit.Kind == token.STRING {
+							date = basicLit.Value[1 : len(basicLit.Value)-1]
+						} else {
+							date = basicLit.Value
+						}
 						_ = date
 
 						var ok bool
@@ -2704,7 +3395,10 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 							// log.Println("we are in the case of append(....)")
 						}
 					}
-					_ = ident
+
+					if ident == nil {
+						continue
+					}
 
 					gongstructName, ok = __gong__map_Indentifiers_gongstructName[identifier]
 					if !ok {
@@ -2841,186 +3535,336 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_BOOLEAN":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_BOOLEAN[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_DATE":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_DATE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_DATE[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_DATE[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_DATE[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_ENUMERATION":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_ENUMERATION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_ENUMERATION[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_INTEGER":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_INTEGER":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_INTEGER[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_REAL":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_REAL":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_REAL[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_REAL[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_REAL[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_STRING":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_STRING":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_STRING[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_STRING[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_STRING[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_XHTML":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_XHTML":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_ATTRIBUTE_VALUE_XHTML_1":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_VALUE_BOOLEAN":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_BOOLEAN, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_VALUE_DATE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_DATE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_VALUE_ENUMERATION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_ENUMERATION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_VALUE_INTEGER":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_INTEGER, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_VALUE_REAL":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_REAL, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_VALUE_STRING":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_STRING, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_VALUE_XHTML":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_VALUE_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_ATTRIBUTE_VALUE_XHTML_1[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_VALUE_XHTML, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_CHILDREN":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPEC_HIERARCHY":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_HIERARCHY[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_CHILDREN[identifier]
+									instanceWhoseFieldIsAppended.SPEC_HIERARCHY = append(instanceWhoseFieldIsAppended.SPEC_HIERARCHY, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPEC_HIERARCHY[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_CHILDREN[identifier]
-								instanceWhoseFieldIsAppended.SPEC_HIERARCHY = append(instanceWhoseFieldIsAppended.SPEC_HIERARCHY, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_HIERARCHY[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_CHILDREN[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPEC_HIERARCHY) {
+										instanceWhoseFieldIsAppended.SPEC_HIERARCHY = slices.Insert(instanceWhoseFieldIsAppended.SPEC_HIERARCHY, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_CORE_CONTENT":
@@ -3031,74 +3875,144 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "DATATYPE_DEFINITION_BOOLEAN":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_BOOLEAN, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "DATATYPE_DEFINITION_DATE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_DATE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "DATATYPE_DEFINITION_ENUMERATION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_ENUMERATION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "DATATYPE_DEFINITION_INTEGER":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_INTEGER, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "DATATYPE_DEFINITION_REAL":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_REAL, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "DATATYPE_DEFINITION_STRING":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_STRING, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "DATATYPE_DEFINITION_XHTML":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
-								instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML = append(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_DATATYPE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_DATATYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML) {
+										instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML = slices.Insert(instanceWhoseFieldIsAppended.DATATYPE_DEFINITION_XHTML, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
@@ -3161,14 +4075,24 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPECIFICATION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPECIFICATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPECIFICATIONS[identifier]
+									instanceWhoseFieldIsAppended.SPECIFICATION = append(instanceWhoseFieldIsAppended.SPECIFICATION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPECIFICATION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPECIFICATIONS[identifier]
-								instanceWhoseFieldIsAppended.SPECIFICATION = append(instanceWhoseFieldIsAppended.SPECIFICATION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPECIFICATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPECIFICATIONS[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPECIFICATION) {
+										instanceWhoseFieldIsAppended.SPECIFICATION = slices.Insert(instanceWhoseFieldIsAppended.SPECIFICATION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_SPECIFICATION_TYPE_REF":
@@ -3179,102 +4103,192 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ENUM_VALUE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ENUM_VALUE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPECIFIED_VALUES[identifier]
+									instanceWhoseFieldIsAppended.ENUM_VALUE = append(instanceWhoseFieldIsAppended.ENUM_VALUE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ENUM_VALUE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPECIFIED_VALUES[identifier]
-								instanceWhoseFieldIsAppended.ENUM_VALUE = append(instanceWhoseFieldIsAppended.ENUM_VALUE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ENUM_VALUE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPECIFIED_VALUES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ENUM_VALUE) {
+										instanceWhoseFieldIsAppended.ENUM_VALUE = slices.Insert(instanceWhoseFieldIsAppended.ENUM_VALUE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_SPEC_ATTRIBUTES":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "ATTRIBUTE_DEFINITION_BOOLEAN":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_BOOLEAN[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_BOOLEAN, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_DEFINITION_DATE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_DATE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_DATE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_DEFINITION_ENUMERATION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_ENUMERATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_ENUMERATION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_DEFINITION_INTEGER":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_INTEGER[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_INTEGER, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_DEFINITION_REAL":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_REAL[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_REAL, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_DEFINITION_STRING":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_STRING[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_STRING, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "ATTRIBUTE_DEFINITION_XHTML":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
-								instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML = append(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_ATTRIBUTE_DEFINITION_XHTML[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_ATTRIBUTES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML) {
+										instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML = slices.Insert(instanceWhoseFieldIsAppended.ATTRIBUTE_DEFINITION_XHTML, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_SPEC_OBJECTS":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPEC_OBJECT":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_OBJECT[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_OBJECTS[identifier]
+									instanceWhoseFieldIsAppended.SPEC_OBJECT = append(instanceWhoseFieldIsAppended.SPEC_OBJECT, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPEC_OBJECT[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_OBJECTS[identifier]
-								instanceWhoseFieldIsAppended.SPEC_OBJECT = append(instanceWhoseFieldIsAppended.SPEC_OBJECT, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_OBJECT[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_OBJECTS[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPEC_OBJECT) {
+										instanceWhoseFieldIsAppended.SPEC_OBJECT = slices.Insert(instanceWhoseFieldIsAppended.SPEC_OBJECT, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_SPEC_OBJECT_TYPE_REF":
@@ -3285,28 +4299,48 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "SPEC_RELATION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_RELATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATIONS[identifier]
+									instanceWhoseFieldIsAppended.SPEC_RELATION = append(instanceWhoseFieldIsAppended.SPEC_RELATION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPEC_RELATION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATIONS[identifier]
-								instanceWhoseFieldIsAppended.SPEC_RELATION = append(instanceWhoseFieldIsAppended.SPEC_RELATION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_RELATION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATIONS[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPEC_RELATION) {
+										instanceWhoseFieldIsAppended.SPEC_RELATION = slices.Insert(instanceWhoseFieldIsAppended.SPEC_RELATION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_SPEC_RELATION_GROUPS":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "RELATION_GROUP":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_RELATION_GROUP[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATION_GROUPS[identifier]
+									instanceWhoseFieldIsAppended.RELATION_GROUP = append(instanceWhoseFieldIsAppended.RELATION_GROUP, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_RELATION_GROUP[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATION_GROUPS[identifier]
-								instanceWhoseFieldIsAppended.RELATION_GROUP = append(instanceWhoseFieldIsAppended.RELATION_GROUP, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_RELATION_GROUP[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_RELATION_GROUPS[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.RELATION_GROUP) {
+										instanceWhoseFieldIsAppended.RELATION_GROUP = slices.Insert(instanceWhoseFieldIsAppended.RELATION_GROUP, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_SPEC_RELATION_REF":
@@ -3321,44 +4355,84 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "RELATION_GROUP_TYPE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_RELATION_GROUP_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE = append(instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_RELATION_GROUP_TYPE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
-								instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE = append(instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_RELATION_GROUP_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE) {
+										instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE = slices.Insert(instanceWhoseFieldIsAppended.RELATION_GROUP_TYPE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "SPEC_OBJECT_TYPE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_OBJECT_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE = append(instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPEC_OBJECT_TYPE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
-								instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE = append(instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_OBJECT_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE) {
+										instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE = slices.Insert(instanceWhoseFieldIsAppended.SPEC_OBJECT_TYPE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "SPEC_RELATION_TYPE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_RELATION_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE = append(instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPEC_RELATION_TYPE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
-								instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE = append(instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPEC_RELATION_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE) {
+										instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE = slices.Insert(instanceWhoseFieldIsAppended.SPEC_RELATION_TYPE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						case "SPECIFICATION_TYPE":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPECIFICATION_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									instanceWhoseFieldIsAppended.SPECIFICATION_TYPE = append(instanceWhoseFieldIsAppended.SPECIFICATION_TYPE, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_SPECIFICATION_TYPE[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
-								instanceWhoseFieldIsAppended.SPECIFICATION_TYPE = append(instanceWhoseFieldIsAppended.SPECIFICATION_TYPE, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_SPECIFICATION_TYPE[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_SPEC_TYPES[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.SPECIFICATION_TYPE) {
+										instanceWhoseFieldIsAppended.SPECIFICATION_TYPE = slices.Insert(instanceWhoseFieldIsAppended.SPECIFICATION_TYPE, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "A_THE_HEADER":
@@ -3369,14 +4443,24 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "REQ_IF_TOOL_EXTENSION":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_REQ_IF_TOOL_EXTENSION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_TOOL_EXTENSIONS[identifier]
+									instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION = append(instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_REQ_IF_TOOL_EXTENSION[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_A_TOOL_EXTENSIONS[identifier]
-								instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION = append(instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_REQ_IF_TOOL_EXTENSION[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_A_TOOL_EXTENSIONS[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION) {
+										instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION = slices.Insert(instanceWhoseFieldIsAppended.REQ_IF_TOOL_EXTENSION, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "DATATYPE_DEFINITION_BOOLEAN":
@@ -3499,28 +4583,48 @@ func UnmarshallGongstructStaging(stage *Stage, cmap *ast.CommentMap, assignStmt 
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "Chapters":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_StaticWebSiteChapter[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_StaticWebSite[identifier]
+									instanceWhoseFieldIsAppended.Chapters = append(instanceWhoseFieldIsAppended.Chapters, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_StaticWebSiteChapter[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_StaticWebSite[identifier]
-								instanceWhoseFieldIsAppended.Chapters = append(instanceWhoseFieldIsAppended.Chapters, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_StaticWebSiteChapter[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_StaticWebSite[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.Chapters) {
+										instanceWhoseFieldIsAppended.Chapters = slices.Insert(instanceWhoseFieldIsAppended.Chapters, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "StaticWebSiteChapter":
 						switch fieldName {
 						// insertion point for slice of pointers assign code
 						case "Paragraphs":
-							// perform the append only when the loop is processing the second argument
-							if argNb == 0 {
-								break
+							// Handle append: elements start at argNb 1
+							if isAppend && argNb > 0 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_StaticWebSiteParagraph[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_StaticWebSiteChapter[identifier]
+									instanceWhoseFieldIsAppended.Paragraphs = append(instanceWhoseFieldIsAppended.Paragraphs, instanceToAppend)
+								}
 							}
-							identifierOfInstanceToAppend := ident.Name
-							if instanceToAppend, ok := __gong__map_StaticWebSiteParagraph[identifierOfInstanceToAppend]; ok {
-								instanceWhoseFieldIsAppended := __gong__map_StaticWebSiteChapter[identifier]
-								instanceWhoseFieldIsAppended.Paragraphs = append(instanceWhoseFieldIsAppended.Paragraphs, instanceToAppend)
+							// Handle slices.Insert: elements start at argNb 2
+							if isSlicesInsert && argNb > 1 {
+								identifierOfInstanceToAppend := ident.Name
+								if instanceToAppend, ok := __gong__map_StaticWebSiteParagraph[identifierOfInstanceToAppend]; ok {
+									instanceWhoseFieldIsAppended := __gong__map_StaticWebSiteChapter[identifier]
+									if insertIndex <= len(instanceWhoseFieldIsAppended.Paragraphs) {
+										instanceWhoseFieldIsAppended.Paragraphs = slices.Insert(instanceWhoseFieldIsAppended.Paragraphs, insertIndex, instanceToAppend)
+										insertIndex++ // Increment for subsequent elements in the same call
+									}
+								}
 							}
 						}
 					case "StaticWebSiteGeneratedImage":

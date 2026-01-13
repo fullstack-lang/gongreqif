@@ -31,6 +31,7 @@ var _ = strings.Clone("")
 
 const ProbeTreeSidebarSuffix = ":sidebar of the probe"
 const ProbeTableSuffix = ":table of the probe"
+const ProbeNotificationTableSuffix = ":notification table of the probe"
 const ProbeFormSuffix = ":form of the probe"
 const ProbeSplitSuffix = ":probe of the probe"
 
@@ -44,6 +45,10 @@ func (stage *Stage) GetProbeFormStageName() string {
 
 func (stage *Stage) GetProbeTableStageName() string {
 	return stage.GetType() + ":" + stage.GetName() + ProbeTableSuffix
+}
+
+func (stage *Stage) GetProbeNotificationTableStageName() string {
+	return stage.GetType() + ":" + stage.GetName() + ProbeNotificationTableSuffix
 }
 
 func (stage *Stage) GetProbeSplitStageName() string {
@@ -83,13 +88,18 @@ type GongStructInterface interface {
 }
 
 // Stage enables storage of staged instances
-// swagger:ignore
 type Stage struct {
 	name string
 
+	// isInDeltaMode is true when the stage is used to compute difference between
+	// succesive commit
+	isInDeltaMode bool
+
 	// insertion point for definition of arrays registering instances
-	ALTERNATIVE_IDs           map[*ALTERNATIVE_ID]struct{}
-	ALTERNATIVE_IDs_mapString map[string]*ALTERNATIVE_ID
+	ALTERNATIVE_IDs                map[*ALTERNATIVE_ID]struct{}
+	ALTERNATIVE_IDs_reference      map[*ALTERNATIVE_ID]*ALTERNATIVE_ID
+	ALTERNATIVE_IDs_referenceOrder map[*ALTERNATIVE_ID]uint // diff Unstage needs the reference order
+	ALTERNATIVE_IDs_mapString      map[string]*ALTERNATIVE_ID
 
 	// insertion point for slice of pointers maps
 	OnAfterALTERNATIVE_IDCreateCallback OnAfterCreateInterface[ALTERNATIVE_ID]
@@ -97,8 +107,10 @@ type Stage struct {
 	OnAfterALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[ALTERNATIVE_ID]
 	OnAfterALTERNATIVE_IDReadCallback   OnAfterReadInterface[ALTERNATIVE_ID]
 
-	ATTRIBUTE_DEFINITION_BOOLEANs           map[*ATTRIBUTE_DEFINITION_BOOLEAN]struct{}
-	ATTRIBUTE_DEFINITION_BOOLEANs_mapString map[string]*ATTRIBUTE_DEFINITION_BOOLEAN
+	ATTRIBUTE_DEFINITION_BOOLEANs                map[*ATTRIBUTE_DEFINITION_BOOLEAN]struct{}
+	ATTRIBUTE_DEFINITION_BOOLEANs_reference      map[*ATTRIBUTE_DEFINITION_BOOLEAN]*ATTRIBUTE_DEFINITION_BOOLEAN
+	ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder map[*ATTRIBUTE_DEFINITION_BOOLEAN]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_BOOLEANs_mapString      map[string]*ATTRIBUTE_DEFINITION_BOOLEAN
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
@@ -106,8 +118,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 	OnAfterATTRIBUTE_DEFINITION_BOOLEANReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_BOOLEAN]
 
-	ATTRIBUTE_DEFINITION_BOOLEAN_Renderings           map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering
+	ATTRIBUTE_DEFINITION_BOOLEAN_Renderings                map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference      map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering
+	ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]
@@ -115,8 +129,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]
 
-	ATTRIBUTE_DEFINITION_DATEs           map[*ATTRIBUTE_DEFINITION_DATE]struct{}
-	ATTRIBUTE_DEFINITION_DATEs_mapString map[string]*ATTRIBUTE_DEFINITION_DATE
+	ATTRIBUTE_DEFINITION_DATEs                map[*ATTRIBUTE_DEFINITION_DATE]struct{}
+	ATTRIBUTE_DEFINITION_DATEs_reference      map[*ATTRIBUTE_DEFINITION_DATE]*ATTRIBUTE_DEFINITION_DATE
+	ATTRIBUTE_DEFINITION_DATEs_referenceOrder map[*ATTRIBUTE_DEFINITION_DATE]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_DATEs_mapString      map[string]*ATTRIBUTE_DEFINITION_DATE
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_DATECreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_DATE]
@@ -124,8 +140,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_DATE]
 	OnAfterATTRIBUTE_DEFINITION_DATEReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_DATE]
 
-	ATTRIBUTE_DEFINITION_DATE_Renderings           map[*ATTRIBUTE_DEFINITION_DATE_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_DATE_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_DATE_Rendering
+	ATTRIBUTE_DEFINITION_DATE_Renderings                map[*ATTRIBUTE_DEFINITION_DATE_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_DATE_Renderings_reference      map[*ATTRIBUTE_DEFINITION_DATE_Rendering]*ATTRIBUTE_DEFINITION_DATE_Rendering
+	ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_DATE_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_DATE_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_DATE_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_DATE_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_DATE_Rendering]
@@ -133,8 +151,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_DATE_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_DATE_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_DATE_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_DATE_Rendering]
 
-	ATTRIBUTE_DEFINITION_ENUMERATIONs           map[*ATTRIBUTE_DEFINITION_ENUMERATION]struct{}
-	ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
+	ATTRIBUTE_DEFINITION_ENUMERATIONs                map[*ATTRIBUTE_DEFINITION_ENUMERATION]struct{}
+	ATTRIBUTE_DEFINITION_ENUMERATIONs_reference      map[*ATTRIBUTE_DEFINITION_ENUMERATION]*ATTRIBUTE_DEFINITION_ENUMERATION
+	ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder map[*ATTRIBUTE_DEFINITION_ENUMERATION]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString      map[string]*ATTRIBUTE_DEFINITION_ENUMERATION
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
@@ -142,8 +162,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATIONReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_ENUMERATION]
 
-	ATTRIBUTE_DEFINITION_ENUMERATION_Renderings           map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering
+	ATTRIBUTE_DEFINITION_ENUMERATION_Renderings                map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference      map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering
+	ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]
@@ -151,8 +173,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]
 
-	ATTRIBUTE_DEFINITION_INTEGERs           map[*ATTRIBUTE_DEFINITION_INTEGER]struct{}
-	ATTRIBUTE_DEFINITION_INTEGERs_mapString map[string]*ATTRIBUTE_DEFINITION_INTEGER
+	ATTRIBUTE_DEFINITION_INTEGERs                map[*ATTRIBUTE_DEFINITION_INTEGER]struct{}
+	ATTRIBUTE_DEFINITION_INTEGERs_reference      map[*ATTRIBUTE_DEFINITION_INTEGER]*ATTRIBUTE_DEFINITION_INTEGER
+	ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder map[*ATTRIBUTE_DEFINITION_INTEGER]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_INTEGERs_mapString      map[string]*ATTRIBUTE_DEFINITION_INTEGER
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_INTEGERCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_INTEGER]
@@ -160,8 +184,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_INTEGER]
 	OnAfterATTRIBUTE_DEFINITION_INTEGERReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_INTEGER]
 
-	ATTRIBUTE_DEFINITION_INTEGER_Renderings           map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_INTEGER_Rendering
+	ATTRIBUTE_DEFINITION_INTEGER_Renderings                map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference      map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]*ATTRIBUTE_DEFINITION_INTEGER_Rendering
+	ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_INTEGER_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering]
@@ -169,8 +195,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering]
 
-	ATTRIBUTE_DEFINITION_REALs           map[*ATTRIBUTE_DEFINITION_REAL]struct{}
-	ATTRIBUTE_DEFINITION_REALs_mapString map[string]*ATTRIBUTE_DEFINITION_REAL
+	ATTRIBUTE_DEFINITION_REALs                map[*ATTRIBUTE_DEFINITION_REAL]struct{}
+	ATTRIBUTE_DEFINITION_REALs_reference      map[*ATTRIBUTE_DEFINITION_REAL]*ATTRIBUTE_DEFINITION_REAL
+	ATTRIBUTE_DEFINITION_REALs_referenceOrder map[*ATTRIBUTE_DEFINITION_REAL]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_REALs_mapString      map[string]*ATTRIBUTE_DEFINITION_REAL
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_REALCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL]
@@ -178,8 +206,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL]
 	OnAfterATTRIBUTE_DEFINITION_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL]
 
-	ATTRIBUTE_DEFINITION_REAL_Renderings           map[*ATTRIBUTE_DEFINITION_REAL_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_REAL_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_REAL_Rendering
+	ATTRIBUTE_DEFINITION_REAL_Renderings                map[*ATTRIBUTE_DEFINITION_REAL_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_REAL_Renderings_reference      map[*ATTRIBUTE_DEFINITION_REAL_Rendering]*ATTRIBUTE_DEFINITION_REAL_Rendering
+	ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_REAL_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_REAL_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_REAL_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_REAL_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL_Rendering]
@@ -187,8 +217,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_REAL_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_REAL_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL_Rendering]
 
-	ATTRIBUTE_DEFINITION_Renderings           map[*ATTRIBUTE_DEFINITION_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_Rendering
+	ATTRIBUTE_DEFINITION_Renderings                map[*ATTRIBUTE_DEFINITION_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_Renderings_reference      map[*ATTRIBUTE_DEFINITION_Rendering]*ATTRIBUTE_DEFINITION_Rendering
+	ATTRIBUTE_DEFINITION_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_Rendering]
@@ -196,8 +228,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_Rendering]
 
-	ATTRIBUTE_DEFINITION_STRINGs           map[*ATTRIBUTE_DEFINITION_STRING]struct{}
-	ATTRIBUTE_DEFINITION_STRINGs_mapString map[string]*ATTRIBUTE_DEFINITION_STRING
+	ATTRIBUTE_DEFINITION_STRINGs                map[*ATTRIBUTE_DEFINITION_STRING]struct{}
+	ATTRIBUTE_DEFINITION_STRINGs_reference      map[*ATTRIBUTE_DEFINITION_STRING]*ATTRIBUTE_DEFINITION_STRING
+	ATTRIBUTE_DEFINITION_STRINGs_referenceOrder map[*ATTRIBUTE_DEFINITION_STRING]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_STRINGs_mapString      map[string]*ATTRIBUTE_DEFINITION_STRING
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING]
@@ -205,8 +239,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING]
 	OnAfterATTRIBUTE_DEFINITION_STRINGReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING]
 
-	ATTRIBUTE_DEFINITION_STRING_Renderings           map[*ATTRIBUTE_DEFINITION_STRING_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_STRING_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_STRING_Rendering
+	ATTRIBUTE_DEFINITION_STRING_Renderings                map[*ATTRIBUTE_DEFINITION_STRING_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_STRING_Renderings_reference      map[*ATTRIBUTE_DEFINITION_STRING_Rendering]*ATTRIBUTE_DEFINITION_STRING_Rendering
+	ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_STRING_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_STRING_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_STRING_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_STRING_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING_Rendering]
@@ -214,8 +250,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_STRING_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_STRING_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING_Rendering]
 
-	ATTRIBUTE_DEFINITION_XHTMLs           map[*ATTRIBUTE_DEFINITION_XHTML]struct{}
-	ATTRIBUTE_DEFINITION_XHTMLs_mapString map[string]*ATTRIBUTE_DEFINITION_XHTML
+	ATTRIBUTE_DEFINITION_XHTMLs                map[*ATTRIBUTE_DEFINITION_XHTML]struct{}
+	ATTRIBUTE_DEFINITION_XHTMLs_reference      map[*ATTRIBUTE_DEFINITION_XHTML]*ATTRIBUTE_DEFINITION_XHTML
+	ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder map[*ATTRIBUTE_DEFINITION_XHTML]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_XHTMLs_mapString      map[string]*ATTRIBUTE_DEFINITION_XHTML
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_XHTMLCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_XHTML]
@@ -223,8 +261,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_XHTMLDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_XHTML]
 	OnAfterATTRIBUTE_DEFINITION_XHTMLReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_XHTML]
 
-	ATTRIBUTE_DEFINITION_XHTML_Renderings           map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]struct{}
-	ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString map[string]*ATTRIBUTE_DEFINITION_XHTML_Rendering
+	ATTRIBUTE_DEFINITION_XHTML_Renderings                map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]struct{}
+	ATTRIBUTE_DEFINITION_XHTML_Renderings_reference      map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]*ATTRIBUTE_DEFINITION_XHTML_Rendering
+	ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]uint // diff Unstage needs the reference order
+	ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString      map[string]*ATTRIBUTE_DEFINITION_XHTML_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingCreateCallback OnAfterCreateInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering]
@@ -232,8 +272,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering]
 	OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingReadCallback   OnAfterReadInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering]
 
-	ATTRIBUTE_VALUE_BOOLEANs           map[*ATTRIBUTE_VALUE_BOOLEAN]struct{}
-	ATTRIBUTE_VALUE_BOOLEANs_mapString map[string]*ATTRIBUTE_VALUE_BOOLEAN
+	ATTRIBUTE_VALUE_BOOLEANs                map[*ATTRIBUTE_VALUE_BOOLEAN]struct{}
+	ATTRIBUTE_VALUE_BOOLEANs_reference      map[*ATTRIBUTE_VALUE_BOOLEAN]*ATTRIBUTE_VALUE_BOOLEAN
+	ATTRIBUTE_VALUE_BOOLEANs_referenceOrder map[*ATTRIBUTE_VALUE_BOOLEAN]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_BOOLEANs_mapString      map[string]*ATTRIBUTE_VALUE_BOOLEAN
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_BOOLEANCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_BOOLEAN]
@@ -241,8 +283,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterATTRIBUTE_VALUE_BOOLEANReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_BOOLEAN]
 
-	ATTRIBUTE_VALUE_DATEs           map[*ATTRIBUTE_VALUE_DATE]struct{}
-	ATTRIBUTE_VALUE_DATEs_mapString map[string]*ATTRIBUTE_VALUE_DATE
+	ATTRIBUTE_VALUE_DATEs                map[*ATTRIBUTE_VALUE_DATE]struct{}
+	ATTRIBUTE_VALUE_DATEs_reference      map[*ATTRIBUTE_VALUE_DATE]*ATTRIBUTE_VALUE_DATE
+	ATTRIBUTE_VALUE_DATEs_referenceOrder map[*ATTRIBUTE_VALUE_DATE]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_DATEs_mapString      map[string]*ATTRIBUTE_VALUE_DATE
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_DATECreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_DATE]
@@ -250,8 +294,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_DATE]
 	OnAfterATTRIBUTE_VALUE_DATEReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_DATE]
 
-	ATTRIBUTE_VALUE_ENUMERATIONs           map[*ATTRIBUTE_VALUE_ENUMERATION]struct{}
-	ATTRIBUTE_VALUE_ENUMERATIONs_mapString map[string]*ATTRIBUTE_VALUE_ENUMERATION
+	ATTRIBUTE_VALUE_ENUMERATIONs                map[*ATTRIBUTE_VALUE_ENUMERATION]struct{}
+	ATTRIBUTE_VALUE_ENUMERATIONs_reference      map[*ATTRIBUTE_VALUE_ENUMERATION]*ATTRIBUTE_VALUE_ENUMERATION
+	ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder map[*ATTRIBUTE_VALUE_ENUMERATION]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_ENUMERATIONs_mapString      map[string]*ATTRIBUTE_VALUE_ENUMERATION
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_ENUMERATION]
@@ -259,8 +305,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterATTRIBUTE_VALUE_ENUMERATIONReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_ENUMERATION]
 
-	ATTRIBUTE_VALUE_INTEGERs           map[*ATTRIBUTE_VALUE_INTEGER]struct{}
-	ATTRIBUTE_VALUE_INTEGERs_mapString map[string]*ATTRIBUTE_VALUE_INTEGER
+	ATTRIBUTE_VALUE_INTEGERs                map[*ATTRIBUTE_VALUE_INTEGER]struct{}
+	ATTRIBUTE_VALUE_INTEGERs_reference      map[*ATTRIBUTE_VALUE_INTEGER]*ATTRIBUTE_VALUE_INTEGER
+	ATTRIBUTE_VALUE_INTEGERs_referenceOrder map[*ATTRIBUTE_VALUE_INTEGER]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_INTEGERs_mapString      map[string]*ATTRIBUTE_VALUE_INTEGER
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_INTEGERCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_INTEGER]
@@ -268,8 +316,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_INTEGER]
 	OnAfterATTRIBUTE_VALUE_INTEGERReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_INTEGER]
 
-	ATTRIBUTE_VALUE_REALs           map[*ATTRIBUTE_VALUE_REAL]struct{}
-	ATTRIBUTE_VALUE_REALs_mapString map[string]*ATTRIBUTE_VALUE_REAL
+	ATTRIBUTE_VALUE_REALs                map[*ATTRIBUTE_VALUE_REAL]struct{}
+	ATTRIBUTE_VALUE_REALs_reference      map[*ATTRIBUTE_VALUE_REAL]*ATTRIBUTE_VALUE_REAL
+	ATTRIBUTE_VALUE_REALs_referenceOrder map[*ATTRIBUTE_VALUE_REAL]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_REALs_mapString      map[string]*ATTRIBUTE_VALUE_REAL
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_REALCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_REAL]
@@ -277,8 +327,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_REAL]
 	OnAfterATTRIBUTE_VALUE_REALReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_REAL]
 
-	ATTRIBUTE_VALUE_STRINGs           map[*ATTRIBUTE_VALUE_STRING]struct{}
-	ATTRIBUTE_VALUE_STRINGs_mapString map[string]*ATTRIBUTE_VALUE_STRING
+	ATTRIBUTE_VALUE_STRINGs                map[*ATTRIBUTE_VALUE_STRING]struct{}
+	ATTRIBUTE_VALUE_STRINGs_reference      map[*ATTRIBUTE_VALUE_STRING]*ATTRIBUTE_VALUE_STRING
+	ATTRIBUTE_VALUE_STRINGs_referenceOrder map[*ATTRIBUTE_VALUE_STRING]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_STRINGs_mapString      map[string]*ATTRIBUTE_VALUE_STRING
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_STRINGCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_STRING]
@@ -286,8 +338,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_STRING]
 	OnAfterATTRIBUTE_VALUE_STRINGReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_STRING]
 
-	ATTRIBUTE_VALUE_XHTMLs           map[*ATTRIBUTE_VALUE_XHTML]struct{}
-	ATTRIBUTE_VALUE_XHTMLs_mapString map[string]*ATTRIBUTE_VALUE_XHTML
+	ATTRIBUTE_VALUE_XHTMLs                map[*ATTRIBUTE_VALUE_XHTML]struct{}
+	ATTRIBUTE_VALUE_XHTMLs_reference      map[*ATTRIBUTE_VALUE_XHTML]*ATTRIBUTE_VALUE_XHTML
+	ATTRIBUTE_VALUE_XHTMLs_referenceOrder map[*ATTRIBUTE_VALUE_XHTML]uint // diff Unstage needs the reference order
+	ATTRIBUTE_VALUE_XHTMLs_mapString      map[string]*ATTRIBUTE_VALUE_XHTML
 
 	// insertion point for slice of pointers maps
 	OnAfterATTRIBUTE_VALUE_XHTMLCreateCallback OnAfterCreateInterface[ATTRIBUTE_VALUE_XHTML]
@@ -295,8 +349,10 @@ type Stage struct {
 	OnAfterATTRIBUTE_VALUE_XHTMLDeleteCallback OnAfterDeleteInterface[ATTRIBUTE_VALUE_XHTML]
 	OnAfterATTRIBUTE_VALUE_XHTMLReadCallback   OnAfterReadInterface[ATTRIBUTE_VALUE_XHTML]
 
-	A_ALTERNATIVE_IDs           map[*A_ALTERNATIVE_ID]struct{}
-	A_ALTERNATIVE_IDs_mapString map[string]*A_ALTERNATIVE_ID
+	A_ALTERNATIVE_IDs                map[*A_ALTERNATIVE_ID]struct{}
+	A_ALTERNATIVE_IDs_reference      map[*A_ALTERNATIVE_ID]*A_ALTERNATIVE_ID
+	A_ALTERNATIVE_IDs_referenceOrder map[*A_ALTERNATIVE_ID]uint // diff Unstage needs the reference order
+	A_ALTERNATIVE_IDs_mapString      map[string]*A_ALTERNATIVE_ID
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ALTERNATIVE_IDCreateCallback OnAfterCreateInterface[A_ALTERNATIVE_ID]
@@ -304,8 +360,10 @@ type Stage struct {
 	OnAfterA_ALTERNATIVE_IDDeleteCallback OnAfterDeleteInterface[A_ALTERNATIVE_ID]
 	OnAfterA_ALTERNATIVE_IDReadCallback   OnAfterReadInterface[A_ALTERNATIVE_ID]
 
-	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs           map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF
+	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs                map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF
+	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
@@ -313,8 +371,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]
 
-	A_ATTRIBUTE_DEFINITION_DATE_REFs           map[*A_ATTRIBUTE_DEFINITION_DATE_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF
+	A_ATTRIBUTE_DEFINITION_DATE_REFs                map[*A_ATTRIBUTE_DEFINITION_DATE_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_DATE_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_DATE_REF]*A_ATTRIBUTE_DEFINITION_DATE_REF
+	A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_DATE_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_DATE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
@@ -322,8 +382,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_DATE_REF]
 
-	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs           map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF
+	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs                map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF
+	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
@@ -331,8 +393,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]
 
-	A_ATTRIBUTE_DEFINITION_INTEGER_REFs           map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF
+	A_ATTRIBUTE_DEFINITION_INTEGER_REFs                map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]*A_ATTRIBUTE_DEFINITION_INTEGER_REF
+	A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_INTEGER_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
@@ -340,8 +404,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF]
 
-	A_ATTRIBUTE_DEFINITION_REAL_REFs           map[*A_ATTRIBUTE_DEFINITION_REAL_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF
+	A_ATTRIBUTE_DEFINITION_REAL_REFs                map[*A_ATTRIBUTE_DEFINITION_REAL_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_REAL_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_REAL_REF]*A_ATTRIBUTE_DEFINITION_REAL_REF
+	A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_REAL_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_REAL_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
@@ -349,8 +415,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_REAL_REF]
 
-	A_ATTRIBUTE_DEFINITION_STRING_REFs           map[*A_ATTRIBUTE_DEFINITION_STRING_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF
+	A_ATTRIBUTE_DEFINITION_STRING_REFs                map[*A_ATTRIBUTE_DEFINITION_STRING_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_STRING_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_STRING_REF]*A_ATTRIBUTE_DEFINITION_STRING_REF
+	A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_STRING_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_STRING_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
@@ -358,8 +426,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_STRING_REF]
 
-	A_ATTRIBUTE_DEFINITION_XHTML_REFs           map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]struct{}
-	A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF
+	A_ATTRIBUTE_DEFINITION_XHTML_REFs                map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]struct{}
+	A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference      map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]*A_ATTRIBUTE_DEFINITION_XHTML_REF
+	A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString      map[string]*A_ATTRIBUTE_DEFINITION_XHTML_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFCreateCallback OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
@@ -367,8 +437,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 	OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFReadCallback   OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF]
 
-	A_ATTRIBUTE_VALUE_BOOLEANs           map[*A_ATTRIBUTE_VALUE_BOOLEAN]struct{}
-	A_ATTRIBUTE_VALUE_BOOLEANs_mapString map[string]*A_ATTRIBUTE_VALUE_BOOLEAN
+	A_ATTRIBUTE_VALUE_BOOLEANs                map[*A_ATTRIBUTE_VALUE_BOOLEAN]struct{}
+	A_ATTRIBUTE_VALUE_BOOLEANs_reference      map[*A_ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_BOOLEAN
+	A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder map[*A_ATTRIBUTE_VALUE_BOOLEAN]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_BOOLEANs_mapString      map[string]*A_ATTRIBUTE_VALUE_BOOLEAN
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_BOOLEAN_ATTRIBUTE_VALUE_BOOLEAN_reverseMap map[*ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_BOOLEAN
@@ -378,8 +450,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 	OnAfterA_ATTRIBUTE_VALUE_BOOLEANReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_BOOLEAN]
 
-	A_ATTRIBUTE_VALUE_DATEs           map[*A_ATTRIBUTE_VALUE_DATE]struct{}
-	A_ATTRIBUTE_VALUE_DATEs_mapString map[string]*A_ATTRIBUTE_VALUE_DATE
+	A_ATTRIBUTE_VALUE_DATEs                map[*A_ATTRIBUTE_VALUE_DATE]struct{}
+	A_ATTRIBUTE_VALUE_DATEs_reference      map[*A_ATTRIBUTE_VALUE_DATE]*A_ATTRIBUTE_VALUE_DATE
+	A_ATTRIBUTE_VALUE_DATEs_referenceOrder map[*A_ATTRIBUTE_VALUE_DATE]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_DATEs_mapString      map[string]*A_ATTRIBUTE_VALUE_DATE
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_DATE_ATTRIBUTE_VALUE_DATE_reverseMap map[*ATTRIBUTE_VALUE_DATE]*A_ATTRIBUTE_VALUE_DATE
@@ -389,8 +463,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_DATEDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_DATE]
 	OnAfterA_ATTRIBUTE_VALUE_DATEReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_DATE]
 
-	A_ATTRIBUTE_VALUE_ENUMERATIONs           map[*A_ATTRIBUTE_VALUE_ENUMERATION]struct{}
-	A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString map[string]*A_ATTRIBUTE_VALUE_ENUMERATION
+	A_ATTRIBUTE_VALUE_ENUMERATIONs                map[*A_ATTRIBUTE_VALUE_ENUMERATION]struct{}
+	A_ATTRIBUTE_VALUE_ENUMERATIONs_reference      map[*A_ATTRIBUTE_VALUE_ENUMERATION]*A_ATTRIBUTE_VALUE_ENUMERATION
+	A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder map[*A_ATTRIBUTE_VALUE_ENUMERATION]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString      map[string]*A_ATTRIBUTE_VALUE_ENUMERATION
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_ENUMERATION_ATTRIBUTE_VALUE_ENUMERATION_reverseMap map[*ATTRIBUTE_VALUE_ENUMERATION]*A_ATTRIBUTE_VALUE_ENUMERATION
@@ -400,8 +476,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 	OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_ENUMERATION]
 
-	A_ATTRIBUTE_VALUE_INTEGERs           map[*A_ATTRIBUTE_VALUE_INTEGER]struct{}
-	A_ATTRIBUTE_VALUE_INTEGERs_mapString map[string]*A_ATTRIBUTE_VALUE_INTEGER
+	A_ATTRIBUTE_VALUE_INTEGERs                map[*A_ATTRIBUTE_VALUE_INTEGER]struct{}
+	A_ATTRIBUTE_VALUE_INTEGERs_reference      map[*A_ATTRIBUTE_VALUE_INTEGER]*A_ATTRIBUTE_VALUE_INTEGER
+	A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder map[*A_ATTRIBUTE_VALUE_INTEGER]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_INTEGERs_mapString      map[string]*A_ATTRIBUTE_VALUE_INTEGER
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_INTEGER_ATTRIBUTE_VALUE_INTEGER_reverseMap map[*ATTRIBUTE_VALUE_INTEGER]*A_ATTRIBUTE_VALUE_INTEGER
@@ -411,8 +489,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_INTEGER]
 	OnAfterA_ATTRIBUTE_VALUE_INTEGERReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_INTEGER]
 
-	A_ATTRIBUTE_VALUE_REALs           map[*A_ATTRIBUTE_VALUE_REAL]struct{}
-	A_ATTRIBUTE_VALUE_REALs_mapString map[string]*A_ATTRIBUTE_VALUE_REAL
+	A_ATTRIBUTE_VALUE_REALs                map[*A_ATTRIBUTE_VALUE_REAL]struct{}
+	A_ATTRIBUTE_VALUE_REALs_reference      map[*A_ATTRIBUTE_VALUE_REAL]*A_ATTRIBUTE_VALUE_REAL
+	A_ATTRIBUTE_VALUE_REALs_referenceOrder map[*A_ATTRIBUTE_VALUE_REAL]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_REALs_mapString      map[string]*A_ATTRIBUTE_VALUE_REAL
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_REAL_ATTRIBUTE_VALUE_REAL_reverseMap map[*ATTRIBUTE_VALUE_REAL]*A_ATTRIBUTE_VALUE_REAL
@@ -422,8 +502,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_REALDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_REAL]
 	OnAfterA_ATTRIBUTE_VALUE_REALReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_REAL]
 
-	A_ATTRIBUTE_VALUE_STRINGs           map[*A_ATTRIBUTE_VALUE_STRING]struct{}
-	A_ATTRIBUTE_VALUE_STRINGs_mapString map[string]*A_ATTRIBUTE_VALUE_STRING
+	A_ATTRIBUTE_VALUE_STRINGs                map[*A_ATTRIBUTE_VALUE_STRING]struct{}
+	A_ATTRIBUTE_VALUE_STRINGs_reference      map[*A_ATTRIBUTE_VALUE_STRING]*A_ATTRIBUTE_VALUE_STRING
+	A_ATTRIBUTE_VALUE_STRINGs_referenceOrder map[*A_ATTRIBUTE_VALUE_STRING]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_STRINGs_mapString      map[string]*A_ATTRIBUTE_VALUE_STRING
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_STRING_ATTRIBUTE_VALUE_STRING_reverseMap map[*ATTRIBUTE_VALUE_STRING]*A_ATTRIBUTE_VALUE_STRING
@@ -433,8 +515,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_STRINGDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_STRING]
 	OnAfterA_ATTRIBUTE_VALUE_STRINGReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_STRING]
 
-	A_ATTRIBUTE_VALUE_XHTMLs           map[*A_ATTRIBUTE_VALUE_XHTML]struct{}
-	A_ATTRIBUTE_VALUE_XHTMLs_mapString map[string]*A_ATTRIBUTE_VALUE_XHTML
+	A_ATTRIBUTE_VALUE_XHTMLs                map[*A_ATTRIBUTE_VALUE_XHTML]struct{}
+	A_ATTRIBUTE_VALUE_XHTMLs_reference      map[*A_ATTRIBUTE_VALUE_XHTML]*A_ATTRIBUTE_VALUE_XHTML
+	A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder map[*A_ATTRIBUTE_VALUE_XHTML]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_XHTMLs_mapString      map[string]*A_ATTRIBUTE_VALUE_XHTML
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_XHTML_ATTRIBUTE_VALUE_XHTML_reverseMap map[*ATTRIBUTE_VALUE_XHTML]*A_ATTRIBUTE_VALUE_XHTML
@@ -444,8 +528,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLDeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML]
 	OnAfterA_ATTRIBUTE_VALUE_XHTMLReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML]
 
-	A_ATTRIBUTE_VALUE_XHTML_1s           map[*A_ATTRIBUTE_VALUE_XHTML_1]struct{}
-	A_ATTRIBUTE_VALUE_XHTML_1s_mapString map[string]*A_ATTRIBUTE_VALUE_XHTML_1
+	A_ATTRIBUTE_VALUE_XHTML_1s                map[*A_ATTRIBUTE_VALUE_XHTML_1]struct{}
+	A_ATTRIBUTE_VALUE_XHTML_1s_reference      map[*A_ATTRIBUTE_VALUE_XHTML_1]*A_ATTRIBUTE_VALUE_XHTML_1
+	A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder map[*A_ATTRIBUTE_VALUE_XHTML_1]uint // diff Unstage needs the reference order
+	A_ATTRIBUTE_VALUE_XHTML_1s_mapString      map[string]*A_ATTRIBUTE_VALUE_XHTML_1
 
 	// insertion point for slice of pointers maps
 	A_ATTRIBUTE_VALUE_XHTML_1_ATTRIBUTE_VALUE_BOOLEAN_reverseMap map[*ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_XHTML_1
@@ -467,8 +553,10 @@ type Stage struct {
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1DeleteCallback OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 	OnAfterA_ATTRIBUTE_VALUE_XHTML_1ReadCallback   OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML_1]
 
-	A_CHILDRENs           map[*A_CHILDREN]struct{}
-	A_CHILDRENs_mapString map[string]*A_CHILDREN
+	A_CHILDRENs                map[*A_CHILDREN]struct{}
+	A_CHILDRENs_reference      map[*A_CHILDREN]*A_CHILDREN
+	A_CHILDRENs_referenceOrder map[*A_CHILDREN]uint // diff Unstage needs the reference order
+	A_CHILDRENs_mapString      map[string]*A_CHILDREN
 
 	// insertion point for slice of pointers maps
 	A_CHILDREN_SPEC_HIERARCHY_reverseMap map[*SPEC_HIERARCHY]*A_CHILDREN
@@ -478,8 +566,10 @@ type Stage struct {
 	OnAfterA_CHILDRENDeleteCallback OnAfterDeleteInterface[A_CHILDREN]
 	OnAfterA_CHILDRENReadCallback   OnAfterReadInterface[A_CHILDREN]
 
-	A_CORE_CONTENTs           map[*A_CORE_CONTENT]struct{}
-	A_CORE_CONTENTs_mapString map[string]*A_CORE_CONTENT
+	A_CORE_CONTENTs                map[*A_CORE_CONTENT]struct{}
+	A_CORE_CONTENTs_reference      map[*A_CORE_CONTENT]*A_CORE_CONTENT
+	A_CORE_CONTENTs_referenceOrder map[*A_CORE_CONTENT]uint // diff Unstage needs the reference order
+	A_CORE_CONTENTs_mapString      map[string]*A_CORE_CONTENT
 
 	// insertion point for slice of pointers maps
 	OnAfterA_CORE_CONTENTCreateCallback OnAfterCreateInterface[A_CORE_CONTENT]
@@ -487,8 +577,10 @@ type Stage struct {
 	OnAfterA_CORE_CONTENTDeleteCallback OnAfterDeleteInterface[A_CORE_CONTENT]
 	OnAfterA_CORE_CONTENTReadCallback   OnAfterReadInterface[A_CORE_CONTENT]
 
-	A_DATATYPESs           map[*A_DATATYPES]struct{}
-	A_DATATYPESs_mapString map[string]*A_DATATYPES
+	A_DATATYPESs                map[*A_DATATYPES]struct{}
+	A_DATATYPESs_reference      map[*A_DATATYPES]*A_DATATYPES
+	A_DATATYPESs_referenceOrder map[*A_DATATYPES]uint // diff Unstage needs the reference order
+	A_DATATYPESs_mapString      map[string]*A_DATATYPES
 
 	// insertion point for slice of pointers maps
 	A_DATATYPES_DATATYPE_DEFINITION_BOOLEAN_reverseMap map[*DATATYPE_DEFINITION_BOOLEAN]*A_DATATYPES
@@ -510,8 +602,10 @@ type Stage struct {
 	OnAfterA_DATATYPESDeleteCallback OnAfterDeleteInterface[A_DATATYPES]
 	OnAfterA_DATATYPESReadCallback   OnAfterReadInterface[A_DATATYPES]
 
-	A_DATATYPE_DEFINITION_BOOLEAN_REFs           map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]struct{}
-	A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF
+	A_DATATYPE_DEFINITION_BOOLEAN_REFs                map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]struct{}
+	A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference      map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]*A_DATATYPE_DEFINITION_BOOLEAN_REF
+	A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_BOOLEAN_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
@@ -519,8 +613,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 	OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF]
 
-	A_DATATYPE_DEFINITION_DATE_REFs           map[*A_DATATYPE_DEFINITION_DATE_REF]struct{}
-	A_DATATYPE_DEFINITION_DATE_REFs_mapString map[string]*A_DATATYPE_DEFINITION_DATE_REF
+	A_DATATYPE_DEFINITION_DATE_REFs                map[*A_DATATYPE_DEFINITION_DATE_REF]struct{}
+	A_DATATYPE_DEFINITION_DATE_REFs_reference      map[*A_DATATYPE_DEFINITION_DATE_REF]*A_DATATYPE_DEFINITION_DATE_REF
+	A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_DATE_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_DATE_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_DATE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_DATE_REF]
@@ -528,8 +624,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_DATE_REF]
 	OnAfterA_DATATYPE_DEFINITION_DATE_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_DATE_REF]
 
-	A_DATATYPE_DEFINITION_ENUMERATION_REFs           map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]struct{}
-	A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF
+	A_DATATYPE_DEFINITION_ENUMERATION_REFs                map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]struct{}
+	A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference      map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]*A_DATATYPE_DEFINITION_ENUMERATION_REF
+	A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_ENUMERATION_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
@@ -537,8 +635,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 	OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF]
 
-	A_DATATYPE_DEFINITION_INTEGER_REFs           map[*A_DATATYPE_DEFINITION_INTEGER_REF]struct{}
-	A_DATATYPE_DEFINITION_INTEGER_REFs_mapString map[string]*A_DATATYPE_DEFINITION_INTEGER_REF
+	A_DATATYPE_DEFINITION_INTEGER_REFs                map[*A_DATATYPE_DEFINITION_INTEGER_REF]struct{}
+	A_DATATYPE_DEFINITION_INTEGER_REFs_reference      map[*A_DATATYPE_DEFINITION_INTEGER_REF]*A_DATATYPE_DEFINITION_INTEGER_REF
+	A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_INTEGER_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_INTEGER_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_INTEGER_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
@@ -546,8 +646,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 	OnAfterA_DATATYPE_DEFINITION_INTEGER_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_INTEGER_REF]
 
-	A_DATATYPE_DEFINITION_REAL_REFs           map[*A_DATATYPE_DEFINITION_REAL_REF]struct{}
-	A_DATATYPE_DEFINITION_REAL_REFs_mapString map[string]*A_DATATYPE_DEFINITION_REAL_REF
+	A_DATATYPE_DEFINITION_REAL_REFs                map[*A_DATATYPE_DEFINITION_REAL_REF]struct{}
+	A_DATATYPE_DEFINITION_REAL_REFs_reference      map[*A_DATATYPE_DEFINITION_REAL_REF]*A_DATATYPE_DEFINITION_REAL_REF
+	A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_REAL_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_REAL_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_REAL_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_REAL_REF]
@@ -555,8 +657,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_REAL_REF]
 	OnAfterA_DATATYPE_DEFINITION_REAL_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_REAL_REF]
 
-	A_DATATYPE_DEFINITION_STRING_REFs           map[*A_DATATYPE_DEFINITION_STRING_REF]struct{}
-	A_DATATYPE_DEFINITION_STRING_REFs_mapString map[string]*A_DATATYPE_DEFINITION_STRING_REF
+	A_DATATYPE_DEFINITION_STRING_REFs                map[*A_DATATYPE_DEFINITION_STRING_REF]struct{}
+	A_DATATYPE_DEFINITION_STRING_REFs_reference      map[*A_DATATYPE_DEFINITION_STRING_REF]*A_DATATYPE_DEFINITION_STRING_REF
+	A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_STRING_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_STRING_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_STRING_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_STRING_REF]
@@ -564,8 +668,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_STRING_REF]
 	OnAfterA_DATATYPE_DEFINITION_STRING_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_STRING_REF]
 
-	A_DATATYPE_DEFINITION_XHTML_REFs           map[*A_DATATYPE_DEFINITION_XHTML_REF]struct{}
-	A_DATATYPE_DEFINITION_XHTML_REFs_mapString map[string]*A_DATATYPE_DEFINITION_XHTML_REF
+	A_DATATYPE_DEFINITION_XHTML_REFs                map[*A_DATATYPE_DEFINITION_XHTML_REF]struct{}
+	A_DATATYPE_DEFINITION_XHTML_REFs_reference      map[*A_DATATYPE_DEFINITION_XHTML_REF]*A_DATATYPE_DEFINITION_XHTML_REF
+	A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder map[*A_DATATYPE_DEFINITION_XHTML_REF]uint // diff Unstage needs the reference order
+	A_DATATYPE_DEFINITION_XHTML_REFs_mapString      map[string]*A_DATATYPE_DEFINITION_XHTML_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFCreateCallback OnAfterCreateInterface[A_DATATYPE_DEFINITION_XHTML_REF]
@@ -573,8 +679,10 @@ type Stage struct {
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFDeleteCallback OnAfterDeleteInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 	OnAfterA_DATATYPE_DEFINITION_XHTML_REFReadCallback   OnAfterReadInterface[A_DATATYPE_DEFINITION_XHTML_REF]
 
-	A_EDITABLE_ATTSs           map[*A_EDITABLE_ATTS]struct{}
-	A_EDITABLE_ATTSs_mapString map[string]*A_EDITABLE_ATTS
+	A_EDITABLE_ATTSs                map[*A_EDITABLE_ATTS]struct{}
+	A_EDITABLE_ATTSs_reference      map[*A_EDITABLE_ATTS]*A_EDITABLE_ATTS
+	A_EDITABLE_ATTSs_referenceOrder map[*A_EDITABLE_ATTS]uint // diff Unstage needs the reference order
+	A_EDITABLE_ATTSs_mapString      map[string]*A_EDITABLE_ATTS
 
 	// insertion point for slice of pointers maps
 	OnAfterA_EDITABLE_ATTSCreateCallback OnAfterCreateInterface[A_EDITABLE_ATTS]
@@ -582,8 +690,10 @@ type Stage struct {
 	OnAfterA_EDITABLE_ATTSDeleteCallback OnAfterDeleteInterface[A_EDITABLE_ATTS]
 	OnAfterA_EDITABLE_ATTSReadCallback   OnAfterReadInterface[A_EDITABLE_ATTS]
 
-	A_ENUM_VALUE_REFs           map[*A_ENUM_VALUE_REF]struct{}
-	A_ENUM_VALUE_REFs_mapString map[string]*A_ENUM_VALUE_REF
+	A_ENUM_VALUE_REFs                map[*A_ENUM_VALUE_REF]struct{}
+	A_ENUM_VALUE_REFs_reference      map[*A_ENUM_VALUE_REF]*A_ENUM_VALUE_REF
+	A_ENUM_VALUE_REFs_referenceOrder map[*A_ENUM_VALUE_REF]uint // diff Unstage needs the reference order
+	A_ENUM_VALUE_REFs_mapString      map[string]*A_ENUM_VALUE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_ENUM_VALUE_REFCreateCallback OnAfterCreateInterface[A_ENUM_VALUE_REF]
@@ -591,8 +701,10 @@ type Stage struct {
 	OnAfterA_ENUM_VALUE_REFDeleteCallback OnAfterDeleteInterface[A_ENUM_VALUE_REF]
 	OnAfterA_ENUM_VALUE_REFReadCallback   OnAfterReadInterface[A_ENUM_VALUE_REF]
 
-	A_OBJECTs           map[*A_OBJECT]struct{}
-	A_OBJECTs_mapString map[string]*A_OBJECT
+	A_OBJECTs                map[*A_OBJECT]struct{}
+	A_OBJECTs_reference      map[*A_OBJECT]*A_OBJECT
+	A_OBJECTs_referenceOrder map[*A_OBJECT]uint // diff Unstage needs the reference order
+	A_OBJECTs_mapString      map[string]*A_OBJECT
 
 	// insertion point for slice of pointers maps
 	OnAfterA_OBJECTCreateCallback OnAfterCreateInterface[A_OBJECT]
@@ -600,8 +712,10 @@ type Stage struct {
 	OnAfterA_OBJECTDeleteCallback OnAfterDeleteInterface[A_OBJECT]
 	OnAfterA_OBJECTReadCallback   OnAfterReadInterface[A_OBJECT]
 
-	A_PROPERTIESs           map[*A_PROPERTIES]struct{}
-	A_PROPERTIESs_mapString map[string]*A_PROPERTIES
+	A_PROPERTIESs                map[*A_PROPERTIES]struct{}
+	A_PROPERTIESs_reference      map[*A_PROPERTIES]*A_PROPERTIES
+	A_PROPERTIESs_referenceOrder map[*A_PROPERTIES]uint // diff Unstage needs the reference order
+	A_PROPERTIESs_mapString      map[string]*A_PROPERTIES
 
 	// insertion point for slice of pointers maps
 	OnAfterA_PROPERTIESCreateCallback OnAfterCreateInterface[A_PROPERTIES]
@@ -609,8 +723,10 @@ type Stage struct {
 	OnAfterA_PROPERTIESDeleteCallback OnAfterDeleteInterface[A_PROPERTIES]
 	OnAfterA_PROPERTIESReadCallback   OnAfterReadInterface[A_PROPERTIES]
 
-	A_RELATION_GROUP_TYPE_REFs           map[*A_RELATION_GROUP_TYPE_REF]struct{}
-	A_RELATION_GROUP_TYPE_REFs_mapString map[string]*A_RELATION_GROUP_TYPE_REF
+	A_RELATION_GROUP_TYPE_REFs                map[*A_RELATION_GROUP_TYPE_REF]struct{}
+	A_RELATION_GROUP_TYPE_REFs_reference      map[*A_RELATION_GROUP_TYPE_REF]*A_RELATION_GROUP_TYPE_REF
+	A_RELATION_GROUP_TYPE_REFs_referenceOrder map[*A_RELATION_GROUP_TYPE_REF]uint // diff Unstage needs the reference order
+	A_RELATION_GROUP_TYPE_REFs_mapString      map[string]*A_RELATION_GROUP_TYPE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_RELATION_GROUP_TYPE_REFCreateCallback OnAfterCreateInterface[A_RELATION_GROUP_TYPE_REF]
@@ -618,8 +734,10 @@ type Stage struct {
 	OnAfterA_RELATION_GROUP_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_RELATION_GROUP_TYPE_REF]
 	OnAfterA_RELATION_GROUP_TYPE_REFReadCallback   OnAfterReadInterface[A_RELATION_GROUP_TYPE_REF]
 
-	A_SOURCE_1s           map[*A_SOURCE_1]struct{}
-	A_SOURCE_1s_mapString map[string]*A_SOURCE_1
+	A_SOURCE_1s                map[*A_SOURCE_1]struct{}
+	A_SOURCE_1s_reference      map[*A_SOURCE_1]*A_SOURCE_1
+	A_SOURCE_1s_referenceOrder map[*A_SOURCE_1]uint // diff Unstage needs the reference order
+	A_SOURCE_1s_mapString      map[string]*A_SOURCE_1
 
 	// insertion point for slice of pointers maps
 	OnAfterA_SOURCE_1CreateCallback OnAfterCreateInterface[A_SOURCE_1]
@@ -627,8 +745,10 @@ type Stage struct {
 	OnAfterA_SOURCE_1DeleteCallback OnAfterDeleteInterface[A_SOURCE_1]
 	OnAfterA_SOURCE_1ReadCallback   OnAfterReadInterface[A_SOURCE_1]
 
-	A_SOURCE_SPECIFICATION_1s           map[*A_SOURCE_SPECIFICATION_1]struct{}
-	A_SOURCE_SPECIFICATION_1s_mapString map[string]*A_SOURCE_SPECIFICATION_1
+	A_SOURCE_SPECIFICATION_1s                map[*A_SOURCE_SPECIFICATION_1]struct{}
+	A_SOURCE_SPECIFICATION_1s_reference      map[*A_SOURCE_SPECIFICATION_1]*A_SOURCE_SPECIFICATION_1
+	A_SOURCE_SPECIFICATION_1s_referenceOrder map[*A_SOURCE_SPECIFICATION_1]uint // diff Unstage needs the reference order
+	A_SOURCE_SPECIFICATION_1s_mapString      map[string]*A_SOURCE_SPECIFICATION_1
 
 	// insertion point for slice of pointers maps
 	OnAfterA_SOURCE_SPECIFICATION_1CreateCallback OnAfterCreateInterface[A_SOURCE_SPECIFICATION_1]
@@ -636,8 +756,10 @@ type Stage struct {
 	OnAfterA_SOURCE_SPECIFICATION_1DeleteCallback OnAfterDeleteInterface[A_SOURCE_SPECIFICATION_1]
 	OnAfterA_SOURCE_SPECIFICATION_1ReadCallback   OnAfterReadInterface[A_SOURCE_SPECIFICATION_1]
 
-	A_SPECIFICATIONSs           map[*A_SPECIFICATIONS]struct{}
-	A_SPECIFICATIONSs_mapString map[string]*A_SPECIFICATIONS
+	A_SPECIFICATIONSs                map[*A_SPECIFICATIONS]struct{}
+	A_SPECIFICATIONSs_reference      map[*A_SPECIFICATIONS]*A_SPECIFICATIONS
+	A_SPECIFICATIONSs_referenceOrder map[*A_SPECIFICATIONS]uint // diff Unstage needs the reference order
+	A_SPECIFICATIONSs_mapString      map[string]*A_SPECIFICATIONS
 
 	// insertion point for slice of pointers maps
 	A_SPECIFICATIONS_SPECIFICATION_reverseMap map[*SPECIFICATION]*A_SPECIFICATIONS
@@ -647,8 +769,10 @@ type Stage struct {
 	OnAfterA_SPECIFICATIONSDeleteCallback OnAfterDeleteInterface[A_SPECIFICATIONS]
 	OnAfterA_SPECIFICATIONSReadCallback   OnAfterReadInterface[A_SPECIFICATIONS]
 
-	A_SPECIFICATION_TYPE_REFs           map[*A_SPECIFICATION_TYPE_REF]struct{}
-	A_SPECIFICATION_TYPE_REFs_mapString map[string]*A_SPECIFICATION_TYPE_REF
+	A_SPECIFICATION_TYPE_REFs                map[*A_SPECIFICATION_TYPE_REF]struct{}
+	A_SPECIFICATION_TYPE_REFs_reference      map[*A_SPECIFICATION_TYPE_REF]*A_SPECIFICATION_TYPE_REF
+	A_SPECIFICATION_TYPE_REFs_referenceOrder map[*A_SPECIFICATION_TYPE_REF]uint // diff Unstage needs the reference order
+	A_SPECIFICATION_TYPE_REFs_mapString      map[string]*A_SPECIFICATION_TYPE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_SPECIFICATION_TYPE_REFCreateCallback OnAfterCreateInterface[A_SPECIFICATION_TYPE_REF]
@@ -656,8 +780,10 @@ type Stage struct {
 	OnAfterA_SPECIFICATION_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPECIFICATION_TYPE_REF]
 	OnAfterA_SPECIFICATION_TYPE_REFReadCallback   OnAfterReadInterface[A_SPECIFICATION_TYPE_REF]
 
-	A_SPECIFIED_VALUESs           map[*A_SPECIFIED_VALUES]struct{}
-	A_SPECIFIED_VALUESs_mapString map[string]*A_SPECIFIED_VALUES
+	A_SPECIFIED_VALUESs                map[*A_SPECIFIED_VALUES]struct{}
+	A_SPECIFIED_VALUESs_reference      map[*A_SPECIFIED_VALUES]*A_SPECIFIED_VALUES
+	A_SPECIFIED_VALUESs_referenceOrder map[*A_SPECIFIED_VALUES]uint // diff Unstage needs the reference order
+	A_SPECIFIED_VALUESs_mapString      map[string]*A_SPECIFIED_VALUES
 
 	// insertion point for slice of pointers maps
 	A_SPECIFIED_VALUES_ENUM_VALUE_reverseMap map[*ENUM_VALUE]*A_SPECIFIED_VALUES
@@ -667,8 +793,10 @@ type Stage struct {
 	OnAfterA_SPECIFIED_VALUESDeleteCallback OnAfterDeleteInterface[A_SPECIFIED_VALUES]
 	OnAfterA_SPECIFIED_VALUESReadCallback   OnAfterReadInterface[A_SPECIFIED_VALUES]
 
-	A_SPEC_ATTRIBUTESs           map[*A_SPEC_ATTRIBUTES]struct{}
-	A_SPEC_ATTRIBUTESs_mapString map[string]*A_SPEC_ATTRIBUTES
+	A_SPEC_ATTRIBUTESs                map[*A_SPEC_ATTRIBUTES]struct{}
+	A_SPEC_ATTRIBUTESs_reference      map[*A_SPEC_ATTRIBUTES]*A_SPEC_ATTRIBUTES
+	A_SPEC_ATTRIBUTESs_referenceOrder map[*A_SPEC_ATTRIBUTES]uint // diff Unstage needs the reference order
+	A_SPEC_ATTRIBUTESs_mapString      map[string]*A_SPEC_ATTRIBUTES
 
 	// insertion point for slice of pointers maps
 	A_SPEC_ATTRIBUTES_ATTRIBUTE_DEFINITION_BOOLEAN_reverseMap map[*ATTRIBUTE_DEFINITION_BOOLEAN]*A_SPEC_ATTRIBUTES
@@ -690,8 +818,10 @@ type Stage struct {
 	OnAfterA_SPEC_ATTRIBUTESDeleteCallback OnAfterDeleteInterface[A_SPEC_ATTRIBUTES]
 	OnAfterA_SPEC_ATTRIBUTESReadCallback   OnAfterReadInterface[A_SPEC_ATTRIBUTES]
 
-	A_SPEC_OBJECTSs           map[*A_SPEC_OBJECTS]struct{}
-	A_SPEC_OBJECTSs_mapString map[string]*A_SPEC_OBJECTS
+	A_SPEC_OBJECTSs                map[*A_SPEC_OBJECTS]struct{}
+	A_SPEC_OBJECTSs_reference      map[*A_SPEC_OBJECTS]*A_SPEC_OBJECTS
+	A_SPEC_OBJECTSs_referenceOrder map[*A_SPEC_OBJECTS]uint // diff Unstage needs the reference order
+	A_SPEC_OBJECTSs_mapString      map[string]*A_SPEC_OBJECTS
 
 	// insertion point for slice of pointers maps
 	A_SPEC_OBJECTS_SPEC_OBJECT_reverseMap map[*SPEC_OBJECT]*A_SPEC_OBJECTS
@@ -701,8 +831,10 @@ type Stage struct {
 	OnAfterA_SPEC_OBJECTSDeleteCallback OnAfterDeleteInterface[A_SPEC_OBJECTS]
 	OnAfterA_SPEC_OBJECTSReadCallback   OnAfterReadInterface[A_SPEC_OBJECTS]
 
-	A_SPEC_OBJECT_TYPE_REFs           map[*A_SPEC_OBJECT_TYPE_REF]struct{}
-	A_SPEC_OBJECT_TYPE_REFs_mapString map[string]*A_SPEC_OBJECT_TYPE_REF
+	A_SPEC_OBJECT_TYPE_REFs                map[*A_SPEC_OBJECT_TYPE_REF]struct{}
+	A_SPEC_OBJECT_TYPE_REFs_reference      map[*A_SPEC_OBJECT_TYPE_REF]*A_SPEC_OBJECT_TYPE_REF
+	A_SPEC_OBJECT_TYPE_REFs_referenceOrder map[*A_SPEC_OBJECT_TYPE_REF]uint // diff Unstage needs the reference order
+	A_SPEC_OBJECT_TYPE_REFs_mapString      map[string]*A_SPEC_OBJECT_TYPE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_SPEC_OBJECT_TYPE_REFCreateCallback OnAfterCreateInterface[A_SPEC_OBJECT_TYPE_REF]
@@ -710,8 +842,10 @@ type Stage struct {
 	OnAfterA_SPEC_OBJECT_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_OBJECT_TYPE_REF]
 	OnAfterA_SPEC_OBJECT_TYPE_REFReadCallback   OnAfterReadInterface[A_SPEC_OBJECT_TYPE_REF]
 
-	A_SPEC_RELATIONSs           map[*A_SPEC_RELATIONS]struct{}
-	A_SPEC_RELATIONSs_mapString map[string]*A_SPEC_RELATIONS
+	A_SPEC_RELATIONSs                map[*A_SPEC_RELATIONS]struct{}
+	A_SPEC_RELATIONSs_reference      map[*A_SPEC_RELATIONS]*A_SPEC_RELATIONS
+	A_SPEC_RELATIONSs_referenceOrder map[*A_SPEC_RELATIONS]uint // diff Unstage needs the reference order
+	A_SPEC_RELATIONSs_mapString      map[string]*A_SPEC_RELATIONS
 
 	// insertion point for slice of pointers maps
 	A_SPEC_RELATIONS_SPEC_RELATION_reverseMap map[*SPEC_RELATION]*A_SPEC_RELATIONS
@@ -721,8 +855,10 @@ type Stage struct {
 	OnAfterA_SPEC_RELATIONSDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATIONS]
 	OnAfterA_SPEC_RELATIONSReadCallback   OnAfterReadInterface[A_SPEC_RELATIONS]
 
-	A_SPEC_RELATION_GROUPSs           map[*A_SPEC_RELATION_GROUPS]struct{}
-	A_SPEC_RELATION_GROUPSs_mapString map[string]*A_SPEC_RELATION_GROUPS
+	A_SPEC_RELATION_GROUPSs                map[*A_SPEC_RELATION_GROUPS]struct{}
+	A_SPEC_RELATION_GROUPSs_reference      map[*A_SPEC_RELATION_GROUPS]*A_SPEC_RELATION_GROUPS
+	A_SPEC_RELATION_GROUPSs_referenceOrder map[*A_SPEC_RELATION_GROUPS]uint // diff Unstage needs the reference order
+	A_SPEC_RELATION_GROUPSs_mapString      map[string]*A_SPEC_RELATION_GROUPS
 
 	// insertion point for slice of pointers maps
 	A_SPEC_RELATION_GROUPS_RELATION_GROUP_reverseMap map[*RELATION_GROUP]*A_SPEC_RELATION_GROUPS
@@ -732,8 +868,10 @@ type Stage struct {
 	OnAfterA_SPEC_RELATION_GROUPSDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_GROUPS]
 	OnAfterA_SPEC_RELATION_GROUPSReadCallback   OnAfterReadInterface[A_SPEC_RELATION_GROUPS]
 
-	A_SPEC_RELATION_REFs           map[*A_SPEC_RELATION_REF]struct{}
-	A_SPEC_RELATION_REFs_mapString map[string]*A_SPEC_RELATION_REF
+	A_SPEC_RELATION_REFs                map[*A_SPEC_RELATION_REF]struct{}
+	A_SPEC_RELATION_REFs_reference      map[*A_SPEC_RELATION_REF]*A_SPEC_RELATION_REF
+	A_SPEC_RELATION_REFs_referenceOrder map[*A_SPEC_RELATION_REF]uint // diff Unstage needs the reference order
+	A_SPEC_RELATION_REFs_mapString      map[string]*A_SPEC_RELATION_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_SPEC_RELATION_REFCreateCallback OnAfterCreateInterface[A_SPEC_RELATION_REF]
@@ -741,8 +879,10 @@ type Stage struct {
 	OnAfterA_SPEC_RELATION_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_REF]
 	OnAfterA_SPEC_RELATION_REFReadCallback   OnAfterReadInterface[A_SPEC_RELATION_REF]
 
-	A_SPEC_RELATION_TYPE_REFs           map[*A_SPEC_RELATION_TYPE_REF]struct{}
-	A_SPEC_RELATION_TYPE_REFs_mapString map[string]*A_SPEC_RELATION_TYPE_REF
+	A_SPEC_RELATION_TYPE_REFs                map[*A_SPEC_RELATION_TYPE_REF]struct{}
+	A_SPEC_RELATION_TYPE_REFs_reference      map[*A_SPEC_RELATION_TYPE_REF]*A_SPEC_RELATION_TYPE_REF
+	A_SPEC_RELATION_TYPE_REFs_referenceOrder map[*A_SPEC_RELATION_TYPE_REF]uint // diff Unstage needs the reference order
+	A_SPEC_RELATION_TYPE_REFs_mapString      map[string]*A_SPEC_RELATION_TYPE_REF
 
 	// insertion point for slice of pointers maps
 	OnAfterA_SPEC_RELATION_TYPE_REFCreateCallback OnAfterCreateInterface[A_SPEC_RELATION_TYPE_REF]
@@ -750,8 +890,10 @@ type Stage struct {
 	OnAfterA_SPEC_RELATION_TYPE_REFDeleteCallback OnAfterDeleteInterface[A_SPEC_RELATION_TYPE_REF]
 	OnAfterA_SPEC_RELATION_TYPE_REFReadCallback   OnAfterReadInterface[A_SPEC_RELATION_TYPE_REF]
 
-	A_SPEC_TYPESs           map[*A_SPEC_TYPES]struct{}
-	A_SPEC_TYPESs_mapString map[string]*A_SPEC_TYPES
+	A_SPEC_TYPESs                map[*A_SPEC_TYPES]struct{}
+	A_SPEC_TYPESs_reference      map[*A_SPEC_TYPES]*A_SPEC_TYPES
+	A_SPEC_TYPESs_referenceOrder map[*A_SPEC_TYPES]uint // diff Unstage needs the reference order
+	A_SPEC_TYPESs_mapString      map[string]*A_SPEC_TYPES
 
 	// insertion point for slice of pointers maps
 	A_SPEC_TYPES_RELATION_GROUP_TYPE_reverseMap map[*RELATION_GROUP_TYPE]*A_SPEC_TYPES
@@ -767,8 +909,10 @@ type Stage struct {
 	OnAfterA_SPEC_TYPESDeleteCallback OnAfterDeleteInterface[A_SPEC_TYPES]
 	OnAfterA_SPEC_TYPESReadCallback   OnAfterReadInterface[A_SPEC_TYPES]
 
-	A_THE_HEADERs           map[*A_THE_HEADER]struct{}
-	A_THE_HEADERs_mapString map[string]*A_THE_HEADER
+	A_THE_HEADERs                map[*A_THE_HEADER]struct{}
+	A_THE_HEADERs_reference      map[*A_THE_HEADER]*A_THE_HEADER
+	A_THE_HEADERs_referenceOrder map[*A_THE_HEADER]uint // diff Unstage needs the reference order
+	A_THE_HEADERs_mapString      map[string]*A_THE_HEADER
 
 	// insertion point for slice of pointers maps
 	OnAfterA_THE_HEADERCreateCallback OnAfterCreateInterface[A_THE_HEADER]
@@ -776,8 +920,10 @@ type Stage struct {
 	OnAfterA_THE_HEADERDeleteCallback OnAfterDeleteInterface[A_THE_HEADER]
 	OnAfterA_THE_HEADERReadCallback   OnAfterReadInterface[A_THE_HEADER]
 
-	A_TOOL_EXTENSIONSs           map[*A_TOOL_EXTENSIONS]struct{}
-	A_TOOL_EXTENSIONSs_mapString map[string]*A_TOOL_EXTENSIONS
+	A_TOOL_EXTENSIONSs                map[*A_TOOL_EXTENSIONS]struct{}
+	A_TOOL_EXTENSIONSs_reference      map[*A_TOOL_EXTENSIONS]*A_TOOL_EXTENSIONS
+	A_TOOL_EXTENSIONSs_referenceOrder map[*A_TOOL_EXTENSIONS]uint // diff Unstage needs the reference order
+	A_TOOL_EXTENSIONSs_mapString      map[string]*A_TOOL_EXTENSIONS
 
 	// insertion point for slice of pointers maps
 	A_TOOL_EXTENSIONS_REQ_IF_TOOL_EXTENSION_reverseMap map[*REQ_IF_TOOL_EXTENSION]*A_TOOL_EXTENSIONS
@@ -787,8 +933,10 @@ type Stage struct {
 	OnAfterA_TOOL_EXTENSIONSDeleteCallback OnAfterDeleteInterface[A_TOOL_EXTENSIONS]
 	OnAfterA_TOOL_EXTENSIONSReadCallback   OnAfterReadInterface[A_TOOL_EXTENSIONS]
 
-	DATATYPE_DEFINITION_BOOLEANs           map[*DATATYPE_DEFINITION_BOOLEAN]struct{}
-	DATATYPE_DEFINITION_BOOLEANs_mapString map[string]*DATATYPE_DEFINITION_BOOLEAN
+	DATATYPE_DEFINITION_BOOLEANs                map[*DATATYPE_DEFINITION_BOOLEAN]struct{}
+	DATATYPE_DEFINITION_BOOLEANs_reference      map[*DATATYPE_DEFINITION_BOOLEAN]*DATATYPE_DEFINITION_BOOLEAN
+	DATATYPE_DEFINITION_BOOLEANs_referenceOrder map[*DATATYPE_DEFINITION_BOOLEAN]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_BOOLEANs_mapString      map[string]*DATATYPE_DEFINITION_BOOLEAN
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_BOOLEANCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_BOOLEAN]
@@ -796,8 +944,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_BOOLEANDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_BOOLEAN]
 	OnAfterDATATYPE_DEFINITION_BOOLEANReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_BOOLEAN]
 
-	DATATYPE_DEFINITION_DATEs           map[*DATATYPE_DEFINITION_DATE]struct{}
-	DATATYPE_DEFINITION_DATEs_mapString map[string]*DATATYPE_DEFINITION_DATE
+	DATATYPE_DEFINITION_DATEs                map[*DATATYPE_DEFINITION_DATE]struct{}
+	DATATYPE_DEFINITION_DATEs_reference      map[*DATATYPE_DEFINITION_DATE]*DATATYPE_DEFINITION_DATE
+	DATATYPE_DEFINITION_DATEs_referenceOrder map[*DATATYPE_DEFINITION_DATE]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_DATEs_mapString      map[string]*DATATYPE_DEFINITION_DATE
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_DATECreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_DATE]
@@ -805,8 +955,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_DATEDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_DATE]
 	OnAfterDATATYPE_DEFINITION_DATEReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_DATE]
 
-	DATATYPE_DEFINITION_ENUMERATIONs           map[*DATATYPE_DEFINITION_ENUMERATION]struct{}
-	DATATYPE_DEFINITION_ENUMERATIONs_mapString map[string]*DATATYPE_DEFINITION_ENUMERATION
+	DATATYPE_DEFINITION_ENUMERATIONs                map[*DATATYPE_DEFINITION_ENUMERATION]struct{}
+	DATATYPE_DEFINITION_ENUMERATIONs_reference      map[*DATATYPE_DEFINITION_ENUMERATION]*DATATYPE_DEFINITION_ENUMERATION
+	DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder map[*DATATYPE_DEFINITION_ENUMERATION]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_ENUMERATIONs_mapString      map[string]*DATATYPE_DEFINITION_ENUMERATION
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_ENUMERATION]
@@ -814,8 +966,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_ENUMERATION]
 	OnAfterDATATYPE_DEFINITION_ENUMERATIONReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_ENUMERATION]
 
-	DATATYPE_DEFINITION_INTEGERs           map[*DATATYPE_DEFINITION_INTEGER]struct{}
-	DATATYPE_DEFINITION_INTEGERs_mapString map[string]*DATATYPE_DEFINITION_INTEGER
+	DATATYPE_DEFINITION_INTEGERs                map[*DATATYPE_DEFINITION_INTEGER]struct{}
+	DATATYPE_DEFINITION_INTEGERs_reference      map[*DATATYPE_DEFINITION_INTEGER]*DATATYPE_DEFINITION_INTEGER
+	DATATYPE_DEFINITION_INTEGERs_referenceOrder map[*DATATYPE_DEFINITION_INTEGER]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_INTEGERs_mapString      map[string]*DATATYPE_DEFINITION_INTEGER
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_INTEGERCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_INTEGER]
@@ -823,8 +977,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_INTEGERDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_INTEGER]
 	OnAfterDATATYPE_DEFINITION_INTEGERReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_INTEGER]
 
-	DATATYPE_DEFINITION_REALs           map[*DATATYPE_DEFINITION_REAL]struct{}
-	DATATYPE_DEFINITION_REALs_mapString map[string]*DATATYPE_DEFINITION_REAL
+	DATATYPE_DEFINITION_REALs                map[*DATATYPE_DEFINITION_REAL]struct{}
+	DATATYPE_DEFINITION_REALs_reference      map[*DATATYPE_DEFINITION_REAL]*DATATYPE_DEFINITION_REAL
+	DATATYPE_DEFINITION_REALs_referenceOrder map[*DATATYPE_DEFINITION_REAL]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_REALs_mapString      map[string]*DATATYPE_DEFINITION_REAL
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_REALCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_REAL]
@@ -832,8 +988,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_REALDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_REAL]
 	OnAfterDATATYPE_DEFINITION_REALReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_REAL]
 
-	DATATYPE_DEFINITION_STRINGs           map[*DATATYPE_DEFINITION_STRING]struct{}
-	DATATYPE_DEFINITION_STRINGs_mapString map[string]*DATATYPE_DEFINITION_STRING
+	DATATYPE_DEFINITION_STRINGs                map[*DATATYPE_DEFINITION_STRING]struct{}
+	DATATYPE_DEFINITION_STRINGs_reference      map[*DATATYPE_DEFINITION_STRING]*DATATYPE_DEFINITION_STRING
+	DATATYPE_DEFINITION_STRINGs_referenceOrder map[*DATATYPE_DEFINITION_STRING]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_STRINGs_mapString      map[string]*DATATYPE_DEFINITION_STRING
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_STRINGCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_STRING]
@@ -841,8 +999,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_STRINGDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_STRING]
 	OnAfterDATATYPE_DEFINITION_STRINGReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_STRING]
 
-	DATATYPE_DEFINITION_XHTMLs           map[*DATATYPE_DEFINITION_XHTML]struct{}
-	DATATYPE_DEFINITION_XHTMLs_mapString map[string]*DATATYPE_DEFINITION_XHTML
+	DATATYPE_DEFINITION_XHTMLs                map[*DATATYPE_DEFINITION_XHTML]struct{}
+	DATATYPE_DEFINITION_XHTMLs_reference      map[*DATATYPE_DEFINITION_XHTML]*DATATYPE_DEFINITION_XHTML
+	DATATYPE_DEFINITION_XHTMLs_referenceOrder map[*DATATYPE_DEFINITION_XHTML]uint // diff Unstage needs the reference order
+	DATATYPE_DEFINITION_XHTMLs_mapString      map[string]*DATATYPE_DEFINITION_XHTML
 
 	// insertion point for slice of pointers maps
 	OnAfterDATATYPE_DEFINITION_XHTMLCreateCallback OnAfterCreateInterface[DATATYPE_DEFINITION_XHTML]
@@ -850,8 +1010,10 @@ type Stage struct {
 	OnAfterDATATYPE_DEFINITION_XHTMLDeleteCallback OnAfterDeleteInterface[DATATYPE_DEFINITION_XHTML]
 	OnAfterDATATYPE_DEFINITION_XHTMLReadCallback   OnAfterReadInterface[DATATYPE_DEFINITION_XHTML]
 
-	EMBEDDED_VALUEs           map[*EMBEDDED_VALUE]struct{}
-	EMBEDDED_VALUEs_mapString map[string]*EMBEDDED_VALUE
+	EMBEDDED_VALUEs                map[*EMBEDDED_VALUE]struct{}
+	EMBEDDED_VALUEs_reference      map[*EMBEDDED_VALUE]*EMBEDDED_VALUE
+	EMBEDDED_VALUEs_referenceOrder map[*EMBEDDED_VALUE]uint // diff Unstage needs the reference order
+	EMBEDDED_VALUEs_mapString      map[string]*EMBEDDED_VALUE
 
 	// insertion point for slice of pointers maps
 	OnAfterEMBEDDED_VALUECreateCallback OnAfterCreateInterface[EMBEDDED_VALUE]
@@ -859,8 +1021,10 @@ type Stage struct {
 	OnAfterEMBEDDED_VALUEDeleteCallback OnAfterDeleteInterface[EMBEDDED_VALUE]
 	OnAfterEMBEDDED_VALUEReadCallback   OnAfterReadInterface[EMBEDDED_VALUE]
 
-	ENUM_VALUEs           map[*ENUM_VALUE]struct{}
-	ENUM_VALUEs_mapString map[string]*ENUM_VALUE
+	ENUM_VALUEs                map[*ENUM_VALUE]struct{}
+	ENUM_VALUEs_reference      map[*ENUM_VALUE]*ENUM_VALUE
+	ENUM_VALUEs_referenceOrder map[*ENUM_VALUE]uint // diff Unstage needs the reference order
+	ENUM_VALUEs_mapString      map[string]*ENUM_VALUE
 
 	// insertion point for slice of pointers maps
 	OnAfterENUM_VALUECreateCallback OnAfterCreateInterface[ENUM_VALUE]
@@ -868,8 +1032,10 @@ type Stage struct {
 	OnAfterENUM_VALUEDeleteCallback OnAfterDeleteInterface[ENUM_VALUE]
 	OnAfterENUM_VALUEReadCallback   OnAfterReadInterface[ENUM_VALUE]
 
-	EmbeddedJpgImages           map[*EmbeddedJpgImage]struct{}
-	EmbeddedJpgImages_mapString map[string]*EmbeddedJpgImage
+	EmbeddedJpgImages                map[*EmbeddedJpgImage]struct{}
+	EmbeddedJpgImages_reference      map[*EmbeddedJpgImage]*EmbeddedJpgImage
+	EmbeddedJpgImages_referenceOrder map[*EmbeddedJpgImage]uint // diff Unstage needs the reference order
+	EmbeddedJpgImages_mapString      map[string]*EmbeddedJpgImage
 
 	// insertion point for slice of pointers maps
 	OnAfterEmbeddedJpgImageCreateCallback OnAfterCreateInterface[EmbeddedJpgImage]
@@ -877,8 +1043,10 @@ type Stage struct {
 	OnAfterEmbeddedJpgImageDeleteCallback OnAfterDeleteInterface[EmbeddedJpgImage]
 	OnAfterEmbeddedJpgImageReadCallback   OnAfterReadInterface[EmbeddedJpgImage]
 
-	EmbeddedPngImages           map[*EmbeddedPngImage]struct{}
-	EmbeddedPngImages_mapString map[string]*EmbeddedPngImage
+	EmbeddedPngImages                map[*EmbeddedPngImage]struct{}
+	EmbeddedPngImages_reference      map[*EmbeddedPngImage]*EmbeddedPngImage
+	EmbeddedPngImages_referenceOrder map[*EmbeddedPngImage]uint // diff Unstage needs the reference order
+	EmbeddedPngImages_mapString      map[string]*EmbeddedPngImage
 
 	// insertion point for slice of pointers maps
 	OnAfterEmbeddedPngImageCreateCallback OnAfterCreateInterface[EmbeddedPngImage]
@@ -886,8 +1054,10 @@ type Stage struct {
 	OnAfterEmbeddedPngImageDeleteCallback OnAfterDeleteInterface[EmbeddedPngImage]
 	OnAfterEmbeddedPngImageReadCallback   OnAfterReadInterface[EmbeddedPngImage]
 
-	EmbeddedSvgImages           map[*EmbeddedSvgImage]struct{}
-	EmbeddedSvgImages_mapString map[string]*EmbeddedSvgImage
+	EmbeddedSvgImages                map[*EmbeddedSvgImage]struct{}
+	EmbeddedSvgImages_reference      map[*EmbeddedSvgImage]*EmbeddedSvgImage
+	EmbeddedSvgImages_referenceOrder map[*EmbeddedSvgImage]uint // diff Unstage needs the reference order
+	EmbeddedSvgImages_mapString      map[string]*EmbeddedSvgImage
 
 	// insertion point for slice of pointers maps
 	OnAfterEmbeddedSvgImageCreateCallback OnAfterCreateInterface[EmbeddedSvgImage]
@@ -895,8 +1065,10 @@ type Stage struct {
 	OnAfterEmbeddedSvgImageDeleteCallback OnAfterDeleteInterface[EmbeddedSvgImage]
 	OnAfterEmbeddedSvgImageReadCallback   OnAfterReadInterface[EmbeddedSvgImage]
 
-	Kills           map[*Kill]struct{}
-	Kills_mapString map[string]*Kill
+	Kills                map[*Kill]struct{}
+	Kills_reference      map[*Kill]*Kill
+	Kills_referenceOrder map[*Kill]uint // diff Unstage needs the reference order
+	Kills_mapString      map[string]*Kill
 
 	// insertion point for slice of pointers maps
 	OnAfterKillCreateCallback OnAfterCreateInterface[Kill]
@@ -904,8 +1076,10 @@ type Stage struct {
 	OnAfterKillDeleteCallback OnAfterDeleteInterface[Kill]
 	OnAfterKillReadCallback   OnAfterReadInterface[Kill]
 
-	Map_identifier_bools           map[*Map_identifier_bool]struct{}
-	Map_identifier_bools_mapString map[string]*Map_identifier_bool
+	Map_identifier_bools                map[*Map_identifier_bool]struct{}
+	Map_identifier_bools_reference      map[*Map_identifier_bool]*Map_identifier_bool
+	Map_identifier_bools_referenceOrder map[*Map_identifier_bool]uint // diff Unstage needs the reference order
+	Map_identifier_bools_mapString      map[string]*Map_identifier_bool
 
 	// insertion point for slice of pointers maps
 	OnAfterMap_identifier_boolCreateCallback OnAfterCreateInterface[Map_identifier_bool]
@@ -913,8 +1087,10 @@ type Stage struct {
 	OnAfterMap_identifier_boolDeleteCallback OnAfterDeleteInterface[Map_identifier_bool]
 	OnAfterMap_identifier_boolReadCallback   OnAfterReadInterface[Map_identifier_bool]
 
-	RELATION_GROUPs           map[*RELATION_GROUP]struct{}
-	RELATION_GROUPs_mapString map[string]*RELATION_GROUP
+	RELATION_GROUPs                map[*RELATION_GROUP]struct{}
+	RELATION_GROUPs_reference      map[*RELATION_GROUP]*RELATION_GROUP
+	RELATION_GROUPs_referenceOrder map[*RELATION_GROUP]uint // diff Unstage needs the reference order
+	RELATION_GROUPs_mapString      map[string]*RELATION_GROUP
 
 	// insertion point for slice of pointers maps
 	OnAfterRELATION_GROUPCreateCallback OnAfterCreateInterface[RELATION_GROUP]
@@ -922,8 +1098,10 @@ type Stage struct {
 	OnAfterRELATION_GROUPDeleteCallback OnAfterDeleteInterface[RELATION_GROUP]
 	OnAfterRELATION_GROUPReadCallback   OnAfterReadInterface[RELATION_GROUP]
 
-	RELATION_GROUP_TYPEs           map[*RELATION_GROUP_TYPE]struct{}
-	RELATION_GROUP_TYPEs_mapString map[string]*RELATION_GROUP_TYPE
+	RELATION_GROUP_TYPEs                map[*RELATION_GROUP_TYPE]struct{}
+	RELATION_GROUP_TYPEs_reference      map[*RELATION_GROUP_TYPE]*RELATION_GROUP_TYPE
+	RELATION_GROUP_TYPEs_referenceOrder map[*RELATION_GROUP_TYPE]uint // diff Unstage needs the reference order
+	RELATION_GROUP_TYPEs_mapString      map[string]*RELATION_GROUP_TYPE
 
 	// insertion point for slice of pointers maps
 	OnAfterRELATION_GROUP_TYPECreateCallback OnAfterCreateInterface[RELATION_GROUP_TYPE]
@@ -931,8 +1109,10 @@ type Stage struct {
 	OnAfterRELATION_GROUP_TYPEDeleteCallback OnAfterDeleteInterface[RELATION_GROUP_TYPE]
 	OnAfterRELATION_GROUP_TYPEReadCallback   OnAfterReadInterface[RELATION_GROUP_TYPE]
 
-	REQ_IFs           map[*REQ_IF]struct{}
-	REQ_IFs_mapString map[string]*REQ_IF
+	REQ_IFs                map[*REQ_IF]struct{}
+	REQ_IFs_reference      map[*REQ_IF]*REQ_IF
+	REQ_IFs_referenceOrder map[*REQ_IF]uint // diff Unstage needs the reference order
+	REQ_IFs_mapString      map[string]*REQ_IF
 
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IFCreateCallback OnAfterCreateInterface[REQ_IF]
@@ -940,8 +1120,10 @@ type Stage struct {
 	OnAfterREQ_IFDeleteCallback OnAfterDeleteInterface[REQ_IF]
 	OnAfterREQ_IFReadCallback   OnAfterReadInterface[REQ_IF]
 
-	REQ_IF_CONTENTs           map[*REQ_IF_CONTENT]struct{}
-	REQ_IF_CONTENTs_mapString map[string]*REQ_IF_CONTENT
+	REQ_IF_CONTENTs                map[*REQ_IF_CONTENT]struct{}
+	REQ_IF_CONTENTs_reference      map[*REQ_IF_CONTENT]*REQ_IF_CONTENT
+	REQ_IF_CONTENTs_referenceOrder map[*REQ_IF_CONTENT]uint // diff Unstage needs the reference order
+	REQ_IF_CONTENTs_mapString      map[string]*REQ_IF_CONTENT
 
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IF_CONTENTCreateCallback OnAfterCreateInterface[REQ_IF_CONTENT]
@@ -949,8 +1131,10 @@ type Stage struct {
 	OnAfterREQ_IF_CONTENTDeleteCallback OnAfterDeleteInterface[REQ_IF_CONTENT]
 	OnAfterREQ_IF_CONTENTReadCallback   OnAfterReadInterface[REQ_IF_CONTENT]
 
-	REQ_IF_HEADERs           map[*REQ_IF_HEADER]struct{}
-	REQ_IF_HEADERs_mapString map[string]*REQ_IF_HEADER
+	REQ_IF_HEADERs                map[*REQ_IF_HEADER]struct{}
+	REQ_IF_HEADERs_reference      map[*REQ_IF_HEADER]*REQ_IF_HEADER
+	REQ_IF_HEADERs_referenceOrder map[*REQ_IF_HEADER]uint // diff Unstage needs the reference order
+	REQ_IF_HEADERs_mapString      map[string]*REQ_IF_HEADER
 
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IF_HEADERCreateCallback OnAfterCreateInterface[REQ_IF_HEADER]
@@ -958,8 +1142,10 @@ type Stage struct {
 	OnAfterREQ_IF_HEADERDeleteCallback OnAfterDeleteInterface[REQ_IF_HEADER]
 	OnAfterREQ_IF_HEADERReadCallback   OnAfterReadInterface[REQ_IF_HEADER]
 
-	REQ_IF_TOOL_EXTENSIONs           map[*REQ_IF_TOOL_EXTENSION]struct{}
-	REQ_IF_TOOL_EXTENSIONs_mapString map[string]*REQ_IF_TOOL_EXTENSION
+	REQ_IF_TOOL_EXTENSIONs                map[*REQ_IF_TOOL_EXTENSION]struct{}
+	REQ_IF_TOOL_EXTENSIONs_reference      map[*REQ_IF_TOOL_EXTENSION]*REQ_IF_TOOL_EXTENSION
+	REQ_IF_TOOL_EXTENSIONs_referenceOrder map[*REQ_IF_TOOL_EXTENSION]uint // diff Unstage needs the reference order
+	REQ_IF_TOOL_EXTENSIONs_mapString      map[string]*REQ_IF_TOOL_EXTENSION
 
 	// insertion point for slice of pointers maps
 	OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback OnAfterCreateInterface[REQ_IF_TOOL_EXTENSION]
@@ -967,8 +1153,10 @@ type Stage struct {
 	OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION]
 	OnAfterREQ_IF_TOOL_EXTENSIONReadCallback   OnAfterReadInterface[REQ_IF_TOOL_EXTENSION]
 
-	SPECIFICATIONs           map[*SPECIFICATION]struct{}
-	SPECIFICATIONs_mapString map[string]*SPECIFICATION
+	SPECIFICATIONs                map[*SPECIFICATION]struct{}
+	SPECIFICATIONs_reference      map[*SPECIFICATION]*SPECIFICATION
+	SPECIFICATIONs_referenceOrder map[*SPECIFICATION]uint // diff Unstage needs the reference order
+	SPECIFICATIONs_mapString      map[string]*SPECIFICATION
 
 	// insertion point for slice of pointers maps
 	OnAfterSPECIFICATIONCreateCallback OnAfterCreateInterface[SPECIFICATION]
@@ -976,8 +1164,10 @@ type Stage struct {
 	OnAfterSPECIFICATIONDeleteCallback OnAfterDeleteInterface[SPECIFICATION]
 	OnAfterSPECIFICATIONReadCallback   OnAfterReadInterface[SPECIFICATION]
 
-	SPECIFICATION_Renderings           map[*SPECIFICATION_Rendering]struct{}
-	SPECIFICATION_Renderings_mapString map[string]*SPECIFICATION_Rendering
+	SPECIFICATION_Renderings                map[*SPECIFICATION_Rendering]struct{}
+	SPECIFICATION_Renderings_reference      map[*SPECIFICATION_Rendering]*SPECIFICATION_Rendering
+	SPECIFICATION_Renderings_referenceOrder map[*SPECIFICATION_Rendering]uint // diff Unstage needs the reference order
+	SPECIFICATION_Renderings_mapString      map[string]*SPECIFICATION_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterSPECIFICATION_RenderingCreateCallback OnAfterCreateInterface[SPECIFICATION_Rendering]
@@ -985,8 +1175,10 @@ type Stage struct {
 	OnAfterSPECIFICATION_RenderingDeleteCallback OnAfterDeleteInterface[SPECIFICATION_Rendering]
 	OnAfterSPECIFICATION_RenderingReadCallback   OnAfterReadInterface[SPECIFICATION_Rendering]
 
-	SPECIFICATION_TYPEs           map[*SPECIFICATION_TYPE]struct{}
-	SPECIFICATION_TYPEs_mapString map[string]*SPECIFICATION_TYPE
+	SPECIFICATION_TYPEs                map[*SPECIFICATION_TYPE]struct{}
+	SPECIFICATION_TYPEs_reference      map[*SPECIFICATION_TYPE]*SPECIFICATION_TYPE
+	SPECIFICATION_TYPEs_referenceOrder map[*SPECIFICATION_TYPE]uint // diff Unstage needs the reference order
+	SPECIFICATION_TYPEs_mapString      map[string]*SPECIFICATION_TYPE
 
 	// insertion point for slice of pointers maps
 	OnAfterSPECIFICATION_TYPECreateCallback OnAfterCreateInterface[SPECIFICATION_TYPE]
@@ -994,8 +1186,10 @@ type Stage struct {
 	OnAfterSPECIFICATION_TYPEDeleteCallback OnAfterDeleteInterface[SPECIFICATION_TYPE]
 	OnAfterSPECIFICATION_TYPEReadCallback   OnAfterReadInterface[SPECIFICATION_TYPE]
 
-	SPEC_HIERARCHYs           map[*SPEC_HIERARCHY]struct{}
-	SPEC_HIERARCHYs_mapString map[string]*SPEC_HIERARCHY
+	SPEC_HIERARCHYs                map[*SPEC_HIERARCHY]struct{}
+	SPEC_HIERARCHYs_reference      map[*SPEC_HIERARCHY]*SPEC_HIERARCHY
+	SPEC_HIERARCHYs_referenceOrder map[*SPEC_HIERARCHY]uint // diff Unstage needs the reference order
+	SPEC_HIERARCHYs_mapString      map[string]*SPEC_HIERARCHY
 
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_HIERARCHYCreateCallback OnAfterCreateInterface[SPEC_HIERARCHY]
@@ -1003,8 +1197,10 @@ type Stage struct {
 	OnAfterSPEC_HIERARCHYDeleteCallback OnAfterDeleteInterface[SPEC_HIERARCHY]
 	OnAfterSPEC_HIERARCHYReadCallback   OnAfterReadInterface[SPEC_HIERARCHY]
 
-	SPEC_OBJECTs           map[*SPEC_OBJECT]struct{}
-	SPEC_OBJECTs_mapString map[string]*SPEC_OBJECT
+	SPEC_OBJECTs                map[*SPEC_OBJECT]struct{}
+	SPEC_OBJECTs_reference      map[*SPEC_OBJECT]*SPEC_OBJECT
+	SPEC_OBJECTs_referenceOrder map[*SPEC_OBJECT]uint // diff Unstage needs the reference order
+	SPEC_OBJECTs_mapString      map[string]*SPEC_OBJECT
 
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_OBJECTCreateCallback OnAfterCreateInterface[SPEC_OBJECT]
@@ -1012,8 +1208,10 @@ type Stage struct {
 	OnAfterSPEC_OBJECTDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT]
 	OnAfterSPEC_OBJECTReadCallback   OnAfterReadInterface[SPEC_OBJECT]
 
-	SPEC_OBJECT_TYPEs           map[*SPEC_OBJECT_TYPE]struct{}
-	SPEC_OBJECT_TYPEs_mapString map[string]*SPEC_OBJECT_TYPE
+	SPEC_OBJECT_TYPEs                map[*SPEC_OBJECT_TYPE]struct{}
+	SPEC_OBJECT_TYPEs_reference      map[*SPEC_OBJECT_TYPE]*SPEC_OBJECT_TYPE
+	SPEC_OBJECT_TYPEs_referenceOrder map[*SPEC_OBJECT_TYPE]uint // diff Unstage needs the reference order
+	SPEC_OBJECT_TYPEs_mapString      map[string]*SPEC_OBJECT_TYPE
 
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_OBJECT_TYPECreateCallback OnAfterCreateInterface[SPEC_OBJECT_TYPE]
@@ -1021,8 +1219,10 @@ type Stage struct {
 	OnAfterSPEC_OBJECT_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE]
 	OnAfterSPEC_OBJECT_TYPEReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE]
 
-	SPEC_OBJECT_TYPE_Renderings           map[*SPEC_OBJECT_TYPE_Rendering]struct{}
-	SPEC_OBJECT_TYPE_Renderings_mapString map[string]*SPEC_OBJECT_TYPE_Rendering
+	SPEC_OBJECT_TYPE_Renderings                map[*SPEC_OBJECT_TYPE_Rendering]struct{}
+	SPEC_OBJECT_TYPE_Renderings_reference      map[*SPEC_OBJECT_TYPE_Rendering]*SPEC_OBJECT_TYPE_Rendering
+	SPEC_OBJECT_TYPE_Renderings_referenceOrder map[*SPEC_OBJECT_TYPE_Rendering]uint // diff Unstage needs the reference order
+	SPEC_OBJECT_TYPE_Renderings_mapString      map[string]*SPEC_OBJECT_TYPE_Rendering
 
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_OBJECT_TYPE_RenderingCreateCallback OnAfterCreateInterface[SPEC_OBJECT_TYPE_Rendering]
@@ -1030,8 +1230,10 @@ type Stage struct {
 	OnAfterSPEC_OBJECT_TYPE_RenderingDeleteCallback OnAfterDeleteInterface[SPEC_OBJECT_TYPE_Rendering]
 	OnAfterSPEC_OBJECT_TYPE_RenderingReadCallback   OnAfterReadInterface[SPEC_OBJECT_TYPE_Rendering]
 
-	SPEC_RELATIONs           map[*SPEC_RELATION]struct{}
-	SPEC_RELATIONs_mapString map[string]*SPEC_RELATION
+	SPEC_RELATIONs                map[*SPEC_RELATION]struct{}
+	SPEC_RELATIONs_reference      map[*SPEC_RELATION]*SPEC_RELATION
+	SPEC_RELATIONs_referenceOrder map[*SPEC_RELATION]uint // diff Unstage needs the reference order
+	SPEC_RELATIONs_mapString      map[string]*SPEC_RELATION
 
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_RELATIONCreateCallback OnAfterCreateInterface[SPEC_RELATION]
@@ -1039,8 +1241,10 @@ type Stage struct {
 	OnAfterSPEC_RELATIONDeleteCallback OnAfterDeleteInterface[SPEC_RELATION]
 	OnAfterSPEC_RELATIONReadCallback   OnAfterReadInterface[SPEC_RELATION]
 
-	SPEC_RELATION_TYPEs           map[*SPEC_RELATION_TYPE]struct{}
-	SPEC_RELATION_TYPEs_mapString map[string]*SPEC_RELATION_TYPE
+	SPEC_RELATION_TYPEs                map[*SPEC_RELATION_TYPE]struct{}
+	SPEC_RELATION_TYPEs_reference      map[*SPEC_RELATION_TYPE]*SPEC_RELATION_TYPE
+	SPEC_RELATION_TYPEs_referenceOrder map[*SPEC_RELATION_TYPE]uint // diff Unstage needs the reference order
+	SPEC_RELATION_TYPEs_mapString      map[string]*SPEC_RELATION_TYPE
 
 	// insertion point for slice of pointers maps
 	OnAfterSPEC_RELATION_TYPECreateCallback OnAfterCreateInterface[SPEC_RELATION_TYPE]
@@ -1048,8 +1252,10 @@ type Stage struct {
 	OnAfterSPEC_RELATION_TYPEDeleteCallback OnAfterDeleteInterface[SPEC_RELATION_TYPE]
 	OnAfterSPEC_RELATION_TYPEReadCallback   OnAfterReadInterface[SPEC_RELATION_TYPE]
 
-	StaticWebSites           map[*StaticWebSite]struct{}
-	StaticWebSites_mapString map[string]*StaticWebSite
+	StaticWebSites                map[*StaticWebSite]struct{}
+	StaticWebSites_reference      map[*StaticWebSite]*StaticWebSite
+	StaticWebSites_referenceOrder map[*StaticWebSite]uint // diff Unstage needs the reference order
+	StaticWebSites_mapString      map[string]*StaticWebSite
 
 	// insertion point for slice of pointers maps
 	StaticWebSite_Chapters_reverseMap map[*StaticWebSiteChapter]*StaticWebSite
@@ -1059,8 +1265,10 @@ type Stage struct {
 	OnAfterStaticWebSiteDeleteCallback OnAfterDeleteInterface[StaticWebSite]
 	OnAfterStaticWebSiteReadCallback   OnAfterReadInterface[StaticWebSite]
 
-	StaticWebSiteChapters           map[*StaticWebSiteChapter]struct{}
-	StaticWebSiteChapters_mapString map[string]*StaticWebSiteChapter
+	StaticWebSiteChapters                map[*StaticWebSiteChapter]struct{}
+	StaticWebSiteChapters_reference      map[*StaticWebSiteChapter]*StaticWebSiteChapter
+	StaticWebSiteChapters_referenceOrder map[*StaticWebSiteChapter]uint // diff Unstage needs the reference order
+	StaticWebSiteChapters_mapString      map[string]*StaticWebSiteChapter
 
 	// insertion point for slice of pointers maps
 	StaticWebSiteChapter_Paragraphs_reverseMap map[*StaticWebSiteParagraph]*StaticWebSiteChapter
@@ -1070,8 +1278,10 @@ type Stage struct {
 	OnAfterStaticWebSiteChapterDeleteCallback OnAfterDeleteInterface[StaticWebSiteChapter]
 	OnAfterStaticWebSiteChapterReadCallback   OnAfterReadInterface[StaticWebSiteChapter]
 
-	StaticWebSiteGeneratedImages           map[*StaticWebSiteGeneratedImage]struct{}
-	StaticWebSiteGeneratedImages_mapString map[string]*StaticWebSiteGeneratedImage
+	StaticWebSiteGeneratedImages                map[*StaticWebSiteGeneratedImage]struct{}
+	StaticWebSiteGeneratedImages_reference      map[*StaticWebSiteGeneratedImage]*StaticWebSiteGeneratedImage
+	StaticWebSiteGeneratedImages_referenceOrder map[*StaticWebSiteGeneratedImage]uint // diff Unstage needs the reference order
+	StaticWebSiteGeneratedImages_mapString      map[string]*StaticWebSiteGeneratedImage
 
 	// insertion point for slice of pointers maps
 	OnAfterStaticWebSiteGeneratedImageCreateCallback OnAfterCreateInterface[StaticWebSiteGeneratedImage]
@@ -1079,8 +1289,10 @@ type Stage struct {
 	OnAfterStaticWebSiteGeneratedImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteGeneratedImage]
 	OnAfterStaticWebSiteGeneratedImageReadCallback   OnAfterReadInterface[StaticWebSiteGeneratedImage]
 
-	StaticWebSiteImages           map[*StaticWebSiteImage]struct{}
-	StaticWebSiteImages_mapString map[string]*StaticWebSiteImage
+	StaticWebSiteImages                map[*StaticWebSiteImage]struct{}
+	StaticWebSiteImages_reference      map[*StaticWebSiteImage]*StaticWebSiteImage
+	StaticWebSiteImages_referenceOrder map[*StaticWebSiteImage]uint // diff Unstage needs the reference order
+	StaticWebSiteImages_mapString      map[string]*StaticWebSiteImage
 
 	// insertion point for slice of pointers maps
 	OnAfterStaticWebSiteImageCreateCallback OnAfterCreateInterface[StaticWebSiteImage]
@@ -1088,8 +1300,10 @@ type Stage struct {
 	OnAfterStaticWebSiteImageDeleteCallback OnAfterDeleteInterface[StaticWebSiteImage]
 	OnAfterStaticWebSiteImageReadCallback   OnAfterReadInterface[StaticWebSiteImage]
 
-	StaticWebSiteParagraphs           map[*StaticWebSiteParagraph]struct{}
-	StaticWebSiteParagraphs_mapString map[string]*StaticWebSiteParagraph
+	StaticWebSiteParagraphs                map[*StaticWebSiteParagraph]struct{}
+	StaticWebSiteParagraphs_reference      map[*StaticWebSiteParagraph]*StaticWebSiteParagraph
+	StaticWebSiteParagraphs_referenceOrder map[*StaticWebSiteParagraph]uint // diff Unstage needs the reference order
+	StaticWebSiteParagraphs_mapString      map[string]*StaticWebSiteParagraph
 
 	// insertion point for slice of pointers maps
 	OnAfterStaticWebSiteParagraphCreateCallback OnAfterCreateInterface[StaticWebSiteParagraph]
@@ -1097,8 +1311,10 @@ type Stage struct {
 	OnAfterStaticWebSiteParagraphDeleteCallback OnAfterDeleteInterface[StaticWebSiteParagraph]
 	OnAfterStaticWebSiteParagraphReadCallback   OnAfterReadInterface[StaticWebSiteParagraph]
 
-	XHTML_CONTENTs           map[*XHTML_CONTENT]struct{}
-	XHTML_CONTENTs_mapString map[string]*XHTML_CONTENT
+	XHTML_CONTENTs                map[*XHTML_CONTENT]struct{}
+	XHTML_CONTENTs_reference      map[*XHTML_CONTENT]*XHTML_CONTENT
+	XHTML_CONTENTs_referenceOrder map[*XHTML_CONTENT]uint // diff Unstage needs the reference order
+	XHTML_CONTENTs_mapString      map[string]*XHTML_CONTENT
 
 	// insertion point for slice of pointers maps
 	OnAfterXHTML_CONTENTCreateCallback OnAfterCreateInterface[XHTML_CONTENT]
@@ -1448,8 +1664,36 @@ type Stage struct {
 
 	NamedStructs []*NamedStruct
 
-	// for the computation of the diff at each commit we need
-	reference map[GongstructIF]GongstructIF
+	// GongUnmarshallers is the registry of all model unmarshallers
+	GongUnmarshallers map[string]ModelUnmarshaller
+
+	// probeIF is the interface to the probe that allows log
+	// commit event to the probe
+	probeIF ProbeIF
+
+	forwardCommits  []string
+	backwardCommits []string
+}
+
+func (stage *Stage) ResetCommits() {
+	stage.forwardCommits = []string{}
+	stage.backwardCommits = []string{}
+}
+
+func (stage *Stage) SetDeltaMode(inDeltaMode bool) {
+	stage.isInDeltaMode = inDeltaMode
+}
+
+func (stage *Stage) IsDeltaMode() bool {
+	return stage.isInDeltaMode
+}
+
+func (stage *Stage) SetProbeIF(probeIF ProbeIF) {
+	stage.probeIF = probeIF
+}
+
+func (stage *Stage) GetProbeIF() ProbeIF {
+	return stage.probeIF
 }
 
 // GetNamedStructs implements models.ProbebStage.
@@ -1460,10 +1704,6 @@ func (stage *Stage) GetNamedStructsNames() (res []string) {
 	}
 
 	return
-}
-
-func (stage *Stage) GetReference() map[GongstructIF]GongstructIF {
-	return stage.reference
 }
 
 func GetNamedStructInstances[T PointerToGongstruct](set map[T]struct{}, order map[T]uint) (res []string) {
@@ -4004,6 +4244,216 @@ func NewStage(name string) (stage *Stage) {
 		XHTML_CONTENTMap_Staged_Order: make(map[*XHTML_CONTENT]uint),
 
 		// end of insertion point
+		GongUnmarshallers: map[string]ModelUnmarshaller{ // insertion point for unmarshallers
+			"ALTERNATIVE_ID": &ALTERNATIVE_IDUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_BOOLEAN": &ATTRIBUTE_DEFINITION_BOOLEANUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_BOOLEAN_Rendering": &ATTRIBUTE_DEFINITION_BOOLEAN_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_DATE": &ATTRIBUTE_DEFINITION_DATEUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_DATE_Rendering": &ATTRIBUTE_DEFINITION_DATE_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_ENUMERATION": &ATTRIBUTE_DEFINITION_ENUMERATIONUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_ENUMERATION_Rendering": &ATTRIBUTE_DEFINITION_ENUMERATION_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_INTEGER": &ATTRIBUTE_DEFINITION_INTEGERUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_INTEGER_Rendering": &ATTRIBUTE_DEFINITION_INTEGER_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_REAL": &ATTRIBUTE_DEFINITION_REALUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_REAL_Rendering": &ATTRIBUTE_DEFINITION_REAL_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_Rendering": &ATTRIBUTE_DEFINITION_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_STRING": &ATTRIBUTE_DEFINITION_STRINGUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_STRING_Rendering": &ATTRIBUTE_DEFINITION_STRING_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_XHTML": &ATTRIBUTE_DEFINITION_XHTMLUnmarshaller{},
+	
+			"ATTRIBUTE_DEFINITION_XHTML_Rendering": &ATTRIBUTE_DEFINITION_XHTML_RenderingUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_BOOLEAN": &ATTRIBUTE_VALUE_BOOLEANUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_DATE": &ATTRIBUTE_VALUE_DATEUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_ENUMERATION": &ATTRIBUTE_VALUE_ENUMERATIONUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_INTEGER": &ATTRIBUTE_VALUE_INTEGERUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_REAL": &ATTRIBUTE_VALUE_REALUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_STRING": &ATTRIBUTE_VALUE_STRINGUnmarshaller{},
+	
+			"ATTRIBUTE_VALUE_XHTML": &ATTRIBUTE_VALUE_XHTMLUnmarshaller{},
+	
+			"A_ALTERNATIVE_ID": &A_ALTERNATIVE_IDUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_BOOLEAN_REF": &A_ATTRIBUTE_DEFINITION_BOOLEAN_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_DATE_REF": &A_ATTRIBUTE_DEFINITION_DATE_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_ENUMERATION_REF": &A_ATTRIBUTE_DEFINITION_ENUMERATION_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_INTEGER_REF": &A_ATTRIBUTE_DEFINITION_INTEGER_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_REAL_REF": &A_ATTRIBUTE_DEFINITION_REAL_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_STRING_REF": &A_ATTRIBUTE_DEFINITION_STRING_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_DEFINITION_XHTML_REF": &A_ATTRIBUTE_DEFINITION_XHTML_REFUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_BOOLEAN": &A_ATTRIBUTE_VALUE_BOOLEANUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_DATE": &A_ATTRIBUTE_VALUE_DATEUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_ENUMERATION": &A_ATTRIBUTE_VALUE_ENUMERATIONUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_INTEGER": &A_ATTRIBUTE_VALUE_INTEGERUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_REAL": &A_ATTRIBUTE_VALUE_REALUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_STRING": &A_ATTRIBUTE_VALUE_STRINGUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_XHTML": &A_ATTRIBUTE_VALUE_XHTMLUnmarshaller{},
+	
+			"A_ATTRIBUTE_VALUE_XHTML_1": &A_ATTRIBUTE_VALUE_XHTML_1Unmarshaller{},
+	
+			"A_CHILDREN": &A_CHILDRENUnmarshaller{},
+	
+			"A_CORE_CONTENT": &A_CORE_CONTENTUnmarshaller{},
+	
+			"A_DATATYPES": &A_DATATYPESUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_BOOLEAN_REF": &A_DATATYPE_DEFINITION_BOOLEAN_REFUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_DATE_REF": &A_DATATYPE_DEFINITION_DATE_REFUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_ENUMERATION_REF": &A_DATATYPE_DEFINITION_ENUMERATION_REFUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_INTEGER_REF": &A_DATATYPE_DEFINITION_INTEGER_REFUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_REAL_REF": &A_DATATYPE_DEFINITION_REAL_REFUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_STRING_REF": &A_DATATYPE_DEFINITION_STRING_REFUnmarshaller{},
+	
+			"A_DATATYPE_DEFINITION_XHTML_REF": &A_DATATYPE_DEFINITION_XHTML_REFUnmarshaller{},
+	
+			"A_EDITABLE_ATTS": &A_EDITABLE_ATTSUnmarshaller{},
+	
+			"A_ENUM_VALUE_REF": &A_ENUM_VALUE_REFUnmarshaller{},
+	
+			"A_OBJECT": &A_OBJECTUnmarshaller{},
+	
+			"A_PROPERTIES": &A_PROPERTIESUnmarshaller{},
+	
+			"A_RELATION_GROUP_TYPE_REF": &A_RELATION_GROUP_TYPE_REFUnmarshaller{},
+	
+			"A_SOURCE_1": &A_SOURCE_1Unmarshaller{},
+	
+			"A_SOURCE_SPECIFICATION_1": &A_SOURCE_SPECIFICATION_1Unmarshaller{},
+	
+			"A_SPECIFICATIONS": &A_SPECIFICATIONSUnmarshaller{},
+	
+			"A_SPECIFICATION_TYPE_REF": &A_SPECIFICATION_TYPE_REFUnmarshaller{},
+	
+			"A_SPECIFIED_VALUES": &A_SPECIFIED_VALUESUnmarshaller{},
+	
+			"A_SPEC_ATTRIBUTES": &A_SPEC_ATTRIBUTESUnmarshaller{},
+	
+			"A_SPEC_OBJECTS": &A_SPEC_OBJECTSUnmarshaller{},
+	
+			"A_SPEC_OBJECT_TYPE_REF": &A_SPEC_OBJECT_TYPE_REFUnmarshaller{},
+	
+			"A_SPEC_RELATIONS": &A_SPEC_RELATIONSUnmarshaller{},
+	
+			"A_SPEC_RELATION_GROUPS": &A_SPEC_RELATION_GROUPSUnmarshaller{},
+	
+			"A_SPEC_RELATION_REF": &A_SPEC_RELATION_REFUnmarshaller{},
+	
+			"A_SPEC_RELATION_TYPE_REF": &A_SPEC_RELATION_TYPE_REFUnmarshaller{},
+	
+			"A_SPEC_TYPES": &A_SPEC_TYPESUnmarshaller{},
+	
+			"A_THE_HEADER": &A_THE_HEADERUnmarshaller{},
+	
+			"A_TOOL_EXTENSIONS": &A_TOOL_EXTENSIONSUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_BOOLEAN": &DATATYPE_DEFINITION_BOOLEANUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_DATE": &DATATYPE_DEFINITION_DATEUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_ENUMERATION": &DATATYPE_DEFINITION_ENUMERATIONUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_INTEGER": &DATATYPE_DEFINITION_INTEGERUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_REAL": &DATATYPE_DEFINITION_REALUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_STRING": &DATATYPE_DEFINITION_STRINGUnmarshaller{},
+	
+			"DATATYPE_DEFINITION_XHTML": &DATATYPE_DEFINITION_XHTMLUnmarshaller{},
+	
+			"EMBEDDED_VALUE": &EMBEDDED_VALUEUnmarshaller{},
+	
+			"ENUM_VALUE": &ENUM_VALUEUnmarshaller{},
+	
+			"EmbeddedJpgImage": &EmbeddedJpgImageUnmarshaller{},
+	
+			"EmbeddedPngImage": &EmbeddedPngImageUnmarshaller{},
+	
+			"EmbeddedSvgImage": &EmbeddedSvgImageUnmarshaller{},
+	
+			"Kill": &KillUnmarshaller{},
+	
+			"Map_identifier_bool": &Map_identifier_boolUnmarshaller{},
+	
+			"RELATION_GROUP": &RELATION_GROUPUnmarshaller{},
+	
+			"RELATION_GROUP_TYPE": &RELATION_GROUP_TYPEUnmarshaller{},
+	
+			"REQ_IF": &REQ_IFUnmarshaller{},
+	
+			"REQ_IF_CONTENT": &REQ_IF_CONTENTUnmarshaller{},
+	
+			"REQ_IF_HEADER": &REQ_IF_HEADERUnmarshaller{},
+	
+			"REQ_IF_TOOL_EXTENSION": &REQ_IF_TOOL_EXTENSIONUnmarshaller{},
+	
+			"SPECIFICATION": &SPECIFICATIONUnmarshaller{},
+	
+			"SPECIFICATION_Rendering": &SPECIFICATION_RenderingUnmarshaller{},
+	
+			"SPECIFICATION_TYPE": &SPECIFICATION_TYPEUnmarshaller{},
+	
+			"SPEC_HIERARCHY": &SPEC_HIERARCHYUnmarshaller{},
+	
+			"SPEC_OBJECT": &SPEC_OBJECTUnmarshaller{},
+	
+			"SPEC_OBJECT_TYPE": &SPEC_OBJECT_TYPEUnmarshaller{},
+	
+			"SPEC_OBJECT_TYPE_Rendering": &SPEC_OBJECT_TYPE_RenderingUnmarshaller{},
+	
+			"SPEC_RELATION": &SPEC_RELATIONUnmarshaller{},
+	
+			"SPEC_RELATION_TYPE": &SPEC_RELATION_TYPEUnmarshaller{},
+	
+			"StaticWebSite": &StaticWebSiteUnmarshaller{},
+	
+			"StaticWebSiteChapter": &StaticWebSiteChapterUnmarshaller{},
+	
+			"StaticWebSiteGeneratedImage": &StaticWebSiteGeneratedImageUnmarshaller{},
+	
+			"StaticWebSiteImage": &StaticWebSiteImageUnmarshaller{},
+	
+			"StaticWebSiteParagraph": &StaticWebSiteParagraphUnmarshaller{},
+	
+			"XHTML_CONTENT": &XHTML_CONTENTUnmarshaller{},
+	
+		}, // end of insertion point
 
 		NamedStructs: []*NamedStruct{ // insertion point for order map initialisations
 			{name: "ALTERNATIVE_ID"},
@@ -4111,8 +4561,6 @@ func NewStage(name string) (stage *Stage) {
 			{name: "StaticWebSiteParagraph"},
 			{name: "XHTML_CONTENT"},
 		}, // end of insertion point
-
-		reference: make(map[GongstructIF]GongstructIF),
 	}
 
 	return
@@ -4578,7 +5026,10 @@ func (stage *Stage) Commit() {
 		stage.BackRepo.Commit(stage)
 	}
 	stage.ComputeInstancesNb()
-	stage.ComputeReference()
+	if stage.IsDeltaMode() {
+		stage.ComputeDifference()
+		stage.ComputeReference()
+	}
 }
 
 func (stage *Stage) ComputeInstancesNb() {
@@ -4809,7 +5260,7 @@ func (alternative_id *ALTERNATIVE_ID) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (alternative_id *ALTERNATIVE_ID) SetName(name string) (){
+func (alternative_id *ALTERNATIVE_ID) SetName(name string) {
 	alternative_id.Name = name
 }
 
@@ -4895,7 +5346,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GetName() (res
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) SetName(name string) (){
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) SetName(name string) {
 	attribute_definition_boolean.Name = name
 }
 
@@ -4981,7 +5432,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) SetName(name string) (){
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) SetName(name string) {
 	attribute_definition_boolean_rendering.Name = name
 }
 
@@ -5067,7 +5518,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) SetName(name string) (){
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) SetName(name string) {
 	attribute_definition_date.Name = name
 }
 
@@ -5153,7 +5604,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) SetName(name string) (){
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) SetName(name string) {
 	attribute_definition_date_rendering.Name = name
 }
 
@@ -5239,7 +5690,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GetNam
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) SetName(name string) (){
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) SetName(name string) {
 	attribute_definition_enumeration.Name = name
 }
 
@@ -5325,7 +5776,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) SetName(name string) (){
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) SetName(name string) {
 	attribute_definition_enumeration_rendering.Name = name
 }
 
@@ -5411,7 +5862,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GetName() (res
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) SetName(name string) (){
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) SetName(name string) {
 	attribute_definition_integer.Name = name
 }
 
@@ -5497,7 +5948,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) SetName(name string) (){
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) SetName(name string) {
 	attribute_definition_integer_rendering.Name = name
 }
 
@@ -5583,7 +6034,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) SetName(name string) (){
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) SetName(name string) {
 	attribute_definition_real.Name = name
 }
 
@@ -5669,7 +6120,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) SetName(name string) (){
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) SetName(name string) {
 	attribute_definition_real_rendering.Name = name
 }
 
@@ -5755,7 +6206,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GetName() 
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) SetName(name string) (){
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) SetName(name string) {
 	attribute_definition_rendering.Name = name
 }
 
@@ -5841,7 +6292,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) SetName(name string) (){
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) SetName(name string) {
 	attribute_definition_string.Name = name
 }
 
@@ -5927,7 +6378,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) SetName(name string) (){
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) SetName(name string) {
 	attribute_definition_string_rendering.Name = name
 }
 
@@ -6013,7 +6464,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GetName() (res str
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) SetName(name string) (){
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) SetName(name string) {
 	attribute_definition_xhtml.Name = name
 }
 
@@ -6099,7 +6550,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) SetName(name string) (){
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) SetName(name string) {
 	attribute_definition_xhtml_rendering.Name = name
 }
 
@@ -6185,7 +6636,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) (){
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) {
 	attribute_value_boolean.Name = name
 }
 
@@ -6271,7 +6722,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_date *ATTRIBUTE_VALUE_DATE) SetName(name string) (){
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) SetName(name string) {
 	attribute_value_date.Name = name
 }
 
@@ -6357,7 +6808,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) (){
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) {
 	attribute_value_enumeration.Name = name
 }
 
@@ -6443,7 +6894,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) SetName(name string) (){
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) SetName(name string) {
 	attribute_value_integer.Name = name
 }
 
@@ -6529,7 +6980,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_real *ATTRIBUTE_VALUE_REAL) SetName(name string) (){
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) SetName(name string) {
 	attribute_value_real.Name = name
 }
 
@@ -6615,7 +7066,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_string *ATTRIBUTE_VALUE_STRING) SetName(name string) (){
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) SetName(name string) {
 	attribute_value_string.Name = name
 }
 
@@ -6701,7 +7152,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) SetName(name string) (){
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) SetName(name string) {
 	attribute_value_xhtml.Name = name
 }
 
@@ -6787,7 +7238,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_alternative_id *A_ALTERNATIVE_ID) SetName(name string) (){
+func (a_alternative_id *A_ALTERNATIVE_ID) SetName(name string) {
 	a_alternative_id.Name = name
 }
 
@@ -6873,7 +7324,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Ge
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) SetName(name string) (){
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) SetName(name string) {
 	a_attribute_definition_boolean_ref.Name = name
 }
 
@@ -6959,7 +7410,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) SetName(name string) (){
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) SetName(name string) {
 	a_attribute_definition_date_ref.Name = name
 }
 
@@ -7045,7 +7496,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) SetName(name string) (){
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) SetName(name string) {
 	a_attribute_definition_enumeration_ref.Name = name
 }
 
@@ -7131,7 +7582,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Ge
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) SetName(name string) (){
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) SetName(name string) {
 	a_attribute_definition_integer_ref.Name = name
 }
 
@@ -7217,7 +7668,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) SetName(name string) (){
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) SetName(name string) {
 	a_attribute_definition_real_ref.Name = name
 }
 
@@ -7303,7 +7754,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GetN
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) SetName(name string) (){
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) SetName(name string) {
 	a_attribute_definition_string_ref.Name = name
 }
 
@@ -7389,7 +7840,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GetNam
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) SetName(name string) (){
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) SetName(name string) {
 	a_attribute_definition_xhtml_ref.Name = name
 }
 
@@ -7475,7 +7926,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) (){
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) {
 	a_attribute_value_boolean.Name = name
 }
 
@@ -7561,7 +8012,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) SetName(name string) (){
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) SetName(name string) {
 	a_attribute_value_date.Name = name
 }
 
@@ -7647,7 +8098,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GetName() (r
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) (){
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) SetName(name string) {
 	a_attribute_value_enumeration.Name = name
 }
 
@@ -7733,7 +8184,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) SetName(name string) (){
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) SetName(name string) {
 	a_attribute_value_integer.Name = name
 }
 
@@ -7819,7 +8270,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) SetName(name string) (){
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) SetName(name string) {
 	a_attribute_value_real.Name = name
 }
 
@@ -7905,7 +8356,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) SetName(name string) (){
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) SetName(name string) {
 	a_attribute_value_string.Name = name
 }
 
@@ -7991,7 +8442,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) SetName(name string) (){
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) SetName(name string) {
 	a_attribute_value_xhtml.Name = name
 }
 
@@ -8077,7 +8528,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) SetName(name string) (){
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) SetName(name string) {
 	a_attribute_value_xhtml_1.Name = name
 }
 
@@ -8163,7 +8614,7 @@ func (a_children *A_CHILDREN) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_children *A_CHILDREN) SetName(name string) (){
+func (a_children *A_CHILDREN) SetName(name string) {
 	a_children.Name = name
 }
 
@@ -8249,7 +8700,7 @@ func (a_core_content *A_CORE_CONTENT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_core_content *A_CORE_CONTENT) SetName(name string) (){
+func (a_core_content *A_CORE_CONTENT) SetName(name string) {
 	a_core_content.Name = name
 }
 
@@ -8335,7 +8786,7 @@ func (a_datatypes *A_DATATYPES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatypes *A_DATATYPES) SetName(name string) (){
+func (a_datatypes *A_DATATYPES) SetName(name string) {
 	a_datatypes.Name = name
 }
 
@@ -8421,7 +8872,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GetN
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) SetName(name string) (){
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) SetName(name string) {
 	a_datatype_definition_boolean_ref.Name = name
 }
 
@@ -8507,7 +8958,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GetName() 
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) SetName(name string) (){
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) SetName(name string) {
 	a_datatype_definition_date_ref.Name = name
 }
 
@@ -8593,7 +9044,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) SetName(name string) (){
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) SetName(name string) {
 	a_datatype_definition_enumeration_ref.Name = name
 }
 
@@ -8679,7 +9130,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GetN
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) SetName(name string) (){
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) SetName(name string) {
 	a_datatype_definition_integer_ref.Name = name
 }
 
@@ -8765,7 +9216,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GetName() 
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) SetName(name string) (){
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) SetName(name string) {
 	a_datatype_definition_real_ref.Name = name
 }
 
@@ -8851,7 +9302,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GetNam
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) SetName(name string) (){
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) SetName(name string) {
 	a_datatype_definition_string_ref.Name = name
 }
 
@@ -8937,7 +9388,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) SetName(name string) (){
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) SetName(name string) {
 	a_datatype_definition_xhtml_ref.Name = name
 }
 
@@ -9023,7 +9474,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_editable_atts *A_EDITABLE_ATTS) SetName(name string) (){
+func (a_editable_atts *A_EDITABLE_ATTS) SetName(name string) {
 	a_editable_atts.Name = name
 }
 
@@ -9109,7 +9560,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_enum_value_ref *A_ENUM_VALUE_REF) SetName(name string) (){
+func (a_enum_value_ref *A_ENUM_VALUE_REF) SetName(name string) {
 	a_enum_value_ref.Name = name
 }
 
@@ -9195,7 +9646,7 @@ func (a_object *A_OBJECT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_object *A_OBJECT) SetName(name string) (){
+func (a_object *A_OBJECT) SetName(name string) {
 	a_object.Name = name
 }
 
@@ -9281,7 +9732,7 @@ func (a_properties *A_PROPERTIES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_properties *A_PROPERTIES) SetName(name string) (){
+func (a_properties *A_PROPERTIES) SetName(name string) {
 	a_properties.Name = name
 }
 
@@ -9367,7 +9818,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) SetName(name string) (){
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) SetName(name string) {
 	a_relation_group_type_ref.Name = name
 }
 
@@ -9453,7 +9904,7 @@ func (a_source_1 *A_SOURCE_1) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_source_1 *A_SOURCE_1) SetName(name string) (){
+func (a_source_1 *A_SOURCE_1) SetName(name string) {
 	a_source_1.Name = name
 }
 
@@ -9539,7 +9990,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) SetName(name string) (){
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) SetName(name string) {
 	a_source_specification_1.Name = name
 }
 
@@ -9625,7 +10076,7 @@ func (a_specifications *A_SPECIFICATIONS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_specifications *A_SPECIFICATIONS) SetName(name string) (){
+func (a_specifications *A_SPECIFICATIONS) SetName(name string) {
 	a_specifications.Name = name
 }
 
@@ -9711,7 +10162,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) SetName(name string) (){
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) SetName(name string) {
 	a_specification_type_ref.Name = name
 }
 
@@ -9797,7 +10248,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_specified_values *A_SPECIFIED_VALUES) SetName(name string) (){
+func (a_specified_values *A_SPECIFIED_VALUES) SetName(name string) {
 	a_specified_values.Name = name
 }
 
@@ -9883,7 +10334,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_attributes *A_SPEC_ATTRIBUTES) SetName(name string) (){
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) SetName(name string) {
 	a_spec_attributes.Name = name
 }
 
@@ -9969,7 +10420,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_objects *A_SPEC_OBJECTS) SetName(name string) (){
+func (a_spec_objects *A_SPEC_OBJECTS) SetName(name string) {
 	a_spec_objects.Name = name
 }
 
@@ -10055,7 +10506,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) SetName(name string) (){
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) SetName(name string) {
 	a_spec_object_type_ref.Name = name
 }
 
@@ -10141,7 +10592,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relations *A_SPEC_RELATIONS) SetName(name string) (){
+func (a_spec_relations *A_SPEC_RELATIONS) SetName(name string) {
 	a_spec_relations.Name = name
 }
 
@@ -10227,7 +10678,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) SetName(name string) (){
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) SetName(name string) {
 	a_spec_relation_groups.Name = name
 }
 
@@ -10313,7 +10764,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relation_ref *A_SPEC_RELATION_REF) SetName(name string) (){
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) SetName(name string) {
 	a_spec_relation_ref.Name = name
 }
 
@@ -10399,7 +10850,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) SetName(name string) (){
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) SetName(name string) {
 	a_spec_relation_type_ref.Name = name
 }
 
@@ -10485,7 +10936,7 @@ func (a_spec_types *A_SPEC_TYPES) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_spec_types *A_SPEC_TYPES) SetName(name string) (){
+func (a_spec_types *A_SPEC_TYPES) SetName(name string) {
 	a_spec_types.Name = name
 }
 
@@ -10571,7 +11022,7 @@ func (a_the_header *A_THE_HEADER) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_the_header *A_THE_HEADER) SetName(name string) (){
+func (a_the_header *A_THE_HEADER) SetName(name string) {
 	a_the_header.Name = name
 }
 
@@ -10657,7 +11108,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (a_tool_extensions *A_TOOL_EXTENSIONS) SetName(name string) (){
+func (a_tool_extensions *A_TOOL_EXTENSIONS) SetName(name string) {
 	a_tool_extensions.Name = name
 }
 
@@ -10743,7 +11194,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) SetName(name string) (){
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) SetName(name string) {
 	datatype_definition_boolean.Name = name
 }
 
@@ -10829,7 +11280,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_date *DATATYPE_DEFINITION_DATE) SetName(name string) (){
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) SetName(name string) {
 	datatype_definition_date.Name = name
 }
 
@@ -10915,7 +11366,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GetName(
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) SetName(name string) (){
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) SetName(name string) {
 	datatype_definition_enumeration.Name = name
 }
 
@@ -11001,7 +11452,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) SetName(name string) (){
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) SetName(name string) {
 	datatype_definition_integer.Name = name
 }
 
@@ -11087,7 +11538,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GetName() (res string)
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_real *DATATYPE_DEFINITION_REAL) SetName(name string) (){
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) SetName(name string) {
 	datatype_definition_real.Name = name
 }
 
@@ -11173,7 +11624,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GetName() (res str
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_string *DATATYPE_DEFINITION_STRING) SetName(name string) (){
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) SetName(name string) {
 	datatype_definition_string.Name = name
 }
 
@@ -11259,7 +11710,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GetName() (res strin
 }
 
 // for satisfaction of GongStruct interface
-func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) SetName(name string) (){
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) SetName(name string) {
 	datatype_definition_xhtml.Name = name
 }
 
@@ -11345,7 +11796,7 @@ func (embedded_value *EMBEDDED_VALUE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embedded_value *EMBEDDED_VALUE) SetName(name string) (){
+func (embedded_value *EMBEDDED_VALUE) SetName(name string) {
 	embedded_value.Name = name
 }
 
@@ -11431,7 +11882,7 @@ func (enum_value *ENUM_VALUE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (enum_value *ENUM_VALUE) SetName(name string) (){
+func (enum_value *ENUM_VALUE) SetName(name string) {
 	enum_value.Name = name
 }
 
@@ -11517,7 +11968,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embeddedjpgimage *EmbeddedJpgImage) SetName(name string) (){
+func (embeddedjpgimage *EmbeddedJpgImage) SetName(name string) {
 	embeddedjpgimage.Name = name
 }
 
@@ -11603,7 +12054,7 @@ func (embeddedpngimage *EmbeddedPngImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embeddedpngimage *EmbeddedPngImage) SetName(name string) (){
+func (embeddedpngimage *EmbeddedPngImage) SetName(name string) {
 	embeddedpngimage.Name = name
 }
 
@@ -11689,7 +12140,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (embeddedsvgimage *EmbeddedSvgImage) SetName(name string) (){
+func (embeddedsvgimage *EmbeddedSvgImage) SetName(name string) {
 	embeddedsvgimage.Name = name
 }
 
@@ -11775,7 +12226,7 @@ func (kill *Kill) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (kill *Kill) SetName(name string) (){
+func (kill *Kill) SetName(name string) {
 	kill.Name = name
 }
 
@@ -11861,7 +12312,7 @@ func (map_identifier_bool *Map_identifier_bool) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (map_identifier_bool *Map_identifier_bool) SetName(name string) (){
+func (map_identifier_bool *Map_identifier_bool) SetName(name string) {
 	map_identifier_bool.Name = name
 }
 
@@ -11947,7 +12398,7 @@ func (relation_group *RELATION_GROUP) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (relation_group *RELATION_GROUP) SetName(name string) (){
+func (relation_group *RELATION_GROUP) SetName(name string) {
 	relation_group.Name = name
 }
 
@@ -12033,7 +12484,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (relation_group_type *RELATION_GROUP_TYPE) SetName(name string) (){
+func (relation_group_type *RELATION_GROUP_TYPE) SetName(name string) {
 	relation_group_type.Name = name
 }
 
@@ -12119,7 +12570,7 @@ func (req_if *REQ_IF) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if *REQ_IF) SetName(name string) (){
+func (req_if *REQ_IF) SetName(name string) {
 	req_if.Name = name
 }
 
@@ -12205,7 +12656,7 @@ func (req_if_content *REQ_IF_CONTENT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if_content *REQ_IF_CONTENT) SetName(name string) (){
+func (req_if_content *REQ_IF_CONTENT) SetName(name string) {
 	req_if_content.Name = name
 }
 
@@ -12291,7 +12742,7 @@ func (req_if_header *REQ_IF_HEADER) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if_header *REQ_IF_HEADER) SetName(name string) (){
+func (req_if_header *REQ_IF_HEADER) SetName(name string) {
 	req_if_header.Name = name
 }
 
@@ -12377,7 +12828,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) (){
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) {
 	req_if_tool_extension.Name = name
 }
 
@@ -12463,7 +12914,7 @@ func (specification *SPECIFICATION) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (specification *SPECIFICATION) SetName(name string) (){
+func (specification *SPECIFICATION) SetName(name string) {
 	specification.Name = name
 }
 
@@ -12549,7 +13000,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (specification_rendering *SPECIFICATION_Rendering) SetName(name string) (){
+func (specification_rendering *SPECIFICATION_Rendering) SetName(name string) {
 	specification_rendering.Name = name
 }
 
@@ -12635,7 +13086,7 @@ func (specification_type *SPECIFICATION_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (specification_type *SPECIFICATION_TYPE) SetName(name string) (){
+func (specification_type *SPECIFICATION_TYPE) SetName(name string) {
 	specification_type.Name = name
 }
 
@@ -12721,7 +13172,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_hierarchy *SPEC_HIERARCHY) SetName(name string) (){
+func (spec_hierarchy *SPEC_HIERARCHY) SetName(name string) {
 	spec_hierarchy.Name = name
 }
 
@@ -12807,7 +13258,7 @@ func (spec_object *SPEC_OBJECT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_object *SPEC_OBJECT) SetName(name string) (){
+func (spec_object *SPEC_OBJECT) SetName(name string) {
 	spec_object.Name = name
 }
 
@@ -12893,7 +13344,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_object_type *SPEC_OBJECT_TYPE) SetName(name string) (){
+func (spec_object_type *SPEC_OBJECT_TYPE) SetName(name string) {
 	spec_object_type.Name = name
 }
 
@@ -12979,7 +13430,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GetName() (res str
 }
 
 // for satisfaction of GongStruct interface
-func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) SetName(name string) (){
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) SetName(name string) {
 	spec_object_type_rendering.Name = name
 }
 
@@ -13065,7 +13516,7 @@ func (spec_relation *SPEC_RELATION) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_relation *SPEC_RELATION) SetName(name string) (){
+func (spec_relation *SPEC_RELATION) SetName(name string) {
 	spec_relation.Name = name
 }
 
@@ -13151,7 +13602,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (spec_relation_type *SPEC_RELATION_TYPE) SetName(name string) (){
+func (spec_relation_type *SPEC_RELATION_TYPE) SetName(name string) {
 	spec_relation_type.Name = name
 }
 
@@ -13237,7 +13688,7 @@ func (staticwebsite *StaticWebSite) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsite *StaticWebSite) SetName(name string) (){
+func (staticwebsite *StaticWebSite) SetName(name string) {
 	staticwebsite.Name = name
 }
 
@@ -13323,7 +13774,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsitechapter *StaticWebSiteChapter) SetName(name string) (){
+func (staticwebsitechapter *StaticWebSiteChapter) SetName(name string) {
 	staticwebsitechapter.Name = name
 }
 
@@ -13409,7 +13860,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GetName() (res s
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) SetName(name string) (){
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) SetName(name string) {
 	staticwebsitegeneratedimage.Name = name
 }
 
@@ -13495,7 +13946,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsiteimage *StaticWebSiteImage) SetName(name string) (){
+func (staticwebsiteimage *StaticWebSiteImage) SetName(name string) {
 	staticwebsiteimage.Name = name
 }
 
@@ -13581,7 +14032,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (staticwebsiteparagraph *StaticWebSiteParagraph) SetName(name string) (){
+func (staticwebsiteparagraph *StaticWebSiteParagraph) SetName(name string) {
 	staticwebsiteparagraph.Name = name
 }
 
@@ -13667,7 +14118,7 @@ func (xhtml_content *XHTML_CONTENT) GetName() (res string) {
 }
 
 // for satisfaction of GongStruct interface
-func (xhtml_content *XHTML_CONTENT) SetName(name string) (){
+func (xhtml_content *XHTML_CONTENT) SetName(name string) {
 	xhtml_content.Name = name
 }
 
@@ -14407,7 +14858,12 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	stage.XHTML_CONTENTMap_Staged_Order = make(map[*XHTML_CONTENT]uint)
 	stage.XHTML_CONTENTOrder = 0
 
-	stage.ComputeReference()
+	if stage.GetProbeIF() != nil {
+		stage.GetProbeIF().ResetNotifications()
+	}
+	if stage.IsDeltaMode() {
+		stage.ComputeReference()
+	}
 }
 
 func (stage *Stage) Nil() { // insertion point for array nil
@@ -15170,6 +15626,9 @@ type GongstructIF interface {
 	GongGetFieldValue(fieldName string, stage *Stage) GongFieldValue
 	GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error
 	GongGetGongstructName() string
+	GongGetOrder(stage *Stage) uint
+	GongGetReferenceIdentifier(stage *Stage) string
+	GongGetIdentifier(stage *Stage) string
 	GongCopy() GongstructIF
 	GongGetReverseFieldOwnerName(stage *Stage, reverseField *ReverseField) string
 	GongGetReverseFieldOwner(stage *Stage, reverseField *ReverseField) GongstructIF
@@ -19820,7 +20279,7 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 
 // GetPointerToGongstructName returns the name of the Gongstruct
 // this can be usefull if one want program robust to refactoring
-func GetPointerToGongstructName[Type PointerToGongstruct]() (res string) {
+func GetPointerToGongstructName[Type GongstructIF]() (res string) {
 
 	var ret Type
 
@@ -20043,7 +20502,7 @@ type ReverseField struct {
 	Fieldname      string
 }
 
-func GetReverseFields[Type PointerToGongstruct]() (res []ReverseField) {
+func GetReverseFields[Type GongstructIF]() (res []ReverseField) {
 
 	res = make([]ReverseField, 0)
 
@@ -29457,4 +29916,5 @@ func (stage *Stage) ResetMapStrings() {
 	}
 
 }
+
 // Last line of the template

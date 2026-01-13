@@ -1922,319 +1922,215 @@ func SetCallbackAfterUpdateFromFront[Type Gongstruct](stage *Stage, callback OnA
 
 	var instance Type
 	switch any(instance).(type) {
-		// insertion point
+	// insertion point
 	case *ALTERNATIVE_ID:
 		stage.OnAfterALTERNATIVE_IDUpdateCallback = any(callback).(OnAfterUpdateInterface[ALTERNATIVE_ID])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_BOOLEAN])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_DATE:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATEUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_DATE])
-	
 	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATE_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_DATE_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_ENUMERATION])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGERUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_INTEGER])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_REAL])
-	
 	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_REAL_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_REAL_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_STRING])
-	
 	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRING_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_STRING_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTMLUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_XHTML])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering])
-	
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterATTRIBUTE_VALUE_BOOLEANUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterATTRIBUTE_VALUE_DATEUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_DATE])
-	
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterATTRIBUTE_VALUE_INTEGERUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_INTEGER])
-	
 	case *ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterATTRIBUTE_VALUE_REALUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_REAL])
-	
 	case *ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterATTRIBUTE_VALUE_STRINGUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_STRING])
-	
 	case *ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterATTRIBUTE_VALUE_XHTMLUpdateCallback = any(callback).(OnAfterUpdateInterface[ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ALTERNATIVE_ID:
 		stage.OnAfterA_ALTERNATIVE_IDUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ALTERNATIVE_ID])
-	
 	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_DATE_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_REAL_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_STRING_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF])
-	
 	case *A_ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *A_ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterA_ATTRIBUTE_VALUE_DATEUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_DATE])
-	
 	case *A_ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *A_ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_INTEGER])
-	
 	case *A_ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterA_ATTRIBUTE_VALUE_REALUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_REAL])
-	
 	case *A_ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterA_ATTRIBUTE_VALUE_STRINGUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_STRING])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML_1:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1UpdateCallback = any(callback).(OnAfterUpdateInterface[A_ATTRIBUTE_VALUE_XHTML_1])
-	
 	case *A_CHILDREN:
 		stage.OnAfterA_CHILDRENUpdateCallback = any(callback).(OnAfterUpdateInterface[A_CHILDREN])
-	
 	case *A_CORE_CONTENT:
 		stage.OnAfterA_CORE_CONTENTUpdateCallback = any(callback).(OnAfterUpdateInterface[A_CORE_CONTENT])
-	
 	case *A_DATATYPES:
 		stage.OnAfterA_DATATYPESUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPES])
-	
 	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_DATATYPE_DEFINITION_DATE_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_DATE_REF])
-	
 	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_DATATYPE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_INTEGER_REF])
-	
 	case *A_DATATYPE_DEFINITION_REAL_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_REAL_REF])
-	
 	case *A_DATATYPE_DEFINITION_STRING_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_STRING_REF])
-	
 	case *A_DATATYPE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_DATATYPE_DEFINITION_XHTML_REF])
-	
 	case *A_EDITABLE_ATTS:
 		stage.OnAfterA_EDITABLE_ATTSUpdateCallback = any(callback).(OnAfterUpdateInterface[A_EDITABLE_ATTS])
-	
 	case *A_ENUM_VALUE_REF:
 		stage.OnAfterA_ENUM_VALUE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_ENUM_VALUE_REF])
-	
 	case *A_OBJECT:
 		stage.OnAfterA_OBJECTUpdateCallback = any(callback).(OnAfterUpdateInterface[A_OBJECT])
-	
 	case *A_PROPERTIES:
 		stage.OnAfterA_PROPERTIESUpdateCallback = any(callback).(OnAfterUpdateInterface[A_PROPERTIES])
-	
 	case *A_RELATION_GROUP_TYPE_REF:
 		stage.OnAfterA_RELATION_GROUP_TYPE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_RELATION_GROUP_TYPE_REF])
-	
 	case *A_SOURCE_1:
 		stage.OnAfterA_SOURCE_1UpdateCallback = any(callback).(OnAfterUpdateInterface[A_SOURCE_1])
-	
 	case *A_SOURCE_SPECIFICATION_1:
 		stage.OnAfterA_SOURCE_SPECIFICATION_1UpdateCallback = any(callback).(OnAfterUpdateInterface[A_SOURCE_SPECIFICATION_1])
-	
 	case *A_SPECIFICATIONS:
 		stage.OnAfterA_SPECIFICATIONSUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPECIFICATIONS])
-	
 	case *A_SPECIFICATION_TYPE_REF:
 		stage.OnAfterA_SPECIFICATION_TYPE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPECIFICATION_TYPE_REF])
-	
 	case *A_SPECIFIED_VALUES:
 		stage.OnAfterA_SPECIFIED_VALUESUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPECIFIED_VALUES])
-	
 	case *A_SPEC_ATTRIBUTES:
 		stage.OnAfterA_SPEC_ATTRIBUTESUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_ATTRIBUTES])
-	
 	case *A_SPEC_OBJECTS:
 		stage.OnAfterA_SPEC_OBJECTSUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_OBJECTS])
-	
 	case *A_SPEC_OBJECT_TYPE_REF:
 		stage.OnAfterA_SPEC_OBJECT_TYPE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_OBJECT_TYPE_REF])
-	
 	case *A_SPEC_RELATIONS:
 		stage.OnAfterA_SPEC_RELATIONSUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_RELATIONS])
-	
 	case *A_SPEC_RELATION_GROUPS:
 		stage.OnAfterA_SPEC_RELATION_GROUPSUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_RELATION_GROUPS])
-	
 	case *A_SPEC_RELATION_REF:
 		stage.OnAfterA_SPEC_RELATION_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_RELATION_REF])
-	
 	case *A_SPEC_RELATION_TYPE_REF:
 		stage.OnAfterA_SPEC_RELATION_TYPE_REFUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_RELATION_TYPE_REF])
-	
 	case *A_SPEC_TYPES:
 		stage.OnAfterA_SPEC_TYPESUpdateCallback = any(callback).(OnAfterUpdateInterface[A_SPEC_TYPES])
-	
 	case *A_THE_HEADER:
 		stage.OnAfterA_THE_HEADERUpdateCallback = any(callback).(OnAfterUpdateInterface[A_THE_HEADER])
-	
 	case *A_TOOL_EXTENSIONS:
 		stage.OnAfterA_TOOL_EXTENSIONSUpdateCallback = any(callback).(OnAfterUpdateInterface[A_TOOL_EXTENSIONS])
-	
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		stage.OnAfterDATATYPE_DEFINITION_BOOLEANUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_BOOLEAN])
-	
 	case *DATATYPE_DEFINITION_DATE:
 		stage.OnAfterDATATYPE_DEFINITION_DATEUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_DATE])
-	
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_ENUMERATION])
-	
 	case *DATATYPE_DEFINITION_INTEGER:
 		stage.OnAfterDATATYPE_DEFINITION_INTEGERUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_INTEGER])
-	
 	case *DATATYPE_DEFINITION_REAL:
 		stage.OnAfterDATATYPE_DEFINITION_REALUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_REAL])
-	
 	case *DATATYPE_DEFINITION_STRING:
 		stage.OnAfterDATATYPE_DEFINITION_STRINGUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_STRING])
-	
 	case *DATATYPE_DEFINITION_XHTML:
 		stage.OnAfterDATATYPE_DEFINITION_XHTMLUpdateCallback = any(callback).(OnAfterUpdateInterface[DATATYPE_DEFINITION_XHTML])
-	
 	case *EMBEDDED_VALUE:
 		stage.OnAfterEMBEDDED_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[EMBEDDED_VALUE])
-	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEUpdateCallback = any(callback).(OnAfterUpdateInterface[ENUM_VALUE])
-	
 	case *EmbeddedJpgImage:
 		stage.OnAfterEmbeddedJpgImageUpdateCallback = any(callback).(OnAfterUpdateInterface[EmbeddedJpgImage])
-	
 	case *EmbeddedPngImage:
 		stage.OnAfterEmbeddedPngImageUpdateCallback = any(callback).(OnAfterUpdateInterface[EmbeddedPngImage])
-	
 	case *EmbeddedSvgImage:
 		stage.OnAfterEmbeddedSvgImageUpdateCallback = any(callback).(OnAfterUpdateInterface[EmbeddedSvgImage])
-	
 	case *Kill:
 		stage.OnAfterKillUpdateCallback = any(callback).(OnAfterUpdateInterface[Kill])
-	
 	case *Map_identifier_bool:
 		stage.OnAfterMap_identifier_boolUpdateCallback = any(callback).(OnAfterUpdateInterface[Map_identifier_bool])
-	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPUpdateCallback = any(callback).(OnAfterUpdateInterface[RELATION_GROUP])
-	
 	case *RELATION_GROUP_TYPE:
 		stage.OnAfterRELATION_GROUP_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[RELATION_GROUP_TYPE])
-	
 	case *REQ_IF:
 		stage.OnAfterREQ_IFUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF])
-	
 	case *REQ_IF_CONTENT:
 		stage.OnAfterREQ_IF_CONTENTUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_CONTENT])
-	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_HEADER])
-	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONUpdateCallback = any(callback).(OnAfterUpdateInterface[REQ_IF_TOOL_EXTENSION])
-	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION])
-	
 	case *SPECIFICATION_Rendering:
 		stage.OnAfterSPECIFICATION_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION_Rendering])
-	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPECIFICATION_TYPE])
-	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_HIERARCHY])
-	
 	case *SPEC_OBJECT:
 		stage.OnAfterSPEC_OBJECTUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_OBJECT])
-	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_OBJECT_TYPE])
-	
 	case *SPEC_OBJECT_TYPE_Rendering:
 		stage.OnAfterSPEC_OBJECT_TYPE_RenderingUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_OBJECT_TYPE_Rendering])
-	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_RELATION])
-	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPEUpdateCallback = any(callback).(OnAfterUpdateInterface[SPEC_RELATION_TYPE])
-	
 	case *StaticWebSite:
 		stage.OnAfterStaticWebSiteUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSite])
-	
 	case *StaticWebSiteChapter:
 		stage.OnAfterStaticWebSiteChapterUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSiteChapter])
-	
 	case *StaticWebSiteGeneratedImage:
 		stage.OnAfterStaticWebSiteGeneratedImageUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSiteGeneratedImage])
-	
 	case *StaticWebSiteImage:
 		stage.OnAfterStaticWebSiteImageUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSiteImage])
-	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphUpdateCallback = any(callback).(OnAfterUpdateInterface[StaticWebSiteParagraph])
-	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTUpdateCallback = any(callback).(OnAfterUpdateInterface[XHTML_CONTENT])
-	
 	}
 }
 func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnAfterCreateInterface[Type]) {
@@ -2244,316 +2140,212 @@ func SetCallbackAfterCreateFromFront[Type Gongstruct](stage *Stage, callback OnA
 		// insertion point
 	case *ALTERNATIVE_ID:
 		stage.OnAfterALTERNATIVE_IDCreateCallback = any(callback).(OnAfterCreateInterface[ALTERNATIVE_ID])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_BOOLEAN])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_DATE:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATECreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_DATE])
-	
 	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATE_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_DATE_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_ENUMERATION])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGERCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_INTEGER])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL])
-	
 	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_REAL_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_REAL_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING])
-	
 	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRING_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_STRING_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTMLCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_XHTML])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering])
-	
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterATTRIBUTE_VALUE_BOOLEANCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterATTRIBUTE_VALUE_DATECreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_DATE])
-	
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterATTRIBUTE_VALUE_INTEGERCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_INTEGER])
-	
 	case *ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterATTRIBUTE_VALUE_REALCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_REAL])
-	
 	case *ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterATTRIBUTE_VALUE_STRINGCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_STRING])
-	
 	case *ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterATTRIBUTE_VALUE_XHTMLCreateCallback = any(callback).(OnAfterCreateInterface[ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ALTERNATIVE_ID:
 		stage.OnAfterA_ALTERNATIVE_IDCreateCallback = any(callback).(OnAfterCreateInterface[A_ALTERNATIVE_ID])
-	
 	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_DATE_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_REAL_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_STRING_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF])
-	
 	case *A_ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *A_ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterA_ATTRIBUTE_VALUE_DATECreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_DATE])
-	
 	case *A_ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *A_ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_INTEGER])
-	
 	case *A_ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterA_ATTRIBUTE_VALUE_REALCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_REAL])
-	
 	case *A_ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterA_ATTRIBUTE_VALUE_STRINGCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_STRING])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLCreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML_1:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1CreateCallback = any(callback).(OnAfterCreateInterface[A_ATTRIBUTE_VALUE_XHTML_1])
-	
 	case *A_CHILDREN:
 		stage.OnAfterA_CHILDRENCreateCallback = any(callback).(OnAfterCreateInterface[A_CHILDREN])
-	
 	case *A_CORE_CONTENT:
 		stage.OnAfterA_CORE_CONTENTCreateCallback = any(callback).(OnAfterCreateInterface[A_CORE_CONTENT])
-	
 	case *A_DATATYPES:
 		stage.OnAfterA_DATATYPESCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPES])
-	
 	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_DATATYPE_DEFINITION_DATE_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_DATE_REF])
-	
 	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_DATATYPE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_INTEGER_REF])
-	
 	case *A_DATATYPE_DEFINITION_REAL_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_REAL_REF])
-	
 	case *A_DATATYPE_DEFINITION_STRING_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_STRING_REF])
-	
 	case *A_DATATYPE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_DATATYPE_DEFINITION_XHTML_REF])
-	
 	case *A_EDITABLE_ATTS:
 		stage.OnAfterA_EDITABLE_ATTSCreateCallback = any(callback).(OnAfterCreateInterface[A_EDITABLE_ATTS])
-	
 	case *A_ENUM_VALUE_REF:
 		stage.OnAfterA_ENUM_VALUE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_ENUM_VALUE_REF])
-	
 	case *A_OBJECT:
 		stage.OnAfterA_OBJECTCreateCallback = any(callback).(OnAfterCreateInterface[A_OBJECT])
-	
 	case *A_PROPERTIES:
 		stage.OnAfterA_PROPERTIESCreateCallback = any(callback).(OnAfterCreateInterface[A_PROPERTIES])
-	
 	case *A_RELATION_GROUP_TYPE_REF:
 		stage.OnAfterA_RELATION_GROUP_TYPE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_RELATION_GROUP_TYPE_REF])
-	
 	case *A_SOURCE_1:
 		stage.OnAfterA_SOURCE_1CreateCallback = any(callback).(OnAfterCreateInterface[A_SOURCE_1])
-	
 	case *A_SOURCE_SPECIFICATION_1:
 		stage.OnAfterA_SOURCE_SPECIFICATION_1CreateCallback = any(callback).(OnAfterCreateInterface[A_SOURCE_SPECIFICATION_1])
-	
 	case *A_SPECIFICATIONS:
 		stage.OnAfterA_SPECIFICATIONSCreateCallback = any(callback).(OnAfterCreateInterface[A_SPECIFICATIONS])
-	
 	case *A_SPECIFICATION_TYPE_REF:
 		stage.OnAfterA_SPECIFICATION_TYPE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_SPECIFICATION_TYPE_REF])
-	
 	case *A_SPECIFIED_VALUES:
 		stage.OnAfterA_SPECIFIED_VALUESCreateCallback = any(callback).(OnAfterCreateInterface[A_SPECIFIED_VALUES])
-	
 	case *A_SPEC_ATTRIBUTES:
 		stage.OnAfterA_SPEC_ATTRIBUTESCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_ATTRIBUTES])
-	
 	case *A_SPEC_OBJECTS:
 		stage.OnAfterA_SPEC_OBJECTSCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_OBJECTS])
-	
 	case *A_SPEC_OBJECT_TYPE_REF:
 		stage.OnAfterA_SPEC_OBJECT_TYPE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_OBJECT_TYPE_REF])
-	
 	case *A_SPEC_RELATIONS:
 		stage.OnAfterA_SPEC_RELATIONSCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_RELATIONS])
-	
 	case *A_SPEC_RELATION_GROUPS:
 		stage.OnAfterA_SPEC_RELATION_GROUPSCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_RELATION_GROUPS])
-	
 	case *A_SPEC_RELATION_REF:
 		stage.OnAfterA_SPEC_RELATION_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_RELATION_REF])
-	
 	case *A_SPEC_RELATION_TYPE_REF:
 		stage.OnAfterA_SPEC_RELATION_TYPE_REFCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_RELATION_TYPE_REF])
-	
 	case *A_SPEC_TYPES:
 		stage.OnAfterA_SPEC_TYPESCreateCallback = any(callback).(OnAfterCreateInterface[A_SPEC_TYPES])
-	
 	case *A_THE_HEADER:
 		stage.OnAfterA_THE_HEADERCreateCallback = any(callback).(OnAfterCreateInterface[A_THE_HEADER])
-	
 	case *A_TOOL_EXTENSIONS:
 		stage.OnAfterA_TOOL_EXTENSIONSCreateCallback = any(callback).(OnAfterCreateInterface[A_TOOL_EXTENSIONS])
-	
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		stage.OnAfterDATATYPE_DEFINITION_BOOLEANCreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_BOOLEAN])
-	
 	case *DATATYPE_DEFINITION_DATE:
 		stage.OnAfterDATATYPE_DEFINITION_DATECreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_DATE])
-	
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONCreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_ENUMERATION])
-	
 	case *DATATYPE_DEFINITION_INTEGER:
 		stage.OnAfterDATATYPE_DEFINITION_INTEGERCreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_INTEGER])
-	
 	case *DATATYPE_DEFINITION_REAL:
 		stage.OnAfterDATATYPE_DEFINITION_REALCreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_REAL])
-	
 	case *DATATYPE_DEFINITION_STRING:
 		stage.OnAfterDATATYPE_DEFINITION_STRINGCreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_STRING])
-	
 	case *DATATYPE_DEFINITION_XHTML:
 		stage.OnAfterDATATYPE_DEFINITION_XHTMLCreateCallback = any(callback).(OnAfterCreateInterface[DATATYPE_DEFINITION_XHTML])
-	
 	case *EMBEDDED_VALUE:
 		stage.OnAfterEMBEDDED_VALUECreateCallback = any(callback).(OnAfterCreateInterface[EMBEDDED_VALUE])
-	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUECreateCallback = any(callback).(OnAfterCreateInterface[ENUM_VALUE])
-	
 	case *EmbeddedJpgImage:
 		stage.OnAfterEmbeddedJpgImageCreateCallback = any(callback).(OnAfterCreateInterface[EmbeddedJpgImage])
-	
 	case *EmbeddedPngImage:
 		stage.OnAfterEmbeddedPngImageCreateCallback = any(callback).(OnAfterCreateInterface[EmbeddedPngImage])
-	
 	case *EmbeddedSvgImage:
 		stage.OnAfterEmbeddedSvgImageCreateCallback = any(callback).(OnAfterCreateInterface[EmbeddedSvgImage])
-	
 	case *Kill:
 		stage.OnAfterKillCreateCallback = any(callback).(OnAfterCreateInterface[Kill])
-	
 	case *Map_identifier_bool:
 		stage.OnAfterMap_identifier_boolCreateCallback = any(callback).(OnAfterCreateInterface[Map_identifier_bool])
-	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPCreateCallback = any(callback).(OnAfterCreateInterface[RELATION_GROUP])
-	
 	case *RELATION_GROUP_TYPE:
 		stage.OnAfterRELATION_GROUP_TYPECreateCallback = any(callback).(OnAfterCreateInterface[RELATION_GROUP_TYPE])
-	
 	case *REQ_IF:
 		stage.OnAfterREQ_IFCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF])
-	
 	case *REQ_IF_CONTENT:
 		stage.OnAfterREQ_IF_CONTENTCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_CONTENT])
-	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_HEADER])
-	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONCreateCallback = any(callback).(OnAfterCreateInterface[REQ_IF_TOOL_EXTENSION])
-	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION])
-	
 	case *SPECIFICATION_Rendering:
 		stage.OnAfterSPECIFICATION_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION_Rendering])
-	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPECIFICATION_TYPE])
-	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_HIERARCHY])
-	
 	case *SPEC_OBJECT:
 		stage.OnAfterSPEC_OBJECTCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_OBJECT])
-	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPEC_OBJECT_TYPE])
-	
 	case *SPEC_OBJECT_TYPE_Rendering:
 		stage.OnAfterSPEC_OBJECT_TYPE_RenderingCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_OBJECT_TYPE_Rendering])
-	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONCreateCallback = any(callback).(OnAfterCreateInterface[SPEC_RELATION])
-	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPECreateCallback = any(callback).(OnAfterCreateInterface[SPEC_RELATION_TYPE])
-	
 	case *StaticWebSite:
 		stage.OnAfterStaticWebSiteCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSite])
-	
 	case *StaticWebSiteChapter:
 		stage.OnAfterStaticWebSiteChapterCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSiteChapter])
-	
 	case *StaticWebSiteGeneratedImage:
 		stage.OnAfterStaticWebSiteGeneratedImageCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSiteGeneratedImage])
-	
 	case *StaticWebSiteImage:
 		stage.OnAfterStaticWebSiteImageCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSiteImage])
-	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphCreateCallback = any(callback).(OnAfterCreateInterface[StaticWebSiteParagraph])
-	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTCreateCallback = any(callback).(OnAfterCreateInterface[XHTML_CONTENT])
-	
 	}
 }
 func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnAfterDeleteInterface[Type]) {
@@ -2563,316 +2355,212 @@ func SetCallbackAfterDeleteFromFront[Type Gongstruct](stage *Stage, callback OnA
 		// insertion point
 	case *ALTERNATIVE_ID:
 		stage.OnAfterALTERNATIVE_IDDeleteCallback = any(callback).(OnAfterDeleteInterface[ALTERNATIVE_ID])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_BOOLEAN])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_DATE:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATEDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_DATE])
-	
 	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATE_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_DATE_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_ENUMERATION])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGERDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_INTEGER])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL])
-	
 	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_REAL_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_REAL_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING])
-	
 	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRING_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_STRING_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTMLDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_XHTML])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering])
-	
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterATTRIBUTE_VALUE_BOOLEANDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterATTRIBUTE_VALUE_DATEDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_DATE])
-	
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterATTRIBUTE_VALUE_INTEGERDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_INTEGER])
-	
 	case *ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterATTRIBUTE_VALUE_REALDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_REAL])
-	
 	case *ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterATTRIBUTE_VALUE_STRINGDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_STRING])
-	
 	case *ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterATTRIBUTE_VALUE_XHTMLDeleteCallback = any(callback).(OnAfterDeleteInterface[ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ALTERNATIVE_ID:
 		stage.OnAfterA_ALTERNATIVE_IDDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ALTERNATIVE_ID])
-	
 	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_DATE_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_REAL_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_STRING_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF])
-	
 	case *A_ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *A_ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterA_ATTRIBUTE_VALUE_DATEDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_DATE])
-	
 	case *A_ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *A_ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_INTEGER])
-	
 	case *A_ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterA_ATTRIBUTE_VALUE_REALDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_REAL])
-	
 	case *A_ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterA_ATTRIBUTE_VALUE_STRINGDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_STRING])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML_1:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1DeleteCallback = any(callback).(OnAfterDeleteInterface[A_ATTRIBUTE_VALUE_XHTML_1])
-	
 	case *A_CHILDREN:
 		stage.OnAfterA_CHILDRENDeleteCallback = any(callback).(OnAfterDeleteInterface[A_CHILDREN])
-	
 	case *A_CORE_CONTENT:
 		stage.OnAfterA_CORE_CONTENTDeleteCallback = any(callback).(OnAfterDeleteInterface[A_CORE_CONTENT])
-	
 	case *A_DATATYPES:
 		stage.OnAfterA_DATATYPESDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPES])
-	
 	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_DATATYPE_DEFINITION_DATE_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_DATE_REF])
-	
 	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_DATATYPE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_INTEGER_REF])
-	
 	case *A_DATATYPE_DEFINITION_REAL_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_REAL_REF])
-	
 	case *A_DATATYPE_DEFINITION_STRING_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_STRING_REF])
-	
 	case *A_DATATYPE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_DATATYPE_DEFINITION_XHTML_REF])
-	
 	case *A_EDITABLE_ATTS:
 		stage.OnAfterA_EDITABLE_ATTSDeleteCallback = any(callback).(OnAfterDeleteInterface[A_EDITABLE_ATTS])
-	
 	case *A_ENUM_VALUE_REF:
 		stage.OnAfterA_ENUM_VALUE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_ENUM_VALUE_REF])
-	
 	case *A_OBJECT:
 		stage.OnAfterA_OBJECTDeleteCallback = any(callback).(OnAfterDeleteInterface[A_OBJECT])
-	
 	case *A_PROPERTIES:
 		stage.OnAfterA_PROPERTIESDeleteCallback = any(callback).(OnAfterDeleteInterface[A_PROPERTIES])
-	
 	case *A_RELATION_GROUP_TYPE_REF:
 		stage.OnAfterA_RELATION_GROUP_TYPE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_RELATION_GROUP_TYPE_REF])
-	
 	case *A_SOURCE_1:
 		stage.OnAfterA_SOURCE_1DeleteCallback = any(callback).(OnAfterDeleteInterface[A_SOURCE_1])
-	
 	case *A_SOURCE_SPECIFICATION_1:
 		stage.OnAfterA_SOURCE_SPECIFICATION_1DeleteCallback = any(callback).(OnAfterDeleteInterface[A_SOURCE_SPECIFICATION_1])
-	
 	case *A_SPECIFICATIONS:
 		stage.OnAfterA_SPECIFICATIONSDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPECIFICATIONS])
-	
 	case *A_SPECIFICATION_TYPE_REF:
 		stage.OnAfterA_SPECIFICATION_TYPE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPECIFICATION_TYPE_REF])
-	
 	case *A_SPECIFIED_VALUES:
 		stage.OnAfterA_SPECIFIED_VALUESDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPECIFIED_VALUES])
-	
 	case *A_SPEC_ATTRIBUTES:
 		stage.OnAfterA_SPEC_ATTRIBUTESDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_ATTRIBUTES])
-	
 	case *A_SPEC_OBJECTS:
 		stage.OnAfterA_SPEC_OBJECTSDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_OBJECTS])
-	
 	case *A_SPEC_OBJECT_TYPE_REF:
 		stage.OnAfterA_SPEC_OBJECT_TYPE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_OBJECT_TYPE_REF])
-	
 	case *A_SPEC_RELATIONS:
 		stage.OnAfterA_SPEC_RELATIONSDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_RELATIONS])
-	
 	case *A_SPEC_RELATION_GROUPS:
 		stage.OnAfterA_SPEC_RELATION_GROUPSDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_RELATION_GROUPS])
-	
 	case *A_SPEC_RELATION_REF:
 		stage.OnAfterA_SPEC_RELATION_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_RELATION_REF])
-	
 	case *A_SPEC_RELATION_TYPE_REF:
 		stage.OnAfterA_SPEC_RELATION_TYPE_REFDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_RELATION_TYPE_REF])
-	
 	case *A_SPEC_TYPES:
 		stage.OnAfterA_SPEC_TYPESDeleteCallback = any(callback).(OnAfterDeleteInterface[A_SPEC_TYPES])
-	
 	case *A_THE_HEADER:
 		stage.OnAfterA_THE_HEADERDeleteCallback = any(callback).(OnAfterDeleteInterface[A_THE_HEADER])
-	
 	case *A_TOOL_EXTENSIONS:
 		stage.OnAfterA_TOOL_EXTENSIONSDeleteCallback = any(callback).(OnAfterDeleteInterface[A_TOOL_EXTENSIONS])
-	
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		stage.OnAfterDATATYPE_DEFINITION_BOOLEANDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_BOOLEAN])
-	
 	case *DATATYPE_DEFINITION_DATE:
 		stage.OnAfterDATATYPE_DEFINITION_DATEDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_DATE])
-	
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_ENUMERATION])
-	
 	case *DATATYPE_DEFINITION_INTEGER:
 		stage.OnAfterDATATYPE_DEFINITION_INTEGERDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_INTEGER])
-	
 	case *DATATYPE_DEFINITION_REAL:
 		stage.OnAfterDATATYPE_DEFINITION_REALDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_REAL])
-	
 	case *DATATYPE_DEFINITION_STRING:
 		stage.OnAfterDATATYPE_DEFINITION_STRINGDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_STRING])
-	
 	case *DATATYPE_DEFINITION_XHTML:
 		stage.OnAfterDATATYPE_DEFINITION_XHTMLDeleteCallback = any(callback).(OnAfterDeleteInterface[DATATYPE_DEFINITION_XHTML])
-	
 	case *EMBEDDED_VALUE:
 		stage.OnAfterEMBEDDED_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[EMBEDDED_VALUE])
-	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEDeleteCallback = any(callback).(OnAfterDeleteInterface[ENUM_VALUE])
-	
 	case *EmbeddedJpgImage:
 		stage.OnAfterEmbeddedJpgImageDeleteCallback = any(callback).(OnAfterDeleteInterface[EmbeddedJpgImage])
-	
 	case *EmbeddedPngImage:
 		stage.OnAfterEmbeddedPngImageDeleteCallback = any(callback).(OnAfterDeleteInterface[EmbeddedPngImage])
-	
 	case *EmbeddedSvgImage:
 		stage.OnAfterEmbeddedSvgImageDeleteCallback = any(callback).(OnAfterDeleteInterface[EmbeddedSvgImage])
-	
 	case *Kill:
 		stage.OnAfterKillDeleteCallback = any(callback).(OnAfterDeleteInterface[Kill])
-	
 	case *Map_identifier_bool:
 		stage.OnAfterMap_identifier_boolDeleteCallback = any(callback).(OnAfterDeleteInterface[Map_identifier_bool])
-	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPDeleteCallback = any(callback).(OnAfterDeleteInterface[RELATION_GROUP])
-	
 	case *RELATION_GROUP_TYPE:
 		stage.OnAfterRELATION_GROUP_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[RELATION_GROUP_TYPE])
-	
 	case *REQ_IF:
 		stage.OnAfterREQ_IFDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF])
-	
 	case *REQ_IF_CONTENT:
 		stage.OnAfterREQ_IF_CONTENTDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_CONTENT])
-	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_HEADER])
-	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONDeleteCallback = any(callback).(OnAfterDeleteInterface[REQ_IF_TOOL_EXTENSION])
-	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION])
-	
 	case *SPECIFICATION_Rendering:
 		stage.OnAfterSPECIFICATION_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION_Rendering])
-	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPECIFICATION_TYPE])
-	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_HIERARCHY])
-	
 	case *SPEC_OBJECT:
 		stage.OnAfterSPEC_OBJECTDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_OBJECT])
-	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_OBJECT_TYPE])
-	
 	case *SPEC_OBJECT_TYPE_Rendering:
 		stage.OnAfterSPEC_OBJECT_TYPE_RenderingDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_OBJECT_TYPE_Rendering])
-	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_RELATION])
-	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPEDeleteCallback = any(callback).(OnAfterDeleteInterface[SPEC_RELATION_TYPE])
-	
 	case *StaticWebSite:
 		stage.OnAfterStaticWebSiteDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSite])
-	
 	case *StaticWebSiteChapter:
 		stage.OnAfterStaticWebSiteChapterDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSiteChapter])
-	
 	case *StaticWebSiteGeneratedImage:
 		stage.OnAfterStaticWebSiteGeneratedImageDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSiteGeneratedImage])
-	
 	case *StaticWebSiteImage:
 		stage.OnAfterStaticWebSiteImageDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSiteImage])
-	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphDeleteCallback = any(callback).(OnAfterDeleteInterface[StaticWebSiteParagraph])
-	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTDeleteCallback = any(callback).(OnAfterDeleteInterface[XHTML_CONTENT])
-	
 	}
 }
 func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAfterReadInterface[Type]) {
@@ -2882,315 +2570,211 @@ func SetCallbackAfterReadFromFront[Type Gongstruct](stage *Stage, callback OnAft
 		// insertion point
 	case *ALTERNATIVE_ID:
 		stage.OnAfterALTERNATIVE_IDReadCallback = any(callback).(OnAfterReadInterface[ALTERNATIVE_ID])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEANReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_BOOLEAN])
-	
 	case *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_BOOLEAN_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_BOOLEAN_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_DATE:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATEReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_DATE])
-	
 	case *ATTRIBUTE_DEFINITION_DATE_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_DATE_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_DATE_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATIONReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_ENUMERATION])
-	
 	case *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_ENUMERATION_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_ENUMERATION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGERReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_INTEGER])
-	
 	case *ATTRIBUTE_DEFINITION_INTEGER_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_INTEGER_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_INTEGER_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_REAL:
 		stage.OnAfterATTRIBUTE_DEFINITION_REALReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL])
-	
 	case *ATTRIBUTE_DEFINITION_REAL_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_REAL_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_REAL_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_STRING:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRINGReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING])
-	
 	case *ATTRIBUTE_DEFINITION_STRING_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_STRING_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_STRING_Rendering])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTMLReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_XHTML])
-	
 	case *ATTRIBUTE_DEFINITION_XHTML_Rendering:
 		stage.OnAfterATTRIBUTE_DEFINITION_XHTML_RenderingReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_DEFINITION_XHTML_Rendering])
-	
 	case *ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterATTRIBUTE_VALUE_BOOLEANReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterATTRIBUTE_VALUE_DATEReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_DATE])
-	
 	case *ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterATTRIBUTE_VALUE_ENUMERATIONReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterATTRIBUTE_VALUE_INTEGERReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_INTEGER])
-	
 	case *ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterATTRIBUTE_VALUE_REALReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_REAL])
-	
 	case *ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterATTRIBUTE_VALUE_STRINGReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_STRING])
-	
 	case *ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterATTRIBUTE_VALUE_XHTMLReadCallback = any(callback).(OnAfterReadInterface[ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ALTERNATIVE_ID:
 		stage.OnAfterA_ALTERNATIVE_IDReadCallback = any(callback).(OnAfterReadInterface[A_ALTERNATIVE_ID])
-	
 	case *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_BOOLEAN_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_DATE_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_DATE_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_DATE_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_ENUMERATION_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_INTEGER_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_INTEGER_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_REAL_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_REAL_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_REAL_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_STRING_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_STRING_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_STRING_REF])
-	
 	case *A_ATTRIBUTE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_ATTRIBUTE_DEFINITION_XHTML_REFReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_DEFINITION_XHTML_REF])
-	
 	case *A_ATTRIBUTE_VALUE_BOOLEAN:
 		stage.OnAfterA_ATTRIBUTE_VALUE_BOOLEANReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_BOOLEAN])
-	
 	case *A_ATTRIBUTE_VALUE_DATE:
 		stage.OnAfterA_ATTRIBUTE_VALUE_DATEReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_DATE])
-	
 	case *A_ATTRIBUTE_VALUE_ENUMERATION:
 		stage.OnAfterA_ATTRIBUTE_VALUE_ENUMERATIONReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_ENUMERATION])
-	
 	case *A_ATTRIBUTE_VALUE_INTEGER:
 		stage.OnAfterA_ATTRIBUTE_VALUE_INTEGERReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_INTEGER])
-	
 	case *A_ATTRIBUTE_VALUE_REAL:
 		stage.OnAfterA_ATTRIBUTE_VALUE_REALReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_REAL])
-	
 	case *A_ATTRIBUTE_VALUE_STRING:
 		stage.OnAfterA_ATTRIBUTE_VALUE_STRINGReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_STRING])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTMLReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML])
-	
 	case *A_ATTRIBUTE_VALUE_XHTML_1:
 		stage.OnAfterA_ATTRIBUTE_VALUE_XHTML_1ReadCallback = any(callback).(OnAfterReadInterface[A_ATTRIBUTE_VALUE_XHTML_1])
-	
 	case *A_CHILDREN:
 		stage.OnAfterA_CHILDRENReadCallback = any(callback).(OnAfterReadInterface[A_CHILDREN])
-	
 	case *A_CORE_CONTENT:
 		stage.OnAfterA_CORE_CONTENTReadCallback = any(callback).(OnAfterReadInterface[A_CORE_CONTENT])
-	
 	case *A_DATATYPES:
 		stage.OnAfterA_DATATYPESReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPES])
-	
 	case *A_DATATYPE_DEFINITION_BOOLEAN_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_BOOLEAN_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_BOOLEAN_REF])
-	
 	case *A_DATATYPE_DEFINITION_DATE_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_DATE_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_DATE_REF])
-	
 	case *A_DATATYPE_DEFINITION_ENUMERATION_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_ENUMERATION_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_ENUMERATION_REF])
-	
 	case *A_DATATYPE_DEFINITION_INTEGER_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_INTEGER_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_INTEGER_REF])
-	
 	case *A_DATATYPE_DEFINITION_REAL_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_REAL_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_REAL_REF])
-	
 	case *A_DATATYPE_DEFINITION_STRING_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_STRING_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_STRING_REF])
-	
 	case *A_DATATYPE_DEFINITION_XHTML_REF:
 		stage.OnAfterA_DATATYPE_DEFINITION_XHTML_REFReadCallback = any(callback).(OnAfterReadInterface[A_DATATYPE_DEFINITION_XHTML_REF])
-	
 	case *A_EDITABLE_ATTS:
 		stage.OnAfterA_EDITABLE_ATTSReadCallback = any(callback).(OnAfterReadInterface[A_EDITABLE_ATTS])
-	
 	case *A_ENUM_VALUE_REF:
 		stage.OnAfterA_ENUM_VALUE_REFReadCallback = any(callback).(OnAfterReadInterface[A_ENUM_VALUE_REF])
-	
 	case *A_OBJECT:
 		stage.OnAfterA_OBJECTReadCallback = any(callback).(OnAfterReadInterface[A_OBJECT])
-	
 	case *A_PROPERTIES:
 		stage.OnAfterA_PROPERTIESReadCallback = any(callback).(OnAfterReadInterface[A_PROPERTIES])
-	
 	case *A_RELATION_GROUP_TYPE_REF:
 		stage.OnAfterA_RELATION_GROUP_TYPE_REFReadCallback = any(callback).(OnAfterReadInterface[A_RELATION_GROUP_TYPE_REF])
-	
 	case *A_SOURCE_1:
 		stage.OnAfterA_SOURCE_1ReadCallback = any(callback).(OnAfterReadInterface[A_SOURCE_1])
-	
 	case *A_SOURCE_SPECIFICATION_1:
 		stage.OnAfterA_SOURCE_SPECIFICATION_1ReadCallback = any(callback).(OnAfterReadInterface[A_SOURCE_SPECIFICATION_1])
-	
 	case *A_SPECIFICATIONS:
 		stage.OnAfterA_SPECIFICATIONSReadCallback = any(callback).(OnAfterReadInterface[A_SPECIFICATIONS])
-	
 	case *A_SPECIFICATION_TYPE_REF:
 		stage.OnAfterA_SPECIFICATION_TYPE_REFReadCallback = any(callback).(OnAfterReadInterface[A_SPECIFICATION_TYPE_REF])
-	
 	case *A_SPECIFIED_VALUES:
 		stage.OnAfterA_SPECIFIED_VALUESReadCallback = any(callback).(OnAfterReadInterface[A_SPECIFIED_VALUES])
-	
 	case *A_SPEC_ATTRIBUTES:
 		stage.OnAfterA_SPEC_ATTRIBUTESReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_ATTRIBUTES])
-	
 	case *A_SPEC_OBJECTS:
 		stage.OnAfterA_SPEC_OBJECTSReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_OBJECTS])
-	
 	case *A_SPEC_OBJECT_TYPE_REF:
 		stage.OnAfterA_SPEC_OBJECT_TYPE_REFReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_OBJECT_TYPE_REF])
-	
 	case *A_SPEC_RELATIONS:
 		stage.OnAfterA_SPEC_RELATIONSReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_RELATIONS])
-	
 	case *A_SPEC_RELATION_GROUPS:
 		stage.OnAfterA_SPEC_RELATION_GROUPSReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_RELATION_GROUPS])
-	
 	case *A_SPEC_RELATION_REF:
 		stage.OnAfterA_SPEC_RELATION_REFReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_RELATION_REF])
-	
 	case *A_SPEC_RELATION_TYPE_REF:
 		stage.OnAfterA_SPEC_RELATION_TYPE_REFReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_RELATION_TYPE_REF])
-	
 	case *A_SPEC_TYPES:
 		stage.OnAfterA_SPEC_TYPESReadCallback = any(callback).(OnAfterReadInterface[A_SPEC_TYPES])
-	
 	case *A_THE_HEADER:
 		stage.OnAfterA_THE_HEADERReadCallback = any(callback).(OnAfterReadInterface[A_THE_HEADER])
-	
 	case *A_TOOL_EXTENSIONS:
 		stage.OnAfterA_TOOL_EXTENSIONSReadCallback = any(callback).(OnAfterReadInterface[A_TOOL_EXTENSIONS])
-	
 	case *DATATYPE_DEFINITION_BOOLEAN:
 		stage.OnAfterDATATYPE_DEFINITION_BOOLEANReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_BOOLEAN])
-	
 	case *DATATYPE_DEFINITION_DATE:
 		stage.OnAfterDATATYPE_DEFINITION_DATEReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_DATE])
-	
 	case *DATATYPE_DEFINITION_ENUMERATION:
 		stage.OnAfterDATATYPE_DEFINITION_ENUMERATIONReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_ENUMERATION])
-	
 	case *DATATYPE_DEFINITION_INTEGER:
 		stage.OnAfterDATATYPE_DEFINITION_INTEGERReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_INTEGER])
-	
 	case *DATATYPE_DEFINITION_REAL:
 		stage.OnAfterDATATYPE_DEFINITION_REALReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_REAL])
-	
 	case *DATATYPE_DEFINITION_STRING:
 		stage.OnAfterDATATYPE_DEFINITION_STRINGReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_STRING])
-	
 	case *DATATYPE_DEFINITION_XHTML:
 		stage.OnAfterDATATYPE_DEFINITION_XHTMLReadCallback = any(callback).(OnAfterReadInterface[DATATYPE_DEFINITION_XHTML])
-	
 	case *EMBEDDED_VALUE:
 		stage.OnAfterEMBEDDED_VALUEReadCallback = any(callback).(OnAfterReadInterface[EMBEDDED_VALUE])
-	
 	case *ENUM_VALUE:
 		stage.OnAfterENUM_VALUEReadCallback = any(callback).(OnAfterReadInterface[ENUM_VALUE])
-	
 	case *EmbeddedJpgImage:
 		stage.OnAfterEmbeddedJpgImageReadCallback = any(callback).(OnAfterReadInterface[EmbeddedJpgImage])
-	
 	case *EmbeddedPngImage:
 		stage.OnAfterEmbeddedPngImageReadCallback = any(callback).(OnAfterReadInterface[EmbeddedPngImage])
-	
 	case *EmbeddedSvgImage:
 		stage.OnAfterEmbeddedSvgImageReadCallback = any(callback).(OnAfterReadInterface[EmbeddedSvgImage])
-	
 	case *Kill:
 		stage.OnAfterKillReadCallback = any(callback).(OnAfterReadInterface[Kill])
-	
 	case *Map_identifier_bool:
 		stage.OnAfterMap_identifier_boolReadCallback = any(callback).(OnAfterReadInterface[Map_identifier_bool])
-	
 	case *RELATION_GROUP:
 		stage.OnAfterRELATION_GROUPReadCallback = any(callback).(OnAfterReadInterface[RELATION_GROUP])
-	
 	case *RELATION_GROUP_TYPE:
 		stage.OnAfterRELATION_GROUP_TYPEReadCallback = any(callback).(OnAfterReadInterface[RELATION_GROUP_TYPE])
-	
 	case *REQ_IF:
 		stage.OnAfterREQ_IFReadCallback = any(callback).(OnAfterReadInterface[REQ_IF])
-	
 	case *REQ_IF_CONTENT:
 		stage.OnAfterREQ_IF_CONTENTReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_CONTENT])
-	
 	case *REQ_IF_HEADER:
 		stage.OnAfterREQ_IF_HEADERReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_HEADER])
-	
 	case *REQ_IF_TOOL_EXTENSION:
 		stage.OnAfterREQ_IF_TOOL_EXTENSIONReadCallback = any(callback).(OnAfterReadInterface[REQ_IF_TOOL_EXTENSION])
-	
 	case *SPECIFICATION:
 		stage.OnAfterSPECIFICATIONReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION])
-	
 	case *SPECIFICATION_Rendering:
 		stage.OnAfterSPECIFICATION_RenderingReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION_Rendering])
-	
 	case *SPECIFICATION_TYPE:
 		stage.OnAfterSPECIFICATION_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPECIFICATION_TYPE])
-	
 	case *SPEC_HIERARCHY:
 		stage.OnAfterSPEC_HIERARCHYReadCallback = any(callback).(OnAfterReadInterface[SPEC_HIERARCHY])
-	
 	case *SPEC_OBJECT:
 		stage.OnAfterSPEC_OBJECTReadCallback = any(callback).(OnAfterReadInterface[SPEC_OBJECT])
-	
 	case *SPEC_OBJECT_TYPE:
 		stage.OnAfterSPEC_OBJECT_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPEC_OBJECT_TYPE])
-	
 	case *SPEC_OBJECT_TYPE_Rendering:
 		stage.OnAfterSPEC_OBJECT_TYPE_RenderingReadCallback = any(callback).(OnAfterReadInterface[SPEC_OBJECT_TYPE_Rendering])
-	
 	case *SPEC_RELATION:
 		stage.OnAfterSPEC_RELATIONReadCallback = any(callback).(OnAfterReadInterface[SPEC_RELATION])
-	
 	case *SPEC_RELATION_TYPE:
 		stage.OnAfterSPEC_RELATION_TYPEReadCallback = any(callback).(OnAfterReadInterface[SPEC_RELATION_TYPE])
-	
 	case *StaticWebSite:
 		stage.OnAfterStaticWebSiteReadCallback = any(callback).(OnAfterReadInterface[StaticWebSite])
-	
 	case *StaticWebSiteChapter:
 		stage.OnAfterStaticWebSiteChapterReadCallback = any(callback).(OnAfterReadInterface[StaticWebSiteChapter])
-	
 	case *StaticWebSiteGeneratedImage:
 		stage.OnAfterStaticWebSiteGeneratedImageReadCallback = any(callback).(OnAfterReadInterface[StaticWebSiteGeneratedImage])
-	
 	case *StaticWebSiteImage:
 		stage.OnAfterStaticWebSiteImageReadCallback = any(callback).(OnAfterReadInterface[StaticWebSiteImage])
-	
 	case *StaticWebSiteParagraph:
 		stage.OnAfterStaticWebSiteParagraphReadCallback = any(callback).(OnAfterReadInterface[StaticWebSiteParagraph])
-	
 	case *XHTML_CONTENT:
 		stage.OnAfterXHTML_CONTENTReadCallback = any(callback).(OnAfterReadInterface[XHTML_CONTENT])
-	
 	}
 }

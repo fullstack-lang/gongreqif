@@ -420,7 +420,7 @@ type GongstructEnumIntField interface {
 }
 
 type PointerToGongstructEnumIntField interface {
-	*NMTOKEN
+	//insertion point for pointers to enum int types | *NMTOKEN
 	FromCodeString(input string) (err error)
 }
 

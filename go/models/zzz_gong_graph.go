@@ -1,6 +1,8 @@
 // generated code - do not edit
 package models
 
+import "fmt"
+
 func IsStagedPointerToGongstruct[Type PointerToGongstruct](stage *Stage, instance Type) (ok bool) {
 
 	switch target := any(instance).(type) {
@@ -8679,4 +8681,3305 @@ func (stage *Stage) UnstageBranchXHTML_CONTENT(xhtml_content *XHTML_CONTENT) {
 
 	//insertion point for the staging of instances referenced by slice of pointers
 
+}
+
+// insertion point for diff per struct
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (alternative_id *ALTERNATIVE_ID) GongDiff(stage *Stage, alternative_idOther *ALTERNATIVE_ID) (diffs []string) {
+	// insertion point for field diffs
+	if alternative_id.Name != alternative_idOther.Name {
+		diffs = append(diffs, alternative_id.GongMarshallField(stage, "Name"))
+	}
+	if alternative_id.IDENTIFIER != alternative_idOther.IDENTIFIER {
+		diffs = append(diffs, alternative_id.GongMarshallField(stage, "IDENTIFIER"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongDiff(stage *Stage, attribute_definition_booleanOther *ATTRIBUTE_DEFINITION_BOOLEAN) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_boolean.Name != attribute_definition_booleanOther.Name {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_boolean.DESC != attribute_definition_booleanOther.DESC {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_boolean.IDENTIFIER != attribute_definition_booleanOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_boolean.IS_EDITABLE != attribute_definition_booleanOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_boolean.LAST_CHANGE != attribute_definition_booleanOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_boolean.LONG_NAME != attribute_definition_booleanOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (attribute_definition_boolean.ALTERNATIVE_ID == nil) != (attribute_definition_booleanOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_boolean.ALTERNATIVE_ID != nil && attribute_definition_booleanOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_boolean.ALTERNATIVE_ID != attribute_definition_booleanOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_boolean.DEFAULT_VALUE == nil) != (attribute_definition_booleanOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_boolean.DEFAULT_VALUE != nil && attribute_definition_booleanOther.DEFAULT_VALUE != nil {
+		if attribute_definition_boolean.DEFAULT_VALUE != attribute_definition_booleanOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_boolean.TYPE == nil) != (attribute_definition_booleanOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_boolean.TYPE != nil && attribute_definition_booleanOther.TYPE != nil {
+		if attribute_definition_boolean.TYPE != attribute_definition_booleanOther.TYPE {
+			diffs = append(diffs, attribute_definition_boolean.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongDiff(stage *Stage, attribute_definition_boolean_renderingOther *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_boolean_rendering.Name != attribute_definition_boolean_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_boolean_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_boolean_rendering.ShowInTable != attribute_definition_boolean_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_boolean_rendering.ShowInTitle != attribute_definition_boolean_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_boolean_rendering.ShowInSubject != attribute_definition_boolean_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongDiff(stage *Stage, attribute_definition_dateOther *ATTRIBUTE_DEFINITION_DATE) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_date.Name != attribute_definition_dateOther.Name {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_date.DESC != attribute_definition_dateOther.DESC {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_date.IDENTIFIER != attribute_definition_dateOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_date.IS_EDITABLE != attribute_definition_dateOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_date.LAST_CHANGE != attribute_definition_dateOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_date.LONG_NAME != attribute_definition_dateOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (attribute_definition_date.ALTERNATIVE_ID == nil) != (attribute_definition_dateOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_date.ALTERNATIVE_ID != nil && attribute_definition_dateOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_date.ALTERNATIVE_ID != attribute_definition_dateOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_date.DEFAULT_VALUE == nil) != (attribute_definition_dateOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_date.DEFAULT_VALUE != nil && attribute_definition_dateOther.DEFAULT_VALUE != nil {
+		if attribute_definition_date.DEFAULT_VALUE != attribute_definition_dateOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_date.TYPE == nil) != (attribute_definition_dateOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_date.TYPE != nil && attribute_definition_dateOther.TYPE != nil {
+		if attribute_definition_date.TYPE != attribute_definition_dateOther.TYPE {
+			diffs = append(diffs, attribute_definition_date.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongDiff(stage *Stage, attribute_definition_date_renderingOther *ATTRIBUTE_DEFINITION_DATE_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_date_rendering.Name != attribute_definition_date_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_date_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_date_rendering.ShowInTable != attribute_definition_date_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_date_rendering.ShowInTitle != attribute_definition_date_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_date_rendering.ShowInSubject != attribute_definition_date_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongDiff(stage *Stage, attribute_definition_enumerationOther *ATTRIBUTE_DEFINITION_ENUMERATION) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_enumeration.Name != attribute_definition_enumerationOther.Name {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_enumeration.DESC != attribute_definition_enumerationOther.DESC {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_enumeration.IDENTIFIER != attribute_definition_enumerationOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_enumeration.IS_EDITABLE != attribute_definition_enumerationOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_enumeration.LAST_CHANGE != attribute_definition_enumerationOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_enumeration.LONG_NAME != attribute_definition_enumerationOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if attribute_definition_enumeration.MULTI_VALUED != attribute_definition_enumerationOther.MULTI_VALUED {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED"))
+	}
+	if (attribute_definition_enumeration.ALTERNATIVE_ID == nil) != (attribute_definition_enumerationOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_enumeration.ALTERNATIVE_ID != nil && attribute_definition_enumerationOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_enumeration.ALTERNATIVE_ID != attribute_definition_enumerationOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_enumeration.DEFAULT_VALUE == nil) != (attribute_definition_enumerationOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_enumeration.DEFAULT_VALUE != nil && attribute_definition_enumerationOther.DEFAULT_VALUE != nil {
+		if attribute_definition_enumeration.DEFAULT_VALUE != attribute_definition_enumerationOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_enumeration.TYPE == nil) != (attribute_definition_enumerationOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_enumeration.TYPE != nil && attribute_definition_enumerationOther.TYPE != nil {
+		if attribute_definition_enumeration.TYPE != attribute_definition_enumerationOther.TYPE {
+			diffs = append(diffs, attribute_definition_enumeration.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongDiff(stage *Stage, attribute_definition_enumeration_renderingOther *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_enumeration_rendering.Name != attribute_definition_enumeration_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_enumeration_rendering.ShowInTable != attribute_definition_enumeration_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_enumeration_rendering.ShowInTitle != attribute_definition_enumeration_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_enumeration_rendering.ShowInSubject != attribute_definition_enumeration_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongDiff(stage *Stage, attribute_definition_integerOther *ATTRIBUTE_DEFINITION_INTEGER) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_integer.Name != attribute_definition_integerOther.Name {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_integer.DESC != attribute_definition_integerOther.DESC {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_integer.IDENTIFIER != attribute_definition_integerOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_integer.IS_EDITABLE != attribute_definition_integerOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_integer.LAST_CHANGE != attribute_definition_integerOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_integer.LONG_NAME != attribute_definition_integerOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (attribute_definition_integer.ALTERNATIVE_ID == nil) != (attribute_definition_integerOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_integer.ALTERNATIVE_ID != nil && attribute_definition_integerOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_integer.ALTERNATIVE_ID != attribute_definition_integerOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_integer.DEFAULT_VALUE == nil) != (attribute_definition_integerOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_integer.DEFAULT_VALUE != nil && attribute_definition_integerOther.DEFAULT_VALUE != nil {
+		if attribute_definition_integer.DEFAULT_VALUE != attribute_definition_integerOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_integer.TYPE == nil) != (attribute_definition_integerOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_integer.TYPE != nil && attribute_definition_integerOther.TYPE != nil {
+		if attribute_definition_integer.TYPE != attribute_definition_integerOther.TYPE {
+			diffs = append(diffs, attribute_definition_integer.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongDiff(stage *Stage, attribute_definition_integer_renderingOther *ATTRIBUTE_DEFINITION_INTEGER_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_integer_rendering.Name != attribute_definition_integer_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_integer_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_integer_rendering.ShowInTable != attribute_definition_integer_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_integer_rendering.ShowInTitle != attribute_definition_integer_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_integer_rendering.ShowInSubject != attribute_definition_integer_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongDiff(stage *Stage, attribute_definition_realOther *ATTRIBUTE_DEFINITION_REAL) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_real.Name != attribute_definition_realOther.Name {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_real.DESC != attribute_definition_realOther.DESC {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_real.IDENTIFIER != attribute_definition_realOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_real.IS_EDITABLE != attribute_definition_realOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_real.LAST_CHANGE != attribute_definition_realOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_real.LONG_NAME != attribute_definition_realOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (attribute_definition_real.ALTERNATIVE_ID == nil) != (attribute_definition_realOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_real.ALTERNATIVE_ID != nil && attribute_definition_realOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_real.ALTERNATIVE_ID != attribute_definition_realOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_real.DEFAULT_VALUE == nil) != (attribute_definition_realOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_real.DEFAULT_VALUE != nil && attribute_definition_realOther.DEFAULT_VALUE != nil {
+		if attribute_definition_real.DEFAULT_VALUE != attribute_definition_realOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_real.TYPE == nil) != (attribute_definition_realOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_real.TYPE != nil && attribute_definition_realOther.TYPE != nil {
+		if attribute_definition_real.TYPE != attribute_definition_realOther.TYPE {
+			diffs = append(diffs, attribute_definition_real.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongDiff(stage *Stage, attribute_definition_real_renderingOther *ATTRIBUTE_DEFINITION_REAL_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_real_rendering.Name != attribute_definition_real_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_real_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_real_rendering.ShowInTable != attribute_definition_real_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_real_rendering.ShowInTitle != attribute_definition_real_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_real_rendering.ShowInSubject != attribute_definition_real_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongDiff(stage *Stage, attribute_definition_renderingOther *ATTRIBUTE_DEFINITION_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_rendering.Name != attribute_definition_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_rendering.ShowInTable != attribute_definition_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_rendering.ShowInTitle != attribute_definition_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_rendering.ShowInSubject != attribute_definition_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongDiff(stage *Stage, attribute_definition_stringOther *ATTRIBUTE_DEFINITION_STRING) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_string.Name != attribute_definition_stringOther.Name {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_string.DESC != attribute_definition_stringOther.DESC {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_string.IDENTIFIER != attribute_definition_stringOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_string.IS_EDITABLE != attribute_definition_stringOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_string.LAST_CHANGE != attribute_definition_stringOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_string.LONG_NAME != attribute_definition_stringOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (attribute_definition_string.ALTERNATIVE_ID == nil) != (attribute_definition_stringOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_string.ALTERNATIVE_ID != nil && attribute_definition_stringOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_string.ALTERNATIVE_ID != attribute_definition_stringOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_string.DEFAULT_VALUE == nil) != (attribute_definition_stringOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_string.DEFAULT_VALUE != nil && attribute_definition_stringOther.DEFAULT_VALUE != nil {
+		if attribute_definition_string.DEFAULT_VALUE != attribute_definition_stringOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_string.TYPE == nil) != (attribute_definition_stringOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_string.TYPE != nil && attribute_definition_stringOther.TYPE != nil {
+		if attribute_definition_string.TYPE != attribute_definition_stringOther.TYPE {
+			diffs = append(diffs, attribute_definition_string.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongDiff(stage *Stage, attribute_definition_string_renderingOther *ATTRIBUTE_DEFINITION_STRING_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_string_rendering.Name != attribute_definition_string_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_string_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_string_rendering.ShowInTable != attribute_definition_string_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_string_rendering.ShowInTitle != attribute_definition_string_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_string_rendering.ShowInSubject != attribute_definition_string_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongDiff(stage *Stage, attribute_definition_xhtmlOther *ATTRIBUTE_DEFINITION_XHTML) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_xhtml.Name != attribute_definition_xhtmlOther.Name {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_xhtml.DESC != attribute_definition_xhtmlOther.DESC {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "DESC"))
+	}
+	if attribute_definition_xhtml.IDENTIFIER != attribute_definition_xhtmlOther.IDENTIFIER {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if attribute_definition_xhtml.IS_EDITABLE != attribute_definition_xhtmlOther.IS_EDITABLE {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if attribute_definition_xhtml.LAST_CHANGE != attribute_definition_xhtmlOther.LAST_CHANGE {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if attribute_definition_xhtml.LONG_NAME != attribute_definition_xhtmlOther.LONG_NAME {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (attribute_definition_xhtml.ALTERNATIVE_ID == nil) != (attribute_definition_xhtmlOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if attribute_definition_xhtml.ALTERNATIVE_ID != nil && attribute_definition_xhtmlOther.ALTERNATIVE_ID != nil {
+		if attribute_definition_xhtml.ALTERNATIVE_ID != attribute_definition_xhtmlOther.ALTERNATIVE_ID {
+			diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (attribute_definition_xhtml.DEFAULT_VALUE == nil) != (attribute_definition_xhtmlOther.DEFAULT_VALUE == nil) {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE"))
+	} else if attribute_definition_xhtml.DEFAULT_VALUE != nil && attribute_definition_xhtmlOther.DEFAULT_VALUE != nil {
+		if attribute_definition_xhtml.DEFAULT_VALUE != attribute_definition_xhtmlOther.DEFAULT_VALUE {
+			diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE"))
+		}
+	}
+	if (attribute_definition_xhtml.TYPE == nil) != (attribute_definition_xhtmlOther.TYPE == nil) {
+		diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "TYPE"))
+	} else if attribute_definition_xhtml.TYPE != nil && attribute_definition_xhtmlOther.TYPE != nil {
+		if attribute_definition_xhtml.TYPE != attribute_definition_xhtmlOther.TYPE {
+			diffs = append(diffs, attribute_definition_xhtml.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongDiff(stage *Stage, attribute_definition_xhtml_renderingOther *ATTRIBUTE_DEFINITION_XHTML_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_definition_xhtml_rendering.Name != attribute_definition_xhtml_renderingOther.Name {
+		diffs = append(diffs, attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name"))
+	}
+	if attribute_definition_xhtml_rendering.ShowInTable != attribute_definition_xhtml_renderingOther.ShowInTable {
+		diffs = append(diffs, attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable"))
+	}
+	if attribute_definition_xhtml_rendering.ShowInTitle != attribute_definition_xhtml_renderingOther.ShowInTitle {
+		diffs = append(diffs, attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle"))
+	}
+	if attribute_definition_xhtml_rendering.ShowInSubject != attribute_definition_xhtml_renderingOther.ShowInSubject {
+		diffs = append(diffs, attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongDiff(stage *Stage, attribute_value_booleanOther *ATTRIBUTE_VALUE_BOOLEAN) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_boolean.Name != attribute_value_booleanOther.Name {
+		diffs = append(diffs, attribute_value_boolean.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_boolean.DEFINITION == nil) != (attribute_value_booleanOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_boolean.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_boolean.DEFINITION != nil && attribute_value_booleanOther.DEFINITION != nil {
+		if attribute_value_boolean.DEFINITION != attribute_value_booleanOther.DEFINITION {
+			diffs = append(diffs, attribute_value_boolean.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if attribute_value_boolean.THE_VALUE != attribute_value_booleanOther.THE_VALUE {
+		diffs = append(diffs, attribute_value_boolean.GongMarshallField(stage, "THE_VALUE"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongDiff(stage *Stage, attribute_value_dateOther *ATTRIBUTE_VALUE_DATE) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_date.Name != attribute_value_dateOther.Name {
+		diffs = append(diffs, attribute_value_date.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_date.DEFINITION == nil) != (attribute_value_dateOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_date.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_date.DEFINITION != nil && attribute_value_dateOther.DEFINITION != nil {
+		if attribute_value_date.DEFINITION != attribute_value_dateOther.DEFINITION {
+			diffs = append(diffs, attribute_value_date.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if attribute_value_date.THE_VALUE != attribute_value_dateOther.THE_VALUE {
+		diffs = append(diffs, attribute_value_date.GongMarshallField(stage, "THE_VALUE"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongDiff(stage *Stage, attribute_value_enumerationOther *ATTRIBUTE_VALUE_ENUMERATION) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_enumeration.Name != attribute_value_enumerationOther.Name {
+		diffs = append(diffs, attribute_value_enumeration.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_enumeration.DEFINITION == nil) != (attribute_value_enumerationOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_enumeration.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_enumeration.DEFINITION != nil && attribute_value_enumerationOther.DEFINITION != nil {
+		if attribute_value_enumeration.DEFINITION != attribute_value_enumerationOther.DEFINITION {
+			diffs = append(diffs, attribute_value_enumeration.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if (attribute_value_enumeration.VALUES == nil) != (attribute_value_enumerationOther.VALUES == nil) {
+		diffs = append(diffs, attribute_value_enumeration.GongMarshallField(stage, "VALUES"))
+	} else if attribute_value_enumeration.VALUES != nil && attribute_value_enumerationOther.VALUES != nil {
+		if attribute_value_enumeration.VALUES != attribute_value_enumerationOther.VALUES {
+			diffs = append(diffs, attribute_value_enumeration.GongMarshallField(stage, "VALUES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongDiff(stage *Stage, attribute_value_integerOther *ATTRIBUTE_VALUE_INTEGER) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_integer.Name != attribute_value_integerOther.Name {
+		diffs = append(diffs, attribute_value_integer.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_integer.DEFINITION == nil) != (attribute_value_integerOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_integer.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_integer.DEFINITION != nil && attribute_value_integerOther.DEFINITION != nil {
+		if attribute_value_integer.DEFINITION != attribute_value_integerOther.DEFINITION {
+			diffs = append(diffs, attribute_value_integer.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if attribute_value_integer.THE_VALUE != attribute_value_integerOther.THE_VALUE {
+		diffs = append(diffs, attribute_value_integer.GongMarshallField(stage, "THE_VALUE"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongDiff(stage *Stage, attribute_value_realOther *ATTRIBUTE_VALUE_REAL) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_real.Name != attribute_value_realOther.Name {
+		diffs = append(diffs, attribute_value_real.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_real.DEFINITION == nil) != (attribute_value_realOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_real.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_real.DEFINITION != nil && attribute_value_realOther.DEFINITION != nil {
+		if attribute_value_real.DEFINITION != attribute_value_realOther.DEFINITION {
+			diffs = append(diffs, attribute_value_real.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if attribute_value_real.THE_VALUE != attribute_value_realOther.THE_VALUE {
+		diffs = append(diffs, attribute_value_real.GongMarshallField(stage, "THE_VALUE"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongDiff(stage *Stage, attribute_value_stringOther *ATTRIBUTE_VALUE_STRING) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_string.Name != attribute_value_stringOther.Name {
+		diffs = append(diffs, attribute_value_string.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_string.DEFINITION == nil) != (attribute_value_stringOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_string.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_string.DEFINITION != nil && attribute_value_stringOther.DEFINITION != nil {
+		if attribute_value_string.DEFINITION != attribute_value_stringOther.DEFINITION {
+			diffs = append(diffs, attribute_value_string.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if attribute_value_string.THE_VALUE != attribute_value_stringOther.THE_VALUE {
+		diffs = append(diffs, attribute_value_string.GongMarshallField(stage, "THE_VALUE"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongDiff(stage *Stage, attribute_value_xhtmlOther *ATTRIBUTE_VALUE_XHTML) (diffs []string) {
+	// insertion point for field diffs
+	if attribute_value_xhtml.Name != attribute_value_xhtmlOther.Name {
+		diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "Name"))
+	}
+	if (attribute_value_xhtml.DEFINITION == nil) != (attribute_value_xhtmlOther.DEFINITION == nil) {
+		diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "DEFINITION"))
+	} else if attribute_value_xhtml.DEFINITION != nil && attribute_value_xhtmlOther.DEFINITION != nil {
+		if attribute_value_xhtml.DEFINITION != attribute_value_xhtmlOther.DEFINITION {
+			diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "DEFINITION"))
+		}
+	}
+	if attribute_value_xhtml.IS_SIMPLIFIED != attribute_value_xhtmlOther.IS_SIMPLIFIED {
+		diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED"))
+	}
+	if (attribute_value_xhtml.THE_VALUE == nil) != (attribute_value_xhtmlOther.THE_VALUE == nil) {
+		diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE"))
+	} else if attribute_value_xhtml.THE_VALUE != nil && attribute_value_xhtmlOther.THE_VALUE != nil {
+		if attribute_value_xhtml.THE_VALUE != attribute_value_xhtmlOther.THE_VALUE {
+			diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE"))
+		}
+	}
+	if (attribute_value_xhtml.THE_ORIGINAL_VALUE == nil) != (attribute_value_xhtmlOther.THE_ORIGINAL_VALUE == nil) {
+		diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE"))
+	} else if attribute_value_xhtml.THE_ORIGINAL_VALUE != nil && attribute_value_xhtmlOther.THE_ORIGINAL_VALUE != nil {
+		if attribute_value_xhtml.THE_ORIGINAL_VALUE != attribute_value_xhtmlOther.THE_ORIGINAL_VALUE {
+			diffs = append(diffs, attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_alternative_id *A_ALTERNATIVE_ID) GongDiff(stage *Stage, a_alternative_idOther *A_ALTERNATIVE_ID) (diffs []string) {
+	// insertion point for field diffs
+	if a_alternative_id.Name != a_alternative_idOther.Name {
+		diffs = append(diffs, a_alternative_id.GongMarshallField(stage, "Name"))
+	}
+	if (a_alternative_id.ALTERNATIVE_ID == nil) != (a_alternative_idOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if a_alternative_id.ALTERNATIVE_ID != nil && a_alternative_idOther.ALTERNATIVE_ID != nil {
+		if a_alternative_id.ALTERNATIVE_ID != a_alternative_idOther.ALTERNATIVE_ID {
+			diffs = append(diffs, a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongDiff(stage *Stage, a_attribute_definition_boolean_refOther *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_boolean_ref.Name != a_attribute_definition_boolean_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF != a_attribute_definition_boolean_refOther.ATTRIBUTE_DEFINITION_BOOLEAN_REF {
+		diffs = append(diffs, a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongDiff(stage *Stage, a_attribute_definition_date_refOther *A_ATTRIBUTE_DEFINITION_DATE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_date_ref.Name != a_attribute_definition_date_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_date_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF != a_attribute_definition_date_refOther.ATTRIBUTE_DEFINITION_DATE_REF {
+		diffs = append(diffs, a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongDiff(stage *Stage, a_attribute_definition_enumeration_refOther *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_enumeration_ref.Name != a_attribute_definition_enumeration_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF != a_attribute_definition_enumeration_refOther.ATTRIBUTE_DEFINITION_ENUMERATION_REF {
+		diffs = append(diffs, a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongDiff(stage *Stage, a_attribute_definition_integer_refOther *A_ATTRIBUTE_DEFINITION_INTEGER_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_integer_ref.Name != a_attribute_definition_integer_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_integer_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF != a_attribute_definition_integer_refOther.ATTRIBUTE_DEFINITION_INTEGER_REF {
+		diffs = append(diffs, a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongDiff(stage *Stage, a_attribute_definition_real_refOther *A_ATTRIBUTE_DEFINITION_REAL_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_real_ref.Name != a_attribute_definition_real_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_real_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF != a_attribute_definition_real_refOther.ATTRIBUTE_DEFINITION_REAL_REF {
+		diffs = append(diffs, a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongDiff(stage *Stage, a_attribute_definition_string_refOther *A_ATTRIBUTE_DEFINITION_STRING_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_string_ref.Name != a_attribute_definition_string_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_string_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF != a_attribute_definition_string_refOther.ATTRIBUTE_DEFINITION_STRING_REF {
+		diffs = append(diffs, a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongDiff(stage *Stage, a_attribute_definition_xhtml_refOther *A_ATTRIBUTE_DEFINITION_XHTML_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_definition_xhtml_ref.Name != a_attribute_definition_xhtml_refOther.Name {
+		diffs = append(diffs, a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF != a_attribute_definition_xhtml_refOther.ATTRIBUTE_DEFINITION_XHTML_REF {
+		diffs = append(diffs, a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongDiff(stage *Stage, a_attribute_value_booleanOther *A_ATTRIBUTE_VALUE_BOOLEAN) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_boolean.Name != a_attribute_value_booleanOther.Name {
+		diffs = append(diffs, a_attribute_value_boolean.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_BOOLEANDifferent := false
+	if len(a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN) != len(a_attribute_value_booleanOther.ATTRIBUTE_VALUE_BOOLEAN) {
+		ATTRIBUTE_VALUE_BOOLEANDifferent = true
+	} else {
+		for i := range a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN {
+			if (a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN[i] == nil) != (a_attribute_value_booleanOther.ATTRIBUTE_VALUE_BOOLEAN[i] == nil) {
+				ATTRIBUTE_VALUE_BOOLEANDifferent = true
+				break
+			} else if a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN[i] != nil && a_attribute_value_booleanOther.ATTRIBUTE_VALUE_BOOLEAN[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN[i] != a_attribute_value_booleanOther.ATTRIBUTE_VALUE_BOOLEAN[i] {
+					ATTRIBUTE_VALUE_BOOLEANDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_BOOLEANDifferent {
+		ops := Diff(stage, a_attribute_value_boolean, a_attribute_value_booleanOther, "ATTRIBUTE_VALUE_BOOLEAN", a_attribute_value_booleanOther.ATTRIBUTE_VALUE_BOOLEAN, a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongDiff(stage *Stage, a_attribute_value_dateOther *A_ATTRIBUTE_VALUE_DATE) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_date.Name != a_attribute_value_dateOther.Name {
+		diffs = append(diffs, a_attribute_value_date.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_DATEDifferent := false
+	if len(a_attribute_value_date.ATTRIBUTE_VALUE_DATE) != len(a_attribute_value_dateOther.ATTRIBUTE_VALUE_DATE) {
+		ATTRIBUTE_VALUE_DATEDifferent = true
+	} else {
+		for i := range a_attribute_value_date.ATTRIBUTE_VALUE_DATE {
+			if (a_attribute_value_date.ATTRIBUTE_VALUE_DATE[i] == nil) != (a_attribute_value_dateOther.ATTRIBUTE_VALUE_DATE[i] == nil) {
+				ATTRIBUTE_VALUE_DATEDifferent = true
+				break
+			} else if a_attribute_value_date.ATTRIBUTE_VALUE_DATE[i] != nil && a_attribute_value_dateOther.ATTRIBUTE_VALUE_DATE[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_date.ATTRIBUTE_VALUE_DATE[i] != a_attribute_value_dateOther.ATTRIBUTE_VALUE_DATE[i] {
+					ATTRIBUTE_VALUE_DATEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_DATEDifferent {
+		ops := Diff(stage, a_attribute_value_date, a_attribute_value_dateOther, "ATTRIBUTE_VALUE_DATE", a_attribute_value_dateOther.ATTRIBUTE_VALUE_DATE, a_attribute_value_date.ATTRIBUTE_VALUE_DATE)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongDiff(stage *Stage, a_attribute_value_enumerationOther *A_ATTRIBUTE_VALUE_ENUMERATION) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_enumeration.Name != a_attribute_value_enumerationOther.Name {
+		diffs = append(diffs, a_attribute_value_enumeration.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_ENUMERATIONDifferent := false
+	if len(a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION) != len(a_attribute_value_enumerationOther.ATTRIBUTE_VALUE_ENUMERATION) {
+		ATTRIBUTE_VALUE_ENUMERATIONDifferent = true
+	} else {
+		for i := range a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION {
+			if (a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION[i] == nil) != (a_attribute_value_enumerationOther.ATTRIBUTE_VALUE_ENUMERATION[i] == nil) {
+				ATTRIBUTE_VALUE_ENUMERATIONDifferent = true
+				break
+			} else if a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION[i] != nil && a_attribute_value_enumerationOther.ATTRIBUTE_VALUE_ENUMERATION[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION[i] != a_attribute_value_enumerationOther.ATTRIBUTE_VALUE_ENUMERATION[i] {
+					ATTRIBUTE_VALUE_ENUMERATIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_ENUMERATIONDifferent {
+		ops := Diff(stage, a_attribute_value_enumeration, a_attribute_value_enumerationOther, "ATTRIBUTE_VALUE_ENUMERATION", a_attribute_value_enumerationOther.ATTRIBUTE_VALUE_ENUMERATION, a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongDiff(stage *Stage, a_attribute_value_integerOther *A_ATTRIBUTE_VALUE_INTEGER) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_integer.Name != a_attribute_value_integerOther.Name {
+		diffs = append(diffs, a_attribute_value_integer.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_INTEGERDifferent := false
+	if len(a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER) != len(a_attribute_value_integerOther.ATTRIBUTE_VALUE_INTEGER) {
+		ATTRIBUTE_VALUE_INTEGERDifferent = true
+	} else {
+		for i := range a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER {
+			if (a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER[i] == nil) != (a_attribute_value_integerOther.ATTRIBUTE_VALUE_INTEGER[i] == nil) {
+				ATTRIBUTE_VALUE_INTEGERDifferent = true
+				break
+			} else if a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER[i] != nil && a_attribute_value_integerOther.ATTRIBUTE_VALUE_INTEGER[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER[i] != a_attribute_value_integerOther.ATTRIBUTE_VALUE_INTEGER[i] {
+					ATTRIBUTE_VALUE_INTEGERDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_INTEGERDifferent {
+		ops := Diff(stage, a_attribute_value_integer, a_attribute_value_integerOther, "ATTRIBUTE_VALUE_INTEGER", a_attribute_value_integerOther.ATTRIBUTE_VALUE_INTEGER, a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongDiff(stage *Stage, a_attribute_value_realOther *A_ATTRIBUTE_VALUE_REAL) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_real.Name != a_attribute_value_realOther.Name {
+		diffs = append(diffs, a_attribute_value_real.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_REALDifferent := false
+	if len(a_attribute_value_real.ATTRIBUTE_VALUE_REAL) != len(a_attribute_value_realOther.ATTRIBUTE_VALUE_REAL) {
+		ATTRIBUTE_VALUE_REALDifferent = true
+	} else {
+		for i := range a_attribute_value_real.ATTRIBUTE_VALUE_REAL {
+			if (a_attribute_value_real.ATTRIBUTE_VALUE_REAL[i] == nil) != (a_attribute_value_realOther.ATTRIBUTE_VALUE_REAL[i] == nil) {
+				ATTRIBUTE_VALUE_REALDifferent = true
+				break
+			} else if a_attribute_value_real.ATTRIBUTE_VALUE_REAL[i] != nil && a_attribute_value_realOther.ATTRIBUTE_VALUE_REAL[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_real.ATTRIBUTE_VALUE_REAL[i] != a_attribute_value_realOther.ATTRIBUTE_VALUE_REAL[i] {
+					ATTRIBUTE_VALUE_REALDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_REALDifferent {
+		ops := Diff(stage, a_attribute_value_real, a_attribute_value_realOther, "ATTRIBUTE_VALUE_REAL", a_attribute_value_realOther.ATTRIBUTE_VALUE_REAL, a_attribute_value_real.ATTRIBUTE_VALUE_REAL)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongDiff(stage *Stage, a_attribute_value_stringOther *A_ATTRIBUTE_VALUE_STRING) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_string.Name != a_attribute_value_stringOther.Name {
+		diffs = append(diffs, a_attribute_value_string.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_STRINGDifferent := false
+	if len(a_attribute_value_string.ATTRIBUTE_VALUE_STRING) != len(a_attribute_value_stringOther.ATTRIBUTE_VALUE_STRING) {
+		ATTRIBUTE_VALUE_STRINGDifferent = true
+	} else {
+		for i := range a_attribute_value_string.ATTRIBUTE_VALUE_STRING {
+			if (a_attribute_value_string.ATTRIBUTE_VALUE_STRING[i] == nil) != (a_attribute_value_stringOther.ATTRIBUTE_VALUE_STRING[i] == nil) {
+				ATTRIBUTE_VALUE_STRINGDifferent = true
+				break
+			} else if a_attribute_value_string.ATTRIBUTE_VALUE_STRING[i] != nil && a_attribute_value_stringOther.ATTRIBUTE_VALUE_STRING[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_string.ATTRIBUTE_VALUE_STRING[i] != a_attribute_value_stringOther.ATTRIBUTE_VALUE_STRING[i] {
+					ATTRIBUTE_VALUE_STRINGDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_STRINGDifferent {
+		ops := Diff(stage, a_attribute_value_string, a_attribute_value_stringOther, "ATTRIBUTE_VALUE_STRING", a_attribute_value_stringOther.ATTRIBUTE_VALUE_STRING, a_attribute_value_string.ATTRIBUTE_VALUE_STRING)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongDiff(stage *Stage, a_attribute_value_xhtmlOther *A_ATTRIBUTE_VALUE_XHTML) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_xhtml.Name != a_attribute_value_xhtmlOther.Name {
+		diffs = append(diffs, a_attribute_value_xhtml.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_XHTMLDifferent := false
+	if len(a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML) != len(a_attribute_value_xhtmlOther.ATTRIBUTE_VALUE_XHTML) {
+		ATTRIBUTE_VALUE_XHTMLDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML {
+			if (a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML[i] == nil) != (a_attribute_value_xhtmlOther.ATTRIBUTE_VALUE_XHTML[i] == nil) {
+				ATTRIBUTE_VALUE_XHTMLDifferent = true
+				break
+			} else if a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML[i] != nil && a_attribute_value_xhtmlOther.ATTRIBUTE_VALUE_XHTML[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML[i] != a_attribute_value_xhtmlOther.ATTRIBUTE_VALUE_XHTML[i] {
+					ATTRIBUTE_VALUE_XHTMLDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_XHTMLDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml, a_attribute_value_xhtmlOther, "ATTRIBUTE_VALUE_XHTML", a_attribute_value_xhtmlOther.ATTRIBUTE_VALUE_XHTML, a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongDiff(stage *Stage, a_attribute_value_xhtml_1Other *A_ATTRIBUTE_VALUE_XHTML_1) (diffs []string) {
+	// insertion point for field diffs
+	if a_attribute_value_xhtml_1.Name != a_attribute_value_xhtml_1Other.Name {
+		diffs = append(diffs, a_attribute_value_xhtml_1.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_VALUE_BOOLEANDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_BOOLEAN) {
+		ATTRIBUTE_VALUE_BOOLEANDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_BOOLEAN[i] == nil) {
+				ATTRIBUTE_VALUE_BOOLEANDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_BOOLEAN[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_BOOLEAN[i] {
+					ATTRIBUTE_VALUE_BOOLEANDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_BOOLEANDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_BOOLEAN", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_BOOLEAN, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_VALUE_DATEDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_DATE) {
+		ATTRIBUTE_VALUE_DATEDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_DATE[i] == nil) {
+				ATTRIBUTE_VALUE_DATEDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_DATE[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_DATE[i] {
+					ATTRIBUTE_VALUE_DATEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_DATEDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_DATE", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_DATE, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_VALUE_ENUMERATIONDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_ENUMERATION) {
+		ATTRIBUTE_VALUE_ENUMERATIONDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_ENUMERATION[i] == nil) {
+				ATTRIBUTE_VALUE_ENUMERATIONDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_ENUMERATION[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_ENUMERATION[i] {
+					ATTRIBUTE_VALUE_ENUMERATIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_ENUMERATIONDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_ENUMERATION", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_ENUMERATION, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_VALUE_INTEGERDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_INTEGER) {
+		ATTRIBUTE_VALUE_INTEGERDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_INTEGER[i] == nil) {
+				ATTRIBUTE_VALUE_INTEGERDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_INTEGER[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_INTEGER[i] {
+					ATTRIBUTE_VALUE_INTEGERDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_INTEGERDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_INTEGER", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_INTEGER, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_VALUE_REALDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_REAL) {
+		ATTRIBUTE_VALUE_REALDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_REAL[i] == nil) {
+				ATTRIBUTE_VALUE_REALDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_REAL[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_REAL[i] {
+					ATTRIBUTE_VALUE_REALDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_REALDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_REAL", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_REAL, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_VALUE_STRINGDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_STRING) {
+		ATTRIBUTE_VALUE_STRINGDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_STRING[i] == nil) {
+				ATTRIBUTE_VALUE_STRINGDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_STRING[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_STRING[i] {
+					ATTRIBUTE_VALUE_STRINGDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_STRINGDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_STRING", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_STRING, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_VALUE_XHTMLDifferent := false
+	if len(a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML) != len(a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_XHTML) {
+		ATTRIBUTE_VALUE_XHTMLDifferent = true
+	} else {
+		for i := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML {
+			if (a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML[i] == nil) != (a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_XHTML[i] == nil) {
+				ATTRIBUTE_VALUE_XHTMLDifferent = true
+				break
+			} else if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML[i] != nil && a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_XHTML[i] != nil {
+				// this is a pointer comparaison
+				if a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML[i] != a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_XHTML[i] {
+					ATTRIBUTE_VALUE_XHTMLDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_VALUE_XHTMLDifferent {
+		ops := Diff(stage, a_attribute_value_xhtml_1, a_attribute_value_xhtml_1Other, "ATTRIBUTE_VALUE_XHTML", a_attribute_value_xhtml_1Other.ATTRIBUTE_VALUE_XHTML, a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_children *A_CHILDREN) GongDiff(stage *Stage, a_childrenOther *A_CHILDREN) (diffs []string) {
+	// insertion point for field diffs
+	if a_children.Name != a_childrenOther.Name {
+		diffs = append(diffs, a_children.GongMarshallField(stage, "Name"))
+	}
+	SPEC_HIERARCHYDifferent := false
+	if len(a_children.SPEC_HIERARCHY) != len(a_childrenOther.SPEC_HIERARCHY) {
+		SPEC_HIERARCHYDifferent = true
+	} else {
+		for i := range a_children.SPEC_HIERARCHY {
+			if (a_children.SPEC_HIERARCHY[i] == nil) != (a_childrenOther.SPEC_HIERARCHY[i] == nil) {
+				SPEC_HIERARCHYDifferent = true
+				break
+			} else if a_children.SPEC_HIERARCHY[i] != nil && a_childrenOther.SPEC_HIERARCHY[i] != nil {
+				// this is a pointer comparaison
+				if a_children.SPEC_HIERARCHY[i] != a_childrenOther.SPEC_HIERARCHY[i] {
+					SPEC_HIERARCHYDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPEC_HIERARCHYDifferent {
+		ops := Diff(stage, a_children, a_childrenOther, "SPEC_HIERARCHY", a_childrenOther.SPEC_HIERARCHY, a_children.SPEC_HIERARCHY)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_core_content *A_CORE_CONTENT) GongDiff(stage *Stage, a_core_contentOther *A_CORE_CONTENT) (diffs []string) {
+	// insertion point for field diffs
+	if a_core_content.Name != a_core_contentOther.Name {
+		diffs = append(diffs, a_core_content.GongMarshallField(stage, "Name"))
+	}
+	if (a_core_content.REQ_IF_CONTENT == nil) != (a_core_contentOther.REQ_IF_CONTENT == nil) {
+		diffs = append(diffs, a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT"))
+	} else if a_core_content.REQ_IF_CONTENT != nil && a_core_contentOther.REQ_IF_CONTENT != nil {
+		if a_core_content.REQ_IF_CONTENT != a_core_contentOther.REQ_IF_CONTENT {
+			diffs = append(diffs, a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatypes *A_DATATYPES) GongDiff(stage *Stage, a_datatypesOther *A_DATATYPES) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatypes.Name != a_datatypesOther.Name {
+		diffs = append(diffs, a_datatypes.GongMarshallField(stage, "Name"))
+	}
+	DATATYPE_DEFINITION_BOOLEANDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_BOOLEAN) != len(a_datatypesOther.DATATYPE_DEFINITION_BOOLEAN) {
+		DATATYPE_DEFINITION_BOOLEANDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_BOOLEAN {
+			if (a_datatypes.DATATYPE_DEFINITION_BOOLEAN[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_BOOLEAN[i] == nil) {
+				DATATYPE_DEFINITION_BOOLEANDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_BOOLEAN[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_BOOLEAN[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_BOOLEAN[i] != a_datatypesOther.DATATYPE_DEFINITION_BOOLEAN[i] {
+					DATATYPE_DEFINITION_BOOLEANDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_BOOLEANDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_BOOLEAN", a_datatypesOther.DATATYPE_DEFINITION_BOOLEAN, a_datatypes.DATATYPE_DEFINITION_BOOLEAN)
+		diffs = append(diffs, ops)
+	}
+	DATATYPE_DEFINITION_DATEDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_DATE) != len(a_datatypesOther.DATATYPE_DEFINITION_DATE) {
+		DATATYPE_DEFINITION_DATEDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_DATE {
+			if (a_datatypes.DATATYPE_DEFINITION_DATE[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_DATE[i] == nil) {
+				DATATYPE_DEFINITION_DATEDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_DATE[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_DATE[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_DATE[i] != a_datatypesOther.DATATYPE_DEFINITION_DATE[i] {
+					DATATYPE_DEFINITION_DATEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_DATEDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_DATE", a_datatypesOther.DATATYPE_DEFINITION_DATE, a_datatypes.DATATYPE_DEFINITION_DATE)
+		diffs = append(diffs, ops)
+	}
+	DATATYPE_DEFINITION_ENUMERATIONDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_ENUMERATION) != len(a_datatypesOther.DATATYPE_DEFINITION_ENUMERATION) {
+		DATATYPE_DEFINITION_ENUMERATIONDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_ENUMERATION {
+			if (a_datatypes.DATATYPE_DEFINITION_ENUMERATION[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_ENUMERATION[i] == nil) {
+				DATATYPE_DEFINITION_ENUMERATIONDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_ENUMERATION[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_ENUMERATION[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_ENUMERATION[i] != a_datatypesOther.DATATYPE_DEFINITION_ENUMERATION[i] {
+					DATATYPE_DEFINITION_ENUMERATIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_ENUMERATIONDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_ENUMERATION", a_datatypesOther.DATATYPE_DEFINITION_ENUMERATION, a_datatypes.DATATYPE_DEFINITION_ENUMERATION)
+		diffs = append(diffs, ops)
+	}
+	DATATYPE_DEFINITION_INTEGERDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_INTEGER) != len(a_datatypesOther.DATATYPE_DEFINITION_INTEGER) {
+		DATATYPE_DEFINITION_INTEGERDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_INTEGER {
+			if (a_datatypes.DATATYPE_DEFINITION_INTEGER[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_INTEGER[i] == nil) {
+				DATATYPE_DEFINITION_INTEGERDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_INTEGER[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_INTEGER[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_INTEGER[i] != a_datatypesOther.DATATYPE_DEFINITION_INTEGER[i] {
+					DATATYPE_DEFINITION_INTEGERDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_INTEGERDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_INTEGER", a_datatypesOther.DATATYPE_DEFINITION_INTEGER, a_datatypes.DATATYPE_DEFINITION_INTEGER)
+		diffs = append(diffs, ops)
+	}
+	DATATYPE_DEFINITION_REALDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_REAL) != len(a_datatypesOther.DATATYPE_DEFINITION_REAL) {
+		DATATYPE_DEFINITION_REALDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_REAL {
+			if (a_datatypes.DATATYPE_DEFINITION_REAL[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_REAL[i] == nil) {
+				DATATYPE_DEFINITION_REALDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_REAL[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_REAL[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_REAL[i] != a_datatypesOther.DATATYPE_DEFINITION_REAL[i] {
+					DATATYPE_DEFINITION_REALDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_REALDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_REAL", a_datatypesOther.DATATYPE_DEFINITION_REAL, a_datatypes.DATATYPE_DEFINITION_REAL)
+		diffs = append(diffs, ops)
+	}
+	DATATYPE_DEFINITION_STRINGDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_STRING) != len(a_datatypesOther.DATATYPE_DEFINITION_STRING) {
+		DATATYPE_DEFINITION_STRINGDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_STRING {
+			if (a_datatypes.DATATYPE_DEFINITION_STRING[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_STRING[i] == nil) {
+				DATATYPE_DEFINITION_STRINGDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_STRING[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_STRING[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_STRING[i] != a_datatypesOther.DATATYPE_DEFINITION_STRING[i] {
+					DATATYPE_DEFINITION_STRINGDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_STRINGDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_STRING", a_datatypesOther.DATATYPE_DEFINITION_STRING, a_datatypes.DATATYPE_DEFINITION_STRING)
+		diffs = append(diffs, ops)
+	}
+	DATATYPE_DEFINITION_XHTMLDifferent := false
+	if len(a_datatypes.DATATYPE_DEFINITION_XHTML) != len(a_datatypesOther.DATATYPE_DEFINITION_XHTML) {
+		DATATYPE_DEFINITION_XHTMLDifferent = true
+	} else {
+		for i := range a_datatypes.DATATYPE_DEFINITION_XHTML {
+			if (a_datatypes.DATATYPE_DEFINITION_XHTML[i] == nil) != (a_datatypesOther.DATATYPE_DEFINITION_XHTML[i] == nil) {
+				DATATYPE_DEFINITION_XHTMLDifferent = true
+				break
+			} else if a_datatypes.DATATYPE_DEFINITION_XHTML[i] != nil && a_datatypesOther.DATATYPE_DEFINITION_XHTML[i] != nil {
+				// this is a pointer comparaison
+				if a_datatypes.DATATYPE_DEFINITION_XHTML[i] != a_datatypesOther.DATATYPE_DEFINITION_XHTML[i] {
+					DATATYPE_DEFINITION_XHTMLDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if DATATYPE_DEFINITION_XHTMLDifferent {
+		ops := Diff(stage, a_datatypes, a_datatypesOther, "DATATYPE_DEFINITION_XHTML", a_datatypesOther.DATATYPE_DEFINITION_XHTML, a_datatypes.DATATYPE_DEFINITION_XHTML)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongDiff(stage *Stage, a_datatype_definition_boolean_refOther *A_DATATYPE_DEFINITION_BOOLEAN_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_boolean_ref.Name != a_datatype_definition_boolean_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF != a_datatype_definition_boolean_refOther.DATATYPE_DEFINITION_BOOLEAN_REF {
+		diffs = append(diffs, a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongDiff(stage *Stage, a_datatype_definition_date_refOther *A_DATATYPE_DEFINITION_DATE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_date_ref.Name != a_datatype_definition_date_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_date_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF != a_datatype_definition_date_refOther.DATATYPE_DEFINITION_DATE_REF {
+		diffs = append(diffs, a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongDiff(stage *Stage, a_datatype_definition_enumeration_refOther *A_DATATYPE_DEFINITION_ENUMERATION_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_enumeration_ref.Name != a_datatype_definition_enumeration_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF != a_datatype_definition_enumeration_refOther.DATATYPE_DEFINITION_ENUMERATION_REF {
+		diffs = append(diffs, a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongDiff(stage *Stage, a_datatype_definition_integer_refOther *A_DATATYPE_DEFINITION_INTEGER_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_integer_ref.Name != a_datatype_definition_integer_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_integer_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF != a_datatype_definition_integer_refOther.DATATYPE_DEFINITION_INTEGER_REF {
+		diffs = append(diffs, a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongDiff(stage *Stage, a_datatype_definition_real_refOther *A_DATATYPE_DEFINITION_REAL_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_real_ref.Name != a_datatype_definition_real_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_real_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF != a_datatype_definition_real_refOther.DATATYPE_DEFINITION_REAL_REF {
+		diffs = append(diffs, a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongDiff(stage *Stage, a_datatype_definition_string_refOther *A_DATATYPE_DEFINITION_STRING_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_string_ref.Name != a_datatype_definition_string_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_string_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF != a_datatype_definition_string_refOther.DATATYPE_DEFINITION_STRING_REF {
+		diffs = append(diffs, a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongDiff(stage *Stage, a_datatype_definition_xhtml_refOther *A_DATATYPE_DEFINITION_XHTML_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_datatype_definition_xhtml_ref.Name != a_datatype_definition_xhtml_refOther.Name {
+		diffs = append(diffs, a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF != a_datatype_definition_xhtml_refOther.DATATYPE_DEFINITION_XHTML_REF {
+		diffs = append(diffs, a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_editable_atts *A_EDITABLE_ATTS) GongDiff(stage *Stage, a_editable_attsOther *A_EDITABLE_ATTS) (diffs []string) {
+	// insertion point for field diffs
+	if a_editable_atts.Name != a_editable_attsOther.Name {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "Name"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_BOOLEAN_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_DATE_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_ENUMERATION_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_INTEGER_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_REAL_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_STRING_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF"))
+	}
+	if a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF != a_editable_attsOther.ATTRIBUTE_DEFINITION_XHTML_REF {
+		diffs = append(diffs, a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongDiff(stage *Stage, a_enum_value_refOther *A_ENUM_VALUE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_enum_value_ref.Name != a_enum_value_refOther.Name {
+		diffs = append(diffs, a_enum_value_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_enum_value_ref.ENUM_VALUE_REF != a_enum_value_refOther.ENUM_VALUE_REF {
+		diffs = append(diffs, a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_object *A_OBJECT) GongDiff(stage *Stage, a_objectOther *A_OBJECT) (diffs []string) {
+	// insertion point for field diffs
+	if a_object.Name != a_objectOther.Name {
+		diffs = append(diffs, a_object.GongMarshallField(stage, "Name"))
+	}
+	if a_object.SPEC_OBJECT_REF != a_objectOther.SPEC_OBJECT_REF {
+		diffs = append(diffs, a_object.GongMarshallField(stage, "SPEC_OBJECT_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_properties *A_PROPERTIES) GongDiff(stage *Stage, a_propertiesOther *A_PROPERTIES) (diffs []string) {
+	// insertion point for field diffs
+	if a_properties.Name != a_propertiesOther.Name {
+		diffs = append(diffs, a_properties.GongMarshallField(stage, "Name"))
+	}
+	if (a_properties.EMBEDDED_VALUE == nil) != (a_propertiesOther.EMBEDDED_VALUE == nil) {
+		diffs = append(diffs, a_properties.GongMarshallField(stage, "EMBEDDED_VALUE"))
+	} else if a_properties.EMBEDDED_VALUE != nil && a_propertiesOther.EMBEDDED_VALUE != nil {
+		if a_properties.EMBEDDED_VALUE != a_propertiesOther.EMBEDDED_VALUE {
+			diffs = append(diffs, a_properties.GongMarshallField(stage, "EMBEDDED_VALUE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongDiff(stage *Stage, a_relation_group_type_refOther *A_RELATION_GROUP_TYPE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_relation_group_type_ref.Name != a_relation_group_type_refOther.Name {
+		diffs = append(diffs, a_relation_group_type_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_relation_group_type_ref.RELATION_GROUP_TYPE_REF != a_relation_group_type_refOther.RELATION_GROUP_TYPE_REF {
+		diffs = append(diffs, a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_source_1 *A_SOURCE_1) GongDiff(stage *Stage, a_source_1Other *A_SOURCE_1) (diffs []string) {
+	// insertion point for field diffs
+	if a_source_1.Name != a_source_1Other.Name {
+		diffs = append(diffs, a_source_1.GongMarshallField(stage, "Name"))
+	}
+	if a_source_1.SPEC_OBJECT_REF != a_source_1Other.SPEC_OBJECT_REF {
+		diffs = append(diffs, a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongDiff(stage *Stage, a_source_specification_1Other *A_SOURCE_SPECIFICATION_1) (diffs []string) {
+	// insertion point for field diffs
+	if a_source_specification_1.Name != a_source_specification_1Other.Name {
+		diffs = append(diffs, a_source_specification_1.GongMarshallField(stage, "Name"))
+	}
+	if a_source_specification_1.SPECIFICATION_REF != a_source_specification_1Other.SPECIFICATION_REF {
+		diffs = append(diffs, a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_specifications *A_SPECIFICATIONS) GongDiff(stage *Stage, a_specificationsOther *A_SPECIFICATIONS) (diffs []string) {
+	// insertion point for field diffs
+	if a_specifications.Name != a_specificationsOther.Name {
+		diffs = append(diffs, a_specifications.GongMarshallField(stage, "Name"))
+	}
+	SPECIFICATIONDifferent := false
+	if len(a_specifications.SPECIFICATION) != len(a_specificationsOther.SPECIFICATION) {
+		SPECIFICATIONDifferent = true
+	} else {
+		for i := range a_specifications.SPECIFICATION {
+			if (a_specifications.SPECIFICATION[i] == nil) != (a_specificationsOther.SPECIFICATION[i] == nil) {
+				SPECIFICATIONDifferent = true
+				break
+			} else if a_specifications.SPECIFICATION[i] != nil && a_specificationsOther.SPECIFICATION[i] != nil {
+				// this is a pointer comparaison
+				if a_specifications.SPECIFICATION[i] != a_specificationsOther.SPECIFICATION[i] {
+					SPECIFICATIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPECIFICATIONDifferent {
+		ops := Diff(stage, a_specifications, a_specificationsOther, "SPECIFICATION", a_specificationsOther.SPECIFICATION, a_specifications.SPECIFICATION)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongDiff(stage *Stage, a_specification_type_refOther *A_SPECIFICATION_TYPE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_specification_type_ref.Name != a_specification_type_refOther.Name {
+		diffs = append(diffs, a_specification_type_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_specification_type_ref.SPECIFICATION_TYPE_REF != a_specification_type_refOther.SPECIFICATION_TYPE_REF {
+		diffs = append(diffs, a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_specified_values *A_SPECIFIED_VALUES) GongDiff(stage *Stage, a_specified_valuesOther *A_SPECIFIED_VALUES) (diffs []string) {
+	// insertion point for field diffs
+	if a_specified_values.Name != a_specified_valuesOther.Name {
+		diffs = append(diffs, a_specified_values.GongMarshallField(stage, "Name"))
+	}
+	ENUM_VALUEDifferent := false
+	if len(a_specified_values.ENUM_VALUE) != len(a_specified_valuesOther.ENUM_VALUE) {
+		ENUM_VALUEDifferent = true
+	} else {
+		for i := range a_specified_values.ENUM_VALUE {
+			if (a_specified_values.ENUM_VALUE[i] == nil) != (a_specified_valuesOther.ENUM_VALUE[i] == nil) {
+				ENUM_VALUEDifferent = true
+				break
+			} else if a_specified_values.ENUM_VALUE[i] != nil && a_specified_valuesOther.ENUM_VALUE[i] != nil {
+				// this is a pointer comparaison
+				if a_specified_values.ENUM_VALUE[i] != a_specified_valuesOther.ENUM_VALUE[i] {
+					ENUM_VALUEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ENUM_VALUEDifferent {
+		ops := Diff(stage, a_specified_values, a_specified_valuesOther, "ENUM_VALUE", a_specified_valuesOther.ENUM_VALUE, a_specified_values.ENUM_VALUE)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongDiff(stage *Stage, a_spec_attributesOther *A_SPEC_ATTRIBUTES) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_attributes.Name != a_spec_attributesOther.Name {
+		diffs = append(diffs, a_spec_attributes.GongMarshallField(stage, "Name"))
+	}
+	ATTRIBUTE_DEFINITION_BOOLEANDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_BOOLEAN) {
+		ATTRIBUTE_DEFINITION_BOOLEANDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_BOOLEAN[i] == nil) {
+				ATTRIBUTE_DEFINITION_BOOLEANDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_BOOLEAN[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_BOOLEAN[i] {
+					ATTRIBUTE_DEFINITION_BOOLEANDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_BOOLEANDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_BOOLEAN", a_spec_attributesOther.ATTRIBUTE_DEFINITION_BOOLEAN, a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_DEFINITION_DATEDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_DATE) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_DATE) {
+		ATTRIBUTE_DEFINITION_DATEDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_DATE {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_DATE[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_DATE[i] == nil) {
+				ATTRIBUTE_DEFINITION_DATEDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_DATE[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_DATE[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_DATE[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_DATE[i] {
+					ATTRIBUTE_DEFINITION_DATEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_DATEDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_DATE", a_spec_attributesOther.ATTRIBUTE_DEFINITION_DATE, a_spec_attributes.ATTRIBUTE_DEFINITION_DATE)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_DEFINITION_ENUMERATIONDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_ENUMERATION) {
+		ATTRIBUTE_DEFINITION_ENUMERATIONDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_ENUMERATION[i] == nil) {
+				ATTRIBUTE_DEFINITION_ENUMERATIONDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_ENUMERATION[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_ENUMERATION[i] {
+					ATTRIBUTE_DEFINITION_ENUMERATIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_ENUMERATIONDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_ENUMERATION", a_spec_attributesOther.ATTRIBUTE_DEFINITION_ENUMERATION, a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_DEFINITION_INTEGERDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_INTEGER) {
+		ATTRIBUTE_DEFINITION_INTEGERDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_INTEGER[i] == nil) {
+				ATTRIBUTE_DEFINITION_INTEGERDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_INTEGER[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_INTEGER[i] {
+					ATTRIBUTE_DEFINITION_INTEGERDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_INTEGERDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_INTEGER", a_spec_attributesOther.ATTRIBUTE_DEFINITION_INTEGER, a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_DEFINITION_REALDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_REAL) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_REAL) {
+		ATTRIBUTE_DEFINITION_REALDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_REAL {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_REAL[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_REAL[i] == nil) {
+				ATTRIBUTE_DEFINITION_REALDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_REAL[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_REAL[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_REAL[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_REAL[i] {
+					ATTRIBUTE_DEFINITION_REALDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_REALDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_REAL", a_spec_attributesOther.ATTRIBUTE_DEFINITION_REAL, a_spec_attributes.ATTRIBUTE_DEFINITION_REAL)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_DEFINITION_STRINGDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_STRING) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_STRING) {
+		ATTRIBUTE_DEFINITION_STRINGDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_STRING {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_STRING[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_STRING[i] == nil) {
+				ATTRIBUTE_DEFINITION_STRINGDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_STRING[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_STRING[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_STRING[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_STRING[i] {
+					ATTRIBUTE_DEFINITION_STRINGDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_STRINGDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_STRING", a_spec_attributesOther.ATTRIBUTE_DEFINITION_STRING, a_spec_attributes.ATTRIBUTE_DEFINITION_STRING)
+		diffs = append(diffs, ops)
+	}
+	ATTRIBUTE_DEFINITION_XHTMLDifferent := false
+	if len(a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML) != len(a_spec_attributesOther.ATTRIBUTE_DEFINITION_XHTML) {
+		ATTRIBUTE_DEFINITION_XHTMLDifferent = true
+	} else {
+		for i := range a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML {
+			if (a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML[i] == nil) != (a_spec_attributesOther.ATTRIBUTE_DEFINITION_XHTML[i] == nil) {
+				ATTRIBUTE_DEFINITION_XHTMLDifferent = true
+				break
+			} else if a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML[i] != nil && a_spec_attributesOther.ATTRIBUTE_DEFINITION_XHTML[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML[i] != a_spec_attributesOther.ATTRIBUTE_DEFINITION_XHTML[i] {
+					ATTRIBUTE_DEFINITION_XHTMLDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ATTRIBUTE_DEFINITION_XHTMLDifferent {
+		ops := Diff(stage, a_spec_attributes, a_spec_attributesOther, "ATTRIBUTE_DEFINITION_XHTML", a_spec_attributesOther.ATTRIBUTE_DEFINITION_XHTML, a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_objects *A_SPEC_OBJECTS) GongDiff(stage *Stage, a_spec_objectsOther *A_SPEC_OBJECTS) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_objects.Name != a_spec_objectsOther.Name {
+		diffs = append(diffs, a_spec_objects.GongMarshallField(stage, "Name"))
+	}
+	SPEC_OBJECTDifferent := false
+	if len(a_spec_objects.SPEC_OBJECT) != len(a_spec_objectsOther.SPEC_OBJECT) {
+		SPEC_OBJECTDifferent = true
+	} else {
+		for i := range a_spec_objects.SPEC_OBJECT {
+			if (a_spec_objects.SPEC_OBJECT[i] == nil) != (a_spec_objectsOther.SPEC_OBJECT[i] == nil) {
+				SPEC_OBJECTDifferent = true
+				break
+			} else if a_spec_objects.SPEC_OBJECT[i] != nil && a_spec_objectsOther.SPEC_OBJECT[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_objects.SPEC_OBJECT[i] != a_spec_objectsOther.SPEC_OBJECT[i] {
+					SPEC_OBJECTDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPEC_OBJECTDifferent {
+		ops := Diff(stage, a_spec_objects, a_spec_objectsOther, "SPEC_OBJECT", a_spec_objectsOther.SPEC_OBJECT, a_spec_objects.SPEC_OBJECT)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongDiff(stage *Stage, a_spec_object_type_refOther *A_SPEC_OBJECT_TYPE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_object_type_ref.Name != a_spec_object_type_refOther.Name {
+		diffs = append(diffs, a_spec_object_type_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF != a_spec_object_type_refOther.SPEC_OBJECT_TYPE_REF {
+		diffs = append(diffs, a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_relations *A_SPEC_RELATIONS) GongDiff(stage *Stage, a_spec_relationsOther *A_SPEC_RELATIONS) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_relations.Name != a_spec_relationsOther.Name {
+		diffs = append(diffs, a_spec_relations.GongMarshallField(stage, "Name"))
+	}
+	SPEC_RELATIONDifferent := false
+	if len(a_spec_relations.SPEC_RELATION) != len(a_spec_relationsOther.SPEC_RELATION) {
+		SPEC_RELATIONDifferent = true
+	} else {
+		for i := range a_spec_relations.SPEC_RELATION {
+			if (a_spec_relations.SPEC_RELATION[i] == nil) != (a_spec_relationsOther.SPEC_RELATION[i] == nil) {
+				SPEC_RELATIONDifferent = true
+				break
+			} else if a_spec_relations.SPEC_RELATION[i] != nil && a_spec_relationsOther.SPEC_RELATION[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_relations.SPEC_RELATION[i] != a_spec_relationsOther.SPEC_RELATION[i] {
+					SPEC_RELATIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPEC_RELATIONDifferent {
+		ops := Diff(stage, a_spec_relations, a_spec_relationsOther, "SPEC_RELATION", a_spec_relationsOther.SPEC_RELATION, a_spec_relations.SPEC_RELATION)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongDiff(stage *Stage, a_spec_relation_groupsOther *A_SPEC_RELATION_GROUPS) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_relation_groups.Name != a_spec_relation_groupsOther.Name {
+		diffs = append(diffs, a_spec_relation_groups.GongMarshallField(stage, "Name"))
+	}
+	RELATION_GROUPDifferent := false
+	if len(a_spec_relation_groups.RELATION_GROUP) != len(a_spec_relation_groupsOther.RELATION_GROUP) {
+		RELATION_GROUPDifferent = true
+	} else {
+		for i := range a_spec_relation_groups.RELATION_GROUP {
+			if (a_spec_relation_groups.RELATION_GROUP[i] == nil) != (a_spec_relation_groupsOther.RELATION_GROUP[i] == nil) {
+				RELATION_GROUPDifferent = true
+				break
+			} else if a_spec_relation_groups.RELATION_GROUP[i] != nil && a_spec_relation_groupsOther.RELATION_GROUP[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_relation_groups.RELATION_GROUP[i] != a_spec_relation_groupsOther.RELATION_GROUP[i] {
+					RELATION_GROUPDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if RELATION_GROUPDifferent {
+		ops := Diff(stage, a_spec_relation_groups, a_spec_relation_groupsOther, "RELATION_GROUP", a_spec_relation_groupsOther.RELATION_GROUP, a_spec_relation_groups.RELATION_GROUP)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongDiff(stage *Stage, a_spec_relation_refOther *A_SPEC_RELATION_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_relation_ref.Name != a_spec_relation_refOther.Name {
+		diffs = append(diffs, a_spec_relation_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_spec_relation_ref.SPEC_RELATION_REF != a_spec_relation_refOther.SPEC_RELATION_REF {
+		diffs = append(diffs, a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongDiff(stage *Stage, a_spec_relation_type_refOther *A_SPEC_RELATION_TYPE_REF) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_relation_type_ref.Name != a_spec_relation_type_refOther.Name {
+		diffs = append(diffs, a_spec_relation_type_ref.GongMarshallField(stage, "Name"))
+	}
+	if a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF != a_spec_relation_type_refOther.SPEC_RELATION_TYPE_REF {
+		diffs = append(diffs, a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_spec_types *A_SPEC_TYPES) GongDiff(stage *Stage, a_spec_typesOther *A_SPEC_TYPES) (diffs []string) {
+	// insertion point for field diffs
+	if a_spec_types.Name != a_spec_typesOther.Name {
+		diffs = append(diffs, a_spec_types.GongMarshallField(stage, "Name"))
+	}
+	RELATION_GROUP_TYPEDifferent := false
+	if len(a_spec_types.RELATION_GROUP_TYPE) != len(a_spec_typesOther.RELATION_GROUP_TYPE) {
+		RELATION_GROUP_TYPEDifferent = true
+	} else {
+		for i := range a_spec_types.RELATION_GROUP_TYPE {
+			if (a_spec_types.RELATION_GROUP_TYPE[i] == nil) != (a_spec_typesOther.RELATION_GROUP_TYPE[i] == nil) {
+				RELATION_GROUP_TYPEDifferent = true
+				break
+			} else if a_spec_types.RELATION_GROUP_TYPE[i] != nil && a_spec_typesOther.RELATION_GROUP_TYPE[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_types.RELATION_GROUP_TYPE[i] != a_spec_typesOther.RELATION_GROUP_TYPE[i] {
+					RELATION_GROUP_TYPEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if RELATION_GROUP_TYPEDifferent {
+		ops := Diff(stage, a_spec_types, a_spec_typesOther, "RELATION_GROUP_TYPE", a_spec_typesOther.RELATION_GROUP_TYPE, a_spec_types.RELATION_GROUP_TYPE)
+		diffs = append(diffs, ops)
+	}
+	SPEC_OBJECT_TYPEDifferent := false
+	if len(a_spec_types.SPEC_OBJECT_TYPE) != len(a_spec_typesOther.SPEC_OBJECT_TYPE) {
+		SPEC_OBJECT_TYPEDifferent = true
+	} else {
+		for i := range a_spec_types.SPEC_OBJECT_TYPE {
+			if (a_spec_types.SPEC_OBJECT_TYPE[i] == nil) != (a_spec_typesOther.SPEC_OBJECT_TYPE[i] == nil) {
+				SPEC_OBJECT_TYPEDifferent = true
+				break
+			} else if a_spec_types.SPEC_OBJECT_TYPE[i] != nil && a_spec_typesOther.SPEC_OBJECT_TYPE[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_types.SPEC_OBJECT_TYPE[i] != a_spec_typesOther.SPEC_OBJECT_TYPE[i] {
+					SPEC_OBJECT_TYPEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPEC_OBJECT_TYPEDifferent {
+		ops := Diff(stage, a_spec_types, a_spec_typesOther, "SPEC_OBJECT_TYPE", a_spec_typesOther.SPEC_OBJECT_TYPE, a_spec_types.SPEC_OBJECT_TYPE)
+		diffs = append(diffs, ops)
+	}
+	SPEC_RELATION_TYPEDifferent := false
+	if len(a_spec_types.SPEC_RELATION_TYPE) != len(a_spec_typesOther.SPEC_RELATION_TYPE) {
+		SPEC_RELATION_TYPEDifferent = true
+	} else {
+		for i := range a_spec_types.SPEC_RELATION_TYPE {
+			if (a_spec_types.SPEC_RELATION_TYPE[i] == nil) != (a_spec_typesOther.SPEC_RELATION_TYPE[i] == nil) {
+				SPEC_RELATION_TYPEDifferent = true
+				break
+			} else if a_spec_types.SPEC_RELATION_TYPE[i] != nil && a_spec_typesOther.SPEC_RELATION_TYPE[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_types.SPEC_RELATION_TYPE[i] != a_spec_typesOther.SPEC_RELATION_TYPE[i] {
+					SPEC_RELATION_TYPEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPEC_RELATION_TYPEDifferent {
+		ops := Diff(stage, a_spec_types, a_spec_typesOther, "SPEC_RELATION_TYPE", a_spec_typesOther.SPEC_RELATION_TYPE, a_spec_types.SPEC_RELATION_TYPE)
+		diffs = append(diffs, ops)
+	}
+	SPECIFICATION_TYPEDifferent := false
+	if len(a_spec_types.SPECIFICATION_TYPE) != len(a_spec_typesOther.SPECIFICATION_TYPE) {
+		SPECIFICATION_TYPEDifferent = true
+	} else {
+		for i := range a_spec_types.SPECIFICATION_TYPE {
+			if (a_spec_types.SPECIFICATION_TYPE[i] == nil) != (a_spec_typesOther.SPECIFICATION_TYPE[i] == nil) {
+				SPECIFICATION_TYPEDifferent = true
+				break
+			} else if a_spec_types.SPECIFICATION_TYPE[i] != nil && a_spec_typesOther.SPECIFICATION_TYPE[i] != nil {
+				// this is a pointer comparaison
+				if a_spec_types.SPECIFICATION_TYPE[i] != a_spec_typesOther.SPECIFICATION_TYPE[i] {
+					SPECIFICATION_TYPEDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if SPECIFICATION_TYPEDifferent {
+		ops := Diff(stage, a_spec_types, a_spec_typesOther, "SPECIFICATION_TYPE", a_spec_typesOther.SPECIFICATION_TYPE, a_spec_types.SPECIFICATION_TYPE)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_the_header *A_THE_HEADER) GongDiff(stage *Stage, a_the_headerOther *A_THE_HEADER) (diffs []string) {
+	// insertion point for field diffs
+	if a_the_header.Name != a_the_headerOther.Name {
+		diffs = append(diffs, a_the_header.GongMarshallField(stage, "Name"))
+	}
+	if (a_the_header.REQ_IF_HEADER == nil) != (a_the_headerOther.REQ_IF_HEADER == nil) {
+		diffs = append(diffs, a_the_header.GongMarshallField(stage, "REQ_IF_HEADER"))
+	} else if a_the_header.REQ_IF_HEADER != nil && a_the_headerOther.REQ_IF_HEADER != nil {
+		if a_the_header.REQ_IF_HEADER != a_the_headerOther.REQ_IF_HEADER {
+			diffs = append(diffs, a_the_header.GongMarshallField(stage, "REQ_IF_HEADER"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongDiff(stage *Stage, a_tool_extensionsOther *A_TOOL_EXTENSIONS) (diffs []string) {
+	// insertion point for field diffs
+	if a_tool_extensions.Name != a_tool_extensionsOther.Name {
+		diffs = append(diffs, a_tool_extensions.GongMarshallField(stage, "Name"))
+	}
+	REQ_IF_TOOL_EXTENSIONDifferent := false
+	if len(a_tool_extensions.REQ_IF_TOOL_EXTENSION) != len(a_tool_extensionsOther.REQ_IF_TOOL_EXTENSION) {
+		REQ_IF_TOOL_EXTENSIONDifferent = true
+	} else {
+		for i := range a_tool_extensions.REQ_IF_TOOL_EXTENSION {
+			if (a_tool_extensions.REQ_IF_TOOL_EXTENSION[i] == nil) != (a_tool_extensionsOther.REQ_IF_TOOL_EXTENSION[i] == nil) {
+				REQ_IF_TOOL_EXTENSIONDifferent = true
+				break
+			} else if a_tool_extensions.REQ_IF_TOOL_EXTENSION[i] != nil && a_tool_extensionsOther.REQ_IF_TOOL_EXTENSION[i] != nil {
+				// this is a pointer comparaison
+				if a_tool_extensions.REQ_IF_TOOL_EXTENSION[i] != a_tool_extensionsOther.REQ_IF_TOOL_EXTENSION[i] {
+					REQ_IF_TOOL_EXTENSIONDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if REQ_IF_TOOL_EXTENSIONDifferent {
+		ops := Diff(stage, a_tool_extensions, a_tool_extensionsOther, "REQ_IF_TOOL_EXTENSION", a_tool_extensionsOther.REQ_IF_TOOL_EXTENSION, a_tool_extensions.REQ_IF_TOOL_EXTENSION)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongDiff(stage *Stage, datatype_definition_booleanOther *DATATYPE_DEFINITION_BOOLEAN) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_boolean.Name != datatype_definition_booleanOther.Name {
+		diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_boolean.DESC != datatype_definition_booleanOther.DESC {
+		diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_boolean.IDENTIFIER != datatype_definition_booleanOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_boolean.LAST_CHANGE != datatype_definition_booleanOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_boolean.LONG_NAME != datatype_definition_booleanOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (datatype_definition_boolean.ALTERNATIVE_ID == nil) != (datatype_definition_booleanOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_boolean.ALTERNATIVE_ID != nil && datatype_definition_booleanOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_boolean.ALTERNATIVE_ID != datatype_definition_booleanOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongDiff(stage *Stage, datatype_definition_dateOther *DATATYPE_DEFINITION_DATE) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_date.Name != datatype_definition_dateOther.Name {
+		diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_date.DESC != datatype_definition_dateOther.DESC {
+		diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_date.IDENTIFIER != datatype_definition_dateOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_date.LAST_CHANGE != datatype_definition_dateOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_date.LONG_NAME != datatype_definition_dateOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (datatype_definition_date.ALTERNATIVE_ID == nil) != (datatype_definition_dateOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_date.ALTERNATIVE_ID != nil && datatype_definition_dateOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_date.ALTERNATIVE_ID != datatype_definition_dateOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongDiff(stage *Stage, datatype_definition_enumerationOther *DATATYPE_DEFINITION_ENUMERATION) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_enumeration.Name != datatype_definition_enumerationOther.Name {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_enumeration.DESC != datatype_definition_enumerationOther.DESC {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_enumeration.IDENTIFIER != datatype_definition_enumerationOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_enumeration.LAST_CHANGE != datatype_definition_enumerationOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_enumeration.LONG_NAME != datatype_definition_enumerationOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (datatype_definition_enumeration.ALTERNATIVE_ID == nil) != (datatype_definition_enumerationOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_enumeration.ALTERNATIVE_ID != nil && datatype_definition_enumerationOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_enumeration.ALTERNATIVE_ID != datatype_definition_enumerationOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (datatype_definition_enumeration.SPECIFIED_VALUES == nil) != (datatype_definition_enumerationOther.SPECIFIED_VALUES == nil) {
+		diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES"))
+	} else if datatype_definition_enumeration.SPECIFIED_VALUES != nil && datatype_definition_enumerationOther.SPECIFIED_VALUES != nil {
+		if datatype_definition_enumeration.SPECIFIED_VALUES != datatype_definition_enumerationOther.SPECIFIED_VALUES {
+			diffs = append(diffs, datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongDiff(stage *Stage, datatype_definition_integerOther *DATATYPE_DEFINITION_INTEGER) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_integer.Name != datatype_definition_integerOther.Name {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_integer.DESC != datatype_definition_integerOther.DESC {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_integer.IDENTIFIER != datatype_definition_integerOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_integer.LAST_CHANGE != datatype_definition_integerOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_integer.LONG_NAME != datatype_definition_integerOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if datatype_definition_integer.MAX != datatype_definition_integerOther.MAX {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "MAX"))
+	}
+	if datatype_definition_integer.MIN != datatype_definition_integerOther.MIN {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "MIN"))
+	}
+	if (datatype_definition_integer.ALTERNATIVE_ID == nil) != (datatype_definition_integerOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_integer.ALTERNATIVE_ID != nil && datatype_definition_integerOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_integer.ALTERNATIVE_ID != datatype_definition_integerOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongDiff(stage *Stage, datatype_definition_realOther *DATATYPE_DEFINITION_REAL) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_real.Name != datatype_definition_realOther.Name {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_real.ACCURACY != datatype_definition_realOther.ACCURACY {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "ACCURACY"))
+	}
+	if datatype_definition_real.DESC != datatype_definition_realOther.DESC {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_real.IDENTIFIER != datatype_definition_realOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_real.LAST_CHANGE != datatype_definition_realOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_real.LONG_NAME != datatype_definition_realOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if datatype_definition_real.MAX != datatype_definition_realOther.MAX {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "MAX"))
+	}
+	if datatype_definition_real.MIN != datatype_definition_realOther.MIN {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "MIN"))
+	}
+	if (datatype_definition_real.ALTERNATIVE_ID == nil) != (datatype_definition_realOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_real.ALTERNATIVE_ID != nil && datatype_definition_realOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_real.ALTERNATIVE_ID != datatype_definition_realOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongDiff(stage *Stage, datatype_definition_stringOther *DATATYPE_DEFINITION_STRING) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_string.Name != datatype_definition_stringOther.Name {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_string.DESC != datatype_definition_stringOther.DESC {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_string.IDENTIFIER != datatype_definition_stringOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_string.LAST_CHANGE != datatype_definition_stringOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_string.LONG_NAME != datatype_definition_stringOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if datatype_definition_string.MAX_LENGTH != datatype_definition_stringOther.MAX_LENGTH {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH"))
+	}
+	if (datatype_definition_string.ALTERNATIVE_ID == nil) != (datatype_definition_stringOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_string.ALTERNATIVE_ID != nil && datatype_definition_stringOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_string.ALTERNATIVE_ID != datatype_definition_stringOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongDiff(stage *Stage, datatype_definition_xhtmlOther *DATATYPE_DEFINITION_XHTML) (diffs []string) {
+	// insertion point for field diffs
+	if datatype_definition_xhtml.Name != datatype_definition_xhtmlOther.Name {
+		diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "Name"))
+	}
+	if datatype_definition_xhtml.DESC != datatype_definition_xhtmlOther.DESC {
+		diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "DESC"))
+	}
+	if datatype_definition_xhtml.IDENTIFIER != datatype_definition_xhtmlOther.IDENTIFIER {
+		diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if datatype_definition_xhtml.LAST_CHANGE != datatype_definition_xhtmlOther.LAST_CHANGE {
+		diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if datatype_definition_xhtml.LONG_NAME != datatype_definition_xhtmlOther.LONG_NAME {
+		diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (datatype_definition_xhtml.ALTERNATIVE_ID == nil) != (datatype_definition_xhtmlOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if datatype_definition_xhtml.ALTERNATIVE_ID != nil && datatype_definition_xhtmlOther.ALTERNATIVE_ID != nil {
+		if datatype_definition_xhtml.ALTERNATIVE_ID != datatype_definition_xhtmlOther.ALTERNATIVE_ID {
+			diffs = append(diffs, datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (embedded_value *EMBEDDED_VALUE) GongDiff(stage *Stage, embedded_valueOther *EMBEDDED_VALUE) (diffs []string) {
+	// insertion point for field diffs
+	if embedded_value.Name != embedded_valueOther.Name {
+		diffs = append(diffs, embedded_value.GongMarshallField(stage, "Name"))
+	}
+	if embedded_value.KEY != embedded_valueOther.KEY {
+		diffs = append(diffs, embedded_value.GongMarshallField(stage, "KEY"))
+	}
+	if embedded_value.OTHER_CONTENT != embedded_valueOther.OTHER_CONTENT {
+		diffs = append(diffs, embedded_value.GongMarshallField(stage, "OTHER_CONTENT"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (enum_value *ENUM_VALUE) GongDiff(stage *Stage, enum_valueOther *ENUM_VALUE) (diffs []string) {
+	// insertion point for field diffs
+	if enum_value.Name != enum_valueOther.Name {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "Name"))
+	}
+	if enum_value.DESC != enum_valueOther.DESC {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "DESC"))
+	}
+	if enum_value.IDENTIFIER != enum_valueOther.IDENTIFIER {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if enum_value.LAST_CHANGE != enum_valueOther.LAST_CHANGE {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if enum_value.LONG_NAME != enum_valueOther.LONG_NAME {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (enum_value.ALTERNATIVE_ID == nil) != (enum_valueOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if enum_value.ALTERNATIVE_ID != nil && enum_valueOther.ALTERNATIVE_ID != nil {
+		if enum_value.ALTERNATIVE_ID != enum_valueOther.ALTERNATIVE_ID {
+			diffs = append(diffs, enum_value.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (enum_value.PROPERTIES == nil) != (enum_valueOther.PROPERTIES == nil) {
+		diffs = append(diffs, enum_value.GongMarshallField(stage, "PROPERTIES"))
+	} else if enum_value.PROPERTIES != nil && enum_valueOther.PROPERTIES != nil {
+		if enum_value.PROPERTIES != enum_valueOther.PROPERTIES {
+			diffs = append(diffs, enum_value.GongMarshallField(stage, "PROPERTIES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (embeddedjpgimage *EmbeddedJpgImage) GongDiff(stage *Stage, embeddedjpgimageOther *EmbeddedJpgImage) (diffs []string) {
+	// insertion point for field diffs
+	if embeddedjpgimage.Name != embeddedjpgimageOther.Name {
+		diffs = append(diffs, embeddedjpgimage.GongMarshallField(stage, "Name"))
+	}
+	if embeddedjpgimage.Base64Content != embeddedjpgimageOther.Base64Content {
+		diffs = append(diffs, embeddedjpgimage.GongMarshallField(stage, "Base64Content"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (embeddedpngimage *EmbeddedPngImage) GongDiff(stage *Stage, embeddedpngimageOther *EmbeddedPngImage) (diffs []string) {
+	// insertion point for field diffs
+	if embeddedpngimage.Name != embeddedpngimageOther.Name {
+		diffs = append(diffs, embeddedpngimage.GongMarshallField(stage, "Name"))
+	}
+	if embeddedpngimage.Base64Content != embeddedpngimageOther.Base64Content {
+		diffs = append(diffs, embeddedpngimage.GongMarshallField(stage, "Base64Content"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (embeddedsvgimage *EmbeddedSvgImage) GongDiff(stage *Stage, embeddedsvgimageOther *EmbeddedSvgImage) (diffs []string) {
+	// insertion point for field diffs
+	if embeddedsvgimage.Name != embeddedsvgimageOther.Name {
+		diffs = append(diffs, embeddedsvgimage.GongMarshallField(stage, "Name"))
+	}
+	if embeddedsvgimage.Content != embeddedsvgimageOther.Content {
+		diffs = append(diffs, embeddedsvgimage.GongMarshallField(stage, "Content"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (kill *Kill) GongDiff(stage *Stage, killOther *Kill) (diffs []string) {
+	// insertion point for field diffs
+	if kill.Name != killOther.Name {
+		diffs = append(diffs, kill.GongMarshallField(stage, "Name"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (map_identifier_bool *Map_identifier_bool) GongDiff(stage *Stage, map_identifier_boolOther *Map_identifier_bool) (diffs []string) {
+	// insertion point for field diffs
+	if map_identifier_bool.Name != map_identifier_boolOther.Name {
+		diffs = append(diffs, map_identifier_bool.GongMarshallField(stage, "Name"))
+	}
+	if map_identifier_bool.Value != map_identifier_boolOther.Value {
+		diffs = append(diffs, map_identifier_bool.GongMarshallField(stage, "Value"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (relation_group *RELATION_GROUP) GongDiff(stage *Stage, relation_groupOther *RELATION_GROUP) (diffs []string) {
+	// insertion point for field diffs
+	if relation_group.Name != relation_groupOther.Name {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "Name"))
+	}
+	if relation_group.DESC != relation_groupOther.DESC {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "DESC"))
+	}
+	if relation_group.IDENTIFIER != relation_groupOther.IDENTIFIER {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if relation_group.LAST_CHANGE != relation_groupOther.LAST_CHANGE {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if relation_group.LONG_NAME != relation_groupOther.LONG_NAME {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (relation_group.ALTERNATIVE_ID == nil) != (relation_groupOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if relation_group.ALTERNATIVE_ID != nil && relation_groupOther.ALTERNATIVE_ID != nil {
+		if relation_group.ALTERNATIVE_ID != relation_groupOther.ALTERNATIVE_ID {
+			diffs = append(diffs, relation_group.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (relation_group.SOURCE_SPECIFICATION == nil) != (relation_groupOther.SOURCE_SPECIFICATION == nil) {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION"))
+	} else if relation_group.SOURCE_SPECIFICATION != nil && relation_groupOther.SOURCE_SPECIFICATION != nil {
+		if relation_group.SOURCE_SPECIFICATION != relation_groupOther.SOURCE_SPECIFICATION {
+			diffs = append(diffs, relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION"))
+		}
+	}
+	if (relation_group.SPEC_RELATIONS == nil) != (relation_groupOther.SPEC_RELATIONS == nil) {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "SPEC_RELATIONS"))
+	} else if relation_group.SPEC_RELATIONS != nil && relation_groupOther.SPEC_RELATIONS != nil {
+		if relation_group.SPEC_RELATIONS != relation_groupOther.SPEC_RELATIONS {
+			diffs = append(diffs, relation_group.GongMarshallField(stage, "SPEC_RELATIONS"))
+		}
+	}
+	if (relation_group.TARGET_SPECIFICATION == nil) != (relation_groupOther.TARGET_SPECIFICATION == nil) {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION"))
+	} else if relation_group.TARGET_SPECIFICATION != nil && relation_groupOther.TARGET_SPECIFICATION != nil {
+		if relation_group.TARGET_SPECIFICATION != relation_groupOther.TARGET_SPECIFICATION {
+			diffs = append(diffs, relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION"))
+		}
+	}
+	if (relation_group.TYPE == nil) != (relation_groupOther.TYPE == nil) {
+		diffs = append(diffs, relation_group.GongMarshallField(stage, "TYPE"))
+	} else if relation_group.TYPE != nil && relation_groupOther.TYPE != nil {
+		if relation_group.TYPE != relation_groupOther.TYPE {
+			diffs = append(diffs, relation_group.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (relation_group_type *RELATION_GROUP_TYPE) GongDiff(stage *Stage, relation_group_typeOther *RELATION_GROUP_TYPE) (diffs []string) {
+	// insertion point for field diffs
+	if relation_group_type.Name != relation_group_typeOther.Name {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "Name"))
+	}
+	if relation_group_type.DESC != relation_group_typeOther.DESC {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "DESC"))
+	}
+	if relation_group_type.IDENTIFIER != relation_group_typeOther.IDENTIFIER {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if relation_group_type.LAST_CHANGE != relation_group_typeOther.LAST_CHANGE {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if relation_group_type.LONG_NAME != relation_group_typeOther.LONG_NAME {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (relation_group_type.ALTERNATIVE_ID == nil) != (relation_group_typeOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if relation_group_type.ALTERNATIVE_ID != nil && relation_group_typeOther.ALTERNATIVE_ID != nil {
+		if relation_group_type.ALTERNATIVE_ID != relation_group_typeOther.ALTERNATIVE_ID {
+			diffs = append(diffs, relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (relation_group_type.SPEC_ATTRIBUTES == nil) != (relation_group_typeOther.SPEC_ATTRIBUTES == nil) {
+		diffs = append(diffs, relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+	} else if relation_group_type.SPEC_ATTRIBUTES != nil && relation_group_typeOther.SPEC_ATTRIBUTES != nil {
+		if relation_group_type.SPEC_ATTRIBUTES != relation_group_typeOther.SPEC_ATTRIBUTES {
+			diffs = append(diffs, relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (req_if *REQ_IF) GongDiff(stage *Stage, req_ifOther *REQ_IF) (diffs []string) {
+	// insertion point for field diffs
+	if req_if.Name != req_ifOther.Name {
+		diffs = append(diffs, req_if.GongMarshallField(stage, "Name"))
+	}
+	if req_if.Lang != req_ifOther.Lang {
+		diffs = append(diffs, req_if.GongMarshallField(stage, "Lang"))
+	}
+	if (req_if.THE_HEADER == nil) != (req_ifOther.THE_HEADER == nil) {
+		diffs = append(diffs, req_if.GongMarshallField(stage, "THE_HEADER"))
+	} else if req_if.THE_HEADER != nil && req_ifOther.THE_HEADER != nil {
+		if req_if.THE_HEADER != req_ifOther.THE_HEADER {
+			diffs = append(diffs, req_if.GongMarshallField(stage, "THE_HEADER"))
+		}
+	}
+	if (req_if.CORE_CONTENT == nil) != (req_ifOther.CORE_CONTENT == nil) {
+		diffs = append(diffs, req_if.GongMarshallField(stage, "CORE_CONTENT"))
+	} else if req_if.CORE_CONTENT != nil && req_ifOther.CORE_CONTENT != nil {
+		if req_if.CORE_CONTENT != req_ifOther.CORE_CONTENT {
+			diffs = append(diffs, req_if.GongMarshallField(stage, "CORE_CONTENT"))
+		}
+	}
+	if (req_if.TOOL_EXTENSIONS == nil) != (req_ifOther.TOOL_EXTENSIONS == nil) {
+		diffs = append(diffs, req_if.GongMarshallField(stage, "TOOL_EXTENSIONS"))
+	} else if req_if.TOOL_EXTENSIONS != nil && req_ifOther.TOOL_EXTENSIONS != nil {
+		if req_if.TOOL_EXTENSIONS != req_ifOther.TOOL_EXTENSIONS {
+			diffs = append(diffs, req_if.GongMarshallField(stage, "TOOL_EXTENSIONS"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (req_if_content *REQ_IF_CONTENT) GongDiff(stage *Stage, req_if_contentOther *REQ_IF_CONTENT) (diffs []string) {
+	// insertion point for field diffs
+	if req_if_content.Name != req_if_contentOther.Name {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "Name"))
+	}
+	if (req_if_content.DATATYPES == nil) != (req_if_contentOther.DATATYPES == nil) {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "DATATYPES"))
+	} else if req_if_content.DATATYPES != nil && req_if_contentOther.DATATYPES != nil {
+		if req_if_content.DATATYPES != req_if_contentOther.DATATYPES {
+			diffs = append(diffs, req_if_content.GongMarshallField(stage, "DATATYPES"))
+		}
+	}
+	if (req_if_content.SPEC_TYPES == nil) != (req_if_contentOther.SPEC_TYPES == nil) {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_TYPES"))
+	} else if req_if_content.SPEC_TYPES != nil && req_if_contentOther.SPEC_TYPES != nil {
+		if req_if_content.SPEC_TYPES != req_if_contentOther.SPEC_TYPES {
+			diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_TYPES"))
+		}
+	}
+	if (req_if_content.SPEC_OBJECTS == nil) != (req_if_contentOther.SPEC_OBJECTS == nil) {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_OBJECTS"))
+	} else if req_if_content.SPEC_OBJECTS != nil && req_if_contentOther.SPEC_OBJECTS != nil {
+		if req_if_content.SPEC_OBJECTS != req_if_contentOther.SPEC_OBJECTS {
+			diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_OBJECTS"))
+		}
+	}
+	if (req_if_content.SPEC_RELATIONS == nil) != (req_if_contentOther.SPEC_RELATIONS == nil) {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_RELATIONS"))
+	} else if req_if_content.SPEC_RELATIONS != nil && req_if_contentOther.SPEC_RELATIONS != nil {
+		if req_if_content.SPEC_RELATIONS != req_if_contentOther.SPEC_RELATIONS {
+			diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_RELATIONS"))
+		}
+	}
+	if (req_if_content.SPECIFICATIONS == nil) != (req_if_contentOther.SPECIFICATIONS == nil) {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPECIFICATIONS"))
+	} else if req_if_content.SPECIFICATIONS != nil && req_if_contentOther.SPECIFICATIONS != nil {
+		if req_if_content.SPECIFICATIONS != req_if_contentOther.SPECIFICATIONS {
+			diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPECIFICATIONS"))
+		}
+	}
+	if (req_if_content.SPEC_RELATION_GROUPS == nil) != (req_if_contentOther.SPEC_RELATION_GROUPS == nil) {
+		diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS"))
+	} else if req_if_content.SPEC_RELATION_GROUPS != nil && req_if_contentOther.SPEC_RELATION_GROUPS != nil {
+		if req_if_content.SPEC_RELATION_GROUPS != req_if_contentOther.SPEC_RELATION_GROUPS {
+			diffs = append(diffs, req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (req_if_header *REQ_IF_HEADER) GongDiff(stage *Stage, req_if_headerOther *REQ_IF_HEADER) (diffs []string) {
+	// insertion point for field diffs
+	if req_if_header.Name != req_if_headerOther.Name {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "Name"))
+	}
+	if req_if_header.IDENTIFIER != req_if_headerOther.IDENTIFIER {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if req_if_header.COMMENT != req_if_headerOther.COMMENT {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "COMMENT"))
+	}
+	if req_if_header.CREATION_TIME != req_if_headerOther.CREATION_TIME {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "CREATION_TIME"))
+	}
+	if req_if_header.REPOSITORY_ID != req_if_headerOther.REPOSITORY_ID {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "REPOSITORY_ID"))
+	}
+	if req_if_header.REQ_IF_TOOL_ID != req_if_headerOther.REQ_IF_TOOL_ID {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID"))
+	}
+	if req_if_header.REQ_IF_VERSION != req_if_headerOther.REQ_IF_VERSION {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "REQ_IF_VERSION"))
+	}
+	if req_if_header.SOURCE_TOOL_ID != req_if_headerOther.SOURCE_TOOL_ID {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID"))
+	}
+	if req_if_header.TITLE != req_if_headerOther.TITLE {
+		diffs = append(diffs, req_if_header.GongMarshallField(stage, "TITLE"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongDiff(stage *Stage, req_if_tool_extensionOther *REQ_IF_TOOL_EXTENSION) (diffs []string) {
+	// insertion point for field diffs
+	if req_if_tool_extension.Name != req_if_tool_extensionOther.Name {
+		diffs = append(diffs, req_if_tool_extension.GongMarshallField(stage, "Name"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (specification *SPECIFICATION) GongDiff(stage *Stage, specificationOther *SPECIFICATION) (diffs []string) {
+	// insertion point for field diffs
+	if specification.Name != specificationOther.Name {
+		diffs = append(diffs, specification.GongMarshallField(stage, "Name"))
+	}
+	if specification.DESC != specificationOther.DESC {
+		diffs = append(diffs, specification.GongMarshallField(stage, "DESC"))
+	}
+	if specification.IDENTIFIER != specificationOther.IDENTIFIER {
+		diffs = append(diffs, specification.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if specification.LAST_CHANGE != specificationOther.LAST_CHANGE {
+		diffs = append(diffs, specification.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if specification.LONG_NAME != specificationOther.LONG_NAME {
+		diffs = append(diffs, specification.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (specification.ALTERNATIVE_ID == nil) != (specificationOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, specification.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if specification.ALTERNATIVE_ID != nil && specificationOther.ALTERNATIVE_ID != nil {
+		if specification.ALTERNATIVE_ID != specificationOther.ALTERNATIVE_ID {
+			diffs = append(diffs, specification.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (specification.TYPE == nil) != (specificationOther.TYPE == nil) {
+		diffs = append(diffs, specification.GongMarshallField(stage, "TYPE"))
+	} else if specification.TYPE != nil && specificationOther.TYPE != nil {
+		if specification.TYPE != specificationOther.TYPE {
+			diffs = append(diffs, specification.GongMarshallField(stage, "TYPE"))
+		}
+	}
+	if (specification.CHILDREN == nil) != (specificationOther.CHILDREN == nil) {
+		diffs = append(diffs, specification.GongMarshallField(stage, "CHILDREN"))
+	} else if specification.CHILDREN != nil && specificationOther.CHILDREN != nil {
+		if specification.CHILDREN != specificationOther.CHILDREN {
+			diffs = append(diffs, specification.GongMarshallField(stage, "CHILDREN"))
+		}
+	}
+	if (specification.VALUES == nil) != (specificationOther.VALUES == nil) {
+		diffs = append(diffs, specification.GongMarshallField(stage, "VALUES"))
+	} else if specification.VALUES != nil && specificationOther.VALUES != nil {
+		if specification.VALUES != specificationOther.VALUES {
+			diffs = append(diffs, specification.GongMarshallField(stage, "VALUES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (specification_rendering *SPECIFICATION_Rendering) GongDiff(stage *Stage, specification_renderingOther *SPECIFICATION_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if specification_rendering.Name != specification_renderingOther.Name {
+		diffs = append(diffs, specification_rendering.GongMarshallField(stage, "Name"))
+	}
+	if specification_rendering.IsNodeExpanded != specification_renderingOther.IsNodeExpanded {
+		diffs = append(diffs, specification_rendering.GongMarshallField(stage, "IsNodeExpanded"))
+	}
+	if specification_rendering.IsSelected != specification_renderingOther.IsSelected {
+		diffs = append(diffs, specification_rendering.GongMarshallField(stage, "IsSelected"))
+	}
+	if specification_rendering.IsWithHeadingNumbering != specification_renderingOther.IsWithHeadingNumbering {
+		diffs = append(diffs, specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (specification_type *SPECIFICATION_TYPE) GongDiff(stage *Stage, specification_typeOther *SPECIFICATION_TYPE) (diffs []string) {
+	// insertion point for field diffs
+	if specification_type.Name != specification_typeOther.Name {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "Name"))
+	}
+	if specification_type.DESC != specification_typeOther.DESC {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "DESC"))
+	}
+	if specification_type.IDENTIFIER != specification_typeOther.IDENTIFIER {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if specification_type.LAST_CHANGE != specification_typeOther.LAST_CHANGE {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if specification_type.LONG_NAME != specification_typeOther.LONG_NAME {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (specification_type.ALTERNATIVE_ID == nil) != (specification_typeOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if specification_type.ALTERNATIVE_ID != nil && specification_typeOther.ALTERNATIVE_ID != nil {
+		if specification_type.ALTERNATIVE_ID != specification_typeOther.ALTERNATIVE_ID {
+			diffs = append(diffs, specification_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (specification_type.SPEC_ATTRIBUTES == nil) != (specification_typeOther.SPEC_ATTRIBUTES == nil) {
+		diffs = append(diffs, specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+	} else if specification_type.SPEC_ATTRIBUTES != nil && specification_typeOther.SPEC_ATTRIBUTES != nil {
+		if specification_type.SPEC_ATTRIBUTES != specification_typeOther.SPEC_ATTRIBUTES {
+			diffs = append(diffs, specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (spec_hierarchy *SPEC_HIERARCHY) GongDiff(stage *Stage, spec_hierarchyOther *SPEC_HIERARCHY) (diffs []string) {
+	// insertion point for field diffs
+	if spec_hierarchy.Name != spec_hierarchyOther.Name {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "Name"))
+	}
+	if spec_hierarchy.DESC != spec_hierarchyOther.DESC {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "DESC"))
+	}
+	if spec_hierarchy.IDENTIFIER != spec_hierarchyOther.IDENTIFIER {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if spec_hierarchy.IS_EDITABLE != spec_hierarchyOther.IS_EDITABLE {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE"))
+	}
+	if spec_hierarchy.IS_TABLE_INTERNAL != spec_hierarchyOther.IS_TABLE_INTERNAL {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL"))
+	}
+	if spec_hierarchy.LAST_CHANGE != spec_hierarchyOther.LAST_CHANGE {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if spec_hierarchy.LONG_NAME != spec_hierarchyOther.LONG_NAME {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (spec_hierarchy.ALTERNATIVE_ID == nil) != (spec_hierarchyOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if spec_hierarchy.ALTERNATIVE_ID != nil && spec_hierarchyOther.ALTERNATIVE_ID != nil {
+		if spec_hierarchy.ALTERNATIVE_ID != spec_hierarchyOther.ALTERNATIVE_ID {
+			diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (spec_hierarchy.OBJECT == nil) != (spec_hierarchyOther.OBJECT == nil) {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "OBJECT"))
+	} else if spec_hierarchy.OBJECT != nil && spec_hierarchyOther.OBJECT != nil {
+		if spec_hierarchy.OBJECT != spec_hierarchyOther.OBJECT {
+			diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "OBJECT"))
+		}
+	}
+	if (spec_hierarchy.CHILDREN == nil) != (spec_hierarchyOther.CHILDREN == nil) {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "CHILDREN"))
+	} else if spec_hierarchy.CHILDREN != nil && spec_hierarchyOther.CHILDREN != nil {
+		if spec_hierarchy.CHILDREN != spec_hierarchyOther.CHILDREN {
+			diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "CHILDREN"))
+		}
+	}
+	if (spec_hierarchy.EDITABLE_ATTS == nil) != (spec_hierarchyOther.EDITABLE_ATTS == nil) {
+		diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS"))
+	} else if spec_hierarchy.EDITABLE_ATTS != nil && spec_hierarchyOther.EDITABLE_ATTS != nil {
+		if spec_hierarchy.EDITABLE_ATTS != spec_hierarchyOther.EDITABLE_ATTS {
+			diffs = append(diffs, spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (spec_object *SPEC_OBJECT) GongDiff(stage *Stage, spec_objectOther *SPEC_OBJECT) (diffs []string) {
+	// insertion point for field diffs
+	if spec_object.Name != spec_objectOther.Name {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "Name"))
+	}
+	if spec_object.DESC != spec_objectOther.DESC {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "DESC"))
+	}
+	if spec_object.IDENTIFIER != spec_objectOther.IDENTIFIER {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if spec_object.LAST_CHANGE != spec_objectOther.LAST_CHANGE {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if spec_object.LONG_NAME != spec_objectOther.LONG_NAME {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (spec_object.ALTERNATIVE_ID == nil) != (spec_objectOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if spec_object.ALTERNATIVE_ID != nil && spec_objectOther.ALTERNATIVE_ID != nil {
+		if spec_object.ALTERNATIVE_ID != spec_objectOther.ALTERNATIVE_ID {
+			diffs = append(diffs, spec_object.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (spec_object.VALUES == nil) != (spec_objectOther.VALUES == nil) {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "VALUES"))
+	} else if spec_object.VALUES != nil && spec_objectOther.VALUES != nil {
+		if spec_object.VALUES != spec_objectOther.VALUES {
+			diffs = append(diffs, spec_object.GongMarshallField(stage, "VALUES"))
+		}
+	}
+	if (spec_object.TYPE == nil) != (spec_objectOther.TYPE == nil) {
+		diffs = append(diffs, spec_object.GongMarshallField(stage, "TYPE"))
+	} else if spec_object.TYPE != nil && spec_objectOther.TYPE != nil {
+		if spec_object.TYPE != spec_objectOther.TYPE {
+			diffs = append(diffs, spec_object.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (spec_object_type *SPEC_OBJECT_TYPE) GongDiff(stage *Stage, spec_object_typeOther *SPEC_OBJECT_TYPE) (diffs []string) {
+	// insertion point for field diffs
+	if spec_object_type.Name != spec_object_typeOther.Name {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "Name"))
+	}
+	if spec_object_type.DESC != spec_object_typeOther.DESC {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "DESC"))
+	}
+	if spec_object_type.IDENTIFIER != spec_object_typeOther.IDENTIFIER {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if spec_object_type.LAST_CHANGE != spec_object_typeOther.LAST_CHANGE {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if spec_object_type.LONG_NAME != spec_object_typeOther.LONG_NAME {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (spec_object_type.ALTERNATIVE_ID == nil) != (spec_object_typeOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if spec_object_type.ALTERNATIVE_ID != nil && spec_object_typeOther.ALTERNATIVE_ID != nil {
+		if spec_object_type.ALTERNATIVE_ID != spec_object_typeOther.ALTERNATIVE_ID {
+			diffs = append(diffs, spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (spec_object_type.SPEC_ATTRIBUTES == nil) != (spec_object_typeOther.SPEC_ATTRIBUTES == nil) {
+		diffs = append(diffs, spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+	} else if spec_object_type.SPEC_ATTRIBUTES != nil && spec_object_typeOther.SPEC_ATTRIBUTES != nil {
+		if spec_object_type.SPEC_ATTRIBUTES != spec_object_typeOther.SPEC_ATTRIBUTES {
+			diffs = append(diffs, spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongDiff(stage *Stage, spec_object_type_renderingOther *SPEC_OBJECT_TYPE_Rendering) (diffs []string) {
+	// insertion point for field diffs
+	if spec_object_type_rendering.Name != spec_object_type_renderingOther.Name {
+		diffs = append(diffs, spec_object_type_rendering.GongMarshallField(stage, "Name"))
+	}
+	if spec_object_type_rendering.IsNodeExpanded != spec_object_type_renderingOther.IsNodeExpanded {
+		diffs = append(diffs, spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded"))
+	}
+	if spec_object_type_rendering.ShowIdentifier != spec_object_type_renderingOther.ShowIdentifier {
+		diffs = append(diffs, spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier"))
+	}
+	if spec_object_type_rendering.ShowName != spec_object_type_renderingOther.ShowName {
+		diffs = append(diffs, spec_object_type_rendering.GongMarshallField(stage, "ShowName"))
+	}
+	if spec_object_type_rendering.ShowRelations != spec_object_type_renderingOther.ShowRelations {
+		diffs = append(diffs, spec_object_type_rendering.GongMarshallField(stage, "ShowRelations"))
+	}
+	if spec_object_type_rendering.IsHeading != spec_object_type_renderingOther.IsHeading {
+		diffs = append(diffs, spec_object_type_rendering.GongMarshallField(stage, "IsHeading"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (spec_relation *SPEC_RELATION) GongDiff(stage *Stage, spec_relationOther *SPEC_RELATION) (diffs []string) {
+	// insertion point for field diffs
+	if spec_relation.Name != spec_relationOther.Name {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "Name"))
+	}
+	if spec_relation.DESC != spec_relationOther.DESC {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "DESC"))
+	}
+	if spec_relation.IDENTIFIER != spec_relationOther.IDENTIFIER {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if spec_relation.LAST_CHANGE != spec_relationOther.LAST_CHANGE {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if spec_relation.LONG_NAME != spec_relationOther.LONG_NAME {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (spec_relation.ALTERNATIVE_ID == nil) != (spec_relationOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if spec_relation.ALTERNATIVE_ID != nil && spec_relationOther.ALTERNATIVE_ID != nil {
+		if spec_relation.ALTERNATIVE_ID != spec_relationOther.ALTERNATIVE_ID {
+			diffs = append(diffs, spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (spec_relation.VALUES == nil) != (spec_relationOther.VALUES == nil) {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "VALUES"))
+	} else if spec_relation.VALUES != nil && spec_relationOther.VALUES != nil {
+		if spec_relation.VALUES != spec_relationOther.VALUES {
+			diffs = append(diffs, spec_relation.GongMarshallField(stage, "VALUES"))
+		}
+	}
+	if (spec_relation.SOURCE == nil) != (spec_relationOther.SOURCE == nil) {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "SOURCE"))
+	} else if spec_relation.SOURCE != nil && spec_relationOther.SOURCE != nil {
+		if spec_relation.SOURCE != spec_relationOther.SOURCE {
+			diffs = append(diffs, spec_relation.GongMarshallField(stage, "SOURCE"))
+		}
+	}
+	if (spec_relation.TARGET == nil) != (spec_relationOther.TARGET == nil) {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "TARGET"))
+	} else if spec_relation.TARGET != nil && spec_relationOther.TARGET != nil {
+		if spec_relation.TARGET != spec_relationOther.TARGET {
+			diffs = append(diffs, spec_relation.GongMarshallField(stage, "TARGET"))
+		}
+	}
+	if (spec_relation.TYPE == nil) != (spec_relationOther.TYPE == nil) {
+		diffs = append(diffs, spec_relation.GongMarshallField(stage, "TYPE"))
+	} else if spec_relation.TYPE != nil && spec_relationOther.TYPE != nil {
+		if spec_relation.TYPE != spec_relationOther.TYPE {
+			diffs = append(diffs, spec_relation.GongMarshallField(stage, "TYPE"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (spec_relation_type *SPEC_RELATION_TYPE) GongDiff(stage *Stage, spec_relation_typeOther *SPEC_RELATION_TYPE) (diffs []string) {
+	// insertion point for field diffs
+	if spec_relation_type.Name != spec_relation_typeOther.Name {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "Name"))
+	}
+	if spec_relation_type.DESC != spec_relation_typeOther.DESC {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "DESC"))
+	}
+	if spec_relation_type.IDENTIFIER != spec_relation_typeOther.IDENTIFIER {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "IDENTIFIER"))
+	}
+	if spec_relation_type.LAST_CHANGE != spec_relation_typeOther.LAST_CHANGE {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "LAST_CHANGE"))
+	}
+	if spec_relation_type.LONG_NAME != spec_relation_typeOther.LONG_NAME {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "LONG_NAME"))
+	}
+	if (spec_relation_type.ALTERNATIVE_ID == nil) != (spec_relation_typeOther.ALTERNATIVE_ID == nil) {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+	} else if spec_relation_type.ALTERNATIVE_ID != nil && spec_relation_typeOther.ALTERNATIVE_ID != nil {
+		if spec_relation_type.ALTERNATIVE_ID != spec_relation_typeOther.ALTERNATIVE_ID {
+			diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		}
+	}
+	if (spec_relation_type.SPEC_ATTRIBUTES == nil) != (spec_relation_typeOther.SPEC_ATTRIBUTES == nil) {
+		diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+	} else if spec_relation_type.SPEC_ATTRIBUTES != nil && spec_relation_typeOther.SPEC_ATTRIBUTES != nil {
+		if spec_relation_type.SPEC_ATTRIBUTES != spec_relation_typeOther.SPEC_ATTRIBUTES {
+			diffs = append(diffs, spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (staticwebsite *StaticWebSite) GongDiff(stage *Stage, staticwebsiteOther *StaticWebSite) (diffs []string) {
+	// insertion point for field diffs
+	if staticwebsite.Name != staticwebsiteOther.Name {
+		diffs = append(diffs, staticwebsite.GongMarshallField(stage, "Name"))
+	}
+	if staticwebsite.MarkdownContent != staticwebsiteOther.MarkdownContent {
+		diffs = append(diffs, staticwebsite.GongMarshallField(stage, "MarkdownContent"))
+	}
+	ChaptersDifferent := false
+	if len(staticwebsite.Chapters) != len(staticwebsiteOther.Chapters) {
+		ChaptersDifferent = true
+	} else {
+		for i := range staticwebsite.Chapters {
+			if (staticwebsite.Chapters[i] == nil) != (staticwebsiteOther.Chapters[i] == nil) {
+				ChaptersDifferent = true
+				break
+			} else if staticwebsite.Chapters[i] != nil && staticwebsiteOther.Chapters[i] != nil {
+				// this is a pointer comparaison
+				if staticwebsite.Chapters[i] != staticwebsiteOther.Chapters[i] {
+					ChaptersDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ChaptersDifferent {
+		ops := Diff(stage, staticwebsite, staticwebsiteOther, "Chapters", staticwebsiteOther.Chapters, staticwebsite.Chapters)
+		diffs = append(diffs, ops)
+	}
+	if staticwebsite.InputImagesDir != staticwebsiteOther.InputImagesDir {
+		diffs = append(diffs, staticwebsite.GongMarshallField(stage, "InputImagesDir"))
+	}
+	if staticwebsite.OutputStaticWebDir != staticwebsiteOther.OutputStaticWebDir {
+		diffs = append(diffs, staticwebsite.GongMarshallField(stage, "OutputStaticWebDir"))
+	}
+	if staticwebsite.VersionInfo != staticwebsiteOther.VersionInfo {
+		diffs = append(diffs, staticwebsite.GongMarshallField(stage, "VersionInfo"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (staticwebsitechapter *StaticWebSiteChapter) GongDiff(stage *Stage, staticwebsitechapterOther *StaticWebSiteChapter) (diffs []string) {
+	// insertion point for field diffs
+	if staticwebsitechapter.Name != staticwebsitechapterOther.Name {
+		diffs = append(diffs, staticwebsitechapter.GongMarshallField(stage, "Name"))
+	}
+	if staticwebsitechapter.MarkdownContent != staticwebsitechapterOther.MarkdownContent {
+		diffs = append(diffs, staticwebsitechapter.GongMarshallField(stage, "MarkdownContent"))
+	}
+	ParagraphsDifferent := false
+	if len(staticwebsitechapter.Paragraphs) != len(staticwebsitechapterOther.Paragraphs) {
+		ParagraphsDifferent = true
+	} else {
+		for i := range staticwebsitechapter.Paragraphs {
+			if (staticwebsitechapter.Paragraphs[i] == nil) != (staticwebsitechapterOther.Paragraphs[i] == nil) {
+				ParagraphsDifferent = true
+				break
+			} else if staticwebsitechapter.Paragraphs[i] != nil && staticwebsitechapterOther.Paragraphs[i] != nil {
+				// this is a pointer comparaison
+				if staticwebsitechapter.Paragraphs[i] != staticwebsitechapterOther.Paragraphs[i] {
+					ParagraphsDifferent = true
+					break
+				}
+			}
+		}
+	}
+	if ParagraphsDifferent {
+		ops := Diff(stage, staticwebsitechapter, staticwebsitechapterOther, "Paragraphs", staticwebsitechapterOther.Paragraphs, staticwebsitechapter.Paragraphs)
+		diffs = append(diffs, ops)
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongDiff(stage *Stage, staticwebsitegeneratedimageOther *StaticWebSiteGeneratedImage) (diffs []string) {
+	// insertion point for field diffs
+	if staticwebsitegeneratedimage.Name != staticwebsitegeneratedimageOther.Name {
+		diffs = append(diffs, staticwebsitegeneratedimage.GongMarshallField(stage, "Name"))
+	}
+	if staticwebsitegeneratedimage.SourceDirectoryPath != staticwebsitegeneratedimageOther.SourceDirectoryPath {
+		diffs = append(diffs, staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath"))
+	}
+	if staticwebsitegeneratedimage.Width != staticwebsitegeneratedimageOther.Width {
+		diffs = append(diffs, staticwebsitegeneratedimage.GongMarshallField(stage, "Width"))
+	}
+	if staticwebsitegeneratedimage.Height != staticwebsitegeneratedimageOther.Height {
+		diffs = append(diffs, staticwebsitegeneratedimage.GongMarshallField(stage, "Height"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (staticwebsiteimage *StaticWebSiteImage) GongDiff(stage *Stage, staticwebsiteimageOther *StaticWebSiteImage) (diffs []string) {
+	// insertion point for field diffs
+	if staticwebsiteimage.Name != staticwebsiteimageOther.Name {
+		diffs = append(diffs, staticwebsiteimage.GongMarshallField(stage, "Name"))
+	}
+	if staticwebsiteimage.SourceDirectoryPath != staticwebsiteimageOther.SourceDirectoryPath {
+		diffs = append(diffs, staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath"))
+	}
+	if staticwebsiteimage.Width != staticwebsiteimageOther.Width {
+		diffs = append(diffs, staticwebsiteimage.GongMarshallField(stage, "Width"))
+	}
+	if staticwebsiteimage.Height != staticwebsiteimageOther.Height {
+		diffs = append(diffs, staticwebsiteimage.GongMarshallField(stage, "Height"))
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongDiff(stage *Stage, staticwebsiteparagraphOther *StaticWebSiteParagraph) (diffs []string) {
+	// insertion point for field diffs
+	if staticwebsiteparagraph.Name != staticwebsiteparagraphOther.Name {
+		diffs = append(diffs, staticwebsiteparagraph.GongMarshallField(stage, "Name"))
+	}
+	if staticwebsiteparagraph.LegendMarkdownContent != staticwebsiteparagraphOther.LegendMarkdownContent {
+		diffs = append(diffs, staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent"))
+	}
+	if (staticwebsiteparagraph.Image == nil) != (staticwebsiteparagraphOther.Image == nil) {
+		diffs = append(diffs, staticwebsiteparagraph.GongMarshallField(stage, "Image"))
+	} else if staticwebsiteparagraph.Image != nil && staticwebsiteparagraphOther.Image != nil {
+		if staticwebsiteparagraph.Image != staticwebsiteparagraphOther.Image {
+			diffs = append(diffs, staticwebsiteparagraph.GongMarshallField(stage, "Image"))
+		}
+	}
+
+	return
+}
+
+// GongDiff computes the diff between the instance and another instance of same gong struct type
+// and returns the list of differences as strings
+func (xhtml_content *XHTML_CONTENT) GongDiff(stage *Stage, xhtml_contentOther *XHTML_CONTENT) (diffs []string) {
+	// insertion point for field diffs
+	if xhtml_content.Name != xhtml_contentOther.Name {
+		diffs = append(diffs, xhtml_content.GongMarshallField(stage, "Name"))
+	}
+	if xhtml_content.EnclosedText != xhtml_contentOther.EnclosedText {
+		diffs = append(diffs, xhtml_content.GongMarshallField(stage, "EnclosedText"))
+	}
+	if xhtml_content.PureText != xhtml_contentOther.PureText {
+		diffs = append(diffs, xhtml_content.GongMarshallField(stage, "PureText"))
+	}
+
+	return
+}
+
+// Diff returns the sequence of operations to transform oldSlice into newSlice.
+// It requires type T to be comparable (e.g., pointers, ints, strings).
+func Diff[T1, T2 PointerToGongstruct](stage *Stage, a, b T1, fieldName string, oldSlice, newSlice []T2) (ops string) {
+	m, n := len(oldSlice), len(newSlice)
+
+	// 1. Build the LCS (Longest Common Subsequence) Matrix
+	// This helps us find the "anchor" elements that shouldn't move.
+	dp := make([][]int, m+1)
+	for i := range dp {
+		dp[i] = make([]int, n+1)
+	}
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if oldSlice[i] == newSlice[j] {
+				dp[i+1][j+1] = dp[i][j] + 1
+			} else {
+				// Take the maximum of previous options
+				if dp[i][j+1] > dp[i+1][j] {
+					dp[i+1][j+1] = dp[i][j+1]
+				} else {
+					dp[i+1][j+1] = dp[i+1][j]
+				}
+			}
+		}
+	}
+
+	// 2. Backtrack to find which indices in oldSlice are part of the LCS
+	// We use a map for O(1) lookups.
+	keptIndices := make(map[int]bool)
+	i, j := m, n
+	for i > 0 && j > 0 {
+		if oldSlice[i-1] == newSlice[j-1] {
+			keptIndices[i-1] = true
+			i--
+			j--
+		} else if dp[i-1][j] > dp[i][j-1] {
+			i--
+		} else {
+			j--
+		}
+	}
+
+	// 3. PHASE 1: Generate Deletions
+	// MUST go from High Index -> Low Index to preserve validity of lower indices.
+	for k := m - 1; k >= 0; k-- {
+		if !keptIndices[k] {
+			ops += fmt.Sprintf("\n\t%s.%s = slices.Delete( %s.%s, %d, %d)", a.GongGetReferenceIdentifier(stage), fieldName, a.GongGetReferenceIdentifier(stage), fieldName, k, k+1)
+		}
+	}
+
+	// 4. PHASE 2: Generate Insertions
+	// We simulate the state of the slice after deletions to determine insertion points.
+	// The 'current' slice essentially consists of only the kept LCS items.
+
+	// Create a temporary view of what's left after deletions for tracking matches
+	var currentLCS []T2
+	for k := 0; k < m; k++ {
+		if keptIndices[k] {
+			currentLCS = append(currentLCS, oldSlice[k])
+		}
+	}
+
+	lcsIdx := 0
+	// Iterate through the NEW slice. If it matches the current LCS head, we keep it.
+	// If it doesn't match, it must be inserted here.
+	for k, targetVal := range newSlice {
+		if lcsIdx < len(currentLCS) && currentLCS[lcsIdx] == targetVal {
+			lcsIdx++
+		} else {
+			ops += fmt.Sprintf("\n\t%s.%s = slices.Insert( %s.%s, %d, %s)", a.GongGetIdentifier(stage), fieldName, a.GongGetIdentifier(stage), fieldName, k, targetVal.GongGetIdentifier(stage))
+		}
+	}
+
+	return ops
 }

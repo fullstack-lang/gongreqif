@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
 	"sort"
 	"strings"
 )
@@ -33,16 +32,23 @@ var _ map[string]any = map[string]any{
 // function will stage objects
 func _(stage *models.Stage) {
 
-	// Declaration of instances to stage{{Identifiers}}
+	// insertion point for declaration of instances to stage{{Identifiers}}
 
-	// Setup of values{{ValueInitializers}}
+	// insertion point for initialization of values{{ValueInitializers}}
 
-	// Setup of pointers{{PointersInitializers}}
-}
-`
+	// insertion point for setup of pointers{{PointersInitializers}}
+}`
 
-const IdentifiersDecls = `
-	{{Identifier}} := (&models.{{GeneratedStructName}}{}).Stage(stage)`
+const GongIdentifiersDecls = `
+	{{Identifier}} := (&models.{{GeneratedStructName}}{Name: ` + "`" + `{{GeneratedFieldNameValue}}` + "`" + `}).Stage(stage)`
+
+const GongUnstageStmt = `
+	{{Identifier}}.Unstage(stage)`
+
+// previous version does not hanldle embedded structs (https://github.com/golang/go/issues/9859)
+// simpler version but the name of the instance cannot be human read before the fields initialization
+const IdentifiersDeclsWithoutNameInit = `
+	{{Identifier}} := (&models.{{GeneratedStructName}}{}).Stage(stage)` /* */
 
 const StringInitStatement = `
 	{{Identifier}}.{{GeneratedFieldName}} = ` + "`" + `{{GeneratedFieldNameValue}}` + "`"
@@ -97,17 +103,12 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	initializerStatements := ""
 	pointersInitializesStatements := ""
 
-	id := ""
-	_ = id
 	decl := ""
 	_ = decl
 	setValueField := ""
 	_ = setValueField
 
 	// insertion initialization of objects to stage
-	map_ALTERNATIVE_ID_Identifiers := make(map[*ALTERNATIVE_ID]string)
-	_ = map_ALTERNATIVE_ID_Identifiers
-
 	alternative_idOrdered := []*ALTERNATIVE_ID{}
 	for alternative_id := range stage.ALTERNATIVE_IDs {
 		alternative_idOrdered = append(alternative_idOrdered, alternative_id)
@@ -127,33 +128,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, alternative_id := range alternative_idOrdered {
 
-		id = generatesIdentifier("ALTERNATIVE_ID", int(stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]), alternative_id.Name)
-		map_ALTERNATIVE_ID_Identifiers[alternative_id] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ALTERNATIVE_ID")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", alternative_id.Name)
-		identifiersDecl += decl
+		identifiersDecl += alternative_id.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(alternative_id.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(alternative_id.IDENTIFIER))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += alternative_id.GongMarshallField(stage, "Name")
+		initializerStatements += alternative_id.GongMarshallField(stage, "IDENTIFIER")
 	}
-
-	map_ATTRIBUTE_DEFINITION_BOOLEAN_Identifiers := make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]string)
-	_ = map_ATTRIBUTE_DEFINITION_BOOLEAN_Identifiers
 
 	attribute_definition_booleanOrdered := []*ATTRIBUTE_DEFINITION_BOOLEAN{}
 	for attribute_definition_boolean := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
@@ -174,57 +155,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_boolean := range attribute_definition_booleanOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN", int(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]), attribute_definition_boolean.Name)
-		map_ATTRIBUTE_DEFINITION_BOOLEAN_Identifiers[attribute_definition_boolean] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_BOOLEAN")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_boolean.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers
 
 	attribute_definition_boolean_renderingOrdered := []*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering{}
 	for attribute_definition_boolean_rendering := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings {
@@ -245,45 +189,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", int(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]), attribute_definition_boolean_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers[attribute_definition_boolean_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_boolean_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_DATE_Identifiers := make(map[*ATTRIBUTE_DEFINITION_DATE]string)
-	_ = map_ATTRIBUTE_DEFINITION_DATE_Identifiers
 
 	attribute_definition_dateOrdered := []*ATTRIBUTE_DEFINITION_DATE{}
 	for attribute_definition_date := range stage.ATTRIBUTE_DEFINITION_DATEs {
@@ -304,57 +218,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_date := range attribute_definition_dateOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE", int(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]), attribute_definition_date.Name)
-		map_ATTRIBUTE_DEFINITION_DATE_Identifiers[attribute_definition_date] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_DATE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_date.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers
 
 	attribute_definition_date_renderingOrdered := []*ATTRIBUTE_DEFINITION_DATE_Rendering{}
 	for attribute_definition_date_rendering := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings {
@@ -375,45 +252,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE_Rendering", int(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]), attribute_definition_date_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers[attribute_definition_date_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_DATE_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_date_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_date_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_ENUMERATION_Identifiers := make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]string)
-	_ = map_ATTRIBUTE_DEFINITION_ENUMERATION_Identifiers
 
 	attribute_definition_enumerationOrdered := []*ATTRIBUTE_DEFINITION_ENUMERATION{}
 	for attribute_definition_enumeration := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
@@ -434,63 +281,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_enumeration := range attribute_definition_enumerationOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION", int(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]), attribute_definition_enumeration.Name)
-		map_ATTRIBUTE_DEFINITION_ENUMERATION_Identifiers[attribute_definition_enumeration] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_ENUMERATION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_enumeration.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.LONG_NAME))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MULTI_VALUED")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration.MULTI_VALUED))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED")
+		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers
 
 	attribute_definition_enumeration_renderingOrdered := []*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering{}
 	for attribute_definition_enumeration_rendering := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings {
@@ -511,45 +316,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", int(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]), attribute_definition_enumeration_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers[attribute_definition_enumeration_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_enumeration_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers := make(map[*ATTRIBUTE_DEFINITION_INTEGER]string)
-	_ = map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers
 
 	attribute_definition_integerOrdered := []*ATTRIBUTE_DEFINITION_INTEGER{}
 	for attribute_definition_integer := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
@@ -570,57 +345,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_integer := range attribute_definition_integerOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER", int(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]), attribute_definition_integer.Name)
-		map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers[attribute_definition_integer] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_INTEGER")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_integer.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers
 
 	attribute_definition_integer_renderingOrdered := []*ATTRIBUTE_DEFINITION_INTEGER_Rendering{}
 	for attribute_definition_integer_rendering := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings {
@@ -641,45 +379,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER_Rendering", int(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]), attribute_definition_integer_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers[attribute_definition_integer_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_INTEGER_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_integer_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_REAL_Identifiers := make(map[*ATTRIBUTE_DEFINITION_REAL]string)
-	_ = map_ATTRIBUTE_DEFINITION_REAL_Identifiers
 
 	attribute_definition_realOrdered := []*ATTRIBUTE_DEFINITION_REAL{}
 	for attribute_definition_real := range stage.ATTRIBUTE_DEFINITION_REALs {
@@ -700,57 +408,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_real := range attribute_definition_realOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL", int(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]), attribute_definition_real.Name)
-		map_ATTRIBUTE_DEFINITION_REAL_Identifiers[attribute_definition_real] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_REAL")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_real.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers
 
 	attribute_definition_real_renderingOrdered := []*ATTRIBUTE_DEFINITION_REAL_Rendering{}
 	for attribute_definition_real_rendering := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings {
@@ -771,45 +442,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL_Rendering", int(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]), attribute_definition_real_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers[attribute_definition_real_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_REAL_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_real_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_real_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_Rendering_Identifiers
 
 	attribute_definition_renderingOrdered := []*ATTRIBUTE_DEFINITION_Rendering{}
 	for attribute_definition_rendering := range stage.ATTRIBUTE_DEFINITION_Renderings {
@@ -830,45 +471,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_rendering := range attribute_definition_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_Rendering", int(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]), attribute_definition_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_Rendering_Identifiers[attribute_definition_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_STRING_Identifiers := make(map[*ATTRIBUTE_DEFINITION_STRING]string)
-	_ = map_ATTRIBUTE_DEFINITION_STRING_Identifiers
 
 	attribute_definition_stringOrdered := []*ATTRIBUTE_DEFINITION_STRING{}
 	for attribute_definition_string := range stage.ATTRIBUTE_DEFINITION_STRINGs {
@@ -889,57 +500,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_string := range attribute_definition_stringOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING", int(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]), attribute_definition_string.Name)
-		map_ATTRIBUTE_DEFINITION_STRING_Identifiers[attribute_definition_string] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_STRING")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_string.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers
 
 	attribute_definition_string_renderingOrdered := []*ATTRIBUTE_DEFINITION_STRING_Rendering{}
 	for attribute_definition_string_rendering := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings {
@@ -960,45 +534,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING_Rendering", int(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]), attribute_definition_string_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers[attribute_definition_string_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_STRING_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_string_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_string_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_DEFINITION_XHTML_Identifiers := make(map[*ATTRIBUTE_DEFINITION_XHTML]string)
-	_ = map_ATTRIBUTE_DEFINITION_XHTML_Identifiers
 
 	attribute_definition_xhtmlOrdered := []*ATTRIBUTE_DEFINITION_XHTML{}
 	for attribute_definition_xhtml := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
@@ -1019,57 +563,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_xhtml := range attribute_definition_xhtmlOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML", int(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]), attribute_definition_xhtml.Name)
-		map_ATTRIBUTE_DEFINITION_XHTML_Identifiers[attribute_definition_xhtml] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_XHTML")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_xhtml.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "TYPE")
 	}
-
-	map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers := make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]string)
-	_ = map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers
 
 	attribute_definition_xhtml_renderingOrdered := []*ATTRIBUTE_DEFINITION_XHTML_Rendering{}
 	for attribute_definition_xhtml_rendering := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings {
@@ -1090,45 +597,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML_Rendering", int(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]), attribute_definition_xhtml_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers[attribute_definition_xhtml_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_XHTML_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_definition_xhtml_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTable")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTable))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInTitle")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTitle))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowInSubject")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubject))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject")
 	}
-
-	map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers := make(map[*ATTRIBUTE_VALUE_BOOLEAN]string)
-	_ = map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers
 
 	attribute_value_booleanOrdered := []*ATTRIBUTE_VALUE_BOOLEAN{}
 	for attribute_value_boolean := range stage.ATTRIBUTE_VALUE_BOOLEANs {
@@ -1149,33 +626,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_boolean := range attribute_value_booleanOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_BOOLEAN", int(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]), attribute_value_boolean.Name)
-		map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[attribute_value_boolean] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_BOOLEAN")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_boolean.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_boolean.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_boolean.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "THE_VALUE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_value_boolean.THE_VALUE))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_boolean.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "THE_VALUE")
 	}
-
-	map_ATTRIBUTE_VALUE_DATE_Identifiers := make(map[*ATTRIBUTE_VALUE_DATE]string)
-	_ = map_ATTRIBUTE_VALUE_DATE_Identifiers
 
 	attribute_value_dateOrdered := []*ATTRIBUTE_VALUE_DATE{}
 	for attribute_value_date := range stage.ATTRIBUTE_VALUE_DATEs {
@@ -1196,33 +654,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_date := range attribute_value_dateOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_DATE", int(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]), attribute_value_date.Name)
-		map_ATTRIBUTE_VALUE_DATE_Identifiers[attribute_value_date] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_DATE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_date.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_date.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_date.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "THE_VALUE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_date.THE_VALUE))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_date.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_date.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_date.GongMarshallField(stage, "THE_VALUE")
 	}
-
-	map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers := make(map[*ATTRIBUTE_VALUE_ENUMERATION]string)
-	_ = map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers
 
 	attribute_value_enumerationOrdered := []*ATTRIBUTE_VALUE_ENUMERATION{}
 	for attribute_value_enumeration := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
@@ -1243,27 +682,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_enumeration := range attribute_value_enumerationOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_ENUMERATION", int(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]), attribute_value_enumeration.Name)
-		map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[attribute_value_enumeration] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_ENUMERATION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_enumeration.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_enumeration.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_enumeration.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_enumeration.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "DEFINITION")
+		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "VALUES")
 	}
-
-	map_ATTRIBUTE_VALUE_INTEGER_Identifiers := make(map[*ATTRIBUTE_VALUE_INTEGER]string)
-	_ = map_ATTRIBUTE_VALUE_INTEGER_Identifiers
 
 	attribute_value_integerOrdered := []*ATTRIBUTE_VALUE_INTEGER{}
 	for attribute_value_integer := range stage.ATTRIBUTE_VALUE_INTEGERs {
@@ -1284,33 +710,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_integer := range attribute_value_integerOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_INTEGER", int(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]), attribute_value_integer.Name)
-		map_ATTRIBUTE_VALUE_INTEGER_Identifiers[attribute_value_integer] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_INTEGER")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_integer.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_integer.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_integer.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "THE_VALUE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_value_integer.THE_VALUE))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_integer.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_integer.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_integer.GongMarshallField(stage, "THE_VALUE")
 	}
-
-	map_ATTRIBUTE_VALUE_REAL_Identifiers := make(map[*ATTRIBUTE_VALUE_REAL]string)
-	_ = map_ATTRIBUTE_VALUE_REAL_Identifiers
 
 	attribute_value_realOrdered := []*ATTRIBUTE_VALUE_REAL{}
 	for attribute_value_real := range stage.ATTRIBUTE_VALUE_REALs {
@@ -1331,33 +738,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_real := range attribute_value_realOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_REAL", int(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]), attribute_value_real.Name)
-		map_ATTRIBUTE_VALUE_REAL_Identifiers[attribute_value_real] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_REAL")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_real.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_real.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_real.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "THE_VALUE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%f", attribute_value_real.THE_VALUE))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_real.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_real.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_real.GongMarshallField(stage, "THE_VALUE")
 	}
-
-	map_ATTRIBUTE_VALUE_STRING_Identifiers := make(map[*ATTRIBUTE_VALUE_STRING]string)
-	_ = map_ATTRIBUTE_VALUE_STRING_Identifiers
 
 	attribute_value_stringOrdered := []*ATTRIBUTE_VALUE_STRING{}
 	for attribute_value_string := range stage.ATTRIBUTE_VALUE_STRINGs {
@@ -1378,33 +766,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_string := range attribute_value_stringOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_STRING", int(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]), attribute_value_string.Name)
-		map_ATTRIBUTE_VALUE_STRING_Identifiers[attribute_value_string] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_STRING")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_string.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_string.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_string.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "THE_VALUE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_string.THE_VALUE))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_string.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_string.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_string.GongMarshallField(stage, "THE_VALUE")
 	}
-
-	map_ATTRIBUTE_VALUE_XHTML_Identifiers := make(map[*ATTRIBUTE_VALUE_XHTML]string)
-	_ = map_ATTRIBUTE_VALUE_XHTML_Identifiers
 
 	attribute_value_xhtmlOrdered := []*ATTRIBUTE_VALUE_XHTML{}
 	for attribute_value_xhtml := range stage.ATTRIBUTE_VALUE_XHTMLs {
@@ -1425,33 +794,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, attribute_value_xhtml := range attribute_value_xhtmlOrdered {
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_XHTML", int(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]), attribute_value_xhtml.Name)
-		map_ATTRIBUTE_VALUE_XHTML_Identifiers[attribute_value_xhtml] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_XHTML")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_xhtml.Name)
-		identifiersDecl += decl
+		identifiersDecl += attribute_value_xhtml.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(attribute_value_xhtml.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_SIMPLIFIED")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_value_xhtml.IS_SIMPLIFIED))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED")
+		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE")
+		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE")
 	}
-
-	map_A_ALTERNATIVE_ID_Identifiers := make(map[*A_ALTERNATIVE_ID]string)
-	_ = map_A_ALTERNATIVE_ID_Identifiers
 
 	a_alternative_idOrdered := []*A_ALTERNATIVE_ID{}
 	for a_alternative_id := range stage.A_ALTERNATIVE_IDs {
@@ -1472,27 +824,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_alternative_id := range a_alternative_idOrdered {
 
-		id = generatesIdentifier("A_ALTERNATIVE_ID", int(stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]), a_alternative_id.Name)
-		map_A_ALTERNATIVE_ID_Identifiers[a_alternative_id] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ALTERNATIVE_ID")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_alternative_id.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_alternative_id.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_alternative_id.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_alternative_id.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_Identifiers
 
 	a_attribute_definition_boolean_refOrdered := []*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF{}
 	for a_attribute_definition_boolean_ref := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs {
@@ -1513,33 +851,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_boolean_ref := range a_attribute_definition_boolean_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", int(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]), a_attribute_definition_boolean_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_Identifiers[a_attribute_definition_boolean_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_boolean_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_boolean_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_boolean_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_DATE_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_DATE_REF_Identifiers
 
 	a_attribute_definition_date_refOrdered := []*A_ATTRIBUTE_DEFINITION_DATE_REF{}
 	for a_attribute_definition_date_ref := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs {
@@ -1560,33 +878,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_date_ref := range a_attribute_definition_date_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_DATE_REF", int(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]), a_attribute_definition_date_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_DATE_REF_Identifiers[a_attribute_definition_date_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_DATE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_date_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_date_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_date_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_Identifiers
 
 	a_attribute_definition_enumeration_refOrdered := []*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF{}
 	for a_attribute_definition_enumeration_ref := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs {
@@ -1607,33 +905,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_enumeration_ref := range a_attribute_definition_enumeration_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", int(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]), a_attribute_definition_enumeration_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_Identifiers[a_attribute_definition_enumeration_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_enumeration_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_enumeration_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_enumeration_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_INTEGER_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_INTEGER_REF_Identifiers
 
 	a_attribute_definition_integer_refOrdered := []*A_ATTRIBUTE_DEFINITION_INTEGER_REF{}
 	for a_attribute_definition_integer_ref := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs {
@@ -1654,33 +932,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_integer_ref := range a_attribute_definition_integer_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_INTEGER_REF", int(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]), a_attribute_definition_integer_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_INTEGER_REF_Identifiers[a_attribute_definition_integer_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_INTEGER_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_integer_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_integer_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_integer_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_REAL_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_REAL_REF_Identifiers
 
 	a_attribute_definition_real_refOrdered := []*A_ATTRIBUTE_DEFINITION_REAL_REF{}
 	for a_attribute_definition_real_ref := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs {
@@ -1701,33 +959,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_real_ref := range a_attribute_definition_real_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_REAL_REF", int(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]), a_attribute_definition_real_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_REAL_REF_Identifiers[a_attribute_definition_real_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_REAL_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_real_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_real_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_real_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_STRING_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_STRING_REF_Identifiers
 
 	a_attribute_definition_string_refOrdered := []*A_ATTRIBUTE_DEFINITION_STRING_REF{}
 	for a_attribute_definition_string_ref := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs {
@@ -1748,33 +986,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_string_ref := range a_attribute_definition_string_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_STRING_REF", int(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]), a_attribute_definition_string_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_STRING_REF_Identifiers[a_attribute_definition_string_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_STRING_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_string_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_string_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_string_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
 	}
-
-	map_A_ATTRIBUTE_DEFINITION_XHTML_REF_Identifiers := make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]string)
-	_ = map_A_ATTRIBUTE_DEFINITION_XHTML_REF_Identifiers
 
 	a_attribute_definition_xhtml_refOrdered := []*A_ATTRIBUTE_DEFINITION_XHTML_REF{}
 	for a_attribute_definition_xhtml_ref := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs {
@@ -1795,33 +1013,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_definition_xhtml_ref := range a_attribute_definition_xhtml_refOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_XHTML_REF", int(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]), a_attribute_definition_xhtml_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_XHTML_REF_Identifiers[a_attribute_definition_xhtml_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_XHTML_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_xhtml_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_definition_xhtml_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_xhtml_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
 	}
-
-	map_A_ATTRIBUTE_VALUE_BOOLEAN_Identifiers := make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]string)
-	_ = map_A_ATTRIBUTE_VALUE_BOOLEAN_Identifiers
 
 	a_attribute_value_booleanOrdered := []*A_ATTRIBUTE_VALUE_BOOLEAN{}
 	for a_attribute_value_boolean := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
@@ -1842,27 +1040,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_boolean := range a_attribute_value_booleanOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_BOOLEAN", int(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]), a_attribute_value_boolean.Name)
-		map_A_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[a_attribute_value_boolean] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_BOOLEAN")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_boolean.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_boolean.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_boolean.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_boolean.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_boolean.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
 	}
-
-	map_A_ATTRIBUTE_VALUE_DATE_Identifiers := make(map[*A_ATTRIBUTE_VALUE_DATE]string)
-	_ = map_A_ATTRIBUTE_VALUE_DATE_Identifiers
 
 	a_attribute_value_dateOrdered := []*A_ATTRIBUTE_VALUE_DATE{}
 	for a_attribute_value_date := range stage.A_ATTRIBUTE_VALUE_DATEs {
@@ -1883,27 +1067,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_date := range a_attribute_value_dateOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_DATE", int(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]), a_attribute_value_date.Name)
-		map_A_ATTRIBUTE_VALUE_DATE_Identifiers[a_attribute_value_date] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_DATE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_date.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_date.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_date.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_date.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_date.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
 	}
-
-	map_A_ATTRIBUTE_VALUE_ENUMERATION_Identifiers := make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]string)
-	_ = map_A_ATTRIBUTE_VALUE_ENUMERATION_Identifiers
 
 	a_attribute_value_enumerationOrdered := []*A_ATTRIBUTE_VALUE_ENUMERATION{}
 	for a_attribute_value_enumeration := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
@@ -1924,27 +1094,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_enumeration := range a_attribute_value_enumerationOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_ENUMERATION", int(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]), a_attribute_value_enumeration.Name)
-		map_A_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[a_attribute_value_enumeration] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_ENUMERATION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_enumeration.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_enumeration.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_enumeration.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_enumeration.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_enumeration.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
 	}
-
-	map_A_ATTRIBUTE_VALUE_INTEGER_Identifiers := make(map[*A_ATTRIBUTE_VALUE_INTEGER]string)
-	_ = map_A_ATTRIBUTE_VALUE_INTEGER_Identifiers
 
 	a_attribute_value_integerOrdered := []*A_ATTRIBUTE_VALUE_INTEGER{}
 	for a_attribute_value_integer := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
@@ -1965,27 +1121,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_integer := range a_attribute_value_integerOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_INTEGER", int(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]), a_attribute_value_integer.Name)
-		map_A_ATTRIBUTE_VALUE_INTEGER_Identifiers[a_attribute_value_integer] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_INTEGER")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_integer.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_integer.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_integer.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_integer.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_integer.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
 	}
-
-	map_A_ATTRIBUTE_VALUE_REAL_Identifiers := make(map[*A_ATTRIBUTE_VALUE_REAL]string)
-	_ = map_A_ATTRIBUTE_VALUE_REAL_Identifiers
 
 	a_attribute_value_realOrdered := []*A_ATTRIBUTE_VALUE_REAL{}
 	for a_attribute_value_real := range stage.A_ATTRIBUTE_VALUE_REALs {
@@ -2006,27 +1148,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_real := range a_attribute_value_realOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_REAL", int(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]), a_attribute_value_real.Name)
-		map_A_ATTRIBUTE_VALUE_REAL_Identifiers[a_attribute_value_real] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_REAL")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_real.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_real.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_real.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_real.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_real.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
 	}
-
-	map_A_ATTRIBUTE_VALUE_STRING_Identifiers := make(map[*A_ATTRIBUTE_VALUE_STRING]string)
-	_ = map_A_ATTRIBUTE_VALUE_STRING_Identifiers
 
 	a_attribute_value_stringOrdered := []*A_ATTRIBUTE_VALUE_STRING{}
 	for a_attribute_value_string := range stage.A_ATTRIBUTE_VALUE_STRINGs {
@@ -2047,27 +1175,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_string := range a_attribute_value_stringOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_STRING", int(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]), a_attribute_value_string.Name)
-		map_A_ATTRIBUTE_VALUE_STRING_Identifiers[a_attribute_value_string] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_STRING")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_string.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_string.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_string.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_string.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_string.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
 	}
-
-	map_A_ATTRIBUTE_VALUE_XHTML_Identifiers := make(map[*A_ATTRIBUTE_VALUE_XHTML]string)
-	_ = map_A_ATTRIBUTE_VALUE_XHTML_Identifiers
 
 	a_attribute_value_xhtmlOrdered := []*A_ATTRIBUTE_VALUE_XHTML{}
 	for a_attribute_value_xhtml := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
@@ -2088,27 +1202,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_xhtml := range a_attribute_value_xhtmlOrdered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML", int(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]), a_attribute_value_xhtml.Name)
-		map_A_ATTRIBUTE_VALUE_XHTML_Identifiers[a_attribute_value_xhtml] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_XHTML")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_xhtml.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_xhtml.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_xhtml.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_xhtml.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
 	}
-
-	map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers := make(map[*A_ATTRIBUTE_VALUE_XHTML_1]string)
-	_ = map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers
 
 	a_attribute_value_xhtml_1Ordered := []*A_ATTRIBUTE_VALUE_XHTML_1{}
 	for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
@@ -2129,27 +1229,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_attribute_value_xhtml_1 := range a_attribute_value_xhtml_1Ordered {
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML_1", int(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]), a_attribute_value_xhtml_1.Name)
-		map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers[a_attribute_value_xhtml_1] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_XHTML_1")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_xhtml_1.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_attribute_value_xhtml_1.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml_1.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
 	}
-
-	map_A_CHILDREN_Identifiers := make(map[*A_CHILDREN]string)
-	_ = map_A_CHILDREN_Identifiers
 
 	a_childrenOrdered := []*A_CHILDREN{}
 	for a_children := range stage.A_CHILDRENs {
@@ -2170,27 +1262,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_children := range a_childrenOrdered {
 
-		id = generatesIdentifier("A_CHILDREN", int(stage.A_CHILDRENMap_Staged_Order[a_children]), a_children.Name)
-		map_A_CHILDREN_Identifiers[a_children] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_CHILDREN")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_children.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_children.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_children.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_children.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_children.GongMarshallField(stage, "SPEC_HIERARCHY")
 	}
-
-	map_A_CORE_CONTENT_Identifiers := make(map[*A_CORE_CONTENT]string)
-	_ = map_A_CORE_CONTENT_Identifiers
 
 	a_core_contentOrdered := []*A_CORE_CONTENT{}
 	for a_core_content := range stage.A_CORE_CONTENTs {
@@ -2211,27 +1289,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_core_content := range a_core_contentOrdered {
 
-		id = generatesIdentifier("A_CORE_CONTENT", int(stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]), a_core_content.Name)
-		map_A_CORE_CONTENT_Identifiers[a_core_content] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_CORE_CONTENT")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_core_content.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_core_content.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_core_content.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_core_content.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT")
 	}
-
-	map_A_DATATYPES_Identifiers := make(map[*A_DATATYPES]string)
-	_ = map_A_DATATYPES_Identifiers
 
 	a_datatypesOrdered := []*A_DATATYPES{}
 	for a_datatypes := range stage.A_DATATYPESs {
@@ -2252,27 +1316,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatypes := range a_datatypesOrdered {
 
-		id = generatesIdentifier("A_DATATYPES", int(stage.A_DATATYPESMap_Staged_Order[a_datatypes]), a_datatypes.Name)
-		map_A_DATATYPES_Identifiers[a_datatypes] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPES")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatypes.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatypes.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatypes.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatypes.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML")
 	}
-
-	map_A_DATATYPE_DEFINITION_BOOLEAN_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_BOOLEAN_REF_Identifiers
 
 	a_datatype_definition_boolean_refOrdered := []*A_DATATYPE_DEFINITION_BOOLEAN_REF{}
 	for a_datatype_definition_boolean_ref := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs {
@@ -2293,33 +1349,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_boolean_ref := range a_datatype_definition_boolean_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_BOOLEAN_REF", int(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]), a_datatype_definition_boolean_ref.Name)
-		map_A_DATATYPE_DEFINITION_BOOLEAN_REF_Identifiers[a_datatype_definition_boolean_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_BOOLEAN_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_boolean_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_boolean_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_boolean_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_BOOLEAN_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF")
 	}
-
-	map_A_DATATYPE_DEFINITION_DATE_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_DATE_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_DATE_REF_Identifiers
 
 	a_datatype_definition_date_refOrdered := []*A_DATATYPE_DEFINITION_DATE_REF{}
 	for a_datatype_definition_date_ref := range stage.A_DATATYPE_DEFINITION_DATE_REFs {
@@ -2340,33 +1376,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_date_ref := range a_datatype_definition_date_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_DATE_REF", int(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]), a_datatype_definition_date_ref.Name)
-		map_A_DATATYPE_DEFINITION_DATE_REF_Identifiers[a_datatype_definition_date_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_DATE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_date_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_date_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_date_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_DATE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF")
 	}
-
-	map_A_DATATYPE_DEFINITION_ENUMERATION_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_ENUMERATION_REF_Identifiers
 
 	a_datatype_definition_enumeration_refOrdered := []*A_DATATYPE_DEFINITION_ENUMERATION_REF{}
 	for a_datatype_definition_enumeration_ref := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs {
@@ -2387,33 +1403,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_enumeration_ref := range a_datatype_definition_enumeration_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_ENUMERATION_REF", int(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]), a_datatype_definition_enumeration_ref.Name)
-		map_A_DATATYPE_DEFINITION_ENUMERATION_REF_Identifiers[a_datatype_definition_enumeration_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_ENUMERATION_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_enumeration_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_enumeration_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_enumeration_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_ENUMERATION_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF")
 	}
-
-	map_A_DATATYPE_DEFINITION_INTEGER_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_INTEGER_REF_Identifiers
 
 	a_datatype_definition_integer_refOrdered := []*A_DATATYPE_DEFINITION_INTEGER_REF{}
 	for a_datatype_definition_integer_ref := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs {
@@ -2434,33 +1430,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_integer_ref := range a_datatype_definition_integer_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_INTEGER_REF", int(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]), a_datatype_definition_integer_ref.Name)
-		map_A_DATATYPE_DEFINITION_INTEGER_REF_Identifiers[a_datatype_definition_integer_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_INTEGER_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_integer_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_integer_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_integer_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_INTEGER_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF")
 	}
-
-	map_A_DATATYPE_DEFINITION_REAL_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_REAL_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_REAL_REF_Identifiers
 
 	a_datatype_definition_real_refOrdered := []*A_DATATYPE_DEFINITION_REAL_REF{}
 	for a_datatype_definition_real_ref := range stage.A_DATATYPE_DEFINITION_REAL_REFs {
@@ -2481,33 +1457,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_real_ref := range a_datatype_definition_real_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_REAL_REF", int(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]), a_datatype_definition_real_ref.Name)
-		map_A_DATATYPE_DEFINITION_REAL_REF_Identifiers[a_datatype_definition_real_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_REAL_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_real_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_real_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_real_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_REAL_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF")
 	}
-
-	map_A_DATATYPE_DEFINITION_STRING_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_STRING_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_STRING_REF_Identifiers
 
 	a_datatype_definition_string_refOrdered := []*A_DATATYPE_DEFINITION_STRING_REF{}
 	for a_datatype_definition_string_ref := range stage.A_DATATYPE_DEFINITION_STRING_REFs {
@@ -2528,33 +1484,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_string_ref := range a_datatype_definition_string_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_STRING_REF", int(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]), a_datatype_definition_string_ref.Name)
-		map_A_DATATYPE_DEFINITION_STRING_REF_Identifiers[a_datatype_definition_string_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_STRING_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_string_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_string_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_string_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_STRING_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF")
 	}
-
-	map_A_DATATYPE_DEFINITION_XHTML_REF_Identifiers := make(map[*A_DATATYPE_DEFINITION_XHTML_REF]string)
-	_ = map_A_DATATYPE_DEFINITION_XHTML_REF_Identifiers
 
 	a_datatype_definition_xhtml_refOrdered := []*A_DATATYPE_DEFINITION_XHTML_REF{}
 	for a_datatype_definition_xhtml_ref := range stage.A_DATATYPE_DEFINITION_XHTML_REFs {
@@ -2575,33 +1511,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_datatype_definition_xhtml_ref := range a_datatype_definition_xhtml_refOrdered {
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_XHTML_REF", int(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]), a_datatype_definition_xhtml_ref.Name)
-		map_A_DATATYPE_DEFINITION_XHTML_REF_Identifiers[a_datatype_definition_xhtml_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_XHTML_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_xhtml_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_datatype_definition_xhtml_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_xhtml_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_XHTML_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF")
 	}
-
-	map_A_EDITABLE_ATTS_Identifiers := make(map[*A_EDITABLE_ATTS]string)
-	_ = map_A_EDITABLE_ATTS_Identifiers
 
 	a_editable_attsOrdered := []*A_EDITABLE_ATTS{}
 	for a_editable_atts := range stage.A_EDITABLE_ATTSs {
@@ -2622,69 +1538,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_editable_atts := range a_editable_attsOrdered {
 
-		id = generatesIdentifier("A_EDITABLE_ATTS", int(stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]), a_editable_atts.Name)
-		map_A_EDITABLE_ATTS_Identifiers[a_editable_atts] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_EDITABLE_ATTS")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_editable_atts.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_editable_atts.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "Name")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
 	}
-
-	map_A_ENUM_VALUE_REF_Identifiers := make(map[*A_ENUM_VALUE_REF]string)
-	_ = map_A_ENUM_VALUE_REF_Identifiers
 
 	a_enum_value_refOrdered := []*A_ENUM_VALUE_REF{}
 	for a_enum_value_ref := range stage.A_ENUM_VALUE_REFs {
@@ -2705,33 +1571,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_enum_value_ref := range a_enum_value_refOrdered {
 
-		id = generatesIdentifier("A_ENUM_VALUE_REF", int(stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]), a_enum_value_ref.Name)
-		map_A_ENUM_VALUE_REF_Identifiers[a_enum_value_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ENUM_VALUE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_enum_value_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_enum_value_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_enum_value_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ENUM_VALUE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_enum_value_ref.ENUM_VALUE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF")
 	}
-
-	map_A_OBJECT_Identifiers := make(map[*A_OBJECT]string)
-	_ = map_A_OBJECT_Identifiers
 
 	a_objectOrdered := []*A_OBJECT{}
 	for a_object := range stage.A_OBJECTs {
@@ -2752,33 +1598,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_object := range a_objectOrdered {
 
-		id = generatesIdentifier("A_OBJECT", int(stage.A_OBJECTMap_Staged_Order[a_object]), a_object.Name)
-		map_A_OBJECT_Identifiers[a_object] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_OBJECT")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_object.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_object.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_object.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPEC_OBJECT_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_object.SPEC_OBJECT_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_object.GongMarshallField(stage, "Name")
+		initializerStatements += a_object.GongMarshallField(stage, "SPEC_OBJECT_REF")
 	}
-
-	map_A_PROPERTIES_Identifiers := make(map[*A_PROPERTIES]string)
-	_ = map_A_PROPERTIES_Identifiers
 
 	a_propertiesOrdered := []*A_PROPERTIES{}
 	for a_properties := range stage.A_PROPERTIESs {
@@ -2799,27 +1625,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_properties := range a_propertiesOrdered {
 
-		id = generatesIdentifier("A_PROPERTIES", int(stage.A_PROPERTIESMap_Staged_Order[a_properties]), a_properties.Name)
-		map_A_PROPERTIES_Identifiers[a_properties] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_PROPERTIES")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_properties.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_properties.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_properties.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_properties.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_properties.GongMarshallField(stage, "EMBEDDED_VALUE")
 	}
-
-	map_A_RELATION_GROUP_TYPE_REF_Identifiers := make(map[*A_RELATION_GROUP_TYPE_REF]string)
-	_ = map_A_RELATION_GROUP_TYPE_REF_Identifiers
 
 	a_relation_group_type_refOrdered := []*A_RELATION_GROUP_TYPE_REF{}
 	for a_relation_group_type_ref := range stage.A_RELATION_GROUP_TYPE_REFs {
@@ -2840,33 +1652,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_relation_group_type_ref := range a_relation_group_type_refOrdered {
 
-		id = generatesIdentifier("A_RELATION_GROUP_TYPE_REF", int(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]), a_relation_group_type_ref.Name)
-		map_A_RELATION_GROUP_TYPE_REF_Identifiers[a_relation_group_type_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_RELATION_GROUP_TYPE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_relation_group_type_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_relation_group_type_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_relation_group_type_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "RELATION_GROUP_TYPE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_relation_group_type_ref.RELATION_GROUP_TYPE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF")
 	}
-
-	map_A_SOURCE_1_Identifiers := make(map[*A_SOURCE_1]string)
-	_ = map_A_SOURCE_1_Identifiers
 
 	a_source_1Ordered := []*A_SOURCE_1{}
 	for a_source_1 := range stage.A_SOURCE_1s {
@@ -2887,33 +1679,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_source_1 := range a_source_1Ordered {
 
-		id = generatesIdentifier("A_SOURCE_1", int(stage.A_SOURCE_1Map_Staged_Order[a_source_1]), a_source_1.Name)
-		map_A_SOURCE_1_Identifiers[a_source_1] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SOURCE_1")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_source_1.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_source_1.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_source_1.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPEC_OBJECT_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_source_1.SPEC_OBJECT_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_source_1.GongMarshallField(stage, "Name")
+		initializerStatements += a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF")
 	}
-
-	map_A_SOURCE_SPECIFICATION_1_Identifiers := make(map[*A_SOURCE_SPECIFICATION_1]string)
-	_ = map_A_SOURCE_SPECIFICATION_1_Identifiers
 
 	a_source_specification_1Ordered := []*A_SOURCE_SPECIFICATION_1{}
 	for a_source_specification_1 := range stage.A_SOURCE_SPECIFICATION_1s {
@@ -2934,35 +1706,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_source_specification_1 := range a_source_specification_1Ordered {
 
-		id = generatesIdentifier("A_SOURCE_SPECIFICATION_1", int(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]), a_source_specification_1.Name)
-		map_A_SOURCE_SPECIFICATION_1_Identifiers[a_source_specification_1] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SOURCE_SPECIFICATION_1")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_source_specification_1.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_source_specification_1.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_source_specification_1.Name))
-		initializerStatements += setValueField
-
-		if a_source_specification_1.SPECIFICATION_REF != "" {
-			setValueField = StringEnumInitStatement
-			setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-			setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPECIFICATION_REF")
-			setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", "models."+a_source_specification_1.SPECIFICATION_REF.ToCodeString())
-			initializerStatements += setValueField
-		}
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_source_specification_1.GongMarshallField(stage, "Name")
+		initializerStatements += a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF")
 	}
-
-	map_A_SPECIFICATIONS_Identifiers := make(map[*A_SPECIFICATIONS]string)
-	_ = map_A_SPECIFICATIONS_Identifiers
 
 	a_specificationsOrdered := []*A_SPECIFICATIONS{}
 	for a_specifications := range stage.A_SPECIFICATIONSs {
@@ -2983,27 +1733,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_specifications := range a_specificationsOrdered {
 
-		id = generatesIdentifier("A_SPECIFICATIONS", int(stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]), a_specifications.Name)
-		map_A_SPECIFICATIONS_Identifiers[a_specifications] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPECIFICATIONS")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specifications.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_specifications.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_specifications.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_specifications.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_specifications.GongMarshallField(stage, "SPECIFICATION")
 	}
-
-	map_A_SPECIFICATION_TYPE_REF_Identifiers := make(map[*A_SPECIFICATION_TYPE_REF]string)
-	_ = map_A_SPECIFICATION_TYPE_REF_Identifiers
 
 	a_specification_type_refOrdered := []*A_SPECIFICATION_TYPE_REF{}
 	for a_specification_type_ref := range stage.A_SPECIFICATION_TYPE_REFs {
@@ -3024,33 +1760,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_specification_type_ref := range a_specification_type_refOrdered {
 
-		id = generatesIdentifier("A_SPECIFICATION_TYPE_REF", int(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]), a_specification_type_ref.Name)
-		map_A_SPECIFICATION_TYPE_REF_Identifiers[a_specification_type_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPECIFICATION_TYPE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specification_type_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_specification_type_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_specification_type_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPECIFICATION_TYPE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_specification_type_ref.SPECIFICATION_TYPE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF")
 	}
-
-	map_A_SPECIFIED_VALUES_Identifiers := make(map[*A_SPECIFIED_VALUES]string)
-	_ = map_A_SPECIFIED_VALUES_Identifiers
 
 	a_specified_valuesOrdered := []*A_SPECIFIED_VALUES{}
 	for a_specified_values := range stage.A_SPECIFIED_VALUESs {
@@ -3071,27 +1787,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_specified_values := range a_specified_valuesOrdered {
 
-		id = generatesIdentifier("A_SPECIFIED_VALUES", int(stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]), a_specified_values.Name)
-		map_A_SPECIFIED_VALUES_Identifiers[a_specified_values] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPECIFIED_VALUES")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specified_values.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_specified_values.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_specified_values.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_specified_values.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_specified_values.GongMarshallField(stage, "ENUM_VALUE")
 	}
-
-	map_A_SPEC_ATTRIBUTES_Identifiers := make(map[*A_SPEC_ATTRIBUTES]string)
-	_ = map_A_SPEC_ATTRIBUTES_Identifiers
 
 	a_spec_attributesOrdered := []*A_SPEC_ATTRIBUTES{}
 	for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
@@ -3112,27 +1814,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_attributes := range a_spec_attributesOrdered {
 
-		id = generatesIdentifier("A_SPEC_ATTRIBUTES", int(stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]), a_spec_attributes.Name)
-		map_A_SPEC_ATTRIBUTES_Identifiers[a_spec_attributes] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_ATTRIBUTES")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_attributes.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_attributes.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_attributes.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_attributes.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML")
 	}
-
-	map_A_SPEC_OBJECTS_Identifiers := make(map[*A_SPEC_OBJECTS]string)
-	_ = map_A_SPEC_OBJECTS_Identifiers
 
 	a_spec_objectsOrdered := []*A_SPEC_OBJECTS{}
 	for a_spec_objects := range stage.A_SPEC_OBJECTSs {
@@ -3153,27 +1847,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_objects := range a_spec_objectsOrdered {
 
-		id = generatesIdentifier("A_SPEC_OBJECTS", int(stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]), a_spec_objects.Name)
-		map_A_SPEC_OBJECTS_Identifiers[a_spec_objects] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_OBJECTS")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_objects.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_objects.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_objects.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_objects.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_objects.GongMarshallField(stage, "SPEC_OBJECT")
 	}
-
-	map_A_SPEC_OBJECT_TYPE_REF_Identifiers := make(map[*A_SPEC_OBJECT_TYPE_REF]string)
-	_ = map_A_SPEC_OBJECT_TYPE_REF_Identifiers
 
 	a_spec_object_type_refOrdered := []*A_SPEC_OBJECT_TYPE_REF{}
 	for a_spec_object_type_ref := range stage.A_SPEC_OBJECT_TYPE_REFs {
@@ -3194,33 +1874,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_object_type_ref := range a_spec_object_type_refOrdered {
 
-		id = generatesIdentifier("A_SPEC_OBJECT_TYPE_REF", int(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]), a_spec_object_type_ref.Name)
-		map_A_SPEC_OBJECT_TYPE_REF_Identifiers[a_spec_object_type_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_OBJECT_TYPE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_object_type_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_object_type_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_object_type_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF")
 	}
-
-	map_A_SPEC_RELATIONS_Identifiers := make(map[*A_SPEC_RELATIONS]string)
-	_ = map_A_SPEC_RELATIONS_Identifiers
 
 	a_spec_relationsOrdered := []*A_SPEC_RELATIONS{}
 	for a_spec_relations := range stage.A_SPEC_RELATIONSs {
@@ -3241,27 +1901,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_relations := range a_spec_relationsOrdered {
 
-		id = generatesIdentifier("A_SPEC_RELATIONS", int(stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]), a_spec_relations.Name)
-		map_A_SPEC_RELATIONS_Identifiers[a_spec_relations] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATIONS")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relations.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_relations.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_relations.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relations.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_relations.GongMarshallField(stage, "SPEC_RELATION")
 	}
-
-	map_A_SPEC_RELATION_GROUPS_Identifiers := make(map[*A_SPEC_RELATION_GROUPS]string)
-	_ = map_A_SPEC_RELATION_GROUPS_Identifiers
 
 	a_spec_relation_groupsOrdered := []*A_SPEC_RELATION_GROUPS{}
 	for a_spec_relation_groups := range stage.A_SPEC_RELATION_GROUPSs {
@@ -3282,27 +1928,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_relation_groups := range a_spec_relation_groupsOrdered {
 
-		id = generatesIdentifier("A_SPEC_RELATION_GROUPS", int(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]), a_spec_relation_groups.Name)
-		map_A_SPEC_RELATION_GROUPS_Identifiers[a_spec_relation_groups] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATION_GROUPS")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_groups.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_relation_groups.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_relation_groups.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relation_groups.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_relation_groups.GongMarshallField(stage, "RELATION_GROUP")
 	}
-
-	map_A_SPEC_RELATION_REF_Identifiers := make(map[*A_SPEC_RELATION_REF]string)
-	_ = map_A_SPEC_RELATION_REF_Identifiers
 
 	a_spec_relation_refOrdered := []*A_SPEC_RELATION_REF{}
 	for a_spec_relation_ref := range stage.A_SPEC_RELATION_REFs {
@@ -3323,33 +1955,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_relation_ref := range a_spec_relation_refOrdered {
 
-		id = generatesIdentifier("A_SPEC_RELATION_REF", int(stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]), a_spec_relation_ref.Name)
-		map_A_SPEC_RELATION_REF_Identifiers[a_spec_relation_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATION_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_relation_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_relation_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPEC_RELATION_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_relation_ref.SPEC_RELATION_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF")
 	}
-
-	map_A_SPEC_RELATION_TYPE_REF_Identifiers := make(map[*A_SPEC_RELATION_TYPE_REF]string)
-	_ = map_A_SPEC_RELATION_TYPE_REF_Identifiers
 
 	a_spec_relation_type_refOrdered := []*A_SPEC_RELATION_TYPE_REF{}
 	for a_spec_relation_type_ref := range stage.A_SPEC_RELATION_TYPE_REFs {
@@ -3370,33 +1982,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_relation_type_ref := range a_spec_relation_type_refOrdered {
 
-		id = generatesIdentifier("A_SPEC_RELATION_TYPE_REF", int(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]), a_spec_relation_type_ref.Name)
-		map_A_SPEC_RELATION_TYPE_REF_Identifiers[a_spec_relation_type_ref] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATION_TYPE_REF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_type_ref.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_relation_type_ref.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_relation_type_ref.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SPEC_RELATION_TYPE_REF")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF")
 	}
-
-	map_A_SPEC_TYPES_Identifiers := make(map[*A_SPEC_TYPES]string)
-	_ = map_A_SPEC_TYPES_Identifiers
 
 	a_spec_typesOrdered := []*A_SPEC_TYPES{}
 	for a_spec_types := range stage.A_SPEC_TYPESs {
@@ -3417,27 +2009,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_spec_types := range a_spec_typesOrdered {
 
-		id = generatesIdentifier("A_SPEC_TYPES", int(stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]), a_spec_types.Name)
-		map_A_SPEC_TYPES_Identifiers[a_spec_types] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_TYPES")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_types.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_spec_types.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_spec_types.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_spec_types.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "RELATION_GROUP_TYPE")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_OBJECT_TYPE")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_RELATION_TYPE")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPECIFICATION_TYPE")
 	}
-
-	map_A_THE_HEADER_Identifiers := make(map[*A_THE_HEADER]string)
-	_ = map_A_THE_HEADER_Identifiers
 
 	a_the_headerOrdered := []*A_THE_HEADER{}
 	for a_the_header := range stage.A_THE_HEADERs {
@@ -3458,27 +2039,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_the_header := range a_the_headerOrdered {
 
-		id = generatesIdentifier("A_THE_HEADER", int(stage.A_THE_HEADERMap_Staged_Order[a_the_header]), a_the_header.Name)
-		map_A_THE_HEADER_Identifiers[a_the_header] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_THE_HEADER")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_the_header.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_the_header.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_the_header.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_the_header.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_the_header.GongMarshallField(stage, "REQ_IF_HEADER")
 	}
-
-	map_A_TOOL_EXTENSIONS_Identifiers := make(map[*A_TOOL_EXTENSIONS]string)
-	_ = map_A_TOOL_EXTENSIONS_Identifiers
 
 	a_tool_extensionsOrdered := []*A_TOOL_EXTENSIONS{}
 	for a_tool_extensions := range stage.A_TOOL_EXTENSIONSs {
@@ -3499,27 +2066,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, a_tool_extensions := range a_tool_extensionsOrdered {
 
-		id = generatesIdentifier("A_TOOL_EXTENSIONS", int(stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]), a_tool_extensions.Name)
-		map_A_TOOL_EXTENSIONS_Identifiers[a_tool_extensions] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_TOOL_EXTENSIONS")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_tool_extensions.Name)
-		identifiersDecl += decl
+		identifiersDecl += a_tool_extensions.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(a_tool_extensions.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += a_tool_extensions.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_tool_extensions.GongMarshallField(stage, "REQ_IF_TOOL_EXTENSION")
 	}
-
-	map_DATATYPE_DEFINITION_BOOLEAN_Identifiers := make(map[*DATATYPE_DEFINITION_BOOLEAN]string)
-	_ = map_DATATYPE_DEFINITION_BOOLEAN_Identifiers
 
 	datatype_definition_booleanOrdered := []*DATATYPE_DEFINITION_BOOLEAN{}
 	for datatype_definition_boolean := range stage.DATATYPE_DEFINITION_BOOLEANs {
@@ -3540,51 +2093,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_boolean := range datatype_definition_booleanOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_BOOLEAN", int(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]), datatype_definition_boolean.Name)
-		map_DATATYPE_DEFINITION_BOOLEAN_Identifiers[datatype_definition_boolean] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_BOOLEAN")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_boolean.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_boolean.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_DATATYPE_DEFINITION_DATE_Identifiers := make(map[*DATATYPE_DEFINITION_DATE]string)
-	_ = map_DATATYPE_DEFINITION_DATE_Identifiers
 
 	datatype_definition_dateOrdered := []*DATATYPE_DEFINITION_DATE{}
 	for datatype_definition_date := range stage.DATATYPE_DEFINITION_DATEs {
@@ -3605,51 +2124,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_date := range datatype_definition_dateOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_DATE", int(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]), datatype_definition_date.Name)
-		map_DATATYPE_DEFINITION_DATE_Identifiers[datatype_definition_date] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_DATE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_date.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_date.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_DATATYPE_DEFINITION_ENUMERATION_Identifiers := make(map[*DATATYPE_DEFINITION_ENUMERATION]string)
-	_ = map_DATATYPE_DEFINITION_ENUMERATION_Identifiers
 
 	datatype_definition_enumerationOrdered := []*DATATYPE_DEFINITION_ENUMERATION{}
 	for datatype_definition_enumeration := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
@@ -3670,51 +2155,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_enumeration := range datatype_definition_enumerationOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_ENUMERATION", int(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]), datatype_definition_enumeration.Name)
-		map_DATATYPE_DEFINITION_ENUMERATION_Identifiers[datatype_definition_enumeration] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_ENUMERATION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_enumeration.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_enumeration.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES")
 	}
-
-	map_DATATYPE_DEFINITION_INTEGER_Identifiers := make(map[*DATATYPE_DEFINITION_INTEGER]string)
-	_ = map_DATATYPE_DEFINITION_INTEGER_Identifiers
 
 	datatype_definition_integerOrdered := []*DATATYPE_DEFINITION_INTEGER{}
 	for datatype_definition_integer := range stage.DATATYPE_DEFINITION_INTEGERs {
@@ -3735,63 +2187,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_integer := range datatype_definition_integerOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_INTEGER", int(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]), datatype_definition_integer.Name)
-		map_DATATYPE_DEFINITION_INTEGER_Identifiers[datatype_definition_integer] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_INTEGER")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_integer.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_integer.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.LONG_NAME))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MAX")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_integer.MAX))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MIN")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_integer.MIN))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MAX")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MIN")
+		pointersInitializesStatements += datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_DATATYPE_DEFINITION_REAL_Identifiers := make(map[*DATATYPE_DEFINITION_REAL]string)
-	_ = map_DATATYPE_DEFINITION_REAL_Identifiers
 
 	datatype_definition_realOrdered := []*DATATYPE_DEFINITION_REAL{}
 	for datatype_definition_real := range stage.DATATYPE_DEFINITION_REALs {
@@ -3812,69 +2220,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_real := range datatype_definition_realOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_REAL", int(stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]), datatype_definition_real.Name)
-		map_DATATYPE_DEFINITION_REAL_Identifiers[datatype_definition_real] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_REAL")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_real.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_real.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ACCURACY")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_real.ACCURACY))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.LONG_NAME))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MAX")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%f", datatype_definition_real.MAX))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MIN")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%f", datatype_definition_real.MIN))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "ACCURACY")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MAX")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MIN")
+		pointersInitializesStatements += datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_DATATYPE_DEFINITION_STRING_Identifiers := make(map[*DATATYPE_DEFINITION_STRING]string)
-	_ = map_DATATYPE_DEFINITION_STRING_Identifiers
 
 	datatype_definition_stringOrdered := []*DATATYPE_DEFINITION_STRING{}
 	for datatype_definition_string := range stage.DATATYPE_DEFINITION_STRINGs {
@@ -3895,57 +2254,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_string := range datatype_definition_stringOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_STRING", int(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]), datatype_definition_string.Name)
-		map_DATATYPE_DEFINITION_STRING_Identifiers[datatype_definition_string] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_STRING")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_string.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_string.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.LONG_NAME))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MAX_LENGTH")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_string.MAX_LENGTH))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH")
+		pointersInitializesStatements += datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_DATATYPE_DEFINITION_XHTML_Identifiers := make(map[*DATATYPE_DEFINITION_XHTML]string)
-	_ = map_DATATYPE_DEFINITION_XHTML_Identifiers
 
 	datatype_definition_xhtmlOrdered := []*DATATYPE_DEFINITION_XHTML{}
 	for datatype_definition_xhtml := range stage.DATATYPE_DEFINITION_XHTMLs {
@@ -3966,51 +2286,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, datatype_definition_xhtml := range datatype_definition_xhtmlOrdered {
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_XHTML", int(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]), datatype_definition_xhtml.Name)
-		map_DATATYPE_DEFINITION_XHTML_Identifiers[datatype_definition_xhtml] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_XHTML")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_xhtml.Name)
-		identifiersDecl += decl
+		identifiersDecl += datatype_definition_xhtml.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
 	}
-
-	map_EMBEDDED_VALUE_Identifiers := make(map[*EMBEDDED_VALUE]string)
-	_ = map_EMBEDDED_VALUE_Identifiers
 
 	embedded_valueOrdered := []*EMBEDDED_VALUE{}
 	for embedded_value := range stage.EMBEDDED_VALUEs {
@@ -4031,39 +2317,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, embedded_value := range embedded_valueOrdered {
 
-		id = generatesIdentifier("EMBEDDED_VALUE", int(stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]), embedded_value.Name)
-		map_EMBEDDED_VALUE_Identifiers[embedded_value] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EMBEDDED_VALUE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embedded_value.Name)
-		identifiersDecl += decl
+		identifiersDecl += embedded_value.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embedded_value.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "KEY")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", embedded_value.KEY))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "OTHER_CONTENT")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embedded_value.OTHER_CONTENT))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += embedded_value.GongMarshallField(stage, "Name")
+		initializerStatements += embedded_value.GongMarshallField(stage, "KEY")
+		initializerStatements += embedded_value.GongMarshallField(stage, "OTHER_CONTENT")
 	}
-
-	map_ENUM_VALUE_Identifiers := make(map[*ENUM_VALUE]string)
-	_ = map_ENUM_VALUE_Identifiers
 
 	enum_valueOrdered := []*ENUM_VALUE{}
 	for enum_value := range stage.ENUM_VALUEs {
@@ -4084,51 +2345,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, enum_value := range enum_valueOrdered {
 
-		id = generatesIdentifier("ENUM_VALUE", int(stage.ENUM_VALUEMap_Staged_Order[enum_value]), enum_value.Name)
-		map_ENUM_VALUE_Identifiers[enum_value] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ENUM_VALUE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", enum_value.Name)
-		identifiersDecl += decl
+		identifiersDecl += enum_value.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(enum_value.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(enum_value.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(enum_value.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(enum_value.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(enum_value.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += enum_value.GongMarshallField(stage, "Name")
+		initializerStatements += enum_value.GongMarshallField(stage, "DESC")
+		initializerStatements += enum_value.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += enum_value.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += enum_value.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += enum_value.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += enum_value.GongMarshallField(stage, "PROPERTIES")
 	}
-
-	map_EmbeddedJpgImage_Identifiers := make(map[*EmbeddedJpgImage]string)
-	_ = map_EmbeddedJpgImage_Identifiers
 
 	embeddedjpgimageOrdered := []*EmbeddedJpgImage{}
 	for embeddedjpgimage := range stage.EmbeddedJpgImages {
@@ -4149,33 +2377,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, embeddedjpgimage := range embeddedjpgimageOrdered {
 
-		id = generatesIdentifier("EmbeddedJpgImage", int(stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]), embeddedjpgimage.Name)
-		map_EmbeddedJpgImage_Identifiers[embeddedjpgimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedJpgImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedjpgimage.Name)
-		identifiersDecl += decl
+		identifiersDecl += embeddedjpgimage.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Base64Content")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Base64Content))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Name")
+		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Base64Content")
 	}
-
-	map_EmbeddedPngImage_Identifiers := make(map[*EmbeddedPngImage]string)
-	_ = map_EmbeddedPngImage_Identifiers
 
 	embeddedpngimageOrdered := []*EmbeddedPngImage{}
 	for embeddedpngimage := range stage.EmbeddedPngImages {
@@ -4196,33 +2404,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, embeddedpngimage := range embeddedpngimageOrdered {
 
-		id = generatesIdentifier("EmbeddedPngImage", int(stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]), embeddedpngimage.Name)
-		map_EmbeddedPngImage_Identifiers[embeddedpngimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedPngImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedpngimage.Name)
-		identifiersDecl += decl
+		identifiersDecl += embeddedpngimage.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Base64Content")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Base64Content))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Name")
+		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Base64Content")
 	}
-
-	map_EmbeddedSvgImage_Identifiers := make(map[*EmbeddedSvgImage]string)
-	_ = map_EmbeddedSvgImage_Identifiers
 
 	embeddedsvgimageOrdered := []*EmbeddedSvgImage{}
 	for embeddedsvgimage := range stage.EmbeddedSvgImages {
@@ -4243,33 +2431,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, embeddedsvgimage := range embeddedsvgimageOrdered {
 
-		id = generatesIdentifier("EmbeddedSvgImage", int(stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]), embeddedsvgimage.Name)
-		map_EmbeddedSvgImage_Identifiers[embeddedsvgimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedSvgImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedsvgimage.Name)
-		identifiersDecl += decl
+		identifiersDecl += embeddedsvgimage.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Content")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Content))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Name")
+		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Content")
 	}
-
-	map_Kill_Identifiers := make(map[*Kill]string)
-	_ = map_Kill_Identifiers
 
 	killOrdered := []*Kill{}
 	for kill := range stage.Kills {
@@ -4290,27 +2458,12 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, kill := range killOrdered {
 
-		id = generatesIdentifier("Kill", int(stage.KillMap_Staged_Order[kill]), kill.Name)
-		map_Kill_Identifiers[kill] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Kill")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", kill.Name)
-		identifiersDecl += decl
+		identifiersDecl += kill.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(kill.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += kill.GongMarshallField(stage, "Name")
 	}
-
-	map_Map_identifier_bool_Identifiers := make(map[*Map_identifier_bool]string)
-	_ = map_Map_identifier_bool_Identifiers
 
 	map_identifier_boolOrdered := []*Map_identifier_bool{}
 	for map_identifier_bool := range stage.Map_identifier_bools {
@@ -4331,33 +2484,13 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, map_identifier_bool := range map_identifier_boolOrdered {
 
-		id = generatesIdentifier("Map_identifier_bool", int(stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]), map_identifier_bool.Name)
-		map_Map_identifier_bool_Identifiers[map_identifier_bool] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_identifier_bool")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_identifier_bool.Name)
-		identifiersDecl += decl
+		identifiersDecl += map_identifier_bool.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(map_identifier_bool.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Value")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_identifier_bool.Value))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Name")
+		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Value")
 	}
-
-	map_RELATION_GROUP_Identifiers := make(map[*RELATION_GROUP]string)
-	_ = map_RELATION_GROUP_Identifiers
 
 	relation_groupOrdered := []*RELATION_GROUP{}
 	for relation_group := range stage.RELATION_GROUPs {
@@ -4378,51 +2511,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, relation_group := range relation_groupOrdered {
 
-		id = generatesIdentifier("RELATION_GROUP", int(stage.RELATION_GROUPMap_Staged_Order[relation_group]), relation_group.Name)
-		map_RELATION_GROUP_Identifiers[relation_group] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "RELATION_GROUP")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", relation_group.Name)
-		identifiersDecl += decl
+		identifiersDecl += relation_group.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += relation_group.GongMarshallField(stage, "Name")
+		initializerStatements += relation_group.GongMarshallField(stage, "DESC")
+		initializerStatements += relation_group.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += relation_group.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += relation_group.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SPEC_RELATIONS")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TYPE")
 	}
-
-	map_RELATION_GROUP_TYPE_Identifiers := make(map[*RELATION_GROUP_TYPE]string)
-	_ = map_RELATION_GROUP_TYPE_Identifiers
 
 	relation_group_typeOrdered := []*RELATION_GROUP_TYPE{}
 	for relation_group_type := range stage.RELATION_GROUP_TYPEs {
@@ -4443,51 +2546,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, relation_group_type := range relation_group_typeOrdered {
 
-		id = generatesIdentifier("RELATION_GROUP_TYPE", int(stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]), relation_group_type.Name)
-		map_RELATION_GROUP_TYPE_Identifiers[relation_group_type] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "RELATION_GROUP_TYPE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", relation_group_type.Name)
-		identifiersDecl += decl
+		identifiersDecl += relation_group_type.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group_type.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group_type.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group_type.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group_type.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(relation_group_type.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += relation_group_type.GongMarshallField(stage, "Name")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "DESC")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
 	}
-
-	map_REQ_IF_Identifiers := make(map[*REQ_IF]string)
-	_ = map_REQ_IF_Identifiers
 
 	req_ifOrdered := []*REQ_IF{}
 	for req_if := range stage.REQ_IFs {
@@ -4508,33 +2578,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, req_if := range req_ifOrdered {
 
-		id = generatesIdentifier("REQ_IF", int(stage.REQ_IFMap_Staged_Order[req_if]), req_if.Name)
-		map_REQ_IF_Identifiers[req_if] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if.Name)
-		identifiersDecl += decl
+		identifiersDecl += req_if.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Lang")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if.Lang))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += req_if.GongMarshallField(stage, "Name")
+		initializerStatements += req_if.GongMarshallField(stage, "Lang")
+		pointersInitializesStatements += req_if.GongMarshallField(stage, "THE_HEADER")
+		pointersInitializesStatements += req_if.GongMarshallField(stage, "CORE_CONTENT")
+		pointersInitializesStatements += req_if.GongMarshallField(stage, "TOOL_EXTENSIONS")
 	}
-
-	map_REQ_IF_CONTENT_Identifiers := make(map[*REQ_IF_CONTENT]string)
-	_ = map_REQ_IF_CONTENT_Identifiers
 
 	req_if_contentOrdered := []*REQ_IF_CONTENT{}
 	for req_if_content := range stage.REQ_IF_CONTENTs {
@@ -4555,27 +2608,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, req_if_content := range req_if_contentOrdered {
 
-		id = generatesIdentifier("REQ_IF_CONTENT", int(stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]), req_if_content.Name)
-		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_CONTENT")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_content.Name)
-		identifiersDecl += decl
+		identifiersDecl += req_if_content.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_content.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += req_if_content.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "DATATYPES")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_TYPES")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_OBJECTS")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATIONS")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPECIFICATIONS")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS")
 	}
-
-	map_REQ_IF_HEADER_Identifiers := make(map[*REQ_IF_HEADER]string)
-	_ = map_REQ_IF_HEADER_Identifiers
 
 	req_if_headerOrdered := []*REQ_IF_HEADER{}
 	for req_if_header := range stage.REQ_IF_HEADERs {
@@ -4596,75 +2640,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, req_if_header := range req_if_headerOrdered {
 
-		id = generatesIdentifier("REQ_IF_HEADER", int(stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]), req_if_header.Name)
-		map_REQ_IF_HEADER_Identifiers[req_if_header] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_HEADER")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_header.Name)
-		identifiersDecl += decl
+		identifiersDecl += req_if_header.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "COMMENT")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.COMMENT))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "CREATION_TIME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.CREATION_TIME))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "REPOSITORY_ID")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.REPOSITORY_ID))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "REQ_IF_TOOL_ID")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.REQ_IF_TOOL_ID))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "REQ_IF_VERSION")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.REQ_IF_VERSION))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SOURCE_TOOL_ID")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.SOURCE_TOOL_ID))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "TITLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_header.TITLE))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += req_if_header.GongMarshallField(stage, "Name")
+		initializerStatements += req_if_header.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += req_if_header.GongMarshallField(stage, "COMMENT")
+		initializerStatements += req_if_header.GongMarshallField(stage, "CREATION_TIME")
+		initializerStatements += req_if_header.GongMarshallField(stage, "REPOSITORY_ID")
+		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID")
+		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_VERSION")
+		initializerStatements += req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID")
+		initializerStatements += req_if_header.GongMarshallField(stage, "TITLE")
 	}
-
-	map_REQ_IF_TOOL_EXTENSION_Identifiers := make(map[*REQ_IF_TOOL_EXTENSION]string)
-	_ = map_REQ_IF_TOOL_EXTENSION_Identifiers
 
 	req_if_tool_extensionOrdered := []*REQ_IF_TOOL_EXTENSION{}
 	for req_if_tool_extension := range stage.REQ_IF_TOOL_EXTENSIONs {
@@ -4685,27 +2674,12 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, req_if_tool_extension := range req_if_tool_extensionOrdered {
 
-		id = generatesIdentifier("REQ_IF_TOOL_EXTENSION", int(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]), req_if_tool_extension.Name)
-		map_REQ_IF_TOOL_EXTENSION_Identifiers[req_if_tool_extension] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_TOOL_EXTENSION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_tool_extension.Name)
-		identifiersDecl += decl
+		identifiersDecl += req_if_tool_extension.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(req_if_tool_extension.Name))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += req_if_tool_extension.GongMarshallField(stage, "Name")
 	}
-
-	map_SPECIFICATION_Identifiers := make(map[*SPECIFICATION]string)
-	_ = map_SPECIFICATION_Identifiers
 
 	specificationOrdered := []*SPECIFICATION{}
 	for specification := range stage.SPECIFICATIONs {
@@ -4726,51 +2700,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, specification := range specificationOrdered {
 
-		id = generatesIdentifier("SPECIFICATION", int(stage.SPECIFICATIONMap_Staged_Order[specification]), specification.Name)
-		map_SPECIFICATION_Identifiers[specification] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification.Name)
-		identifiersDecl += decl
+		identifiersDecl += specification.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += specification.GongMarshallField(stage, "Name")
+		initializerStatements += specification.GongMarshallField(stage, "DESC")
+		initializerStatements += specification.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += specification.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += specification.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "TYPE")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "CHILDREN")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "VALUES")
 	}
-
-	map_SPECIFICATION_Rendering_Identifiers := make(map[*SPECIFICATION_Rendering]string)
-	_ = map_SPECIFICATION_Rendering_Identifiers
 
 	specification_renderingOrdered := []*SPECIFICATION_Rendering{}
 	for specification_rendering := range stage.SPECIFICATION_Renderings {
@@ -4791,45 +2734,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, specification_rendering := range specification_renderingOrdered {
 
-		id = generatesIdentifier("SPECIFICATION_Rendering", int(stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]), specification_rendering.Name)
-		map_SPECIFICATION_Rendering_Identifiers[specification_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += specification_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsNodeExpanded")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", specification_rendering.IsNodeExpanded))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsSelected")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", specification_rendering.IsSelected))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsWithHeadingNumbering")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", specification_rendering.IsWithHeadingNumbering))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += specification_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += specification_rendering.GongMarshallField(stage, "IsNodeExpanded")
+		initializerStatements += specification_rendering.GongMarshallField(stage, "IsSelected")
+		initializerStatements += specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering")
 	}
-
-	map_SPECIFICATION_TYPE_Identifiers := make(map[*SPECIFICATION_TYPE]string)
-	_ = map_SPECIFICATION_TYPE_Identifiers
 
 	specification_typeOrdered := []*SPECIFICATION_TYPE{}
 	for specification_type := range stage.SPECIFICATION_TYPEs {
@@ -4850,51 +2763,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, specification_type := range specification_typeOrdered {
 
-		id = generatesIdentifier("SPECIFICATION_TYPE", int(stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]), specification_type.Name)
-		map_SPECIFICATION_TYPE_Identifiers[specification_type] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION_TYPE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification_type.Name)
-		identifiersDecl += decl
+		identifiersDecl += specification_type.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification_type.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification_type.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification_type.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification_type.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(specification_type.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += specification_type.GongMarshallField(stage, "Name")
+		initializerStatements += specification_type.GongMarshallField(stage, "DESC")
+		initializerStatements += specification_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += specification_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += specification_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += specification_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
 	}
-
-	map_SPEC_HIERARCHY_Identifiers := make(map[*SPEC_HIERARCHY]string)
-	_ = map_SPEC_HIERARCHY_Identifiers
 
 	spec_hierarchyOrdered := []*SPEC_HIERARCHY{}
 	for spec_hierarchy := range stage.SPEC_HIERARCHYs {
@@ -4915,63 +2795,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, spec_hierarchy := range spec_hierarchyOrdered {
 
-		id = generatesIdentifier("SPEC_HIERARCHY", int(stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]), spec_hierarchy.Name)
-		map_SPEC_HIERARCHY_Identifiers[spec_hierarchy] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_HIERARCHY")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_hierarchy.Name)
-		identifiersDecl += decl
+		identifiersDecl += spec_hierarchy.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_EDITABLE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_hierarchy.IS_EDITABLE))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IS_TABLE_INTERNAL")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_hierarchy.IS_TABLE_INTERNAL))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "Name")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "OBJECT")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "CHILDREN")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS")
 	}
-
-	map_SPEC_OBJECT_Identifiers := make(map[*SPEC_OBJECT]string)
-	_ = map_SPEC_OBJECT_Identifiers
 
 	spec_objectOrdered := []*SPEC_OBJECT{}
 	for spec_object := range stage.SPEC_OBJECTs {
@@ -4992,51 +2831,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, spec_object := range spec_objectOrdered {
 
-		id = generatesIdentifier("SPEC_OBJECT", int(stage.SPEC_OBJECTMap_Staged_Order[spec_object]), spec_object.Name)
-		map_SPEC_OBJECT_Identifiers[spec_object] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object.Name)
-		identifiersDecl += decl
+		identifiersDecl += spec_object.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += spec_object.GongMarshallField(stage, "Name")
+		initializerStatements += spec_object.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_object.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_object.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_object.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_object.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_object.GongMarshallField(stage, "VALUES")
+		pointersInitializesStatements += spec_object.GongMarshallField(stage, "TYPE")
 	}
-
-	map_SPEC_OBJECT_TYPE_Identifiers := make(map[*SPEC_OBJECT_TYPE]string)
-	_ = map_SPEC_OBJECT_TYPE_Identifiers
 
 	spec_object_typeOrdered := []*SPEC_OBJECT_TYPE{}
 	for spec_object_type := range stage.SPEC_OBJECT_TYPEs {
@@ -5057,51 +2864,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, spec_object_type := range spec_object_typeOrdered {
 
-		id = generatesIdentifier("SPEC_OBJECT_TYPE", int(stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]), spec_object_type.Name)
-		map_SPEC_OBJECT_TYPE_Identifiers[spec_object_type] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT_TYPE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type.Name)
-		identifiersDecl += decl
+		identifiersDecl += spec_object_type.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += spec_object_type.GongMarshallField(stage, "Name")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
 	}
-
-	map_SPEC_OBJECT_TYPE_Rendering_Identifiers := make(map[*SPEC_OBJECT_TYPE_Rendering]string)
-	_ = map_SPEC_OBJECT_TYPE_Rendering_Identifiers
 
 	spec_object_type_renderingOrdered := []*SPEC_OBJECT_TYPE_Rendering{}
 	for spec_object_type_rendering := range stage.SPEC_OBJECT_TYPE_Renderings {
@@ -5122,57 +2896,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, spec_object_type_rendering := range spec_object_type_renderingOrdered {
 
-		id = generatesIdentifier("SPEC_OBJECT_TYPE_Rendering", int(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]), spec_object_type_rendering.Name)
-		map_SPEC_OBJECT_TYPE_Rendering_Identifiers[spec_object_type_rendering] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT_TYPE_Rendering")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type_rendering.Name)
-		identifiersDecl += decl
+		identifiersDecl += spec_object_type_rendering.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_object_type_rendering.Name))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsNodeExpanded")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.IsNodeExpanded))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowIdentifier")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowIdentifier))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowName")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowName))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "ShowRelations")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowRelations))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IsHeading")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.IsHeading))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowName")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowRelations")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsHeading")
 	}
-
-	map_SPEC_RELATION_Identifiers := make(map[*SPEC_RELATION]string)
-	_ = map_SPEC_RELATION_Identifiers
 
 	spec_relationOrdered := []*SPEC_RELATION{}
 	for spec_relation := range stage.SPEC_RELATIONs {
@@ -5193,51 +2927,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, spec_relation := range spec_relationOrdered {
 
-		id = generatesIdentifier("SPEC_RELATION", int(stage.SPEC_RELATIONMap_Staged_Order[spec_relation]), spec_relation.Name)
-		map_SPEC_RELATION_Identifiers[spec_relation] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_RELATION")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_relation.Name)
-		identifiersDecl += decl
+		identifiersDecl += spec_relation.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += spec_relation.GongMarshallField(stage, "Name")
+		initializerStatements += spec_relation.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_relation.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_relation.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_relation.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "VALUES")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "SOURCE")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TARGET")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TYPE")
 	}
-
-	map_SPEC_RELATION_TYPE_Identifiers := make(map[*SPEC_RELATION_TYPE]string)
-	_ = map_SPEC_RELATION_TYPE_Identifiers
 
 	spec_relation_typeOrdered := []*SPEC_RELATION_TYPE{}
 	for spec_relation_type := range stage.SPEC_RELATION_TYPEs {
@@ -5258,51 +2962,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, spec_relation_type := range spec_relation_typeOrdered {
 
-		id = generatesIdentifier("SPEC_RELATION_TYPE", int(stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]), spec_relation_type.Name)
-		map_SPEC_RELATION_TYPE_Identifiers[spec_relation_type] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_RELATION_TYPE")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_relation_type.Name)
-		identifiersDecl += decl
+		identifiersDecl += spec_relation_type.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation_type.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "DESC")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation_type.DESC))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "IDENTIFIER")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation_type.IDENTIFIER))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LAST_CHANGE))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LONG_NAME")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LONG_NAME))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "Name")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
 	}
-
-	map_StaticWebSite_Identifiers := make(map[*StaticWebSite]string)
-	_ = map_StaticWebSite_Identifiers
 
 	staticwebsiteOrdered := []*StaticWebSite{}
 	for staticwebsite := range stage.StaticWebSites {
@@ -5323,51 +2994,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, staticwebsite := range staticwebsiteOrdered {
 
-		id = generatesIdentifier("StaticWebSite", int(stage.StaticWebSiteMap_Staged_Order[staticwebsite]), staticwebsite.Name)
-		map_StaticWebSite_Identifiers[staticwebsite] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSite")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsite.Name)
-		identifiersDecl += decl
+		identifiersDecl += staticwebsite.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MarkdownContent")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.MarkdownContent))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "InputImagesDir")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.InputImagesDir))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "OutputStaticWebDir")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.OutputStaticWebDir))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "VersionInfo")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsite.VersionInfo))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += staticwebsite.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "MarkdownContent")
+		pointersInitializesStatements += staticwebsite.GongMarshallField(stage, "Chapters")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "InputImagesDir")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "OutputStaticWebDir")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "VersionInfo")
 	}
-
-	map_StaticWebSiteChapter_Identifiers := make(map[*StaticWebSiteChapter]string)
-	_ = map_StaticWebSiteChapter_Identifiers
 
 	staticwebsitechapterOrdered := []*StaticWebSiteChapter{}
 	for staticwebsitechapter := range stage.StaticWebSiteChapters {
@@ -5388,33 +3025,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, staticwebsitechapter := range staticwebsitechapterOrdered {
 
-		id = generatesIdentifier("StaticWebSiteChapter", int(stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]), staticwebsitechapter.Name)
-		map_StaticWebSiteChapter_Identifiers[staticwebsitechapter] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteChapter")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitechapter.Name)
-		identifiersDecl += decl
+		identifiersDecl += staticwebsitechapter.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "MarkdownContent")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.MarkdownContent))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "MarkdownContent")
+		pointersInitializesStatements += staticwebsitechapter.GongMarshallField(stage, "Paragraphs")
 	}
-
-	map_StaticWebSiteGeneratedImage_Identifiers := make(map[*StaticWebSiteGeneratedImage]string)
-	_ = map_StaticWebSiteGeneratedImage_Identifiers
 
 	staticwebsitegeneratedimageOrdered := []*StaticWebSiteGeneratedImage{}
 	for staticwebsitegeneratedimage := range stage.StaticWebSiteGeneratedImages {
@@ -5435,45 +3053,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, staticwebsitegeneratedimage := range staticwebsitegeneratedimageOrdered {
 
-		id = generatesIdentifier("StaticWebSiteGeneratedImage", int(stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]), staticwebsitegeneratedimage.Name)
-		map_StaticWebSiteGeneratedImage_Identifiers[staticwebsitegeneratedimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteGeneratedImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitegeneratedimage.Name)
-		identifiersDecl += decl
+		identifiersDecl += staticwebsitegeneratedimage.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsitegeneratedimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SourceDirectoryPath")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsitegeneratedimage.SourceDirectoryPath))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Width")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsitegeneratedimage.Width))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Height")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsitegeneratedimage.Height))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath")
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Width")
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Height")
 	}
-
-	map_StaticWebSiteImage_Identifiers := make(map[*StaticWebSiteImage]string)
-	_ = map_StaticWebSiteImage_Identifiers
 
 	staticwebsiteimageOrdered := []*StaticWebSiteImage{}
 	for staticwebsiteimage := range stage.StaticWebSiteImages {
@@ -5494,45 +3082,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, staticwebsiteimage := range staticwebsiteimageOrdered {
 
-		id = generatesIdentifier("StaticWebSiteImage", int(stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]), staticwebsiteimage.Name)
-		map_StaticWebSiteImage_Identifiers[staticwebsiteimage] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteImage")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsiteimage.Name)
-		identifiersDecl += decl
+		identifiersDecl += staticwebsiteimage.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsiteimage.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "SourceDirectoryPath")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsiteimage.SourceDirectoryPath))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Width")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsiteimage.Width))
-		initializerStatements += setValueField
-
-		setValueField = NumberInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Height")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsiteimage.Height))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath")
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Width")
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Height")
 	}
-
-	map_StaticWebSiteParagraph_Identifiers := make(map[*StaticWebSiteParagraph]string)
-	_ = map_StaticWebSiteParagraph_Identifiers
 
 	staticwebsiteparagraphOrdered := []*StaticWebSiteParagraph{}
 	for staticwebsiteparagraph := range stage.StaticWebSiteParagraphs {
@@ -5553,33 +3111,14 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, staticwebsiteparagraph := range staticwebsiteparagraphOrdered {
 
-		id = generatesIdentifier("StaticWebSiteParagraph", int(stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]), staticwebsiteparagraph.Name)
-		map_StaticWebSiteParagraph_Identifiers[staticwebsiteparagraph] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteParagraph")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsiteparagraph.Name)
-		identifiersDecl += decl
+		identifiersDecl += staticwebsiteparagraph.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "LegendMarkdownContent")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.LegendMarkdownContent))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent")
+		pointersInitializesStatements += staticwebsiteparagraph.GongMarshallField(stage, "Image")
 	}
-
-	map_XHTML_CONTENT_Identifiers := make(map[*XHTML_CONTENT]string)
-	_ = map_XHTML_CONTENT_Identifiers
 
 	xhtml_contentOrdered := []*XHTML_CONTENT{}
 	for xhtml_content := range stage.XHTML_CONTENTs {
@@ -5600,2388 +3139,846 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	}
 	for _, xhtml_content := range xhtml_contentOrdered {
 
-		id = generatesIdentifier("XHTML_CONTENT", int(stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]), xhtml_content.Name)
-		map_XHTML_CONTENT_Identifiers[xhtml_content] = id
-
-		decl = IdentifiersDecls
-		decl = strings.ReplaceAll(decl, "{{Identifier}}", id)
-		decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "XHTML_CONTENT")
-		decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", xhtml_content.Name)
-		identifiersDecl += decl
+		identifiersDecl += xhtml_content.GongMarshallIdentifier(stage)
 
 		initializerStatements += "\n"
-		// Initialisation of values
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "Name")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(xhtml_content.Name))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "EnclosedText")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(xhtml_content.EnclosedText))
-		initializerStatements += setValueField
-
-		setValueField = StringInitStatement
-		setValueField = strings.ReplaceAll(setValueField, "{{Identifier}}", id)
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldName}}", "PureText")
-		setValueField = strings.ReplaceAll(setValueField, "{{GeneratedFieldNameValue}}", string(xhtml_content.PureText))
-		initializerStatements += setValueField
-
+		// Insertion point for basic fields value assignment
+		initializerStatements += xhtml_content.GongMarshallField(stage, "Name")
+		initializerStatements += xhtml_content.GongMarshallField(stage, "EnclosedText")
+		initializerStatements += xhtml_content.GongMarshallField(stage, "PureText")
 	}
 
 	// insertion initialization of objects to stage
-	if len(alternative_idOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ALTERNATIVE_ID instances pointers"
-	}
 	for _, alternative_id := range alternative_idOrdered {
+		_ = alternative_id
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ALTERNATIVE_ID", int(stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]), alternative_id.Name)
-		map_ALTERNATIVE_ID_Identifiers[alternative_id] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_booleanOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_BOOLEAN instances pointers"
-	}
 	for _, attribute_definition_boolean := range attribute_definition_booleanOrdered {
+		_ = attribute_definition_boolean
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN", int(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]), attribute_definition_boolean.Name)
-		map_ATTRIBUTE_DEFINITION_BOOLEAN_Identifiers[attribute_definition_boolean] = id
-
-		// Initialisation of values
-		if attribute_definition_boolean.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_boolean.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_boolean.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[attribute_definition_boolean.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_boolean.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_BOOLEAN_REF_Identifiers[attribute_definition_boolean.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_boolean_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_BOOLEAN_Rendering instances pointers"
-	}
 	for _, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
+		_ = attribute_definition_boolean_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", int(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]), attribute_definition_boolean_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_Identifiers[attribute_definition_boolean_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_dateOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_DATE instances pointers"
-	}
 	for _, attribute_definition_date := range attribute_definition_dateOrdered {
+		_ = attribute_definition_date
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE", int(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]), attribute_definition_date.Name)
-		map_ATTRIBUTE_DEFINITION_DATE_Identifiers[attribute_definition_date] = id
-
-		// Initialisation of values
-		if attribute_definition_date.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_date.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_date.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_DATE_Identifiers[attribute_definition_date.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_date.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_DATE_REF_Identifiers[attribute_definition_date.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_date_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_DATE_Rendering instances pointers"
-	}
 	for _, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
+		_ = attribute_definition_date_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_DATE_Rendering", int(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]), attribute_definition_date_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_DATE_Rendering_Identifiers[attribute_definition_date_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_enumerationOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_ENUMERATION instances pointers"
-	}
 	for _, attribute_definition_enumeration := range attribute_definition_enumerationOrdered {
+		_ = attribute_definition_enumeration
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION", int(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]), attribute_definition_enumeration.Name)
-		map_ATTRIBUTE_DEFINITION_ENUMERATION_Identifiers[attribute_definition_enumeration] = id
-
-		// Initialisation of values
-		if attribute_definition_enumeration.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_enumeration.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_enumeration.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[attribute_definition_enumeration.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_enumeration.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_ENUMERATION_REF_Identifiers[attribute_definition_enumeration.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_enumeration_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_ENUMERATION_Rendering instances pointers"
-	}
 	for _, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
+		_ = attribute_definition_enumeration_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", int(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]), attribute_definition_enumeration_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_Identifiers[attribute_definition_enumeration_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_integerOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_INTEGER instances pointers"
-	}
 	for _, attribute_definition_integer := range attribute_definition_integerOrdered {
+		_ = attribute_definition_integer
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER", int(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]), attribute_definition_integer.Name)
-		map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers[attribute_definition_integer] = id
-
-		// Initialisation of values
-		if attribute_definition_integer.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_integer.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_integer.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_INTEGER_Identifiers[attribute_definition_integer.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_integer.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_INTEGER_REF_Identifiers[attribute_definition_integer.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_integer_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_INTEGER_Rendering instances pointers"
-	}
 	for _, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
+		_ = attribute_definition_integer_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_INTEGER_Rendering", int(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]), attribute_definition_integer_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_INTEGER_Rendering_Identifiers[attribute_definition_integer_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_realOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_REAL instances pointers"
-	}
 	for _, attribute_definition_real := range attribute_definition_realOrdered {
+		_ = attribute_definition_real
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL", int(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]), attribute_definition_real.Name)
-		map_ATTRIBUTE_DEFINITION_REAL_Identifiers[attribute_definition_real] = id
-
-		// Initialisation of values
-		if attribute_definition_real.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_real.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_real.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_REAL_Identifiers[attribute_definition_real.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_real.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_REAL_REF_Identifiers[attribute_definition_real.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_real_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_REAL_Rendering instances pointers"
-	}
 	for _, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
+		_ = attribute_definition_real_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_REAL_Rendering", int(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]), attribute_definition_real_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_REAL_Rendering_Identifiers[attribute_definition_real_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_Rendering instances pointers"
-	}
 	for _, attribute_definition_rendering := range attribute_definition_renderingOrdered {
+		_ = attribute_definition_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_Rendering", int(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]), attribute_definition_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_Rendering_Identifiers[attribute_definition_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_stringOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_STRING instances pointers"
-	}
 	for _, attribute_definition_string := range attribute_definition_stringOrdered {
+		_ = attribute_definition_string
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING", int(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]), attribute_definition_string.Name)
-		map_ATTRIBUTE_DEFINITION_STRING_Identifiers[attribute_definition_string] = id
-
-		// Initialisation of values
-		if attribute_definition_string.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_string.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_string.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_STRING_Identifiers[attribute_definition_string.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_string.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_STRING_REF_Identifiers[attribute_definition_string.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_string_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_STRING_Rendering instances pointers"
-	}
 	for _, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
+		_ = attribute_definition_string_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_STRING_Rendering", int(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]), attribute_definition_string_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_STRING_Rendering_Identifiers[attribute_definition_string_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_xhtmlOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_XHTML instances pointers"
-	}
 	for _, attribute_definition_xhtml := range attribute_definition_xhtmlOrdered {
+		_ = attribute_definition_xhtml
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML", int(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]), attribute_definition_xhtml.Name)
-		map_ATTRIBUTE_DEFINITION_XHTML_Identifiers[attribute_definition_xhtml] = id
-
-		// Initialisation of values
-		if attribute_definition_xhtml.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[attribute_definition_xhtml.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_xhtml.DEFAULT_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_XHTML_Identifiers[attribute_definition_xhtml.DEFAULT_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_definition_xhtml.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPE_DEFINITION_XHTML_REF_Identifiers[attribute_definition_xhtml.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_definition_xhtml_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_DEFINITION_XHTML_Rendering instances pointers"
-	}
 	for _, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
+		_ = attribute_definition_xhtml_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_DEFINITION_XHTML_Rendering", int(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]), attribute_definition_xhtml_rendering.Name)
-		map_ATTRIBUTE_DEFINITION_XHTML_Rendering_Identifiers[attribute_definition_xhtml_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_booleanOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_BOOLEAN instances pointers"
-	}
 	for _, attribute_value_boolean := range attribute_value_booleanOrdered {
+		_ = attribute_value_boolean
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_BOOLEAN", int(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]), attribute_value_boolean.Name)
-		map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[attribute_value_boolean] = id
-
-		// Initialisation of values
-		if attribute_value_boolean.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_Identifiers[attribute_value_boolean.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_dateOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_DATE instances pointers"
-	}
 	for _, attribute_value_date := range attribute_value_dateOrdered {
+		_ = attribute_value_date
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_DATE", int(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]), attribute_value_date.Name)
-		map_ATTRIBUTE_VALUE_DATE_Identifiers[attribute_value_date] = id
-
-		// Initialisation of values
-		if attribute_value_date.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_DATE_REF_Identifiers[attribute_value_date.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_enumerationOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_ENUMERATION instances pointers"
-	}
 	for _, attribute_value_enumeration := range attribute_value_enumerationOrdered {
+		_ = attribute_value_enumeration
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_ENUMERATION", int(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]), attribute_value_enumeration.Name)
-		map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[attribute_value_enumeration] = id
-
-		// Initialisation of values
-		if attribute_value_enumeration.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_Identifiers[attribute_value_enumeration.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_value_enumeration.VALUES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "VALUES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ENUM_VALUE_REF_Identifiers[attribute_value_enumeration.VALUES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_integerOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_INTEGER instances pointers"
-	}
 	for _, attribute_value_integer := range attribute_value_integerOrdered {
+		_ = attribute_value_integer
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_INTEGER", int(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]), attribute_value_integer.Name)
-		map_ATTRIBUTE_VALUE_INTEGER_Identifiers[attribute_value_integer] = id
-
-		// Initialisation of values
-		if attribute_value_integer.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_INTEGER_REF_Identifiers[attribute_value_integer.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_realOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_REAL instances pointers"
-	}
 	for _, attribute_value_real := range attribute_value_realOrdered {
+		_ = attribute_value_real
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_REAL", int(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]), attribute_value_real.Name)
-		map_ATTRIBUTE_VALUE_REAL_Identifiers[attribute_value_real] = id
-
-		// Initialisation of values
-		if attribute_value_real.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_REAL_REF_Identifiers[attribute_value_real.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_stringOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_STRING instances pointers"
-	}
 	for _, attribute_value_string := range attribute_value_stringOrdered {
+		_ = attribute_value_string
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_STRING", int(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]), attribute_value_string.Name)
-		map_ATTRIBUTE_VALUE_STRING_Identifiers[attribute_value_string] = id
-
-		// Initialisation of values
-		if attribute_value_string.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_STRING_REF_Identifiers[attribute_value_string.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(attribute_value_xhtmlOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ATTRIBUTE_VALUE_XHTML instances pointers"
-	}
 	for _, attribute_value_xhtml := range attribute_value_xhtmlOrdered {
+		_ = attribute_value_xhtml
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ATTRIBUTE_VALUE_XHTML", int(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]), attribute_value_xhtml.Name)
-		map_ATTRIBUTE_VALUE_XHTML_Identifiers[attribute_value_xhtml] = id
-
-		// Initialisation of values
-		if attribute_value_xhtml.DEFINITION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DEFINITION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_DEFINITION_XHTML_REF_Identifiers[attribute_value_xhtml.DEFINITION])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_value_xhtml.THE_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "THE_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_XHTML_CONTENT_Identifiers[attribute_value_xhtml.THE_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if attribute_value_xhtml.THE_ORIGINAL_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "THE_ORIGINAL_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_XHTML_CONTENT_Identifiers[attribute_value_xhtml.THE_ORIGINAL_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_alternative_idOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ALTERNATIVE_ID instances pointers"
-	}
 	for _, a_alternative_id := range a_alternative_idOrdered {
+		_ = a_alternative_id
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ALTERNATIVE_ID", int(stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]), a_alternative_id.Name)
-		map_A_ALTERNATIVE_ID_Identifiers[a_alternative_id] = id
-
-		// Initialisation of values
-		if a_alternative_id.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ALTERNATIVE_ID_Identifiers[a_alternative_id.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_boolean_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_BOOLEAN_REF instances pointers"
-	}
 	for _, a_attribute_definition_boolean_ref := range a_attribute_definition_boolean_refOrdered {
+		_ = a_attribute_definition_boolean_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", int(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]), a_attribute_definition_boolean_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_Identifiers[a_attribute_definition_boolean_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_date_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_DATE_REF instances pointers"
-	}
 	for _, a_attribute_definition_date_ref := range a_attribute_definition_date_refOrdered {
+		_ = a_attribute_definition_date_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_DATE_REF", int(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]), a_attribute_definition_date_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_DATE_REF_Identifiers[a_attribute_definition_date_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_enumeration_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_ENUMERATION_REF instances pointers"
-	}
 	for _, a_attribute_definition_enumeration_ref := range a_attribute_definition_enumeration_refOrdered {
+		_ = a_attribute_definition_enumeration_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", int(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]), a_attribute_definition_enumeration_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_Identifiers[a_attribute_definition_enumeration_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_integer_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_INTEGER_REF instances pointers"
-	}
 	for _, a_attribute_definition_integer_ref := range a_attribute_definition_integer_refOrdered {
+		_ = a_attribute_definition_integer_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_INTEGER_REF", int(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]), a_attribute_definition_integer_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_INTEGER_REF_Identifiers[a_attribute_definition_integer_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_real_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_REAL_REF instances pointers"
-	}
 	for _, a_attribute_definition_real_ref := range a_attribute_definition_real_refOrdered {
+		_ = a_attribute_definition_real_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_REAL_REF", int(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]), a_attribute_definition_real_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_REAL_REF_Identifiers[a_attribute_definition_real_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_string_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_STRING_REF instances pointers"
-	}
 	for _, a_attribute_definition_string_ref := range a_attribute_definition_string_refOrdered {
+		_ = a_attribute_definition_string_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_STRING_REF", int(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]), a_attribute_definition_string_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_STRING_REF_Identifiers[a_attribute_definition_string_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_definition_xhtml_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_DEFINITION_XHTML_REF instances pointers"
-	}
 	for _, a_attribute_definition_xhtml_ref := range a_attribute_definition_xhtml_refOrdered {
+		_ = a_attribute_definition_xhtml_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_DEFINITION_XHTML_REF", int(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]), a_attribute_definition_xhtml_ref.Name)
-		map_A_ATTRIBUTE_DEFINITION_XHTML_REF_Identifiers[a_attribute_definition_xhtml_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_booleanOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_BOOLEAN instances pointers"
-	}
 	for _, a_attribute_value_boolean := range a_attribute_value_booleanOrdered {
+		_ = a_attribute_value_boolean
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_BOOLEAN", int(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]), a_attribute_value_boolean.Name)
-		map_A_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[a_attribute_value_boolean] = id
-
-		// Initialisation of values
-		for _, _attribute_value_boolean := range a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_BOOLEAN")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[_attribute_value_boolean])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_dateOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_DATE instances pointers"
-	}
 	for _, a_attribute_value_date := range a_attribute_value_dateOrdered {
+		_ = a_attribute_value_date
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_DATE", int(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]), a_attribute_value_date.Name)
-		map_A_ATTRIBUTE_VALUE_DATE_Identifiers[a_attribute_value_date] = id
-
-		// Initialisation of values
-		for _, _attribute_value_date := range a_attribute_value_date.ATTRIBUTE_VALUE_DATE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_DATE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_DATE_Identifiers[_attribute_value_date])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_enumerationOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_ENUMERATION instances pointers"
-	}
 	for _, a_attribute_value_enumeration := range a_attribute_value_enumerationOrdered {
+		_ = a_attribute_value_enumeration
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_ENUMERATION", int(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]), a_attribute_value_enumeration.Name)
-		map_A_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[a_attribute_value_enumeration] = id
-
-		// Initialisation of values
-		for _, _attribute_value_enumeration := range a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_ENUMERATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[_attribute_value_enumeration])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_integerOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_INTEGER instances pointers"
-	}
 	for _, a_attribute_value_integer := range a_attribute_value_integerOrdered {
+		_ = a_attribute_value_integer
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_INTEGER", int(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]), a_attribute_value_integer.Name)
-		map_A_ATTRIBUTE_VALUE_INTEGER_Identifiers[a_attribute_value_integer] = id
-
-		// Initialisation of values
-		for _, _attribute_value_integer := range a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_INTEGER")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_INTEGER_Identifiers[_attribute_value_integer])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_realOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_REAL instances pointers"
-	}
 	for _, a_attribute_value_real := range a_attribute_value_realOrdered {
+		_ = a_attribute_value_real
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_REAL", int(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]), a_attribute_value_real.Name)
-		map_A_ATTRIBUTE_VALUE_REAL_Identifiers[a_attribute_value_real] = id
-
-		// Initialisation of values
-		for _, _attribute_value_real := range a_attribute_value_real.ATTRIBUTE_VALUE_REAL {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_REAL")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_REAL_Identifiers[_attribute_value_real])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_stringOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_STRING instances pointers"
-	}
 	for _, a_attribute_value_string := range a_attribute_value_stringOrdered {
+		_ = a_attribute_value_string
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_STRING", int(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]), a_attribute_value_string.Name)
-		map_A_ATTRIBUTE_VALUE_STRING_Identifiers[a_attribute_value_string] = id
-
-		// Initialisation of values
-		for _, _attribute_value_string := range a_attribute_value_string.ATTRIBUTE_VALUE_STRING {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_STRING")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_STRING_Identifiers[_attribute_value_string])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_xhtmlOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_XHTML instances pointers"
-	}
 	for _, a_attribute_value_xhtml := range a_attribute_value_xhtmlOrdered {
+		_ = a_attribute_value_xhtml
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML", int(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]), a_attribute_value_xhtml.Name)
-		map_A_ATTRIBUTE_VALUE_XHTML_Identifiers[a_attribute_value_xhtml] = id
-
-		// Initialisation of values
-		for _, _attribute_value_xhtml := range a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_XHTML")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_XHTML_Identifiers[_attribute_value_xhtml])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_attribute_value_xhtml_1Ordered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ATTRIBUTE_VALUE_XHTML_1 instances pointers"
-	}
 	for _, a_attribute_value_xhtml_1 := range a_attribute_value_xhtml_1Ordered {
+		_ = a_attribute_value_xhtml_1
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ATTRIBUTE_VALUE_XHTML_1", int(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]), a_attribute_value_xhtml_1.Name)
-		map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers[a_attribute_value_xhtml_1] = id
-
-		// Initialisation of values
-		for _, _attribute_value_boolean := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_BOOLEAN")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_BOOLEAN_Identifiers[_attribute_value_boolean])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_value_date := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_DATE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_DATE_Identifiers[_attribute_value_date])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_value_enumeration := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_ENUMERATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_ENUMERATION_Identifiers[_attribute_value_enumeration])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_value_integer := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_INTEGER")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_INTEGER_Identifiers[_attribute_value_integer])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_value_real := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_REAL")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_REAL_Identifiers[_attribute_value_real])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_value_string := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_STRING")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_STRING_Identifiers[_attribute_value_string])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_value_xhtml := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_XHTML")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_VALUE_XHTML_Identifiers[_attribute_value_xhtml])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_childrenOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_CHILDREN instances pointers"
-	}
 	for _, a_children := range a_childrenOrdered {
+		_ = a_children
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_CHILDREN", int(stage.A_CHILDRENMap_Staged_Order[a_children]), a_children.Name)
-		map_A_CHILDREN_Identifiers[a_children] = id
-
-		// Initialisation of values
-		for _, _spec_hierarchy := range a_children.SPEC_HIERARCHY {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_HIERARCHY")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_HIERARCHY_Identifiers[_spec_hierarchy])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_core_contentOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_CORE_CONTENT instances pointers"
-	}
 	for _, a_core_content := range a_core_contentOrdered {
+		_ = a_core_content
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_CORE_CONTENT", int(stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]), a_core_content.Name)
-		map_A_CORE_CONTENT_Identifiers[a_core_content] = id
-
-		// Initialisation of values
-		if a_core_content.REQ_IF_CONTENT != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "REQ_IF_CONTENT")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQ_IF_CONTENT_Identifiers[a_core_content.REQ_IF_CONTENT])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatypesOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPES instances pointers"
-	}
 	for _, a_datatypes := range a_datatypesOrdered {
+		_ = a_datatypes
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPES", int(stage.A_DATATYPESMap_Staged_Order[a_datatypes]), a_datatypes.Name)
-		map_A_DATATYPES_Identifiers[a_datatypes] = id
-
-		// Initialisation of values
-		for _, _datatype_definition_boolean := range a_datatypes.DATATYPE_DEFINITION_BOOLEAN {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_BOOLEAN")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_BOOLEAN_Identifiers[_datatype_definition_boolean])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _datatype_definition_date := range a_datatypes.DATATYPE_DEFINITION_DATE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_DATE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_DATE_Identifiers[_datatype_definition_date])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _datatype_definition_enumeration := range a_datatypes.DATATYPE_DEFINITION_ENUMERATION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_ENUMERATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_ENUMERATION_Identifiers[_datatype_definition_enumeration])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _datatype_definition_integer := range a_datatypes.DATATYPE_DEFINITION_INTEGER {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_INTEGER")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_INTEGER_Identifiers[_datatype_definition_integer])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _datatype_definition_real := range a_datatypes.DATATYPE_DEFINITION_REAL {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_REAL")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_REAL_Identifiers[_datatype_definition_real])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _datatype_definition_string := range a_datatypes.DATATYPE_DEFINITION_STRING {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_STRING")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_STRING_Identifiers[_datatype_definition_string])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _datatype_definition_xhtml := range a_datatypes.DATATYPE_DEFINITION_XHTML {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_XHTML")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_DATATYPE_DEFINITION_XHTML_Identifiers[_datatype_definition_xhtml])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_boolean_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_BOOLEAN_REF instances pointers"
-	}
 	for _, a_datatype_definition_boolean_ref := range a_datatype_definition_boolean_refOrdered {
+		_ = a_datatype_definition_boolean_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_BOOLEAN_REF", int(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]), a_datatype_definition_boolean_ref.Name)
-		map_A_DATATYPE_DEFINITION_BOOLEAN_REF_Identifiers[a_datatype_definition_boolean_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_date_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_DATE_REF instances pointers"
-	}
 	for _, a_datatype_definition_date_ref := range a_datatype_definition_date_refOrdered {
+		_ = a_datatype_definition_date_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_DATE_REF", int(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]), a_datatype_definition_date_ref.Name)
-		map_A_DATATYPE_DEFINITION_DATE_REF_Identifiers[a_datatype_definition_date_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_enumeration_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_ENUMERATION_REF instances pointers"
-	}
 	for _, a_datatype_definition_enumeration_ref := range a_datatype_definition_enumeration_refOrdered {
+		_ = a_datatype_definition_enumeration_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_ENUMERATION_REF", int(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]), a_datatype_definition_enumeration_ref.Name)
-		map_A_DATATYPE_DEFINITION_ENUMERATION_REF_Identifiers[a_datatype_definition_enumeration_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_integer_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_INTEGER_REF instances pointers"
-	}
 	for _, a_datatype_definition_integer_ref := range a_datatype_definition_integer_refOrdered {
+		_ = a_datatype_definition_integer_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_INTEGER_REF", int(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]), a_datatype_definition_integer_ref.Name)
-		map_A_DATATYPE_DEFINITION_INTEGER_REF_Identifiers[a_datatype_definition_integer_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_real_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_REAL_REF instances pointers"
-	}
 	for _, a_datatype_definition_real_ref := range a_datatype_definition_real_refOrdered {
+		_ = a_datatype_definition_real_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_REAL_REF", int(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]), a_datatype_definition_real_ref.Name)
-		map_A_DATATYPE_DEFINITION_REAL_REF_Identifiers[a_datatype_definition_real_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_string_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_STRING_REF instances pointers"
-	}
 	for _, a_datatype_definition_string_ref := range a_datatype_definition_string_refOrdered {
+		_ = a_datatype_definition_string_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_STRING_REF", int(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]), a_datatype_definition_string_ref.Name)
-		map_A_DATATYPE_DEFINITION_STRING_REF_Identifiers[a_datatype_definition_string_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_datatype_definition_xhtml_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_DATATYPE_DEFINITION_XHTML_REF instances pointers"
-	}
 	for _, a_datatype_definition_xhtml_ref := range a_datatype_definition_xhtml_refOrdered {
+		_ = a_datatype_definition_xhtml_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_DATATYPE_DEFINITION_XHTML_REF", int(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]), a_datatype_definition_xhtml_ref.Name)
-		map_A_DATATYPE_DEFINITION_XHTML_REF_Identifiers[a_datatype_definition_xhtml_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_editable_attsOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_EDITABLE_ATTS instances pointers"
-	}
 	for _, a_editable_atts := range a_editable_attsOrdered {
+		_ = a_editable_atts
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_EDITABLE_ATTS", int(stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]), a_editable_atts.Name)
-		map_A_EDITABLE_ATTS_Identifiers[a_editable_atts] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_enum_value_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_ENUM_VALUE_REF instances pointers"
-	}
 	for _, a_enum_value_ref := range a_enum_value_refOrdered {
+		_ = a_enum_value_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_ENUM_VALUE_REF", int(stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]), a_enum_value_ref.Name)
-		map_A_ENUM_VALUE_REF_Identifiers[a_enum_value_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_objectOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_OBJECT instances pointers"
-	}
 	for _, a_object := range a_objectOrdered {
+		_ = a_object
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_OBJECT", int(stage.A_OBJECTMap_Staged_Order[a_object]), a_object.Name)
-		map_A_OBJECT_Identifiers[a_object] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_propertiesOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_PROPERTIES instances pointers"
-	}
 	for _, a_properties := range a_propertiesOrdered {
+		_ = a_properties
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_PROPERTIES", int(stage.A_PROPERTIESMap_Staged_Order[a_properties]), a_properties.Name)
-		map_A_PROPERTIES_Identifiers[a_properties] = id
-
-		// Initialisation of values
-		if a_properties.EMBEDDED_VALUE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "EMBEDDED_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_EMBEDDED_VALUE_Identifiers[a_properties.EMBEDDED_VALUE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_relation_group_type_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_RELATION_GROUP_TYPE_REF instances pointers"
-	}
 	for _, a_relation_group_type_ref := range a_relation_group_type_refOrdered {
+		_ = a_relation_group_type_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_RELATION_GROUP_TYPE_REF", int(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]), a_relation_group_type_ref.Name)
-		map_A_RELATION_GROUP_TYPE_REF_Identifiers[a_relation_group_type_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_source_1Ordered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SOURCE_1 instances pointers"
-	}
 	for _, a_source_1 := range a_source_1Ordered {
+		_ = a_source_1
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SOURCE_1", int(stage.A_SOURCE_1Map_Staged_Order[a_source_1]), a_source_1.Name)
-		map_A_SOURCE_1_Identifiers[a_source_1] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_source_specification_1Ordered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SOURCE_SPECIFICATION_1 instances pointers"
-	}
 	for _, a_source_specification_1 := range a_source_specification_1Ordered {
+		_ = a_source_specification_1
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SOURCE_SPECIFICATION_1", int(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]), a_source_specification_1.Name)
-		map_A_SOURCE_SPECIFICATION_1_Identifiers[a_source_specification_1] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_specificationsOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPECIFICATIONS instances pointers"
-	}
 	for _, a_specifications := range a_specificationsOrdered {
+		_ = a_specifications
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPECIFICATIONS", int(stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]), a_specifications.Name)
-		map_A_SPECIFICATIONS_Identifiers[a_specifications] = id
-
-		// Initialisation of values
-		for _, _specification := range a_specifications.SPECIFICATION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFICATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPECIFICATION_Identifiers[_specification])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_specification_type_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPECIFICATION_TYPE_REF instances pointers"
-	}
 	for _, a_specification_type_ref := range a_specification_type_refOrdered {
+		_ = a_specification_type_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPECIFICATION_TYPE_REF", int(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]), a_specification_type_ref.Name)
-		map_A_SPECIFICATION_TYPE_REF_Identifiers[a_specification_type_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_specified_valuesOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPECIFIED_VALUES instances pointers"
-	}
 	for _, a_specified_values := range a_specified_valuesOrdered {
+		_ = a_specified_values
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPECIFIED_VALUES", int(stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]), a_specified_values.Name)
-		map_A_SPECIFIED_VALUES_Identifiers[a_specified_values] = id
-
-		// Initialisation of values
-		for _, _enum_value := range a_specified_values.ENUM_VALUE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ENUM_VALUE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ENUM_VALUE_Identifiers[_enum_value])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_attributesOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_ATTRIBUTES instances pointers"
-	}
 	for _, a_spec_attributes := range a_spec_attributesOrdered {
+		_ = a_spec_attributes
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_ATTRIBUTES", int(stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]), a_spec_attributes.Name)
-		map_A_SPEC_ATTRIBUTES_Identifiers[a_spec_attributes] = id
-
-		// Initialisation of values
-		for _, _attribute_definition_boolean := range a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_BOOLEAN_Identifiers[_attribute_definition_boolean])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_definition_date := range a_spec_attributes.ATTRIBUTE_DEFINITION_DATE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_DATE_Identifiers[_attribute_definition_date])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_definition_enumeration := range a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_ENUMERATION_Identifiers[_attribute_definition_enumeration])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_definition_integer := range a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_INTEGER_Identifiers[_attribute_definition_integer])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_definition_real := range a_spec_attributes.ATTRIBUTE_DEFINITION_REAL {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_REAL_Identifiers[_attribute_definition_real])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_definition_string := range a_spec_attributes.ATTRIBUTE_DEFINITION_STRING {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_STRING_Identifiers[_attribute_definition_string])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _attribute_definition_xhtml := range a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_ATTRIBUTE_DEFINITION_XHTML_Identifiers[_attribute_definition_xhtml])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_objectsOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_OBJECTS instances pointers"
-	}
 	for _, a_spec_objects := range a_spec_objectsOrdered {
+		_ = a_spec_objects
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_OBJECTS", int(stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]), a_spec_objects.Name)
-		map_A_SPEC_OBJECTS_Identifiers[a_spec_objects] = id
-
-		// Initialisation of values
-		for _, _spec_object := range a_spec_objects.SPEC_OBJECT {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_OBJECT")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_OBJECT_Identifiers[_spec_object])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_object_type_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_OBJECT_TYPE_REF instances pointers"
-	}
 	for _, a_spec_object_type_ref := range a_spec_object_type_refOrdered {
+		_ = a_spec_object_type_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_OBJECT_TYPE_REF", int(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]), a_spec_object_type_ref.Name)
-		map_A_SPEC_OBJECT_TYPE_REF_Identifiers[a_spec_object_type_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_relationsOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATIONS instances pointers"
-	}
 	for _, a_spec_relations := range a_spec_relationsOrdered {
+		_ = a_spec_relations
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATIONS", int(stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]), a_spec_relations.Name)
-		map_A_SPEC_RELATIONS_Identifiers[a_spec_relations] = id
-
-		// Initialisation of values
-		for _, _spec_relation := range a_spec_relations.SPEC_RELATION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_RELATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_RELATION_Identifiers[_spec_relation])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_relation_groupsOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATION_GROUPS instances pointers"
-	}
 	for _, a_spec_relation_groups := range a_spec_relation_groupsOrdered {
+		_ = a_spec_relation_groups
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATION_GROUPS", int(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]), a_spec_relation_groups.Name)
-		map_A_SPEC_RELATION_GROUPS_Identifiers[a_spec_relation_groups] = id
-
-		// Initialisation of values
-		for _, _relation_group := range a_spec_relation_groups.RELATION_GROUP {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "RELATION_GROUP")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_RELATION_GROUP_Identifiers[_relation_group])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_relation_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATION_REF instances pointers"
-	}
 	for _, a_spec_relation_ref := range a_spec_relation_refOrdered {
+		_ = a_spec_relation_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATION_REF", int(stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]), a_spec_relation_ref.Name)
-		map_A_SPEC_RELATION_REF_Identifiers[a_spec_relation_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_relation_type_refOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_RELATION_TYPE_REF instances pointers"
-	}
 	for _, a_spec_relation_type_ref := range a_spec_relation_type_refOrdered {
+		_ = a_spec_relation_type_ref
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_RELATION_TYPE_REF", int(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]), a_spec_relation_type_ref.Name)
-		map_A_SPEC_RELATION_TYPE_REF_Identifiers[a_spec_relation_type_ref] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_spec_typesOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_SPEC_TYPES instances pointers"
-	}
 	for _, a_spec_types := range a_spec_typesOrdered {
+		_ = a_spec_types
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_SPEC_TYPES", int(stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]), a_spec_types.Name)
-		map_A_SPEC_TYPES_Identifiers[a_spec_types] = id
-
-		// Initialisation of values
-		for _, _relation_group_type := range a_spec_types.RELATION_GROUP_TYPE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "RELATION_GROUP_TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_RELATION_GROUP_TYPE_Identifiers[_relation_group_type])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _spec_object_type := range a_spec_types.SPEC_OBJECT_TYPE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_OBJECT_TYPE_Identifiers[_spec_object_type])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _spec_relation_type := range a_spec_types.SPEC_RELATION_TYPE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_RELATION_TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPEC_RELATION_TYPE_Identifiers[_spec_relation_type])
-			pointersInitializesStatements += setPointerField
-		}
-
-		for _, _specification_type := range a_spec_types.SPECIFICATION_TYPE {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFICATION_TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_SPECIFICATION_TYPE_Identifiers[_specification_type])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_the_headerOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_THE_HEADER instances pointers"
-	}
 	for _, a_the_header := range a_the_headerOrdered {
+		_ = a_the_header
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_THE_HEADER", int(stage.A_THE_HEADERMap_Staged_Order[a_the_header]), a_the_header.Name)
-		map_A_THE_HEADER_Identifiers[a_the_header] = id
-
-		// Initialisation of values
-		if a_the_header.REQ_IF_HEADER != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "REQ_IF_HEADER")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQ_IF_HEADER_Identifiers[a_the_header.REQ_IF_HEADER])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(a_tool_extensionsOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of A_TOOL_EXTENSIONS instances pointers"
-	}
 	for _, a_tool_extensions := range a_tool_extensionsOrdered {
+		_ = a_tool_extensions
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("A_TOOL_EXTENSIONS", int(stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]), a_tool_extensions.Name)
-		map_A_TOOL_EXTENSIONS_Identifiers[a_tool_extensions] = id
-
-		// Initialisation of values
-		for _, _req_if_tool_extension := range a_tool_extensions.REQ_IF_TOOL_EXTENSION {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "REQ_IF_TOOL_EXTENSION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_REQ_IF_TOOL_EXTENSION_Identifiers[_req_if_tool_extension])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_booleanOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_BOOLEAN instances pointers"
-	}
 	for _, datatype_definition_boolean := range datatype_definition_booleanOrdered {
+		_ = datatype_definition_boolean
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_BOOLEAN", int(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]), datatype_definition_boolean.Name)
-		map_DATATYPE_DEFINITION_BOOLEAN_Identifiers[datatype_definition_boolean] = id
-
-		// Initialisation of values
-		if datatype_definition_boolean.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_boolean.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_dateOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_DATE instances pointers"
-	}
 	for _, datatype_definition_date := range datatype_definition_dateOrdered {
+		_ = datatype_definition_date
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_DATE", int(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]), datatype_definition_date.Name)
-		map_DATATYPE_DEFINITION_DATE_Identifiers[datatype_definition_date] = id
-
-		// Initialisation of values
-		if datatype_definition_date.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_date.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_enumerationOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_ENUMERATION instances pointers"
-	}
 	for _, datatype_definition_enumeration := range datatype_definition_enumerationOrdered {
+		_ = datatype_definition_enumeration
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_ENUMERATION", int(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]), datatype_definition_enumeration.Name)
-		map_DATATYPE_DEFINITION_ENUMERATION_Identifiers[datatype_definition_enumeration] = id
-
-		// Initialisation of values
-		if datatype_definition_enumeration.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_enumeration.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if datatype_definition_enumeration.SPECIFIED_VALUES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFIED_VALUES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPECIFIED_VALUES_Identifiers[datatype_definition_enumeration.SPECIFIED_VALUES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_integerOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_INTEGER instances pointers"
-	}
 	for _, datatype_definition_integer := range datatype_definition_integerOrdered {
+		_ = datatype_definition_integer
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_INTEGER", int(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]), datatype_definition_integer.Name)
-		map_DATATYPE_DEFINITION_INTEGER_Identifiers[datatype_definition_integer] = id
-
-		// Initialisation of values
-		if datatype_definition_integer.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_integer.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_realOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_REAL instances pointers"
-	}
 	for _, datatype_definition_real := range datatype_definition_realOrdered {
+		_ = datatype_definition_real
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_REAL", int(stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]), datatype_definition_real.Name)
-		map_DATATYPE_DEFINITION_REAL_Identifiers[datatype_definition_real] = id
-
-		// Initialisation of values
-		if datatype_definition_real.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_real.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_stringOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_STRING instances pointers"
-	}
 	for _, datatype_definition_string := range datatype_definition_stringOrdered {
+		_ = datatype_definition_string
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_STRING", int(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]), datatype_definition_string.Name)
-		map_DATATYPE_DEFINITION_STRING_Identifiers[datatype_definition_string] = id
-
-		// Initialisation of values
-		if datatype_definition_string.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_string.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(datatype_definition_xhtmlOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of DATATYPE_DEFINITION_XHTML instances pointers"
-	}
 	for _, datatype_definition_xhtml := range datatype_definition_xhtmlOrdered {
+		_ = datatype_definition_xhtml
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("DATATYPE_DEFINITION_XHTML", int(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]), datatype_definition_xhtml.Name)
-		map_DATATYPE_DEFINITION_XHTML_Identifiers[datatype_definition_xhtml] = id
-
-		// Initialisation of values
-		if datatype_definition_xhtml.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[datatype_definition_xhtml.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(embedded_valueOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of EMBEDDED_VALUE instances pointers"
-	}
 	for _, embedded_value := range embedded_valueOrdered {
+		_ = embedded_value
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EMBEDDED_VALUE", int(stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]), embedded_value.Name)
-		map_EMBEDDED_VALUE_Identifiers[embedded_value] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(enum_valueOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of ENUM_VALUE instances pointers"
-	}
 	for _, enum_value := range enum_valueOrdered {
+		_ = enum_value
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("ENUM_VALUE", int(stage.ENUM_VALUEMap_Staged_Order[enum_value]), enum_value.Name)
-		map_ENUM_VALUE_Identifiers[enum_value] = id
-
-		// Initialisation of values
-		if enum_value.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[enum_value.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if enum_value.PROPERTIES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "PROPERTIES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_PROPERTIES_Identifiers[enum_value.PROPERTIES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(embeddedjpgimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of EmbeddedJpgImage instances pointers"
-	}
 	for _, embeddedjpgimage := range embeddedjpgimageOrdered {
+		_ = embeddedjpgimage
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EmbeddedJpgImage", int(stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]), embeddedjpgimage.Name)
-		map_EmbeddedJpgImage_Identifiers[embeddedjpgimage] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(embeddedpngimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of EmbeddedPngImage instances pointers"
-	}
 	for _, embeddedpngimage := range embeddedpngimageOrdered {
+		_ = embeddedpngimage
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EmbeddedPngImage", int(stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]), embeddedpngimage.Name)
-		map_EmbeddedPngImage_Identifiers[embeddedpngimage] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(embeddedsvgimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of EmbeddedSvgImage instances pointers"
-	}
 	for _, embeddedsvgimage := range embeddedsvgimageOrdered {
+		_ = embeddedsvgimage
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("EmbeddedSvgImage", int(stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]), embeddedsvgimage.Name)
-		map_EmbeddedSvgImage_Identifiers[embeddedsvgimage] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(killOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of Kill instances pointers"
-	}
 	for _, kill := range killOrdered {
+		_ = kill
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("Kill", int(stage.KillMap_Staged_Order[kill]), kill.Name)
-		map_Kill_Identifiers[kill] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(map_identifier_boolOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of Map_identifier_bool instances pointers"
-	}
 	for _, map_identifier_bool := range map_identifier_boolOrdered {
+		_ = map_identifier_bool
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("Map_identifier_bool", int(stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]), map_identifier_bool.Name)
-		map_Map_identifier_bool_Identifiers[map_identifier_bool] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(relation_groupOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP instances pointers"
-	}
 	for _, relation_group := range relation_groupOrdered {
+		_ = relation_group
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("RELATION_GROUP", int(stage.RELATION_GROUPMap_Staged_Order[relation_group]), relation_group.Name)
-		map_RELATION_GROUP_Identifiers[relation_group] = id
-
-		// Initialisation of values
-		if relation_group.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[relation_group.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if relation_group.SOURCE_SPECIFICATION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SOURCE_SPECIFICATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SOURCE_SPECIFICATION_1_Identifiers[relation_group.SOURCE_SPECIFICATION])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if relation_group.SPEC_RELATIONS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_RELATIONS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_RELATION_REF_Identifiers[relation_group.SPEC_RELATIONS])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if relation_group.TARGET_SPECIFICATION != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TARGET_SPECIFICATION")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SOURCE_SPECIFICATION_1_Identifiers[relation_group.TARGET_SPECIFICATION])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if relation_group.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_RELATION_GROUP_TYPE_REF_Identifiers[relation_group.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(relation_group_typeOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of RELATION_GROUP_TYPE instances pointers"
-	}
 	for _, relation_group_type := range relation_group_typeOrdered {
+		_ = relation_group_type
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("RELATION_GROUP_TYPE", int(stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]), relation_group_type.Name)
-		map_RELATION_GROUP_TYPE_Identifiers[relation_group_type] = id
-
-		// Initialisation of values
-		if relation_group_type.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[relation_group_type.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if relation_group_type.SPEC_ATTRIBUTES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_ATTRIBUTES_Identifiers[relation_group_type.SPEC_ATTRIBUTES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(req_ifOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of REQ_IF instances pointers"
-	}
 	for _, req_if := range req_ifOrdered {
+		_ = req_if
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF", int(stage.REQ_IFMap_Staged_Order[req_if]), req_if.Name)
-		map_REQ_IF_Identifiers[req_if] = id
-
-		// Initialisation of values
-		if req_if.THE_HEADER != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "THE_HEADER")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_THE_HEADER_Identifiers[req_if.THE_HEADER])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if.CORE_CONTENT != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "CORE_CONTENT")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_CORE_CONTENT_Identifiers[req_if.CORE_CONTENT])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if.TOOL_EXTENSIONS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TOOL_EXTENSIONS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_TOOL_EXTENSIONS_Identifiers[req_if.TOOL_EXTENSIONS])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(req_if_contentOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of REQ_IF_CONTENT instances pointers"
-	}
 	for _, req_if_content := range req_if_contentOrdered {
+		_ = req_if_content
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF_CONTENT", int(stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]), req_if_content.Name)
-		map_REQ_IF_CONTENT_Identifiers[req_if_content] = id
-
-		// Initialisation of values
-		if req_if_content.DATATYPES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "DATATYPES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_DATATYPES_Identifiers[req_if_content.DATATYPES])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if_content.SPEC_TYPES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_TYPES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_TYPES_Identifiers[req_if_content.SPEC_TYPES])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if_content.SPEC_OBJECTS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_OBJECTS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_OBJECTS_Identifiers[req_if_content.SPEC_OBJECTS])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if_content.SPEC_RELATIONS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_RELATIONS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_RELATIONS_Identifiers[req_if_content.SPEC_RELATIONS])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if_content.SPECIFICATIONS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPECIFICATIONS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPECIFICATIONS_Identifiers[req_if_content.SPECIFICATIONS])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if req_if_content.SPEC_RELATION_GROUPS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_RELATION_GROUPS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_RELATION_GROUPS_Identifiers[req_if_content.SPEC_RELATION_GROUPS])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(req_if_headerOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of REQ_IF_HEADER instances pointers"
-	}
 	for _, req_if_header := range req_if_headerOrdered {
+		_ = req_if_header
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF_HEADER", int(stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]), req_if_header.Name)
-		map_REQ_IF_HEADER_Identifiers[req_if_header] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(req_if_tool_extensionOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of REQ_IF_TOOL_EXTENSION instances pointers"
-	}
 	for _, req_if_tool_extension := range req_if_tool_extensionOrdered {
+		_ = req_if_tool_extension
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("REQ_IF_TOOL_EXTENSION", int(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]), req_if_tool_extension.Name)
-		map_REQ_IF_TOOL_EXTENSION_Identifiers[req_if_tool_extension] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(specificationOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPECIFICATION instances pointers"
-	}
 	for _, specification := range specificationOrdered {
+		_ = specification
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPECIFICATION", int(stage.SPECIFICATIONMap_Staged_Order[specification]), specification.Name)
-		map_SPECIFICATION_Identifiers[specification] = id
-
-		// Initialisation of values
-		if specification.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[specification.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if specification.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPECIFICATION_TYPE_REF_Identifiers[specification.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if specification.CHILDREN != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "CHILDREN")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_CHILDREN_Identifiers[specification.CHILDREN])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if specification.VALUES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "VALUES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers[specification.VALUES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(specification_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPECIFICATION_Rendering instances pointers"
-	}
 	for _, specification_rendering := range specification_renderingOrdered {
+		_ = specification_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPECIFICATION_Rendering", int(stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]), specification_rendering.Name)
-		map_SPECIFICATION_Rendering_Identifiers[specification_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(specification_typeOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPECIFICATION_TYPE instances pointers"
-	}
 	for _, specification_type := range specification_typeOrdered {
+		_ = specification_type
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPECIFICATION_TYPE", int(stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]), specification_type.Name)
-		map_SPECIFICATION_TYPE_Identifiers[specification_type] = id
-
-		// Initialisation of values
-		if specification_type.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[specification_type.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if specification_type.SPEC_ATTRIBUTES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_ATTRIBUTES_Identifiers[specification_type.SPEC_ATTRIBUTES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(spec_hierarchyOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPEC_HIERARCHY instances pointers"
-	}
 	for _, spec_hierarchy := range spec_hierarchyOrdered {
+		_ = spec_hierarchy
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_HIERARCHY", int(stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]), spec_hierarchy.Name)
-		map_SPEC_HIERARCHY_Identifiers[spec_hierarchy] = id
-
-		// Initialisation of values
-		if spec_hierarchy.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[spec_hierarchy.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_hierarchy.OBJECT != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "OBJECT")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_OBJECT_Identifiers[spec_hierarchy.OBJECT])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_hierarchy.CHILDREN != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "CHILDREN")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_CHILDREN_Identifiers[spec_hierarchy.CHILDREN])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_hierarchy.EDITABLE_ATTS != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "EDITABLE_ATTS")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_EDITABLE_ATTS_Identifiers[spec_hierarchy.EDITABLE_ATTS])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(spec_objectOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPEC_OBJECT instances pointers"
-	}
 	for _, spec_object := range spec_objectOrdered {
+		_ = spec_object
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_OBJECT", int(stage.SPEC_OBJECTMap_Staged_Order[spec_object]), spec_object.Name)
-		map_SPEC_OBJECT_Identifiers[spec_object] = id
-
-		// Initialisation of values
-		if spec_object.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[spec_object.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_object.VALUES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "VALUES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers[spec_object.VALUES])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_object.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_OBJECT_TYPE_REF_Identifiers[spec_object.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(spec_object_typeOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPEC_OBJECT_TYPE instances pointers"
-	}
 	for _, spec_object_type := range spec_object_typeOrdered {
+		_ = spec_object_type
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_OBJECT_TYPE", int(stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]), spec_object_type.Name)
-		map_SPEC_OBJECT_TYPE_Identifiers[spec_object_type] = id
-
-		// Initialisation of values
-		if spec_object_type.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[spec_object_type.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_object_type.SPEC_ATTRIBUTES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_ATTRIBUTES_Identifiers[spec_object_type.SPEC_ATTRIBUTES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(spec_object_type_renderingOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPEC_OBJECT_TYPE_Rendering instances pointers"
-	}
 	for _, spec_object_type_rendering := range spec_object_type_renderingOrdered {
+		_ = spec_object_type_rendering
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_OBJECT_TYPE_Rendering", int(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]), spec_object_type_rendering.Name)
-		map_SPEC_OBJECT_TYPE_Rendering_Identifiers[spec_object_type_rendering] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(spec_relationOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPEC_RELATION instances pointers"
-	}
 	for _, spec_relation := range spec_relationOrdered {
+		_ = spec_relation
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_RELATION", int(stage.SPEC_RELATIONMap_Staged_Order[spec_relation]), spec_relation.Name)
-		map_SPEC_RELATION_Identifiers[spec_relation] = id
-
-		// Initialisation of values
-		if spec_relation.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[spec_relation.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_relation.VALUES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "VALUES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ATTRIBUTE_VALUE_XHTML_1_Identifiers[spec_relation.VALUES])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_relation.SOURCE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SOURCE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SOURCE_1_Identifiers[spec_relation.SOURCE])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_relation.TARGET != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TARGET")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SOURCE_1_Identifiers[spec_relation.TARGET])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_relation.TYPE != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "TYPE")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_RELATION_TYPE_REF_Identifiers[spec_relation.TYPE])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(spec_relation_typeOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of SPEC_RELATION_TYPE instances pointers"
-	}
 	for _, spec_relation_type := range spec_relation_typeOrdered {
+		_ = spec_relation_type
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("SPEC_RELATION_TYPE", int(stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]), spec_relation_type.Name)
-		map_SPEC_RELATION_TYPE_Identifiers[spec_relation_type] = id
-
-		// Initialisation of values
-		if spec_relation_type.ALTERNATIVE_ID != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_ALTERNATIVE_ID_Identifiers[spec_relation_type.ALTERNATIVE_ID])
-			pointersInitializesStatements += setPointerField
-		}
-
-		if spec_relation_type.SPEC_ATTRIBUTES != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_A_SPEC_ATTRIBUTES_Identifiers[spec_relation_type.SPEC_ATTRIBUTES])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(staticwebsiteOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of StaticWebSite instances pointers"
-	}
 	for _, staticwebsite := range staticwebsiteOrdered {
+		_ = staticwebsite
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSite", int(stage.StaticWebSiteMap_Staged_Order[staticwebsite]), staticwebsite.Name)
-		map_StaticWebSite_Identifiers[staticwebsite] = id
-
-		// Initialisation of values
-		for _, _staticwebsitechapter := range staticwebsite.Chapters {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Chapters")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_StaticWebSiteChapter_Identifiers[_staticwebsitechapter])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(staticwebsitechapterOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of StaticWebSiteChapter instances pointers"
-	}
 	for _, staticwebsitechapter := range staticwebsitechapterOrdered {
+		_ = staticwebsitechapter
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteChapter", int(stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]), staticwebsitechapter.Name)
-		map_StaticWebSiteChapter_Identifiers[staticwebsitechapter] = id
-
-		// Initialisation of values
-		for _, _staticwebsiteparagraph := range staticwebsitechapter.Paragraphs {
-			setPointerField = SliceOfPointersFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Paragraphs")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_StaticWebSiteParagraph_Identifiers[_staticwebsiteparagraph])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(staticwebsitegeneratedimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of StaticWebSiteGeneratedImage instances pointers"
-	}
 	for _, staticwebsitegeneratedimage := range staticwebsitegeneratedimageOrdered {
+		_ = staticwebsitegeneratedimage
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteGeneratedImage", int(stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]), staticwebsitegeneratedimage.Name)
-		map_StaticWebSiteGeneratedImage_Identifiers[staticwebsitegeneratedimage] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(staticwebsiteimageOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of StaticWebSiteImage instances pointers"
-	}
 	for _, staticwebsiteimage := range staticwebsiteimageOrdered {
+		_ = staticwebsiteimage
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteImage", int(stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]), staticwebsiteimage.Name)
-		map_StaticWebSiteImage_Identifiers[staticwebsiteimage] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
-	if len(staticwebsiteparagraphOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of StaticWebSiteParagraph instances pointers"
-	}
 	for _, staticwebsiteparagraph := range staticwebsiteparagraphOrdered {
+		_ = staticwebsiteparagraph
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("StaticWebSiteParagraph", int(stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]), staticwebsiteparagraph.Name)
-		map_StaticWebSiteParagraph_Identifiers[staticwebsiteparagraph] = id
-
-		// Initialisation of values
-		if staticwebsiteparagraph.Image != nil {
-			setPointerField = PointerFieldInitStatement
-			setPointerField = strings.ReplaceAll(setPointerField, "{{Identifier}}", id)
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldName}}", "Image")
-			setPointerField = strings.ReplaceAll(setPointerField, "{{GeneratedFieldNameValue}}", map_StaticWebSiteImage_Identifiers[staticwebsiteparagraph.Image])
-			pointersInitializesStatements += setPointerField
-		}
-
+		// Insertion point for pointers initialization
 	}
 
-	if len(xhtml_contentOrdered) > 0 {
-		pointersInitializesStatements += "\n\t// setup of XHTML_CONTENT instances pointers"
-	}
 	for _, xhtml_content := range xhtml_contentOrdered {
+		_ = xhtml_content
 		var setPointerField string
 		_ = setPointerField
 
-		id = generatesIdentifier("XHTML_CONTENT", int(stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]), xhtml_content.Name)
-		map_XHTML_CONTENT_Identifiers[xhtml_content] = id
-
-		// Initialisation of values
+		// Insertion point for pointers initialization
 	}
 
 	res = strings.ReplaceAll(res, "{{Identifiers}}", identifiersDecl)
@@ -8037,18 +4034,5106 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	return
 }
 
-// unique identifier per struct
-func generatesIdentifier(gongStructName string, idx int, instanceName string) (identifier string) {
+// insertion point for marshall field methods
+func (alternative_id *ALTERNATIVE_ID) GongMarshallField(stage *Stage, fieldName string) (res string) {
 
-	identifier = instanceName
-	// Make a Regex to say we only want letters and numbers
-	reg, err := regexp.Compile("[^a-zA-Z0-9]+")
-	if err != nil {
-		log.Fatal(err)
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", alternative_id.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(alternative_id.Name))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", alternative_id.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(alternative_id.IDENTIFIER))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ALTERNATIVE_ID", fieldName)
 	}
-	processedString := reg.ReplaceAllString(instanceName, "_")
+	return
+}
 
-	identifier = fmt.Sprintf("__%s__%08d_%s", gongStructName, idx, processedString)
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallField(stage *Stage, fieldName string) (res string) {
 
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_boolean.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_boolean.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_boolean.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_boolean.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_boolean.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_boolean.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_BOOLEAN", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_boolean_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_BOOLEAN_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_date.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_date.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_date.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_date.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_date.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_date.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_DATE", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_date_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_DATE_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.LONG_NAME))
+	case "MULTI_VALUED":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MULTI_VALUED")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration.MULTI_VALUED))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_enumeration.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_enumeration.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_enumeration.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_ENUMERATION", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_enumeration_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_ENUMERATION_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_integer.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_integer.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_integer.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_integer.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_integer.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_integer.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_INTEGER", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_integer_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_INTEGER_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_real.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_real.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_real.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_real.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_real.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_real.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_REAL", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_real_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_REAL_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_string.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_string.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_string.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_string.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_string.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_string.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_STRING", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_string_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_STRING_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml.IS_EDITABLE))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if attribute_definition_xhtml.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "DEFAULT_VALUE":
+		if attribute_definition_xhtml.DEFAULT_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml.DEFAULT_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFAULT_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if attribute_definition_xhtml.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_XHTML", fieldName)
+	}
+	return
+}
+
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml_rendering.Name))
+	case "ShowInTable":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTable")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTable))
+	case "ShowInTitle":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInTitle")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInTitle))
+	case "ShowInSubject":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowInSubject")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_definition_xhtml_rendering.ShowInSubject))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_DEFINITION_XHTML_Rendering", fieldName)
+	}
+	return
+}
+
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_boolean.Name))
+	case "THE_VALUE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_value_boolean.THE_VALUE))
+
+	case "DEFINITION":
+		if attribute_value_boolean.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_boolean.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_BOOLEAN", fieldName)
+	}
+	return
+}
+
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_date.Name))
+	case "THE_VALUE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_date.THE_VALUE))
+
+	case "DEFINITION":
+		if attribute_value_date.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_date.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_DATE", fieldName)
+	}
+	return
+}
+
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_enumeration.Name))
+
+	case "DEFINITION":
+		if attribute_value_enumeration.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_enumeration.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "VALUES":
+		if attribute_value_enumeration.VALUES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_enumeration.VALUES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_ENUMERATION", fieldName)
+	}
+	return
+}
+
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_integer.Name))
+	case "THE_VALUE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", attribute_value_integer.THE_VALUE))
+
+	case "DEFINITION":
+		if attribute_value_integer.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_integer.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_INTEGER", fieldName)
+	}
+	return
+}
+
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_real.Name))
+	case "THE_VALUE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%f", attribute_value_real.THE_VALUE))
+
+	case "DEFINITION":
+		if attribute_value_real.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_real.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_REAL", fieldName)
+	}
+	return
+}
+
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_string.Name))
+	case "THE_VALUE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_string.THE_VALUE))
+
+	case "DEFINITION":
+		if attribute_value_string.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_string.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_STRING", fieldName)
+	}
+	return
+}
+
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_xhtml.Name))
+	case "IS_SIMPLIFIED":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_SIMPLIFIED")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", attribute_value_xhtml.IS_SIMPLIFIED))
+
+	case "DEFINITION":
+		if attribute_value_xhtml.DEFINITION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_xhtml.DEFINITION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DEFINITION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "THE_VALUE":
+		if attribute_value_xhtml.THE_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_xhtml.THE_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "THE_ORIGINAL_VALUE":
+		if attribute_value_xhtml.THE_ORIGINAL_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_ORIGINAL_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", attribute_value_xhtml.THE_ORIGINAL_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_ORIGINAL_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ATTRIBUTE_VALUE_XHTML", fieldName)
+	}
+	return
+}
+
+func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_alternative_id.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_alternative_id.Name))
+
+	case "ALTERNATIVE_ID":
+		if a_alternative_id.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_alternative_id.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", a_alternative_id.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_alternative_id.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ALTERNATIVE_ID", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_boolean_ref.Name))
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_date_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_date_ref.Name))
+	case "ATTRIBUTE_DEFINITION_DATE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_date_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_DATE_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_enumeration_ref.Name))
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_integer_ref.Name))
+	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_INTEGER_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_real_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_real_ref.Name))
+	case "ATTRIBUTE_DEFINITION_REAL_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_real_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_REAL_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_string_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_string_ref.Name))
+	case "ATTRIBUTE_DEFINITION_STRING_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_string_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_STRING_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_xhtml_ref.Name))
+	case "ATTRIBUTE_DEFINITION_XHTML_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_XHTML_REF", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_boolean.Name))
+
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		for _, _attribute_value_boolean := range a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_boolean.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_BOOLEAN")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_boolean.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_BOOLEAN", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_date.Name))
+
+	case "ATTRIBUTE_VALUE_DATE":
+		for _, _attribute_value_date := range a_attribute_value_date.ATTRIBUTE_VALUE_DATE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_date.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_DATE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_date.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_DATE", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_enumeration.Name))
+
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		for _, _attribute_value_enumeration := range a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_enumeration.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_ENUMERATION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_enumeration.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_ENUMERATION", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_integer.Name))
+
+	case "ATTRIBUTE_VALUE_INTEGER":
+		for _, _attribute_value_integer := range a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_integer.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_INTEGER")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_integer.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_INTEGER", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_real.Name))
+
+	case "ATTRIBUTE_VALUE_REAL":
+		for _, _attribute_value_real := range a_attribute_value_real.ATTRIBUTE_VALUE_REAL {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_real.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_REAL")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_real.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_REAL", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_string.Name))
+
+	case "ATTRIBUTE_VALUE_STRING":
+		for _, _attribute_value_string := range a_attribute_value_string.ATTRIBUTE_VALUE_STRING {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_string.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_STRING")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_string.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_STRING", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml.Name))
+
+	case "ATTRIBUTE_VALUE_XHTML":
+		for _, _attribute_value_xhtml := range a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_XHTML")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_xhtml.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_XHTML", fieldName)
+	}
+	return
+}
+
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml_1.Name))
+
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		for _, _attribute_value_boolean := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_BOOLEAN")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_boolean.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_VALUE_DATE":
+		for _, _attribute_value_date := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_DATE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_date.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		for _, _attribute_value_enumeration := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_ENUMERATION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_enumeration.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_VALUE_INTEGER":
+		for _, _attribute_value_integer := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_INTEGER")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_integer.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_VALUE_REAL":
+		for _, _attribute_value_real := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_REAL")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_real.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_VALUE_STRING":
+		for _, _attribute_value_string := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_STRING")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_string.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_VALUE_XHTML":
+		for _, _attribute_value_xhtml := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_XHTML")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_xhtml.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_XHTML_1", fieldName)
+	}
+	return
+}
+
+func (a_children *A_CHILDREN) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_children.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_children.Name))
+
+	case "SPEC_HIERARCHY":
+		for _, _spec_hierarchy := range a_children.SPEC_HIERARCHY {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_children.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_HIERARCHY")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_hierarchy.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_CHILDREN", fieldName)
+	}
+	return
+}
+
+func (a_core_content *A_CORE_CONTENT) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_core_content.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_core_content.Name))
+
+	case "REQ_IF_CONTENT":
+		if a_core_content.REQ_IF_CONTENT != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_core_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_CONTENT")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", a_core_content.REQ_IF_CONTENT.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_core_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_CONTENT")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_CORE_CONTENT", fieldName)
+	}
+	return
+}
+
+func (a_datatypes *A_DATATYPES) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatypes.Name))
+
+	case "DATATYPE_DEFINITION_BOOLEAN":
+		for _, _datatype_definition_boolean := range a_datatypes.DATATYPE_DEFINITION_BOOLEAN {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_BOOLEAN")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_boolean.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "DATATYPE_DEFINITION_DATE":
+		for _, _datatype_definition_date := range a_datatypes.DATATYPE_DEFINITION_DATE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_DATE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_date.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "DATATYPE_DEFINITION_ENUMERATION":
+		for _, _datatype_definition_enumeration := range a_datatypes.DATATYPE_DEFINITION_ENUMERATION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_ENUMERATION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_enumeration.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "DATATYPE_DEFINITION_INTEGER":
+		for _, _datatype_definition_integer := range a_datatypes.DATATYPE_DEFINITION_INTEGER {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_INTEGER")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_integer.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "DATATYPE_DEFINITION_REAL":
+		for _, _datatype_definition_real := range a_datatypes.DATATYPE_DEFINITION_REAL {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_REAL")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_real.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "DATATYPE_DEFINITION_STRING":
+		for _, _datatype_definition_string := range a_datatypes.DATATYPE_DEFINITION_STRING {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_STRING")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_string.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "DATATYPE_DEFINITION_XHTML":
+		for _, _datatype_definition_xhtml := range a_datatypes.DATATYPE_DEFINITION_XHTML {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_XHTML")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_xhtml.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPES", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_boolean_ref.Name))
+	case "DATATYPE_DEFINITION_BOOLEAN_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_BOOLEAN_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_BOOLEAN_REF", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_date_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_date_ref.Name))
+	case "DATATYPE_DEFINITION_DATE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_date_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_DATE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_DATE_REF", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_enumeration_ref.Name))
+	case "DATATYPE_DEFINITION_ENUMERATION_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_ENUMERATION_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_ENUMERATION_REF", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_integer_ref.Name))
+	case "DATATYPE_DEFINITION_INTEGER_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_INTEGER_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_INTEGER_REF", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_real_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_real_ref.Name))
+	case "DATATYPE_DEFINITION_REAL_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_real_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_REAL_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_REAL_REF", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_string_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_string_ref.Name))
+	case "DATATYPE_DEFINITION_STRING_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_string_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_STRING_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_STRING_REF", fieldName)
+	}
+	return
+}
+
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_xhtml_ref.Name))
+	case "DATATYPE_DEFINITION_XHTML_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_XHTML_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_XHTML_REF", fieldName)
+	}
+	return
+}
+
+func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.Name))
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
+	case "ATTRIBUTE_DEFINITION_DATE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF))
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
+	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF))
+	case "ATTRIBUTE_DEFINITION_REAL_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF))
+	case "ATTRIBUTE_DEFINITION_STRING_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF))
+	case "ATTRIBUTE_DEFINITION_XHTML_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_EDITABLE_ATTS", fieldName)
+	}
+	return
+}
+
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_enum_value_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_enum_value_ref.Name))
+	case "ENUM_VALUE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_enum_value_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ENUM_VALUE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_enum_value_ref.ENUM_VALUE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_ENUM_VALUE_REF", fieldName)
+	}
+	return
+}
+
+func (a_object *A_OBJECT) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_object.Name))
+	case "SPEC_OBJECT_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECT_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_object.SPEC_OBJECT_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_OBJECT", fieldName)
+	}
+	return
+}
+
+func (a_properties *A_PROPERTIES) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_properties.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_properties.Name))
+
+	case "EMBEDDED_VALUE":
+		if a_properties.EMBEDDED_VALUE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_properties.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "EMBEDDED_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", a_properties.EMBEDDED_VALUE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_properties.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "EMBEDDED_VALUE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_PROPERTIES", fieldName)
+	}
+	return
+}
+
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_relation_group_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_relation_group_type_ref.Name))
+	case "RELATION_GROUP_TYPE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_relation_group_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "RELATION_GROUP_TYPE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_relation_group_type_ref.RELATION_GROUP_TYPE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_RELATION_GROUP_TYPE_REF", fieldName)
+	}
+	return
+}
+
+func (a_source_1 *A_SOURCE_1) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_source_1.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_source_1.Name))
+	case "SPEC_OBJECT_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_source_1.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECT_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_source_1.SPEC_OBJECT_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SOURCE_1", fieldName)
+	}
+	return
+}
+
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_source_specification_1.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_source_specification_1.Name))
+	case "SPECIFICATION_REF":
+		if a_source_specification_1.SPECIFICATION_REF.ToCodeString() != "" {
+			res = StringEnumInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_source_specification_1.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFICATION_REF")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "models."+a_source_specification_1.SPECIFICATION_REF.ToCodeString())
+		} else {
+			// in case of empty enum, we need to unstage the previous value
+			res = StringEnumInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_source_specification_1.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFICATION_REF")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "\"\"")
+		}
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SOURCE_SPECIFICATION_1", fieldName)
+	}
+	return
+}
+
+func (a_specifications *A_SPECIFICATIONS) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_specifications.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specifications.Name))
+
+	case "SPECIFICATION":
+		for _, _specification := range a_specifications.SPECIFICATION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_specifications.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPECIFICATION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _specification.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPECIFICATIONS", fieldName)
+	}
+	return
+}
+
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_specification_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specification_type_ref.Name))
+	case "SPECIFICATION_TYPE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_specification_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFICATION_TYPE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specification_type_ref.SPECIFICATION_TYPE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPECIFICATION_TYPE_REF", fieldName)
+	}
+	return
+}
+
+func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_specified_values.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specified_values.Name))
+
+	case "ENUM_VALUE":
+		for _, _enum_value := range a_specified_values.ENUM_VALUE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_specified_values.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ENUM_VALUE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _enum_value.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPECIFIED_VALUES", fieldName)
+	}
+	return
+}
+
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_attributes.Name))
+
+	case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		for _, _attribute_definition_boolean := range a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_boolean.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_DEFINITION_DATE":
+		for _, _attribute_definition_date := range a_spec_attributes.ATTRIBUTE_DEFINITION_DATE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_date.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		for _, _attribute_definition_enumeration := range a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_enumeration.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_DEFINITION_INTEGER":
+		for _, _attribute_definition_integer := range a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_integer.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_DEFINITION_REAL":
+		for _, _attribute_definition_real := range a_spec_attributes.ATTRIBUTE_DEFINITION_REAL {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_real.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_DEFINITION_STRING":
+		for _, _attribute_definition_string := range a_spec_attributes.ATTRIBUTE_DEFINITION_STRING {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_string.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "ATTRIBUTE_DEFINITION_XHTML":
+		for _, _attribute_definition_xhtml := range a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_xhtml.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_ATTRIBUTES", fieldName)
+	}
+	return
+}
+
+func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_objects.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_objects.Name))
+
+	case "SPEC_OBJECT":
+		for _, _spec_object := range a_spec_objects.SPEC_OBJECT {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_objects.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_OBJECT")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_object.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_OBJECTS", fieldName)
+	}
+	return
+}
+
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_object_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_object_type_ref.Name))
+	case "SPEC_OBJECT_TYPE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_object_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_OBJECT_TYPE_REF", fieldName)
+	}
+	return
+}
+
+func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relations.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relations.Name))
+
+	case "SPEC_RELATION":
+		for _, _spec_relation := range a_spec_relations.SPEC_RELATION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_relations.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_RELATION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_relation.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATIONS", fieldName)
+	}
+	return
+}
+
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_groups.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_groups.Name))
+
+	case "RELATION_GROUP":
+		for _, _relation_group := range a_spec_relation_groups.RELATION_GROUP {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_relation_groups.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "RELATION_GROUP")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _relation_group.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATION_GROUPS", fieldName)
+	}
+	return
+}
+
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_ref.Name))
+	case "SPEC_RELATION_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATION_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_ref.SPEC_RELATION_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATION_REF", fieldName)
+	}
+	return
+}
+
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_type_ref.Name))
+	case "SPEC_RELATION_TYPE_REF":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_type_ref.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATION_TYPE_REF")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATION_TYPE_REF", fieldName)
+	}
+	return
+}
+
+func (a_spec_types *A_SPEC_TYPES) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_types.Name))
+
+	case "RELATION_GROUP_TYPE":
+		for _, _relation_group_type := range a_spec_types.RELATION_GROUP_TYPE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "RELATION_GROUP_TYPE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _relation_group_type.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "SPEC_OBJECT_TYPE":
+		for _, _spec_object_type := range a_spec_types.SPEC_OBJECT_TYPE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_object_type.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "SPEC_RELATION_TYPE":
+		for _, _spec_relation_type := range a_spec_types.SPEC_RELATION_TYPE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_RELATION_TYPE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_relation_type.GongGetIdentifier(stage))
+			res += tmp
+		}
+	case "SPECIFICATION_TYPE":
+		for _, _specification_type := range a_spec_types.SPECIFICATION_TYPE {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPECIFICATION_TYPE")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _specification_type.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_SPEC_TYPES", fieldName)
+	}
+	return
+}
+
+func (a_the_header *A_THE_HEADER) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_the_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_the_header.Name))
+
+	case "REQ_IF_HEADER":
+		if a_the_header.REQ_IF_HEADER != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_the_header.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_HEADER")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", a_the_header.REQ_IF_HEADER.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", a_the_header.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_HEADER")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_THE_HEADER", fieldName)
+	}
+	return
+}
+
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", a_tool_extensions.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_tool_extensions.Name))
+
+	case "REQ_IF_TOOL_EXTENSION":
+		for _, _req_if_tool_extension := range a_tool_extensions.REQ_IF_TOOL_EXTENSION {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_tool_extensions.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "REQ_IF_TOOL_EXTENSION")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _req_if_tool_extension.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct A_TOOL_EXTENSIONS", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_boolean.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_boolean.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_BOOLEAN", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_date.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_date.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_DATE", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_enumeration.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_enumeration.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPECIFIED_VALUES":
+		if datatype_definition_enumeration.SPECIFIED_VALUES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFIED_VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_enumeration.SPECIFIED_VALUES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFIED_VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_ENUMERATION", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.LONG_NAME))
+	case "MAX":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MAX")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_integer.MAX))
+	case "MIN":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MIN")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_integer.MIN))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_integer.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_integer.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_INTEGER", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.Name))
+	case "ACCURACY":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ACCURACY")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_real.ACCURACY))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.LONG_NAME))
+	case "MAX":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MAX")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%f", datatype_definition_real.MAX))
+	case "MIN":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MIN")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%f", datatype_definition_real.MIN))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_real.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_real.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_REAL", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.LONG_NAME))
+	case "MAX_LENGTH":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MAX_LENGTH")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", datatype_definition_string.MAX_LENGTH))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_string.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_string.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_STRING", fieldName)
+	}
+	return
+}
+
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if datatype_definition_xhtml.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", datatype_definition_xhtml.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct DATATYPE_DEFINITION_XHTML", fieldName)
+	}
+	return
+}
+
+func (embedded_value *EMBEDDED_VALUE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embedded_value.Name))
+	case "KEY":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "KEY")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", embedded_value.KEY))
+	case "OTHER_CONTENT":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "OTHER_CONTENT")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embedded_value.OTHER_CONTENT))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct EMBEDDED_VALUE", fieldName)
+	}
+	return
+}
+
+func (enum_value *ENUM_VALUE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if enum_value.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", enum_value.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "PROPERTIES":
+		if enum_value.PROPERTIES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "PROPERTIES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", enum_value.PROPERTIES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "PROPERTIES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct ENUM_VALUE", fieldName)
+	}
+	return
+}
+
+func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedjpgimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Name))
+	case "Base64Content":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedjpgimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Base64Content")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Base64Content))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct EmbeddedJpgImage", fieldName)
+	}
+	return
+}
+
+func (embeddedpngimage *EmbeddedPngImage) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedpngimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Name))
+	case "Base64Content":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedpngimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Base64Content")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Base64Content))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct EmbeddedPngImage", fieldName)
+	}
+	return
+}
+
+func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedsvgimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Name))
+	case "Content":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedsvgimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Content")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Content))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct EmbeddedSvgImage", fieldName)
+	}
+	return
+}
+
+func (kill *Kill) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", kill.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(kill.Name))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct Kill", fieldName)
+	}
+	return
+}
+
+func (map_identifier_bool *Map_identifier_bool) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", map_identifier_bool.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(map_identifier_bool.Name))
+	case "Value":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", map_identifier_bool.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Value")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", map_identifier_bool.Value))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct Map_identifier_bool", fieldName)
+	}
+	return
+}
+
+func (relation_group *RELATION_GROUP) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if relation_group.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SOURCE_SPECIFICATION":
+		if relation_group.SOURCE_SPECIFICATION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SOURCE_SPECIFICATION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group.SOURCE_SPECIFICATION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SOURCE_SPECIFICATION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_RELATIONS":
+		if relation_group.SPEC_RELATIONS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group.SPEC_RELATIONS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TARGET_SPECIFICATION":
+		if relation_group.TARGET_SPECIFICATION != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TARGET_SPECIFICATION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group.TARGET_SPECIFICATION.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TARGET_SPECIFICATION")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if relation_group.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct RELATION_GROUP", fieldName)
+	}
+	return
+}
+
+func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if relation_group_type.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group_type.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_ATTRIBUTES":
+		if relation_group_type.SPEC_ATTRIBUTES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", relation_group_type.SPEC_ATTRIBUTES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct RELATION_GROUP_TYPE", fieldName)
+	}
+	return
+}
+
+func (req_if *REQ_IF) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if.Name))
+	case "Lang":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Lang")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if.Lang))
+
+	case "THE_HEADER":
+		if req_if.THE_HEADER != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_HEADER")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if.THE_HEADER.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_HEADER")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "CORE_CONTENT":
+		if req_if.CORE_CONTENT != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CORE_CONTENT")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if.CORE_CONTENT.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CORE_CONTENT")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TOOL_EXTENSIONS":
+		if req_if.TOOL_EXTENSIONS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TOOL_EXTENSIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if.TOOL_EXTENSIONS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TOOL_EXTENSIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct REQ_IF", fieldName)
+	}
+	return
+}
+
+func (req_if_content *REQ_IF_CONTENT) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_content.Name))
+
+	case "DATATYPES":
+		if req_if_content.DATATYPES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if_content.DATATYPES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_TYPES":
+		if req_if_content.SPEC_TYPES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_TYPES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if_content.SPEC_TYPES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_TYPES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_OBJECTS":
+		if req_if_content.SPEC_OBJECTS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECTS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if_content.SPEC_OBJECTS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECTS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_RELATIONS":
+		if req_if_content.SPEC_RELATIONS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if_content.SPEC_RELATIONS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPECIFICATIONS":
+		if req_if_content.SPECIFICATIONS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFICATIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if_content.SPECIFICATIONS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFICATIONS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_RELATION_GROUPS":
+		if req_if_content.SPEC_RELATION_GROUPS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATION_GROUPS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", req_if_content.SPEC_RELATION_GROUPS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATION_GROUPS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct REQ_IF_CONTENT", fieldName)
+	}
+	return
+}
+
+func (req_if_header *REQ_IF_HEADER) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.Name))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.IDENTIFIER))
+	case "COMMENT":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "COMMENT")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.COMMENT))
+	case "CREATION_TIME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CREATION_TIME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.CREATION_TIME))
+	case "REPOSITORY_ID":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REPOSITORY_ID")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.REPOSITORY_ID))
+	case "REQ_IF_TOOL_ID":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_TOOL_ID")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.REQ_IF_TOOL_ID))
+	case "REQ_IF_VERSION":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_VERSION")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.REQ_IF_VERSION))
+	case "SOURCE_TOOL_ID":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SOURCE_TOOL_ID")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.SOURCE_TOOL_ID))
+	case "TITLE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TITLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.TITLE))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct REQ_IF_HEADER", fieldName)
+	}
+	return
+}
+
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_tool_extension.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_tool_extension.Name))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct REQ_IF_TOOL_EXTENSION", fieldName)
+	}
+	return
+}
+
+func (specification *SPECIFICATION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if specification.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", specification.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if specification.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", specification.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "CHILDREN":
+		if specification.CHILDREN != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CHILDREN")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", specification.CHILDREN.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CHILDREN")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "VALUES":
+		if specification.VALUES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", specification.VALUES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPECIFICATION", fieldName)
+	}
+	return
+}
+
+func (specification_rendering *SPECIFICATION_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_rendering.Name))
+	case "IsNodeExpanded":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IsNodeExpanded")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", specification_rendering.IsNodeExpanded))
+	case "IsSelected":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IsSelected")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", specification_rendering.IsSelected))
+	case "IsWithHeadingNumbering":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IsWithHeadingNumbering")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", specification_rendering.IsWithHeadingNumbering))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPECIFICATION_Rendering", fieldName)
+	}
+	return
+}
+
+func (specification_type *SPECIFICATION_TYPE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if specification_type.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", specification_type.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_ATTRIBUTES":
+		if specification_type.SPEC_ATTRIBUTES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", specification_type.SPEC_ATTRIBUTES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPECIFICATION_TYPE", fieldName)
+	}
+	return
+}
+
+func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.IDENTIFIER))
+	case "IS_EDITABLE":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_EDITABLE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_hierarchy.IS_EDITABLE))
+	case "IS_TABLE_INTERNAL":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IS_TABLE_INTERNAL")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_hierarchy.IS_TABLE_INTERNAL))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if spec_hierarchy.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_hierarchy.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "OBJECT":
+		if spec_hierarchy.OBJECT != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "OBJECT")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_hierarchy.OBJECT.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "OBJECT")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "CHILDREN":
+		if spec_hierarchy.CHILDREN != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CHILDREN")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_hierarchy.CHILDREN.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CHILDREN")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "EDITABLE_ATTS":
+		if spec_hierarchy.EDITABLE_ATTS != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "EDITABLE_ATTS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_hierarchy.EDITABLE_ATTS.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "EDITABLE_ATTS")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPEC_HIERARCHY", fieldName)
+	}
+	return
+}
+
+func (spec_object *SPEC_OBJECT) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if spec_object.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_object.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "VALUES":
+		if spec_object.VALUES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_object.VALUES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if spec_object.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_object.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPEC_OBJECT", fieldName)
+	}
+	return
+}
+
+func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if spec_object_type.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_object_type.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_ATTRIBUTES":
+		if spec_object_type.SPEC_ATTRIBUTES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_object_type.SPEC_ATTRIBUTES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPEC_OBJECT_TYPE", fieldName)
+	}
+	return
+}
+
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type_rendering.Name))
+	case "IsNodeExpanded":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IsNodeExpanded")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.IsNodeExpanded))
+	case "ShowIdentifier":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowIdentifier")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowIdentifier))
+	case "ShowName":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowName")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowName))
+	case "ShowRelations":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ShowRelations")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.ShowRelations))
+	case "IsHeading":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IsHeading")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%t", spec_object_type_rendering.IsHeading))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPEC_OBJECT_TYPE_Rendering", fieldName)
+	}
+	return
+}
+
+func (spec_relation *SPEC_RELATION) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if spec_relation.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "VALUES":
+		if spec_relation.VALUES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation.VALUES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VALUES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SOURCE":
+		if spec_relation.SOURCE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SOURCE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation.SOURCE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SOURCE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TARGET":
+		if spec_relation.TARGET != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TARGET")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation.TARGET.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TARGET")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "TYPE":
+		if spec_relation.TYPE != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation.TYPE.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TYPE")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPEC_RELATION", fieldName)
+	}
+	return
+}
+
+func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.Name))
+	case "DESC":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.DESC))
+	case "IDENTIFIER":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.IDENTIFIER))
+	case "LAST_CHANGE":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LAST_CHANGE))
+	case "LONG_NAME":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LONG_NAME))
+
+	case "ALTERNATIVE_ID":
+		if spec_relation_type.ALTERNATIVE_ID != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation_type.ALTERNATIVE_ID.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ALTERNATIVE_ID")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	case "SPEC_ATTRIBUTES":
+		if spec_relation_type.SPEC_ATTRIBUTES != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", spec_relation_type.SPEC_ATTRIBUTES.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_ATTRIBUTES")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct SPEC_RELATION_TYPE", fieldName)
+	}
+	return
+}
+
+func (staticwebsite *StaticWebSite) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.Name))
+	case "MarkdownContent":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MarkdownContent")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.MarkdownContent))
+	case "InputImagesDir":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "InputImagesDir")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.InputImagesDir))
+	case "OutputStaticWebDir":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "OutputStaticWebDir")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.OutputStaticWebDir))
+	case "VersionInfo":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VersionInfo")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.VersionInfo))
+
+	case "Chapters":
+		for _, _staticwebsitechapter := range staticwebsite.Chapters {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "Chapters")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _staticwebsitechapter.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct StaticWebSite", fieldName)
+	}
+	return
+}
+
+func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.Name))
+	case "MarkdownContent":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MarkdownContent")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.MarkdownContent))
+
+	case "Paragraphs":
+		for _, _staticwebsiteparagraph := range staticwebsitechapter.Paragraphs {
+			tmp := SliceOfPointersFieldInitStatement
+			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "Paragraphs")
+			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _staticwebsiteparagraph.GongGetIdentifier(stage))
+			res += tmp
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct StaticWebSiteChapter", fieldName)
+	}
+	return
+}
+
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitegeneratedimage.Name))
+	case "SourceDirectoryPath":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SourceDirectoryPath")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitegeneratedimage.SourceDirectoryPath))
+	case "Width":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Width")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsitegeneratedimage.Width))
+	case "Height":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Height")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsitegeneratedimage.Height))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct StaticWebSiteGeneratedImage", fieldName)
+	}
+	return
+}
+
+func (staticwebsiteimage *StaticWebSiteImage) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteimage.Name))
+	case "SourceDirectoryPath":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SourceDirectoryPath")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteimage.SourceDirectoryPath))
+	case "Width":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Width")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsiteimage.Width))
+	case "Height":
+		res = NumberInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Height")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", fmt.Sprintf("%d", staticwebsiteimage.Height))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct StaticWebSiteImage", fieldName)
+	}
+	return
+}
+
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.Name))
+	case "LegendMarkdownContent":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LegendMarkdownContent")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.LegendMarkdownContent))
+
+	case "Image":
+		if staticwebsiteparagraph.Image != nil {
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Image")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", staticwebsiteparagraph.Image.GongGetIdentifier(stage))
+		} else {
+			// in case of nil pointer, we need to unstage the previous value
+			res = PointerFieldInitStatement
+			res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
+			res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Image")
+			res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", "nil")
+		}
+	default:
+		log.Panicf("Unknown field %s for Gongstruct StaticWebSiteParagraph", fieldName)
+	}
+	return
+}
+
+func (xhtml_content *XHTML_CONTENT) GongMarshallField(stage *Stage, fieldName string) (res string) {
+
+	switch fieldName {
+	case "Name":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(xhtml_content.Name))
+	case "EnclosedText":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "EnclosedText")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(xhtml_content.EnclosedText))
+	case "PureText":
+		res = StringInitStatement
+		res = strings.ReplaceAll(res, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "PureText")
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(xhtml_content.PureText))
+
+	default:
+		log.Panicf("Unknown field %s for Gongstruct XHTML_CONTENT", fieldName)
+	}
+	return
+}
+
+// insertion point for marshall all fields methods
+func (alternative_id *ALTERNATIVE_ID) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += alternative_id.GongMarshallField(stage, "Name")
+		initializerStatements += alternative_id.GongMarshallField(stage, "IDENTIFIER")
+	}
+	return
+}
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED")
+		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "DESC")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE")
+		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle")
+		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject")
+	}
+	return
+}
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_boolean.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "THE_VALUE")
+	}
+	return
+}
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_date.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_date.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_date.GongMarshallField(stage, "THE_VALUE")
+	}
+	return
+}
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_enumeration.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "DEFINITION")
+		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "VALUES")
+	}
+	return
+}
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_integer.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_integer.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_integer.GongMarshallField(stage, "THE_VALUE")
+	}
+	return
+}
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_real.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_real.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_real.GongMarshallField(stage, "THE_VALUE")
+	}
+	return
+}
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_string.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_string.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_string.GongMarshallField(stage, "THE_VALUE")
+	}
+	return
+}
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "DEFINITION")
+		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED")
+		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE")
+		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE")
+	}
+	return
+}
+func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_alternative_id.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+	}
+	return
+}
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
+	}
+	return
+}
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+	}
+	return
+}
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
+	}
+	return
+}
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
+	}
+	return
+}
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
+	}
+	return
+}
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
+	}
+	return
+}
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_boolean.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_boolean.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
+	}
+	return
+}
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_date.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_date.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
+	}
+	return
+}
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_enumeration.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_enumeration.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
+	}
+	return
+}
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_integer.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_integer.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
+	}
+	return
+}
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_real.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_real.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
+	}
+	return
+}
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_string.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_string.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
+	}
+	return
+}
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_xhtml.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_xhtml.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
+	}
+	return
+}
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
+		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
+	}
+	return
+}
+func (a_children *A_CHILDREN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_children.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_children.GongMarshallField(stage, "SPEC_HIERARCHY")
+	}
+	return
+}
+func (a_core_content *A_CORE_CONTENT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_core_content.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT")
+	}
+	return
+}
+func (a_datatypes *A_DATATYPES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatypes.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING")
+		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML")
+	}
+	return
+}
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF")
+	}
+	return
+}
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF")
+	}
+	return
+}
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF")
+	}
+	return
+}
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF")
+	}
+	return
+}
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF")
+	}
+	return
+}
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF")
+	}
+	return
+}
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF")
+	}
+	return
+}
+func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "Name")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
+		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
+	}
+	return
+}
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF")
+	}
+	return
+}
+func (a_object *A_OBJECT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_object.GongMarshallField(stage, "Name")
+		initializerStatements += a_object.GongMarshallField(stage, "SPEC_OBJECT_REF")
+	}
+	return
+}
+func (a_properties *A_PROPERTIES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_properties.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_properties.GongMarshallField(stage, "EMBEDDED_VALUE")
+	}
+	return
+}
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF")
+	}
+	return
+}
+func (a_source_1 *A_SOURCE_1) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_source_1.GongMarshallField(stage, "Name")
+		initializerStatements += a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF")
+	}
+	return
+}
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_source_specification_1.GongMarshallField(stage, "Name")
+		initializerStatements += a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF")
+	}
+	return
+}
+func (a_specifications *A_SPECIFICATIONS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_specifications.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_specifications.GongMarshallField(stage, "SPECIFICATION")
+	}
+	return
+}
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF")
+	}
+	return
+}
+func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_specified_values.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_specified_values.GongMarshallField(stage, "ENUM_VALUE")
+	}
+	return
+}
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_attributes.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING")
+		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML")
+	}
+	return
+}
+func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_objects.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_objects.GongMarshallField(stage, "SPEC_OBJECT")
+	}
+	return
+}
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF")
+	}
+	return
+}
+func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relations.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_relations.GongMarshallField(stage, "SPEC_RELATION")
+	}
+	return
+}
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relation_groups.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_relation_groups.GongMarshallField(stage, "RELATION_GROUP")
+	}
+	return
+}
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF")
+	}
+	return
+}
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "Name")
+		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF")
+	}
+	return
+}
+func (a_spec_types *A_SPEC_TYPES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_spec_types.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "RELATION_GROUP_TYPE")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_OBJECT_TYPE")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_RELATION_TYPE")
+		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPECIFICATION_TYPE")
+	}
+	return
+}
+func (a_the_header *A_THE_HEADER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_the_header.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_the_header.GongMarshallField(stage, "REQ_IF_HEADER")
+	}
+	return
+}
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += a_tool_extensions.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += a_tool_extensions.GongMarshallField(stage, "REQ_IF_TOOL_EXTENSION")
+	}
+	return
+}
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES")
+	}
+	return
+}
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MAX")
+		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MIN")
+		pointersInitializesStatements += datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "ACCURACY")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MAX")
+		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MIN")
+		pointersInitializesStatements += datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LONG_NAME")
+		initializerStatements += datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH")
+		pointersInitializesStatements += datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "Name")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "DESC")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
+	}
+	return
+}
+func (embedded_value *EMBEDDED_VALUE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += embedded_value.GongMarshallField(stage, "Name")
+		initializerStatements += embedded_value.GongMarshallField(stage, "KEY")
+		initializerStatements += embedded_value.GongMarshallField(stage, "OTHER_CONTENT")
+	}
+	return
+}
+func (enum_value *ENUM_VALUE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += enum_value.GongMarshallField(stage, "Name")
+		initializerStatements += enum_value.GongMarshallField(stage, "DESC")
+		initializerStatements += enum_value.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += enum_value.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += enum_value.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += enum_value.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += enum_value.GongMarshallField(stage, "PROPERTIES")
+	}
+	return
+}
+func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Name")
+		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Base64Content")
+	}
+	return
+}
+func (embeddedpngimage *EmbeddedPngImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Name")
+		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Base64Content")
+	}
+	return
+}
+func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Name")
+		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Content")
+	}
+	return
+}
+func (kill *Kill) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += kill.GongMarshallField(stage, "Name")
+	}
+	return
+}
+func (map_identifier_bool *Map_identifier_bool) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Name")
+		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Value")
+	}
+	return
+}
+func (relation_group *RELATION_GROUP) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += relation_group.GongMarshallField(stage, "Name")
+		initializerStatements += relation_group.GongMarshallField(stage, "DESC")
+		initializerStatements += relation_group.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += relation_group.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += relation_group.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SPEC_RELATIONS")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION")
+		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += relation_group_type.GongMarshallField(stage, "Name")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "DESC")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += relation_group_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+	}
+	return
+}
+func (req_if *REQ_IF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += req_if.GongMarshallField(stage, "Name")
+		initializerStatements += req_if.GongMarshallField(stage, "Lang")
+		pointersInitializesStatements += req_if.GongMarshallField(stage, "THE_HEADER")
+		pointersInitializesStatements += req_if.GongMarshallField(stage, "CORE_CONTENT")
+		pointersInitializesStatements += req_if.GongMarshallField(stage, "TOOL_EXTENSIONS")
+	}
+	return
+}
+func (req_if_content *REQ_IF_CONTENT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += req_if_content.GongMarshallField(stage, "Name")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "DATATYPES")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_TYPES")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_OBJECTS")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATIONS")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPECIFICATIONS")
+		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS")
+	}
+	return
+}
+func (req_if_header *REQ_IF_HEADER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += req_if_header.GongMarshallField(stage, "Name")
+		initializerStatements += req_if_header.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += req_if_header.GongMarshallField(stage, "COMMENT")
+		initializerStatements += req_if_header.GongMarshallField(stage, "CREATION_TIME")
+		initializerStatements += req_if_header.GongMarshallField(stage, "REPOSITORY_ID")
+		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID")
+		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_VERSION")
+		initializerStatements += req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID")
+		initializerStatements += req_if_header.GongMarshallField(stage, "TITLE")
+	}
+	return
+}
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += req_if_tool_extension.GongMarshallField(stage, "Name")
+	}
+	return
+}
+func (specification *SPECIFICATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += specification.GongMarshallField(stage, "Name")
+		initializerStatements += specification.GongMarshallField(stage, "DESC")
+		initializerStatements += specification.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += specification.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += specification.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "TYPE")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "CHILDREN")
+		pointersInitializesStatements += specification.GongMarshallField(stage, "VALUES")
+	}
+	return
+}
+func (specification_rendering *SPECIFICATION_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += specification_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += specification_rendering.GongMarshallField(stage, "IsNodeExpanded")
+		initializerStatements += specification_rendering.GongMarshallField(stage, "IsSelected")
+		initializerStatements += specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering")
+	}
+	return
+}
+func (specification_type *SPECIFICATION_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += specification_type.GongMarshallField(stage, "Name")
+		initializerStatements += specification_type.GongMarshallField(stage, "DESC")
+		initializerStatements += specification_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += specification_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += specification_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += specification_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+	}
+	return
+}
+func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "Name")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "OBJECT")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "CHILDREN")
+		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS")
+	}
+	return
+}
+func (spec_object *SPEC_OBJECT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += spec_object.GongMarshallField(stage, "Name")
+		initializerStatements += spec_object.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_object.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_object.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_object.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_object.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_object.GongMarshallField(stage, "VALUES")
+		pointersInitializesStatements += spec_object.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += spec_object_type.GongMarshallField(stage, "Name")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_object_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+	}
+	return
+}
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "Name")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowName")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowRelations")
+		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsHeading")
+	}
+	return
+}
+func (spec_relation *SPEC_RELATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += spec_relation.GongMarshallField(stage, "Name")
+		initializerStatements += spec_relation.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_relation.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_relation.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_relation.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "VALUES")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "SOURCE")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TARGET")
+		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TYPE")
+	}
+	return
+}
+func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "Name")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "DESC")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "LAST_CHANGE")
+		initializerStatements += spec_relation_type.GongMarshallField(stage, "LONG_NAME")
+		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID")
+		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+	}
+	return
+}
+func (staticwebsite *StaticWebSite) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += staticwebsite.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "MarkdownContent")
+		pointersInitializesStatements += staticwebsite.GongMarshallField(stage, "Chapters")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "InputImagesDir")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "OutputStaticWebDir")
+		initializerStatements += staticwebsite.GongMarshallField(stage, "VersionInfo")
+	}
+	return
+}
+func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "MarkdownContent")
+		pointersInitializesStatements += staticwebsitechapter.GongMarshallField(stage, "Paragraphs")
+	}
+	return
+}
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath")
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Width")
+		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Height")
+	}
+	return
+}
+func (staticwebsiteimage *StaticWebSiteImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath")
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Width")
+		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Height")
+	}
+	return
+}
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "Name")
+		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent")
+		pointersInitializesStatements += staticwebsiteparagraph.GongMarshallField(stage, "Image")
+	}
+	return
+}
+func (xhtml_content *XHTML_CONTENT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+
+	{ // Insertion point for basic fields value assignment
+		initializerStatements += xhtml_content.GongMarshallField(stage, "Name")
+		initializerStatements += xhtml_content.GongMarshallField(stage, "EnclosedText")
+		initializerStatements += xhtml_content.GongMarshallField(stage, "PureText")
+	}
 	return
 }
