@@ -88,12 +88,10 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		}
 
 		markDownContent := "# *" + specification.Name + "*"
-		map_specificationType_node[specificationType].Children =
-			append(map_specificationType_node[specificationType].Children, specificationNode)
+		map_specificationType_node[specificationType].Children = append(map_specificationType_node[specificationType].Children, specificationNode)
 		map_specificationType_nbInstances[specificationType] = map_specificationType_nbInstances[specificationType] + 1
 
 		{
-
 			// specificationAttributeCategoryXHTML := &tree.Node{
 			// 	Name:       "XHTML",
 			// 	IsExpanded: true,
@@ -171,4 +169,20 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 	)
 
 	treeStage.Commit()
+}
+
+type ProxySpecification struct {
+	stager        *m.Stager
+	specification *m.SPECIFICATION
+}
+
+func (p *ProxySpecification) OnAfterUpdate(
+	stage *tree.Stage,
+	stagedNode, frontNode *tree.Node,
+) {
+	if frontNode.IsChecked && !stagedNode.IsChecked {
+		SetSelectedSpecification(p.stager.GetStage(), p.specification)
+		p.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(p.stager)
+		p.stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(p.stager)
+	}
 }
