@@ -105,7 +105,7 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 			ToolTipText:     "Increase the display order (less priority)",
-			Icon:            string(buttons.BUTTON_arrow_upward),
+			Icon:            string(buttons.BUTTON_arrow_downward),
 		}
 		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
 			button,
@@ -121,7 +121,7 @@ func configureAndAddAttributeNode[AttrDef m.AttributeDefinition](
 			HasToolTip:      true,
 			ToolTipPosition: tree.Right,
 			ToolTipText:     "Decrease the display order (more priority)",
-			Icon:            string(buttons.BUTTON_arrow_downward),
+			Icon:            string(buttons.BUTTON_arrow_upward),
 		}
 		nodeAttribute.Buttons = append(nodeAttribute.Buttons,
 			button,
