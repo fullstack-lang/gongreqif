@@ -2,6 +2,8 @@ package models
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	samples "github.com/fullstack-lang/gongreqif/go/cmd/gongreqif/samples"
 
@@ -39,6 +41,17 @@ func (stager *Stager) UpdateAndCommitAnonymousButtonStage() {
 			string(buttons.BUTTON_shuffle),
 			"Load sample (collecting drone)",
 		))
+
+	buttonKill := button.NewButton(
+		&StopButtonProxy{
+			stager: stager,
+		},
+		"Stop for maintenance",
+		string(buttons.BUTTON_stop_circle),
+		"Stop for maintenance",
+	)
+
+	group1.Buttons = append(group1.Buttons, buttonKill)
 
 	stage.Commit()
 }
@@ -78,4 +91,17 @@ func (e *LoadSampleButtonProxy) OnAfterUpdateButton() {
 	ParseAstFromBytes(stageForRenderingConf, samples.SampleRenderingConf)
 
 	e.stager.processRenderingConf(stageForRenderingConf)
+}
+
+type StopButtonProxy struct {
+	stager *Stager
+}
+
+func (e *StopButtonProxy) GetButtonsStage() *button.Stage {
+	return e.stager.anonymousButtonStage
+}
+
+func (proxy *StopButtonProxy) OnAfterUpdateButton() {
+	log.Println("Arret demandé de l'application")
+	os.Exit(0)
 }
