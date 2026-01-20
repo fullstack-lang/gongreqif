@@ -1,7 +1,6 @@
 package specifications
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -17,8 +16,7 @@ func processSpecHierarchy(
 	hierarchyParentNode *tree.Node,
 	outerDepth int,
 	markDownContent *string,
-	digitPrefix string) {
-
+) {
 	stage := stager.GetStage()
 
 	specObject, ok := stager.Map_id_SPEC_OBJECT[specHierarchy.OBJECT.SPEC_OBJECT_REF]
@@ -54,10 +52,6 @@ func processSpecHierarchy(
 				*markDownContent += "#"
 			}
 			*markDownContent += " "
-
-			if digitPrefix != "" {
-				*markDownContent += digitPrefix + " "
-			}
 		}
 	} else {
 		*markDownContent += markdownBoldStartingMark
@@ -106,18 +100,13 @@ func processSpecHierarchy(
 	m.AddIconForEditabilityOfAttribute(specHierarchy.IS_EDITABLE, specObject.Name, specObjectNode)
 
 	if specHierarchy.CHILDREN != nil {
-		for i, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
-			childPrefix := ""
-			if digitPrefix != "" {
-				childPrefix = digitPrefix + "." + fmt.Sprintf("%d", i+1)
-			}
+		for _, specHierarchyChildren := range specHierarchy.CHILDREN.SPEC_HIERARCHY {
 			processSpecHierarchy(
 				stager,
 				specHierarchyChildren,
 				specObjectNode,
 				outerDepth+1,
-				markDownContent,
-				childPrefix)
+				markDownContent)
 		}
 	}
 }
@@ -128,7 +117,6 @@ type ProxySpecification struct {
 }
 
 func (p *ProxySpecification) OnAfterUpdate(treeStage *tree.Stage, stageNode, frontNode *tree.Node) {
-
 	stage := p.stager.GetStage()
 	if frontNode.IsChecked && !stageNode.IsChecked {
 		frontNode.IsChecked = stageNode.IsChecked

@@ -1,7 +1,7 @@
 package specifications
 
 import (
-	"fmt"
+
 	// Corrected path
 	"github.com/fullstack-lang/gongreqif/go/models"
 	m "github.com/fullstack-lang/gongreqif/go/models"
@@ -12,7 +12,6 @@ import (
 
 // UpdateAndCommitSpecificationsMarkdownStage implements models.SpecificationsTreeUpdaterInterface.
 func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownStage(stager *m.Stager) {
-
 	stage := stager.GetStage()
 
 	markdownStage := stager.GetMarkdownStage()
@@ -28,7 +27,6 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		markdownStage.Commit()
 		return
 	}
-	isWithHeadingNumbering := GetSpecificationRendering(stage, selectedSpecification).IsWithHeadingNumbering
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
 	for _, specification := range specifications {
@@ -40,7 +38,8 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		// --- updated logic to generate and assign markdown content ---
 
 		// 1. Initialize markdown content string
-		markDownContent := "# " + specification.Name + "\n\n"
+		// markDownContent := "**Specification \"" + specification.Name + "\"**\n\n"
+		markDownContent := ""
 
 		// 2. A dummy parent node is created because processSpecHierarchy expects a parent
 		// to append children to. This node is temporary and will be discarded.
@@ -48,18 +47,13 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		depth := 1 // initial depth for chapters
 
 		// 3. Recursively process spec hierarchies to build the markdown string
-		for i, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
-			digitPrefix := ""
-			if isWithHeadingNumbering {
-				digitPrefix = fmt.Sprintf("%d", i+1)
-			}
+		for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 			processSpecHierarchy(
 				stager,
 				specHierarchy,
 				hierarchyParentNode,
 				depth,
-				&markDownContent,
-				digitPrefix)
+				&markDownContent)
 		}
 		// --- end of update ---
 
@@ -87,6 +81,10 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		}
 
 		markdown.StageBranch(markdownStage, content)
+
+		if GetSpecificationRendering(stage, selectedSpecification).IsWithHeadingNumbering {
+			content.Content = AddHeaderNumbering(content.Content)
+		}
 	}
 
 	markdownStage.Commit()
