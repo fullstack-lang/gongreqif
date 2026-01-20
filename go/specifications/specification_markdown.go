@@ -27,7 +27,6 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		markdownStage.Commit()
 		return
 	}
-	// isWithHeadingNumbering := GetSpecificationRendering(stage, selectedSpecification).IsWithHeadingNumbering
 
 	specifications := stager.GetRootREQIF().CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.SPECIFICATION
 	for _, specification := range specifications {
@@ -39,7 +38,8 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		// --- updated logic to generate and assign markdown content ---
 
 		// 1. Initialize markdown content string
-		markDownContent := "# " + specification.Name + "\n\n"
+		// markDownContent := "**Specification \"" + specification.Name + "\"**\n\n"
+		markDownContent := ""
 
 		// 2. A dummy parent node is created because processSpecHierarchy expects a parent
 		// to append children to. This node is temporary and will be discarded.
@@ -81,6 +81,10 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsMarkdownSt
 		}
 
 		markdown.StageBranch(markdownStage, content)
+
+		if GetSpecificationRendering(stage, selectedSpecification).IsWithHeadingNumbering {
+			content.Content = AddHeaderNumbering(content.Content)
+		}
 	}
 
 	markdownStage.Commit()
