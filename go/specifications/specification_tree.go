@@ -88,12 +88,10 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 		}
 
 		markDownContent := "# *" + specification.Name + "*"
-		map_specificationType_node[specificationType].Children =
-			append(map_specificationType_node[specificationType].Children, specificationNode)
+		map_specificationType_node[specificationType].Children = append(map_specificationType_node[specificationType].Children, specificationNode)
 		map_specificationType_nbInstances[specificationType] = map_specificationType_nbInstances[specificationType] + 1
 
 		{
-
 			// specificationAttributeCategoryXHTML := &tree.Node{
 			// 	Name:       "XHTML",
 			// 	IsExpanded: true,
@@ -135,19 +133,13 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 
 			depth := 0 // depth of chapters
 
-			for i, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
-
-				digitPrefix := ""
-				if specificationRendering.IsWithHeadingNumbering {
-					digitPrefix = fmt.Sprintf("%d", i+1)
-				}
+			for _, specHierarchy := range specification.CHILDREN.SPEC_HIERARCHY {
 				processSpecHierarchy(
 					stager,
 					specHierarchy,
 					hierarchyParentNode,
 					depth,
-					&markDownContent,
-					digitPrefix)
+					&markDownContent)
 			}
 
 			// log.Println(markDownContent)
