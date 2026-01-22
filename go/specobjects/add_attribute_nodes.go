@@ -12,7 +12,7 @@ import (
 func AddAttributeNodes(stager *m.Stager, objectNode *tree.Node, objectWithValues m.ObjectWithValues) {
 
 	if objectWithValues.GetValues() == nil {
-		log.Println("No values")
+		// some object have no values (like a specification)
 		return
 	}
 
