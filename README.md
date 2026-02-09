@@ -28,7 +28,7 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-You need to have Go version 1.24 or higher installed on your system. You can find the installation instructions on the official Go website:
+You need to have Go version 1.25 or higher installed on your system. You can find the installation instructions on the official Go website:
 
 - [Go Installation Guide](https://go.dev/doc/install)
 
