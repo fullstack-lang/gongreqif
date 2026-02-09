@@ -19,7 +19,7 @@ GongReqif provides a simple interface to parse and visualize the hierarchical st
 
 The `gongreqif` tool and its rationale are discussed in the paper **"Overcoming ReqIF Exchange Challenges through Deep File Analysis and Dedicated Tooling"**, published at the **2025 IEEE International Symposium on Systems Engineering (ISSE)**.
 
-*   **[Download the Paper](https://raw.githubusercontent.com/fullstack-lang/gongreqif/docs/2025317834.pdf)**
+*   **[Download the Paper](https://raw.githubusercontent.com/fullstack-lang/gongreqif/blob/main/docs/2025317834.pdf)**
 
 
 ## Getting Started
