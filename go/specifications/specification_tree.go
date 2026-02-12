@@ -129,7 +129,7 @@ func (o *SpecificationsTreeStageUpdater) UpdateAndCommitSpecificationsTreeStage(
 				IsExpanded: true,
 				FontStyle:  tree.ITALIC,
 			}
-			specificationNode.Children = append(specificationNode.Children, hierarchyParentNode)
+			// specificationNode.Children = append(specificationNode.Children, hierarchyParentNode)
 
 			depth := 0 // depth of chapters
 
