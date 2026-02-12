@@ -11,6 +11,7 @@ import (
 	"slices"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 
 	gongreqif_go "github.com/fullstack-lang/gongreqif/go"
@@ -26,14 +27,18 @@ func __Gong__Abs(x int) int {
 	return x
 }
 
-var _ = __Gong__Abs
-var _ = strings.Clone("")
+var (
+	_ = __Gong__Abs
+	_ = strings.Clone("")
+)
 
-const ProbeTreeSidebarSuffix = ":sidebar of the probe"
-const ProbeTableSuffix = ":table of the probe"
-const ProbeNotificationTableSuffix = ":notification table of the probe"
-const ProbeFormSuffix = ":form of the probe"
-const ProbeSplitSuffix = ":probe of the probe"
+const (
+	ProbeTreeSidebarSuffix       = ":sidebar of the probe"
+	ProbeTableSuffix             = ":table of the probe"
+	ProbeNotificationTableSuffix = ":notification table of the probe"
+	ProbeFormSuffix              = ":form of the probe"
+	ProbeSplitSuffix             = ":probe of the probe"
+)
 
 func (stage *Stage) GetProbeTreeSidebarStageName() string {
 	return stage.GetType() + ":" + stage.GetName() + ProbeTreeSidebarSuffix
@@ -56,8 +61,10 @@ func (stage *Stage) GetProbeSplitStageName() string {
 }
 
 // errUnkownEnum is returns when a value cannot match enum values
-var errUnkownEnum = errors.New("unkown enum")
-var _ = errUnkownEnum
+var (
+	errUnkownEnum = errors.New("unkown enum")
+	_             = errUnkownEnum
+)
 
 // needed to avoid when fmt package is not needed by generated code
 var __dummy__fmt_variable fmt.Scanner
@@ -73,8 +80,10 @@ var _ = __dummy_math_variable
 type __void any
 
 // needed for creating set of instances in the stage
-var __member __void
-var _ = __member
+var (
+	__member __void
+	_        = __member
+)
 
 // GongStructInterface is the interface met by GongStructs
 // It allows runtime reflexion of instances (without the hassle of the "reflect" package)
@@ -1673,18 +1682,1624 @@ type Stage struct {
 
 	forwardCommits  []string
 	backwardCommits []string
+
+	// when navigating the commit history
+	// navigationMode is set to Navigating
+	navigationMode gongStageNavigationMode
+	commitsBehind  int // the number of commits the stage is behind the front of the history
+
+	lock sync.RWMutex
 }
 
-func (stage *Stage) ResetCommits() {
-	stage.forwardCommits = []string{}
-	stage.backwardCommits = []string{}
+type gongStageNavigationMode string
+
+const (
+	GongNavigationModeNormal gongStageNavigationMode = "Normal"
+	// when the mode is navigating, each commit backward and forward
+	// it is possible to go apply the nbCommitsBackward forward commits
+	GongNavigationModeNavigating gongStageNavigationMode = "Navigating"
+)
+
+// ApplyBackwardCommit applies the commit before the current one
+func (stage *Stage) ApplyBackwardCommit() error {
+	if len(stage.backwardCommits) == 0 {
+		return errors.New("no backward commit to apply")
+	}
+
+	if stage.navigationMode == GongNavigationModeNormal && stage.commitsBehind != 0 {
+		return errors.New("in navigation mode normal, cannot have commitsBehind != 0")
+	}
+
+	if stage.navigationMode == GongNavigationModeNormal {
+		stage.navigationMode = GongNavigationModeNavigating
+	}
+
+	if stage.commitsBehind >= len(stage.backwardCommits) {
+		return errors.New("no more backward commit to apply")
+	}
+
+	commitToApply := stage.backwardCommits[len(stage.backwardCommits)-1-stage.commitsBehind]
+
+	// umarshall the backward commit to the stage
+
+	// the parsing of the commit will call the UX update
+	// therefore, it is important to stage.commitsBehind before because it is used in the
+	// UX
+	stage.commitsBehind++
+	err := GongParseAstString(stage, commitToApply, true)
+	if err != nil {
+		log.Println("error during ApplyBackwardCommit: ", err)
+		return err
+	}
+
+	stage.ComputeReferenceAndOrders()
+
+	return nil
+}
+
+func (stage *Stage) GetForwardCommits() []string {
+	return stage.forwardCommits
+}
+
+func (stage *Stage) GetBackwardCommits() []string {
+	return stage.backwardCommits
+}
+
+func (stage *Stage) ApplyForwardCommit() error {
+	if stage.navigationMode == GongNavigationModeNormal && stage.commitsBehind != 0 {
+		return errors.New("in navigation mode normal, cannot have commitsBehind != 0")
+	}
+
+	if stage.commitsBehind == 0 {
+		return errors.New("no more forward commit to apply")
+	}
+
+	if stage.navigationMode == GongNavigationModeNormal {
+		stage.navigationMode = GongNavigationModeNavigating
+	}
+
+	commitToApply := stage.forwardCommits[len(stage.forwardCommits)-1-stage.commitsBehind+1]
+
+	// the parsing of the commit will call the UX update
+	// therefore, it is important to stage.commitsBehind before because it is used in the
+	// UX
+	stage.commitsBehind--
+	err := GongParseAstString(stage, commitToApply, true)
+	if err != nil {
+		log.Println("error during ApplyForwardCommit: ", err)
+		return err
+	}
+	stage.ComputeReferenceAndOrders()
+
+	return nil
+}
+
+func (stage *Stage) GetCommitsBehind() int {
+	return stage.commitsBehind
+}
+
+func (stage *Stage) Lock() {
+	stage.lock.Lock()
+}
+
+func (stage *Stage) Unlock() {
+	stage.lock.Unlock()
+}
+
+func (stage *Stage) RLock() {
+	stage.lock.RLock()
+}
+
+func (stage *Stage) RUnlock() {
+	stage.lock.RUnlock()
+}
+
+// ResetHard removes the more recent
+// commitsBehind forward/backward Commits from the
+// stage
+func (stage *Stage) ResetHard() {
+	newCommitsLen := len(stage.forwardCommits) - stage.GetCommitsBehind()
+
+	stage.forwardCommits = stage.forwardCommits[:newCommitsLen]
+	stage.backwardCommits = stage.backwardCommits[:newCommitsLen]
+	stage.commitsBehind = 0
+	stage.navigationMode = GongNavigationModeNormal
+
+	stage.ComputeInstancesNb()
+	if stage.OnInitCommitCallback != nil {
+		stage.OnInitCommitCallback.BeforeCommit(stage)
+	}
+	if stage.OnInitCommitFromBackCallback != nil {
+		stage.OnInitCommitFromBackCallback.BeforeCommit(stage)
+	}
+}
+
+// Orphans removes all commits
+func (stage *Stage) Orphans() {
+	stage.forwardCommits = stage.forwardCommits[:0]
+	stage.backwardCommits = stage.backwardCommits[:0]
+	stage.commitsBehind = 0
+	stage.navigationMode = GongNavigationModeNormal
+
+	stage.ComputeInstancesNb()
+	if stage.OnInitCommitCallback != nil {
+		stage.OnInitCommitCallback.BeforeCommit(stage)
+	}
+	if stage.OnInitCommitFromBackCallback != nil {
+		stage.OnInitCommitFromBackCallback.BeforeCommit(stage)
+	}
+}
+
+// recomputeOrders recomputes the next order for each struct
+// this is necessary because the order might have been incremented
+// during the commits that have been discarded
+// insertion point for max order recomputation
+func (stage *Stage) recomputeOrders() {
+	// insertion point for max order recomputation
+	var maxALTERNATIVE_IDOrder uint
+	var foundALTERNATIVE_ID bool
+	for _, order := range stage.ALTERNATIVE_IDMap_Staged_Order {
+		if !foundALTERNATIVE_ID || order > maxALTERNATIVE_IDOrder {
+			maxALTERNATIVE_IDOrder = order
+			foundALTERNATIVE_ID = true
+		}
+	}
+	if foundALTERNATIVE_ID {
+		stage.ALTERNATIVE_IDOrder = maxALTERNATIVE_IDOrder + 1
+	} else {
+		stage.ALTERNATIVE_IDOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_BOOLEANOrder uint
+	var foundATTRIBUTE_DEFINITION_BOOLEAN bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_BOOLEAN || order > maxATTRIBUTE_DEFINITION_BOOLEANOrder {
+			maxATTRIBUTE_DEFINITION_BOOLEANOrder = order
+			foundATTRIBUTE_DEFINITION_BOOLEAN = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_BOOLEAN {
+		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder = maxATTRIBUTE_DEFINITION_BOOLEANOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_BOOLEAN_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_BOOLEAN_Rendering || order > maxATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_BOOLEAN_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_BOOLEAN_Rendering {
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder = maxATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_DATEOrder uint
+	var foundATTRIBUTE_DEFINITION_DATE bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_DATE || order > maxATTRIBUTE_DEFINITION_DATEOrder {
+			maxATTRIBUTE_DEFINITION_DATEOrder = order
+			foundATTRIBUTE_DEFINITION_DATE = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_DATE {
+		stage.ATTRIBUTE_DEFINITION_DATEOrder = maxATTRIBUTE_DEFINITION_DATEOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_DATEOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_DATE_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_DATE_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_DATE_Rendering || order > maxATTRIBUTE_DEFINITION_DATE_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_DATE_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_DATE_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_DATE_Rendering {
+		stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder = maxATTRIBUTE_DEFINITION_DATE_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_ENUMERATIONOrder uint
+	var foundATTRIBUTE_DEFINITION_ENUMERATION bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_ENUMERATION || order > maxATTRIBUTE_DEFINITION_ENUMERATIONOrder {
+			maxATTRIBUTE_DEFINITION_ENUMERATIONOrder = order
+			foundATTRIBUTE_DEFINITION_ENUMERATION = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_ENUMERATION {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder = maxATTRIBUTE_DEFINITION_ENUMERATIONOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_ENUMERATION_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_ENUMERATION_Rendering || order > maxATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_ENUMERATION_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_ENUMERATION_Rendering {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder = maxATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_INTEGEROrder uint
+	var foundATTRIBUTE_DEFINITION_INTEGER bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_INTEGER || order > maxATTRIBUTE_DEFINITION_INTEGEROrder {
+			maxATTRIBUTE_DEFINITION_INTEGEROrder = order
+			foundATTRIBUTE_DEFINITION_INTEGER = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_INTEGER {
+		stage.ATTRIBUTE_DEFINITION_INTEGEROrder = maxATTRIBUTE_DEFINITION_INTEGEROrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_INTEGEROrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_INTEGER_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_INTEGER_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_INTEGER_Rendering || order > maxATTRIBUTE_DEFINITION_INTEGER_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_INTEGER_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_INTEGER_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_INTEGER_Rendering {
+		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder = maxATTRIBUTE_DEFINITION_INTEGER_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_REALOrder uint
+	var foundATTRIBUTE_DEFINITION_REAL bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_REAL || order > maxATTRIBUTE_DEFINITION_REALOrder {
+			maxATTRIBUTE_DEFINITION_REALOrder = order
+			foundATTRIBUTE_DEFINITION_REAL = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_REAL {
+		stage.ATTRIBUTE_DEFINITION_REALOrder = maxATTRIBUTE_DEFINITION_REALOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_REALOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_REAL_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_REAL_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_REAL_Rendering || order > maxATTRIBUTE_DEFINITION_REAL_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_REAL_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_REAL_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_REAL_Rendering {
+		stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder = maxATTRIBUTE_DEFINITION_REAL_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_Rendering || order > maxATTRIBUTE_DEFINITION_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_Rendering {
+		stage.ATTRIBUTE_DEFINITION_RenderingOrder = maxATTRIBUTE_DEFINITION_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_STRINGOrder uint
+	var foundATTRIBUTE_DEFINITION_STRING bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_STRING || order > maxATTRIBUTE_DEFINITION_STRINGOrder {
+			maxATTRIBUTE_DEFINITION_STRINGOrder = order
+			foundATTRIBUTE_DEFINITION_STRING = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_STRING {
+		stage.ATTRIBUTE_DEFINITION_STRINGOrder = maxATTRIBUTE_DEFINITION_STRINGOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_STRINGOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_STRING_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_STRING_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_STRING_Rendering || order > maxATTRIBUTE_DEFINITION_STRING_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_STRING_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_STRING_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_STRING_Rendering {
+		stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder = maxATTRIBUTE_DEFINITION_STRING_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_XHTMLOrder uint
+	var foundATTRIBUTE_DEFINITION_XHTML bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_XHTML || order > maxATTRIBUTE_DEFINITION_XHTMLOrder {
+			maxATTRIBUTE_DEFINITION_XHTMLOrder = order
+			foundATTRIBUTE_DEFINITION_XHTML = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_XHTML {
+		stage.ATTRIBUTE_DEFINITION_XHTMLOrder = maxATTRIBUTE_DEFINITION_XHTMLOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_XHTMLOrder = 0
+	}
+
+	var maxATTRIBUTE_DEFINITION_XHTML_RenderingOrder uint
+	var foundATTRIBUTE_DEFINITION_XHTML_Rendering bool
+	for _, order := range stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order {
+		if !foundATTRIBUTE_DEFINITION_XHTML_Rendering || order > maxATTRIBUTE_DEFINITION_XHTML_RenderingOrder {
+			maxATTRIBUTE_DEFINITION_XHTML_RenderingOrder = order
+			foundATTRIBUTE_DEFINITION_XHTML_Rendering = true
+		}
+	}
+	if foundATTRIBUTE_DEFINITION_XHTML_Rendering {
+		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder = maxATTRIBUTE_DEFINITION_XHTML_RenderingOrder + 1
+	} else {
+		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_BOOLEANOrder uint
+	var foundATTRIBUTE_VALUE_BOOLEAN bool
+	for _, order := range stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_BOOLEAN || order > maxATTRIBUTE_VALUE_BOOLEANOrder {
+			maxATTRIBUTE_VALUE_BOOLEANOrder = order
+			foundATTRIBUTE_VALUE_BOOLEAN = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_BOOLEAN {
+		stage.ATTRIBUTE_VALUE_BOOLEANOrder = maxATTRIBUTE_VALUE_BOOLEANOrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_BOOLEANOrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_DATEOrder uint
+	var foundATTRIBUTE_VALUE_DATE bool
+	for _, order := range stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_DATE || order > maxATTRIBUTE_VALUE_DATEOrder {
+			maxATTRIBUTE_VALUE_DATEOrder = order
+			foundATTRIBUTE_VALUE_DATE = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_DATE {
+		stage.ATTRIBUTE_VALUE_DATEOrder = maxATTRIBUTE_VALUE_DATEOrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_DATEOrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_ENUMERATIONOrder uint
+	var foundATTRIBUTE_VALUE_ENUMERATION bool
+	for _, order := range stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_ENUMERATION || order > maxATTRIBUTE_VALUE_ENUMERATIONOrder {
+			maxATTRIBUTE_VALUE_ENUMERATIONOrder = order
+			foundATTRIBUTE_VALUE_ENUMERATION = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_ENUMERATION {
+		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder = maxATTRIBUTE_VALUE_ENUMERATIONOrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_INTEGEROrder uint
+	var foundATTRIBUTE_VALUE_INTEGER bool
+	for _, order := range stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_INTEGER || order > maxATTRIBUTE_VALUE_INTEGEROrder {
+			maxATTRIBUTE_VALUE_INTEGEROrder = order
+			foundATTRIBUTE_VALUE_INTEGER = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_INTEGER {
+		stage.ATTRIBUTE_VALUE_INTEGEROrder = maxATTRIBUTE_VALUE_INTEGEROrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_INTEGEROrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_REALOrder uint
+	var foundATTRIBUTE_VALUE_REAL bool
+	for _, order := range stage.ATTRIBUTE_VALUE_REALMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_REAL || order > maxATTRIBUTE_VALUE_REALOrder {
+			maxATTRIBUTE_VALUE_REALOrder = order
+			foundATTRIBUTE_VALUE_REAL = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_REAL {
+		stage.ATTRIBUTE_VALUE_REALOrder = maxATTRIBUTE_VALUE_REALOrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_REALOrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_STRINGOrder uint
+	var foundATTRIBUTE_VALUE_STRING bool
+	for _, order := range stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_STRING || order > maxATTRIBUTE_VALUE_STRINGOrder {
+			maxATTRIBUTE_VALUE_STRINGOrder = order
+			foundATTRIBUTE_VALUE_STRING = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_STRING {
+		stage.ATTRIBUTE_VALUE_STRINGOrder = maxATTRIBUTE_VALUE_STRINGOrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_STRINGOrder = 0
+	}
+
+	var maxATTRIBUTE_VALUE_XHTMLOrder uint
+	var foundATTRIBUTE_VALUE_XHTML bool
+	for _, order := range stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order {
+		if !foundATTRIBUTE_VALUE_XHTML || order > maxATTRIBUTE_VALUE_XHTMLOrder {
+			maxATTRIBUTE_VALUE_XHTMLOrder = order
+			foundATTRIBUTE_VALUE_XHTML = true
+		}
+	}
+	if foundATTRIBUTE_VALUE_XHTML {
+		stage.ATTRIBUTE_VALUE_XHTMLOrder = maxATTRIBUTE_VALUE_XHTMLOrder + 1
+	} else {
+		stage.ATTRIBUTE_VALUE_XHTMLOrder = 0
+	}
+
+	var maxA_ALTERNATIVE_IDOrder uint
+	var foundA_ALTERNATIVE_ID bool
+	for _, order := range stage.A_ALTERNATIVE_IDMap_Staged_Order {
+		if !foundA_ALTERNATIVE_ID || order > maxA_ALTERNATIVE_IDOrder {
+			maxA_ALTERNATIVE_IDOrder = order
+			foundA_ALTERNATIVE_ID = true
+		}
+	}
+	if foundA_ALTERNATIVE_ID {
+		stage.A_ALTERNATIVE_IDOrder = maxA_ALTERNATIVE_IDOrder + 1
+	} else {
+		stage.A_ALTERNATIVE_IDOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_BOOLEAN_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_BOOLEAN_REF || order > maxA_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_BOOLEAN_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_BOOLEAN_REF {
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder = maxA_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_DATE_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_DATE_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_DATE_REF || order > maxA_ATTRIBUTE_DEFINITION_DATE_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_DATE_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_DATE_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_DATE_REF {
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder = maxA_ATTRIBUTE_DEFINITION_DATE_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_ENUMERATION_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_ENUMERATION_REF || order > maxA_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_ENUMERATION_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_ENUMERATION_REF {
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder = maxA_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_INTEGER_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_INTEGER_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_INTEGER_REF || order > maxA_ATTRIBUTE_DEFINITION_INTEGER_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_INTEGER_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_INTEGER_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_INTEGER_REF {
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder = maxA_ATTRIBUTE_DEFINITION_INTEGER_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_REAL_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_REAL_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_REAL_REF || order > maxA_ATTRIBUTE_DEFINITION_REAL_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_REAL_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_REAL_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_REAL_REF {
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder = maxA_ATTRIBUTE_DEFINITION_REAL_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_STRING_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_STRING_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_STRING_REF || order > maxA_ATTRIBUTE_DEFINITION_STRING_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_STRING_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_STRING_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_STRING_REF {
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder = maxA_ATTRIBUTE_DEFINITION_STRING_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_DEFINITION_XHTML_REFOrder uint
+	var foundA_ATTRIBUTE_DEFINITION_XHTML_REF bool
+	for _, order := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order {
+		if !foundA_ATTRIBUTE_DEFINITION_XHTML_REF || order > maxA_ATTRIBUTE_DEFINITION_XHTML_REFOrder {
+			maxA_ATTRIBUTE_DEFINITION_XHTML_REFOrder = order
+			foundA_ATTRIBUTE_DEFINITION_XHTML_REF = true
+		}
+	}
+	if foundA_ATTRIBUTE_DEFINITION_XHTML_REF {
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder = maxA_ATTRIBUTE_DEFINITION_XHTML_REFOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_BOOLEANOrder uint
+	var foundA_ATTRIBUTE_VALUE_BOOLEAN bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_BOOLEAN || order > maxA_ATTRIBUTE_VALUE_BOOLEANOrder {
+			maxA_ATTRIBUTE_VALUE_BOOLEANOrder = order
+			foundA_ATTRIBUTE_VALUE_BOOLEAN = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_BOOLEAN {
+		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder = maxA_ATTRIBUTE_VALUE_BOOLEANOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_DATEOrder uint
+	var foundA_ATTRIBUTE_VALUE_DATE bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_DATE || order > maxA_ATTRIBUTE_VALUE_DATEOrder {
+			maxA_ATTRIBUTE_VALUE_DATEOrder = order
+			foundA_ATTRIBUTE_VALUE_DATE = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_DATE {
+		stage.A_ATTRIBUTE_VALUE_DATEOrder = maxA_ATTRIBUTE_VALUE_DATEOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_DATEOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_ENUMERATIONOrder uint
+	var foundA_ATTRIBUTE_VALUE_ENUMERATION bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_ENUMERATION || order > maxA_ATTRIBUTE_VALUE_ENUMERATIONOrder {
+			maxA_ATTRIBUTE_VALUE_ENUMERATIONOrder = order
+			foundA_ATTRIBUTE_VALUE_ENUMERATION = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_ENUMERATION {
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder = maxA_ATTRIBUTE_VALUE_ENUMERATIONOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_INTEGEROrder uint
+	var foundA_ATTRIBUTE_VALUE_INTEGER bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_INTEGER || order > maxA_ATTRIBUTE_VALUE_INTEGEROrder {
+			maxA_ATTRIBUTE_VALUE_INTEGEROrder = order
+			foundA_ATTRIBUTE_VALUE_INTEGER = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_INTEGER {
+		stage.A_ATTRIBUTE_VALUE_INTEGEROrder = maxA_ATTRIBUTE_VALUE_INTEGEROrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_INTEGEROrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_REALOrder uint
+	var foundA_ATTRIBUTE_VALUE_REAL bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_REAL || order > maxA_ATTRIBUTE_VALUE_REALOrder {
+			maxA_ATTRIBUTE_VALUE_REALOrder = order
+			foundA_ATTRIBUTE_VALUE_REAL = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_REAL {
+		stage.A_ATTRIBUTE_VALUE_REALOrder = maxA_ATTRIBUTE_VALUE_REALOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_REALOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_STRINGOrder uint
+	var foundA_ATTRIBUTE_VALUE_STRING bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_STRING || order > maxA_ATTRIBUTE_VALUE_STRINGOrder {
+			maxA_ATTRIBUTE_VALUE_STRINGOrder = order
+			foundA_ATTRIBUTE_VALUE_STRING = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_STRING {
+		stage.A_ATTRIBUTE_VALUE_STRINGOrder = maxA_ATTRIBUTE_VALUE_STRINGOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_STRINGOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_XHTMLOrder uint
+	var foundA_ATTRIBUTE_VALUE_XHTML bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_XHTML || order > maxA_ATTRIBUTE_VALUE_XHTMLOrder {
+			maxA_ATTRIBUTE_VALUE_XHTMLOrder = order
+			foundA_ATTRIBUTE_VALUE_XHTML = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_XHTML {
+		stage.A_ATTRIBUTE_VALUE_XHTMLOrder = maxA_ATTRIBUTE_VALUE_XHTMLOrder + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_XHTMLOrder = 0
+	}
+
+	var maxA_ATTRIBUTE_VALUE_XHTML_1Order uint
+	var foundA_ATTRIBUTE_VALUE_XHTML_1 bool
+	for _, order := range stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order {
+		if !foundA_ATTRIBUTE_VALUE_XHTML_1 || order > maxA_ATTRIBUTE_VALUE_XHTML_1Order {
+			maxA_ATTRIBUTE_VALUE_XHTML_1Order = order
+			foundA_ATTRIBUTE_VALUE_XHTML_1 = true
+		}
+	}
+	if foundA_ATTRIBUTE_VALUE_XHTML_1 {
+		stage.A_ATTRIBUTE_VALUE_XHTML_1Order = maxA_ATTRIBUTE_VALUE_XHTML_1Order + 1
+	} else {
+		stage.A_ATTRIBUTE_VALUE_XHTML_1Order = 0
+	}
+
+	var maxA_CHILDRENOrder uint
+	var foundA_CHILDREN bool
+	for _, order := range stage.A_CHILDRENMap_Staged_Order {
+		if !foundA_CHILDREN || order > maxA_CHILDRENOrder {
+			maxA_CHILDRENOrder = order
+			foundA_CHILDREN = true
+		}
+	}
+	if foundA_CHILDREN {
+		stage.A_CHILDRENOrder = maxA_CHILDRENOrder + 1
+	} else {
+		stage.A_CHILDRENOrder = 0
+	}
+
+	var maxA_CORE_CONTENTOrder uint
+	var foundA_CORE_CONTENT bool
+	for _, order := range stage.A_CORE_CONTENTMap_Staged_Order {
+		if !foundA_CORE_CONTENT || order > maxA_CORE_CONTENTOrder {
+			maxA_CORE_CONTENTOrder = order
+			foundA_CORE_CONTENT = true
+		}
+	}
+	if foundA_CORE_CONTENT {
+		stage.A_CORE_CONTENTOrder = maxA_CORE_CONTENTOrder + 1
+	} else {
+		stage.A_CORE_CONTENTOrder = 0
+	}
+
+	var maxA_DATATYPESOrder uint
+	var foundA_DATATYPES bool
+	for _, order := range stage.A_DATATYPESMap_Staged_Order {
+		if !foundA_DATATYPES || order > maxA_DATATYPESOrder {
+			maxA_DATATYPESOrder = order
+			foundA_DATATYPES = true
+		}
+	}
+	if foundA_DATATYPES {
+		stage.A_DATATYPESOrder = maxA_DATATYPESOrder + 1
+	} else {
+		stage.A_DATATYPESOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_BOOLEAN_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_BOOLEAN_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_BOOLEAN_REF || order > maxA_DATATYPE_DEFINITION_BOOLEAN_REFOrder {
+			maxA_DATATYPE_DEFINITION_BOOLEAN_REFOrder = order
+			foundA_DATATYPE_DEFINITION_BOOLEAN_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_BOOLEAN_REF {
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder = maxA_DATATYPE_DEFINITION_BOOLEAN_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_DATE_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_DATE_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_DATE_REF || order > maxA_DATATYPE_DEFINITION_DATE_REFOrder {
+			maxA_DATATYPE_DEFINITION_DATE_REFOrder = order
+			foundA_DATATYPE_DEFINITION_DATE_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_DATE_REF {
+		stage.A_DATATYPE_DEFINITION_DATE_REFOrder = maxA_DATATYPE_DEFINITION_DATE_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_DATE_REFOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_ENUMERATION_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_ENUMERATION_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_ENUMERATION_REF || order > maxA_DATATYPE_DEFINITION_ENUMERATION_REFOrder {
+			maxA_DATATYPE_DEFINITION_ENUMERATION_REFOrder = order
+			foundA_DATATYPE_DEFINITION_ENUMERATION_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_ENUMERATION_REF {
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder = maxA_DATATYPE_DEFINITION_ENUMERATION_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_INTEGER_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_INTEGER_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_INTEGER_REF || order > maxA_DATATYPE_DEFINITION_INTEGER_REFOrder {
+			maxA_DATATYPE_DEFINITION_INTEGER_REFOrder = order
+			foundA_DATATYPE_DEFINITION_INTEGER_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_INTEGER_REF {
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder = maxA_DATATYPE_DEFINITION_INTEGER_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_REAL_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_REAL_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_REAL_REF || order > maxA_DATATYPE_DEFINITION_REAL_REFOrder {
+			maxA_DATATYPE_DEFINITION_REAL_REFOrder = order
+			foundA_DATATYPE_DEFINITION_REAL_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_REAL_REF {
+		stage.A_DATATYPE_DEFINITION_REAL_REFOrder = maxA_DATATYPE_DEFINITION_REAL_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_REAL_REFOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_STRING_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_STRING_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_STRING_REF || order > maxA_DATATYPE_DEFINITION_STRING_REFOrder {
+			maxA_DATATYPE_DEFINITION_STRING_REFOrder = order
+			foundA_DATATYPE_DEFINITION_STRING_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_STRING_REF {
+		stage.A_DATATYPE_DEFINITION_STRING_REFOrder = maxA_DATATYPE_DEFINITION_STRING_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_STRING_REFOrder = 0
+	}
+
+	var maxA_DATATYPE_DEFINITION_XHTML_REFOrder uint
+	var foundA_DATATYPE_DEFINITION_XHTML_REF bool
+	for _, order := range stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order {
+		if !foundA_DATATYPE_DEFINITION_XHTML_REF || order > maxA_DATATYPE_DEFINITION_XHTML_REFOrder {
+			maxA_DATATYPE_DEFINITION_XHTML_REFOrder = order
+			foundA_DATATYPE_DEFINITION_XHTML_REF = true
+		}
+	}
+	if foundA_DATATYPE_DEFINITION_XHTML_REF {
+		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder = maxA_DATATYPE_DEFINITION_XHTML_REFOrder + 1
+	} else {
+		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder = 0
+	}
+
+	var maxA_EDITABLE_ATTSOrder uint
+	var foundA_EDITABLE_ATTS bool
+	for _, order := range stage.A_EDITABLE_ATTSMap_Staged_Order {
+		if !foundA_EDITABLE_ATTS || order > maxA_EDITABLE_ATTSOrder {
+			maxA_EDITABLE_ATTSOrder = order
+			foundA_EDITABLE_ATTS = true
+		}
+	}
+	if foundA_EDITABLE_ATTS {
+		stage.A_EDITABLE_ATTSOrder = maxA_EDITABLE_ATTSOrder + 1
+	} else {
+		stage.A_EDITABLE_ATTSOrder = 0
+	}
+
+	var maxA_ENUM_VALUE_REFOrder uint
+	var foundA_ENUM_VALUE_REF bool
+	for _, order := range stage.A_ENUM_VALUE_REFMap_Staged_Order {
+		if !foundA_ENUM_VALUE_REF || order > maxA_ENUM_VALUE_REFOrder {
+			maxA_ENUM_VALUE_REFOrder = order
+			foundA_ENUM_VALUE_REF = true
+		}
+	}
+	if foundA_ENUM_VALUE_REF {
+		stage.A_ENUM_VALUE_REFOrder = maxA_ENUM_VALUE_REFOrder + 1
+	} else {
+		stage.A_ENUM_VALUE_REFOrder = 0
+	}
+
+	var maxA_OBJECTOrder uint
+	var foundA_OBJECT bool
+	for _, order := range stage.A_OBJECTMap_Staged_Order {
+		if !foundA_OBJECT || order > maxA_OBJECTOrder {
+			maxA_OBJECTOrder = order
+			foundA_OBJECT = true
+		}
+	}
+	if foundA_OBJECT {
+		stage.A_OBJECTOrder = maxA_OBJECTOrder + 1
+	} else {
+		stage.A_OBJECTOrder = 0
+	}
+
+	var maxA_PROPERTIESOrder uint
+	var foundA_PROPERTIES bool
+	for _, order := range stage.A_PROPERTIESMap_Staged_Order {
+		if !foundA_PROPERTIES || order > maxA_PROPERTIESOrder {
+			maxA_PROPERTIESOrder = order
+			foundA_PROPERTIES = true
+		}
+	}
+	if foundA_PROPERTIES {
+		stage.A_PROPERTIESOrder = maxA_PROPERTIESOrder + 1
+	} else {
+		stage.A_PROPERTIESOrder = 0
+	}
+
+	var maxA_RELATION_GROUP_TYPE_REFOrder uint
+	var foundA_RELATION_GROUP_TYPE_REF bool
+	for _, order := range stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order {
+		if !foundA_RELATION_GROUP_TYPE_REF || order > maxA_RELATION_GROUP_TYPE_REFOrder {
+			maxA_RELATION_GROUP_TYPE_REFOrder = order
+			foundA_RELATION_GROUP_TYPE_REF = true
+		}
+	}
+	if foundA_RELATION_GROUP_TYPE_REF {
+		stage.A_RELATION_GROUP_TYPE_REFOrder = maxA_RELATION_GROUP_TYPE_REFOrder + 1
+	} else {
+		stage.A_RELATION_GROUP_TYPE_REFOrder = 0
+	}
+
+	var maxA_SOURCE_1Order uint
+	var foundA_SOURCE_1 bool
+	for _, order := range stage.A_SOURCE_1Map_Staged_Order {
+		if !foundA_SOURCE_1 || order > maxA_SOURCE_1Order {
+			maxA_SOURCE_1Order = order
+			foundA_SOURCE_1 = true
+		}
+	}
+	if foundA_SOURCE_1 {
+		stage.A_SOURCE_1Order = maxA_SOURCE_1Order + 1
+	} else {
+		stage.A_SOURCE_1Order = 0
+	}
+
+	var maxA_SOURCE_SPECIFICATION_1Order uint
+	var foundA_SOURCE_SPECIFICATION_1 bool
+	for _, order := range stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order {
+		if !foundA_SOURCE_SPECIFICATION_1 || order > maxA_SOURCE_SPECIFICATION_1Order {
+			maxA_SOURCE_SPECIFICATION_1Order = order
+			foundA_SOURCE_SPECIFICATION_1 = true
+		}
+	}
+	if foundA_SOURCE_SPECIFICATION_1 {
+		stage.A_SOURCE_SPECIFICATION_1Order = maxA_SOURCE_SPECIFICATION_1Order + 1
+	} else {
+		stage.A_SOURCE_SPECIFICATION_1Order = 0
+	}
+
+	var maxA_SPECIFICATIONSOrder uint
+	var foundA_SPECIFICATIONS bool
+	for _, order := range stage.A_SPECIFICATIONSMap_Staged_Order {
+		if !foundA_SPECIFICATIONS || order > maxA_SPECIFICATIONSOrder {
+			maxA_SPECIFICATIONSOrder = order
+			foundA_SPECIFICATIONS = true
+		}
+	}
+	if foundA_SPECIFICATIONS {
+		stage.A_SPECIFICATIONSOrder = maxA_SPECIFICATIONSOrder + 1
+	} else {
+		stage.A_SPECIFICATIONSOrder = 0
+	}
+
+	var maxA_SPECIFICATION_TYPE_REFOrder uint
+	var foundA_SPECIFICATION_TYPE_REF bool
+	for _, order := range stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order {
+		if !foundA_SPECIFICATION_TYPE_REF || order > maxA_SPECIFICATION_TYPE_REFOrder {
+			maxA_SPECIFICATION_TYPE_REFOrder = order
+			foundA_SPECIFICATION_TYPE_REF = true
+		}
+	}
+	if foundA_SPECIFICATION_TYPE_REF {
+		stage.A_SPECIFICATION_TYPE_REFOrder = maxA_SPECIFICATION_TYPE_REFOrder + 1
+	} else {
+		stage.A_SPECIFICATION_TYPE_REFOrder = 0
+	}
+
+	var maxA_SPECIFIED_VALUESOrder uint
+	var foundA_SPECIFIED_VALUES bool
+	for _, order := range stage.A_SPECIFIED_VALUESMap_Staged_Order {
+		if !foundA_SPECIFIED_VALUES || order > maxA_SPECIFIED_VALUESOrder {
+			maxA_SPECIFIED_VALUESOrder = order
+			foundA_SPECIFIED_VALUES = true
+		}
+	}
+	if foundA_SPECIFIED_VALUES {
+		stage.A_SPECIFIED_VALUESOrder = maxA_SPECIFIED_VALUESOrder + 1
+	} else {
+		stage.A_SPECIFIED_VALUESOrder = 0
+	}
+
+	var maxA_SPEC_ATTRIBUTESOrder uint
+	var foundA_SPEC_ATTRIBUTES bool
+	for _, order := range stage.A_SPEC_ATTRIBUTESMap_Staged_Order {
+		if !foundA_SPEC_ATTRIBUTES || order > maxA_SPEC_ATTRIBUTESOrder {
+			maxA_SPEC_ATTRIBUTESOrder = order
+			foundA_SPEC_ATTRIBUTES = true
+		}
+	}
+	if foundA_SPEC_ATTRIBUTES {
+		stage.A_SPEC_ATTRIBUTESOrder = maxA_SPEC_ATTRIBUTESOrder + 1
+	} else {
+		stage.A_SPEC_ATTRIBUTESOrder = 0
+	}
+
+	var maxA_SPEC_OBJECTSOrder uint
+	var foundA_SPEC_OBJECTS bool
+	for _, order := range stage.A_SPEC_OBJECTSMap_Staged_Order {
+		if !foundA_SPEC_OBJECTS || order > maxA_SPEC_OBJECTSOrder {
+			maxA_SPEC_OBJECTSOrder = order
+			foundA_SPEC_OBJECTS = true
+		}
+	}
+	if foundA_SPEC_OBJECTS {
+		stage.A_SPEC_OBJECTSOrder = maxA_SPEC_OBJECTSOrder + 1
+	} else {
+		stage.A_SPEC_OBJECTSOrder = 0
+	}
+
+	var maxA_SPEC_OBJECT_TYPE_REFOrder uint
+	var foundA_SPEC_OBJECT_TYPE_REF bool
+	for _, order := range stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order {
+		if !foundA_SPEC_OBJECT_TYPE_REF || order > maxA_SPEC_OBJECT_TYPE_REFOrder {
+			maxA_SPEC_OBJECT_TYPE_REFOrder = order
+			foundA_SPEC_OBJECT_TYPE_REF = true
+		}
+	}
+	if foundA_SPEC_OBJECT_TYPE_REF {
+		stage.A_SPEC_OBJECT_TYPE_REFOrder = maxA_SPEC_OBJECT_TYPE_REFOrder + 1
+	} else {
+		stage.A_SPEC_OBJECT_TYPE_REFOrder = 0
+	}
+
+	var maxA_SPEC_RELATIONSOrder uint
+	var foundA_SPEC_RELATIONS bool
+	for _, order := range stage.A_SPEC_RELATIONSMap_Staged_Order {
+		if !foundA_SPEC_RELATIONS || order > maxA_SPEC_RELATIONSOrder {
+			maxA_SPEC_RELATIONSOrder = order
+			foundA_SPEC_RELATIONS = true
+		}
+	}
+	if foundA_SPEC_RELATIONS {
+		stage.A_SPEC_RELATIONSOrder = maxA_SPEC_RELATIONSOrder + 1
+	} else {
+		stage.A_SPEC_RELATIONSOrder = 0
+	}
+
+	var maxA_SPEC_RELATION_GROUPSOrder uint
+	var foundA_SPEC_RELATION_GROUPS bool
+	for _, order := range stage.A_SPEC_RELATION_GROUPSMap_Staged_Order {
+		if !foundA_SPEC_RELATION_GROUPS || order > maxA_SPEC_RELATION_GROUPSOrder {
+			maxA_SPEC_RELATION_GROUPSOrder = order
+			foundA_SPEC_RELATION_GROUPS = true
+		}
+	}
+	if foundA_SPEC_RELATION_GROUPS {
+		stage.A_SPEC_RELATION_GROUPSOrder = maxA_SPEC_RELATION_GROUPSOrder + 1
+	} else {
+		stage.A_SPEC_RELATION_GROUPSOrder = 0
+	}
+
+	var maxA_SPEC_RELATION_REFOrder uint
+	var foundA_SPEC_RELATION_REF bool
+	for _, order := range stage.A_SPEC_RELATION_REFMap_Staged_Order {
+		if !foundA_SPEC_RELATION_REF || order > maxA_SPEC_RELATION_REFOrder {
+			maxA_SPEC_RELATION_REFOrder = order
+			foundA_SPEC_RELATION_REF = true
+		}
+	}
+	if foundA_SPEC_RELATION_REF {
+		stage.A_SPEC_RELATION_REFOrder = maxA_SPEC_RELATION_REFOrder + 1
+	} else {
+		stage.A_SPEC_RELATION_REFOrder = 0
+	}
+
+	var maxA_SPEC_RELATION_TYPE_REFOrder uint
+	var foundA_SPEC_RELATION_TYPE_REF bool
+	for _, order := range stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order {
+		if !foundA_SPEC_RELATION_TYPE_REF || order > maxA_SPEC_RELATION_TYPE_REFOrder {
+			maxA_SPEC_RELATION_TYPE_REFOrder = order
+			foundA_SPEC_RELATION_TYPE_REF = true
+		}
+	}
+	if foundA_SPEC_RELATION_TYPE_REF {
+		stage.A_SPEC_RELATION_TYPE_REFOrder = maxA_SPEC_RELATION_TYPE_REFOrder + 1
+	} else {
+		stage.A_SPEC_RELATION_TYPE_REFOrder = 0
+	}
+
+	var maxA_SPEC_TYPESOrder uint
+	var foundA_SPEC_TYPES bool
+	for _, order := range stage.A_SPEC_TYPESMap_Staged_Order {
+		if !foundA_SPEC_TYPES || order > maxA_SPEC_TYPESOrder {
+			maxA_SPEC_TYPESOrder = order
+			foundA_SPEC_TYPES = true
+		}
+	}
+	if foundA_SPEC_TYPES {
+		stage.A_SPEC_TYPESOrder = maxA_SPEC_TYPESOrder + 1
+	} else {
+		stage.A_SPEC_TYPESOrder = 0
+	}
+
+	var maxA_THE_HEADEROrder uint
+	var foundA_THE_HEADER bool
+	for _, order := range stage.A_THE_HEADERMap_Staged_Order {
+		if !foundA_THE_HEADER || order > maxA_THE_HEADEROrder {
+			maxA_THE_HEADEROrder = order
+			foundA_THE_HEADER = true
+		}
+	}
+	if foundA_THE_HEADER {
+		stage.A_THE_HEADEROrder = maxA_THE_HEADEROrder + 1
+	} else {
+		stage.A_THE_HEADEROrder = 0
+	}
+
+	var maxA_TOOL_EXTENSIONSOrder uint
+	var foundA_TOOL_EXTENSIONS bool
+	for _, order := range stage.A_TOOL_EXTENSIONSMap_Staged_Order {
+		if !foundA_TOOL_EXTENSIONS || order > maxA_TOOL_EXTENSIONSOrder {
+			maxA_TOOL_EXTENSIONSOrder = order
+			foundA_TOOL_EXTENSIONS = true
+		}
+	}
+	if foundA_TOOL_EXTENSIONS {
+		stage.A_TOOL_EXTENSIONSOrder = maxA_TOOL_EXTENSIONSOrder + 1
+	} else {
+		stage.A_TOOL_EXTENSIONSOrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_BOOLEANOrder uint
+	var foundDATATYPE_DEFINITION_BOOLEAN bool
+	for _, order := range stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_BOOLEAN || order > maxDATATYPE_DEFINITION_BOOLEANOrder {
+			maxDATATYPE_DEFINITION_BOOLEANOrder = order
+			foundDATATYPE_DEFINITION_BOOLEAN = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_BOOLEAN {
+		stage.DATATYPE_DEFINITION_BOOLEANOrder = maxDATATYPE_DEFINITION_BOOLEANOrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_BOOLEANOrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_DATEOrder uint
+	var foundDATATYPE_DEFINITION_DATE bool
+	for _, order := range stage.DATATYPE_DEFINITION_DATEMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_DATE || order > maxDATATYPE_DEFINITION_DATEOrder {
+			maxDATATYPE_DEFINITION_DATEOrder = order
+			foundDATATYPE_DEFINITION_DATE = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_DATE {
+		stage.DATATYPE_DEFINITION_DATEOrder = maxDATATYPE_DEFINITION_DATEOrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_DATEOrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_ENUMERATIONOrder uint
+	var foundDATATYPE_DEFINITION_ENUMERATION bool
+	for _, order := range stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_ENUMERATION || order > maxDATATYPE_DEFINITION_ENUMERATIONOrder {
+			maxDATATYPE_DEFINITION_ENUMERATIONOrder = order
+			foundDATATYPE_DEFINITION_ENUMERATION = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_ENUMERATION {
+		stage.DATATYPE_DEFINITION_ENUMERATIONOrder = maxDATATYPE_DEFINITION_ENUMERATIONOrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_ENUMERATIONOrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_INTEGEROrder uint
+	var foundDATATYPE_DEFINITION_INTEGER bool
+	for _, order := range stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_INTEGER || order > maxDATATYPE_DEFINITION_INTEGEROrder {
+			maxDATATYPE_DEFINITION_INTEGEROrder = order
+			foundDATATYPE_DEFINITION_INTEGER = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_INTEGER {
+		stage.DATATYPE_DEFINITION_INTEGEROrder = maxDATATYPE_DEFINITION_INTEGEROrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_INTEGEROrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_REALOrder uint
+	var foundDATATYPE_DEFINITION_REAL bool
+	for _, order := range stage.DATATYPE_DEFINITION_REALMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_REAL || order > maxDATATYPE_DEFINITION_REALOrder {
+			maxDATATYPE_DEFINITION_REALOrder = order
+			foundDATATYPE_DEFINITION_REAL = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_REAL {
+		stage.DATATYPE_DEFINITION_REALOrder = maxDATATYPE_DEFINITION_REALOrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_REALOrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_STRINGOrder uint
+	var foundDATATYPE_DEFINITION_STRING bool
+	for _, order := range stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_STRING || order > maxDATATYPE_DEFINITION_STRINGOrder {
+			maxDATATYPE_DEFINITION_STRINGOrder = order
+			foundDATATYPE_DEFINITION_STRING = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_STRING {
+		stage.DATATYPE_DEFINITION_STRINGOrder = maxDATATYPE_DEFINITION_STRINGOrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_STRINGOrder = 0
+	}
+
+	var maxDATATYPE_DEFINITION_XHTMLOrder uint
+	var foundDATATYPE_DEFINITION_XHTML bool
+	for _, order := range stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order {
+		if !foundDATATYPE_DEFINITION_XHTML || order > maxDATATYPE_DEFINITION_XHTMLOrder {
+			maxDATATYPE_DEFINITION_XHTMLOrder = order
+			foundDATATYPE_DEFINITION_XHTML = true
+		}
+	}
+	if foundDATATYPE_DEFINITION_XHTML {
+		stage.DATATYPE_DEFINITION_XHTMLOrder = maxDATATYPE_DEFINITION_XHTMLOrder + 1
+	} else {
+		stage.DATATYPE_DEFINITION_XHTMLOrder = 0
+	}
+
+	var maxEMBEDDED_VALUEOrder uint
+	var foundEMBEDDED_VALUE bool
+	for _, order := range stage.EMBEDDED_VALUEMap_Staged_Order {
+		if !foundEMBEDDED_VALUE || order > maxEMBEDDED_VALUEOrder {
+			maxEMBEDDED_VALUEOrder = order
+			foundEMBEDDED_VALUE = true
+		}
+	}
+	if foundEMBEDDED_VALUE {
+		stage.EMBEDDED_VALUEOrder = maxEMBEDDED_VALUEOrder + 1
+	} else {
+		stage.EMBEDDED_VALUEOrder = 0
+	}
+
+	var maxENUM_VALUEOrder uint
+	var foundENUM_VALUE bool
+	for _, order := range stage.ENUM_VALUEMap_Staged_Order {
+		if !foundENUM_VALUE || order > maxENUM_VALUEOrder {
+			maxENUM_VALUEOrder = order
+			foundENUM_VALUE = true
+		}
+	}
+	if foundENUM_VALUE {
+		stage.ENUM_VALUEOrder = maxENUM_VALUEOrder + 1
+	} else {
+		stage.ENUM_VALUEOrder = 0
+	}
+
+	var maxEmbeddedJpgImageOrder uint
+	var foundEmbeddedJpgImage bool
+	for _, order := range stage.EmbeddedJpgImageMap_Staged_Order {
+		if !foundEmbeddedJpgImage || order > maxEmbeddedJpgImageOrder {
+			maxEmbeddedJpgImageOrder = order
+			foundEmbeddedJpgImage = true
+		}
+	}
+	if foundEmbeddedJpgImage {
+		stage.EmbeddedJpgImageOrder = maxEmbeddedJpgImageOrder + 1
+	} else {
+		stage.EmbeddedJpgImageOrder = 0
+	}
+
+	var maxEmbeddedPngImageOrder uint
+	var foundEmbeddedPngImage bool
+	for _, order := range stage.EmbeddedPngImageMap_Staged_Order {
+		if !foundEmbeddedPngImage || order > maxEmbeddedPngImageOrder {
+			maxEmbeddedPngImageOrder = order
+			foundEmbeddedPngImage = true
+		}
+	}
+	if foundEmbeddedPngImage {
+		stage.EmbeddedPngImageOrder = maxEmbeddedPngImageOrder + 1
+	} else {
+		stage.EmbeddedPngImageOrder = 0
+	}
+
+	var maxEmbeddedSvgImageOrder uint
+	var foundEmbeddedSvgImage bool
+	for _, order := range stage.EmbeddedSvgImageMap_Staged_Order {
+		if !foundEmbeddedSvgImage || order > maxEmbeddedSvgImageOrder {
+			maxEmbeddedSvgImageOrder = order
+			foundEmbeddedSvgImage = true
+		}
+	}
+	if foundEmbeddedSvgImage {
+		stage.EmbeddedSvgImageOrder = maxEmbeddedSvgImageOrder + 1
+	} else {
+		stage.EmbeddedSvgImageOrder = 0
+	}
+
+	var maxKillOrder uint
+	var foundKill bool
+	for _, order := range stage.KillMap_Staged_Order {
+		if !foundKill || order > maxKillOrder {
+			maxKillOrder = order
+			foundKill = true
+		}
+	}
+	if foundKill {
+		stage.KillOrder = maxKillOrder + 1
+	} else {
+		stage.KillOrder = 0
+	}
+
+	var maxMap_identifier_boolOrder uint
+	var foundMap_identifier_bool bool
+	for _, order := range stage.Map_identifier_boolMap_Staged_Order {
+		if !foundMap_identifier_bool || order > maxMap_identifier_boolOrder {
+			maxMap_identifier_boolOrder = order
+			foundMap_identifier_bool = true
+		}
+	}
+	if foundMap_identifier_bool {
+		stage.Map_identifier_boolOrder = maxMap_identifier_boolOrder + 1
+	} else {
+		stage.Map_identifier_boolOrder = 0
+	}
+
+	var maxRELATION_GROUPOrder uint
+	var foundRELATION_GROUP bool
+	for _, order := range stage.RELATION_GROUPMap_Staged_Order {
+		if !foundRELATION_GROUP || order > maxRELATION_GROUPOrder {
+			maxRELATION_GROUPOrder = order
+			foundRELATION_GROUP = true
+		}
+	}
+	if foundRELATION_GROUP {
+		stage.RELATION_GROUPOrder = maxRELATION_GROUPOrder + 1
+	} else {
+		stage.RELATION_GROUPOrder = 0
+	}
+
+	var maxRELATION_GROUP_TYPEOrder uint
+	var foundRELATION_GROUP_TYPE bool
+	for _, order := range stage.RELATION_GROUP_TYPEMap_Staged_Order {
+		if !foundRELATION_GROUP_TYPE || order > maxRELATION_GROUP_TYPEOrder {
+			maxRELATION_GROUP_TYPEOrder = order
+			foundRELATION_GROUP_TYPE = true
+		}
+	}
+	if foundRELATION_GROUP_TYPE {
+		stage.RELATION_GROUP_TYPEOrder = maxRELATION_GROUP_TYPEOrder + 1
+	} else {
+		stage.RELATION_GROUP_TYPEOrder = 0
+	}
+
+	var maxREQ_IFOrder uint
+	var foundREQ_IF bool
+	for _, order := range stage.REQ_IFMap_Staged_Order {
+		if !foundREQ_IF || order > maxREQ_IFOrder {
+			maxREQ_IFOrder = order
+			foundREQ_IF = true
+		}
+	}
+	if foundREQ_IF {
+		stage.REQ_IFOrder = maxREQ_IFOrder + 1
+	} else {
+		stage.REQ_IFOrder = 0
+	}
+
+	var maxREQ_IF_CONTENTOrder uint
+	var foundREQ_IF_CONTENT bool
+	for _, order := range stage.REQ_IF_CONTENTMap_Staged_Order {
+		if !foundREQ_IF_CONTENT || order > maxREQ_IF_CONTENTOrder {
+			maxREQ_IF_CONTENTOrder = order
+			foundREQ_IF_CONTENT = true
+		}
+	}
+	if foundREQ_IF_CONTENT {
+		stage.REQ_IF_CONTENTOrder = maxREQ_IF_CONTENTOrder + 1
+	} else {
+		stage.REQ_IF_CONTENTOrder = 0
+	}
+
+	var maxREQ_IF_HEADEROrder uint
+	var foundREQ_IF_HEADER bool
+	for _, order := range stage.REQ_IF_HEADERMap_Staged_Order {
+		if !foundREQ_IF_HEADER || order > maxREQ_IF_HEADEROrder {
+			maxREQ_IF_HEADEROrder = order
+			foundREQ_IF_HEADER = true
+		}
+	}
+	if foundREQ_IF_HEADER {
+		stage.REQ_IF_HEADEROrder = maxREQ_IF_HEADEROrder + 1
+	} else {
+		stage.REQ_IF_HEADEROrder = 0
+	}
+
+	var maxREQ_IF_TOOL_EXTENSIONOrder uint
+	var foundREQ_IF_TOOL_EXTENSION bool
+	for _, order := range stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order {
+		if !foundREQ_IF_TOOL_EXTENSION || order > maxREQ_IF_TOOL_EXTENSIONOrder {
+			maxREQ_IF_TOOL_EXTENSIONOrder = order
+			foundREQ_IF_TOOL_EXTENSION = true
+		}
+	}
+	if foundREQ_IF_TOOL_EXTENSION {
+		stage.REQ_IF_TOOL_EXTENSIONOrder = maxREQ_IF_TOOL_EXTENSIONOrder + 1
+	} else {
+		stage.REQ_IF_TOOL_EXTENSIONOrder = 0
+	}
+
+	var maxSPECIFICATIONOrder uint
+	var foundSPECIFICATION bool
+	for _, order := range stage.SPECIFICATIONMap_Staged_Order {
+		if !foundSPECIFICATION || order > maxSPECIFICATIONOrder {
+			maxSPECIFICATIONOrder = order
+			foundSPECIFICATION = true
+		}
+	}
+	if foundSPECIFICATION {
+		stage.SPECIFICATIONOrder = maxSPECIFICATIONOrder + 1
+	} else {
+		stage.SPECIFICATIONOrder = 0
+	}
+
+	var maxSPECIFICATION_RenderingOrder uint
+	var foundSPECIFICATION_Rendering bool
+	for _, order := range stage.SPECIFICATION_RenderingMap_Staged_Order {
+		if !foundSPECIFICATION_Rendering || order > maxSPECIFICATION_RenderingOrder {
+			maxSPECIFICATION_RenderingOrder = order
+			foundSPECIFICATION_Rendering = true
+		}
+	}
+	if foundSPECIFICATION_Rendering {
+		stage.SPECIFICATION_RenderingOrder = maxSPECIFICATION_RenderingOrder + 1
+	} else {
+		stage.SPECIFICATION_RenderingOrder = 0
+	}
+
+	var maxSPECIFICATION_TYPEOrder uint
+	var foundSPECIFICATION_TYPE bool
+	for _, order := range stage.SPECIFICATION_TYPEMap_Staged_Order {
+		if !foundSPECIFICATION_TYPE || order > maxSPECIFICATION_TYPEOrder {
+			maxSPECIFICATION_TYPEOrder = order
+			foundSPECIFICATION_TYPE = true
+		}
+	}
+	if foundSPECIFICATION_TYPE {
+		stage.SPECIFICATION_TYPEOrder = maxSPECIFICATION_TYPEOrder + 1
+	} else {
+		stage.SPECIFICATION_TYPEOrder = 0
+	}
+
+	var maxSPEC_HIERARCHYOrder uint
+	var foundSPEC_HIERARCHY bool
+	for _, order := range stage.SPEC_HIERARCHYMap_Staged_Order {
+		if !foundSPEC_HIERARCHY || order > maxSPEC_HIERARCHYOrder {
+			maxSPEC_HIERARCHYOrder = order
+			foundSPEC_HIERARCHY = true
+		}
+	}
+	if foundSPEC_HIERARCHY {
+		stage.SPEC_HIERARCHYOrder = maxSPEC_HIERARCHYOrder + 1
+	} else {
+		stage.SPEC_HIERARCHYOrder = 0
+	}
+
+	var maxSPEC_OBJECTOrder uint
+	var foundSPEC_OBJECT bool
+	for _, order := range stage.SPEC_OBJECTMap_Staged_Order {
+		if !foundSPEC_OBJECT || order > maxSPEC_OBJECTOrder {
+			maxSPEC_OBJECTOrder = order
+			foundSPEC_OBJECT = true
+		}
+	}
+	if foundSPEC_OBJECT {
+		stage.SPEC_OBJECTOrder = maxSPEC_OBJECTOrder + 1
+	} else {
+		stage.SPEC_OBJECTOrder = 0
+	}
+
+	var maxSPEC_OBJECT_TYPEOrder uint
+	var foundSPEC_OBJECT_TYPE bool
+	for _, order := range stage.SPEC_OBJECT_TYPEMap_Staged_Order {
+		if !foundSPEC_OBJECT_TYPE || order > maxSPEC_OBJECT_TYPEOrder {
+			maxSPEC_OBJECT_TYPEOrder = order
+			foundSPEC_OBJECT_TYPE = true
+		}
+	}
+	if foundSPEC_OBJECT_TYPE {
+		stage.SPEC_OBJECT_TYPEOrder = maxSPEC_OBJECT_TYPEOrder + 1
+	} else {
+		stage.SPEC_OBJECT_TYPEOrder = 0
+	}
+
+	var maxSPEC_OBJECT_TYPE_RenderingOrder uint
+	var foundSPEC_OBJECT_TYPE_Rendering bool
+	for _, order := range stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order {
+		if !foundSPEC_OBJECT_TYPE_Rendering || order > maxSPEC_OBJECT_TYPE_RenderingOrder {
+			maxSPEC_OBJECT_TYPE_RenderingOrder = order
+			foundSPEC_OBJECT_TYPE_Rendering = true
+		}
+	}
+	if foundSPEC_OBJECT_TYPE_Rendering {
+		stage.SPEC_OBJECT_TYPE_RenderingOrder = maxSPEC_OBJECT_TYPE_RenderingOrder + 1
+	} else {
+		stage.SPEC_OBJECT_TYPE_RenderingOrder = 0
+	}
+
+	var maxSPEC_RELATIONOrder uint
+	var foundSPEC_RELATION bool
+	for _, order := range stage.SPEC_RELATIONMap_Staged_Order {
+		if !foundSPEC_RELATION || order > maxSPEC_RELATIONOrder {
+			maxSPEC_RELATIONOrder = order
+			foundSPEC_RELATION = true
+		}
+	}
+	if foundSPEC_RELATION {
+		stage.SPEC_RELATIONOrder = maxSPEC_RELATIONOrder + 1
+	} else {
+		stage.SPEC_RELATIONOrder = 0
+	}
+
+	var maxSPEC_RELATION_TYPEOrder uint
+	var foundSPEC_RELATION_TYPE bool
+	for _, order := range stage.SPEC_RELATION_TYPEMap_Staged_Order {
+		if !foundSPEC_RELATION_TYPE || order > maxSPEC_RELATION_TYPEOrder {
+			maxSPEC_RELATION_TYPEOrder = order
+			foundSPEC_RELATION_TYPE = true
+		}
+	}
+	if foundSPEC_RELATION_TYPE {
+		stage.SPEC_RELATION_TYPEOrder = maxSPEC_RELATION_TYPEOrder + 1
+	} else {
+		stage.SPEC_RELATION_TYPEOrder = 0
+	}
+
+	var maxStaticWebSiteOrder uint
+	var foundStaticWebSite bool
+	for _, order := range stage.StaticWebSiteMap_Staged_Order {
+		if !foundStaticWebSite || order > maxStaticWebSiteOrder {
+			maxStaticWebSiteOrder = order
+			foundStaticWebSite = true
+		}
+	}
+	if foundStaticWebSite {
+		stage.StaticWebSiteOrder = maxStaticWebSiteOrder + 1
+	} else {
+		stage.StaticWebSiteOrder = 0
+	}
+
+	var maxStaticWebSiteChapterOrder uint
+	var foundStaticWebSiteChapter bool
+	for _, order := range stage.StaticWebSiteChapterMap_Staged_Order {
+		if !foundStaticWebSiteChapter || order > maxStaticWebSiteChapterOrder {
+			maxStaticWebSiteChapterOrder = order
+			foundStaticWebSiteChapter = true
+		}
+	}
+	if foundStaticWebSiteChapter {
+		stage.StaticWebSiteChapterOrder = maxStaticWebSiteChapterOrder + 1
+	} else {
+		stage.StaticWebSiteChapterOrder = 0
+	}
+
+	var maxStaticWebSiteGeneratedImageOrder uint
+	var foundStaticWebSiteGeneratedImage bool
+	for _, order := range stage.StaticWebSiteGeneratedImageMap_Staged_Order {
+		if !foundStaticWebSiteGeneratedImage || order > maxStaticWebSiteGeneratedImageOrder {
+			maxStaticWebSiteGeneratedImageOrder = order
+			foundStaticWebSiteGeneratedImage = true
+		}
+	}
+	if foundStaticWebSiteGeneratedImage {
+		stage.StaticWebSiteGeneratedImageOrder = maxStaticWebSiteGeneratedImageOrder + 1
+	} else {
+		stage.StaticWebSiteGeneratedImageOrder = 0
+	}
+
+	var maxStaticWebSiteImageOrder uint
+	var foundStaticWebSiteImage bool
+	for _, order := range stage.StaticWebSiteImageMap_Staged_Order {
+		if !foundStaticWebSiteImage || order > maxStaticWebSiteImageOrder {
+			maxStaticWebSiteImageOrder = order
+			foundStaticWebSiteImage = true
+		}
+	}
+	if foundStaticWebSiteImage {
+		stage.StaticWebSiteImageOrder = maxStaticWebSiteImageOrder + 1
+	} else {
+		stage.StaticWebSiteImageOrder = 0
+	}
+
+	var maxStaticWebSiteParagraphOrder uint
+	var foundStaticWebSiteParagraph bool
+	for _, order := range stage.StaticWebSiteParagraphMap_Staged_Order {
+		if !foundStaticWebSiteParagraph || order > maxStaticWebSiteParagraphOrder {
+			maxStaticWebSiteParagraphOrder = order
+			foundStaticWebSiteParagraph = true
+		}
+	}
+	if foundStaticWebSiteParagraph {
+		stage.StaticWebSiteParagraphOrder = maxStaticWebSiteParagraphOrder + 1
+	} else {
+		stage.StaticWebSiteParagraphOrder = 0
+	}
+
+	var maxXHTML_CONTENTOrder uint
+	var foundXHTML_CONTENT bool
+	for _, order := range stage.XHTML_CONTENTMap_Staged_Order {
+		if !foundXHTML_CONTENT || order > maxXHTML_CONTENTOrder {
+			maxXHTML_CONTENTOrder = order
+			foundXHTML_CONTENT = true
+		}
+	}
+	if foundXHTML_CONTENT {
+		stage.XHTML_CONTENTOrder = maxXHTML_CONTENTOrder + 1
+	} else {
+		stage.XHTML_CONTENTOrder = 0
+	}
+
+	// end of insertion point for max order recomputation
 }
 
 func (stage *Stage) SetDeltaMode(inDeltaMode bool) {
 	stage.isInDeltaMode = inDeltaMode
 }
 
-func (stage *Stage) IsDeltaMode() bool {
+func (stage *Stage) IsInDeltaMode() bool {
 	return stage.isInDeltaMode
 }
 
@@ -1693,12 +3308,15 @@ func (stage *Stage) SetProbeIF(probeIF ProbeIF) {
 }
 
 func (stage *Stage) GetProbeIF() ProbeIF {
+	if stage.probeIF == nil {
+		return nil
+	}
+
 	return stage.probeIF
 }
 
 // GetNamedStructs implements models.ProbebStage.
 func (stage *Stage) GetNamedStructsNames() (res []string) {
-
 	for _, namedStruct := range stage.NamedStructs {
 		res = append(res, namedStruct.name)
 	}
@@ -1707,7 +3325,6 @@ func (stage *Stage) GetNamedStructsNames() (res []string) {
 }
 
 func GetNamedStructInstances[T PointerToGongstruct](set map[T]struct{}, order map[T]uint) (res []string) {
-
 	orderedSet := []T{}
 	for instance := range set {
 		orderedSet = append(orderedSet, instance)
@@ -3196,7 +4813,6 @@ func GetStructInstancesByOrderAuto[T PointerToGongstruct](stage *Stage) (res []T
 }
 
 func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]struct{}, order map[T]uint) (res []T) {
-
 	orderedSet := []T{}
 	for instance := range set {
 		orderedSet = append(orderedSet, instance)
@@ -3218,7 +4834,6 @@ func GetStructInstancesByOrder[T PointerToGongstruct](set map[T]struct{}, order 
 }
 
 func (stage *Stage) GetNamedStructNamesByOrder(namedStructName string) (res []string) {
-
 	switch namedStructName {
 	// insertion point for case
 	case "ALTERNATIVE_ID":
@@ -3711,7 +5326,6 @@ type BackRepoInterface interface {
 }
 
 func NewStage(name string) (stage *Stage) {
-
 	stage = &Stage{ // insertion point for array initiatialisation
 		ALTERNATIVE_IDs:           make(map[*ALTERNATIVE_ID]struct{}),
 		ALTERNATIVE_IDs_mapString: make(map[string]*ALTERNATIVE_ID),
@@ -4246,214 +5860,215 @@ func NewStage(name string) (stage *Stage) {
 		// end of insertion point
 		GongUnmarshallers: map[string]ModelUnmarshaller{ // insertion point for unmarshallers
 			"ALTERNATIVE_ID": &ALTERNATIVE_IDUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_BOOLEAN": &ATTRIBUTE_DEFINITION_BOOLEANUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_BOOLEAN_Rendering": &ATTRIBUTE_DEFINITION_BOOLEAN_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_DATE": &ATTRIBUTE_DEFINITION_DATEUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_DATE_Rendering": &ATTRIBUTE_DEFINITION_DATE_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_ENUMERATION": &ATTRIBUTE_DEFINITION_ENUMERATIONUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_ENUMERATION_Rendering": &ATTRIBUTE_DEFINITION_ENUMERATION_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_INTEGER": &ATTRIBUTE_DEFINITION_INTEGERUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_INTEGER_Rendering": &ATTRIBUTE_DEFINITION_INTEGER_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_REAL": &ATTRIBUTE_DEFINITION_REALUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_REAL_Rendering": &ATTRIBUTE_DEFINITION_REAL_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_Rendering": &ATTRIBUTE_DEFINITION_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_STRING": &ATTRIBUTE_DEFINITION_STRINGUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_STRING_Rendering": &ATTRIBUTE_DEFINITION_STRING_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_XHTML": &ATTRIBUTE_DEFINITION_XHTMLUnmarshaller{},
-	
+
 			"ATTRIBUTE_DEFINITION_XHTML_Rendering": &ATTRIBUTE_DEFINITION_XHTML_RenderingUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_BOOLEAN": &ATTRIBUTE_VALUE_BOOLEANUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_DATE": &ATTRIBUTE_VALUE_DATEUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_ENUMERATION": &ATTRIBUTE_VALUE_ENUMERATIONUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_INTEGER": &ATTRIBUTE_VALUE_INTEGERUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_REAL": &ATTRIBUTE_VALUE_REALUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_STRING": &ATTRIBUTE_VALUE_STRINGUnmarshaller{},
-	
+
 			"ATTRIBUTE_VALUE_XHTML": &ATTRIBUTE_VALUE_XHTMLUnmarshaller{},
-	
+
 			"A_ALTERNATIVE_ID": &A_ALTERNATIVE_IDUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_BOOLEAN_REF": &A_ATTRIBUTE_DEFINITION_BOOLEAN_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_DATE_REF": &A_ATTRIBUTE_DEFINITION_DATE_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_ENUMERATION_REF": &A_ATTRIBUTE_DEFINITION_ENUMERATION_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_INTEGER_REF": &A_ATTRIBUTE_DEFINITION_INTEGER_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_REAL_REF": &A_ATTRIBUTE_DEFINITION_REAL_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_STRING_REF": &A_ATTRIBUTE_DEFINITION_STRING_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_DEFINITION_XHTML_REF": &A_ATTRIBUTE_DEFINITION_XHTML_REFUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_BOOLEAN": &A_ATTRIBUTE_VALUE_BOOLEANUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_DATE": &A_ATTRIBUTE_VALUE_DATEUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_ENUMERATION": &A_ATTRIBUTE_VALUE_ENUMERATIONUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_INTEGER": &A_ATTRIBUTE_VALUE_INTEGERUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_REAL": &A_ATTRIBUTE_VALUE_REALUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_STRING": &A_ATTRIBUTE_VALUE_STRINGUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_XHTML": &A_ATTRIBUTE_VALUE_XHTMLUnmarshaller{},
-	
+
 			"A_ATTRIBUTE_VALUE_XHTML_1": &A_ATTRIBUTE_VALUE_XHTML_1Unmarshaller{},
-	
+
 			"A_CHILDREN": &A_CHILDRENUnmarshaller{},
-	
+
 			"A_CORE_CONTENT": &A_CORE_CONTENTUnmarshaller{},
-	
+
 			"A_DATATYPES": &A_DATATYPESUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_BOOLEAN_REF": &A_DATATYPE_DEFINITION_BOOLEAN_REFUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_DATE_REF": &A_DATATYPE_DEFINITION_DATE_REFUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_ENUMERATION_REF": &A_DATATYPE_DEFINITION_ENUMERATION_REFUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_INTEGER_REF": &A_DATATYPE_DEFINITION_INTEGER_REFUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_REAL_REF": &A_DATATYPE_DEFINITION_REAL_REFUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_STRING_REF": &A_DATATYPE_DEFINITION_STRING_REFUnmarshaller{},
-	
+
 			"A_DATATYPE_DEFINITION_XHTML_REF": &A_DATATYPE_DEFINITION_XHTML_REFUnmarshaller{},
-	
+
 			"A_EDITABLE_ATTS": &A_EDITABLE_ATTSUnmarshaller{},
-	
+
 			"A_ENUM_VALUE_REF": &A_ENUM_VALUE_REFUnmarshaller{},
-	
+
 			"A_OBJECT": &A_OBJECTUnmarshaller{},
-	
+
 			"A_PROPERTIES": &A_PROPERTIESUnmarshaller{},
-	
+
 			"A_RELATION_GROUP_TYPE_REF": &A_RELATION_GROUP_TYPE_REFUnmarshaller{},
-	
+
 			"A_SOURCE_1": &A_SOURCE_1Unmarshaller{},
-	
+
 			"A_SOURCE_SPECIFICATION_1": &A_SOURCE_SPECIFICATION_1Unmarshaller{},
-	
+
 			"A_SPECIFICATIONS": &A_SPECIFICATIONSUnmarshaller{},
-	
+
 			"A_SPECIFICATION_TYPE_REF": &A_SPECIFICATION_TYPE_REFUnmarshaller{},
-	
+
 			"A_SPECIFIED_VALUES": &A_SPECIFIED_VALUESUnmarshaller{},
-	
+
 			"A_SPEC_ATTRIBUTES": &A_SPEC_ATTRIBUTESUnmarshaller{},
-	
+
 			"A_SPEC_OBJECTS": &A_SPEC_OBJECTSUnmarshaller{},
-	
+
 			"A_SPEC_OBJECT_TYPE_REF": &A_SPEC_OBJECT_TYPE_REFUnmarshaller{},
-	
+
 			"A_SPEC_RELATIONS": &A_SPEC_RELATIONSUnmarshaller{},
-	
+
 			"A_SPEC_RELATION_GROUPS": &A_SPEC_RELATION_GROUPSUnmarshaller{},
-	
+
 			"A_SPEC_RELATION_REF": &A_SPEC_RELATION_REFUnmarshaller{},
-	
+
 			"A_SPEC_RELATION_TYPE_REF": &A_SPEC_RELATION_TYPE_REFUnmarshaller{},
-	
+
 			"A_SPEC_TYPES": &A_SPEC_TYPESUnmarshaller{},
-	
+
 			"A_THE_HEADER": &A_THE_HEADERUnmarshaller{},
-	
+
 			"A_TOOL_EXTENSIONS": &A_TOOL_EXTENSIONSUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_BOOLEAN": &DATATYPE_DEFINITION_BOOLEANUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_DATE": &DATATYPE_DEFINITION_DATEUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_ENUMERATION": &DATATYPE_DEFINITION_ENUMERATIONUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_INTEGER": &DATATYPE_DEFINITION_INTEGERUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_REAL": &DATATYPE_DEFINITION_REALUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_STRING": &DATATYPE_DEFINITION_STRINGUnmarshaller{},
-	
+
 			"DATATYPE_DEFINITION_XHTML": &DATATYPE_DEFINITION_XHTMLUnmarshaller{},
-	
+
 			"EMBEDDED_VALUE": &EMBEDDED_VALUEUnmarshaller{},
-	
+
 			"ENUM_VALUE": &ENUM_VALUEUnmarshaller{},
-	
+
 			"EmbeddedJpgImage": &EmbeddedJpgImageUnmarshaller{},
-	
+
 			"EmbeddedPngImage": &EmbeddedPngImageUnmarshaller{},
-	
+
 			"EmbeddedSvgImage": &EmbeddedSvgImageUnmarshaller{},
-	
+
 			"Kill": &KillUnmarshaller{},
-	
+
 			"Map_identifier_bool": &Map_identifier_boolUnmarshaller{},
-	
+
 			"RELATION_GROUP": &RELATION_GROUPUnmarshaller{},
-	
+
 			"RELATION_GROUP_TYPE": &RELATION_GROUP_TYPEUnmarshaller{},
-	
+
 			"REQ_IF": &REQ_IFUnmarshaller{},
-	
+
 			"REQ_IF_CONTENT": &REQ_IF_CONTENTUnmarshaller{},
-	
+
 			"REQ_IF_HEADER": &REQ_IF_HEADERUnmarshaller{},
-	
+
 			"REQ_IF_TOOL_EXTENSION": &REQ_IF_TOOL_EXTENSIONUnmarshaller{},
-	
+
 			"SPECIFICATION": &SPECIFICATIONUnmarshaller{},
-	
+
 			"SPECIFICATION_Rendering": &SPECIFICATION_RenderingUnmarshaller{},
-	
+
 			"SPECIFICATION_TYPE": &SPECIFICATION_TYPEUnmarshaller{},
-	
+
 			"SPEC_HIERARCHY": &SPEC_HIERARCHYUnmarshaller{},
-	
+
 			"SPEC_OBJECT": &SPEC_OBJECTUnmarshaller{},
-	
+
 			"SPEC_OBJECT_TYPE": &SPEC_OBJECT_TYPEUnmarshaller{},
-	
+
 			"SPEC_OBJECT_TYPE_Rendering": &SPEC_OBJECT_TYPE_RenderingUnmarshaller{},
-	
+
 			"SPEC_RELATION": &SPEC_RELATIONUnmarshaller{},
-	
+
 			"SPEC_RELATION_TYPE": &SPEC_RELATION_TYPEUnmarshaller{},
-	
+
 			"StaticWebSite": &StaticWebSiteUnmarshaller{},
-	
+
 			"StaticWebSiteChapter": &StaticWebSiteChapterUnmarshaller{},
-	
+
 			"StaticWebSiteGeneratedImage": &StaticWebSiteGeneratedImageUnmarshaller{},
-	
+
 			"StaticWebSiteImage": &StaticWebSiteImageUnmarshaller{},
-	
+
 			"StaticWebSiteParagraph": &StaticWebSiteParagraphUnmarshaller{},
-	
+
 			"XHTML_CONTENT": &XHTML_CONTENTUnmarshaller{},
-	
-		}, // end of insertion point
+
+			// end of insertion point
+		},
 
 		NamedStructs: []*NamedStruct{ // insertion point for order map initialisations
 			{name: "ALTERNATIVE_ID"},
@@ -4561,13 +6176,14 @@ func NewStage(name string) (stage *Stage) {
 			{name: "StaticWebSiteParagraph"},
 			{name: "XHTML_CONTENT"},
 		}, // end of insertion point
+
+		navigationMode: GongNavigationModeNormal,
 	}
 
 	return
 }
 
 func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
-
 	switch instance := any(instance).(type) {
 	// insertion point for order map initialisations
 	case *ALTERNATIVE_ID:
@@ -4784,7 +6400,6 @@ func GetOrder[Type Gongstruct](stage *Stage, instance *Type) uint {
 }
 
 func GetOrderPointerGongstruct[Type PointerToGongstruct](stage *Stage, instance Type) uint {
-
 	switch instance := any(instance).(type) {
 	// insertion point for order map initialisations
 	case *ALTERNATIVE_ID:
@@ -5005,7 +6620,6 @@ func (stage *Stage) GetName() string {
 }
 
 func (stage *Stage) CommitWithSuspendedCallbacks() {
-
 	tmp := stage.OnInitCommitFromBackCallback
 	stage.OnInitCommitFromBackCallback = nil
 	stage.Commit()
@@ -5026,9 +6640,20 @@ func (stage *Stage) Commit() {
 		stage.BackRepo.Commit(stage)
 	}
 	stage.ComputeInstancesNb()
-	if stage.IsDeltaMode() {
-		stage.ComputeDifference()
-		stage.ComputeReference()
+
+	// if a commit is applied when in navigation mode
+	// this will reset the commits behind and swith the
+	// naviagation
+	if stage.isInDeltaMode && stage.navigationMode == GongNavigationModeNavigating && stage.GetCommitsBehind() > 0 {
+		stage.ResetHard()
+	}
+
+	if stage.IsInDeltaMode() {
+		stage.ComputeForwardAndBackwardCommits()
+		stage.ComputeReferenceAndOrders()
+		if stage.GetProbeIF() != nil {
+			stage.GetProbeIF().Refresh()
+		}
 	}
 }
 
@@ -5180,7 +6805,6 @@ func (stage *Stage) RestoreXL(dirPath string) {
 // insertion point for cumulative sub template with model space calls
 // Stage puts alternative_id to the model stage
 func (alternative_id *ALTERNATIVE_ID) Stage(stage *Stage) *ALTERNATIVE_ID {
-
 	if _, ok := stage.ALTERNATIVE_IDs[alternative_id]; !ok {
 		stage.ALTERNATIVE_IDs[alternative_id] = struct{}{}
 		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = stage.ALTERNATIVE_IDOrder
@@ -5197,14 +6821,13 @@ func (alternative_id *ALTERNATIVE_ID) Stage(stage *Stage) *ALTERNATIVE_ID {
 // - force the order if the order is equal or greater than the stage.ALTERNATIVE_IDOrder
 // - update stage.ALTERNATIVE_IDOrder accordingly
 func (alternative_id *ALTERNATIVE_ID) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ALTERNATIVE_IDs[alternative_id]; !ok {
 		stage.ALTERNATIVE_IDs[alternative_id] = struct{}{}
 
 		if order > stage.ALTERNATIVE_IDOrder {
 			stage.ALTERNATIVE_IDOrder = order
 		}
-		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = stage.ALTERNATIVE_IDOrder
+		stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id] = order
 		stage.ALTERNATIVE_IDOrder++
 	}
 	stage.ALTERNATIVE_IDs_mapString[alternative_id.Name] = alternative_id
@@ -5266,7 +6889,6 @@ func (alternative_id *ALTERNATIVE_ID) SetName(name string) {
 
 // Stage puts attribute_definition_boolean to the model stage
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean]; !ok {
 		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
@@ -5283,14 +6905,13 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) Stage(stage *S
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
 // - update stage.ATTRIBUTE_DEFINITION_BOOLEANOrder accordingly
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean]; !ok {
 		stage.ATTRIBUTE_DEFINITION_BOOLEANs[attribute_definition_boolean] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_BOOLEANOrder {
 			stage.ATTRIBUTE_DEFINITION_BOOLEANOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANOrder
+		stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean] = order
 		stage.ATTRIBUTE_DEFINITION_BOOLEANOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_BOOLEANs_mapString[attribute_definition_boolean.Name] = attribute_definition_boolean
@@ -5352,7 +6973,6 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) SetName(name s
 
 // Stage puts attribute_definition_boolean_rendering to the model stage
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder
@@ -5369,14 +6989,13 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder accordingly
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[attribute_definition_boolean_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_mapString[attribute_definition_boolean_rendering.Name] = attribute_definition_boolean_rendering
@@ -5438,7 +7057,6 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 
 // Stage puts attribute_definition_date to the model stage
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_DATE {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date]; !ok {
 		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEOrder
@@ -5455,14 +7073,13 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_DATEOrder
 // - update stage.ATTRIBUTE_DEFINITION_DATEOrder accordingly
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date]; !ok {
 		stage.ATTRIBUTE_DEFINITION_DATEs[attribute_definition_date] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_DATEOrder {
 			stage.ATTRIBUTE_DEFINITION_DATEOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEOrder
+		stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date] = order
 		stage.ATTRIBUTE_DEFINITION_DATEOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_DATEs_mapString[attribute_definition_date.Name] = attribute_definition_date
@@ -5524,7 +7141,6 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) SetName(name string)
 
 // Stage puts attribute_definition_date_rendering to the model stage
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_DATE_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder
@@ -5541,14 +7157,13 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder accordingly
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_DATE_Renderings[attribute_definition_date_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_DATE_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_DATE_Renderings_mapString[attribute_definition_date_rendering.Name] = attribute_definition_date_rendering
@@ -5610,7 +7225,6 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 
 // Stage puts attribute_definition_enumeration to the model stage
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration]; !ok {
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
@@ -5627,14 +7241,13 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) Stage(
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
 // - update stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder accordingly
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration]; !ok {
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[attribute_definition_enumeration] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder {
 			stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration] = order
 		stage.ATTRIBUTE_DEFINITION_ENUMERATIONOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_mapString[attribute_definition_enumeration.Name] = attribute_definition_enumeration
@@ -5696,7 +7309,6 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) SetNam
 
 // Stage puts attribute_definition_enumeration_rendering to the model stage
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder
@@ -5713,14 +7325,13 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder accordingly
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[attribute_definition_enumeration_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_mapString[attribute_definition_enumeration_rendering.Name] = attribute_definition_enumeration_rendering
@@ -5782,7 +7393,6 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 
 // Stage puts attribute_definition_integer to the model stage
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_INTEGER {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer]; !ok {
 		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGEROrder
@@ -5799,14 +7409,13 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) Stage(stage *S
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_INTEGEROrder
 // - update stage.ATTRIBUTE_DEFINITION_INTEGEROrder accordingly
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer]; !ok {
 		stage.ATTRIBUTE_DEFINITION_INTEGERs[attribute_definition_integer] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_INTEGEROrder {
 			stage.ATTRIBUTE_DEFINITION_INTEGEROrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGEROrder
+		stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer] = order
 		stage.ATTRIBUTE_DEFINITION_INTEGEROrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_INTEGERs_mapString[attribute_definition_integer.Name] = attribute_definition_integer
@@ -5868,7 +7477,6 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) SetName(name s
 
 // Stage puts attribute_definition_integer_rendering to the model stage
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_INTEGER_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder
@@ -5885,14 +7493,13 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder accordingly
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[attribute_definition_integer_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_mapString[attribute_definition_integer_rendering.Name] = attribute_definition_integer_rendering
@@ -5954,7 +7561,6 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 
 // Stage puts attribute_definition_real to the model stage
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real]; !ok {
 		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALOrder
@@ -5971,14 +7577,13 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_REALOrder
 // - update stage.ATTRIBUTE_DEFINITION_REALOrder accordingly
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real]; !ok {
 		stage.ATTRIBUTE_DEFINITION_REALs[attribute_definition_real] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_REALOrder {
 			stage.ATTRIBUTE_DEFINITION_REALOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALOrder
+		stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real] = order
 		stage.ATTRIBUTE_DEFINITION_REALOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_REALs_mapString[attribute_definition_real.Name] = attribute_definition_real
@@ -6040,7 +7645,6 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) SetName(name string)
 
 // Stage puts attribute_definition_real_rendering to the model stage
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_REAL_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder
@@ -6057,14 +7661,13 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder accordingly
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_REAL_Renderings[attribute_definition_real_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_REAL_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_REAL_Renderings_mapString[attribute_definition_real_rendering.Name] = attribute_definition_real_rendering
@@ -6126,7 +7729,6 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 
 // Stage puts attribute_definition_rendering to the model stage
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingOrder
@@ -6143,14 +7745,13 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) Stage(stag
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_RenderingOrder accordingly
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_Renderings[attribute_definition_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_Renderings_mapString[attribute_definition_rendering.Name] = attribute_definition_rendering
@@ -6212,7 +7813,6 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) SetName(na
 
 // Stage puts attribute_definition_string to the model stage
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string]; !ok {
 		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGOrder
@@ -6229,14 +7829,13 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) Stage(stage *Sta
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_STRINGOrder
 // - update stage.ATTRIBUTE_DEFINITION_STRINGOrder accordingly
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string]; !ok {
 		stage.ATTRIBUTE_DEFINITION_STRINGs[attribute_definition_string] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_STRINGOrder {
 			stage.ATTRIBUTE_DEFINITION_STRINGOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGOrder
+		stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string] = order
 		stage.ATTRIBUTE_DEFINITION_STRINGOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_STRINGs_mapString[attribute_definition_string.Name] = attribute_definition_string
@@ -6298,7 +7897,6 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) SetName(name str
 
 // Stage puts attribute_definition_string_rendering to the model stage
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_STRING_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder
@@ -6315,14 +7913,13 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder accordingly
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_STRING_Renderings[attribute_definition_string_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_STRING_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_STRING_Renderings_mapString[attribute_definition_string_rendering.Name] = attribute_definition_string_rendering
@@ -6384,7 +7981,6 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 
 // Stage puts attribute_definition_xhtml to the model stage
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_XHTML {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml]; !ok {
 		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLOrder
@@ -6401,14 +7997,13 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) Stage(stage *Stage
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_XHTMLOrder
 // - update stage.ATTRIBUTE_DEFINITION_XHTMLOrder accordingly
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml]; !ok {
 		stage.ATTRIBUTE_DEFINITION_XHTMLs[attribute_definition_xhtml] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_XHTMLOrder {
 			stage.ATTRIBUTE_DEFINITION_XHTMLOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLOrder
+		stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml] = order
 		stage.ATTRIBUTE_DEFINITION_XHTMLOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_XHTMLs_mapString[attribute_definition_xhtml.Name] = attribute_definition_xhtml
@@ -6470,7 +8065,6 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) SetName(name strin
 
 // Stage puts attribute_definition_xhtml_rendering to the model stage
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) Stage(stage *Stage) *ATTRIBUTE_DEFINITION_XHTML_Rendering {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering] = struct{}{}
 		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder
@@ -6487,14 +8081,13 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder
 // - update stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder accordingly
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering]; !ok {
 		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[attribute_definition_xhtml_rendering] = struct{}{}
 
 		if order > stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder {
 			stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder = order
 		}
-		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder
+		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering] = order
 		stage.ATTRIBUTE_DEFINITION_XHTML_RenderingOrder++
 	}
 	stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_mapString[attribute_definition_xhtml_rendering.Name] = attribute_definition_xhtml_rendering
@@ -6556,7 +8149,6 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 
 // Stage puts attribute_value_boolean to the model stage
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATTRIBUTE_VALUE_BOOLEAN {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean]; !ok {
 		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = struct{}{}
 		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANOrder
@@ -6573,14 +8165,13 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *ATT
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_BOOLEANOrder
 // - update stage.ATTRIBUTE_VALUE_BOOLEANOrder accordingly
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean]; !ok {
 		stage.ATTRIBUTE_VALUE_BOOLEANs[attribute_value_boolean] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_BOOLEANOrder {
 			stage.ATTRIBUTE_VALUE_BOOLEANOrder = order
 		}
-		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANOrder
+		stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean] = order
 		stage.ATTRIBUTE_VALUE_BOOLEANOrder++
 	}
 	stage.ATTRIBUTE_VALUE_BOOLEANs_mapString[attribute_value_boolean.Name] = attribute_value_boolean
@@ -6642,7 +8233,6 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) SetName(name string) {
 
 // Stage puts attribute_value_date to the model stage
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *ATTRIBUTE_VALUE_DATE {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date]; !ok {
 		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = struct{}{}
 		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEOrder
@@ -6659,14 +8249,13 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *ATTRIBUTE
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_DATEOrder
 // - update stage.ATTRIBUTE_VALUE_DATEOrder accordingly
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date]; !ok {
 		stage.ATTRIBUTE_VALUE_DATEs[attribute_value_date] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_DATEOrder {
 			stage.ATTRIBUTE_VALUE_DATEOrder = order
 		}
-		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEOrder
+		stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date] = order
 		stage.ATTRIBUTE_VALUE_DATEOrder++
 	}
 	stage.ATTRIBUTE_VALUE_DATEs_mapString[attribute_value_date.Name] = attribute_value_date
@@ -6728,7 +8317,6 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) SetName(name string) {
 
 // Stage puts attribute_value_enumeration to the model stage
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Stage) *ATTRIBUTE_VALUE_ENUMERATION {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration]; !ok {
 		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = struct{}{}
 		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
@@ -6745,14 +8333,13 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Sta
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
 // - update stage.ATTRIBUTE_VALUE_ENUMERATIONOrder accordingly
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration]; !ok {
 		stage.ATTRIBUTE_VALUE_ENUMERATIONs[attribute_value_enumeration] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_ENUMERATIONOrder {
 			stage.ATTRIBUTE_VALUE_ENUMERATIONOrder = order
 		}
-		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONOrder
+		stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration] = order
 		stage.ATTRIBUTE_VALUE_ENUMERATIONOrder++
 	}
 	stage.ATTRIBUTE_VALUE_ENUMERATIONs_mapString[attribute_value_enumeration.Name] = attribute_value_enumeration
@@ -6814,7 +8401,6 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) SetName(name str
 
 // Stage puts attribute_value_integer to the model stage
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *ATTRIBUTE_VALUE_INTEGER {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer]; !ok {
 		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = struct{}{}
 		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGEROrder
@@ -6831,14 +8417,13 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *ATT
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_INTEGEROrder
 // - update stage.ATTRIBUTE_VALUE_INTEGEROrder accordingly
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer]; !ok {
 		stage.ATTRIBUTE_VALUE_INTEGERs[attribute_value_integer] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_INTEGEROrder {
 			stage.ATTRIBUTE_VALUE_INTEGEROrder = order
 		}
-		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGEROrder
+		stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer] = order
 		stage.ATTRIBUTE_VALUE_INTEGEROrder++
 	}
 	stage.ATTRIBUTE_VALUE_INTEGERs_mapString[attribute_value_integer.Name] = attribute_value_integer
@@ -6900,7 +8485,6 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) SetName(name string) {
 
 // Stage puts attribute_value_real to the model stage
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE_VALUE_REAL {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_REALs[attribute_value_real]; !ok {
 		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = struct{}{}
 		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALOrder
@@ -6917,14 +8501,13 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *ATTRIBUTE
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_REALOrder
 // - update stage.ATTRIBUTE_VALUE_REALOrder accordingly
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_REALs[attribute_value_real]; !ok {
 		stage.ATTRIBUTE_VALUE_REALs[attribute_value_real] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_REALOrder {
 			stage.ATTRIBUTE_VALUE_REALOrder = order
 		}
-		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALOrder
+		stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real] = order
 		stage.ATTRIBUTE_VALUE_REALOrder++
 	}
 	stage.ATTRIBUTE_VALUE_REALs_mapString[attribute_value_real.Name] = attribute_value_real
@@ -6986,7 +8569,6 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) SetName(name string) {
 
 // Stage puts attribute_value_string to the model stage
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *ATTRIBUTE_VALUE_STRING {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string]; !ok {
 		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = struct{}{}
 		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGOrder
@@ -7003,14 +8585,13 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *ATTRI
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_STRINGOrder
 // - update stage.ATTRIBUTE_VALUE_STRINGOrder accordingly
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string]; !ok {
 		stage.ATTRIBUTE_VALUE_STRINGs[attribute_value_string] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_STRINGOrder {
 			stage.ATTRIBUTE_VALUE_STRINGOrder = order
 		}
-		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGOrder
+		stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string] = order
 		stage.ATTRIBUTE_VALUE_STRINGOrder++
 	}
 	stage.ATTRIBUTE_VALUE_STRINGs_mapString[attribute_value_string.Name] = attribute_value_string
@@ -7072,7 +8653,6 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) SetName(name string) {
 
 // Stage puts attribute_value_xhtml to the model stage
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBUTE_VALUE_XHTML {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml]; !ok {
 		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = struct{}{}
 		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLOrder
@@ -7089,14 +8669,13 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *ATTRIBU
 // - force the order if the order is equal or greater than the stage.ATTRIBUTE_VALUE_XHTMLOrder
 // - update stage.ATTRIBUTE_VALUE_XHTMLOrder accordingly
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml]; !ok {
 		stage.ATTRIBUTE_VALUE_XHTMLs[attribute_value_xhtml] = struct{}{}
 
 		if order > stage.ATTRIBUTE_VALUE_XHTMLOrder {
 			stage.ATTRIBUTE_VALUE_XHTMLOrder = order
 		}
-		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLOrder
+		stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml] = order
 		stage.ATTRIBUTE_VALUE_XHTMLOrder++
 	}
 	stage.ATTRIBUTE_VALUE_XHTMLs_mapString[attribute_value_xhtml.Name] = attribute_value_xhtml
@@ -7158,7 +8737,6 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) SetName(name string) {
 
 // Stage puts a_alternative_id to the model stage
 func (a_alternative_id *A_ALTERNATIVE_ID) Stage(stage *Stage) *A_ALTERNATIVE_ID {
-
 	if _, ok := stage.A_ALTERNATIVE_IDs[a_alternative_id]; !ok {
 		stage.A_ALTERNATIVE_IDs[a_alternative_id] = struct{}{}
 		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = stage.A_ALTERNATIVE_IDOrder
@@ -7175,14 +8753,13 @@ func (a_alternative_id *A_ALTERNATIVE_ID) Stage(stage *Stage) *A_ALTERNATIVE_ID 
 // - force the order if the order is equal or greater than the stage.A_ALTERNATIVE_IDOrder
 // - update stage.A_ALTERNATIVE_IDOrder accordingly
 func (a_alternative_id *A_ALTERNATIVE_ID) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ALTERNATIVE_IDs[a_alternative_id]; !ok {
 		stage.A_ALTERNATIVE_IDs[a_alternative_id] = struct{}{}
 
 		if order > stage.A_ALTERNATIVE_IDOrder {
 			stage.A_ALTERNATIVE_IDOrder = order
 		}
-		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = stage.A_ALTERNATIVE_IDOrder
+		stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id] = order
 		stage.A_ALTERNATIVE_IDOrder++
 	}
 	stage.A_ALTERNATIVE_IDs_mapString[a_alternative_id.Name] = a_alternative_id
@@ -7244,7 +8821,6 @@ func (a_alternative_id *A_ALTERNATIVE_ID) SetName(name string) {
 
 // Stage puts a_attribute_definition_boolean_ref to the model stage
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
@@ -7261,14 +8837,13 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) St
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder accordingly
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[a_attribute_definition_boolean_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_mapString[a_attribute_definition_boolean_ref.Name] = a_attribute_definition_boolean_ref
@@ -7330,7 +8905,6 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Se
 
 // Stage puts a_attribute_definition_date_ref to the model stage
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_DATE_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
@@ -7347,14 +8921,13 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) Stage(st
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder accordingly
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[a_attribute_definition_date_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_DATE_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_mapString[a_attribute_definition_date_ref.Name] = a_attribute_definition_date_ref
@@ -7416,7 +8989,6 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) SetName(
 
 // Stage puts a_attribute_definition_enumeration_ref to the model stage
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
@@ -7433,14 +9005,13 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder accordingly
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[a_attribute_definition_enumeration_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_mapString[a_attribute_definition_enumeration_ref.Name] = a_attribute_definition_enumeration_ref
@@ -7502,7 +9073,6 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 
 // Stage puts a_attribute_definition_integer_ref to the model stage
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_INTEGER_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
@@ -7519,14 +9089,13 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) St
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder accordingly
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[a_attribute_definition_integer_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_mapString[a_attribute_definition_integer_ref.Name] = a_attribute_definition_integer_ref
@@ -7588,7 +9157,6 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Se
 
 // Stage puts a_attribute_definition_real_ref to the model stage
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_REAL_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
@@ -7605,14 +9173,13 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) Stage(st
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder accordingly
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[a_attribute_definition_real_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_REAL_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_mapString[a_attribute_definition_real_ref.Name] = a_attribute_definition_real_ref
@@ -7674,7 +9241,6 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) SetName(
 
 // Stage puts a_attribute_definition_string_ref to the model stage
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_STRING_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
@@ -7691,14 +9257,13 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Stag
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder accordingly
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[a_attribute_definition_string_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_STRING_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_mapString[a_attribute_definition_string_ref.Name] = a_attribute_definition_string_ref
@@ -7760,7 +9325,6 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) SetN
 
 // Stage puts a_attribute_definition_xhtml_ref to the model stage
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(stage *Stage) *A_ATTRIBUTE_DEFINITION_XHTML_REF {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = struct{}{}
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
@@ -7777,14 +9341,13 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) Stage(
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
 // - update stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder accordingly
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref]; !ok {
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[a_attribute_definition_xhtml_ref] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder {
 			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder = order
 		}
-		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref] = order
 		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFOrder++
 	}
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_mapString[a_attribute_definition_xhtml_ref.Name] = a_attribute_definition_xhtml_ref
@@ -7846,7 +9409,6 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) SetNam
 
 // Stage puts a_attribute_value_boolean to the model stage
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_BOOLEAN {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean]; !ok {
 		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
@@ -7863,14 +9425,13 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
 // - update stage.A_ATTRIBUTE_VALUE_BOOLEANOrder accordingly
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean]; !ok {
 		stage.A_ATTRIBUTE_VALUE_BOOLEANs[a_attribute_value_boolean] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_BOOLEANOrder {
 			stage.A_ATTRIBUTE_VALUE_BOOLEANOrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANOrder
+		stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean] = order
 		stage.A_ATTRIBUTE_VALUE_BOOLEANOrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_BOOLEANs_mapString[a_attribute_value_boolean.Name] = a_attribute_value_boolean
@@ -7932,7 +9493,6 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) SetName(name string)
 
 // Stage puts a_attribute_value_date to the model stage
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_DATE {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date]; !ok {
 		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEOrder
@@ -7949,14 +9509,13 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) Stage(stage *Stage) *A_ATT
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_DATEOrder
 // - update stage.A_ATTRIBUTE_VALUE_DATEOrder accordingly
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date]; !ok {
 		stage.A_ATTRIBUTE_VALUE_DATEs[a_attribute_value_date] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_DATEOrder {
 			stage.A_ATTRIBUTE_VALUE_DATEOrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEOrder
+		stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date] = order
 		stage.A_ATTRIBUTE_VALUE_DATEOrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_DATEs_mapString[a_attribute_value_date.Name] = a_attribute_value_date
@@ -8018,7 +9577,6 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) SetName(name string) {
 
 // Stage puts a_attribute_value_enumeration to the model stage
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_ENUMERATION {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration]; !ok {
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
@@ -8035,14 +9593,13 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) Stage(stage 
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
 // - update stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder accordingly
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration]; !ok {
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[a_attribute_value_enumeration] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder {
 			stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration] = order
 		stage.A_ATTRIBUTE_VALUE_ENUMERATIONOrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_mapString[a_attribute_value_enumeration.Name] = a_attribute_value_enumeration
@@ -8104,7 +9661,6 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) SetName(name
 
 // Stage puts a_attribute_value_integer to the model stage
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_INTEGER {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer]; !ok {
 		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGEROrder
@@ -8121,14 +9677,13 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_INTEGEROrder
 // - update stage.A_ATTRIBUTE_VALUE_INTEGEROrder accordingly
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer]; !ok {
 		stage.A_ATTRIBUTE_VALUE_INTEGERs[a_attribute_value_integer] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_INTEGEROrder {
 			stage.A_ATTRIBUTE_VALUE_INTEGEROrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGEROrder
+		stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer] = order
 		stage.A_ATTRIBUTE_VALUE_INTEGEROrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_INTEGERs_mapString[a_attribute_value_integer.Name] = a_attribute_value_integer
@@ -8190,7 +9745,6 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) SetName(name string)
 
 // Stage puts a_attribute_value_real to the model stage
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_REAL {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real]; !ok {
 		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALOrder
@@ -8207,14 +9761,13 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) Stage(stage *Stage) *A_ATT
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_REALOrder
 // - update stage.A_ATTRIBUTE_VALUE_REALOrder accordingly
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real]; !ok {
 		stage.A_ATTRIBUTE_VALUE_REALs[a_attribute_value_real] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_REALOrder {
 			stage.A_ATTRIBUTE_VALUE_REALOrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALOrder
+		stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real] = order
 		stage.A_ATTRIBUTE_VALUE_REALOrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_REALs_mapString[a_attribute_value_real.Name] = a_attribute_value_real
@@ -8276,7 +9829,6 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) SetName(name string) {
 
 // Stage puts a_attribute_value_string to the model stage
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_STRING {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string]; !ok {
 		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGOrder
@@ -8293,14 +9845,13 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) Stage(stage *Stage) *A
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_STRINGOrder
 // - update stage.A_ATTRIBUTE_VALUE_STRINGOrder accordingly
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string]; !ok {
 		stage.A_ATTRIBUTE_VALUE_STRINGs[a_attribute_value_string] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_STRINGOrder {
 			stage.A_ATTRIBUTE_VALUE_STRINGOrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGOrder
+		stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string] = order
 		stage.A_ATTRIBUTE_VALUE_STRINGOrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_STRINGs_mapString[a_attribute_value_string.Name] = a_attribute_value_string
@@ -8362,7 +9913,6 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) SetName(name string) {
 
 // Stage puts a_attribute_value_xhtml to the model stage
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml]; !ok {
 		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLOrder
@@ -8379,14 +9929,13 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) Stage(stage *Stage) *A_A
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_XHTMLOrder
 // - update stage.A_ATTRIBUTE_VALUE_XHTMLOrder accordingly
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml]; !ok {
 		stage.A_ATTRIBUTE_VALUE_XHTMLs[a_attribute_value_xhtml] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_XHTMLOrder {
 			stage.A_ATTRIBUTE_VALUE_XHTMLOrder = order
 		}
-		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLOrder
+		stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml] = order
 		stage.A_ATTRIBUTE_VALUE_XHTMLOrder++
 	}
 	stage.A_ATTRIBUTE_VALUE_XHTMLs_mapString[a_attribute_value_xhtml.Name] = a_attribute_value_xhtml
@@ -8448,7 +9997,6 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) SetName(name string) {
 
 // Stage puts a_attribute_value_xhtml_1 to the model stage
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) *A_ATTRIBUTE_VALUE_XHTML_1 {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1]; !ok {
 		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = struct{}{}
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Order
@@ -8465,14 +10013,13 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.A_ATTRIBUTE_VALUE_XHTML_1Order
 // - update stage.A_ATTRIBUTE_VALUE_XHTML_1Order accordingly
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1]; !ok {
 		stage.A_ATTRIBUTE_VALUE_XHTML_1s[a_attribute_value_xhtml_1] = struct{}{}
 
 		if order > stage.A_ATTRIBUTE_VALUE_XHTML_1Order {
 			stage.A_ATTRIBUTE_VALUE_XHTML_1Order = order
 		}
-		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Order
+		stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1] = order
 		stage.A_ATTRIBUTE_VALUE_XHTML_1Order++
 	}
 	stage.A_ATTRIBUTE_VALUE_XHTML_1s_mapString[a_attribute_value_xhtml_1.Name] = a_attribute_value_xhtml_1
@@ -8534,7 +10081,6 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) SetName(name string)
 
 // Stage puts a_children to the model stage
 func (a_children *A_CHILDREN) Stage(stage *Stage) *A_CHILDREN {
-
 	if _, ok := stage.A_CHILDRENs[a_children]; !ok {
 		stage.A_CHILDRENs[a_children] = struct{}{}
 		stage.A_CHILDRENMap_Staged_Order[a_children] = stage.A_CHILDRENOrder
@@ -8551,14 +10097,13 @@ func (a_children *A_CHILDREN) Stage(stage *Stage) *A_CHILDREN {
 // - force the order if the order is equal or greater than the stage.A_CHILDRENOrder
 // - update stage.A_CHILDRENOrder accordingly
 func (a_children *A_CHILDREN) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_CHILDRENs[a_children]; !ok {
 		stage.A_CHILDRENs[a_children] = struct{}{}
 
 		if order > stage.A_CHILDRENOrder {
 			stage.A_CHILDRENOrder = order
 		}
-		stage.A_CHILDRENMap_Staged_Order[a_children] = stage.A_CHILDRENOrder
+		stage.A_CHILDRENMap_Staged_Order[a_children] = order
 		stage.A_CHILDRENOrder++
 	}
 	stage.A_CHILDRENs_mapString[a_children.Name] = a_children
@@ -8620,7 +10165,6 @@ func (a_children *A_CHILDREN) SetName(name string) {
 
 // Stage puts a_core_content to the model stage
 func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
-
 	if _, ok := stage.A_CORE_CONTENTs[a_core_content]; !ok {
 		stage.A_CORE_CONTENTs[a_core_content] = struct{}{}
 		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = stage.A_CORE_CONTENTOrder
@@ -8637,14 +10181,13 @@ func (a_core_content *A_CORE_CONTENT) Stage(stage *Stage) *A_CORE_CONTENT {
 // - force the order if the order is equal or greater than the stage.A_CORE_CONTENTOrder
 // - update stage.A_CORE_CONTENTOrder accordingly
 func (a_core_content *A_CORE_CONTENT) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_CORE_CONTENTs[a_core_content]; !ok {
 		stage.A_CORE_CONTENTs[a_core_content] = struct{}{}
 
 		if order > stage.A_CORE_CONTENTOrder {
 			stage.A_CORE_CONTENTOrder = order
 		}
-		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = stage.A_CORE_CONTENTOrder
+		stage.A_CORE_CONTENTMap_Staged_Order[a_core_content] = order
 		stage.A_CORE_CONTENTOrder++
 	}
 	stage.A_CORE_CONTENTs_mapString[a_core_content.Name] = a_core_content
@@ -8706,7 +10249,6 @@ func (a_core_content *A_CORE_CONTENT) SetName(name string) {
 
 // Stage puts a_datatypes to the model stage
 func (a_datatypes *A_DATATYPES) Stage(stage *Stage) *A_DATATYPES {
-
 	if _, ok := stage.A_DATATYPESs[a_datatypes]; !ok {
 		stage.A_DATATYPESs[a_datatypes] = struct{}{}
 		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = stage.A_DATATYPESOrder
@@ -8723,14 +10265,13 @@ func (a_datatypes *A_DATATYPES) Stage(stage *Stage) *A_DATATYPES {
 // - force the order if the order is equal or greater than the stage.A_DATATYPESOrder
 // - update stage.A_DATATYPESOrder accordingly
 func (a_datatypes *A_DATATYPES) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPESs[a_datatypes]; !ok {
 		stage.A_DATATYPESs[a_datatypes] = struct{}{}
 
 		if order > stage.A_DATATYPESOrder {
 			stage.A_DATATYPESOrder = order
 		}
-		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = stage.A_DATATYPESOrder
+		stage.A_DATATYPESMap_Staged_Order[a_datatypes] = order
 		stage.A_DATATYPESOrder++
 	}
 	stage.A_DATATYPESs_mapString[a_datatypes.Name] = a_datatypes
@@ -8792,7 +10333,6 @@ func (a_datatypes *A_DATATYPES) SetName(name string) {
 
 // Stage puts a_datatype_definition_boolean_ref to the model stage
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_BOOLEAN_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
@@ -8809,14 +10349,13 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Stag
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder accordingly
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[a_datatype_definition_boolean_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder {
 			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref] = order
 		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_mapString[a_datatype_definition_boolean_ref.Name] = a_datatype_definition_boolean_ref
@@ -8878,7 +10417,6 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) SetN
 
 // Stage puts a_datatype_definition_date_ref to the model stage
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_DATE_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFOrder
@@ -8895,14 +10433,13 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) Stage(stag
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_DATE_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_DATE_REFOrder accordingly
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_DATE_REFs[a_datatype_definition_date_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_DATE_REFOrder {
 			stage.A_DATATYPE_DEFINITION_DATE_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFOrder
+		stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref] = order
 		stage.A_DATATYPE_DEFINITION_DATE_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_DATE_REFs_mapString[a_datatype_definition_date_ref.Name] = a_datatype_definition_date_ref
@@ -8964,7 +10501,6 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) SetName(na
 
 // Stage puts a_datatype_definition_enumeration_ref to the model stage
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_ENUMERATION_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
@@ -8981,14 +10517,13 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder accordingly
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[a_datatype_definition_enumeration_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder {
 			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref] = order
 		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_mapString[a_datatype_definition_enumeration_ref.Name] = a_datatype_definition_enumeration_ref
@@ -9050,7 +10585,6 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 
 // Stage puts a_datatype_definition_integer_ref to the model stage
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_INTEGER_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
@@ -9067,14 +10601,13 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Stag
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder accordingly
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFs[a_datatype_definition_integer_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder {
 			stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref] = order
 		stage.A_DATATYPE_DEFINITION_INTEGER_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_mapString[a_datatype_definition_integer_ref.Name] = a_datatype_definition_integer_ref
@@ -9136,7 +10669,6 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) SetN
 
 // Stage puts a_datatype_definition_real_ref to the model stage
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_REAL_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFOrder
@@ -9153,14 +10685,13 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) Stage(stag
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_REAL_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_REAL_REFOrder accordingly
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_REAL_REFs[a_datatype_definition_real_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_REAL_REFOrder {
 			stage.A_DATATYPE_DEFINITION_REAL_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFOrder
+		stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref] = order
 		stage.A_DATATYPE_DEFINITION_REAL_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_REAL_REFs_mapString[a_datatype_definition_real_ref.Name] = a_datatype_definition_real_ref
@@ -9222,7 +10753,6 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) SetName(na
 
 // Stage puts a_datatype_definition_string_ref to the model stage
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_STRING_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFOrder
@@ -9239,14 +10769,13 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) Stage(
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_STRING_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_STRING_REFOrder accordingly
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_STRING_REFs[a_datatype_definition_string_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_STRING_REFOrder {
 			stage.A_DATATYPE_DEFINITION_STRING_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFOrder
+		stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref] = order
 		stage.A_DATATYPE_DEFINITION_STRING_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_STRING_REFs_mapString[a_datatype_definition_string_ref.Name] = a_datatype_definition_string_ref
@@ -9308,7 +10837,6 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) SetNam
 
 // Stage puts a_datatype_definition_xhtml_ref to the model stage
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(stage *Stage) *A_DATATYPE_DEFINITION_XHTML_REF {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = struct{}{}
 		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
@@ -9325,14 +10853,13 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) Stage(st
 // - force the order if the order is equal or greater than the stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
 // - update stage.A_DATATYPE_DEFINITION_XHTML_REFOrder accordingly
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref]; !ok {
 		stage.A_DATATYPE_DEFINITION_XHTML_REFs[a_datatype_definition_xhtml_ref] = struct{}{}
 
 		if order > stage.A_DATATYPE_DEFINITION_XHTML_REFOrder {
 			stage.A_DATATYPE_DEFINITION_XHTML_REFOrder = order
 		}
-		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFOrder
+		stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref] = order
 		stage.A_DATATYPE_DEFINITION_XHTML_REFOrder++
 	}
 	stage.A_DATATYPE_DEFINITION_XHTML_REFs_mapString[a_datatype_definition_xhtml_ref.Name] = a_datatype_definition_xhtml_ref
@@ -9394,7 +10921,6 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) SetName(
 
 // Stage puts a_editable_atts to the model stage
 func (a_editable_atts *A_EDITABLE_ATTS) Stage(stage *Stage) *A_EDITABLE_ATTS {
-
 	if _, ok := stage.A_EDITABLE_ATTSs[a_editable_atts]; !ok {
 		stage.A_EDITABLE_ATTSs[a_editable_atts] = struct{}{}
 		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = stage.A_EDITABLE_ATTSOrder
@@ -9411,14 +10937,13 @@ func (a_editable_atts *A_EDITABLE_ATTS) Stage(stage *Stage) *A_EDITABLE_ATTS {
 // - force the order if the order is equal or greater than the stage.A_EDITABLE_ATTSOrder
 // - update stage.A_EDITABLE_ATTSOrder accordingly
 func (a_editable_atts *A_EDITABLE_ATTS) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_EDITABLE_ATTSs[a_editable_atts]; !ok {
 		stage.A_EDITABLE_ATTSs[a_editable_atts] = struct{}{}
 
 		if order > stage.A_EDITABLE_ATTSOrder {
 			stage.A_EDITABLE_ATTSOrder = order
 		}
-		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = stage.A_EDITABLE_ATTSOrder
+		stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts] = order
 		stage.A_EDITABLE_ATTSOrder++
 	}
 	stage.A_EDITABLE_ATTSs_mapString[a_editable_atts.Name] = a_editable_atts
@@ -9480,7 +11005,6 @@ func (a_editable_atts *A_EDITABLE_ATTS) SetName(name string) {
 
 // Stage puts a_enum_value_ref to the model stage
 func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF {
-
 	if _, ok := stage.A_ENUM_VALUE_REFs[a_enum_value_ref]; !ok {
 		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = struct{}{}
 		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = stage.A_ENUM_VALUE_REFOrder
@@ -9497,14 +11021,13 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) Stage(stage *Stage) *A_ENUM_VALUE_REF 
 // - force the order if the order is equal or greater than the stage.A_ENUM_VALUE_REFOrder
 // - update stage.A_ENUM_VALUE_REFOrder accordingly
 func (a_enum_value_ref *A_ENUM_VALUE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_ENUM_VALUE_REFs[a_enum_value_ref]; !ok {
 		stage.A_ENUM_VALUE_REFs[a_enum_value_ref] = struct{}{}
 
 		if order > stage.A_ENUM_VALUE_REFOrder {
 			stage.A_ENUM_VALUE_REFOrder = order
 		}
-		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = stage.A_ENUM_VALUE_REFOrder
+		stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref] = order
 		stage.A_ENUM_VALUE_REFOrder++
 	}
 	stage.A_ENUM_VALUE_REFs_mapString[a_enum_value_ref.Name] = a_enum_value_ref
@@ -9566,7 +11089,6 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) SetName(name string) {
 
 // Stage puts a_object to the model stage
 func (a_object *A_OBJECT) Stage(stage *Stage) *A_OBJECT {
-
 	if _, ok := stage.A_OBJECTs[a_object]; !ok {
 		stage.A_OBJECTs[a_object] = struct{}{}
 		stage.A_OBJECTMap_Staged_Order[a_object] = stage.A_OBJECTOrder
@@ -9583,14 +11105,13 @@ func (a_object *A_OBJECT) Stage(stage *Stage) *A_OBJECT {
 // - force the order if the order is equal or greater than the stage.A_OBJECTOrder
 // - update stage.A_OBJECTOrder accordingly
 func (a_object *A_OBJECT) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_OBJECTs[a_object]; !ok {
 		stage.A_OBJECTs[a_object] = struct{}{}
 
 		if order > stage.A_OBJECTOrder {
 			stage.A_OBJECTOrder = order
 		}
-		stage.A_OBJECTMap_Staged_Order[a_object] = stage.A_OBJECTOrder
+		stage.A_OBJECTMap_Staged_Order[a_object] = order
 		stage.A_OBJECTOrder++
 	}
 	stage.A_OBJECTs_mapString[a_object.Name] = a_object
@@ -9652,7 +11173,6 @@ func (a_object *A_OBJECT) SetName(name string) {
 
 // Stage puts a_properties to the model stage
 func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
-
 	if _, ok := stage.A_PROPERTIESs[a_properties]; !ok {
 		stage.A_PROPERTIESs[a_properties] = struct{}{}
 		stage.A_PROPERTIESMap_Staged_Order[a_properties] = stage.A_PROPERTIESOrder
@@ -9669,14 +11189,13 @@ func (a_properties *A_PROPERTIES) Stage(stage *Stage) *A_PROPERTIES {
 // - force the order if the order is equal or greater than the stage.A_PROPERTIESOrder
 // - update stage.A_PROPERTIESOrder accordingly
 func (a_properties *A_PROPERTIES) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_PROPERTIESs[a_properties]; !ok {
 		stage.A_PROPERTIESs[a_properties] = struct{}{}
 
 		if order > stage.A_PROPERTIESOrder {
 			stage.A_PROPERTIESOrder = order
 		}
-		stage.A_PROPERTIESMap_Staged_Order[a_properties] = stage.A_PROPERTIESOrder
+		stage.A_PROPERTIESMap_Staged_Order[a_properties] = order
 		stage.A_PROPERTIESOrder++
 	}
 	stage.A_PROPERTIESs_mapString[a_properties.Name] = a_properties
@@ -9738,7 +11257,6 @@ func (a_properties *A_PROPERTIES) SetName(name string) {
 
 // Stage puts a_relation_group_type_ref to the model stage
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Stage(stage *Stage) *A_RELATION_GROUP_TYPE_REF {
-
 	if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref]; !ok {
 		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = struct{}{}
 		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFOrder
@@ -9755,14 +11273,13 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.A_RELATION_GROUP_TYPE_REFOrder
 // - update stage.A_RELATION_GROUP_TYPE_REFOrder accordingly
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref]; !ok {
 		stage.A_RELATION_GROUP_TYPE_REFs[a_relation_group_type_ref] = struct{}{}
 
 		if order > stage.A_RELATION_GROUP_TYPE_REFOrder {
 			stage.A_RELATION_GROUP_TYPE_REFOrder = order
 		}
-		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFOrder
+		stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref] = order
 		stage.A_RELATION_GROUP_TYPE_REFOrder++
 	}
 	stage.A_RELATION_GROUP_TYPE_REFs_mapString[a_relation_group_type_ref.Name] = a_relation_group_type_ref
@@ -9824,7 +11341,6 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) SetName(name string)
 
 // Stage puts a_source_1 to the model stage
 func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
-
 	if _, ok := stage.A_SOURCE_1s[a_source_1]; !ok {
 		stage.A_SOURCE_1s[a_source_1] = struct{}{}
 		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = stage.A_SOURCE_1Order
@@ -9841,14 +11357,13 @@ func (a_source_1 *A_SOURCE_1) Stage(stage *Stage) *A_SOURCE_1 {
 // - force the order if the order is equal or greater than the stage.A_SOURCE_1Order
 // - update stage.A_SOURCE_1Order accordingly
 func (a_source_1 *A_SOURCE_1) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SOURCE_1s[a_source_1]; !ok {
 		stage.A_SOURCE_1s[a_source_1] = struct{}{}
 
 		if order > stage.A_SOURCE_1Order {
 			stage.A_SOURCE_1Order = order
 		}
-		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = stage.A_SOURCE_1Order
+		stage.A_SOURCE_1Map_Staged_Order[a_source_1] = order
 		stage.A_SOURCE_1Order++
 	}
 	stage.A_SOURCE_1s_mapString[a_source_1.Name] = a_source_1
@@ -9910,7 +11425,6 @@ func (a_source_1 *A_SOURCE_1) SetName(name string) {
 
 // Stage puts a_source_specification_1 to the model stage
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Stage(stage *Stage) *A_SOURCE_SPECIFICATION_1 {
-
 	if _, ok := stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1]; !ok {
 		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = struct{}{}
 		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Order
@@ -9927,14 +11441,13 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) Stage(stage *Stage) *A
 // - force the order if the order is equal or greater than the stage.A_SOURCE_SPECIFICATION_1Order
 // - update stage.A_SOURCE_SPECIFICATION_1Order accordingly
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1]; !ok {
 		stage.A_SOURCE_SPECIFICATION_1s[a_source_specification_1] = struct{}{}
 
 		if order > stage.A_SOURCE_SPECIFICATION_1Order {
 			stage.A_SOURCE_SPECIFICATION_1Order = order
 		}
-		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Order
+		stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1] = order
 		stage.A_SOURCE_SPECIFICATION_1Order++
 	}
 	stage.A_SOURCE_SPECIFICATION_1s_mapString[a_source_specification_1.Name] = a_source_specification_1
@@ -9996,7 +11509,6 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) SetName(name string) {
 
 // Stage puts a_specifications to the model stage
 func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS {
-
 	if _, ok := stage.A_SPECIFICATIONSs[a_specifications]; !ok {
 		stage.A_SPECIFICATIONSs[a_specifications] = struct{}{}
 		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = stage.A_SPECIFICATIONSOrder
@@ -10013,14 +11525,13 @@ func (a_specifications *A_SPECIFICATIONS) Stage(stage *Stage) *A_SPECIFICATIONS 
 // - force the order if the order is equal or greater than the stage.A_SPECIFICATIONSOrder
 // - update stage.A_SPECIFICATIONSOrder accordingly
 func (a_specifications *A_SPECIFICATIONS) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPECIFICATIONSs[a_specifications]; !ok {
 		stage.A_SPECIFICATIONSs[a_specifications] = struct{}{}
 
 		if order > stage.A_SPECIFICATIONSOrder {
 			stage.A_SPECIFICATIONSOrder = order
 		}
-		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = stage.A_SPECIFICATIONSOrder
+		stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications] = order
 		stage.A_SPECIFICATIONSOrder++
 	}
 	stage.A_SPECIFICATIONSs_mapString[a_specifications.Name] = a_specifications
@@ -10082,7 +11593,6 @@ func (a_specifications *A_SPECIFICATIONS) SetName(name string) {
 
 // Stage puts a_specification_type_ref to the model stage
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Stage(stage *Stage) *A_SPECIFICATION_TYPE_REF {
-
 	if _, ok := stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref]; !ok {
 		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = struct{}{}
 		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFOrder
@@ -10099,14 +11609,13 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) Stage(stage *Stage) *A
 // - force the order if the order is equal or greater than the stage.A_SPECIFICATION_TYPE_REFOrder
 // - update stage.A_SPECIFICATION_TYPE_REFOrder accordingly
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref]; !ok {
 		stage.A_SPECIFICATION_TYPE_REFs[a_specification_type_ref] = struct{}{}
 
 		if order > stage.A_SPECIFICATION_TYPE_REFOrder {
 			stage.A_SPECIFICATION_TYPE_REFOrder = order
 		}
-		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFOrder
+		stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref] = order
 		stage.A_SPECIFICATION_TYPE_REFOrder++
 	}
 	stage.A_SPECIFICATION_TYPE_REFs_mapString[a_specification_type_ref.Name] = a_specification_type_ref
@@ -10168,7 +11677,6 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) SetName(name string) {
 
 // Stage puts a_specified_values to the model stage
 func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_VALUES {
-
 	if _, ok := stage.A_SPECIFIED_VALUESs[a_specified_values]; !ok {
 		stage.A_SPECIFIED_VALUESs[a_specified_values] = struct{}{}
 		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = stage.A_SPECIFIED_VALUESOrder
@@ -10185,14 +11693,13 @@ func (a_specified_values *A_SPECIFIED_VALUES) Stage(stage *Stage) *A_SPECIFIED_V
 // - force the order if the order is equal or greater than the stage.A_SPECIFIED_VALUESOrder
 // - update stage.A_SPECIFIED_VALUESOrder accordingly
 func (a_specified_values *A_SPECIFIED_VALUES) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPECIFIED_VALUESs[a_specified_values]; !ok {
 		stage.A_SPECIFIED_VALUESs[a_specified_values] = struct{}{}
 
 		if order > stage.A_SPECIFIED_VALUESOrder {
 			stage.A_SPECIFIED_VALUESOrder = order
 		}
-		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = stage.A_SPECIFIED_VALUESOrder
+		stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values] = order
 		stage.A_SPECIFIED_VALUESOrder++
 	}
 	stage.A_SPECIFIED_VALUESs_mapString[a_specified_values.Name] = a_specified_values
@@ -10254,7 +11761,6 @@ func (a_specified_values *A_SPECIFIED_VALUES) SetName(name string) {
 
 // Stage puts a_spec_attributes to the model stage
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) Stage(stage *Stage) *A_SPEC_ATTRIBUTES {
-
 	if _, ok := stage.A_SPEC_ATTRIBUTESs[a_spec_attributes]; !ok {
 		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = struct{}{}
 		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESOrder
@@ -10271,14 +11777,13 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) Stage(stage *Stage) *A_SPEC_ATTRIBUT
 // - force the order if the order is equal or greater than the stage.A_SPEC_ATTRIBUTESOrder
 // - update stage.A_SPEC_ATTRIBUTESOrder accordingly
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_ATTRIBUTESs[a_spec_attributes]; !ok {
 		stage.A_SPEC_ATTRIBUTESs[a_spec_attributes] = struct{}{}
 
 		if order > stage.A_SPEC_ATTRIBUTESOrder {
 			stage.A_SPEC_ATTRIBUTESOrder = order
 		}
-		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESOrder
+		stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes] = order
 		stage.A_SPEC_ATTRIBUTESOrder++
 	}
 	stage.A_SPEC_ATTRIBUTESs_mapString[a_spec_attributes.Name] = a_spec_attributes
@@ -10340,7 +11845,6 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) SetName(name string) {
 
 // Stage puts a_spec_objects to the model stage
 func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
-
 	if _, ok := stage.A_SPEC_OBJECTSs[a_spec_objects]; !ok {
 		stage.A_SPEC_OBJECTSs[a_spec_objects] = struct{}{}
 		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = stage.A_SPEC_OBJECTSOrder
@@ -10357,14 +11861,13 @@ func (a_spec_objects *A_SPEC_OBJECTS) Stage(stage *Stage) *A_SPEC_OBJECTS {
 // - force the order if the order is equal or greater than the stage.A_SPEC_OBJECTSOrder
 // - update stage.A_SPEC_OBJECTSOrder accordingly
 func (a_spec_objects *A_SPEC_OBJECTS) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_OBJECTSs[a_spec_objects]; !ok {
 		stage.A_SPEC_OBJECTSs[a_spec_objects] = struct{}{}
 
 		if order > stage.A_SPEC_OBJECTSOrder {
 			stage.A_SPEC_OBJECTSOrder = order
 		}
-		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = stage.A_SPEC_OBJECTSOrder
+		stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects] = order
 		stage.A_SPEC_OBJECTSOrder++
 	}
 	stage.A_SPEC_OBJECTSs_mapString[a_spec_objects.Name] = a_spec_objects
@@ -10426,7 +11929,6 @@ func (a_spec_objects *A_SPEC_OBJECTS) SetName(name string) {
 
 // Stage puts a_spec_object_type_ref to the model stage
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Stage(stage *Stage) *A_SPEC_OBJECT_TYPE_REF {
-
 	if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref]; !ok {
 		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = struct{}{}
 		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFOrder
@@ -10443,14 +11945,13 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) Stage(stage *Stage) *A_SPE
 // - force the order if the order is equal or greater than the stage.A_SPEC_OBJECT_TYPE_REFOrder
 // - update stage.A_SPEC_OBJECT_TYPE_REFOrder accordingly
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref]; !ok {
 		stage.A_SPEC_OBJECT_TYPE_REFs[a_spec_object_type_ref] = struct{}{}
 
 		if order > stage.A_SPEC_OBJECT_TYPE_REFOrder {
 			stage.A_SPEC_OBJECT_TYPE_REFOrder = order
 		}
-		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFOrder
+		stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref] = order
 		stage.A_SPEC_OBJECT_TYPE_REFOrder++
 	}
 	stage.A_SPEC_OBJECT_TYPE_REFs_mapString[a_spec_object_type_ref.Name] = a_spec_object_type_ref
@@ -10512,7 +12013,6 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) SetName(name string) {
 
 // Stage puts a_spec_relations to the model stage
 func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS {
-
 	if _, ok := stage.A_SPEC_RELATIONSs[a_spec_relations]; !ok {
 		stage.A_SPEC_RELATIONSs[a_spec_relations] = struct{}{}
 		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = stage.A_SPEC_RELATIONSOrder
@@ -10529,14 +12029,13 @@ func (a_spec_relations *A_SPEC_RELATIONS) Stage(stage *Stage) *A_SPEC_RELATIONS 
 // - force the order if the order is equal or greater than the stage.A_SPEC_RELATIONSOrder
 // - update stage.A_SPEC_RELATIONSOrder accordingly
 func (a_spec_relations *A_SPEC_RELATIONS) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_RELATIONSs[a_spec_relations]; !ok {
 		stage.A_SPEC_RELATIONSs[a_spec_relations] = struct{}{}
 
 		if order > stage.A_SPEC_RELATIONSOrder {
 			stage.A_SPEC_RELATIONSOrder = order
 		}
-		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = stage.A_SPEC_RELATIONSOrder
+		stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations] = order
 		stage.A_SPEC_RELATIONSOrder++
 	}
 	stage.A_SPEC_RELATIONSs_mapString[a_spec_relations.Name] = a_spec_relations
@@ -10598,7 +12097,6 @@ func (a_spec_relations *A_SPEC_RELATIONS) SetName(name string) {
 
 // Stage puts a_spec_relation_groups to the model stage
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Stage(stage *Stage) *A_SPEC_RELATION_GROUPS {
-
 	if _, ok := stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups]; !ok {
 		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = struct{}{}
 		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSOrder
@@ -10615,14 +12113,13 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) Stage(stage *Stage) *A_SPE
 // - force the order if the order is equal or greater than the stage.A_SPEC_RELATION_GROUPSOrder
 // - update stage.A_SPEC_RELATION_GROUPSOrder accordingly
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups]; !ok {
 		stage.A_SPEC_RELATION_GROUPSs[a_spec_relation_groups] = struct{}{}
 
 		if order > stage.A_SPEC_RELATION_GROUPSOrder {
 			stage.A_SPEC_RELATION_GROUPSOrder = order
 		}
-		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSOrder
+		stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups] = order
 		stage.A_SPEC_RELATION_GROUPSOrder++
 	}
 	stage.A_SPEC_RELATION_GROUPSs_mapString[a_spec_relation_groups.Name] = a_spec_relation_groups
@@ -10684,7 +12181,6 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) SetName(name string) {
 
 // Stage puts a_spec_relation_ref to the model stage
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELATION_REF {
-
 	if _, ok := stage.A_SPEC_RELATION_REFs[a_spec_relation_ref]; !ok {
 		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = struct{}{}
 		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFOrder
@@ -10701,14 +12197,13 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) Stage(stage *Stage) *A_SPEC_RELA
 // - force the order if the order is equal or greater than the stage.A_SPEC_RELATION_REFOrder
 // - update stage.A_SPEC_RELATION_REFOrder accordingly
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_RELATION_REFs[a_spec_relation_ref]; !ok {
 		stage.A_SPEC_RELATION_REFs[a_spec_relation_ref] = struct{}{}
 
 		if order > stage.A_SPEC_RELATION_REFOrder {
 			stage.A_SPEC_RELATION_REFOrder = order
 		}
-		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFOrder
+		stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref] = order
 		stage.A_SPEC_RELATION_REFOrder++
 	}
 	stage.A_SPEC_RELATION_REFs_mapString[a_spec_relation_ref.Name] = a_spec_relation_ref
@@ -10770,7 +12265,6 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) SetName(name string) {
 
 // Stage puts a_spec_relation_type_ref to the model stage
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Stage(stage *Stage) *A_SPEC_RELATION_TYPE_REF {
-
 	if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref]; !ok {
 		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = struct{}{}
 		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFOrder
@@ -10787,14 +12281,13 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) Stage(stage *Stage) *A
 // - force the order if the order is equal or greater than the stage.A_SPEC_RELATION_TYPE_REFOrder
 // - update stage.A_SPEC_RELATION_TYPE_REFOrder accordingly
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref]; !ok {
 		stage.A_SPEC_RELATION_TYPE_REFs[a_spec_relation_type_ref] = struct{}{}
 
 		if order > stage.A_SPEC_RELATION_TYPE_REFOrder {
 			stage.A_SPEC_RELATION_TYPE_REFOrder = order
 		}
-		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFOrder
+		stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref] = order
 		stage.A_SPEC_RELATION_TYPE_REFOrder++
 	}
 	stage.A_SPEC_RELATION_TYPE_REFs_mapString[a_spec_relation_type_ref.Name] = a_spec_relation_type_ref
@@ -10856,7 +12349,6 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) SetName(name string) {
 
 // Stage puts a_spec_types to the model stage
 func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
-
 	if _, ok := stage.A_SPEC_TYPESs[a_spec_types]; !ok {
 		stage.A_SPEC_TYPESs[a_spec_types] = struct{}{}
 		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = stage.A_SPEC_TYPESOrder
@@ -10873,14 +12365,13 @@ func (a_spec_types *A_SPEC_TYPES) Stage(stage *Stage) *A_SPEC_TYPES {
 // - force the order if the order is equal or greater than the stage.A_SPEC_TYPESOrder
 // - update stage.A_SPEC_TYPESOrder accordingly
 func (a_spec_types *A_SPEC_TYPES) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_SPEC_TYPESs[a_spec_types]; !ok {
 		stage.A_SPEC_TYPESs[a_spec_types] = struct{}{}
 
 		if order > stage.A_SPEC_TYPESOrder {
 			stage.A_SPEC_TYPESOrder = order
 		}
-		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = stage.A_SPEC_TYPESOrder
+		stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types] = order
 		stage.A_SPEC_TYPESOrder++
 	}
 	stage.A_SPEC_TYPESs_mapString[a_spec_types.Name] = a_spec_types
@@ -10942,7 +12433,6 @@ func (a_spec_types *A_SPEC_TYPES) SetName(name string) {
 
 // Stage puts a_the_header to the model stage
 func (a_the_header *A_THE_HEADER) Stage(stage *Stage) *A_THE_HEADER {
-
 	if _, ok := stage.A_THE_HEADERs[a_the_header]; !ok {
 		stage.A_THE_HEADERs[a_the_header] = struct{}{}
 		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = stage.A_THE_HEADEROrder
@@ -10959,14 +12449,13 @@ func (a_the_header *A_THE_HEADER) Stage(stage *Stage) *A_THE_HEADER {
 // - force the order if the order is equal or greater than the stage.A_THE_HEADEROrder
 // - update stage.A_THE_HEADEROrder accordingly
 func (a_the_header *A_THE_HEADER) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_THE_HEADERs[a_the_header]; !ok {
 		stage.A_THE_HEADERs[a_the_header] = struct{}{}
 
 		if order > stage.A_THE_HEADEROrder {
 			stage.A_THE_HEADEROrder = order
 		}
-		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = stage.A_THE_HEADEROrder
+		stage.A_THE_HEADERMap_Staged_Order[a_the_header] = order
 		stage.A_THE_HEADEROrder++
 	}
 	stage.A_THE_HEADERs_mapString[a_the_header.Name] = a_the_header
@@ -11028,7 +12517,6 @@ func (a_the_header *A_THE_HEADER) SetName(name string) {
 
 // Stage puts a_tool_extensions to the model stage
 func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIONS {
-
 	if _, ok := stage.A_TOOL_EXTENSIONSs[a_tool_extensions]; !ok {
 		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = struct{}{}
 		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = stage.A_TOOL_EXTENSIONSOrder
@@ -11045,14 +12533,13 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) Stage(stage *Stage) *A_TOOL_EXTENSIO
 // - force the order if the order is equal or greater than the stage.A_TOOL_EXTENSIONSOrder
 // - update stage.A_TOOL_EXTENSIONSOrder accordingly
 func (a_tool_extensions *A_TOOL_EXTENSIONS) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.A_TOOL_EXTENSIONSs[a_tool_extensions]; !ok {
 		stage.A_TOOL_EXTENSIONSs[a_tool_extensions] = struct{}{}
 
 		if order > stage.A_TOOL_EXTENSIONSOrder {
 			stage.A_TOOL_EXTENSIONSOrder = order
 		}
-		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = stage.A_TOOL_EXTENSIONSOrder
+		stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions] = order
 		stage.A_TOOL_EXTENSIONSOrder++
 	}
 	stage.A_TOOL_EXTENSIONSs_mapString[a_tool_extensions.Name] = a_tool_extensions
@@ -11114,7 +12601,6 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) SetName(name string) {
 
 // Stage puts datatype_definition_boolean to the model stage
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Stage(stage *Stage) *DATATYPE_DEFINITION_BOOLEAN {
-
 	if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean]; !ok {
 		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = struct{}{}
 		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANOrder
@@ -11131,14 +12617,13 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) Stage(stage *Sta
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_BOOLEANOrder
 // - update stage.DATATYPE_DEFINITION_BOOLEANOrder accordingly
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean]; !ok {
 		stage.DATATYPE_DEFINITION_BOOLEANs[datatype_definition_boolean] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_BOOLEANOrder {
 			stage.DATATYPE_DEFINITION_BOOLEANOrder = order
 		}
-		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANOrder
+		stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean] = order
 		stage.DATATYPE_DEFINITION_BOOLEANOrder++
 	}
 	stage.DATATYPE_DEFINITION_BOOLEANs_mapString[datatype_definition_boolean.Name] = datatype_definition_boolean
@@ -11200,7 +12685,6 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) SetName(name str
 
 // Stage puts datatype_definition_date to the model stage
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *DATATYPE_DEFINITION_DATE {
-
 	if _, ok := stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date]; !ok {
 		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = struct{}{}
 		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEOrder
@@ -11217,14 +12701,13 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) Stage(stage *Stage) *D
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_DATEOrder
 // - update stage.DATATYPE_DEFINITION_DATEOrder accordingly
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date]; !ok {
 		stage.DATATYPE_DEFINITION_DATEs[datatype_definition_date] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_DATEOrder {
 			stage.DATATYPE_DEFINITION_DATEOrder = order
 		}
-		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEOrder
+		stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date] = order
 		stage.DATATYPE_DEFINITION_DATEOrder++
 	}
 	stage.DATATYPE_DEFINITION_DATEs_mapString[datatype_definition_date.Name] = datatype_definition_date
@@ -11286,7 +12769,6 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) SetName(name string) {
 
 // Stage puts datatype_definition_enumeration to the model stage
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Stage(stage *Stage) *DATATYPE_DEFINITION_ENUMERATION {
-
 	if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration]; !ok {
 		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = struct{}{}
 		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONOrder
@@ -11303,14 +12785,13 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) Stage(st
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_ENUMERATIONOrder
 // - update stage.DATATYPE_DEFINITION_ENUMERATIONOrder accordingly
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration]; !ok {
 		stage.DATATYPE_DEFINITION_ENUMERATIONs[datatype_definition_enumeration] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_ENUMERATIONOrder {
 			stage.DATATYPE_DEFINITION_ENUMERATIONOrder = order
 		}
-		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONOrder
+		stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration] = order
 		stage.DATATYPE_DEFINITION_ENUMERATIONOrder++
 	}
 	stage.DATATYPE_DEFINITION_ENUMERATIONs_mapString[datatype_definition_enumeration.Name] = datatype_definition_enumeration
@@ -11372,7 +12853,6 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) SetName(
 
 // Stage puts datatype_definition_integer to the model stage
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Stage) *DATATYPE_DEFINITION_INTEGER {
-
 	if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer]; !ok {
 		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = struct{}{}
 		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGEROrder
@@ -11389,14 +12869,13 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) Stage(stage *Sta
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_INTEGEROrder
 // - update stage.DATATYPE_DEFINITION_INTEGEROrder accordingly
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer]; !ok {
 		stage.DATATYPE_DEFINITION_INTEGERs[datatype_definition_integer] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_INTEGEROrder {
 			stage.DATATYPE_DEFINITION_INTEGEROrder = order
 		}
-		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGEROrder
+		stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer] = order
 		stage.DATATYPE_DEFINITION_INTEGEROrder++
 	}
 	stage.DATATYPE_DEFINITION_INTEGERs_mapString[datatype_definition_integer.Name] = datatype_definition_integer
@@ -11458,7 +12937,6 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) SetName(name str
 
 // Stage puts datatype_definition_real to the model stage
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Stage(stage *Stage) *DATATYPE_DEFINITION_REAL {
-
 	if _, ok := stage.DATATYPE_DEFINITION_REALs[datatype_definition_real]; !ok {
 		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = struct{}{}
 		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALOrder
@@ -11475,14 +12953,13 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) Stage(stage *Stage) *D
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_REALOrder
 // - update stage.DATATYPE_DEFINITION_REALOrder accordingly
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_REALs[datatype_definition_real]; !ok {
 		stage.DATATYPE_DEFINITION_REALs[datatype_definition_real] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_REALOrder {
 			stage.DATATYPE_DEFINITION_REALOrder = order
 		}
-		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALOrder
+		stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real] = order
 		stage.DATATYPE_DEFINITION_REALOrder++
 	}
 	stage.DATATYPE_DEFINITION_REALs_mapString[datatype_definition_real.Name] = datatype_definition_real
@@ -11544,7 +13021,6 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) SetName(name string) {
 
 // Stage puts datatype_definition_string to the model stage
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage) *DATATYPE_DEFINITION_STRING {
-
 	if _, ok := stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string]; !ok {
 		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = struct{}{}
 		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGOrder
@@ -11561,14 +13037,13 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) Stage(stage *Stage
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_STRINGOrder
 // - update stage.DATATYPE_DEFINITION_STRINGOrder accordingly
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string]; !ok {
 		stage.DATATYPE_DEFINITION_STRINGs[datatype_definition_string] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_STRINGOrder {
 			stage.DATATYPE_DEFINITION_STRINGOrder = order
 		}
-		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGOrder
+		stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string] = order
 		stage.DATATYPE_DEFINITION_STRINGOrder++
 	}
 	stage.DATATYPE_DEFINITION_STRINGs_mapString[datatype_definition_string.Name] = datatype_definition_string
@@ -11630,7 +13105,6 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) SetName(name strin
 
 // Stage puts datatype_definition_xhtml to the model stage
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Stage(stage *Stage) *DATATYPE_DEFINITION_XHTML {
-
 	if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml]; !ok {
 		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = struct{}{}
 		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLOrder
@@ -11647,14 +13121,13 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) Stage(stage *Stage) 
 // - force the order if the order is equal or greater than the stage.DATATYPE_DEFINITION_XHTMLOrder
 // - update stage.DATATYPE_DEFINITION_XHTMLOrder accordingly
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml]; !ok {
 		stage.DATATYPE_DEFINITION_XHTMLs[datatype_definition_xhtml] = struct{}{}
 
 		if order > stage.DATATYPE_DEFINITION_XHTMLOrder {
 			stage.DATATYPE_DEFINITION_XHTMLOrder = order
 		}
-		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLOrder
+		stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml] = order
 		stage.DATATYPE_DEFINITION_XHTMLOrder++
 	}
 	stage.DATATYPE_DEFINITION_XHTMLs_mapString[datatype_definition_xhtml.Name] = datatype_definition_xhtml
@@ -11716,7 +13189,6 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) SetName(name string)
 
 // Stage puts embedded_value to the model stage
 func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
-
 	if _, ok := stage.EMBEDDED_VALUEs[embedded_value]; !ok {
 		stage.EMBEDDED_VALUEs[embedded_value] = struct{}{}
 		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = stage.EMBEDDED_VALUEOrder
@@ -11733,14 +13205,13 @@ func (embedded_value *EMBEDDED_VALUE) Stage(stage *Stage) *EMBEDDED_VALUE {
 // - force the order if the order is equal or greater than the stage.EMBEDDED_VALUEOrder
 // - update stage.EMBEDDED_VALUEOrder accordingly
 func (embedded_value *EMBEDDED_VALUE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.EMBEDDED_VALUEs[embedded_value]; !ok {
 		stage.EMBEDDED_VALUEs[embedded_value] = struct{}{}
 
 		if order > stage.EMBEDDED_VALUEOrder {
 			stage.EMBEDDED_VALUEOrder = order
 		}
-		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = stage.EMBEDDED_VALUEOrder
+		stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value] = order
 		stage.EMBEDDED_VALUEOrder++
 	}
 	stage.EMBEDDED_VALUEs_mapString[embedded_value.Name] = embedded_value
@@ -11802,7 +13273,6 @@ func (embedded_value *EMBEDDED_VALUE) SetName(name string) {
 
 // Stage puts enum_value to the model stage
 func (enum_value *ENUM_VALUE) Stage(stage *Stage) *ENUM_VALUE {
-
 	if _, ok := stage.ENUM_VALUEs[enum_value]; !ok {
 		stage.ENUM_VALUEs[enum_value] = struct{}{}
 		stage.ENUM_VALUEMap_Staged_Order[enum_value] = stage.ENUM_VALUEOrder
@@ -11819,14 +13289,13 @@ func (enum_value *ENUM_VALUE) Stage(stage *Stage) *ENUM_VALUE {
 // - force the order if the order is equal or greater than the stage.ENUM_VALUEOrder
 // - update stage.ENUM_VALUEOrder accordingly
 func (enum_value *ENUM_VALUE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.ENUM_VALUEs[enum_value]; !ok {
 		stage.ENUM_VALUEs[enum_value] = struct{}{}
 
 		if order > stage.ENUM_VALUEOrder {
 			stage.ENUM_VALUEOrder = order
 		}
-		stage.ENUM_VALUEMap_Staged_Order[enum_value] = stage.ENUM_VALUEOrder
+		stage.ENUM_VALUEMap_Staged_Order[enum_value] = order
 		stage.ENUM_VALUEOrder++
 	}
 	stage.ENUM_VALUEs_mapString[enum_value.Name] = enum_value
@@ -11888,7 +13357,6 @@ func (enum_value *ENUM_VALUE) SetName(name string) {
 
 // Stage puts embeddedjpgimage to the model stage
 func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage {
-
 	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; !ok {
 		stage.EmbeddedJpgImages[embeddedjpgimage] = struct{}{}
 		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
@@ -11905,14 +13373,13 @@ func (embeddedjpgimage *EmbeddedJpgImage) Stage(stage *Stage) *EmbeddedJpgImage 
 // - force the order if the order is equal or greater than the stage.EmbeddedJpgImageOrder
 // - update stage.EmbeddedJpgImageOrder accordingly
 func (embeddedjpgimage *EmbeddedJpgImage) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.EmbeddedJpgImages[embeddedjpgimage]; !ok {
 		stage.EmbeddedJpgImages[embeddedjpgimage] = struct{}{}
 
 		if order > stage.EmbeddedJpgImageOrder {
 			stage.EmbeddedJpgImageOrder = order
 		}
-		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = stage.EmbeddedJpgImageOrder
+		stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage] = order
 		stage.EmbeddedJpgImageOrder++
 	}
 	stage.EmbeddedJpgImages_mapString[embeddedjpgimage.Name] = embeddedjpgimage
@@ -11974,7 +13441,6 @@ func (embeddedjpgimage *EmbeddedJpgImage) SetName(name string) {
 
 // Stage puts embeddedpngimage to the model stage
 func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage {
-
 	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; !ok {
 		stage.EmbeddedPngImages[embeddedpngimage] = struct{}{}
 		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
@@ -11991,14 +13457,13 @@ func (embeddedpngimage *EmbeddedPngImage) Stage(stage *Stage) *EmbeddedPngImage 
 // - force the order if the order is equal or greater than the stage.EmbeddedPngImageOrder
 // - update stage.EmbeddedPngImageOrder accordingly
 func (embeddedpngimage *EmbeddedPngImage) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.EmbeddedPngImages[embeddedpngimage]; !ok {
 		stage.EmbeddedPngImages[embeddedpngimage] = struct{}{}
 
 		if order > stage.EmbeddedPngImageOrder {
 			stage.EmbeddedPngImageOrder = order
 		}
-		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = stage.EmbeddedPngImageOrder
+		stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage] = order
 		stage.EmbeddedPngImageOrder++
 	}
 	stage.EmbeddedPngImages_mapString[embeddedpngimage.Name] = embeddedpngimage
@@ -12060,7 +13525,6 @@ func (embeddedpngimage *EmbeddedPngImage) SetName(name string) {
 
 // Stage puts embeddedsvgimage to the model stage
 func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage {
-
 	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; !ok {
 		stage.EmbeddedSvgImages[embeddedsvgimage] = struct{}{}
 		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
@@ -12077,14 +13541,13 @@ func (embeddedsvgimage *EmbeddedSvgImage) Stage(stage *Stage) *EmbeddedSvgImage 
 // - force the order if the order is equal or greater than the stage.EmbeddedSvgImageOrder
 // - update stage.EmbeddedSvgImageOrder accordingly
 func (embeddedsvgimage *EmbeddedSvgImage) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.EmbeddedSvgImages[embeddedsvgimage]; !ok {
 		stage.EmbeddedSvgImages[embeddedsvgimage] = struct{}{}
 
 		if order > stage.EmbeddedSvgImageOrder {
 			stage.EmbeddedSvgImageOrder = order
 		}
-		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = stage.EmbeddedSvgImageOrder
+		stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage] = order
 		stage.EmbeddedSvgImageOrder++
 	}
 	stage.EmbeddedSvgImages_mapString[embeddedsvgimage.Name] = embeddedsvgimage
@@ -12146,7 +13609,6 @@ func (embeddedsvgimage *EmbeddedSvgImage) SetName(name string) {
 
 // Stage puts kill to the model stage
 func (kill *Kill) Stage(stage *Stage) *Kill {
-
 	if _, ok := stage.Kills[kill]; !ok {
 		stage.Kills[kill] = struct{}{}
 		stage.KillMap_Staged_Order[kill] = stage.KillOrder
@@ -12163,14 +13625,13 @@ func (kill *Kill) Stage(stage *Stage) *Kill {
 // - force the order if the order is equal or greater than the stage.KillOrder
 // - update stage.KillOrder accordingly
 func (kill *Kill) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.Kills[kill]; !ok {
 		stage.Kills[kill] = struct{}{}
 
 		if order > stage.KillOrder {
 			stage.KillOrder = order
 		}
-		stage.KillMap_Staged_Order[kill] = stage.KillOrder
+		stage.KillMap_Staged_Order[kill] = order
 		stage.KillOrder++
 	}
 	stage.Kills_mapString[kill.Name] = kill
@@ -12232,7 +13693,6 @@ func (kill *Kill) SetName(name string) {
 
 // Stage puts map_identifier_bool to the model stage
 func (map_identifier_bool *Map_identifier_bool) Stage(stage *Stage) *Map_identifier_bool {
-
 	if _, ok := stage.Map_identifier_bools[map_identifier_bool]; !ok {
 		stage.Map_identifier_bools[map_identifier_bool] = struct{}{}
 		stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool] = stage.Map_identifier_boolOrder
@@ -12249,14 +13709,13 @@ func (map_identifier_bool *Map_identifier_bool) Stage(stage *Stage) *Map_identif
 // - force the order if the order is equal or greater than the stage.Map_identifier_boolOrder
 // - update stage.Map_identifier_boolOrder accordingly
 func (map_identifier_bool *Map_identifier_bool) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.Map_identifier_bools[map_identifier_bool]; !ok {
 		stage.Map_identifier_bools[map_identifier_bool] = struct{}{}
 
 		if order > stage.Map_identifier_boolOrder {
 			stage.Map_identifier_boolOrder = order
 		}
-		stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool] = stage.Map_identifier_boolOrder
+		stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool] = order
 		stage.Map_identifier_boolOrder++
 	}
 	stage.Map_identifier_bools_mapString[map_identifier_bool.Name] = map_identifier_bool
@@ -12318,7 +13777,6 @@ func (map_identifier_bool *Map_identifier_bool) SetName(name string) {
 
 // Stage puts relation_group to the model stage
 func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
-
 	if _, ok := stage.RELATION_GROUPs[relation_group]; !ok {
 		stage.RELATION_GROUPs[relation_group] = struct{}{}
 		stage.RELATION_GROUPMap_Staged_Order[relation_group] = stage.RELATION_GROUPOrder
@@ -12335,14 +13793,13 @@ func (relation_group *RELATION_GROUP) Stage(stage *Stage) *RELATION_GROUP {
 // - force the order if the order is equal or greater than the stage.RELATION_GROUPOrder
 // - update stage.RELATION_GROUPOrder accordingly
 func (relation_group *RELATION_GROUP) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.RELATION_GROUPs[relation_group]; !ok {
 		stage.RELATION_GROUPs[relation_group] = struct{}{}
 
 		if order > stage.RELATION_GROUPOrder {
 			stage.RELATION_GROUPOrder = order
 		}
-		stage.RELATION_GROUPMap_Staged_Order[relation_group] = stage.RELATION_GROUPOrder
+		stage.RELATION_GROUPMap_Staged_Order[relation_group] = order
 		stage.RELATION_GROUPOrder++
 	}
 	stage.RELATION_GROUPs_mapString[relation_group.Name] = relation_group
@@ -12404,7 +13861,6 @@ func (relation_group *RELATION_GROUP) SetName(name string) {
 
 // Stage puts relation_group_type to the model stage
 func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GROUP_TYPE {
-
 	if _, ok := stage.RELATION_GROUP_TYPEs[relation_group_type]; !ok {
 		stage.RELATION_GROUP_TYPEs[relation_group_type] = struct{}{}
 		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = stage.RELATION_GROUP_TYPEOrder
@@ -12421,14 +13877,13 @@ func (relation_group_type *RELATION_GROUP_TYPE) Stage(stage *Stage) *RELATION_GR
 // - force the order if the order is equal or greater than the stage.RELATION_GROUP_TYPEOrder
 // - update stage.RELATION_GROUP_TYPEOrder accordingly
 func (relation_group_type *RELATION_GROUP_TYPE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.RELATION_GROUP_TYPEs[relation_group_type]; !ok {
 		stage.RELATION_GROUP_TYPEs[relation_group_type] = struct{}{}
 
 		if order > stage.RELATION_GROUP_TYPEOrder {
 			stage.RELATION_GROUP_TYPEOrder = order
 		}
-		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = stage.RELATION_GROUP_TYPEOrder
+		stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type] = order
 		stage.RELATION_GROUP_TYPEOrder++
 	}
 	stage.RELATION_GROUP_TYPEs_mapString[relation_group_type.Name] = relation_group_type
@@ -12490,7 +13945,6 @@ func (relation_group_type *RELATION_GROUP_TYPE) SetName(name string) {
 
 // Stage puts req_if to the model stage
 func (req_if *REQ_IF) Stage(stage *Stage) *REQ_IF {
-
 	if _, ok := stage.REQ_IFs[req_if]; !ok {
 		stage.REQ_IFs[req_if] = struct{}{}
 		stage.REQ_IFMap_Staged_Order[req_if] = stage.REQ_IFOrder
@@ -12507,14 +13961,13 @@ func (req_if *REQ_IF) Stage(stage *Stage) *REQ_IF {
 // - force the order if the order is equal or greater than the stage.REQ_IFOrder
 // - update stage.REQ_IFOrder accordingly
 func (req_if *REQ_IF) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.REQ_IFs[req_if]; !ok {
 		stage.REQ_IFs[req_if] = struct{}{}
 
 		if order > stage.REQ_IFOrder {
 			stage.REQ_IFOrder = order
 		}
-		stage.REQ_IFMap_Staged_Order[req_if] = stage.REQ_IFOrder
+		stage.REQ_IFMap_Staged_Order[req_if] = order
 		stage.REQ_IFOrder++
 	}
 	stage.REQ_IFs_mapString[req_if.Name] = req_if
@@ -12576,7 +14029,6 @@ func (req_if *REQ_IF) SetName(name string) {
 
 // Stage puts req_if_content to the model stage
 func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
-
 	if _, ok := stage.REQ_IF_CONTENTs[req_if_content]; !ok {
 		stage.REQ_IF_CONTENTs[req_if_content] = struct{}{}
 		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = stage.REQ_IF_CONTENTOrder
@@ -12593,14 +14045,13 @@ func (req_if_content *REQ_IF_CONTENT) Stage(stage *Stage) *REQ_IF_CONTENT {
 // - force the order if the order is equal or greater than the stage.REQ_IF_CONTENTOrder
 // - update stage.REQ_IF_CONTENTOrder accordingly
 func (req_if_content *REQ_IF_CONTENT) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.REQ_IF_CONTENTs[req_if_content]; !ok {
 		stage.REQ_IF_CONTENTs[req_if_content] = struct{}{}
 
 		if order > stage.REQ_IF_CONTENTOrder {
 			stage.REQ_IF_CONTENTOrder = order
 		}
-		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = stage.REQ_IF_CONTENTOrder
+		stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content] = order
 		stage.REQ_IF_CONTENTOrder++
 	}
 	stage.REQ_IF_CONTENTs_mapString[req_if_content.Name] = req_if_content
@@ -12662,7 +14113,6 @@ func (req_if_content *REQ_IF_CONTENT) SetName(name string) {
 
 // Stage puts req_if_header to the model stage
 func (req_if_header *REQ_IF_HEADER) Stage(stage *Stage) *REQ_IF_HEADER {
-
 	if _, ok := stage.REQ_IF_HEADERs[req_if_header]; !ok {
 		stage.REQ_IF_HEADERs[req_if_header] = struct{}{}
 		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = stage.REQ_IF_HEADEROrder
@@ -12679,14 +14129,13 @@ func (req_if_header *REQ_IF_HEADER) Stage(stage *Stage) *REQ_IF_HEADER {
 // - force the order if the order is equal or greater than the stage.REQ_IF_HEADEROrder
 // - update stage.REQ_IF_HEADEROrder accordingly
 func (req_if_header *REQ_IF_HEADER) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.REQ_IF_HEADERs[req_if_header]; !ok {
 		stage.REQ_IF_HEADERs[req_if_header] = struct{}{}
 
 		if order > stage.REQ_IF_HEADEROrder {
 			stage.REQ_IF_HEADEROrder = order
 		}
-		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = stage.REQ_IF_HEADEROrder
+		stage.REQ_IF_HEADERMap_Staged_Order[req_if_header] = order
 		stage.REQ_IF_HEADEROrder++
 	}
 	stage.REQ_IF_HEADERs_mapString[req_if_header.Name] = req_if_header
@@ -12748,7 +14197,6 @@ func (req_if_header *REQ_IF_HEADER) SetName(name string) {
 
 // Stage puts req_if_tool_extension to the model stage
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_TOOL_EXTENSION {
-
 	if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension]; !ok {
 		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = struct{}{}
 		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONOrder
@@ -12765,14 +14213,13 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) Stage(stage *Stage) *REQ_IF_
 // - force the order if the order is equal or greater than the stage.REQ_IF_TOOL_EXTENSIONOrder
 // - update stage.REQ_IF_TOOL_EXTENSIONOrder accordingly
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension]; !ok {
 		stage.REQ_IF_TOOL_EXTENSIONs[req_if_tool_extension] = struct{}{}
 
 		if order > stage.REQ_IF_TOOL_EXTENSIONOrder {
 			stage.REQ_IF_TOOL_EXTENSIONOrder = order
 		}
-		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONOrder
+		stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension] = order
 		stage.REQ_IF_TOOL_EXTENSIONOrder++
 	}
 	stage.REQ_IF_TOOL_EXTENSIONs_mapString[req_if_tool_extension.Name] = req_if_tool_extension
@@ -12834,7 +14281,6 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) SetName(name string) {
 
 // Stage puts specification to the model stage
 func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
-
 	if _, ok := stage.SPECIFICATIONs[specification]; !ok {
 		stage.SPECIFICATIONs[specification] = struct{}{}
 		stage.SPECIFICATIONMap_Staged_Order[specification] = stage.SPECIFICATIONOrder
@@ -12851,14 +14297,13 @@ func (specification *SPECIFICATION) Stage(stage *Stage) *SPECIFICATION {
 // - force the order if the order is equal or greater than the stage.SPECIFICATIONOrder
 // - update stage.SPECIFICATIONOrder accordingly
 func (specification *SPECIFICATION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPECIFICATIONs[specification]; !ok {
 		stage.SPECIFICATIONs[specification] = struct{}{}
 
 		if order > stage.SPECIFICATIONOrder {
 			stage.SPECIFICATIONOrder = order
 		}
-		stage.SPECIFICATIONMap_Staged_Order[specification] = stage.SPECIFICATIONOrder
+		stage.SPECIFICATIONMap_Staged_Order[specification] = order
 		stage.SPECIFICATIONOrder++
 	}
 	stage.SPECIFICATIONs_mapString[specification.Name] = specification
@@ -12920,7 +14365,6 @@ func (specification *SPECIFICATION) SetName(name string) {
 
 // Stage puts specification_rendering to the model stage
 func (specification_rendering *SPECIFICATION_Rendering) Stage(stage *Stage) *SPECIFICATION_Rendering {
-
 	if _, ok := stage.SPECIFICATION_Renderings[specification_rendering]; !ok {
 		stage.SPECIFICATION_Renderings[specification_rendering] = struct{}{}
 		stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering] = stage.SPECIFICATION_RenderingOrder
@@ -12937,14 +14381,13 @@ func (specification_rendering *SPECIFICATION_Rendering) Stage(stage *Stage) *SPE
 // - force the order if the order is equal or greater than the stage.SPECIFICATION_RenderingOrder
 // - update stage.SPECIFICATION_RenderingOrder accordingly
 func (specification_rendering *SPECIFICATION_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPECIFICATION_Renderings[specification_rendering]; !ok {
 		stage.SPECIFICATION_Renderings[specification_rendering] = struct{}{}
 
 		if order > stage.SPECIFICATION_RenderingOrder {
 			stage.SPECIFICATION_RenderingOrder = order
 		}
-		stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering] = stage.SPECIFICATION_RenderingOrder
+		stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering] = order
 		stage.SPECIFICATION_RenderingOrder++
 	}
 	stage.SPECIFICATION_Renderings_mapString[specification_rendering.Name] = specification_rendering
@@ -13006,7 +14449,6 @@ func (specification_rendering *SPECIFICATION_Rendering) SetName(name string) {
 
 // Stage puts specification_type to the model stage
 func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION_TYPE {
-
 	if _, ok := stage.SPECIFICATION_TYPEs[specification_type]; !ok {
 		stage.SPECIFICATION_TYPEs[specification_type] = struct{}{}
 		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = stage.SPECIFICATION_TYPEOrder
@@ -13023,14 +14465,13 @@ func (specification_type *SPECIFICATION_TYPE) Stage(stage *Stage) *SPECIFICATION
 // - force the order if the order is equal or greater than the stage.SPECIFICATION_TYPEOrder
 // - update stage.SPECIFICATION_TYPEOrder accordingly
 func (specification_type *SPECIFICATION_TYPE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPECIFICATION_TYPEs[specification_type]; !ok {
 		stage.SPECIFICATION_TYPEs[specification_type] = struct{}{}
 
 		if order > stage.SPECIFICATION_TYPEOrder {
 			stage.SPECIFICATION_TYPEOrder = order
 		}
-		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = stage.SPECIFICATION_TYPEOrder
+		stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type] = order
 		stage.SPECIFICATION_TYPEOrder++
 	}
 	stage.SPECIFICATION_TYPEs_mapString[specification_type.Name] = specification_type
@@ -13092,7 +14533,6 @@ func (specification_type *SPECIFICATION_TYPE) SetName(name string) {
 
 // Stage puts spec_hierarchy to the model stage
 func (spec_hierarchy *SPEC_HIERARCHY) Stage(stage *Stage) *SPEC_HIERARCHY {
-
 	if _, ok := stage.SPEC_HIERARCHYs[spec_hierarchy]; !ok {
 		stage.SPEC_HIERARCHYs[spec_hierarchy] = struct{}{}
 		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = stage.SPEC_HIERARCHYOrder
@@ -13109,14 +14549,13 @@ func (spec_hierarchy *SPEC_HIERARCHY) Stage(stage *Stage) *SPEC_HIERARCHY {
 // - force the order if the order is equal or greater than the stage.SPEC_HIERARCHYOrder
 // - update stage.SPEC_HIERARCHYOrder accordingly
 func (spec_hierarchy *SPEC_HIERARCHY) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPEC_HIERARCHYs[spec_hierarchy]; !ok {
 		stage.SPEC_HIERARCHYs[spec_hierarchy] = struct{}{}
 
 		if order > stage.SPEC_HIERARCHYOrder {
 			stage.SPEC_HIERARCHYOrder = order
 		}
-		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = stage.SPEC_HIERARCHYOrder
+		stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy] = order
 		stage.SPEC_HIERARCHYOrder++
 	}
 	stage.SPEC_HIERARCHYs_mapString[spec_hierarchy.Name] = spec_hierarchy
@@ -13178,7 +14617,6 @@ func (spec_hierarchy *SPEC_HIERARCHY) SetName(name string) {
 
 // Stage puts spec_object to the model stage
 func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
-
 	if _, ok := stage.SPEC_OBJECTs[spec_object]; !ok {
 		stage.SPEC_OBJECTs[spec_object] = struct{}{}
 		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = stage.SPEC_OBJECTOrder
@@ -13195,14 +14633,13 @@ func (spec_object *SPEC_OBJECT) Stage(stage *Stage) *SPEC_OBJECT {
 // - force the order if the order is equal or greater than the stage.SPEC_OBJECTOrder
 // - update stage.SPEC_OBJECTOrder accordingly
 func (spec_object *SPEC_OBJECT) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPEC_OBJECTs[spec_object]; !ok {
 		stage.SPEC_OBJECTs[spec_object] = struct{}{}
 
 		if order > stage.SPEC_OBJECTOrder {
 			stage.SPEC_OBJECTOrder = order
 		}
-		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = stage.SPEC_OBJECTOrder
+		stage.SPEC_OBJECTMap_Staged_Order[spec_object] = order
 		stage.SPEC_OBJECTOrder++
 	}
 	stage.SPEC_OBJECTs_mapString[spec_object.Name] = spec_object
@@ -13264,7 +14701,6 @@ func (spec_object *SPEC_OBJECT) SetName(name string) {
 
 // Stage puts spec_object_type to the model stage
 func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *Stage) *SPEC_OBJECT_TYPE {
-
 	if _, ok := stage.SPEC_OBJECT_TYPEs[spec_object_type]; !ok {
 		stage.SPEC_OBJECT_TYPEs[spec_object_type] = struct{}{}
 		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = stage.SPEC_OBJECT_TYPEOrder
@@ -13281,14 +14717,13 @@ func (spec_object_type *SPEC_OBJECT_TYPE) Stage(stage *Stage) *SPEC_OBJECT_TYPE 
 // - force the order if the order is equal or greater than the stage.SPEC_OBJECT_TYPEOrder
 // - update stage.SPEC_OBJECT_TYPEOrder accordingly
 func (spec_object_type *SPEC_OBJECT_TYPE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPEC_OBJECT_TYPEs[spec_object_type]; !ok {
 		stage.SPEC_OBJECT_TYPEs[spec_object_type] = struct{}{}
 
 		if order > stage.SPEC_OBJECT_TYPEOrder {
 			stage.SPEC_OBJECT_TYPEOrder = order
 		}
-		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = stage.SPEC_OBJECT_TYPEOrder
+		stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type] = order
 		stage.SPEC_OBJECT_TYPEOrder++
 	}
 	stage.SPEC_OBJECT_TYPEs_mapString[spec_object_type.Name] = spec_object_type
@@ -13350,7 +14785,6 @@ func (spec_object_type *SPEC_OBJECT_TYPE) SetName(name string) {
 
 // Stage puts spec_object_type_rendering to the model stage
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Stage(stage *Stage) *SPEC_OBJECT_TYPE_Rendering {
-
 	if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]; !ok {
 		stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering] = struct{}{}
 		stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingOrder
@@ -13367,14 +14801,13 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) Stage(stage *Stage
 // - force the order if the order is equal or greater than the stage.SPEC_OBJECT_TYPE_RenderingOrder
 // - update stage.SPEC_OBJECT_TYPE_RenderingOrder accordingly
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering]; !ok {
 		stage.SPEC_OBJECT_TYPE_Renderings[spec_object_type_rendering] = struct{}{}
 
 		if order > stage.SPEC_OBJECT_TYPE_RenderingOrder {
 			stage.SPEC_OBJECT_TYPE_RenderingOrder = order
 		}
-		stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingOrder
+		stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering] = order
 		stage.SPEC_OBJECT_TYPE_RenderingOrder++
 	}
 	stage.SPEC_OBJECT_TYPE_Renderings_mapString[spec_object_type_rendering.Name] = spec_object_type_rendering
@@ -13436,7 +14869,6 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) SetName(name strin
 
 // Stage puts spec_relation to the model stage
 func (spec_relation *SPEC_RELATION) Stage(stage *Stage) *SPEC_RELATION {
-
 	if _, ok := stage.SPEC_RELATIONs[spec_relation]; !ok {
 		stage.SPEC_RELATIONs[spec_relation] = struct{}{}
 		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = stage.SPEC_RELATIONOrder
@@ -13453,14 +14885,13 @@ func (spec_relation *SPEC_RELATION) Stage(stage *Stage) *SPEC_RELATION {
 // - force the order if the order is equal or greater than the stage.SPEC_RELATIONOrder
 // - update stage.SPEC_RELATIONOrder accordingly
 func (spec_relation *SPEC_RELATION) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPEC_RELATIONs[spec_relation]; !ok {
 		stage.SPEC_RELATIONs[spec_relation] = struct{}{}
 
 		if order > stage.SPEC_RELATIONOrder {
 			stage.SPEC_RELATIONOrder = order
 		}
-		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = stage.SPEC_RELATIONOrder
+		stage.SPEC_RELATIONMap_Staged_Order[spec_relation] = order
 		stage.SPEC_RELATIONOrder++
 	}
 	stage.SPEC_RELATIONs_mapString[spec_relation.Name] = spec_relation
@@ -13522,7 +14953,6 @@ func (spec_relation *SPEC_RELATION) SetName(name string) {
 
 // Stage puts spec_relation_type to the model stage
 func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION_TYPE {
-
 	if _, ok := stage.SPEC_RELATION_TYPEs[spec_relation_type]; !ok {
 		stage.SPEC_RELATION_TYPEs[spec_relation_type] = struct{}{}
 		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = stage.SPEC_RELATION_TYPEOrder
@@ -13539,14 +14969,13 @@ func (spec_relation_type *SPEC_RELATION_TYPE) Stage(stage *Stage) *SPEC_RELATION
 // - force the order if the order is equal or greater than the stage.SPEC_RELATION_TYPEOrder
 // - update stage.SPEC_RELATION_TYPEOrder accordingly
 func (spec_relation_type *SPEC_RELATION_TYPE) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.SPEC_RELATION_TYPEs[spec_relation_type]; !ok {
 		stage.SPEC_RELATION_TYPEs[spec_relation_type] = struct{}{}
 
 		if order > stage.SPEC_RELATION_TYPEOrder {
 			stage.SPEC_RELATION_TYPEOrder = order
 		}
-		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = stage.SPEC_RELATION_TYPEOrder
+		stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type] = order
 		stage.SPEC_RELATION_TYPEOrder++
 	}
 	stage.SPEC_RELATION_TYPEs_mapString[spec_relation_type.Name] = spec_relation_type
@@ -13608,7 +15037,6 @@ func (spec_relation_type *SPEC_RELATION_TYPE) SetName(name string) {
 
 // Stage puts staticwebsite to the model stage
 func (staticwebsite *StaticWebSite) Stage(stage *Stage) *StaticWebSite {
-
 	if _, ok := stage.StaticWebSites[staticwebsite]; !ok {
 		stage.StaticWebSites[staticwebsite] = struct{}{}
 		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = stage.StaticWebSiteOrder
@@ -13625,14 +15053,13 @@ func (staticwebsite *StaticWebSite) Stage(stage *Stage) *StaticWebSite {
 // - force the order if the order is equal or greater than the stage.StaticWebSiteOrder
 // - update stage.StaticWebSiteOrder accordingly
 func (staticwebsite *StaticWebSite) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.StaticWebSites[staticwebsite]; !ok {
 		stage.StaticWebSites[staticwebsite] = struct{}{}
 
 		if order > stage.StaticWebSiteOrder {
 			stage.StaticWebSiteOrder = order
 		}
-		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = stage.StaticWebSiteOrder
+		stage.StaticWebSiteMap_Staged_Order[staticwebsite] = order
 		stage.StaticWebSiteOrder++
 	}
 	stage.StaticWebSites_mapString[staticwebsite.Name] = staticwebsite
@@ -13694,7 +15121,6 @@ func (staticwebsite *StaticWebSite) SetName(name string) {
 
 // Stage puts staticwebsitechapter to the model stage
 func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWebSiteChapter {
-
 	if _, ok := stage.StaticWebSiteChapters[staticwebsitechapter]; !ok {
 		stage.StaticWebSiteChapters[staticwebsitechapter] = struct{}{}
 		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = stage.StaticWebSiteChapterOrder
@@ -13711,14 +15137,13 @@ func (staticwebsitechapter *StaticWebSiteChapter) Stage(stage *Stage) *StaticWeb
 // - force the order if the order is equal or greater than the stage.StaticWebSiteChapterOrder
 // - update stage.StaticWebSiteChapterOrder accordingly
 func (staticwebsitechapter *StaticWebSiteChapter) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.StaticWebSiteChapters[staticwebsitechapter]; !ok {
 		stage.StaticWebSiteChapters[staticwebsitechapter] = struct{}{}
 
 		if order > stage.StaticWebSiteChapterOrder {
 			stage.StaticWebSiteChapterOrder = order
 		}
-		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = stage.StaticWebSiteChapterOrder
+		stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter] = order
 		stage.StaticWebSiteChapterOrder++
 	}
 	stage.StaticWebSiteChapters_mapString[staticwebsitechapter.Name] = staticwebsitechapter
@@ -13780,7 +15205,6 @@ func (staticwebsitechapter *StaticWebSiteChapter) SetName(name string) {
 
 // Stage puts staticwebsitegeneratedimage to the model stage
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Stage) *StaticWebSiteGeneratedImage {
-
 	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; !ok {
 		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = struct{}{}
 		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
@@ -13797,14 +15221,13 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) Stage(stage *Sta
 // - force the order if the order is equal or greater than the stage.StaticWebSiteGeneratedImageOrder
 // - update stage.StaticWebSiteGeneratedImageOrder accordingly
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage]; !ok {
 		stage.StaticWebSiteGeneratedImages[staticwebsitegeneratedimage] = struct{}{}
 
 		if order > stage.StaticWebSiteGeneratedImageOrder {
 			stage.StaticWebSiteGeneratedImageOrder = order
 		}
-		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageOrder
+		stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage] = order
 		stage.StaticWebSiteGeneratedImageOrder++
 	}
 	stage.StaticWebSiteGeneratedImages_mapString[staticwebsitegeneratedimage.Name] = staticwebsitegeneratedimage
@@ -13866,7 +15289,6 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) SetName(name str
 
 // Stage puts staticwebsiteimage to the model stage
 func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSiteImage {
-
 	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; !ok {
 		stage.StaticWebSiteImages[staticwebsiteimage] = struct{}{}
 		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
@@ -13883,14 +15305,13 @@ func (staticwebsiteimage *StaticWebSiteImage) Stage(stage *Stage) *StaticWebSite
 // - force the order if the order is equal or greater than the stage.StaticWebSiteImageOrder
 // - update stage.StaticWebSiteImageOrder accordingly
 func (staticwebsiteimage *StaticWebSiteImage) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.StaticWebSiteImages[staticwebsiteimage]; !ok {
 		stage.StaticWebSiteImages[staticwebsiteimage] = struct{}{}
 
 		if order > stage.StaticWebSiteImageOrder {
 			stage.StaticWebSiteImageOrder = order
 		}
-		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = stage.StaticWebSiteImageOrder
+		stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage] = order
 		stage.StaticWebSiteImageOrder++
 	}
 	stage.StaticWebSiteImages_mapString[staticwebsiteimage.Name] = staticwebsiteimage
@@ -13952,7 +15373,6 @@ func (staticwebsiteimage *StaticWebSiteImage) SetName(name string) {
 
 // Stage puts staticwebsiteparagraph to the model stage
 func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *StaticWebSiteParagraph {
-
 	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; !ok {
 		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = struct{}{}
 		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
@@ -13969,14 +15389,13 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) Stage(stage *Stage) *Stati
 // - force the order if the order is equal or greater than the stage.StaticWebSiteParagraphOrder
 // - update stage.StaticWebSiteParagraphOrder accordingly
 func (staticwebsiteparagraph *StaticWebSiteParagraph) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.StaticWebSiteParagraphs[staticwebsiteparagraph]; !ok {
 		stage.StaticWebSiteParagraphs[staticwebsiteparagraph] = struct{}{}
 
 		if order > stage.StaticWebSiteParagraphOrder {
 			stage.StaticWebSiteParagraphOrder = order
 		}
-		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = stage.StaticWebSiteParagraphOrder
+		stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph] = order
 		stage.StaticWebSiteParagraphOrder++
 	}
 	stage.StaticWebSiteParagraphs_mapString[staticwebsiteparagraph.Name] = staticwebsiteparagraph
@@ -14038,7 +15457,6 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) SetName(name string) {
 
 // Stage puts xhtml_content to the model stage
 func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
-
 	if _, ok := stage.XHTML_CONTENTs[xhtml_content]; !ok {
 		stage.XHTML_CONTENTs[xhtml_content] = struct{}{}
 		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = stage.XHTML_CONTENTOrder
@@ -14055,14 +15473,13 @@ func (xhtml_content *XHTML_CONTENT) Stage(stage *Stage) *XHTML_CONTENT {
 // - force the order if the order is equal or greater than the stage.XHTML_CONTENTOrder
 // - update stage.XHTML_CONTENTOrder accordingly
 func (xhtml_content *XHTML_CONTENT) StagePreserveOrder(stage *Stage, order uint) {
-
 	if _, ok := stage.XHTML_CONTENTs[xhtml_content]; !ok {
 		stage.XHTML_CONTENTs[xhtml_content] = struct{}{}
 
 		if order > stage.XHTML_CONTENTOrder {
 			stage.XHTML_CONTENTOrder = order
 		}
-		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = stage.XHTML_CONTENTOrder
+		stage.XHTML_CONTENTMap_Staged_Order[xhtml_content] = order
 		stage.XHTML_CONTENTOrder++
 	}
 	stage.XHTML_CONTENTs_mapString[xhtml_content.Name] = xhtml_content
@@ -14861,8 +16278,8 @@ func (stage *Stage) Reset() { // insertion point for array reset
 	if stage.GetProbeIF() != nil {
 		stage.GetProbeIF().ResetNotifications()
 	}
-	if stage.IsDeltaMode() {
-		stage.ComputeReference()
+	if stage.IsInDeltaMode() {
+		stage.ComputeReferenceAndOrders()
 	}
 }
 
@@ -15179,6 +16596,7 @@ func (stage *Stage) Nil() { // insertion point for array nil
 	stage.XHTML_CONTENTs = nil
 	stage.XHTML_CONTENTs_mapString = nil
 
+	// end of insertion point for array nil
 }
 
 func (stage *Stage) Unstage() { // insertion point for array nil
@@ -15598,14 +17016,14 @@ func (stage *Stage) Unstage() { // insertion point for array nil
 		xhtml_content.Unstage(stage)
 	}
 
+	// end of insertion point for array nil
 }
 
 // Gongstruct is the type parameter for generated generic function that allows
 // - access to staged instances
 // - navigation between staged instances by going backward association links between gongstruct
 // - full refactoring of Gongstruct identifiers / fields
-type Gongstruct interface {
-}
+type Gongstruct interface{}
 
 type GongtructBasicField interface {
 	int | float64 | bool | string | time.Time | time.Duration
@@ -15622,7 +17040,7 @@ type GongstructIF interface {
 	StageVoid(*Stage)
 	UnstageVoid(stage *Stage)
 	GongGetFieldHeaders() []GongFieldHeader
-	GongClean(stage *Stage)
+	GongClean(stage *Stage) (modified bool)
 	GongGetFieldValue(fieldName string, stage *Stage) GongFieldValue
 	GongSetFieldValue(fieldName string, value GongFieldValue, stage *Stage) error
 	GongGetGongstructName() string
@@ -15643,7 +17061,6 @@ func CompareGongstructByName[T PointerToGongstruct](a, b T) int {
 }
 
 func SortGongstructSetByName[T PointerToGongstruct](set map[T]struct{}) (sortedSlice []T) {
-
 	for key := range set {
 		sortedSlice = append(sortedSlice, key)
 	}
@@ -15653,7 +17070,6 @@ func SortGongstructSetByName[T PointerToGongstruct](set map[T]struct{}) (sortedS
 }
 
 func GetGongstrucsSorted[T PointerToGongstruct](stage *Stage) (sortedSlice []T) {
-
 	set := GetGongstructInstancesSetFromPointerType[T](stage)
 	sortedSlice = SortGongstructSetByName(*set)
 
@@ -17456,7 +18872,6 @@ func GetAssociationName[Type Gongstruct]() *Type {
 // the map is construed by iterating over all Start instances and populationg keys with End instances
 // and values with slice of Start instances
 func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage) map[*End][]*Start {
-
 	var ret Start
 
 	switch any(ret).(type) {
@@ -19420,7 +20835,6 @@ func GetPointerReverseMap[Start, End Gongstruct](fieldname string, stage *Stage)
 // the map is construed by iterating over all Start instances and populating keys with End instances
 // and values with the Start instances
 func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage *Stage) map[*End][]*Start {
-
 	var ret Start
 
 	switch any(ret).(type) {
@@ -20280,7 +21694,6 @@ func GetSliceOfPointersReverseMap[Start, End Gongstruct](fieldname string, stage
 // GetPointerToGongstructName returns the name of the Gongstruct
 // this can be usefull if one want program robust to refactoring
 func GetPointerToGongstructName[Type GongstructIF]() (res string) {
-
 	var ret Type
 
 	switch any(ret).(type) {
@@ -20503,7 +21916,6 @@ type ReverseField struct {
 }
 
 func GetReverseFields[Type GongstructIF]() (res []ReverseField) {
-
 	res = make([]ReverseField, 0)
 
 	var ret Type
@@ -23594,7 +25006,6 @@ func (xhtml_content *XHTML_CONTENT) GongGetFieldHeaders() (res []GongFieldHeader
 
 // GetFieldsFromPointer return the array of the fields
 func GetFieldsFromPointer[Type PointerToGongstruct]() (res []GongFieldHeader) {
-
 	var ret Type
 	return ret.GongGetFieldHeaders()
 }
@@ -23656,6 +25067,7 @@ func (alternative_id *ALTERNATIVE_ID) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23694,6 +25106,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetFieldVa
 	}
 	return
 }
+
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23718,6 +25131,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	}
 	return
 }
+
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23756,6 +25170,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23780,6 +25195,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	}
 	return
 }
+
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23822,6 +25238,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGe
 	}
 	return
 }
+
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23846,6 +25263,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	}
 	return
 }
+
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23884,6 +25302,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetFieldVa
 	}
 	return
 }
+
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23908,6 +25327,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	}
 	return
 }
+
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23946,6 +25366,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23970,6 +25391,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	}
 	return
 }
+
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -23994,6 +25416,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetFie
 	}
 	return
 }
+
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24032,6 +25455,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetFieldValu
 	}
 	return
 }
+
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24056,6 +25480,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	}
 	return
 }
+
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24094,6 +25519,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetFieldValue(
 	}
 	return
 }
+
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24118,6 +25544,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	}
 	return
 }
+
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24136,6 +25563,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldValue(fieldN
 	}
 	return
 }
+
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24152,6 +25580,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetFieldValue(fieldName st
 	}
 	return
 }
+
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24172,6 +25601,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldValu
 	}
 	return
 }
+
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24190,6 +25620,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetFieldValue(fieldN
 	}
 	return
 }
+
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24208,6 +25639,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetFieldValue(fieldName st
 	}
 	return
 }
+
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24224,6 +25656,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetFieldValue(fieldNam
 	}
 	return
 }
+
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24254,6 +25687,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetFieldValue(fieldName 
 	}
 	return
 }
+
 func (a_alternative_id *A_ALTERNATIVE_ID) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24268,6 +25702,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24278,6 +25713,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Go
 	}
 	return
 }
+
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24288,6 +25724,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetF
 	}
 	return
 }
+
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24298,6 +25735,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 	}
 	return
 }
+
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24308,6 +25746,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Go
 	}
 	return
 }
+
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24318,6 +25757,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetF
 	}
 	return
 }
+
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24328,6 +25768,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Gong
 	}
 	return
 }
+
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24338,6 +25779,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGe
 	}
 	return
 }
+
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24356,6 +25798,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24374,6 +25817,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetFieldValue(fieldNam
 	}
 	return
 }
+
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24392,6 +25836,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetField
 	}
 	return
 }
+
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24410,6 +25855,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24428,6 +25874,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetFieldValue(fieldNam
 	}
 	return
 }
+
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24446,6 +25893,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetFieldValue(fiel
 	}
 	return
 }
+
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24464,6 +25912,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetFieldValue(fieldN
 	}
 	return
 }
+
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24542,6 +25991,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (a_children *A_CHILDREN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24560,6 +26010,7 @@ func (a_children *A_CHILDREN) GongGetFieldValue(fieldName string, stage *Stage) 
 	}
 	return
 }
+
 func (a_core_content *A_CORE_CONTENT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24574,6 +26025,7 @@ func (a_core_content *A_CORE_CONTENT) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (a_datatypes *A_DATATYPES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24652,6 +26104,7 @@ func (a_datatypes *A_DATATYPES) GongGetFieldValue(fieldName string, stage *Stage
 	}
 	return
 }
+
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24662,6 +26115,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Gong
 	}
 	return
 }
+
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24672,6 +26126,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetFie
 	}
 	return
 }
+
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24682,6 +26137,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 	}
 	return
 }
+
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24692,6 +26148,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Gong
 	}
 	return
 }
+
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24702,6 +26159,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetFie
 	}
 	return
 }
+
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24712,6 +26170,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGe
 	}
 	return
 }
+
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24722,6 +26181,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetF
 	}
 	return
 }
+
 func (a_editable_atts *A_EDITABLE_ATTS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24744,6 +26204,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GongGetFieldValue(fieldName string, stag
 	}
 	return
 }
+
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24754,6 +26215,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (a_object *A_OBJECT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24764,6 +26226,7 @@ func (a_object *A_OBJECT) GongGetFieldValue(fieldName string, stage *Stage) (res
 	}
 	return
 }
+
 func (a_properties *A_PROPERTIES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24778,6 +26241,7 @@ func (a_properties *A_PROPERTIES) GongGetFieldValue(fieldName string, stage *Sta
 	}
 	return
 }
+
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24788,6 +26252,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (a_source_1 *A_SOURCE_1) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24798,6 +26263,7 @@ func (a_source_1 *A_SOURCE_1) GongGetFieldValue(fieldName string, stage *Stage) 
 	}
 	return
 }
+
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24809,6 +26275,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetFieldValue(fiel
 	}
 	return
 }
+
 func (a_specifications *A_SPECIFICATIONS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24827,6 +26294,7 @@ func (a_specifications *A_SPECIFICATIONS) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24837,6 +26305,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetFieldValue(fiel
 	}
 	return
 }
+
 func (a_specified_values *A_SPECIFIED_VALUES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24855,6 +26324,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongGetFieldValue(fieldName string
 	}
 	return
 }
+
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24933,6 +26403,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetFieldValue(fieldName string, 
 	}
 	return
 }
+
 func (a_spec_objects *A_SPEC_OBJECTS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24951,6 +26422,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24961,6 +26433,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetFieldValue(fieldNam
 	}
 	return
 }
+
 func (a_spec_relations *A_SPEC_RELATIONS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24979,6 +26452,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -24997,6 +26471,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetFieldValue(fieldNam
 	}
 	return
 }
+
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25007,6 +26482,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetFieldValue(fieldName stri
 	}
 	return
 }
+
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25017,6 +26493,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetFieldValue(fiel
 	}
 	return
 }
+
 func (a_spec_types *A_SPEC_TYPES) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25065,6 +26542,7 @@ func (a_spec_types *A_SPEC_TYPES) GongGetFieldValue(fieldName string, stage *Sta
 	}
 	return
 }
+
 func (a_the_header *A_THE_HEADER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25079,6 +26557,7 @@ func (a_the_header *A_THE_HEADER) GongGetFieldValue(fieldName string, stage *Sta
 	}
 	return
 }
+
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25097,6 +26576,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetFieldValue(fieldName string, 
 	}
 	return
 }
+
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25119,6 +26599,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetFieldValu
 	}
 	return
 }
+
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25141,6 +26622,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetFieldValue(fiel
 	}
 	return
 }
+
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25169,6 +26651,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetF
 	}
 	return
 }
+
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25199,6 +26682,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetFieldValu
 	}
 	return
 }
+
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25233,6 +26717,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetFieldValue(fiel
 	}
 	return
 }
+
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25259,6 +26744,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetFieldValue(
 	}
 	return
 }
+
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25281,6 +26767,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetFieldValue(fi
 	}
 	return
 }
+
 func (embedded_value *EMBEDDED_VALUE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25295,6 +26782,7 @@ func (embedded_value *EMBEDDED_VALUE) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (enum_value *ENUM_VALUE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25323,6 +26811,7 @@ func (enum_value *ENUM_VALUE) GongGetFieldValue(fieldName string, stage *Stage) 
 	}
 	return
 }
+
 func (embeddedjpgimage *EmbeddedJpgImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25333,6 +26822,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (embeddedpngimage *EmbeddedPngImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25343,6 +26833,7 @@ func (embeddedpngimage *EmbeddedPngImage) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (embeddedsvgimage *EmbeddedSvgImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25353,6 +26844,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (kill *Kill) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25361,6 +26853,7 @@ func (kill *Kill) GongGetFieldValue(fieldName string, stage *Stage) (res GongFie
 	}
 	return
 }
+
 func (map_identifier_bool *Map_identifier_bool) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25373,6 +26866,7 @@ func (map_identifier_bool *Map_identifier_bool) GongGetFieldValue(fieldName stri
 	}
 	return
 }
+
 func (relation_group *RELATION_GROUP) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25419,6 +26913,7 @@ func (relation_group *RELATION_GROUP) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (relation_group_type *RELATION_GROUP_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25447,6 +26942,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongGetFieldValue(fieldName stri
 	}
 	return
 }
+
 func (req_if *REQ_IF) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25475,6 +26971,7 @@ func (req_if *REQ_IF) GongGetFieldValue(fieldName string, stage *Stage) (res Gon
 	}
 	return
 }
+
 func (req_if_content *REQ_IF_CONTENT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25519,6 +27016,7 @@ func (req_if_content *REQ_IF_CONTENT) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (req_if_header *REQ_IF_HEADER) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25543,6 +27041,7 @@ func (req_if_header *REQ_IF_HEADER) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
+
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25551,6 +27050,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetFieldValue(fieldName 
 	}
 	return
 }
+
 func (specification *SPECIFICATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25591,6 +27091,7 @@ func (specification *SPECIFICATION) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
+
 func (specification_rendering *SPECIFICATION_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25611,6 +27112,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GongGetFieldValue(fieldN
 	}
 	return
 }
+
 func (specification_type *SPECIFICATION_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25639,6 +27141,7 @@ func (specification_type *SPECIFICATION_TYPE) GongGetFieldValue(fieldName string
 	}
 	return
 }
+
 func (spec_hierarchy *SPEC_HIERARCHY) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25687,6 +27190,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongGetFieldValue(fieldName string, stage 
 	}
 	return
 }
+
 func (spec_object *SPEC_OBJECT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25721,6 +27225,7 @@ func (spec_object *SPEC_OBJECT) GongGetFieldValue(fieldName string, stage *Stage
 	}
 	return
 }
+
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25749,6 +27254,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongGetFieldValue(fieldName string, st
 	}
 	return
 }
+
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25777,6 +27283,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetFieldValue(
 	}
 	return
 }
+
 func (spec_relation *SPEC_RELATION) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25823,6 +27330,7 @@ func (spec_relation *SPEC_RELATION) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
+
 func (spec_relation_type *SPEC_RELATION_TYPE) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25851,6 +27359,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongGetFieldValue(fieldName string
 	}
 	return
 }
+
 func (staticwebsite *StaticWebSite) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25877,6 +27386,7 @@ func (staticwebsite *StaticWebSite) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
+
 func (staticwebsitechapter *StaticWebSiteChapter) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25897,6 +27407,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongGetFieldValue(fieldName st
 	}
 	return
 }
+
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25915,6 +27426,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetFieldValu
 	}
 	return
 }
+
 func (staticwebsiteimage *StaticWebSiteImage) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25933,6 +27445,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GongGetFieldValue(fieldName string
 	}
 	return
 }
+
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25949,6 +27462,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetFieldValue(fieldNam
 	}
 	return
 }
+
 func (xhtml_content *XHTML_CONTENT) GongGetFieldValue(fieldName string, stage *Stage) (res GongFieldValue) {
 	switch fieldName {
 	// string value of fields
@@ -25961,8 +27475,8 @@ func (xhtml_content *XHTML_CONTENT) GongGetFieldValue(fieldName string, stage *S
 	}
 	return
 }
-func GetFieldStringValueFromPointer(instance GongstructIF, fieldName string, stage *Stage) (res GongFieldValue) {
 
+func GetFieldStringValueFromPointer(instance GongstructIF, fieldName string, stage *Stage) (res GongFieldValue) {
 	res = instance.GongGetFieldValue(fieldName, stage)
 	return
 }
@@ -29473,7 +30987,6 @@ func GetGongstructNameFromPointer(instance GongstructIF) (res string) {
 }
 
 func (stage *Stage) ResetMapStrings() {
-
 	// insertion point for generic get gongstruct name
 	stage.ALTERNATIVE_IDs_mapString = make(map[string]*ALTERNATIVE_ID)
 	for alternative_id := range stage.ALTERNATIVE_IDs {
@@ -29995,6 +31508,7 @@ func (stage *Stage) ResetMapStrings() {
 		stage.XHTML_CONTENTs_mapString[xhtml_content.Name] = xhtml_content
 	}
 
+	// end of insertion point for generic get gongstruct name
 }
 
 // Last line of the template

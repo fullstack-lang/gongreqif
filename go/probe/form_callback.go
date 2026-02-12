@@ -46,6 +46,8 @@ type ALTERNATIVE_IDFormCallback struct {
 }
 
 func (alternative_idFormCallback *ALTERNATIVE_IDFormCallback) OnSave() {
+	alternative_idFormCallback.probe.stageOfInterest.Lock()
+	defer alternative_idFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ALTERNATIVE_IDFormCallback, OnSave")
 
@@ -124,6 +126,8 @@ type ATTRIBUTE_DEFINITION_BOOLEANFormCallback struct {
 }
 
 func (attribute_definition_booleanFormCallback *ATTRIBUTE_DEFINITION_BOOLEANFormCallback) OnSave() {
+	attribute_definition_booleanFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_booleanFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_BOOLEANFormCallback, OnSave")
 
@@ -282,6 +286,8 @@ type ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback struct {
 }
 
 func (attribute_definition_boolean_renderingFormCallback *ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback) OnSave() {
+	attribute_definition_boolean_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_boolean_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_BOOLEAN_RenderingFormCallback, OnSave")
 
@@ -366,6 +372,8 @@ type ATTRIBUTE_DEFINITION_DATEFormCallback struct {
 }
 
 func (attribute_definition_dateFormCallback *ATTRIBUTE_DEFINITION_DATEFormCallback) OnSave() {
+	attribute_definition_dateFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_dateFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_DATEFormCallback, OnSave")
 
@@ -524,6 +532,8 @@ type ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback struct {
 }
 
 func (attribute_definition_date_renderingFormCallback *ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback) OnSave() {
+	attribute_definition_date_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_date_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_DATE_RenderingFormCallback, OnSave")
 
@@ -608,6 +618,8 @@ type ATTRIBUTE_DEFINITION_ENUMERATIONFormCallback struct {
 }
 
 func (attribute_definition_enumerationFormCallback *ATTRIBUTE_DEFINITION_ENUMERATIONFormCallback) OnSave() {
+	attribute_definition_enumerationFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_enumerationFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_ENUMERATIONFormCallback, OnSave")
 
@@ -768,6 +780,8 @@ type ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback struct {
 }
 
 func (attribute_definition_enumeration_renderingFormCallback *ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback) OnSave() {
+	attribute_definition_enumeration_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_enumeration_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_ENUMERATION_RenderingFormCallback, OnSave")
 
@@ -852,6 +866,8 @@ type ATTRIBUTE_DEFINITION_INTEGERFormCallback struct {
 }
 
 func (attribute_definition_integerFormCallback *ATTRIBUTE_DEFINITION_INTEGERFormCallback) OnSave() {
+	attribute_definition_integerFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_integerFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_INTEGERFormCallback, OnSave")
 
@@ -1010,6 +1026,8 @@ type ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback struct {
 }
 
 func (attribute_definition_integer_renderingFormCallback *ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback) OnSave() {
+	attribute_definition_integer_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_integer_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_INTEGER_RenderingFormCallback, OnSave")
 
@@ -1094,6 +1112,8 @@ type ATTRIBUTE_DEFINITION_REALFormCallback struct {
 }
 
 func (attribute_definition_realFormCallback *ATTRIBUTE_DEFINITION_REALFormCallback) OnSave() {
+	attribute_definition_realFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_realFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_REALFormCallback, OnSave")
 
@@ -1252,6 +1272,8 @@ type ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback struct {
 }
 
 func (attribute_definition_real_renderingFormCallback *ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback) OnSave() {
+	attribute_definition_real_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_real_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_REAL_RenderingFormCallback, OnSave")
 
@@ -1336,6 +1358,8 @@ type ATTRIBUTE_DEFINITION_RenderingFormCallback struct {
 }
 
 func (attribute_definition_renderingFormCallback *ATTRIBUTE_DEFINITION_RenderingFormCallback) OnSave() {
+	attribute_definition_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_RenderingFormCallback, OnSave")
 
@@ -1420,6 +1444,8 @@ type ATTRIBUTE_DEFINITION_STRINGFormCallback struct {
 }
 
 func (attribute_definition_stringFormCallback *ATTRIBUTE_DEFINITION_STRINGFormCallback) OnSave() {
+	attribute_definition_stringFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_stringFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_STRINGFormCallback, OnSave")
 
@@ -1578,6 +1604,8 @@ type ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback struct {
 }
 
 func (attribute_definition_string_renderingFormCallback *ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback) OnSave() {
+	attribute_definition_string_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_string_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_STRING_RenderingFormCallback, OnSave")
 
@@ -1662,6 +1690,8 @@ type ATTRIBUTE_DEFINITION_XHTMLFormCallback struct {
 }
 
 func (attribute_definition_xhtmlFormCallback *ATTRIBUTE_DEFINITION_XHTMLFormCallback) OnSave() {
+	attribute_definition_xhtmlFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_xhtmlFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_XHTMLFormCallback, OnSave")
 
@@ -1820,6 +1850,8 @@ type ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback struct {
 }
 
 func (attribute_definition_xhtml_renderingFormCallback *ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback) OnSave() {
+	attribute_definition_xhtml_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_definition_xhtml_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_DEFINITION_XHTML_RenderingFormCallback, OnSave")
 
@@ -1904,6 +1936,8 @@ type ATTRIBUTE_VALUE_BOOLEANFormCallback struct {
 }
 
 func (attribute_value_booleanFormCallback *ATTRIBUTE_VALUE_BOOLEANFormCallback) OnSave() {
+	attribute_value_booleanFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_booleanFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_BOOLEANFormCallback, OnSave")
 
@@ -2116,6 +2150,8 @@ type ATTRIBUTE_VALUE_DATEFormCallback struct {
 }
 
 func (attribute_value_dateFormCallback *ATTRIBUTE_VALUE_DATEFormCallback) OnSave() {
+	attribute_value_dateFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_dateFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_DATEFormCallback, OnSave")
 
@@ -2328,6 +2364,8 @@ type ATTRIBUTE_VALUE_ENUMERATIONFormCallback struct {
 }
 
 func (attribute_value_enumerationFormCallback *ATTRIBUTE_VALUE_ENUMERATIONFormCallback) OnSave() {
+	attribute_value_enumerationFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_enumerationFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_ENUMERATIONFormCallback, OnSave")
 
@@ -2540,6 +2578,8 @@ type ATTRIBUTE_VALUE_INTEGERFormCallback struct {
 }
 
 func (attribute_value_integerFormCallback *ATTRIBUTE_VALUE_INTEGERFormCallback) OnSave() {
+	attribute_value_integerFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_integerFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_INTEGERFormCallback, OnSave")
 
@@ -2752,6 +2792,8 @@ type ATTRIBUTE_VALUE_REALFormCallback struct {
 }
 
 func (attribute_value_realFormCallback *ATTRIBUTE_VALUE_REALFormCallback) OnSave() {
+	attribute_value_realFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_realFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_REALFormCallback, OnSave")
 
@@ -2964,6 +3006,8 @@ type ATTRIBUTE_VALUE_STRINGFormCallback struct {
 }
 
 func (attribute_value_stringFormCallback *ATTRIBUTE_VALUE_STRINGFormCallback) OnSave() {
+	attribute_value_stringFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_stringFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_STRINGFormCallback, OnSave")
 
@@ -3176,6 +3220,8 @@ type ATTRIBUTE_VALUE_XHTMLFormCallback struct {
 }
 
 func (attribute_value_xhtmlFormCallback *ATTRIBUTE_VALUE_XHTMLFormCallback) OnSave() {
+	attribute_value_xhtmlFormCallback.probe.stageOfInterest.Lock()
+	defer attribute_value_xhtmlFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ATTRIBUTE_VALUE_XHTMLFormCallback, OnSave")
 
@@ -3392,6 +3438,8 @@ type A_ALTERNATIVE_IDFormCallback struct {
 }
 
 func (a_alternative_idFormCallback *A_ALTERNATIVE_IDFormCallback) OnSave() {
+	a_alternative_idFormCallback.probe.stageOfInterest.Lock()
+	defer a_alternative_idFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ALTERNATIVE_IDFormCallback, OnSave")
 
@@ -3470,6 +3518,8 @@ type A_ATTRIBUTE_DEFINITION_BOOLEAN_REFFormCallback struct {
 }
 
 func (a_attribute_definition_boolean_refFormCallback *A_ATTRIBUTE_DEFINITION_BOOLEAN_REFFormCallback) OnSave() {
+	a_attribute_definition_boolean_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_boolean_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_BOOLEAN_REFFormCallback, OnSave")
 
@@ -3548,6 +3598,8 @@ type A_ATTRIBUTE_DEFINITION_DATE_REFFormCallback struct {
 }
 
 func (a_attribute_definition_date_refFormCallback *A_ATTRIBUTE_DEFINITION_DATE_REFFormCallback) OnSave() {
+	a_attribute_definition_date_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_date_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_DATE_REFFormCallback, OnSave")
 
@@ -3626,6 +3678,8 @@ type A_ATTRIBUTE_DEFINITION_ENUMERATION_REFFormCallback struct {
 }
 
 func (a_attribute_definition_enumeration_refFormCallback *A_ATTRIBUTE_DEFINITION_ENUMERATION_REFFormCallback) OnSave() {
+	a_attribute_definition_enumeration_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_enumeration_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_ENUMERATION_REFFormCallback, OnSave")
 
@@ -3704,6 +3758,8 @@ type A_ATTRIBUTE_DEFINITION_INTEGER_REFFormCallback struct {
 }
 
 func (a_attribute_definition_integer_refFormCallback *A_ATTRIBUTE_DEFINITION_INTEGER_REFFormCallback) OnSave() {
+	a_attribute_definition_integer_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_integer_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_INTEGER_REFFormCallback, OnSave")
 
@@ -3782,6 +3838,8 @@ type A_ATTRIBUTE_DEFINITION_REAL_REFFormCallback struct {
 }
 
 func (a_attribute_definition_real_refFormCallback *A_ATTRIBUTE_DEFINITION_REAL_REFFormCallback) OnSave() {
+	a_attribute_definition_real_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_real_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_REAL_REFFormCallback, OnSave")
 
@@ -3860,6 +3918,8 @@ type A_ATTRIBUTE_DEFINITION_STRING_REFFormCallback struct {
 }
 
 func (a_attribute_definition_string_refFormCallback *A_ATTRIBUTE_DEFINITION_STRING_REFFormCallback) OnSave() {
+	a_attribute_definition_string_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_string_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_STRING_REFFormCallback, OnSave")
 
@@ -3938,6 +3998,8 @@ type A_ATTRIBUTE_DEFINITION_XHTML_REFFormCallback struct {
 }
 
 func (a_attribute_definition_xhtml_refFormCallback *A_ATTRIBUTE_DEFINITION_XHTML_REFFormCallback) OnSave() {
+	a_attribute_definition_xhtml_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_definition_xhtml_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_DEFINITION_XHTML_REFFormCallback, OnSave")
 
@@ -4016,6 +4078,8 @@ type A_ATTRIBUTE_VALUE_BOOLEANFormCallback struct {
 }
 
 func (a_attribute_value_booleanFormCallback *A_ATTRIBUTE_VALUE_BOOLEANFormCallback) OnSave() {
+	a_attribute_value_booleanFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_booleanFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_BOOLEANFormCallback, OnSave")
 
@@ -4123,6 +4187,8 @@ type A_ATTRIBUTE_VALUE_DATEFormCallback struct {
 }
 
 func (a_attribute_value_dateFormCallback *A_ATTRIBUTE_VALUE_DATEFormCallback) OnSave() {
+	a_attribute_value_dateFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_dateFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_DATEFormCallback, OnSave")
 
@@ -4230,6 +4296,8 @@ type A_ATTRIBUTE_VALUE_ENUMERATIONFormCallback struct {
 }
 
 func (a_attribute_value_enumerationFormCallback *A_ATTRIBUTE_VALUE_ENUMERATIONFormCallback) OnSave() {
+	a_attribute_value_enumerationFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_enumerationFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_ENUMERATIONFormCallback, OnSave")
 
@@ -4337,6 +4405,8 @@ type A_ATTRIBUTE_VALUE_INTEGERFormCallback struct {
 }
 
 func (a_attribute_value_integerFormCallback *A_ATTRIBUTE_VALUE_INTEGERFormCallback) OnSave() {
+	a_attribute_value_integerFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_integerFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_INTEGERFormCallback, OnSave")
 
@@ -4444,6 +4514,8 @@ type A_ATTRIBUTE_VALUE_REALFormCallback struct {
 }
 
 func (a_attribute_value_realFormCallback *A_ATTRIBUTE_VALUE_REALFormCallback) OnSave() {
+	a_attribute_value_realFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_realFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_REALFormCallback, OnSave")
 
@@ -4551,6 +4623,8 @@ type A_ATTRIBUTE_VALUE_STRINGFormCallback struct {
 }
 
 func (a_attribute_value_stringFormCallback *A_ATTRIBUTE_VALUE_STRINGFormCallback) OnSave() {
+	a_attribute_value_stringFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_stringFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_STRINGFormCallback, OnSave")
 
@@ -4658,6 +4732,8 @@ type A_ATTRIBUTE_VALUE_XHTMLFormCallback struct {
 }
 
 func (a_attribute_value_xhtmlFormCallback *A_ATTRIBUTE_VALUE_XHTMLFormCallback) OnSave() {
+	a_attribute_value_xhtmlFormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_xhtmlFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_XHTMLFormCallback, OnSave")
 
@@ -4765,6 +4841,8 @@ type A_ATTRIBUTE_VALUE_XHTML_1FormCallback struct {
 }
 
 func (a_attribute_value_xhtml_1FormCallback *A_ATTRIBUTE_VALUE_XHTML_1FormCallback) OnSave() {
+	a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest.Lock()
+	defer a_attribute_value_xhtml_1FormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ATTRIBUTE_VALUE_XHTML_1FormCallback, OnSave")
 
@@ -5058,6 +5136,8 @@ type A_CHILDRENFormCallback struct {
 }
 
 func (a_childrenFormCallback *A_CHILDRENFormCallback) OnSave() {
+	a_childrenFormCallback.probe.stageOfInterest.Lock()
+	defer a_childrenFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_CHILDRENFormCallback, OnSave")
 
@@ -5165,6 +5245,8 @@ type A_CORE_CONTENTFormCallback struct {
 }
 
 func (a_core_contentFormCallback *A_CORE_CONTENTFormCallback) OnSave() {
+	a_core_contentFormCallback.probe.stageOfInterest.Lock()
+	defer a_core_contentFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_CORE_CONTENTFormCallback, OnSave")
 
@@ -5243,6 +5325,8 @@ type A_DATATYPESFormCallback struct {
 }
 
 func (a_datatypesFormCallback *A_DATATYPESFormCallback) OnSave() {
+	a_datatypesFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatypesFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPESFormCallback, OnSave")
 
@@ -5536,6 +5620,8 @@ type A_DATATYPE_DEFINITION_BOOLEAN_REFFormCallback struct {
 }
 
 func (a_datatype_definition_boolean_refFormCallback *A_DATATYPE_DEFINITION_BOOLEAN_REFFormCallback) OnSave() {
+	a_datatype_definition_boolean_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_boolean_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_BOOLEAN_REFFormCallback, OnSave")
 
@@ -5614,6 +5700,8 @@ type A_DATATYPE_DEFINITION_DATE_REFFormCallback struct {
 }
 
 func (a_datatype_definition_date_refFormCallback *A_DATATYPE_DEFINITION_DATE_REFFormCallback) OnSave() {
+	a_datatype_definition_date_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_date_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_DATE_REFFormCallback, OnSave")
 
@@ -5692,6 +5780,8 @@ type A_DATATYPE_DEFINITION_ENUMERATION_REFFormCallback struct {
 }
 
 func (a_datatype_definition_enumeration_refFormCallback *A_DATATYPE_DEFINITION_ENUMERATION_REFFormCallback) OnSave() {
+	a_datatype_definition_enumeration_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_enumeration_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_ENUMERATION_REFFormCallback, OnSave")
 
@@ -5770,6 +5860,8 @@ type A_DATATYPE_DEFINITION_INTEGER_REFFormCallback struct {
 }
 
 func (a_datatype_definition_integer_refFormCallback *A_DATATYPE_DEFINITION_INTEGER_REFFormCallback) OnSave() {
+	a_datatype_definition_integer_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_integer_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_INTEGER_REFFormCallback, OnSave")
 
@@ -5848,6 +5940,8 @@ type A_DATATYPE_DEFINITION_REAL_REFFormCallback struct {
 }
 
 func (a_datatype_definition_real_refFormCallback *A_DATATYPE_DEFINITION_REAL_REFFormCallback) OnSave() {
+	a_datatype_definition_real_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_real_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_REAL_REFFormCallback, OnSave")
 
@@ -5926,6 +6020,8 @@ type A_DATATYPE_DEFINITION_STRING_REFFormCallback struct {
 }
 
 func (a_datatype_definition_string_refFormCallback *A_DATATYPE_DEFINITION_STRING_REFFormCallback) OnSave() {
+	a_datatype_definition_string_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_string_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_STRING_REFFormCallback, OnSave")
 
@@ -6004,6 +6100,8 @@ type A_DATATYPE_DEFINITION_XHTML_REFFormCallback struct {
 }
 
 func (a_datatype_definition_xhtml_refFormCallback *A_DATATYPE_DEFINITION_XHTML_REFFormCallback) OnSave() {
+	a_datatype_definition_xhtml_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_datatype_definition_xhtml_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_DATATYPE_DEFINITION_XHTML_REFFormCallback, OnSave")
 
@@ -6082,6 +6180,8 @@ type A_EDITABLE_ATTSFormCallback struct {
 }
 
 func (a_editable_attsFormCallback *A_EDITABLE_ATTSFormCallback) OnSave() {
+	a_editable_attsFormCallback.probe.stageOfInterest.Lock()
+	defer a_editable_attsFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_EDITABLE_ATTSFormCallback, OnSave")
 
@@ -6172,6 +6272,8 @@ type A_ENUM_VALUE_REFFormCallback struct {
 }
 
 func (a_enum_value_refFormCallback *A_ENUM_VALUE_REFFormCallback) OnSave() {
+	a_enum_value_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_enum_value_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_ENUM_VALUE_REFFormCallback, OnSave")
 
@@ -6250,6 +6352,8 @@ type A_OBJECTFormCallback struct {
 }
 
 func (a_objectFormCallback *A_OBJECTFormCallback) OnSave() {
+	a_objectFormCallback.probe.stageOfInterest.Lock()
+	defer a_objectFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_OBJECTFormCallback, OnSave")
 
@@ -6328,6 +6432,8 @@ type A_PROPERTIESFormCallback struct {
 }
 
 func (a_propertiesFormCallback *A_PROPERTIESFormCallback) OnSave() {
+	a_propertiesFormCallback.probe.stageOfInterest.Lock()
+	defer a_propertiesFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_PROPERTIESFormCallback, OnSave")
 
@@ -6406,6 +6512,8 @@ type A_RELATION_GROUP_TYPE_REFFormCallback struct {
 }
 
 func (a_relation_group_type_refFormCallback *A_RELATION_GROUP_TYPE_REFFormCallback) OnSave() {
+	a_relation_group_type_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_relation_group_type_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_RELATION_GROUP_TYPE_REFFormCallback, OnSave")
 
@@ -6484,6 +6592,8 @@ type A_SOURCE_1FormCallback struct {
 }
 
 func (a_source_1FormCallback *A_SOURCE_1FormCallback) OnSave() {
+	a_source_1FormCallback.probe.stageOfInterest.Lock()
+	defer a_source_1FormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SOURCE_1FormCallback, OnSave")
 
@@ -6562,6 +6672,8 @@ type A_SOURCE_SPECIFICATION_1FormCallback struct {
 }
 
 func (a_source_specification_1FormCallback *A_SOURCE_SPECIFICATION_1FormCallback) OnSave() {
+	a_source_specification_1FormCallback.probe.stageOfInterest.Lock()
+	defer a_source_specification_1FormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SOURCE_SPECIFICATION_1FormCallback, OnSave")
 
@@ -6640,6 +6752,8 @@ type A_SPECIFICATIONSFormCallback struct {
 }
 
 func (a_specificationsFormCallback *A_SPECIFICATIONSFormCallback) OnSave() {
+	a_specificationsFormCallback.probe.stageOfInterest.Lock()
+	defer a_specificationsFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPECIFICATIONSFormCallback, OnSave")
 
@@ -6747,6 +6861,8 @@ type A_SPECIFICATION_TYPE_REFFormCallback struct {
 }
 
 func (a_specification_type_refFormCallback *A_SPECIFICATION_TYPE_REFFormCallback) OnSave() {
+	a_specification_type_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_specification_type_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPECIFICATION_TYPE_REFFormCallback, OnSave")
 
@@ -6825,6 +6941,8 @@ type A_SPECIFIED_VALUESFormCallback struct {
 }
 
 func (a_specified_valuesFormCallback *A_SPECIFIED_VALUESFormCallback) OnSave() {
+	a_specified_valuesFormCallback.probe.stageOfInterest.Lock()
+	defer a_specified_valuesFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPECIFIED_VALUESFormCallback, OnSave")
 
@@ -6932,6 +7050,8 @@ type A_SPEC_ATTRIBUTESFormCallback struct {
 }
 
 func (a_spec_attributesFormCallback *A_SPEC_ATTRIBUTESFormCallback) OnSave() {
+	a_spec_attributesFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_attributesFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_ATTRIBUTESFormCallback, OnSave")
 
@@ -7225,6 +7345,8 @@ type A_SPEC_OBJECTSFormCallback struct {
 }
 
 func (a_spec_objectsFormCallback *A_SPEC_OBJECTSFormCallback) OnSave() {
+	a_spec_objectsFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_objectsFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_OBJECTSFormCallback, OnSave")
 
@@ -7332,6 +7454,8 @@ type A_SPEC_OBJECT_TYPE_REFFormCallback struct {
 }
 
 func (a_spec_object_type_refFormCallback *A_SPEC_OBJECT_TYPE_REFFormCallback) OnSave() {
+	a_spec_object_type_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_object_type_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_OBJECT_TYPE_REFFormCallback, OnSave")
 
@@ -7410,6 +7534,8 @@ type A_SPEC_RELATIONSFormCallback struct {
 }
 
 func (a_spec_relationsFormCallback *A_SPEC_RELATIONSFormCallback) OnSave() {
+	a_spec_relationsFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_relationsFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_RELATIONSFormCallback, OnSave")
 
@@ -7517,6 +7643,8 @@ type A_SPEC_RELATION_GROUPSFormCallback struct {
 }
 
 func (a_spec_relation_groupsFormCallback *A_SPEC_RELATION_GROUPSFormCallback) OnSave() {
+	a_spec_relation_groupsFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_relation_groupsFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_RELATION_GROUPSFormCallback, OnSave")
 
@@ -7624,6 +7752,8 @@ type A_SPEC_RELATION_REFFormCallback struct {
 }
 
 func (a_spec_relation_refFormCallback *A_SPEC_RELATION_REFFormCallback) OnSave() {
+	a_spec_relation_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_relation_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_RELATION_REFFormCallback, OnSave")
 
@@ -7702,6 +7832,8 @@ type A_SPEC_RELATION_TYPE_REFFormCallback struct {
 }
 
 func (a_spec_relation_type_refFormCallback *A_SPEC_RELATION_TYPE_REFFormCallback) OnSave() {
+	a_spec_relation_type_refFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_relation_type_refFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_RELATION_TYPE_REFFormCallback, OnSave")
 
@@ -7780,6 +7912,8 @@ type A_SPEC_TYPESFormCallback struct {
 }
 
 func (a_spec_typesFormCallback *A_SPEC_TYPESFormCallback) OnSave() {
+	a_spec_typesFormCallback.probe.stageOfInterest.Lock()
+	defer a_spec_typesFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_SPEC_TYPESFormCallback, OnSave")
 
@@ -7980,6 +8114,8 @@ type A_THE_HEADERFormCallback struct {
 }
 
 func (a_the_headerFormCallback *A_THE_HEADERFormCallback) OnSave() {
+	a_the_headerFormCallback.probe.stageOfInterest.Lock()
+	defer a_the_headerFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_THE_HEADERFormCallback, OnSave")
 
@@ -8058,6 +8194,8 @@ type A_TOOL_EXTENSIONSFormCallback struct {
 }
 
 func (a_tool_extensionsFormCallback *A_TOOL_EXTENSIONSFormCallback) OnSave() {
+	a_tool_extensionsFormCallback.probe.stageOfInterest.Lock()
+	defer a_tool_extensionsFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("A_TOOL_EXTENSIONSFormCallback, OnSave")
 
@@ -8165,6 +8303,8 @@ type DATATYPE_DEFINITION_BOOLEANFormCallback struct {
 }
 
 func (datatype_definition_booleanFormCallback *DATATYPE_DEFINITION_BOOLEANFormCallback) OnSave() {
+	datatype_definition_booleanFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_booleanFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_BOOLEANFormCallback, OnSave")
 
@@ -8317,6 +8457,8 @@ type DATATYPE_DEFINITION_DATEFormCallback struct {
 }
 
 func (datatype_definition_dateFormCallback *DATATYPE_DEFINITION_DATEFormCallback) OnSave() {
+	datatype_definition_dateFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_dateFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_DATEFormCallback, OnSave")
 
@@ -8469,6 +8611,8 @@ type DATATYPE_DEFINITION_ENUMERATIONFormCallback struct {
 }
 
 func (datatype_definition_enumerationFormCallback *DATATYPE_DEFINITION_ENUMERATIONFormCallback) OnSave() {
+	datatype_definition_enumerationFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_enumerationFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_ENUMERATIONFormCallback, OnSave")
 
@@ -8623,6 +8767,8 @@ type DATATYPE_DEFINITION_INTEGERFormCallback struct {
 }
 
 func (datatype_definition_integerFormCallback *DATATYPE_DEFINITION_INTEGERFormCallback) OnSave() {
+	datatype_definition_integerFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_integerFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_INTEGERFormCallback, OnSave")
 
@@ -8779,6 +8925,8 @@ type DATATYPE_DEFINITION_REALFormCallback struct {
 }
 
 func (datatype_definition_realFormCallback *DATATYPE_DEFINITION_REALFormCallback) OnSave() {
+	datatype_definition_realFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_realFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_REALFormCallback, OnSave")
 
@@ -8937,6 +9085,8 @@ type DATATYPE_DEFINITION_STRINGFormCallback struct {
 }
 
 func (datatype_definition_stringFormCallback *DATATYPE_DEFINITION_STRINGFormCallback) OnSave() {
+	datatype_definition_stringFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_stringFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_STRINGFormCallback, OnSave")
 
@@ -9091,6 +9241,8 @@ type DATATYPE_DEFINITION_XHTMLFormCallback struct {
 }
 
 func (datatype_definition_xhtmlFormCallback *DATATYPE_DEFINITION_XHTMLFormCallback) OnSave() {
+	datatype_definition_xhtmlFormCallback.probe.stageOfInterest.Lock()
+	defer datatype_definition_xhtmlFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("DATATYPE_DEFINITION_XHTMLFormCallback, OnSave")
 
@@ -9243,6 +9395,8 @@ type EMBEDDED_VALUEFormCallback struct {
 }
 
 func (embedded_valueFormCallback *EMBEDDED_VALUEFormCallback) OnSave() {
+	embedded_valueFormCallback.probe.stageOfInterest.Lock()
+	defer embedded_valueFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("EMBEDDED_VALUEFormCallback, OnSave")
 
@@ -9323,6 +9477,8 @@ type ENUM_VALUEFormCallback struct {
 }
 
 func (enum_valueFormCallback *ENUM_VALUEFormCallback) OnSave() {
+	enum_valueFormCallback.probe.stageOfInterest.Lock()
+	defer enum_valueFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("ENUM_VALUEFormCallback, OnSave")
 
@@ -9477,6 +9633,8 @@ type EmbeddedJpgImageFormCallback struct {
 }
 
 func (embeddedjpgimageFormCallback *EmbeddedJpgImageFormCallback) OnSave() {
+	embeddedjpgimageFormCallback.probe.stageOfInterest.Lock()
+	defer embeddedjpgimageFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("EmbeddedJpgImageFormCallback, OnSave")
 
@@ -9555,6 +9713,8 @@ type EmbeddedPngImageFormCallback struct {
 }
 
 func (embeddedpngimageFormCallback *EmbeddedPngImageFormCallback) OnSave() {
+	embeddedpngimageFormCallback.probe.stageOfInterest.Lock()
+	defer embeddedpngimageFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("EmbeddedPngImageFormCallback, OnSave")
 
@@ -9633,6 +9793,8 @@ type EmbeddedSvgImageFormCallback struct {
 }
 
 func (embeddedsvgimageFormCallback *EmbeddedSvgImageFormCallback) OnSave() {
+	embeddedsvgimageFormCallback.probe.stageOfInterest.Lock()
+	defer embeddedsvgimageFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("EmbeddedSvgImageFormCallback, OnSave")
 
@@ -9711,6 +9873,8 @@ type KillFormCallback struct {
 }
 
 func (killFormCallback *KillFormCallback) OnSave() {
+	killFormCallback.probe.stageOfInterest.Lock()
+	defer killFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("KillFormCallback, OnSave")
 
@@ -9787,6 +9951,8 @@ type Map_identifier_boolFormCallback struct {
 }
 
 func (map_identifier_boolFormCallback *Map_identifier_boolFormCallback) OnSave() {
+	map_identifier_boolFormCallback.probe.stageOfInterest.Lock()
+	defer map_identifier_boolFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("Map_identifier_boolFormCallback, OnSave")
 
@@ -9865,6 +10031,8 @@ type RELATION_GROUPFormCallback struct {
 }
 
 func (relation_groupFormCallback *RELATION_GROUPFormCallback) OnSave() {
+	relation_groupFormCallback.probe.stageOfInterest.Lock()
+	defer relation_groupFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("RELATION_GROUPFormCallback, OnSave")
 
@@ -10025,6 +10193,8 @@ type RELATION_GROUP_TYPEFormCallback struct {
 }
 
 func (relation_group_typeFormCallback *RELATION_GROUP_TYPEFormCallback) OnSave() {
+	relation_group_typeFormCallback.probe.stageOfInterest.Lock()
+	defer relation_group_typeFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("RELATION_GROUP_TYPEFormCallback, OnSave")
 
@@ -10179,6 +10349,8 @@ type REQ_IFFormCallback struct {
 }
 
 func (req_ifFormCallback *REQ_IFFormCallback) OnSave() {
+	req_ifFormCallback.probe.stageOfInterest.Lock()
+	defer req_ifFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("REQ_IFFormCallback, OnSave")
 
@@ -10263,6 +10435,8 @@ type REQ_IF_CONTENTFormCallback struct {
 }
 
 func (req_if_contentFormCallback *REQ_IF_CONTENTFormCallback) OnSave() {
+	req_if_contentFormCallback.probe.stageOfInterest.Lock()
+	defer req_if_contentFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("REQ_IF_CONTENTFormCallback, OnSave")
 
@@ -10351,6 +10525,8 @@ type REQ_IF_HEADERFormCallback struct {
 }
 
 func (req_if_headerFormCallback *REQ_IF_HEADERFormCallback) OnSave() {
+	req_if_headerFormCallback.probe.stageOfInterest.Lock()
+	defer req_if_headerFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("REQ_IF_HEADERFormCallback, OnSave")
 
@@ -10443,6 +10619,8 @@ type REQ_IF_TOOL_EXTENSIONFormCallback struct {
 }
 
 func (req_if_tool_extensionFormCallback *REQ_IF_TOOL_EXTENSIONFormCallback) OnSave() {
+	req_if_tool_extensionFormCallback.probe.stageOfInterest.Lock()
+	defer req_if_tool_extensionFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("REQ_IF_TOOL_EXTENSIONFormCallback, OnSave")
 
@@ -10585,6 +10763,8 @@ type SPECIFICATIONFormCallback struct {
 }
 
 func (specificationFormCallback *SPECIFICATIONFormCallback) OnSave() {
+	specificationFormCallback.probe.stageOfInterest.Lock()
+	defer specificationFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPECIFICATIONFormCallback, OnSave")
 
@@ -10743,6 +10923,8 @@ type SPECIFICATION_RenderingFormCallback struct {
 }
 
 func (specification_renderingFormCallback *SPECIFICATION_RenderingFormCallback) OnSave() {
+	specification_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer specification_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPECIFICATION_RenderingFormCallback, OnSave")
 
@@ -10825,6 +11007,8 @@ type SPECIFICATION_TYPEFormCallback struct {
 }
 
 func (specification_typeFormCallback *SPECIFICATION_TYPEFormCallback) OnSave() {
+	specification_typeFormCallback.probe.stageOfInterest.Lock()
+	defer specification_typeFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPECIFICATION_TYPEFormCallback, OnSave")
 
@@ -10979,6 +11163,8 @@ type SPEC_HIERARCHYFormCallback struct {
 }
 
 func (spec_hierarchyFormCallback *SPEC_HIERARCHYFormCallback) OnSave() {
+	spec_hierarchyFormCallback.probe.stageOfInterest.Lock()
+	defer spec_hierarchyFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPEC_HIERARCHYFormCallback, OnSave")
 
@@ -11141,6 +11327,8 @@ type SPEC_OBJECTFormCallback struct {
 }
 
 func (spec_objectFormCallback *SPEC_OBJECTFormCallback) OnSave() {
+	spec_objectFormCallback.probe.stageOfInterest.Lock()
+	defer spec_objectFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPEC_OBJECTFormCallback, OnSave")
 
@@ -11297,6 +11485,8 @@ type SPEC_OBJECT_TYPEFormCallback struct {
 }
 
 func (spec_object_typeFormCallback *SPEC_OBJECT_TYPEFormCallback) OnSave() {
+	spec_object_typeFormCallback.probe.stageOfInterest.Lock()
+	defer spec_object_typeFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPEC_OBJECT_TYPEFormCallback, OnSave")
 
@@ -11451,6 +11641,8 @@ type SPEC_OBJECT_TYPE_RenderingFormCallback struct {
 }
 
 func (spec_object_type_renderingFormCallback *SPEC_OBJECT_TYPE_RenderingFormCallback) OnSave() {
+	spec_object_type_renderingFormCallback.probe.stageOfInterest.Lock()
+	defer spec_object_type_renderingFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPEC_OBJECT_TYPE_RenderingFormCallback, OnSave")
 
@@ -11537,6 +11729,8 @@ type SPEC_RELATIONFormCallback struct {
 }
 
 func (spec_relationFormCallback *SPEC_RELATIONFormCallback) OnSave() {
+	spec_relationFormCallback.probe.stageOfInterest.Lock()
+	defer spec_relationFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPEC_RELATIONFormCallback, OnSave")
 
@@ -11697,6 +11891,8 @@ type SPEC_RELATION_TYPEFormCallback struct {
 }
 
 func (spec_relation_typeFormCallback *SPEC_RELATION_TYPEFormCallback) OnSave() {
+	spec_relation_typeFormCallback.probe.stageOfInterest.Lock()
+	defer spec_relation_typeFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("SPEC_RELATION_TYPEFormCallback, OnSave")
 
@@ -11851,6 +12047,8 @@ type StaticWebSiteFormCallback struct {
 }
 
 func (staticwebsiteFormCallback *StaticWebSiteFormCallback) OnSave() {
+	staticwebsiteFormCallback.probe.stageOfInterest.Lock()
+	defer staticwebsiteFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("StaticWebSiteFormCallback, OnSave")
 
@@ -11966,6 +12164,8 @@ type StaticWebSiteChapterFormCallback struct {
 }
 
 func (staticwebsitechapterFormCallback *StaticWebSiteChapterFormCallback) OnSave() {
+	staticwebsitechapterFormCallback.probe.stageOfInterest.Lock()
+	defer staticwebsitechapterFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("StaticWebSiteChapterFormCallback, OnSave")
 
@@ -12141,6 +12341,8 @@ type StaticWebSiteGeneratedImageFormCallback struct {
 }
 
 func (staticwebsitegeneratedimageFormCallback *StaticWebSiteGeneratedImageFormCallback) OnSave() {
+	staticwebsitegeneratedimageFormCallback.probe.stageOfInterest.Lock()
+	defer staticwebsitegeneratedimageFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("StaticWebSiteGeneratedImageFormCallback, OnSave")
 
@@ -12223,6 +12425,8 @@ type StaticWebSiteImageFormCallback struct {
 }
 
 func (staticwebsiteimageFormCallback *StaticWebSiteImageFormCallback) OnSave() {
+	staticwebsiteimageFormCallback.probe.stageOfInterest.Lock()
+	defer staticwebsiteimageFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("StaticWebSiteImageFormCallback, OnSave")
 
@@ -12305,6 +12509,8 @@ type StaticWebSiteParagraphFormCallback struct {
 }
 
 func (staticwebsiteparagraphFormCallback *StaticWebSiteParagraphFormCallback) OnSave() {
+	staticwebsiteparagraphFormCallback.probe.stageOfInterest.Lock()
+	defer staticwebsiteparagraphFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("StaticWebSiteParagraphFormCallback, OnSave")
 
@@ -12451,6 +12657,8 @@ type XHTML_CONTENTFormCallback struct {
 }
 
 func (xhtml_contentFormCallback *XHTML_CONTENTFormCallback) OnSave() {
+	xhtml_contentFormCallback.probe.stageOfInterest.Lock()
+	defer xhtml_contentFormCallback.probe.stageOfInterest.Unlock()
 
 	// log.Println("XHTML_CONTENTFormCallback, OnSave")
 

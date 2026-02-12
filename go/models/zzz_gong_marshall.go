@@ -99,9 +99,9 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 	// map of identifiers
 	// var StageMapDstructIds map[*Dstruct]string
-	identifiersDecl := ""
-	initializerStatements := ""
-	pointersInitializesStatements := ""
+	var identifiersDecl strings.Builder
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 
 	decl := ""
 	_ = decl
@@ -124,16 +124,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return alternative_idi_order < alternative_idj_order
 	})
 	if len(alternative_idOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, alternative_id := range alternative_idOrdered {
 
-		identifiersDecl += alternative_id.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(alternative_id.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += alternative_id.GongMarshallField(stage, "Name")
-		initializerStatements += alternative_id.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements.WriteString(alternative_id.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(alternative_id.GongMarshallField(stage, "IDENTIFIER"))
 	}
 
 	attribute_definition_booleanOrdered := []*ATTRIBUTE_DEFINITION_BOOLEAN{}
@@ -151,23 +151,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_booleani_order < attribute_definition_booleanj_order
 	})
 	if len(attribute_definition_booleanOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_boolean := range attribute_definition_booleanOrdered {
 
-		identifiersDecl += attribute_definition_boolean.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_boolean.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_boolean_renderingOrdered := []*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering{}
@@ -185,19 +185,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_boolean_renderingi_order < attribute_definition_boolean_renderingj_order
 	})
 	if len(attribute_definition_boolean_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_boolean_rendering := range attribute_definition_boolean_renderingOrdered {
 
-		identifiersDecl += attribute_definition_boolean_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_boolean_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_dateOrdered := []*ATTRIBUTE_DEFINITION_DATE{}
@@ -215,23 +215,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_datei_order < attribute_definition_datej_order
 	})
 	if len(attribute_definition_dateOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_date := range attribute_definition_dateOrdered {
 
-		identifiersDecl += attribute_definition_date.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_date.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_date_renderingOrdered := []*ATTRIBUTE_DEFINITION_DATE_Rendering{}
@@ -249,19 +249,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_date_renderingi_order < attribute_definition_date_renderingj_order
 	})
 	if len(attribute_definition_date_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_date_rendering := range attribute_definition_date_renderingOrdered {
 
-		identifiersDecl += attribute_definition_date_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_date_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_enumerationOrdered := []*ATTRIBUTE_DEFINITION_ENUMERATION{}
@@ -279,24 +279,24 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_enumerationi_order < attribute_definition_enumerationj_order
 	})
 	if len(attribute_definition_enumerationOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_enumeration := range attribute_definition_enumerationOrdered {
 
-		identifiersDecl += attribute_definition_enumeration.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_enumeration.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED")
-		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED"))
+		pointersInitializesStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_enumeration_renderingOrdered := []*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering{}
@@ -314,19 +314,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_enumeration_renderingi_order < attribute_definition_enumeration_renderingj_order
 	})
 	if len(attribute_definition_enumeration_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_enumeration_rendering := range attribute_definition_enumeration_renderingOrdered {
 
-		identifiersDecl += attribute_definition_enumeration_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_enumeration_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_integerOrdered := []*ATTRIBUTE_DEFINITION_INTEGER{}
@@ -344,23 +344,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_integeri_order < attribute_definition_integerj_order
 	})
 	if len(attribute_definition_integerOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_integer := range attribute_definition_integerOrdered {
 
-		identifiersDecl += attribute_definition_integer.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_integer.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_integer_renderingOrdered := []*ATTRIBUTE_DEFINITION_INTEGER_Rendering{}
@@ -378,19 +378,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_integer_renderingi_order < attribute_definition_integer_renderingj_order
 	})
 	if len(attribute_definition_integer_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_integer_rendering := range attribute_definition_integer_renderingOrdered {
 
-		identifiersDecl += attribute_definition_integer_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_integer_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_realOrdered := []*ATTRIBUTE_DEFINITION_REAL{}
@@ -408,23 +408,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_reali_order < attribute_definition_realj_order
 	})
 	if len(attribute_definition_realOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_real := range attribute_definition_realOrdered {
 
-		identifiersDecl += attribute_definition_real.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_real.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_real_renderingOrdered := []*ATTRIBUTE_DEFINITION_REAL_Rendering{}
@@ -442,19 +442,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_real_renderingi_order < attribute_definition_real_renderingj_order
 	})
 	if len(attribute_definition_real_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_real_rendering := range attribute_definition_real_renderingOrdered {
 
-		identifiersDecl += attribute_definition_real_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_real_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_renderingOrdered := []*ATTRIBUTE_DEFINITION_Rendering{}
@@ -472,19 +472,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_renderingi_order < attribute_definition_renderingj_order
 	})
 	if len(attribute_definition_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_rendering := range attribute_definition_renderingOrdered {
 
-		identifiersDecl += attribute_definition_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_stringOrdered := []*ATTRIBUTE_DEFINITION_STRING{}
@@ -502,23 +502,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_stringi_order < attribute_definition_stringj_order
 	})
 	if len(attribute_definition_stringOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_string := range attribute_definition_stringOrdered {
 
-		identifiersDecl += attribute_definition_string.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_string.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_string_renderingOrdered := []*ATTRIBUTE_DEFINITION_STRING_Rendering{}
@@ -536,19 +536,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_string_renderingi_order < attribute_definition_string_renderingj_order
 	})
 	if len(attribute_definition_string_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_string_rendering := range attribute_definition_string_renderingOrdered {
 
-		identifiersDecl += attribute_definition_string_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_string_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_definition_xhtmlOrdered := []*ATTRIBUTE_DEFINITION_XHTML{}
@@ -566,23 +566,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_xhtmli_order < attribute_definition_xhtmlj_order
 	})
 	if len(attribute_definition_xhtmlOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_xhtml := range attribute_definition_xhtmlOrdered {
 
-		identifiersDecl += attribute_definition_xhtml.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_xhtml.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "TYPE"))
 	}
 
 	attribute_definition_xhtml_renderingOrdered := []*ATTRIBUTE_DEFINITION_XHTML_Rendering{}
@@ -600,19 +600,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_definition_xhtml_renderingi_order < attribute_definition_xhtml_renderingj_order
 	})
 	if len(attribute_definition_xhtml_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_definition_xhtml_rendering := range attribute_definition_xhtml_renderingOrdered {
 
-		identifiersDecl += attribute_definition_xhtml_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_definition_xhtml_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank"))
 	}
 
 	attribute_value_booleanOrdered := []*ATTRIBUTE_VALUE_BOOLEAN{}
@@ -630,17 +630,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_booleani_order < attribute_value_booleanj_order
 	})
 	if len(attribute_value_booleanOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_boolean := range attribute_value_booleanOrdered {
 
-		identifiersDecl += attribute_value_boolean.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_boolean.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_boolean.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_boolean.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_boolean.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_boolean.GongMarshallField(stage, "THE_VALUE"))
 	}
 
 	attribute_value_dateOrdered := []*ATTRIBUTE_VALUE_DATE{}
@@ -658,17 +658,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_datei_order < attribute_value_datej_order
 	})
 	if len(attribute_value_dateOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_date := range attribute_value_dateOrdered {
 
-		identifiersDecl += attribute_value_date.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_date.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_date.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_date.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_date.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_date.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_date.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_date.GongMarshallField(stage, "THE_VALUE"))
 	}
 
 	attribute_value_enumerationOrdered := []*ATTRIBUTE_VALUE_ENUMERATION{}
@@ -686,17 +686,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_enumerationi_order < attribute_value_enumerationj_order
 	})
 	if len(attribute_value_enumerationOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_enumeration := range attribute_value_enumerationOrdered {
 
-		identifiersDecl += attribute_value_enumeration.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_enumeration.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_enumeration.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "DEFINITION")
-		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "VALUES")
+		initializerStatements.WriteString(attribute_value_enumeration.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_enumeration.GongMarshallField(stage, "DEFINITION"))
+		pointersInitializesStatements.WriteString(attribute_value_enumeration.GongMarshallField(stage, "VALUES"))
 	}
 
 	attribute_value_integerOrdered := []*ATTRIBUTE_VALUE_INTEGER{}
@@ -714,17 +714,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_integeri_order < attribute_value_integerj_order
 	})
 	if len(attribute_value_integerOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_integer := range attribute_value_integerOrdered {
 
-		identifiersDecl += attribute_value_integer.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_integer.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_integer.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_integer.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_integer.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_integer.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_integer.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_integer.GongMarshallField(stage, "THE_VALUE"))
 	}
 
 	attribute_value_realOrdered := []*ATTRIBUTE_VALUE_REAL{}
@@ -742,17 +742,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_reali_order < attribute_value_realj_order
 	})
 	if len(attribute_value_realOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_real := range attribute_value_realOrdered {
 
-		identifiersDecl += attribute_value_real.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_real.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_real.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_real.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_real.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_real.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_real.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_real.GongMarshallField(stage, "THE_VALUE"))
 	}
 
 	attribute_value_stringOrdered := []*ATTRIBUTE_VALUE_STRING{}
@@ -770,17 +770,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_stringi_order < attribute_value_stringj_order
 	})
 	if len(attribute_value_stringOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_string := range attribute_value_stringOrdered {
 
-		identifiersDecl += attribute_value_string.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_string.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_string.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_string.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_string.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_string.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_string.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_string.GongMarshallField(stage, "THE_VALUE"))
 	}
 
 	attribute_value_xhtmlOrdered := []*ATTRIBUTE_VALUE_XHTML{}
@@ -798,19 +798,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return attribute_value_xhtmli_order < attribute_value_xhtmlj_order
 	})
 	if len(attribute_value_xhtmlOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, attribute_value_xhtml := range attribute_value_xhtmlOrdered {
 
-		identifiersDecl += attribute_value_xhtml.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(attribute_value_xhtml.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED")
-		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE")
-		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE")
+		initializerStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED"))
+		pointersInitializesStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE"))
 	}
 
 	a_alternative_idOrdered := []*A_ALTERNATIVE_ID{}
@@ -828,16 +828,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_alternative_idi_order < a_alternative_idj_order
 	})
 	if len(a_alternative_idOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_alternative_id := range a_alternative_idOrdered {
 
-		identifiersDecl += a_alternative_id.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_alternative_id.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_alternative_id.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(a_alternative_id.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	a_attribute_definition_boolean_refOrdered := []*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF{}
@@ -855,16 +855,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_boolean_refi_order < a_attribute_definition_boolean_refj_order
 	})
 	if len(a_attribute_definition_boolean_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_boolean_ref := range a_attribute_definition_boolean_refOrdered {
 
-		identifiersDecl += a_attribute_definition_boolean_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_boolean_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+		initializerStatements.WriteString(a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF"))
 	}
 
 	a_attribute_definition_date_refOrdered := []*A_ATTRIBUTE_DEFINITION_DATE_REF{}
@@ -882,16 +882,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_date_refi_order < a_attribute_definition_date_refj_order
 	})
 	if len(a_attribute_definition_date_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_date_ref := range a_attribute_definition_date_refOrdered {
 
-		identifiersDecl += a_attribute_definition_date_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_date_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
+		initializerStatements.WriteString(a_attribute_definition_date_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF"))
 	}
 
 	a_attribute_definition_enumeration_refOrdered := []*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF{}
@@ -909,16 +909,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_enumeration_refi_order < a_attribute_definition_enumeration_refj_order
 	})
 	if len(a_attribute_definition_enumeration_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_enumeration_ref := range a_attribute_definition_enumeration_refOrdered {
 
-		identifiersDecl += a_attribute_definition_enumeration_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_enumeration_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+		initializerStatements.WriteString(a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF"))
 	}
 
 	a_attribute_definition_integer_refOrdered := []*A_ATTRIBUTE_DEFINITION_INTEGER_REF{}
@@ -936,16 +936,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_integer_refi_order < a_attribute_definition_integer_refj_order
 	})
 	if len(a_attribute_definition_integer_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_integer_ref := range a_attribute_definition_integer_refOrdered {
 
-		identifiersDecl += a_attribute_definition_integer_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_integer_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
+		initializerStatements.WriteString(a_attribute_definition_integer_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF"))
 	}
 
 	a_attribute_definition_real_refOrdered := []*A_ATTRIBUTE_DEFINITION_REAL_REF{}
@@ -963,16 +963,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_real_refi_order < a_attribute_definition_real_refj_order
 	})
 	if len(a_attribute_definition_real_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_real_ref := range a_attribute_definition_real_refOrdered {
 
-		identifiersDecl += a_attribute_definition_real_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_real_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
+		initializerStatements.WriteString(a_attribute_definition_real_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF"))
 	}
 
 	a_attribute_definition_string_refOrdered := []*A_ATTRIBUTE_DEFINITION_STRING_REF{}
@@ -990,16 +990,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_string_refi_order < a_attribute_definition_string_refj_order
 	})
 	if len(a_attribute_definition_string_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_string_ref := range a_attribute_definition_string_refOrdered {
 
-		identifiersDecl += a_attribute_definition_string_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_string_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
+		initializerStatements.WriteString(a_attribute_definition_string_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF"))
 	}
 
 	a_attribute_definition_xhtml_refOrdered := []*A_ATTRIBUTE_DEFINITION_XHTML_REF{}
@@ -1017,16 +1017,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_definition_xhtml_refi_order < a_attribute_definition_xhtml_refj_order
 	})
 	if len(a_attribute_definition_xhtml_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_definition_xhtml_ref := range a_attribute_definition_xhtml_refOrdered {
 
-		identifiersDecl += a_attribute_definition_xhtml_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_definition_xhtml_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
+		initializerStatements.WriteString(a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF"))
 	}
 
 	a_attribute_value_booleanOrdered := []*A_ATTRIBUTE_VALUE_BOOLEAN{}
@@ -1044,16 +1044,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_booleani_order < a_attribute_value_booleanj_order
 	})
 	if len(a_attribute_value_booleanOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_boolean := range a_attribute_value_booleanOrdered {
 
-		identifiersDecl += a_attribute_value_boolean.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_boolean.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_boolean.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_boolean.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
+		initializerStatements.WriteString(a_attribute_value_boolean.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_boolean.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN"))
 	}
 
 	a_attribute_value_dateOrdered := []*A_ATTRIBUTE_VALUE_DATE{}
@@ -1071,16 +1071,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_datei_order < a_attribute_value_datej_order
 	})
 	if len(a_attribute_value_dateOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_date := range a_attribute_value_dateOrdered {
 
-		identifiersDecl += a_attribute_value_date.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_date.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_date.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_date.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
+		initializerStatements.WriteString(a_attribute_value_date.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_date.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE"))
 	}
 
 	a_attribute_value_enumerationOrdered := []*A_ATTRIBUTE_VALUE_ENUMERATION{}
@@ -1098,16 +1098,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_enumerationi_order < a_attribute_value_enumerationj_order
 	})
 	if len(a_attribute_value_enumerationOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_enumeration := range a_attribute_value_enumerationOrdered {
 
-		identifiersDecl += a_attribute_value_enumeration.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_enumeration.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_enumeration.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_enumeration.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
+		initializerStatements.WriteString(a_attribute_value_enumeration.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_enumeration.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION"))
 	}
 
 	a_attribute_value_integerOrdered := []*A_ATTRIBUTE_VALUE_INTEGER{}
@@ -1125,16 +1125,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_integeri_order < a_attribute_value_integerj_order
 	})
 	if len(a_attribute_value_integerOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_integer := range a_attribute_value_integerOrdered {
 
-		identifiersDecl += a_attribute_value_integer.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_integer.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_integer.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_integer.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
+		initializerStatements.WriteString(a_attribute_value_integer.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_integer.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER"))
 	}
 
 	a_attribute_value_realOrdered := []*A_ATTRIBUTE_VALUE_REAL{}
@@ -1152,16 +1152,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_reali_order < a_attribute_value_realj_order
 	})
 	if len(a_attribute_value_realOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_real := range a_attribute_value_realOrdered {
 
-		identifiersDecl += a_attribute_value_real.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_real.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_real.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_real.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
+		initializerStatements.WriteString(a_attribute_value_real.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_real.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL"))
 	}
 
 	a_attribute_value_stringOrdered := []*A_ATTRIBUTE_VALUE_STRING{}
@@ -1179,16 +1179,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_stringi_order < a_attribute_value_stringj_order
 	})
 	if len(a_attribute_value_stringOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_string := range a_attribute_value_stringOrdered {
 
-		identifiersDecl += a_attribute_value_string.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_string.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_string.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_string.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
+		initializerStatements.WriteString(a_attribute_value_string.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_string.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING"))
 	}
 
 	a_attribute_value_xhtmlOrdered := []*A_ATTRIBUTE_VALUE_XHTML{}
@@ -1206,16 +1206,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_xhtmli_order < a_attribute_value_xhtmlj_order
 	})
 	if len(a_attribute_value_xhtmlOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_xhtml := range a_attribute_value_xhtmlOrdered {
 
-		identifiersDecl += a_attribute_value_xhtml.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_xhtml.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_xhtml.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_xhtml.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
+		initializerStatements.WriteString(a_attribute_value_xhtml.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML"))
 	}
 
 	a_attribute_value_xhtml_1Ordered := []*A_ATTRIBUTE_VALUE_XHTML_1{}
@@ -1233,22 +1233,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_attribute_value_xhtml_1i_order < a_attribute_value_xhtml_1j_order
 	})
 	if len(a_attribute_value_xhtml_1Ordered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_attribute_value_xhtml_1 := range a_attribute_value_xhtml_1Ordered {
 
-		identifiersDecl += a_attribute_value_xhtml_1.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_attribute_value_xhtml_1.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
+		initializerStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML"))
 	}
 
 	a_childrenOrdered := []*A_CHILDREN{}
@@ -1266,16 +1266,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_childreni_order < a_childrenj_order
 	})
 	if len(a_childrenOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_children := range a_childrenOrdered {
 
-		identifiersDecl += a_children.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_children.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_children.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_children.GongMarshallField(stage, "SPEC_HIERARCHY")
+		initializerStatements.WriteString(a_children.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_children.GongMarshallField(stage, "SPEC_HIERARCHY"))
 	}
 
 	a_core_contentOrdered := []*A_CORE_CONTENT{}
@@ -1293,16 +1293,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_core_contenti_order < a_core_contentj_order
 	})
 	if len(a_core_contentOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_core_content := range a_core_contentOrdered {
 
-		identifiersDecl += a_core_content.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_core_content.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_core_content.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT")
+		initializerStatements.WriteString(a_core_content.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT"))
 	}
 
 	a_datatypesOrdered := []*A_DATATYPES{}
@@ -1320,22 +1320,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatypesi_order < a_datatypesj_order
 	})
 	if len(a_datatypesOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatypes := range a_datatypesOrdered {
 
-		identifiersDecl += a_datatypes.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatypes.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatypes.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML")
+		initializerStatements.WriteString(a_datatypes.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML"))
 	}
 
 	a_datatype_definition_boolean_refOrdered := []*A_DATATYPE_DEFINITION_BOOLEAN_REF{}
@@ -1353,16 +1353,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_boolean_refi_order < a_datatype_definition_boolean_refj_order
 	})
 	if len(a_datatype_definition_boolean_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_boolean_ref := range a_datatype_definition_boolean_refOrdered {
 
-		identifiersDecl += a_datatype_definition_boolean_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_boolean_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF")
+		initializerStatements.WriteString(a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF"))
 	}
 
 	a_datatype_definition_date_refOrdered := []*A_DATATYPE_DEFINITION_DATE_REF{}
@@ -1380,16 +1380,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_date_refi_order < a_datatype_definition_date_refj_order
 	})
 	if len(a_datatype_definition_date_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_date_ref := range a_datatype_definition_date_refOrdered {
 
-		identifiersDecl += a_datatype_definition_date_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_date_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF")
+		initializerStatements.WriteString(a_datatype_definition_date_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF"))
 	}
 
 	a_datatype_definition_enumeration_refOrdered := []*A_DATATYPE_DEFINITION_ENUMERATION_REF{}
@@ -1407,16 +1407,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_enumeration_refi_order < a_datatype_definition_enumeration_refj_order
 	})
 	if len(a_datatype_definition_enumeration_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_enumeration_ref := range a_datatype_definition_enumeration_refOrdered {
 
-		identifiersDecl += a_datatype_definition_enumeration_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_enumeration_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF")
+		initializerStatements.WriteString(a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF"))
 	}
 
 	a_datatype_definition_integer_refOrdered := []*A_DATATYPE_DEFINITION_INTEGER_REF{}
@@ -1434,16 +1434,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_integer_refi_order < a_datatype_definition_integer_refj_order
 	})
 	if len(a_datatype_definition_integer_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_integer_ref := range a_datatype_definition_integer_refOrdered {
 
-		identifiersDecl += a_datatype_definition_integer_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_integer_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF")
+		initializerStatements.WriteString(a_datatype_definition_integer_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF"))
 	}
 
 	a_datatype_definition_real_refOrdered := []*A_DATATYPE_DEFINITION_REAL_REF{}
@@ -1461,16 +1461,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_real_refi_order < a_datatype_definition_real_refj_order
 	})
 	if len(a_datatype_definition_real_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_real_ref := range a_datatype_definition_real_refOrdered {
 
-		identifiersDecl += a_datatype_definition_real_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_real_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF")
+		initializerStatements.WriteString(a_datatype_definition_real_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF"))
 	}
 
 	a_datatype_definition_string_refOrdered := []*A_DATATYPE_DEFINITION_STRING_REF{}
@@ -1488,16 +1488,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_string_refi_order < a_datatype_definition_string_refj_order
 	})
 	if len(a_datatype_definition_string_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_string_ref := range a_datatype_definition_string_refOrdered {
 
-		identifiersDecl += a_datatype_definition_string_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_string_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF")
+		initializerStatements.WriteString(a_datatype_definition_string_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF"))
 	}
 
 	a_datatype_definition_xhtml_refOrdered := []*A_DATATYPE_DEFINITION_XHTML_REF{}
@@ -1515,16 +1515,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_datatype_definition_xhtml_refi_order < a_datatype_definition_xhtml_refj_order
 	})
 	if len(a_datatype_definition_xhtml_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_datatype_definition_xhtml_ref := range a_datatype_definition_xhtml_refOrdered {
 
-		identifiersDecl += a_datatype_definition_xhtml_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_datatype_definition_xhtml_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF")
+		initializerStatements.WriteString(a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF"))
 	}
 
 	a_editable_attsOrdered := []*A_EDITABLE_ATTS{}
@@ -1542,22 +1542,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_editable_attsi_order < a_editable_attsj_order
 	})
 	if len(a_editable_attsOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_editable_atts := range a_editable_attsOrdered {
 
-		identifiersDecl += a_editable_atts.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_editable_atts.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "Name")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF"))
 	}
 
 	a_enum_value_refOrdered := []*A_ENUM_VALUE_REF{}
@@ -1575,16 +1575,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_enum_value_refi_order < a_enum_value_refj_order
 	})
 	if len(a_enum_value_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_enum_value_ref := range a_enum_value_refOrdered {
 
-		identifiersDecl += a_enum_value_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_enum_value_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF")
+		initializerStatements.WriteString(a_enum_value_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF"))
 	}
 
 	a_objectOrdered := []*A_OBJECT{}
@@ -1602,16 +1602,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_objecti_order < a_objectj_order
 	})
 	if len(a_objectOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_object := range a_objectOrdered {
 
-		identifiersDecl += a_object.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_object.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_object.GongMarshallField(stage, "Name")
-		initializerStatements += a_object.GongMarshallField(stage, "SPEC_OBJECT_REF")
+		initializerStatements.WriteString(a_object.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_object.GongMarshallField(stage, "SPEC_OBJECT_REF"))
 	}
 
 	a_propertiesOrdered := []*A_PROPERTIES{}
@@ -1629,16 +1629,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_propertiesi_order < a_propertiesj_order
 	})
 	if len(a_propertiesOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_properties := range a_propertiesOrdered {
 
-		identifiersDecl += a_properties.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_properties.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_properties.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_properties.GongMarshallField(stage, "EMBEDDED_VALUE")
+		initializerStatements.WriteString(a_properties.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_properties.GongMarshallField(stage, "EMBEDDED_VALUE"))
 	}
 
 	a_relation_group_type_refOrdered := []*A_RELATION_GROUP_TYPE_REF{}
@@ -1656,16 +1656,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_relation_group_type_refi_order < a_relation_group_type_refj_order
 	})
 	if len(a_relation_group_type_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_relation_group_type_ref := range a_relation_group_type_refOrdered {
 
-		identifiersDecl += a_relation_group_type_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_relation_group_type_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF")
+		initializerStatements.WriteString(a_relation_group_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF"))
 	}
 
 	a_source_1Ordered := []*A_SOURCE_1{}
@@ -1683,16 +1683,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_source_1i_order < a_source_1j_order
 	})
 	if len(a_source_1Ordered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_source_1 := range a_source_1Ordered {
 
-		identifiersDecl += a_source_1.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_source_1.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_source_1.GongMarshallField(stage, "Name")
-		initializerStatements += a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF")
+		initializerStatements.WriteString(a_source_1.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF"))
 	}
 
 	a_source_specification_1Ordered := []*A_SOURCE_SPECIFICATION_1{}
@@ -1710,16 +1710,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_source_specification_1i_order < a_source_specification_1j_order
 	})
 	if len(a_source_specification_1Ordered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_source_specification_1 := range a_source_specification_1Ordered {
 
-		identifiersDecl += a_source_specification_1.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_source_specification_1.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_source_specification_1.GongMarshallField(stage, "Name")
-		initializerStatements += a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF")
+		initializerStatements.WriteString(a_source_specification_1.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF"))
 	}
 
 	a_specificationsOrdered := []*A_SPECIFICATIONS{}
@@ -1737,16 +1737,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_specificationsi_order < a_specificationsj_order
 	})
 	if len(a_specificationsOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_specifications := range a_specificationsOrdered {
 
-		identifiersDecl += a_specifications.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_specifications.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_specifications.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_specifications.GongMarshallField(stage, "SPECIFICATION")
+		initializerStatements.WriteString(a_specifications.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_specifications.GongMarshallField(stage, "SPECIFICATION"))
 	}
 
 	a_specification_type_refOrdered := []*A_SPECIFICATION_TYPE_REF{}
@@ -1764,16 +1764,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_specification_type_refi_order < a_specification_type_refj_order
 	})
 	if len(a_specification_type_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_specification_type_ref := range a_specification_type_refOrdered {
 
-		identifiersDecl += a_specification_type_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_specification_type_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF")
+		initializerStatements.WriteString(a_specification_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF"))
 	}
 
 	a_specified_valuesOrdered := []*A_SPECIFIED_VALUES{}
@@ -1791,16 +1791,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_specified_valuesi_order < a_specified_valuesj_order
 	})
 	if len(a_specified_valuesOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_specified_values := range a_specified_valuesOrdered {
 
-		identifiersDecl += a_specified_values.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_specified_values.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_specified_values.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_specified_values.GongMarshallField(stage, "ENUM_VALUE")
+		initializerStatements.WriteString(a_specified_values.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_specified_values.GongMarshallField(stage, "ENUM_VALUE"))
 	}
 
 	a_spec_attributesOrdered := []*A_SPEC_ATTRIBUTES{}
@@ -1818,22 +1818,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_attributesi_order < a_spec_attributesj_order
 	})
 	if len(a_spec_attributesOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_attributes := range a_spec_attributesOrdered {
 
-		identifiersDecl += a_spec_attributes.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_attributes.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_attributes.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML")
+		initializerStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML"))
 	}
 
 	a_spec_objectsOrdered := []*A_SPEC_OBJECTS{}
@@ -1851,16 +1851,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_objectsi_order < a_spec_objectsj_order
 	})
 	if len(a_spec_objectsOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_objects := range a_spec_objectsOrdered {
 
-		identifiersDecl += a_spec_objects.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_objects.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_objects.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_objects.GongMarshallField(stage, "SPEC_OBJECT")
+		initializerStatements.WriteString(a_spec_objects.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_objects.GongMarshallField(stage, "SPEC_OBJECT"))
 	}
 
 	a_spec_object_type_refOrdered := []*A_SPEC_OBJECT_TYPE_REF{}
@@ -1878,16 +1878,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_object_type_refi_order < a_spec_object_type_refj_order
 	})
 	if len(a_spec_object_type_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_object_type_ref := range a_spec_object_type_refOrdered {
 
-		identifiersDecl += a_spec_object_type_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_object_type_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF")
+		initializerStatements.WriteString(a_spec_object_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF"))
 	}
 
 	a_spec_relationsOrdered := []*A_SPEC_RELATIONS{}
@@ -1905,16 +1905,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_relationsi_order < a_spec_relationsj_order
 	})
 	if len(a_spec_relationsOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_relations := range a_spec_relationsOrdered {
 
-		identifiersDecl += a_spec_relations.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_relations.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relations.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_relations.GongMarshallField(stage, "SPEC_RELATION")
+		initializerStatements.WriteString(a_spec_relations.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_relations.GongMarshallField(stage, "SPEC_RELATION"))
 	}
 
 	a_spec_relation_groupsOrdered := []*A_SPEC_RELATION_GROUPS{}
@@ -1932,16 +1932,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_relation_groupsi_order < a_spec_relation_groupsj_order
 	})
 	if len(a_spec_relation_groupsOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_relation_groups := range a_spec_relation_groupsOrdered {
 
-		identifiersDecl += a_spec_relation_groups.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_relation_groups.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relation_groups.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_relation_groups.GongMarshallField(stage, "RELATION_GROUP")
+		initializerStatements.WriteString(a_spec_relation_groups.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_relation_groups.GongMarshallField(stage, "RELATION_GROUP"))
 	}
 
 	a_spec_relation_refOrdered := []*A_SPEC_RELATION_REF{}
@@ -1959,16 +1959,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_relation_refi_order < a_spec_relation_refj_order
 	})
 	if len(a_spec_relation_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_relation_ref := range a_spec_relation_refOrdered {
 
-		identifiersDecl += a_spec_relation_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_relation_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF")
+		initializerStatements.WriteString(a_spec_relation_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF"))
 	}
 
 	a_spec_relation_type_refOrdered := []*A_SPEC_RELATION_TYPE_REF{}
@@ -1986,16 +1986,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_relation_type_refi_order < a_spec_relation_type_refj_order
 	})
 	if len(a_spec_relation_type_refOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_relation_type_ref := range a_spec_relation_type_refOrdered {
 
-		identifiersDecl += a_spec_relation_type_ref.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_relation_type_ref.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF")
+		initializerStatements.WriteString(a_spec_relation_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF"))
 	}
 
 	a_spec_typesOrdered := []*A_SPEC_TYPES{}
@@ -2013,19 +2013,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_spec_typesi_order < a_spec_typesj_order
 	})
 	if len(a_spec_typesOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_spec_types := range a_spec_typesOrdered {
 
-		identifiersDecl += a_spec_types.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_spec_types.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_spec_types.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "RELATION_GROUP_TYPE")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_OBJECT_TYPE")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_RELATION_TYPE")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPECIFICATION_TYPE")
+		initializerStatements.WriteString(a_spec_types.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "RELATION_GROUP_TYPE"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "SPEC_OBJECT_TYPE"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "SPEC_RELATION_TYPE"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "SPECIFICATION_TYPE"))
 	}
 
 	a_the_headerOrdered := []*A_THE_HEADER{}
@@ -2043,16 +2043,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_the_headeri_order < a_the_headerj_order
 	})
 	if len(a_the_headerOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_the_header := range a_the_headerOrdered {
 
-		identifiersDecl += a_the_header.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_the_header.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_the_header.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_the_header.GongMarshallField(stage, "REQ_IF_HEADER")
+		initializerStatements.WriteString(a_the_header.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_the_header.GongMarshallField(stage, "REQ_IF_HEADER"))
 	}
 
 	a_tool_extensionsOrdered := []*A_TOOL_EXTENSIONS{}
@@ -2070,16 +2070,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return a_tool_extensionsi_order < a_tool_extensionsj_order
 	})
 	if len(a_tool_extensionsOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, a_tool_extensions := range a_tool_extensionsOrdered {
 
-		identifiersDecl += a_tool_extensions.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(a_tool_extensions.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += a_tool_extensions.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_tool_extensions.GongMarshallField(stage, "REQ_IF_TOOL_EXTENSION")
+		initializerStatements.WriteString(a_tool_extensions.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_tool_extensions.GongMarshallField(stage, "REQ_IF_TOOL_EXTENSION"))
 	}
 
 	datatype_definition_booleanOrdered := []*DATATYPE_DEFINITION_BOOLEAN{}
@@ -2097,20 +2097,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_booleani_order < datatype_definition_booleanj_order
 	})
 	if len(datatype_definition_booleanOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_boolean := range datatype_definition_booleanOrdered {
 
-		identifiersDecl += datatype_definition_boolean.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_boolean.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	datatype_definition_dateOrdered := []*DATATYPE_DEFINITION_DATE{}
@@ -2128,20 +2128,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_datei_order < datatype_definition_datej_order
 	})
 	if len(datatype_definition_dateOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_date := range datatype_definition_dateOrdered {
 
-		identifiersDecl += datatype_definition_date.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_date.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	datatype_definition_enumerationOrdered := []*DATATYPE_DEFINITION_ENUMERATION{}
@@ -2159,21 +2159,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_enumerationi_order < datatype_definition_enumerationj_order
 	})
 	if len(datatype_definition_enumerationOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_enumeration := range datatype_definition_enumerationOrdered {
 
-		identifiersDecl += datatype_definition_enumeration.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_enumeration.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES")
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES"))
 	}
 
 	datatype_definition_integerOrdered := []*DATATYPE_DEFINITION_INTEGER{}
@@ -2191,22 +2191,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_integeri_order < datatype_definition_integerj_order
 	})
 	if len(datatype_definition_integerOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_integer := range datatype_definition_integerOrdered {
 
-		identifiersDecl += datatype_definition_integer.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_integer.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MAX")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MIN")
-		pointersInitializesStatements += datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "MAX"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "MIN"))
+		pointersInitializesStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	datatype_definition_realOrdered := []*DATATYPE_DEFINITION_REAL{}
@@ -2224,23 +2224,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_reali_order < datatype_definition_realj_order
 	})
 	if len(datatype_definition_realOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_real := range datatype_definition_realOrdered {
 
-		identifiersDecl += datatype_definition_real.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_real.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "ACCURACY")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MAX")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MIN")
-		pointersInitializesStatements += datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "ACCURACY"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "MAX"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "MIN"))
+		pointersInitializesStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	datatype_definition_stringOrdered := []*DATATYPE_DEFINITION_STRING{}
@@ -2258,21 +2258,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_stringi_order < datatype_definition_stringj_order
 	})
 	if len(datatype_definition_stringOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_string := range datatype_definition_stringOrdered {
 
-		identifiersDecl += datatype_definition_string.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_string.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH")
-		pointersInitializesStatements += datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH"))
+		pointersInitializesStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	datatype_definition_xhtmlOrdered := []*DATATYPE_DEFINITION_XHTML{}
@@ -2290,20 +2290,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return datatype_definition_xhtmli_order < datatype_definition_xhtmlj_order
 	})
 	if len(datatype_definition_xhtmlOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, datatype_definition_xhtml := range datatype_definition_xhtmlOrdered {
 
-		identifiersDecl += datatype_definition_xhtml.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(datatype_definition_xhtml.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
 
 	embedded_valueOrdered := []*EMBEDDED_VALUE{}
@@ -2321,17 +2321,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return embedded_valuei_order < embedded_valuej_order
 	})
 	if len(embedded_valueOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, embedded_value := range embedded_valueOrdered {
 
-		identifiersDecl += embedded_value.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(embedded_value.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += embedded_value.GongMarshallField(stage, "Name")
-		initializerStatements += embedded_value.GongMarshallField(stage, "KEY")
-		initializerStatements += embedded_value.GongMarshallField(stage, "OTHER_CONTENT")
+		initializerStatements.WriteString(embedded_value.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embedded_value.GongMarshallField(stage, "KEY"))
+		initializerStatements.WriteString(embedded_value.GongMarshallField(stage, "OTHER_CONTENT"))
 	}
 
 	enum_valueOrdered := []*ENUM_VALUE{}
@@ -2349,21 +2349,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return enum_valuei_order < enum_valuej_order
 	})
 	if len(enum_valueOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, enum_value := range enum_valueOrdered {
 
-		identifiersDecl += enum_value.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(enum_value.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += enum_value.GongMarshallField(stage, "Name")
-		initializerStatements += enum_value.GongMarshallField(stage, "DESC")
-		initializerStatements += enum_value.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += enum_value.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += enum_value.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += enum_value.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += enum_value.GongMarshallField(stage, "PROPERTIES")
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(enum_value.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(enum_value.GongMarshallField(stage, "PROPERTIES"))
 	}
 
 	embeddedjpgimageOrdered := []*EmbeddedJpgImage{}
@@ -2381,16 +2381,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return embeddedjpgimagei_order < embeddedjpgimagej_order
 	})
 	if len(embeddedjpgimageOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, embeddedjpgimage := range embeddedjpgimageOrdered {
 
-		identifiersDecl += embeddedjpgimage.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(embeddedjpgimage.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Name")
-		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Base64Content")
+		initializerStatements.WriteString(embeddedjpgimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embeddedjpgimage.GongMarshallField(stage, "Base64Content"))
 	}
 
 	embeddedpngimageOrdered := []*EmbeddedPngImage{}
@@ -2408,16 +2408,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return embeddedpngimagei_order < embeddedpngimagej_order
 	})
 	if len(embeddedpngimageOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, embeddedpngimage := range embeddedpngimageOrdered {
 
-		identifiersDecl += embeddedpngimage.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(embeddedpngimage.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Name")
-		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Base64Content")
+		initializerStatements.WriteString(embeddedpngimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embeddedpngimage.GongMarshallField(stage, "Base64Content"))
 	}
 
 	embeddedsvgimageOrdered := []*EmbeddedSvgImage{}
@@ -2435,16 +2435,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return embeddedsvgimagei_order < embeddedsvgimagej_order
 	})
 	if len(embeddedsvgimageOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, embeddedsvgimage := range embeddedsvgimageOrdered {
 
-		identifiersDecl += embeddedsvgimage.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(embeddedsvgimage.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Name")
-		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Content")
+		initializerStatements.WriteString(embeddedsvgimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embeddedsvgimage.GongMarshallField(stage, "Content"))
 	}
 
 	killOrdered := []*Kill{}
@@ -2462,15 +2462,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return killi_order < killj_order
 	})
 	if len(killOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, kill := range killOrdered {
 
-		identifiersDecl += kill.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(kill.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += kill.GongMarshallField(stage, "Name")
+		initializerStatements.WriteString(kill.GongMarshallField(stage, "Name"))
 	}
 
 	map_identifier_boolOrdered := []*Map_identifier_bool{}
@@ -2488,16 +2488,16 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return map_identifier_booli_order < map_identifier_boolj_order
 	})
 	if len(map_identifier_boolOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, map_identifier_bool := range map_identifier_boolOrdered {
 
-		identifiersDecl += map_identifier_bool.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(map_identifier_bool.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Name")
-		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Value")
+		initializerStatements.WriteString(map_identifier_bool.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(map_identifier_bool.GongMarshallField(stage, "Value"))
 	}
 
 	relation_groupOrdered := []*RELATION_GROUP{}
@@ -2515,24 +2515,24 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return relation_groupi_order < relation_groupj_order
 	})
 	if len(relation_groupOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, relation_group := range relation_groupOrdered {
 
-		identifiersDecl += relation_group.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(relation_group.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += relation_group.GongMarshallField(stage, "Name")
-		initializerStatements += relation_group.GongMarshallField(stage, "DESC")
-		initializerStatements += relation_group.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += relation_group.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += relation_group.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SPEC_RELATIONS")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "SPEC_RELATIONS"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "TYPE"))
 	}
 
 	relation_group_typeOrdered := []*RELATION_GROUP_TYPE{}
@@ -2550,21 +2550,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return relation_group_typei_order < relation_group_typej_order
 	})
 	if len(relation_group_typeOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, relation_group_type := range relation_group_typeOrdered {
 
-		identifiersDecl += relation_group_type.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(relation_group_type.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += relation_group_type.GongMarshallField(stage, "Name")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "DESC")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
 
 	req_ifOrdered := []*REQ_IF{}
@@ -2582,19 +2582,19 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return req_ifi_order < req_ifj_order
 	})
 	if len(req_ifOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, req_if := range req_ifOrdered {
 
-		identifiersDecl += req_if.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(req_if.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += req_if.GongMarshallField(stage, "Name")
-		initializerStatements += req_if.GongMarshallField(stage, "Lang")
-		pointersInitializesStatements += req_if.GongMarshallField(stage, "THE_HEADER")
-		pointersInitializesStatements += req_if.GongMarshallField(stage, "CORE_CONTENT")
-		pointersInitializesStatements += req_if.GongMarshallField(stage, "TOOL_EXTENSIONS")
+		initializerStatements.WriteString(req_if.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(req_if.GongMarshallField(stage, "Lang"))
+		pointersInitializesStatements.WriteString(req_if.GongMarshallField(stage, "THE_HEADER"))
+		pointersInitializesStatements.WriteString(req_if.GongMarshallField(stage, "CORE_CONTENT"))
+		pointersInitializesStatements.WriteString(req_if.GongMarshallField(stage, "TOOL_EXTENSIONS"))
 	}
 
 	req_if_contentOrdered := []*REQ_IF_CONTENT{}
@@ -2612,21 +2612,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return req_if_contenti_order < req_if_contentj_order
 	})
 	if len(req_if_contentOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, req_if_content := range req_if_contentOrdered {
 
-		identifiersDecl += req_if_content.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(req_if_content.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += req_if_content.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "DATATYPES")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_TYPES")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_OBJECTS")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATIONS")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPECIFICATIONS")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS")
+		initializerStatements.WriteString(req_if_content.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "DATATYPES"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_TYPES"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_OBJECTS"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_RELATIONS"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPECIFICATIONS"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS"))
 	}
 
 	req_if_headerOrdered := []*REQ_IF_HEADER{}
@@ -2644,23 +2644,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return req_if_headeri_order < req_if_headerj_order
 	})
 	if len(req_if_headerOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, req_if_header := range req_if_headerOrdered {
 
-		identifiersDecl += req_if_header.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(req_if_header.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += req_if_header.GongMarshallField(stage, "Name")
-		initializerStatements += req_if_header.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += req_if_header.GongMarshallField(stage, "COMMENT")
-		initializerStatements += req_if_header.GongMarshallField(stage, "CREATION_TIME")
-		initializerStatements += req_if_header.GongMarshallField(stage, "REPOSITORY_ID")
-		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID")
-		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_VERSION")
-		initializerStatements += req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID")
-		initializerStatements += req_if_header.GongMarshallField(stage, "TITLE")
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "COMMENT"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "CREATION_TIME"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "REPOSITORY_ID"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "REQ_IF_VERSION"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "TITLE"))
 	}
 
 	req_if_tool_extensionOrdered := []*REQ_IF_TOOL_EXTENSION{}
@@ -2678,15 +2678,15 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return req_if_tool_extensioni_order < req_if_tool_extensionj_order
 	})
 	if len(req_if_tool_extensionOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, req_if_tool_extension := range req_if_tool_extensionOrdered {
 
-		identifiersDecl += req_if_tool_extension.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(req_if_tool_extension.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += req_if_tool_extension.GongMarshallField(stage, "Name")
+		initializerStatements.WriteString(req_if_tool_extension.GongMarshallField(stage, "Name"))
 	}
 
 	specificationOrdered := []*SPECIFICATION{}
@@ -2704,23 +2704,23 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return specificationi_order < specificationj_order
 	})
 	if len(specificationOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, specification := range specificationOrdered {
 
-		identifiersDecl += specification.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(specification.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += specification.GongMarshallField(stage, "Name")
-		initializerStatements += specification.GongMarshallField(stage, "DESC")
-		initializerStatements += specification.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += specification.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += specification.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "TYPE")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "CHILDREN")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "VALUES")
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "TYPE"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "CHILDREN"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "VALUES"))
 	}
 
 	specification_renderingOrdered := []*SPECIFICATION_Rendering{}
@@ -2738,18 +2738,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return specification_renderingi_order < specification_renderingj_order
 	})
 	if len(specification_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, specification_rendering := range specification_renderingOrdered {
 
-		identifiersDecl += specification_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(specification_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += specification_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += specification_rendering.GongMarshallField(stage, "IsNodeExpanded")
-		initializerStatements += specification_rendering.GongMarshallField(stage, "IsSelected")
-		initializerStatements += specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering")
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "IsNodeExpanded"))
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "IsSelected"))
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering"))
 	}
 
 	specification_typeOrdered := []*SPECIFICATION_TYPE{}
@@ -2767,21 +2767,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return specification_typei_order < specification_typej_order
 	})
 	if len(specification_typeOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, specification_type := range specification_typeOrdered {
 
-		identifiersDecl += specification_type.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(specification_type.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += specification_type.GongMarshallField(stage, "Name")
-		initializerStatements += specification_type.GongMarshallField(stage, "DESC")
-		initializerStatements += specification_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += specification_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += specification_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += specification_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(specification_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
 
 	spec_hierarchyOrdered := []*SPEC_HIERARCHY{}
@@ -2799,25 +2799,25 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return spec_hierarchyi_order < spec_hierarchyj_order
 	})
 	if len(spec_hierarchyOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, spec_hierarchy := range spec_hierarchyOrdered {
 
-		identifiersDecl += spec_hierarchy.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(spec_hierarchy.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "Name")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "OBJECT")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "CHILDREN")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS")
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "OBJECT"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "CHILDREN"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS"))
 	}
 
 	spec_objectOrdered := []*SPEC_OBJECT{}
@@ -2835,22 +2835,22 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return spec_objecti_order < spec_objectj_order
 	})
 	if len(spec_objectOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, spec_object := range spec_objectOrdered {
 
-		identifiersDecl += spec_object.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(spec_object.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += spec_object.GongMarshallField(stage, "Name")
-		initializerStatements += spec_object.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_object.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_object.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_object.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_object.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_object.GongMarshallField(stage, "VALUES")
-		pointersInitializesStatements += spec_object.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_object.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_object.GongMarshallField(stage, "VALUES"))
+		pointersInitializesStatements.WriteString(spec_object.GongMarshallField(stage, "TYPE"))
 	}
 
 	spec_object_typeOrdered := []*SPEC_OBJECT_TYPE{}
@@ -2868,21 +2868,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return spec_object_typei_order < spec_object_typej_order
 	})
 	if len(spec_object_typeOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, spec_object_type := range spec_object_typeOrdered {
 
-		identifiersDecl += spec_object_type.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(spec_object_type.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += spec_object_type.GongMarshallField(stage, "Name")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
 
 	spec_object_type_renderingOrdered := []*SPEC_OBJECT_TYPE_Rendering{}
@@ -2900,20 +2900,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return spec_object_type_renderingi_order < spec_object_type_renderingj_order
 	})
 	if len(spec_object_type_renderingOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, spec_object_type_rendering := range spec_object_type_renderingOrdered {
 
-		identifiersDecl += spec_object_type_rendering.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(spec_object_type_rendering.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowName")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowRelations")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsHeading")
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "ShowName"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "ShowRelations"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "IsHeading"))
 	}
 
 	spec_relationOrdered := []*SPEC_RELATION{}
@@ -2931,24 +2931,24 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return spec_relationi_order < spec_relationj_order
 	})
 	if len(spec_relationOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, spec_relation := range spec_relationOrdered {
 
-		identifiersDecl += spec_relation.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(spec_relation.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += spec_relation.GongMarshallField(stage, "Name")
-		initializerStatements += spec_relation.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_relation.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_relation.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_relation.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "VALUES")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "SOURCE")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TARGET")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "VALUES"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "SOURCE"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "TARGET"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "TYPE"))
 	}
 
 	spec_relation_typeOrdered := []*SPEC_RELATION_TYPE{}
@@ -2966,21 +2966,21 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return spec_relation_typei_order < spec_relation_typej_order
 	})
 	if len(spec_relation_typeOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, spec_relation_type := range spec_relation_typeOrdered {
 
-		identifiersDecl += spec_relation_type.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(spec_relation_type.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "Name")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
 
 	staticwebsiteOrdered := []*StaticWebSite{}
@@ -2998,20 +2998,20 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return staticwebsitei_order < staticwebsitej_order
 	})
 	if len(staticwebsiteOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, staticwebsite := range staticwebsiteOrdered {
 
-		identifiersDecl += staticwebsite.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(staticwebsite.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += staticwebsite.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "MarkdownContent")
-		pointersInitializesStatements += staticwebsite.GongMarshallField(stage, "Chapters")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "InputImagesDir")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "OutputStaticWebDir")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "VersionInfo")
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "MarkdownContent"))
+		pointersInitializesStatements.WriteString(staticwebsite.GongMarshallField(stage, "Chapters"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "InputImagesDir"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "OutputStaticWebDir"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "VersionInfo"))
 	}
 
 	staticwebsitechapterOrdered := []*StaticWebSiteChapter{}
@@ -3029,17 +3029,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return staticwebsitechapteri_order < staticwebsitechapterj_order
 	})
 	if len(staticwebsitechapterOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, staticwebsitechapter := range staticwebsitechapterOrdered {
 
-		identifiersDecl += staticwebsitechapter.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(staticwebsitechapter.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "MarkdownContent")
-		pointersInitializesStatements += staticwebsitechapter.GongMarshallField(stage, "Paragraphs")
+		initializerStatements.WriteString(staticwebsitechapter.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsitechapter.GongMarshallField(stage, "MarkdownContent"))
+		pointersInitializesStatements.WriteString(staticwebsitechapter.GongMarshallField(stage, "Paragraphs"))
 	}
 
 	staticwebsitegeneratedimageOrdered := []*StaticWebSiteGeneratedImage{}
@@ -3057,18 +3057,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return staticwebsitegeneratedimagei_order < staticwebsitegeneratedimagej_order
 	})
 	if len(staticwebsitegeneratedimageOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, staticwebsitegeneratedimage := range staticwebsitegeneratedimageOrdered {
 
-		identifiersDecl += staticwebsitegeneratedimage.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(staticwebsitegeneratedimage.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath")
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Width")
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Height")
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath"))
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "Width"))
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "Height"))
 	}
 
 	staticwebsiteimageOrdered := []*StaticWebSiteImage{}
@@ -3086,18 +3086,18 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return staticwebsiteimagei_order < staticwebsiteimagej_order
 	})
 	if len(staticwebsiteimageOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, staticwebsiteimage := range staticwebsiteimageOrdered {
 
-		identifiersDecl += staticwebsiteimage.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(staticwebsiteimage.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath")
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Width")
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Height")
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath"))
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "Width"))
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "Height"))
 	}
 
 	staticwebsiteparagraphOrdered := []*StaticWebSiteParagraph{}
@@ -3115,17 +3115,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return staticwebsiteparagraphi_order < staticwebsiteparagraphj_order
 	})
 	if len(staticwebsiteparagraphOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, staticwebsiteparagraph := range staticwebsiteparagraphOrdered {
 
-		identifiersDecl += staticwebsiteparagraph.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(staticwebsiteparagraph.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent")
-		pointersInitializesStatements += staticwebsiteparagraph.GongMarshallField(stage, "Image")
+		initializerStatements.WriteString(staticwebsiteparagraph.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent"))
+		pointersInitializesStatements.WriteString(staticwebsiteparagraph.GongMarshallField(stage, "Image"))
 	}
 
 	xhtml_contentOrdered := []*XHTML_CONTENT{}
@@ -3143,17 +3143,17 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		return xhtml_contenti_order < xhtml_contentj_order
 	})
 	if len(xhtml_contentOrdered) > 0 {
-		identifiersDecl += "\n"
+		identifiersDecl.WriteString("\n")
 	}
 	for _, xhtml_content := range xhtml_contentOrdered {
 
-		identifiersDecl += xhtml_content.GongMarshallIdentifier(stage)
+		identifiersDecl.WriteString(xhtml_content.GongMarshallIdentifier(stage))
 
-		initializerStatements += "\n"
+		initializerStatements.WriteString("\n")
 		// Insertion point for basic fields value assignment
-		initializerStatements += xhtml_content.GongMarshallField(stage, "Name")
-		initializerStatements += xhtml_content.GongMarshallField(stage, "EnclosedText")
-		initializerStatements += xhtml_content.GongMarshallField(stage, "PureText")
+		initializerStatements.WriteString(xhtml_content.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(xhtml_content.GongMarshallField(stage, "EnclosedText"))
+		initializerStatements.WriteString(xhtml_content.GongMarshallField(stage, "PureText"))
 	}
 
 	// insertion initialization of objects to stage
@@ -3989,9 +3989,9 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 		// Insertion point for pointers initialization
 	}
 
-	res = strings.ReplaceAll(res, "{{Identifiers}}", identifiersDecl)
-	res = strings.ReplaceAll(res, "{{ValueInitializers}}", initializerStatements)
-	res = strings.ReplaceAll(res, "{{PointersInitializers}}", pointersInitializesStatements)
+	res = strings.ReplaceAll(res, "{{Identifiers}}", identifiersDecl.String())
+	res = strings.ReplaceAll(res, "{{ValueInitializers}}", initializerStatements.String())
+	res = strings.ReplaceAll(res, "{{PointersInitializers}}", pointersInitializesStatements.String())
 
 	if stage.MetaPackageImportAlias != "" {
 		res = strings.ReplaceAll(res, "{{ImportPackageDeclaration}}",
@@ -4001,7 +4001,7 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 			fmt.Sprintf("\nvar _ %s.Stage",
 				stage.MetaPackageImportAlias))
 
-		var entries string
+		var entries strings.Builder
 
 		// regenerate the map of doc link renaming
 		// the key and value are set to the value because
@@ -4020,24 +4020,24 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 
 			switch value.Type {
 			case GONG__ENUM_CAST_INT:
-				entries += fmt.Sprintf("\n\n\t\"%s\": %s(0),", value.Ident, value.Ident)
+				entries.WriteString(fmt.Sprintf("\n\n\t\"%s\": %s(0),", value.Ident, value.Ident))
 			case GONG__ENUM_CAST_STRING:
-				entries += fmt.Sprintf("\n\n\t\"%s\": %s(\"\"),", value.Ident, value.Ident)
+				entries.WriteString(fmt.Sprintf("\n\n\t\"%s\": %s(\"\"),", value.Ident, value.Ident))
 			case GONG__FIELD_VALUE:
 				// substitute the second point with "{})."
 				joker := "__substitute_for_first_point__"
 				valueIdentifier := strings.Replace(value.Ident, ".", joker, 1)
 				valueIdentifier = strings.Replace(valueIdentifier, ".", "{}).", 1)
 				valueIdentifier = strings.Replace(valueIdentifier, joker, ".", 1)
-				entries += fmt.Sprintf("\n\n\t\"%s\": (%s,", value.Ident, valueIdentifier)
+				entries.WriteString(fmt.Sprintf("\n\n\t\"%s\": (%s,", value.Ident, valueIdentifier))
 			case GONG__IDENTIFIER_CONST:
-				entries += fmt.Sprintf("\n\n\t\"%s\": %s,", value.Ident, value.Ident)
+				entries.WriteString(fmt.Sprintf("\n\n\t\"%s\": %s,", value.Ident, value.Ident))
 			case GONG__STRUCT_INSTANCE:
-				entries += fmt.Sprintf("\n\n\t\"%s\": &(%s{}),", value.Ident, value.Ident)
+				entries.WriteString(fmt.Sprintf("\n\n\t\"%s\": &(%s{}),", value.Ident, value.Ident))
 			}
 		}
 
-		// res = strings.ReplaceAll(res, "{{EntriesDocLinkStringDocLinkIdentifier}}", entries)
+		// res = strings.ReplaceAll(res, "{{EntriesDocLinkStringDocLinkIdentifier}}", entries.String())
 	}
 	return
 }
@@ -5344,13 +5344,15 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallField(st
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_boolean.Name))
 
 	case "ATTRIBUTE_VALUE_BOOLEAN":
+		var sb strings.Builder
 		for _, _attribute_value_boolean := range a_attribute_value_boolean.ATTRIBUTE_VALUE_BOOLEAN {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_boolean.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_BOOLEAN")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_boolean.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_BOOLEAN", fieldName)
 	}
@@ -5367,13 +5369,15 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallField(stage *S
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_date.Name))
 
 	case "ATTRIBUTE_VALUE_DATE":
+		var sb strings.Builder
 		for _, _attribute_value_date := range a_attribute_value_date.ATTRIBUTE_VALUE_DATE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_date.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_DATE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_date.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_DATE", fieldName)
 	}
@@ -5390,13 +5394,15 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshall
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_enumeration.Name))
 
 	case "ATTRIBUTE_VALUE_ENUMERATION":
+		var sb strings.Builder
 		for _, _attribute_value_enumeration := range a_attribute_value_enumeration.ATTRIBUTE_VALUE_ENUMERATION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_enumeration.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_ENUMERATION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_enumeration.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_ENUMERATION", fieldName)
 	}
@@ -5413,13 +5419,15 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallField(st
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_integer.Name))
 
 	case "ATTRIBUTE_VALUE_INTEGER":
+		var sb strings.Builder
 		for _, _attribute_value_integer := range a_attribute_value_integer.ATTRIBUTE_VALUE_INTEGER {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_integer.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_INTEGER")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_integer.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_INTEGER", fieldName)
 	}
@@ -5436,13 +5444,15 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallField(stage *S
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_real.Name))
 
 	case "ATTRIBUTE_VALUE_REAL":
+		var sb strings.Builder
 		for _, _attribute_value_real := range a_attribute_value_real.ATTRIBUTE_VALUE_REAL {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_real.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_REAL")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_real.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_REAL", fieldName)
 	}
@@ -5459,13 +5469,15 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallField(stag
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_string.Name))
 
 	case "ATTRIBUTE_VALUE_STRING":
+		var sb strings.Builder
 		for _, _attribute_value_string := range a_attribute_value_string.ATTRIBUTE_VALUE_STRING {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_string.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_STRING")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_string.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_STRING", fieldName)
 	}
@@ -5482,13 +5494,15 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallField(stage 
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml.Name))
 
 	case "ATTRIBUTE_VALUE_XHTML":
+		var sb strings.Builder
 		for _, _attribute_value_xhtml := range a_attribute_value_xhtml.ATTRIBUTE_VALUE_XHTML {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_XHTML")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_xhtml.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_XHTML", fieldName)
 	}
@@ -5505,61 +5519,75 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallField(st
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml_1.Name))
 
 	case "ATTRIBUTE_VALUE_BOOLEAN":
+		var sb strings.Builder
 		for _, _attribute_value_boolean := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_BOOLEAN {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_BOOLEAN")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_boolean.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_VALUE_DATE":
+		var sb strings.Builder
 		for _, _attribute_value_date := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_DATE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_DATE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_date.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_VALUE_ENUMERATION":
+		var sb strings.Builder
 		for _, _attribute_value_enumeration := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_ENUMERATION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_ENUMERATION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_enumeration.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_VALUE_INTEGER":
+		var sb strings.Builder
 		for _, _attribute_value_integer := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_INTEGER {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_INTEGER")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_integer.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_VALUE_REAL":
+		var sb strings.Builder
 		for _, _attribute_value_real := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_REAL {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_REAL")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_real.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_VALUE_STRING":
+		var sb strings.Builder
 		for _, _attribute_value_string := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_STRING {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_STRING")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_string.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_VALUE_XHTML":
+		var sb strings.Builder
 		for _, _attribute_value_xhtml := range a_attribute_value_xhtml_1.ATTRIBUTE_VALUE_XHTML {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_VALUE_XHTML")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_value_xhtml.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_VALUE_XHTML_1", fieldName)
 	}
@@ -5576,13 +5604,15 @@ func (a_children *A_CHILDREN) GongMarshallField(stage *Stage, fieldName string) 
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_children.Name))
 
 	case "SPEC_HIERARCHY":
+		var sb strings.Builder
 		for _, _spec_hierarchy := range a_children.SPEC_HIERARCHY {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_children.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_HIERARCHY")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_hierarchy.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_CHILDREN", fieldName)
 	}
@@ -5627,61 +5657,75 @@ func (a_datatypes *A_DATATYPES) GongMarshallField(stage *Stage, fieldName string
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatypes.Name))
 
 	case "DATATYPE_DEFINITION_BOOLEAN":
+		var sb strings.Builder
 		for _, _datatype_definition_boolean := range a_datatypes.DATATYPE_DEFINITION_BOOLEAN {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_BOOLEAN")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_boolean.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "DATATYPE_DEFINITION_DATE":
+		var sb strings.Builder
 		for _, _datatype_definition_date := range a_datatypes.DATATYPE_DEFINITION_DATE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_DATE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_date.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "DATATYPE_DEFINITION_ENUMERATION":
+		var sb strings.Builder
 		for _, _datatype_definition_enumeration := range a_datatypes.DATATYPE_DEFINITION_ENUMERATION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_ENUMERATION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_enumeration.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "DATATYPE_DEFINITION_INTEGER":
+		var sb strings.Builder
 		for _, _datatype_definition_integer := range a_datatypes.DATATYPE_DEFINITION_INTEGER {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_INTEGER")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_integer.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "DATATYPE_DEFINITION_REAL":
+		var sb strings.Builder
 		for _, _datatype_definition_real := range a_datatypes.DATATYPE_DEFINITION_REAL {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_REAL")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_real.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "DATATYPE_DEFINITION_STRING":
+		var sb strings.Builder
 		for _, _datatype_definition_string := range a_datatypes.DATATYPE_DEFINITION_STRING {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_STRING")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_string.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "DATATYPE_DEFINITION_XHTML":
+		var sb strings.Builder
 		for _, _datatype_definition_xhtml := range a_datatypes.DATATYPE_DEFINITION_XHTML {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_XHTML")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _datatype_definition_xhtml.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPES", fieldName)
 	}
@@ -6024,13 +6068,15 @@ func (a_specifications *A_SPECIFICATIONS) GongMarshallField(stage *Stage, fieldN
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specifications.Name))
 
 	case "SPECIFICATION":
+		var sb strings.Builder
 		for _, _specification := range a_specifications.SPECIFICATION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_specifications.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPECIFICATION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _specification.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPECIFICATIONS", fieldName)
 	}
@@ -6067,13 +6113,15 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallField(stage *Stage, fi
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specified_values.Name))
 
 	case "ENUM_VALUE":
+		var sb strings.Builder
 		for _, _enum_value := range a_specified_values.ENUM_VALUE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_specified_values.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ENUM_VALUE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _enum_value.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPECIFIED_VALUES", fieldName)
 	}
@@ -6090,61 +6138,75 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallField(stage *Stage, fiel
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_attributes.Name))
 
 	case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		var sb strings.Builder
 		for _, _attribute_definition_boolean := range a_spec_attributes.ATTRIBUTE_DEFINITION_BOOLEAN {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_boolean.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_DEFINITION_DATE":
+		var sb strings.Builder
 		for _, _attribute_definition_date := range a_spec_attributes.ATTRIBUTE_DEFINITION_DATE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_date.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		var sb strings.Builder
 		for _, _attribute_definition_enumeration := range a_spec_attributes.ATTRIBUTE_DEFINITION_ENUMERATION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_enumeration.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_DEFINITION_INTEGER":
+		var sb strings.Builder
 		for _, _attribute_definition_integer := range a_spec_attributes.ATTRIBUTE_DEFINITION_INTEGER {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_integer.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_DEFINITION_REAL":
+		var sb strings.Builder
 		for _, _attribute_definition_real := range a_spec_attributes.ATTRIBUTE_DEFINITION_REAL {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_real.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_DEFINITION_STRING":
+		var sb strings.Builder
 		for _, _attribute_definition_string := range a_spec_attributes.ATTRIBUTE_DEFINITION_STRING {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_string.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "ATTRIBUTE_DEFINITION_XHTML":
+		var sb strings.Builder
 		for _, _attribute_definition_xhtml := range a_spec_attributes.ATTRIBUTE_DEFINITION_XHTML {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _attribute_definition_xhtml.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_ATTRIBUTES", fieldName)
 	}
@@ -6161,13 +6223,15 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallField(stage *Stage, fieldName 
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_objects.Name))
 
 	case "SPEC_OBJECT":
+		var sb strings.Builder
 		for _, _spec_object := range a_spec_objects.SPEC_OBJECT {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_objects.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_OBJECT")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_object.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_OBJECTS", fieldName)
 	}
@@ -6204,13 +6268,15 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallField(stage *Stage, fieldN
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relations.Name))
 
 	case "SPEC_RELATION":
+		var sb strings.Builder
 		for _, _spec_relation := range a_spec_relations.SPEC_RELATION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_relations.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_RELATION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_relation.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATIONS", fieldName)
 	}
@@ -6227,13 +6293,15 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallField(stage *S
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_groups.Name))
 
 	case "RELATION_GROUP":
+		var sb strings.Builder
 		for _, _relation_group := range a_spec_relation_groups.RELATION_GROUP {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_relation_groups.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "RELATION_GROUP")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _relation_group.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATION_GROUPS", fieldName)
 	}
@@ -6290,37 +6358,45 @@ func (a_spec_types *A_SPEC_TYPES) GongMarshallField(stage *Stage, fieldName stri
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_types.Name))
 
 	case "RELATION_GROUP_TYPE":
+		var sb strings.Builder
 		for _, _relation_group_type := range a_spec_types.RELATION_GROUP_TYPE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "RELATION_GROUP_TYPE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _relation_group_type.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "SPEC_OBJECT_TYPE":
+		var sb strings.Builder
 		for _, _spec_object_type := range a_spec_types.SPEC_OBJECT_TYPE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_object_type.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "SPEC_RELATION_TYPE":
+		var sb strings.Builder
 		for _, _spec_relation_type := range a_spec_types.SPEC_RELATION_TYPE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPEC_RELATION_TYPE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _spec_relation_type.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	case "SPECIFICATION_TYPE":
+		var sb strings.Builder
 		for _, _specification_type := range a_spec_types.SPECIFICATION_TYPE {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "SPECIFICATION_TYPE")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _specification_type.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_TYPES", fieldName)
 	}
@@ -6365,13 +6441,15 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallField(stage *Stage, fiel
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_tool_extensions.Name))
 
 	case "REQ_IF_TOOL_EXTENSION":
+		var sb strings.Builder
 		for _, _req_if_tool_extension := range a_tool_extensions.REQ_IF_TOOL_EXTENSION {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", a_tool_extensions.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "REQ_IF_TOOL_EXTENSION")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _req_if_tool_extension.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_TOOL_EXTENSIONS", fieldName)
 	}
@@ -7962,13 +8040,15 @@ func (staticwebsite *StaticWebSite) GongMarshallField(stage *Stage, fieldName st
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.VersionInfo))
 
 	case "Chapters":
+		var sb strings.Builder
 		for _, _staticwebsitechapter := range staticwebsite.Chapters {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "Chapters")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _staticwebsitechapter.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct StaticWebSite", fieldName)
 	}
@@ -7990,13 +8070,15 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallField(stage *Stage
 		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.MarkdownContent))
 
 	case "Paragraphs":
+		var sb strings.Builder
 		for _, _staticwebsiteparagraph := range staticwebsitechapter.Paragraphs {
 			tmp := SliceOfPointersFieldInitStatement
 			tmp = strings.ReplaceAll(tmp, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldName}}", "Paragraphs")
 			tmp = strings.ReplaceAll(tmp, "{{GeneratedFieldNameValue}}", _staticwebsiteparagraph.GongGetIdentifier(stage))
-			res += tmp
+			sb.WriteString(tmp)
 		}
+		res = sb.String()
 	default:
 		log.Panicf("Unknown field %s for Gongstruct StaticWebSiteChapter", fieldName)
 	}
@@ -8122,1074 +8204,1490 @@ func (xhtml_content *XHTML_CONTENT) GongMarshallField(stage *Stage, fieldName st
 }
 
 // insertion point for marshall all fields methods
-func (alternative_id *ALTERNATIVE_ID) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (alternative_id *ALTERNATIVE_ID) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += alternative_id.GongMarshallField(stage, "Name")
-		initializerStatements += alternative_id.GongMarshallField(stage, "IDENTIFIER")
+		initializerStatements.WriteString(alternative_id.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(alternative_id.GongMarshallField(stage, "IDENTIFIER"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_boolean.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_boolean.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_boolean_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_date.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_date.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_date.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_date_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_date_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED")
-		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_enumeration.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "MULTI_VALUED"))
+		pointersInitializesStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_enumeration.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_enumeration_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_integer.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_integer.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_integer.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_integer_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_integer_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_real.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_real.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_real.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_real_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_real_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_string.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_string.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_string.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_string_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_string_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "DESC")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE")
-		pointersInitializesStatements += attribute_definition_xhtml.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "DEFAULT_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_definition_xhtml.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject")
-		initializerStatements += attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank")
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTable"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInTitle"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "ShowInSubject"))
+		initializerStatements.WriteString(attribute_definition_xhtml_rendering.GongMarshallField(stage, "Rank"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_boolean.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_boolean.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_boolean.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_boolean.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_boolean.GongMarshallField(stage, "THE_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_date.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_date.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_date.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_date.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_date.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_date.GongMarshallField(stage, "THE_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_enumeration.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "DEFINITION")
-		pointersInitializesStatements += attribute_value_enumeration.GongMarshallField(stage, "VALUES")
+		initializerStatements.WriteString(attribute_value_enumeration.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_enumeration.GongMarshallField(stage, "DEFINITION"))
+		pointersInitializesStatements.WriteString(attribute_value_enumeration.GongMarshallField(stage, "VALUES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_integer.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_integer.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_integer.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_integer.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_integer.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_integer.GongMarshallField(stage, "THE_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_real.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_real.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_real.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_real.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_real.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_real.GongMarshallField(stage, "THE_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_string.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_string.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_string.GongMarshallField(stage, "THE_VALUE")
+		initializerStatements.WriteString(attribute_value_string.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_string.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_string.GongMarshallField(stage, "THE_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "DEFINITION")
-		initializerStatements += attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED")
-		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE")
-		pointersInitializesStatements += attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE")
+		initializerStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "DEFINITION"))
+		initializerStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "IS_SIMPLIFIED"))
+		pointersInitializesStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "THE_VALUE"))
+		pointersInitializesStatements.WriteString(attribute_value_xhtml.GongMarshallField(stage, "THE_ORIGINAL_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_alternative_id.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(a_alternative_id.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_alternative_id.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
+		initializerStatements.WriteString(a_attribute_definition_boolean_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_boolean_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
+		initializerStatements.WriteString(a_attribute_definition_date_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_date_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
+		initializerStatements.WriteString(a_attribute_definition_enumeration_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_enumeration_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
+		initializerStatements.WriteString(a_attribute_definition_integer_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_integer_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
+		initializerStatements.WriteString(a_attribute_definition_real_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_real_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
+		initializerStatements.WriteString(a_attribute_definition_string_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_string_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
+		initializerStatements.WriteString(a_attribute_definition_xhtml_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_attribute_definition_xhtml_ref.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_boolean.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_boolean.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
+		initializerStatements.WriteString(a_attribute_value_boolean.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_boolean.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_date.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_date.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
+		initializerStatements.WriteString(a_attribute_value_date.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_date.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_enumeration.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_enumeration.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
+		initializerStatements.WriteString(a_attribute_value_enumeration.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_enumeration.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_integer.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_integer.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
+		initializerStatements.WriteString(a_attribute_value_integer.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_integer.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_real.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_real.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
+		initializerStatements.WriteString(a_attribute_value_real.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_real.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_string.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_string.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
+		initializerStatements.WriteString(a_attribute_value_string.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_string.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_xhtml.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_xhtml.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
+		initializerStatements.WriteString(a_attribute_value_xhtml.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING")
-		pointersInitializesStatements += a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML")
+		initializerStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_BOOLEAN"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_DATE"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_ENUMERATION"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_INTEGER"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_REAL"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_STRING"))
+		pointersInitializesStatements.WriteString(a_attribute_value_xhtml_1.GongMarshallField(stage, "ATTRIBUTE_VALUE_XHTML"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_children *A_CHILDREN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_children *A_CHILDREN) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_children.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_children.GongMarshallField(stage, "SPEC_HIERARCHY")
+		initializerStatements.WriteString(a_children.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_children.GongMarshallField(stage, "SPEC_HIERARCHY"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_core_content *A_CORE_CONTENT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_core_content *A_CORE_CONTENT) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_core_content.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT")
+		initializerStatements.WriteString(a_core_content.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_core_content.GongMarshallField(stage, "REQ_IF_CONTENT"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatypes *A_DATATYPES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatypes *A_DATATYPES) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatypes.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING")
-		pointersInitializesStatements += a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML")
+		initializerStatements.WriteString(a_datatypes.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING"))
+		pointersInitializesStatements.WriteString(a_datatypes.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF")
+		initializerStatements.WriteString(a_datatype_definition_boolean_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_boolean_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_BOOLEAN_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF")
+		initializerStatements.WriteString(a_datatype_definition_date_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_date_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_DATE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF")
+		initializerStatements.WriteString(a_datatype_definition_enumeration_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_enumeration_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_ENUMERATION_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF")
+		initializerStatements.WriteString(a_datatype_definition_integer_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_integer_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_INTEGER_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF")
+		initializerStatements.WriteString(a_datatype_definition_real_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_real_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_REAL_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF")
+		initializerStatements.WriteString(a_datatype_definition_string_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_string_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_STRING_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF")
+		initializerStatements.WriteString(a_datatype_definition_xhtml_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_datatype_definition_xhtml_ref.GongMarshallField(stage, "DATATYPE_DEFINITION_XHTML_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "Name")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF")
-		initializerStatements += a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF")
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING_REF"))
+		initializerStatements.WriteString(a_editable_atts.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF")
+		initializerStatements.WriteString(a_enum_value_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_enum_value_ref.GongMarshallField(stage, "ENUM_VALUE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_object *A_OBJECT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_object *A_OBJECT) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_object.GongMarshallField(stage, "Name")
-		initializerStatements += a_object.GongMarshallField(stage, "SPEC_OBJECT_REF")
+		initializerStatements.WriteString(a_object.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_object.GongMarshallField(stage, "SPEC_OBJECT_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_properties *A_PROPERTIES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_properties *A_PROPERTIES) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_properties.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_properties.GongMarshallField(stage, "EMBEDDED_VALUE")
+		initializerStatements.WriteString(a_properties.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_properties.GongMarshallField(stage, "EMBEDDED_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF")
+		initializerStatements.WriteString(a_relation_group_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_relation_group_type_ref.GongMarshallField(stage, "RELATION_GROUP_TYPE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_source_1 *A_SOURCE_1) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_source_1 *A_SOURCE_1) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_source_1.GongMarshallField(stage, "Name")
-		initializerStatements += a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF")
+		initializerStatements.WriteString(a_source_1.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_source_1.GongMarshallField(stage, "SPEC_OBJECT_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_source_specification_1.GongMarshallField(stage, "Name")
-		initializerStatements += a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF")
+		initializerStatements.WriteString(a_source_specification_1.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_source_specification_1.GongMarshallField(stage, "SPECIFICATION_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_specifications *A_SPECIFICATIONS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_specifications *A_SPECIFICATIONS) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_specifications.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_specifications.GongMarshallField(stage, "SPECIFICATION")
+		initializerStatements.WriteString(a_specifications.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_specifications.GongMarshallField(stage, "SPECIFICATION"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF")
+		initializerStatements.WriteString(a_specification_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_specification_type_ref.GongMarshallField(stage, "SPECIFICATION_TYPE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_specified_values.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_specified_values.GongMarshallField(stage, "ENUM_VALUE")
+		initializerStatements.WriteString(a_specified_values.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_specified_values.GongMarshallField(stage, "ENUM_VALUE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_attributes.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING")
-		pointersInitializesStatements += a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML")
+		initializerStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_BOOLEAN"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_DATE"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_ENUMERATION"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_INTEGER"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_REAL"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_STRING"))
+		pointersInitializesStatements.WriteString(a_spec_attributes.GongMarshallField(stage, "ATTRIBUTE_DEFINITION_XHTML"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_objects.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_objects.GongMarshallField(stage, "SPEC_OBJECT")
+		initializerStatements.WriteString(a_spec_objects.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_objects.GongMarshallField(stage, "SPEC_OBJECT"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF")
+		initializerStatements.WriteString(a_spec_object_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_spec_object_type_ref.GongMarshallField(stage, "SPEC_OBJECT_TYPE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relations.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_relations.GongMarshallField(stage, "SPEC_RELATION")
+		initializerStatements.WriteString(a_spec_relations.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_relations.GongMarshallField(stage, "SPEC_RELATION"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relation_groups.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_relation_groups.GongMarshallField(stage, "RELATION_GROUP")
+		initializerStatements.WriteString(a_spec_relation_groups.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_relation_groups.GongMarshallField(stage, "RELATION_GROUP"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF")
+		initializerStatements.WriteString(a_spec_relation_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_spec_relation_ref.GongMarshallField(stage, "SPEC_RELATION_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "Name")
-		initializerStatements += a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF")
+		initializerStatements.WriteString(a_spec_relation_type_ref.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(a_spec_relation_type_ref.GongMarshallField(stage, "SPEC_RELATION_TYPE_REF"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_spec_types *A_SPEC_TYPES) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_spec_types *A_SPEC_TYPES) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_spec_types.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "RELATION_GROUP_TYPE")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_OBJECT_TYPE")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPEC_RELATION_TYPE")
-		pointersInitializesStatements += a_spec_types.GongMarshallField(stage, "SPECIFICATION_TYPE")
+		initializerStatements.WriteString(a_spec_types.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "RELATION_GROUP_TYPE"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "SPEC_OBJECT_TYPE"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "SPEC_RELATION_TYPE"))
+		pointersInitializesStatements.WriteString(a_spec_types.GongMarshallField(stage, "SPECIFICATION_TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_the_header *A_THE_HEADER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_the_header *A_THE_HEADER) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_the_header.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_the_header.GongMarshallField(stage, "REQ_IF_HEADER")
+		initializerStatements.WriteString(a_the_header.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_the_header.GongMarshallField(stage, "REQ_IF_HEADER"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += a_tool_extensions.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += a_tool_extensions.GongMarshallField(stage, "REQ_IF_TOOL_EXTENSION")
+		initializerStatements.WriteString(a_tool_extensions.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(a_tool_extensions.GongMarshallField(stage, "REQ_IF_TOOL_EXTENSION"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_boolean.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_date.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_date.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES")
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(datatype_definition_enumeration.GongMarshallField(stage, "SPECIFIED_VALUES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MAX")
-		initializerStatements += datatype_definition_integer.GongMarshallField(stage, "MIN")
-		pointersInitializesStatements += datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "MAX"))
+		initializerStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "MIN"))
+		pointersInitializesStatements.WriteString(datatype_definition_integer.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "ACCURACY")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MAX")
-		initializerStatements += datatype_definition_real.GongMarshallField(stage, "MIN")
-		pointersInitializesStatements += datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "ACCURACY"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "MAX"))
+		initializerStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "MIN"))
+		pointersInitializesStatements.WriteString(datatype_definition_real.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "LONG_NAME")
-		initializerStatements += datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH")
-		pointersInitializesStatements += datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "LONG_NAME"))
+		initializerStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "MAX_LENGTH"))
+		pointersInitializesStatements.WriteString(datatype_definition_string.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "Name")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "DESC")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID")
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(datatype_definition_xhtml.GongMarshallField(stage, "ALTERNATIVE_ID"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (embedded_value *EMBEDDED_VALUE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (embedded_value *EMBEDDED_VALUE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += embedded_value.GongMarshallField(stage, "Name")
-		initializerStatements += embedded_value.GongMarshallField(stage, "KEY")
-		initializerStatements += embedded_value.GongMarshallField(stage, "OTHER_CONTENT")
+		initializerStatements.WriteString(embedded_value.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embedded_value.GongMarshallField(stage, "KEY"))
+		initializerStatements.WriteString(embedded_value.GongMarshallField(stage, "OTHER_CONTENT"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (enum_value *ENUM_VALUE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (enum_value *ENUM_VALUE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += enum_value.GongMarshallField(stage, "Name")
-		initializerStatements += enum_value.GongMarshallField(stage, "DESC")
-		initializerStatements += enum_value.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += enum_value.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += enum_value.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += enum_value.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += enum_value.GongMarshallField(stage, "PROPERTIES")
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(enum_value.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(enum_value.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(enum_value.GongMarshallField(stage, "PROPERTIES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Name")
-		initializerStatements += embeddedjpgimage.GongMarshallField(stage, "Base64Content")
+		initializerStatements.WriteString(embeddedjpgimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embeddedjpgimage.GongMarshallField(stage, "Base64Content"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (embeddedpngimage *EmbeddedPngImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (embeddedpngimage *EmbeddedPngImage) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Name")
-		initializerStatements += embeddedpngimage.GongMarshallField(stage, "Base64Content")
+		initializerStatements.WriteString(embeddedpngimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embeddedpngimage.GongMarshallField(stage, "Base64Content"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Name")
-		initializerStatements += embeddedsvgimage.GongMarshallField(stage, "Content")
+		initializerStatements.WriteString(embeddedsvgimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(embeddedsvgimage.GongMarshallField(stage, "Content"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (kill *Kill) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (kill *Kill) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += kill.GongMarshallField(stage, "Name")
+		initializerStatements.WriteString(kill.GongMarshallField(stage, "Name"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (map_identifier_bool *Map_identifier_bool) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (map_identifier_bool *Map_identifier_bool) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Name")
-		initializerStatements += map_identifier_bool.GongMarshallField(stage, "Value")
+		initializerStatements.WriteString(map_identifier_bool.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(map_identifier_bool.GongMarshallField(stage, "Value"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (relation_group *RELATION_GROUP) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (relation_group *RELATION_GROUP) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += relation_group.GongMarshallField(stage, "Name")
-		initializerStatements += relation_group.GongMarshallField(stage, "DESC")
-		initializerStatements += relation_group.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += relation_group.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += relation_group.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "SPEC_RELATIONS")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION")
-		pointersInitializesStatements += relation_group.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(relation_group.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "SOURCE_SPECIFICATION"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "SPEC_RELATIONS"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "TARGET_SPECIFICATION"))
+		pointersInitializesStatements.WriteString(relation_group.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += relation_group_type.GongMarshallField(stage, "Name")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "DESC")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += relation_group_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(relation_group_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(relation_group_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(relation_group_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (req_if *REQ_IF) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (req_if *REQ_IF) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += req_if.GongMarshallField(stage, "Name")
-		initializerStatements += req_if.GongMarshallField(stage, "Lang")
-		pointersInitializesStatements += req_if.GongMarshallField(stage, "THE_HEADER")
-		pointersInitializesStatements += req_if.GongMarshallField(stage, "CORE_CONTENT")
-		pointersInitializesStatements += req_if.GongMarshallField(stage, "TOOL_EXTENSIONS")
+		initializerStatements.WriteString(req_if.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(req_if.GongMarshallField(stage, "Lang"))
+		pointersInitializesStatements.WriteString(req_if.GongMarshallField(stage, "THE_HEADER"))
+		pointersInitializesStatements.WriteString(req_if.GongMarshallField(stage, "CORE_CONTENT"))
+		pointersInitializesStatements.WriteString(req_if.GongMarshallField(stage, "TOOL_EXTENSIONS"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (req_if_content *REQ_IF_CONTENT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (req_if_content *REQ_IF_CONTENT) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += req_if_content.GongMarshallField(stage, "Name")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "DATATYPES")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_TYPES")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_OBJECTS")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATIONS")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPECIFICATIONS")
-		pointersInitializesStatements += req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS")
+		initializerStatements.WriteString(req_if_content.GongMarshallField(stage, "Name"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "DATATYPES"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_TYPES"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_OBJECTS"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_RELATIONS"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPECIFICATIONS"))
+		pointersInitializesStatements.WriteString(req_if_content.GongMarshallField(stage, "SPEC_RELATION_GROUPS"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (req_if_header *REQ_IF_HEADER) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (req_if_header *REQ_IF_HEADER) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += req_if_header.GongMarshallField(stage, "Name")
-		initializerStatements += req_if_header.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += req_if_header.GongMarshallField(stage, "COMMENT")
-		initializerStatements += req_if_header.GongMarshallField(stage, "CREATION_TIME")
-		initializerStatements += req_if_header.GongMarshallField(stage, "REPOSITORY_ID")
-		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID")
-		initializerStatements += req_if_header.GongMarshallField(stage, "REQ_IF_VERSION")
-		initializerStatements += req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID")
-		initializerStatements += req_if_header.GongMarshallField(stage, "TITLE")
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "COMMENT"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "CREATION_TIME"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "REPOSITORY_ID"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "REQ_IF_TOOL_ID"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "REQ_IF_VERSION"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "SOURCE_TOOL_ID"))
+		initializerStatements.WriteString(req_if_header.GongMarshallField(stage, "TITLE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += req_if_tool_extension.GongMarshallField(stage, "Name")
+		initializerStatements.WriteString(req_if_tool_extension.GongMarshallField(stage, "Name"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (specification *SPECIFICATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (specification *SPECIFICATION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += specification.GongMarshallField(stage, "Name")
-		initializerStatements += specification.GongMarshallField(stage, "DESC")
-		initializerStatements += specification.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += specification.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += specification.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "TYPE")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "CHILDREN")
-		pointersInitializesStatements += specification.GongMarshallField(stage, "VALUES")
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(specification.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "TYPE"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "CHILDREN"))
+		pointersInitializesStatements.WriteString(specification.GongMarshallField(stage, "VALUES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (specification_rendering *SPECIFICATION_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (specification_rendering *SPECIFICATION_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += specification_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += specification_rendering.GongMarshallField(stage, "IsNodeExpanded")
-		initializerStatements += specification_rendering.GongMarshallField(stage, "IsSelected")
-		initializerStatements += specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering")
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "IsNodeExpanded"))
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "IsSelected"))
+		initializerStatements.WriteString(specification_rendering.GongMarshallField(stage, "IsWithHeadingNumbering"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (specification_type *SPECIFICATION_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (specification_type *SPECIFICATION_TYPE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += specification_type.GongMarshallField(stage, "Name")
-		initializerStatements += specification_type.GongMarshallField(stage, "DESC")
-		initializerStatements += specification_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += specification_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += specification_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += specification_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(specification_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(specification_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(specification_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "Name")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_hierarchy.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "OBJECT")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "CHILDREN")
-		pointersInitializesStatements += spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS")
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "IS_EDITABLE"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "IS_TABLE_INTERNAL"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "OBJECT"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "CHILDREN"))
+		pointersInitializesStatements.WriteString(spec_hierarchy.GongMarshallField(stage, "EDITABLE_ATTS"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (spec_object *SPEC_OBJECT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (spec_object *SPEC_OBJECT) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += spec_object.GongMarshallField(stage, "Name")
-		initializerStatements += spec_object.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_object.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_object.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_object.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_object.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_object.GongMarshallField(stage, "VALUES")
-		pointersInitializesStatements += spec_object.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_object.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_object.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_object.GongMarshallField(stage, "VALUES"))
+		pointersInitializesStatements.WriteString(spec_object.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += spec_object_type.GongMarshallField(stage, "Name")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_object_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_object_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_object_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_object_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "Name")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowName")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "ShowRelations")
-		initializerStatements += spec_object_type_rendering.GongMarshallField(stage, "IsHeading")
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "IsNodeExpanded"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "ShowIdentifier"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "ShowName"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "ShowRelations"))
+		initializerStatements.WriteString(spec_object_type_rendering.GongMarshallField(stage, "IsHeading"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (spec_relation *SPEC_RELATION) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (spec_relation *SPEC_RELATION) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += spec_relation.GongMarshallField(stage, "Name")
-		initializerStatements += spec_relation.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_relation.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_relation.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_relation.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "VALUES")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "SOURCE")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TARGET")
-		pointersInitializesStatements += spec_relation.GongMarshallField(stage, "TYPE")
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_relation.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "VALUES"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "SOURCE"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "TARGET"))
+		pointersInitializesStatements.WriteString(spec_relation.GongMarshallField(stage, "TYPE"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "Name")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "DESC")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "IDENTIFIER")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "LAST_CHANGE")
-		initializerStatements += spec_relation_type.GongMarshallField(stage, "LONG_NAME")
-		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID")
-		pointersInitializesStatements += spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES")
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "DESC"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "IDENTIFIER"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "LAST_CHANGE"))
+		initializerStatements.WriteString(spec_relation_type.GongMarshallField(stage, "LONG_NAME"))
+		pointersInitializesStatements.WriteString(spec_relation_type.GongMarshallField(stage, "ALTERNATIVE_ID"))
+		pointersInitializesStatements.WriteString(spec_relation_type.GongMarshallField(stage, "SPEC_ATTRIBUTES"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (staticwebsite *StaticWebSite) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (staticwebsite *StaticWebSite) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += staticwebsite.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "MarkdownContent")
-		pointersInitializesStatements += staticwebsite.GongMarshallField(stage, "Chapters")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "InputImagesDir")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "OutputStaticWebDir")
-		initializerStatements += staticwebsite.GongMarshallField(stage, "VersionInfo")
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "MarkdownContent"))
+		pointersInitializesStatements.WriteString(staticwebsite.GongMarshallField(stage, "Chapters"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "InputImagesDir"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "OutputStaticWebDir"))
+		initializerStatements.WriteString(staticwebsite.GongMarshallField(stage, "VersionInfo"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsitechapter.GongMarshallField(stage, "MarkdownContent")
-		pointersInitializesStatements += staticwebsitechapter.GongMarshallField(stage, "Paragraphs")
+		initializerStatements.WriteString(staticwebsitechapter.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsitechapter.GongMarshallField(stage, "MarkdownContent"))
+		pointersInitializesStatements.WriteString(staticwebsitechapter.GongMarshallField(stage, "Paragraphs"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath")
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Width")
-		initializerStatements += staticwebsitegeneratedimage.GongMarshallField(stage, "Height")
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "SourceDirectoryPath"))
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "Width"))
+		initializerStatements.WriteString(staticwebsitegeneratedimage.GongMarshallField(stage, "Height"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (staticwebsiteimage *StaticWebSiteImage) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (staticwebsiteimage *StaticWebSiteImage) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath")
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Width")
-		initializerStatements += staticwebsiteimage.GongMarshallField(stage, "Height")
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "SourceDirectoryPath"))
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "Width"))
+		initializerStatements.WriteString(staticwebsiteimage.GongMarshallField(stage, "Height"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "Name")
-		initializerStatements += staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent")
-		pointersInitializesStatements += staticwebsiteparagraph.GongMarshallField(stage, "Image")
+		initializerStatements.WriteString(staticwebsiteparagraph.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(staticwebsiteparagraph.GongMarshallField(stage, "LegendMarkdownContent"))
+		pointersInitializesStatements.WriteString(staticwebsiteparagraph.GongMarshallField(stage, "Image"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }
-func (xhtml_content *XHTML_CONTENT) GongMarshallAllFields(stage *Stage) (initializerStatements string, pointersInitializesStatements string) {
+func (xhtml_content *XHTML_CONTENT) GongMarshallAllFields(stage *Stage) (initRes string, ptrRes string) {
 
+	var initializerStatements strings.Builder
+	var pointersInitializesStatements strings.Builder
 	{ // Insertion point for basic fields value assignment
-		initializerStatements += xhtml_content.GongMarshallField(stage, "Name")
-		initializerStatements += xhtml_content.GongMarshallField(stage, "EnclosedText")
-		initializerStatements += xhtml_content.GongMarshallField(stage, "PureText")
+		initializerStatements.WriteString(xhtml_content.GongMarshallField(stage, "Name"))
+		initializerStatements.WriteString(xhtml_content.GongMarshallField(stage, "EnclosedText"))
+		initializerStatements.WriteString(xhtml_content.GongMarshallField(stage, "PureText"))
 	}
+	initRes = initializerStatements.String()
+	ptrRes = pointersInitializesStatements.String()
 	return
 }

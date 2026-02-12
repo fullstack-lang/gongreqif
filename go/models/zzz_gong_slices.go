@@ -3,12 +3,15 @@ package models
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 )
 
-var __GongSliceTemplate_time__dummyDeclaration time.Duration
-var _ = __GongSliceTemplate_time__dummyDeclaration
+var (
+	__GongSliceTemplate_time__dummyDeclaration time.Duration
+	_                                          = __GongSliceTemplate_time__dummyDeclaration
+)
 
 // ComputeReverseMaps computes the reverse map, for all intances, for all slice to pointers field
 // Its complexity is in O(n)O(p) where p is the number of pointers
@@ -613,10 +616,10 @@ func (stage *Stage) ComputeReverseMaps() {
 	// Compute reverse map for named struct XHTML_CONTENT
 	// insertion point per field
 
+	// end of insertion point per named struct
 }
 
 func (stage *Stage) GetInstances() (res []GongstructIF) {
-
 	// insertion point per named struct
 	for instance := range stage.ALTERNATIVE_IDs {
 		res = append(res, instance)
@@ -1558,24 +1561,18 @@ func (xhtml_content *XHTML_CONTENT) GongCopy() GongstructIF {
 	return &newInstance
 }
 
-func (stage *Stage) ComputeDifference() {
+func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	var lenNewInstances int
 	var lenModifiedInstances int
 	var lenDeletedInstances int
 
-	var newInstancesStmt string
-	_ = newInstancesStmt
-	var fieldsEditStmt string
-	_ = fieldsEditStmt
-	var deletedInstancesStmt string
-	_ = deletedInstancesStmt
+	var newInstancesSlice []string
+	var fieldsEditSlice []string
+	var deletedInstancesSlice []string
 
-	var newInstancesReverseStmt string
-	_ = newInstancesReverseStmt
-	var fieldsEditReverseStmt string
-	_ = fieldsEditReverseStmt
-	var deletedInstancesReverseStmt string
-	_ = deletedInstancesReverseStmt
+	var newInstancesReverseSlice []string
+	var fieldsEditReverseSlice []string
+	var deletedInstancesReverseSlice []string
 
 	// first clean the staging area to remove non staged instances
 	// from pointers fields and slices of pointers fields
@@ -1589,21 +1586,29 @@ func (stage *Stage) ComputeDifference() {
 	for alternative_id := range stage.ALTERNATIVE_IDs {
 		if ref, ok := stage.ALTERNATIVE_IDs_reference[alternative_id]; !ok {
 			alternative_ids_newInstances = append(alternative_ids_newInstances, alternative_id)
-			newInstancesStmt += alternative_id.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += alternative_id.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, alternative_id.GongMarshallIdentifier(stage))
+			if stage.ALTERNATIVE_IDs_referenceOrder == nil {
+				stage.ALTERNATIVE_IDs_referenceOrder = make(map[*ALTERNATIVE_ID]uint)
+			}
+			stage.ALTERNATIVE_IDs_referenceOrder[alternative_id] = stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, alternative_id.GongMarshallUnstaging(stage))
+			delete(stage.ALTERNATIVE_IDs_referenceOrder, alternative_id)
 			fieldInitializers, pointersInitializations := alternative_id.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ALTERNATIVE_IDMap_Staged_Order[ref] = stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]
 			diffs := alternative_id.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, alternative_id)
+			delete(stage.ALTERNATIVE_IDMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", alternative_id.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", alternative_id.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1614,11 +1619,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ALTERNATIVE_IDs_reference {
 		if _, ok := stage.ALTERNATIVE_IDs[ref]; !ok {
 			alternative_ids_deletedInstances = append(alternative_ids_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1631,21 +1635,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_boolean := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference[attribute_definition_boolean]; !ok {
 			attribute_definition_booleans_newInstances = append(attribute_definition_booleans_newInstances, attribute_definition_boolean)
-			newInstancesStmt += attribute_definition_boolean.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_boolean.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_boolean.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_boolean.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder, attribute_definition_boolean)
 			fieldInitializers, pointersInitializations := attribute_definition_boolean.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]
 			diffs := attribute_definition_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_boolean)
+			delete(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_boolean.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_boolean.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1656,11 +1668,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[ref]; !ok {
 			attribute_definition_booleans_deletedInstances = append(attribute_definition_booleans_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1673,21 +1684,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_boolean_rendering := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference[attribute_definition_boolean_rendering]; !ok {
 			attribute_definition_boolean_renderings_newInstances = append(attribute_definition_boolean_renderings_newInstances, attribute_definition_boolean_rendering)
-			newInstancesStmt += attribute_definition_boolean_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_boolean_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_boolean_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_boolean_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder, attribute_definition_boolean_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_boolean_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]
 			diffs := attribute_definition_boolean_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_boolean_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_boolean_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_boolean_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1698,11 +1717,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[ref]; !ok {
 			attribute_definition_boolean_renderings_deletedInstances = append(attribute_definition_boolean_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1715,21 +1733,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_date := range stage.ATTRIBUTE_DEFINITION_DATEs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_DATEs_reference[attribute_definition_date]; !ok {
 			attribute_definition_dates_newInstances = append(attribute_definition_dates_newInstances, attribute_definition_date)
-			newInstancesStmt += attribute_definition_date.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_date.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_date.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_DATE]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_date.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder, attribute_definition_date)
 			fieldInitializers, pointersInitializations := attribute_definition_date.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]
 			diffs := attribute_definition_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_date)
+			delete(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_date.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_date.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1740,11 +1766,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_DATEs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[ref]; !ok {
 			attribute_definition_dates_deletedInstances = append(attribute_definition_dates_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1757,21 +1782,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_date_rendering := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference[attribute_definition_date_rendering]; !ok {
 			attribute_definition_date_renderings_newInstances = append(attribute_definition_date_renderings_newInstances, attribute_definition_date_rendering)
-			newInstancesStmt += attribute_definition_date_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_date_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_date_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_date_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder, attribute_definition_date_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_date_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]
 			diffs := attribute_definition_date_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_date_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_date_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_date_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1782,11 +1815,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings[ref]; !ok {
 			attribute_definition_date_renderings_deletedInstances = append(attribute_definition_date_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1799,21 +1831,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_enumeration := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference[attribute_definition_enumeration]; !ok {
 			attribute_definition_enumerations_newInstances = append(attribute_definition_enumerations_newInstances, attribute_definition_enumeration)
-			newInstancesStmt += attribute_definition_enumeration.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_enumeration.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_enumeration.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_enumeration.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder, attribute_definition_enumeration)
 			fieldInitializers, pointersInitializations := attribute_definition_enumeration.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]
 			diffs := attribute_definition_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_enumeration)
+			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_enumeration.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_enumeration.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1824,11 +1864,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[ref]; !ok {
 			attribute_definition_enumerations_deletedInstances = append(attribute_definition_enumerations_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1841,21 +1880,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_enumeration_rendering := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference[attribute_definition_enumeration_rendering]; !ok {
 			attribute_definition_enumeration_renderings_newInstances = append(attribute_definition_enumeration_renderings_newInstances, attribute_definition_enumeration_rendering)
-			newInstancesStmt += attribute_definition_enumeration_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_enumeration_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_enumeration_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_enumeration_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder, attribute_definition_enumeration_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_enumeration_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]
 			diffs := attribute_definition_enumeration_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_enumeration_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_enumeration_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_enumeration_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1866,11 +1913,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[ref]; !ok {
 			attribute_definition_enumeration_renderings_deletedInstances = append(attribute_definition_enumeration_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1883,21 +1929,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_integer := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs_reference[attribute_definition_integer]; !ok {
 			attribute_definition_integers_newInstances = append(attribute_definition_integers_newInstances, attribute_definition_integer)
-			newInstancesStmt += attribute_definition_integer.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_integer.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_integer.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_INTEGER]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_integer.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder, attribute_definition_integer)
 			fieldInitializers, pointersInitializations := attribute_definition_integer.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]
 			diffs := attribute_definition_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_integer)
+			delete(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_integer.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_integer.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1908,11 +1962,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_INTEGERs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[ref]; !ok {
 			attribute_definition_integers_deletedInstances = append(attribute_definition_integers_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1925,21 +1978,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_integer_rendering := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference[attribute_definition_integer_rendering]; !ok {
 			attribute_definition_integer_renderings_newInstances = append(attribute_definition_integer_renderings_newInstances, attribute_definition_integer_rendering)
-			newInstancesStmt += attribute_definition_integer_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_integer_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_integer_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_integer_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder, attribute_definition_integer_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_integer_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]
 			diffs := attribute_definition_integer_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_integer_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_integer_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_integer_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1950,11 +2011,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[ref]; !ok {
 			attribute_definition_integer_renderings_deletedInstances = append(attribute_definition_integer_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -1967,21 +2027,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_real := range stage.ATTRIBUTE_DEFINITION_REALs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_REALs_reference[attribute_definition_real]; !ok {
 			attribute_definition_reals_newInstances = append(attribute_definition_reals_newInstances, attribute_definition_real)
-			newInstancesStmt += attribute_definition_real.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_real.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_real.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_REAL]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_real.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder, attribute_definition_real)
 			fieldInitializers, pointersInitializations := attribute_definition_real.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]
 			diffs := attribute_definition_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_real)
+			delete(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_real.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_real.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -1992,11 +2060,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_REALs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[ref]; !ok {
 			attribute_definition_reals_deletedInstances = append(attribute_definition_reals_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2009,21 +2076,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_real_rendering := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference[attribute_definition_real_rendering]; !ok {
 			attribute_definition_real_renderings_newInstances = append(attribute_definition_real_renderings_newInstances, attribute_definition_real_rendering)
-			newInstancesStmt += attribute_definition_real_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_real_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_real_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_real_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder, attribute_definition_real_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_real_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]
 			diffs := attribute_definition_real_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_real_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_real_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_real_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2034,11 +2109,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings[ref]; !ok {
 			attribute_definition_real_renderings_deletedInstances = append(attribute_definition_real_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2051,21 +2125,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_rendering := range stage.ATTRIBUTE_DEFINITION_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_Renderings_reference[attribute_definition_rendering]; !ok {
 			attribute_definition_renderings_newInstances = append(attribute_definition_renderings_newInstances, attribute_definition_rendering)
-			newInstancesStmt += attribute_definition_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder, attribute_definition_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]
 			diffs := attribute_definition_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2076,11 +2158,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[ref]; !ok {
 			attribute_definition_renderings_deletedInstances = append(attribute_definition_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2093,21 +2174,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_string := range stage.ATTRIBUTE_DEFINITION_STRINGs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_STRINGs_reference[attribute_definition_string]; !ok {
 			attribute_definition_strings_newInstances = append(attribute_definition_strings_newInstances, attribute_definition_string)
-			newInstancesStmt += attribute_definition_string.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_string.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_string.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_STRING]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_string.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder, attribute_definition_string)
 			fieldInitializers, pointersInitializations := attribute_definition_string.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]
 			diffs := attribute_definition_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_string)
+			delete(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_string.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_string.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2118,11 +2207,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_STRINGs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[ref]; !ok {
 			attribute_definition_strings_deletedInstances = append(attribute_definition_strings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2135,21 +2223,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_string_rendering := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference[attribute_definition_string_rendering]; !ok {
 			attribute_definition_string_renderings_newInstances = append(attribute_definition_string_renderings_newInstances, attribute_definition_string_rendering)
-			newInstancesStmt += attribute_definition_string_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_string_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_string_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_string_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder, attribute_definition_string_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_string_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]
 			diffs := attribute_definition_string_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_string_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_string_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_string_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2160,11 +2256,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings[ref]; !ok {
 			attribute_definition_string_renderings_deletedInstances = append(attribute_definition_string_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2177,21 +2272,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_xhtml := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs_reference[attribute_definition_xhtml]; !ok {
 			attribute_definition_xhtmls_newInstances = append(attribute_definition_xhtmls_newInstances, attribute_definition_xhtml)
-			newInstancesStmt += attribute_definition_xhtml.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_xhtml.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_xhtml.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_XHTML]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_xhtml.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder, attribute_definition_xhtml)
 			fieldInitializers, pointersInitializations := attribute_definition_xhtml.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]
 			diffs := attribute_definition_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_xhtml)
+			delete(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_xhtml.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_xhtml.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2202,11 +2305,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_XHTMLs_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[ref]; !ok {
 			attribute_definition_xhtmls_deletedInstances = append(attribute_definition_xhtmls_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2219,21 +2321,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_definition_xhtml_rendering := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings {
 		if ref, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference[attribute_definition_xhtml_rendering]; !ok {
 			attribute_definition_xhtml_renderings_newInstances = append(attribute_definition_xhtml_renderings_newInstances, attribute_definition_xhtml_rendering)
-			newInstancesStmt += attribute_definition_xhtml_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_definition_xhtml_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_definition_xhtml_rendering.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder == nil {
+				stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]uint)
+			}
+			stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_xhtml_rendering.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder, attribute_definition_xhtml_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_xhtml_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]
 			diffs := attribute_definition_xhtml_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_xhtml_rendering)
+			delete(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_definition_xhtml_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_xhtml_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2244,11 +2354,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference {
 		if _, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[ref]; !ok {
 			attribute_definition_xhtml_renderings_deletedInstances = append(attribute_definition_xhtml_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2261,21 +2370,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_boolean := range stage.ATTRIBUTE_VALUE_BOOLEANs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_BOOLEANs_reference[attribute_value_boolean]; !ok {
 			attribute_value_booleans_newInstances = append(attribute_value_booleans_newInstances, attribute_value_boolean)
-			newInstancesStmt += attribute_value_boolean.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_boolean.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_boolean.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder = make(map[*ATTRIBUTE_VALUE_BOOLEAN]uint)
+			}
+			stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_boolean.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder, attribute_value_boolean)
 			fieldInitializers, pointersInitializations := attribute_value_boolean.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]
 			diffs := attribute_value_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_boolean)
+			delete(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_boolean.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_boolean.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2286,11 +2403,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_BOOLEANs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[ref]; !ok {
 			attribute_value_booleans_deletedInstances = append(attribute_value_booleans_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2303,21 +2419,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_date := range stage.ATTRIBUTE_VALUE_DATEs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_DATEs_reference[attribute_value_date]; !ok {
 			attribute_value_dates_newInstances = append(attribute_value_dates_newInstances, attribute_value_date)
-			newInstancesStmt += attribute_value_date.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_date.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_date.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_DATEs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_DATEs_referenceOrder = make(map[*ATTRIBUTE_VALUE_DATE]uint)
+			}
+			stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_date.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_DATEs_referenceOrder, attribute_value_date)
 			fieldInitializers, pointersInitializations := attribute_value_date.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]
 			diffs := attribute_value_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_date)
+			delete(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_date.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_date.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2328,11 +2452,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_DATEs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_DATEs[ref]; !ok {
 			attribute_value_dates_deletedInstances = append(attribute_value_dates_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2345,21 +2468,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_enumeration := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference[attribute_value_enumeration]; !ok {
 			attribute_value_enumerations_newInstances = append(attribute_value_enumerations_newInstances, attribute_value_enumeration)
-			newInstancesStmt += attribute_value_enumeration.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_enumeration.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_enumeration.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder = make(map[*ATTRIBUTE_VALUE_ENUMERATION]uint)
+			}
+			stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_enumeration.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder, attribute_value_enumeration)
 			fieldInitializers, pointersInitializations := attribute_value_enumeration.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]
 			diffs := attribute_value_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_enumeration)
+			delete(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_enumeration.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_enumeration.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2370,11 +2501,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[ref]; !ok {
 			attribute_value_enumerations_deletedInstances = append(attribute_value_enumerations_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2387,21 +2517,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_integer := range stage.ATTRIBUTE_VALUE_INTEGERs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_INTEGERs_reference[attribute_value_integer]; !ok {
 			attribute_value_integers_newInstances = append(attribute_value_integers_newInstances, attribute_value_integer)
-			newInstancesStmt += attribute_value_integer.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_integer.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_integer.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder = make(map[*ATTRIBUTE_VALUE_INTEGER]uint)
+			}
+			stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_integer.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder, attribute_value_integer)
 			fieldInitializers, pointersInitializations := attribute_value_integer.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]
 			diffs := attribute_value_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_integer)
+			delete(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_integer.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_integer.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2412,11 +2550,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_INTEGERs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[ref]; !ok {
 			attribute_value_integers_deletedInstances = append(attribute_value_integers_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2429,21 +2566,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_real := range stage.ATTRIBUTE_VALUE_REALs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_REALs_reference[attribute_value_real]; !ok {
 			attribute_value_reals_newInstances = append(attribute_value_reals_newInstances, attribute_value_real)
-			newInstancesStmt += attribute_value_real.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_real.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_real.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_REALs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_REALs_referenceOrder = make(map[*ATTRIBUTE_VALUE_REAL]uint)
+			}
+			stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_real.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_REALs_referenceOrder, attribute_value_real)
 			fieldInitializers, pointersInitializations := attribute_value_real.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]
 			diffs := attribute_value_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_real)
+			delete(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_real.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_real.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2454,11 +2599,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_REALs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_REALs[ref]; !ok {
 			attribute_value_reals_deletedInstances = append(attribute_value_reals_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2471,21 +2615,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_string := range stage.ATTRIBUTE_VALUE_STRINGs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_STRINGs_reference[attribute_value_string]; !ok {
 			attribute_value_strings_newInstances = append(attribute_value_strings_newInstances, attribute_value_string)
-			newInstancesStmt += attribute_value_string.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_string.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_string.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder = make(map[*ATTRIBUTE_VALUE_STRING]uint)
+			}
+			stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_string.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder, attribute_value_string)
 			fieldInitializers, pointersInitializations := attribute_value_string.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]
 			diffs := attribute_value_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_string)
+			delete(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_string.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_string.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2496,11 +2648,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_STRINGs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[ref]; !ok {
 			attribute_value_strings_deletedInstances = append(attribute_value_strings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2513,21 +2664,29 @@ func (stage *Stage) ComputeDifference() {
 	for attribute_value_xhtml := range stage.ATTRIBUTE_VALUE_XHTMLs {
 		if ref, ok := stage.ATTRIBUTE_VALUE_XHTMLs_reference[attribute_value_xhtml]; !ok {
 			attribute_value_xhtmls_newInstances = append(attribute_value_xhtmls_newInstances, attribute_value_xhtml)
-			newInstancesStmt += attribute_value_xhtml.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += attribute_value_xhtml.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, attribute_value_xhtml.GongMarshallIdentifier(stage))
+			if stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder == nil {
+				stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder = make(map[*ATTRIBUTE_VALUE_XHTML]uint)
+			}
+			stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_xhtml.GongMarshallUnstaging(stage))
+			delete(stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder, attribute_value_xhtml)
 			fieldInitializers, pointersInitializations := attribute_value_xhtml.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]
 			diffs := attribute_value_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_xhtml)
+			delete(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", attribute_value_xhtml.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_xhtml.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2538,11 +2697,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ATTRIBUTE_VALUE_XHTMLs_reference {
 		if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[ref]; !ok {
 			attribute_value_xhtmls_deletedInstances = append(attribute_value_xhtmls_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2555,21 +2713,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_alternative_id := range stage.A_ALTERNATIVE_IDs {
 		if ref, ok := stage.A_ALTERNATIVE_IDs_reference[a_alternative_id]; !ok {
 			a_alternative_ids_newInstances = append(a_alternative_ids_newInstances, a_alternative_id)
-			newInstancesStmt += a_alternative_id.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_alternative_id.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_alternative_id.GongMarshallIdentifier(stage))
+			if stage.A_ALTERNATIVE_IDs_referenceOrder == nil {
+				stage.A_ALTERNATIVE_IDs_referenceOrder = make(map[*A_ALTERNATIVE_ID]uint)
+			}
+			stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id] = stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_alternative_id.GongMarshallUnstaging(stage))
+			delete(stage.A_ALTERNATIVE_IDs_referenceOrder, a_alternative_id)
 			fieldInitializers, pointersInitializations := a_alternative_id.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ALTERNATIVE_IDMap_Staged_Order[ref] = stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]
 			diffs := a_alternative_id.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_alternative_id)
+			delete(stage.A_ALTERNATIVE_IDMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_alternative_id.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_alternative_id.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2580,11 +2746,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ALTERNATIVE_IDs_reference {
 		if _, ok := stage.A_ALTERNATIVE_IDs[ref]; !ok {
 			a_alternative_ids_deletedInstances = append(a_alternative_ids_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2597,21 +2762,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_boolean_ref := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference[a_attribute_definition_boolean_ref]; !ok {
 			a_attribute_definition_boolean_refs_newInstances = append(a_attribute_definition_boolean_refs_newInstances, a_attribute_definition_boolean_ref)
-			newInstancesStmt += a_attribute_definition_boolean_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_boolean_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_boolean_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_boolean_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder, a_attribute_definition_boolean_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_boolean_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]
 			diffs := a_attribute_definition_boolean_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_boolean_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_boolean_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_boolean_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2622,11 +2795,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[ref]; !ok {
 			a_attribute_definition_boolean_refs_deletedInstances = append(a_attribute_definition_boolean_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2639,21 +2811,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_date_ref := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference[a_attribute_definition_date_ref]; !ok {
 			a_attribute_definition_date_refs_newInstances = append(a_attribute_definition_date_refs_newInstances, a_attribute_definition_date_ref)
-			newInstancesStmt += a_attribute_definition_date_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_date_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_date_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_date_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder, a_attribute_definition_date_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_date_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]
 			diffs := a_attribute_definition_date_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_date_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_date_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_date_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2664,11 +2844,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[ref]; !ok {
 			a_attribute_definition_date_refs_deletedInstances = append(a_attribute_definition_date_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2681,21 +2860,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_enumeration_ref := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference[a_attribute_definition_enumeration_ref]; !ok {
 			a_attribute_definition_enumeration_refs_newInstances = append(a_attribute_definition_enumeration_refs_newInstances, a_attribute_definition_enumeration_ref)
-			newInstancesStmt += a_attribute_definition_enumeration_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_enumeration_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_enumeration_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_enumeration_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder, a_attribute_definition_enumeration_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_enumeration_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]
 			diffs := a_attribute_definition_enumeration_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_enumeration_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_enumeration_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_enumeration_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2706,11 +2893,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[ref]; !ok {
 			a_attribute_definition_enumeration_refs_deletedInstances = append(a_attribute_definition_enumeration_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2723,21 +2909,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_integer_ref := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference[a_attribute_definition_integer_ref]; !ok {
 			a_attribute_definition_integer_refs_newInstances = append(a_attribute_definition_integer_refs_newInstances, a_attribute_definition_integer_ref)
-			newInstancesStmt += a_attribute_definition_integer_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_integer_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_integer_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_integer_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder, a_attribute_definition_integer_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_integer_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]
 			diffs := a_attribute_definition_integer_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_integer_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_integer_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_integer_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2748,11 +2942,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[ref]; !ok {
 			a_attribute_definition_integer_refs_deletedInstances = append(a_attribute_definition_integer_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2765,21 +2958,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_real_ref := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference[a_attribute_definition_real_ref]; !ok {
 			a_attribute_definition_real_refs_newInstances = append(a_attribute_definition_real_refs_newInstances, a_attribute_definition_real_ref)
-			newInstancesStmt += a_attribute_definition_real_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_real_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_real_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_real_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder, a_attribute_definition_real_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_real_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]
 			diffs := a_attribute_definition_real_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_real_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_real_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_real_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2790,11 +2991,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[ref]; !ok {
 			a_attribute_definition_real_refs_deletedInstances = append(a_attribute_definition_real_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2807,21 +3007,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_string_ref := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference[a_attribute_definition_string_ref]; !ok {
 			a_attribute_definition_string_refs_newInstances = append(a_attribute_definition_string_refs_newInstances, a_attribute_definition_string_ref)
-			newInstancesStmt += a_attribute_definition_string_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_string_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_string_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_string_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder, a_attribute_definition_string_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_string_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]
 			diffs := a_attribute_definition_string_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_string_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_string_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_string_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2832,11 +3040,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[ref]; !ok {
 			a_attribute_definition_string_refs_deletedInstances = append(a_attribute_definition_string_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2849,21 +3056,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_definition_xhtml_ref := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs {
 		if ref, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference[a_attribute_definition_xhtml_ref]; !ok {
 			a_attribute_definition_xhtml_refs_newInstances = append(a_attribute_definition_xhtml_refs_newInstances, a_attribute_definition_xhtml_ref)
-			newInstancesStmt += a_attribute_definition_xhtml_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_definition_xhtml_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_definition_xhtml_ref.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]uint)
+			}
+			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_xhtml_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder, a_attribute_definition_xhtml_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_xhtml_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]
 			diffs := a_attribute_definition_xhtml_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_xhtml_ref)
+			delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_definition_xhtml_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_xhtml_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2874,11 +3089,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference {
 		if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[ref]; !ok {
 			a_attribute_definition_xhtml_refs_deletedInstances = append(a_attribute_definition_xhtml_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2891,21 +3105,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_boolean := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference[a_attribute_value_boolean]; !ok {
 			a_attribute_value_booleans_newInstances = append(a_attribute_value_booleans_newInstances, a_attribute_value_boolean)
-			newInstancesStmt += a_attribute_value_boolean.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_boolean.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_boolean.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_boolean.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder, a_attribute_value_boolean)
 			fieldInitializers, pointersInitializations := a_attribute_value_boolean.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]
 			diffs := a_attribute_value_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_boolean)
+			delete(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_boolean.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_boolean.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2916,11 +3138,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[ref]; !ok {
 			a_attribute_value_booleans_deletedInstances = append(a_attribute_value_booleans_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2933,21 +3154,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_date := range stage.A_ATTRIBUTE_VALUE_DATEs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_DATEs_reference[a_attribute_value_date]; !ok {
 			a_attribute_value_dates_newInstances = append(a_attribute_value_dates_newInstances, a_attribute_value_date)
-			newInstancesStmt += a_attribute_value_date.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_date.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_date.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_DATE]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_date.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder, a_attribute_value_date)
 			fieldInitializers, pointersInitializations := a_attribute_value_date.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]
 			diffs := a_attribute_value_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_date)
+			delete(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_date.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_date.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -2958,11 +3187,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_DATEs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[ref]; !ok {
 			a_attribute_value_dates_deletedInstances = append(a_attribute_value_dates_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -2975,21 +3203,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_enumeration := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference[a_attribute_value_enumeration]; !ok {
 			a_attribute_value_enumerations_newInstances = append(a_attribute_value_enumerations_newInstances, a_attribute_value_enumeration)
-			newInstancesStmt += a_attribute_value_enumeration.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_enumeration.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_enumeration.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_enumeration.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder, a_attribute_value_enumeration)
 			fieldInitializers, pointersInitializations := a_attribute_value_enumeration.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]
 			diffs := a_attribute_value_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_enumeration)
+			delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_enumeration.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_enumeration.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3000,11 +3236,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[ref]; !ok {
 			a_attribute_value_enumerations_deletedInstances = append(a_attribute_value_enumerations_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3017,21 +3252,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_integer := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs_reference[a_attribute_value_integer]; !ok {
 			a_attribute_value_integers_newInstances = append(a_attribute_value_integers_newInstances, a_attribute_value_integer)
-			newInstancesStmt += a_attribute_value_integer.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_integer.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_integer.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_INTEGER]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_integer.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder, a_attribute_value_integer)
 			fieldInitializers, pointersInitializations := a_attribute_value_integer.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]
 			diffs := a_attribute_value_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_integer)
+			delete(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_integer.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_integer.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3042,11 +3285,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_INTEGERs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[ref]; !ok {
 			a_attribute_value_integers_deletedInstances = append(a_attribute_value_integers_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3059,21 +3301,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_real := range stage.A_ATTRIBUTE_VALUE_REALs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_REALs_reference[a_attribute_value_real]; !ok {
 			a_attribute_value_reals_newInstances = append(a_attribute_value_reals_newInstances, a_attribute_value_real)
-			newInstancesStmt += a_attribute_value_real.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_real.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_real.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_REAL]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_real.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder, a_attribute_value_real)
 			fieldInitializers, pointersInitializations := a_attribute_value_real.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]
 			diffs := a_attribute_value_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_real)
+			delete(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_real.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_real.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3084,11 +3334,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_REALs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[ref]; !ok {
 			a_attribute_value_reals_deletedInstances = append(a_attribute_value_reals_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3101,21 +3350,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_string := range stage.A_ATTRIBUTE_VALUE_STRINGs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_STRINGs_reference[a_attribute_value_string]; !ok {
 			a_attribute_value_strings_newInstances = append(a_attribute_value_strings_newInstances, a_attribute_value_string)
-			newInstancesStmt += a_attribute_value_string.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_string.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_string.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_STRING]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_string.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder, a_attribute_value_string)
 			fieldInitializers, pointersInitializations := a_attribute_value_string.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]
 			diffs := a_attribute_value_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_string)
+			delete(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_string.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_string.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3126,11 +3383,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_STRINGs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[ref]; !ok {
 			a_attribute_value_strings_deletedInstances = append(a_attribute_value_strings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3143,21 +3399,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_xhtml := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs_reference[a_attribute_value_xhtml]; !ok {
 			a_attribute_value_xhtmls_newInstances = append(a_attribute_value_xhtmls_newInstances, a_attribute_value_xhtml)
-			newInstancesStmt += a_attribute_value_xhtml.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_xhtml.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_xhtml.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_XHTML]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_xhtml.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder, a_attribute_value_xhtml)
 			fieldInitializers, pointersInitializations := a_attribute_value_xhtml.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]
 			diffs := a_attribute_value_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_xhtml)
+			delete(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_xhtml.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_xhtml.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3168,11 +3432,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_XHTMLs_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[ref]; !ok {
 			a_attribute_value_xhtmls_deletedInstances = append(a_attribute_value_xhtmls_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3185,21 +3448,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_attribute_value_xhtml_1 := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
 		if ref, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference[a_attribute_value_xhtml_1]; !ok {
 			a_attribute_value_xhtml_1s_newInstances = append(a_attribute_value_xhtml_1s_newInstances, a_attribute_value_xhtml_1)
-			newInstancesStmt += a_attribute_value_xhtml_1.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_attribute_value_xhtml_1.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_attribute_value_xhtml_1.GongMarshallIdentifier(stage))
+			if stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder == nil {
+				stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]uint)
+			}
+			stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_xhtml_1.GongMarshallUnstaging(stage))
+			delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder, a_attribute_value_xhtml_1)
 			fieldInitializers, pointersInitializations := a_attribute_value_xhtml_1.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]
 			diffs := a_attribute_value_xhtml_1.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_xhtml_1)
+			delete(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_attribute_value_xhtml_1.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_xhtml_1.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3210,11 +3481,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference {
 		if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[ref]; !ok {
 			a_attribute_value_xhtml_1s_deletedInstances = append(a_attribute_value_xhtml_1s_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3227,21 +3497,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_children := range stage.A_CHILDRENs {
 		if ref, ok := stage.A_CHILDRENs_reference[a_children]; !ok {
 			a_childrens_newInstances = append(a_childrens_newInstances, a_children)
-			newInstancesStmt += a_children.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_children.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_children.GongMarshallIdentifier(stage))
+			if stage.A_CHILDRENs_referenceOrder == nil {
+				stage.A_CHILDRENs_referenceOrder = make(map[*A_CHILDREN]uint)
+			}
+			stage.A_CHILDRENs_referenceOrder[a_children] = stage.A_CHILDRENMap_Staged_Order[a_children]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_children.GongMarshallUnstaging(stage))
+			delete(stage.A_CHILDRENs_referenceOrder, a_children)
 			fieldInitializers, pointersInitializations := a_children.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_CHILDRENMap_Staged_Order[ref] = stage.A_CHILDRENMap_Staged_Order[a_children]
 			diffs := a_children.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_children)
+			delete(stage.A_CHILDRENMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_children.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_children.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3252,11 +3530,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_CHILDRENs_reference {
 		if _, ok := stage.A_CHILDRENs[ref]; !ok {
 			a_childrens_deletedInstances = append(a_childrens_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3269,21 +3546,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_core_content := range stage.A_CORE_CONTENTs {
 		if ref, ok := stage.A_CORE_CONTENTs_reference[a_core_content]; !ok {
 			a_core_contents_newInstances = append(a_core_contents_newInstances, a_core_content)
-			newInstancesStmt += a_core_content.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_core_content.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_core_content.GongMarshallIdentifier(stage))
+			if stage.A_CORE_CONTENTs_referenceOrder == nil {
+				stage.A_CORE_CONTENTs_referenceOrder = make(map[*A_CORE_CONTENT]uint)
+			}
+			stage.A_CORE_CONTENTs_referenceOrder[a_core_content] = stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_core_content.GongMarshallUnstaging(stage))
+			delete(stage.A_CORE_CONTENTs_referenceOrder, a_core_content)
 			fieldInitializers, pointersInitializations := a_core_content.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_CORE_CONTENTMap_Staged_Order[ref] = stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]
 			diffs := a_core_content.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_core_content)
+			delete(stage.A_CORE_CONTENTMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_core_content.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_core_content.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3294,11 +3579,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_CORE_CONTENTs_reference {
 		if _, ok := stage.A_CORE_CONTENTs[ref]; !ok {
 			a_core_contents_deletedInstances = append(a_core_contents_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3311,21 +3595,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatypes := range stage.A_DATATYPESs {
 		if ref, ok := stage.A_DATATYPESs_reference[a_datatypes]; !ok {
 			a_datatypess_newInstances = append(a_datatypess_newInstances, a_datatypes)
-			newInstancesStmt += a_datatypes.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatypes.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatypes.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPESs_referenceOrder == nil {
+				stage.A_DATATYPESs_referenceOrder = make(map[*A_DATATYPES]uint)
+			}
+			stage.A_DATATYPESs_referenceOrder[a_datatypes] = stage.A_DATATYPESMap_Staged_Order[a_datatypes]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatypes.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPESs_referenceOrder, a_datatypes)
 			fieldInitializers, pointersInitializations := a_datatypes.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPESMap_Staged_Order[ref] = stage.A_DATATYPESMap_Staged_Order[a_datatypes]
 			diffs := a_datatypes.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatypes)
+			delete(stage.A_DATATYPESMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatypes.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatypes.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3336,11 +3628,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPESs_reference {
 		if _, ok := stage.A_DATATYPESs[ref]; !ok {
 			a_datatypess_deletedInstances = append(a_datatypess_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3353,21 +3644,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_boolean_ref := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference[a_datatype_definition_boolean_ref]; !ok {
 			a_datatype_definition_boolean_refs_newInstances = append(a_datatype_definition_boolean_refs_newInstances, a_datatype_definition_boolean_ref)
-			newInstancesStmt += a_datatype_definition_boolean_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_boolean_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_boolean_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_boolean_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder, a_datatype_definition_boolean_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_boolean_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]
 			diffs := a_datatype_definition_boolean_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_boolean_ref)
+			delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_boolean_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_boolean_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3378,11 +3677,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[ref]; !ok {
 			a_datatype_definition_boolean_refs_deletedInstances = append(a_datatype_definition_boolean_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3395,21 +3693,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_date_ref := range stage.A_DATATYPE_DEFINITION_DATE_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs_reference[a_datatype_definition_date_ref]; !ok {
 			a_datatype_definition_date_refs_newInstances = append(a_datatype_definition_date_refs_newInstances, a_datatype_definition_date_ref)
-			newInstancesStmt += a_datatype_definition_date_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_date_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_date_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_DATE_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_date_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder, a_datatype_definition_date_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_date_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]
 			diffs := a_datatype_definition_date_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_date_ref)
+			delete(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_date_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_date_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3420,11 +3726,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_DATE_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[ref]; !ok {
 			a_datatype_definition_date_refs_deletedInstances = append(a_datatype_definition_date_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3437,21 +3742,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_enumeration_ref := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference[a_datatype_definition_enumeration_ref]; !ok {
 			a_datatype_definition_enumeration_refs_newInstances = append(a_datatype_definition_enumeration_refs_newInstances, a_datatype_definition_enumeration_ref)
-			newInstancesStmt += a_datatype_definition_enumeration_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_enumeration_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_enumeration_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_enumeration_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder, a_datatype_definition_enumeration_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_enumeration_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]
 			diffs := a_datatype_definition_enumeration_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_enumeration_ref)
+			delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_enumeration_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_enumeration_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3462,11 +3775,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[ref]; !ok {
 			a_datatype_definition_enumeration_refs_deletedInstances = append(a_datatype_definition_enumeration_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3479,21 +3791,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_integer_ref := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference[a_datatype_definition_integer_ref]; !ok {
 			a_datatype_definition_integer_refs_newInstances = append(a_datatype_definition_integer_refs_newInstances, a_datatype_definition_integer_ref)
-			newInstancesStmt += a_datatype_definition_integer_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_integer_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_integer_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_integer_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder, a_datatype_definition_integer_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_integer_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]
 			diffs := a_datatype_definition_integer_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_integer_ref)
+			delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_integer_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_integer_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3504,11 +3824,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[ref]; !ok {
 			a_datatype_definition_integer_refs_deletedInstances = append(a_datatype_definition_integer_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3521,21 +3840,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_real_ref := range stage.A_DATATYPE_DEFINITION_REAL_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs_reference[a_datatype_definition_real_ref]; !ok {
 			a_datatype_definition_real_refs_newInstances = append(a_datatype_definition_real_refs_newInstances, a_datatype_definition_real_ref)
-			newInstancesStmt += a_datatype_definition_real_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_real_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_real_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_REAL_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_real_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder, a_datatype_definition_real_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_real_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]
 			diffs := a_datatype_definition_real_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_real_ref)
+			delete(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_real_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_real_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3546,11 +3873,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_REAL_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[ref]; !ok {
 			a_datatype_definition_real_refs_deletedInstances = append(a_datatype_definition_real_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3563,21 +3889,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_string_ref := range stage.A_DATATYPE_DEFINITION_STRING_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs_reference[a_datatype_definition_string_ref]; !ok {
 			a_datatype_definition_string_refs_newInstances = append(a_datatype_definition_string_refs_newInstances, a_datatype_definition_string_ref)
-			newInstancesStmt += a_datatype_definition_string_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_string_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_string_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_STRING_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_string_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder, a_datatype_definition_string_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_string_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]
 			diffs := a_datatype_definition_string_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_string_ref)
+			delete(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_string_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_string_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3588,11 +3922,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_STRING_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[ref]; !ok {
 			a_datatype_definition_string_refs_deletedInstances = append(a_datatype_definition_string_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3605,21 +3938,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_datatype_definition_xhtml_ref := range stage.A_DATATYPE_DEFINITION_XHTML_REFs {
 		if ref, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference[a_datatype_definition_xhtml_ref]; !ok {
 			a_datatype_definition_xhtml_refs_newInstances = append(a_datatype_definition_xhtml_refs_newInstances, a_datatype_definition_xhtml_ref)
-			newInstancesStmt += a_datatype_definition_xhtml_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_datatype_definition_xhtml_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_datatype_definition_xhtml_ref.GongMarshallIdentifier(stage))
+			if stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder == nil {
+				stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]uint)
+			}
+			stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_xhtml_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder, a_datatype_definition_xhtml_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_xhtml_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]
 			diffs := a_datatype_definition_xhtml_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_xhtml_ref)
+			delete(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_datatype_definition_xhtml_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_xhtml_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3630,11 +3971,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference {
 		if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[ref]; !ok {
 			a_datatype_definition_xhtml_refs_deletedInstances = append(a_datatype_definition_xhtml_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3647,21 +3987,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_editable_atts := range stage.A_EDITABLE_ATTSs {
 		if ref, ok := stage.A_EDITABLE_ATTSs_reference[a_editable_atts]; !ok {
 			a_editable_attss_newInstances = append(a_editable_attss_newInstances, a_editable_atts)
-			newInstancesStmt += a_editable_atts.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_editable_atts.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_editable_atts.GongMarshallIdentifier(stage))
+			if stage.A_EDITABLE_ATTSs_referenceOrder == nil {
+				stage.A_EDITABLE_ATTSs_referenceOrder = make(map[*A_EDITABLE_ATTS]uint)
+			}
+			stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts] = stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_editable_atts.GongMarshallUnstaging(stage))
+			delete(stage.A_EDITABLE_ATTSs_referenceOrder, a_editable_atts)
 			fieldInitializers, pointersInitializations := a_editable_atts.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_EDITABLE_ATTSMap_Staged_Order[ref] = stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]
 			diffs := a_editable_atts.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_editable_atts)
+			delete(stage.A_EDITABLE_ATTSMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_editable_atts.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_editable_atts.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3672,11 +4020,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_EDITABLE_ATTSs_reference {
 		if _, ok := stage.A_EDITABLE_ATTSs[ref]; !ok {
 			a_editable_attss_deletedInstances = append(a_editable_attss_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3689,21 +4036,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_enum_value_ref := range stage.A_ENUM_VALUE_REFs {
 		if ref, ok := stage.A_ENUM_VALUE_REFs_reference[a_enum_value_ref]; !ok {
 			a_enum_value_refs_newInstances = append(a_enum_value_refs_newInstances, a_enum_value_ref)
-			newInstancesStmt += a_enum_value_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_enum_value_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_enum_value_ref.GongMarshallIdentifier(stage))
+			if stage.A_ENUM_VALUE_REFs_referenceOrder == nil {
+				stage.A_ENUM_VALUE_REFs_referenceOrder = make(map[*A_ENUM_VALUE_REF]uint)
+			}
+			stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref] = stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_enum_value_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_ENUM_VALUE_REFs_referenceOrder, a_enum_value_ref)
 			fieldInitializers, pointersInitializations := a_enum_value_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_ENUM_VALUE_REFMap_Staged_Order[ref] = stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]
 			diffs := a_enum_value_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_enum_value_ref)
+			delete(stage.A_ENUM_VALUE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_enum_value_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_enum_value_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3714,11 +4069,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_ENUM_VALUE_REFs_reference {
 		if _, ok := stage.A_ENUM_VALUE_REFs[ref]; !ok {
 			a_enum_value_refs_deletedInstances = append(a_enum_value_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3731,21 +4085,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_object := range stage.A_OBJECTs {
 		if ref, ok := stage.A_OBJECTs_reference[a_object]; !ok {
 			a_objects_newInstances = append(a_objects_newInstances, a_object)
-			newInstancesStmt += a_object.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_object.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_object.GongMarshallIdentifier(stage))
+			if stage.A_OBJECTs_referenceOrder == nil {
+				stage.A_OBJECTs_referenceOrder = make(map[*A_OBJECT]uint)
+			}
+			stage.A_OBJECTs_referenceOrder[a_object] = stage.A_OBJECTMap_Staged_Order[a_object]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_object.GongMarshallUnstaging(stage))
+			delete(stage.A_OBJECTs_referenceOrder, a_object)
 			fieldInitializers, pointersInitializations := a_object.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_OBJECTMap_Staged_Order[ref] = stage.A_OBJECTMap_Staged_Order[a_object]
 			diffs := a_object.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_object)
+			delete(stage.A_OBJECTMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_object.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_object.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3756,11 +4118,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_OBJECTs_reference {
 		if _, ok := stage.A_OBJECTs[ref]; !ok {
 			a_objects_deletedInstances = append(a_objects_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3773,21 +4134,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_properties := range stage.A_PROPERTIESs {
 		if ref, ok := stage.A_PROPERTIESs_reference[a_properties]; !ok {
 			a_propertiess_newInstances = append(a_propertiess_newInstances, a_properties)
-			newInstancesStmt += a_properties.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_properties.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_properties.GongMarshallIdentifier(stage))
+			if stage.A_PROPERTIESs_referenceOrder == nil {
+				stage.A_PROPERTIESs_referenceOrder = make(map[*A_PROPERTIES]uint)
+			}
+			stage.A_PROPERTIESs_referenceOrder[a_properties] = stage.A_PROPERTIESMap_Staged_Order[a_properties]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_properties.GongMarshallUnstaging(stage))
+			delete(stage.A_PROPERTIESs_referenceOrder, a_properties)
 			fieldInitializers, pointersInitializations := a_properties.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_PROPERTIESMap_Staged_Order[ref] = stage.A_PROPERTIESMap_Staged_Order[a_properties]
 			diffs := a_properties.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_properties)
+			delete(stage.A_PROPERTIESMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_properties.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_properties.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3798,11 +4167,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_PROPERTIESs_reference {
 		if _, ok := stage.A_PROPERTIESs[ref]; !ok {
 			a_propertiess_deletedInstances = append(a_propertiess_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3815,21 +4183,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_relation_group_type_ref := range stage.A_RELATION_GROUP_TYPE_REFs {
 		if ref, ok := stage.A_RELATION_GROUP_TYPE_REFs_reference[a_relation_group_type_ref]; !ok {
 			a_relation_group_type_refs_newInstances = append(a_relation_group_type_refs_newInstances, a_relation_group_type_ref)
-			newInstancesStmt += a_relation_group_type_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_relation_group_type_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_relation_group_type_ref.GongMarshallIdentifier(stage))
+			if stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder == nil {
+				stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder = make(map[*A_RELATION_GROUP_TYPE_REF]uint)
+			}
+			stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_relation_group_type_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder, a_relation_group_type_ref)
 			fieldInitializers, pointersInitializations := a_relation_group_type_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[ref] = stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]
 			diffs := a_relation_group_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_relation_group_type_ref)
+			delete(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_relation_group_type_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_relation_group_type_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3840,11 +4216,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_RELATION_GROUP_TYPE_REFs_reference {
 		if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[ref]; !ok {
 			a_relation_group_type_refs_deletedInstances = append(a_relation_group_type_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3857,21 +4232,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_source_1 := range stage.A_SOURCE_1s {
 		if ref, ok := stage.A_SOURCE_1s_reference[a_source_1]; !ok {
 			a_source_1s_newInstances = append(a_source_1s_newInstances, a_source_1)
-			newInstancesStmt += a_source_1.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_source_1.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_source_1.GongMarshallIdentifier(stage))
+			if stage.A_SOURCE_1s_referenceOrder == nil {
+				stage.A_SOURCE_1s_referenceOrder = make(map[*A_SOURCE_1]uint)
+			}
+			stage.A_SOURCE_1s_referenceOrder[a_source_1] = stage.A_SOURCE_1Map_Staged_Order[a_source_1]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_source_1.GongMarshallUnstaging(stage))
+			delete(stage.A_SOURCE_1s_referenceOrder, a_source_1)
 			fieldInitializers, pointersInitializations := a_source_1.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SOURCE_1Map_Staged_Order[ref] = stage.A_SOURCE_1Map_Staged_Order[a_source_1]
 			diffs := a_source_1.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_source_1)
+			delete(stage.A_SOURCE_1Map_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_source_1.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_source_1.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3882,11 +4265,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SOURCE_1s_reference {
 		if _, ok := stage.A_SOURCE_1s[ref]; !ok {
 			a_source_1s_deletedInstances = append(a_source_1s_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3899,21 +4281,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_source_specification_1 := range stage.A_SOURCE_SPECIFICATION_1s {
 		if ref, ok := stage.A_SOURCE_SPECIFICATION_1s_reference[a_source_specification_1]; !ok {
 			a_source_specification_1s_newInstances = append(a_source_specification_1s_newInstances, a_source_specification_1)
-			newInstancesStmt += a_source_specification_1.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_source_specification_1.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_source_specification_1.GongMarshallIdentifier(stage))
+			if stage.A_SOURCE_SPECIFICATION_1s_referenceOrder == nil {
+				stage.A_SOURCE_SPECIFICATION_1s_referenceOrder = make(map[*A_SOURCE_SPECIFICATION_1]uint)
+			}
+			stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_source_specification_1.GongMarshallUnstaging(stage))
+			delete(stage.A_SOURCE_SPECIFICATION_1s_referenceOrder, a_source_specification_1)
 			fieldInitializers, pointersInitializations := a_source_specification_1.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[ref] = stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]
 			diffs := a_source_specification_1.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_source_specification_1)
+			delete(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_source_specification_1.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_source_specification_1.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3924,11 +4314,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SOURCE_SPECIFICATION_1s_reference {
 		if _, ok := stage.A_SOURCE_SPECIFICATION_1s[ref]; !ok {
 			a_source_specification_1s_deletedInstances = append(a_source_specification_1s_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3941,21 +4330,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_specifications := range stage.A_SPECIFICATIONSs {
 		if ref, ok := stage.A_SPECIFICATIONSs_reference[a_specifications]; !ok {
 			a_specificationss_newInstances = append(a_specificationss_newInstances, a_specifications)
-			newInstancesStmt += a_specifications.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_specifications.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_specifications.GongMarshallIdentifier(stage))
+			if stage.A_SPECIFICATIONSs_referenceOrder == nil {
+				stage.A_SPECIFICATIONSs_referenceOrder = make(map[*A_SPECIFICATIONS]uint)
+			}
+			stage.A_SPECIFICATIONSs_referenceOrder[a_specifications] = stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_specifications.GongMarshallUnstaging(stage))
+			delete(stage.A_SPECIFICATIONSs_referenceOrder, a_specifications)
 			fieldInitializers, pointersInitializations := a_specifications.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPECIFICATIONSMap_Staged_Order[ref] = stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]
 			diffs := a_specifications.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_specifications)
+			delete(stage.A_SPECIFICATIONSMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_specifications.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_specifications.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -3966,11 +4363,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPECIFICATIONSs_reference {
 		if _, ok := stage.A_SPECIFICATIONSs[ref]; !ok {
 			a_specificationss_deletedInstances = append(a_specificationss_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -3983,21 +4379,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_specification_type_ref := range stage.A_SPECIFICATION_TYPE_REFs {
 		if ref, ok := stage.A_SPECIFICATION_TYPE_REFs_reference[a_specification_type_ref]; !ok {
 			a_specification_type_refs_newInstances = append(a_specification_type_refs_newInstances, a_specification_type_ref)
-			newInstancesStmt += a_specification_type_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_specification_type_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_specification_type_ref.GongMarshallIdentifier(stage))
+			if stage.A_SPECIFICATION_TYPE_REFs_referenceOrder == nil {
+				stage.A_SPECIFICATION_TYPE_REFs_referenceOrder = make(map[*A_SPECIFICATION_TYPE_REF]uint)
+			}
+			stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_specification_type_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_SPECIFICATION_TYPE_REFs_referenceOrder, a_specification_type_ref)
 			fieldInitializers, pointersInitializations := a_specification_type_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[ref] = stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]
 			diffs := a_specification_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_specification_type_ref)
+			delete(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_specification_type_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_specification_type_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4008,11 +4412,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPECIFICATION_TYPE_REFs_reference {
 		if _, ok := stage.A_SPECIFICATION_TYPE_REFs[ref]; !ok {
 			a_specification_type_refs_deletedInstances = append(a_specification_type_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4025,21 +4428,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_specified_values := range stage.A_SPECIFIED_VALUESs {
 		if ref, ok := stage.A_SPECIFIED_VALUESs_reference[a_specified_values]; !ok {
 			a_specified_valuess_newInstances = append(a_specified_valuess_newInstances, a_specified_values)
-			newInstancesStmt += a_specified_values.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_specified_values.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_specified_values.GongMarshallIdentifier(stage))
+			if stage.A_SPECIFIED_VALUESs_referenceOrder == nil {
+				stage.A_SPECIFIED_VALUESs_referenceOrder = make(map[*A_SPECIFIED_VALUES]uint)
+			}
+			stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values] = stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_specified_values.GongMarshallUnstaging(stage))
+			delete(stage.A_SPECIFIED_VALUESs_referenceOrder, a_specified_values)
 			fieldInitializers, pointersInitializations := a_specified_values.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPECIFIED_VALUESMap_Staged_Order[ref] = stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]
 			diffs := a_specified_values.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_specified_values)
+			delete(stage.A_SPECIFIED_VALUESMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_specified_values.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_specified_values.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4050,11 +4461,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPECIFIED_VALUESs_reference {
 		if _, ok := stage.A_SPECIFIED_VALUESs[ref]; !ok {
 			a_specified_valuess_deletedInstances = append(a_specified_valuess_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4067,21 +4477,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_attributes := range stage.A_SPEC_ATTRIBUTESs {
 		if ref, ok := stage.A_SPEC_ATTRIBUTESs_reference[a_spec_attributes]; !ok {
 			a_spec_attributess_newInstances = append(a_spec_attributess_newInstances, a_spec_attributes)
-			newInstancesStmt += a_spec_attributes.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_attributes.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_attributes.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_ATTRIBUTESs_referenceOrder == nil {
+				stage.A_SPEC_ATTRIBUTESs_referenceOrder = make(map[*A_SPEC_ATTRIBUTES]uint)
+			}
+			stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_attributes.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_ATTRIBUTESs_referenceOrder, a_spec_attributes)
 			fieldInitializers, pointersInitializations := a_spec_attributes.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_ATTRIBUTESMap_Staged_Order[ref] = stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]
 			diffs := a_spec_attributes.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_attributes)
+			delete(stage.A_SPEC_ATTRIBUTESMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_attributes.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_attributes.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4092,11 +4510,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_ATTRIBUTESs_reference {
 		if _, ok := stage.A_SPEC_ATTRIBUTESs[ref]; !ok {
 			a_spec_attributess_deletedInstances = append(a_spec_attributess_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4109,21 +4526,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_objects := range stage.A_SPEC_OBJECTSs {
 		if ref, ok := stage.A_SPEC_OBJECTSs_reference[a_spec_objects]; !ok {
 			a_spec_objectss_newInstances = append(a_spec_objectss_newInstances, a_spec_objects)
-			newInstancesStmt += a_spec_objects.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_objects.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_objects.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_OBJECTSs_referenceOrder == nil {
+				stage.A_SPEC_OBJECTSs_referenceOrder = make(map[*A_SPEC_OBJECTS]uint)
+			}
+			stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects] = stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_objects.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_OBJECTSs_referenceOrder, a_spec_objects)
 			fieldInitializers, pointersInitializations := a_spec_objects.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_OBJECTSMap_Staged_Order[ref] = stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]
 			diffs := a_spec_objects.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_objects)
+			delete(stage.A_SPEC_OBJECTSMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_objects.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_objects.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4134,11 +4559,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_OBJECTSs_reference {
 		if _, ok := stage.A_SPEC_OBJECTSs[ref]; !ok {
 			a_spec_objectss_deletedInstances = append(a_spec_objectss_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4151,21 +4575,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_object_type_ref := range stage.A_SPEC_OBJECT_TYPE_REFs {
 		if ref, ok := stage.A_SPEC_OBJECT_TYPE_REFs_reference[a_spec_object_type_ref]; !ok {
 			a_spec_object_type_refs_newInstances = append(a_spec_object_type_refs_newInstances, a_spec_object_type_ref)
-			newInstancesStmt += a_spec_object_type_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_object_type_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_object_type_ref.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder == nil {
+				stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder = make(map[*A_SPEC_OBJECT_TYPE_REF]uint)
+			}
+			stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_object_type_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder, a_spec_object_type_ref)
 			fieldInitializers, pointersInitializations := a_spec_object_type_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[ref] = stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]
 			diffs := a_spec_object_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_object_type_ref)
+			delete(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_object_type_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_object_type_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4176,11 +4608,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_OBJECT_TYPE_REFs_reference {
 		if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[ref]; !ok {
 			a_spec_object_type_refs_deletedInstances = append(a_spec_object_type_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4193,21 +4624,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_relations := range stage.A_SPEC_RELATIONSs {
 		if ref, ok := stage.A_SPEC_RELATIONSs_reference[a_spec_relations]; !ok {
 			a_spec_relationss_newInstances = append(a_spec_relationss_newInstances, a_spec_relations)
-			newInstancesStmt += a_spec_relations.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_relations.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_relations.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_RELATIONSs_referenceOrder == nil {
+				stage.A_SPEC_RELATIONSs_referenceOrder = make(map[*A_SPEC_RELATIONS]uint)
+			}
+			stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations] = stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relations.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_RELATIONSs_referenceOrder, a_spec_relations)
 			fieldInitializers, pointersInitializations := a_spec_relations.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_RELATIONSMap_Staged_Order[ref] = stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]
 			diffs := a_spec_relations.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relations)
+			delete(stage.A_SPEC_RELATIONSMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_relations.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relations.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4218,11 +4657,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_RELATIONSs_reference {
 		if _, ok := stage.A_SPEC_RELATIONSs[ref]; !ok {
 			a_spec_relationss_deletedInstances = append(a_spec_relationss_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4235,21 +4673,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_relation_groups := range stage.A_SPEC_RELATION_GROUPSs {
 		if ref, ok := stage.A_SPEC_RELATION_GROUPSs_reference[a_spec_relation_groups]; !ok {
 			a_spec_relation_groupss_newInstances = append(a_spec_relation_groupss_newInstances, a_spec_relation_groups)
-			newInstancesStmt += a_spec_relation_groups.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_relation_groups.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_relation_groups.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_RELATION_GROUPSs_referenceOrder == nil {
+				stage.A_SPEC_RELATION_GROUPSs_referenceOrder = make(map[*A_SPEC_RELATION_GROUPS]uint)
+			}
+			stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relation_groups.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_RELATION_GROUPSs_referenceOrder, a_spec_relation_groups)
 			fieldInitializers, pointersInitializations := a_spec_relation_groups.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[ref] = stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]
 			diffs := a_spec_relation_groups.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relation_groups)
+			delete(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_relation_groups.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relation_groups.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4260,11 +4706,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_RELATION_GROUPSs_reference {
 		if _, ok := stage.A_SPEC_RELATION_GROUPSs[ref]; !ok {
 			a_spec_relation_groupss_deletedInstances = append(a_spec_relation_groupss_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4277,21 +4722,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_relation_ref := range stage.A_SPEC_RELATION_REFs {
 		if ref, ok := stage.A_SPEC_RELATION_REFs_reference[a_spec_relation_ref]; !ok {
 			a_spec_relation_refs_newInstances = append(a_spec_relation_refs_newInstances, a_spec_relation_ref)
-			newInstancesStmt += a_spec_relation_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_relation_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_relation_ref.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_RELATION_REFs_referenceOrder == nil {
+				stage.A_SPEC_RELATION_REFs_referenceOrder = make(map[*A_SPEC_RELATION_REF]uint)
+			}
+			stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relation_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_RELATION_REFs_referenceOrder, a_spec_relation_ref)
 			fieldInitializers, pointersInitializations := a_spec_relation_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_RELATION_REFMap_Staged_Order[ref] = stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]
 			diffs := a_spec_relation_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relation_ref)
+			delete(stage.A_SPEC_RELATION_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_relation_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relation_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4302,11 +4755,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_RELATION_REFs_reference {
 		if _, ok := stage.A_SPEC_RELATION_REFs[ref]; !ok {
 			a_spec_relation_refs_deletedInstances = append(a_spec_relation_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4319,21 +4771,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_relation_type_ref := range stage.A_SPEC_RELATION_TYPE_REFs {
 		if ref, ok := stage.A_SPEC_RELATION_TYPE_REFs_reference[a_spec_relation_type_ref]; !ok {
 			a_spec_relation_type_refs_newInstances = append(a_spec_relation_type_refs_newInstances, a_spec_relation_type_ref)
-			newInstancesStmt += a_spec_relation_type_ref.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_relation_type_ref.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_relation_type_ref.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder == nil {
+				stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder = make(map[*A_SPEC_RELATION_TYPE_REF]uint)
+			}
+			stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relation_type_ref.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder, a_spec_relation_type_ref)
 			fieldInitializers, pointersInitializations := a_spec_relation_type_ref.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[ref] = stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]
 			diffs := a_spec_relation_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relation_type_ref)
+			delete(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_relation_type_ref.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relation_type_ref.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4344,11 +4804,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_RELATION_TYPE_REFs_reference {
 		if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[ref]; !ok {
 			a_spec_relation_type_refs_deletedInstances = append(a_spec_relation_type_refs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4361,21 +4820,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_spec_types := range stage.A_SPEC_TYPESs {
 		if ref, ok := stage.A_SPEC_TYPESs_reference[a_spec_types]; !ok {
 			a_spec_typess_newInstances = append(a_spec_typess_newInstances, a_spec_types)
-			newInstancesStmt += a_spec_types.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_spec_types.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_spec_types.GongMarshallIdentifier(stage))
+			if stage.A_SPEC_TYPESs_referenceOrder == nil {
+				stage.A_SPEC_TYPESs_referenceOrder = make(map[*A_SPEC_TYPES]uint)
+			}
+			stage.A_SPEC_TYPESs_referenceOrder[a_spec_types] = stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_types.GongMarshallUnstaging(stage))
+			delete(stage.A_SPEC_TYPESs_referenceOrder, a_spec_types)
 			fieldInitializers, pointersInitializations := a_spec_types.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_SPEC_TYPESMap_Staged_Order[ref] = stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]
 			diffs := a_spec_types.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_types)
+			delete(stage.A_SPEC_TYPESMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_spec_types.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_types.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4386,11 +4853,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_SPEC_TYPESs_reference {
 		if _, ok := stage.A_SPEC_TYPESs[ref]; !ok {
 			a_spec_typess_deletedInstances = append(a_spec_typess_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4403,21 +4869,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_the_header := range stage.A_THE_HEADERs {
 		if ref, ok := stage.A_THE_HEADERs_reference[a_the_header]; !ok {
 			a_the_headers_newInstances = append(a_the_headers_newInstances, a_the_header)
-			newInstancesStmt += a_the_header.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_the_header.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_the_header.GongMarshallIdentifier(stage))
+			if stage.A_THE_HEADERs_referenceOrder == nil {
+				stage.A_THE_HEADERs_referenceOrder = make(map[*A_THE_HEADER]uint)
+			}
+			stage.A_THE_HEADERs_referenceOrder[a_the_header] = stage.A_THE_HEADERMap_Staged_Order[a_the_header]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_the_header.GongMarshallUnstaging(stage))
+			delete(stage.A_THE_HEADERs_referenceOrder, a_the_header)
 			fieldInitializers, pointersInitializations := a_the_header.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_THE_HEADERMap_Staged_Order[ref] = stage.A_THE_HEADERMap_Staged_Order[a_the_header]
 			diffs := a_the_header.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_the_header)
+			delete(stage.A_THE_HEADERMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_the_header.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_the_header.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4428,11 +4902,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_THE_HEADERs_reference {
 		if _, ok := stage.A_THE_HEADERs[ref]; !ok {
 			a_the_headers_deletedInstances = append(a_the_headers_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4445,21 +4918,29 @@ func (stage *Stage) ComputeDifference() {
 	for a_tool_extensions := range stage.A_TOOL_EXTENSIONSs {
 		if ref, ok := stage.A_TOOL_EXTENSIONSs_reference[a_tool_extensions]; !ok {
 			a_tool_extensionss_newInstances = append(a_tool_extensionss_newInstances, a_tool_extensions)
-			newInstancesStmt += a_tool_extensions.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += a_tool_extensions.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, a_tool_extensions.GongMarshallIdentifier(stage))
+			if stage.A_TOOL_EXTENSIONSs_referenceOrder == nil {
+				stage.A_TOOL_EXTENSIONSs_referenceOrder = make(map[*A_TOOL_EXTENSIONS]uint)
+			}
+			stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions] = stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, a_tool_extensions.GongMarshallUnstaging(stage))
+			delete(stage.A_TOOL_EXTENSIONSs_referenceOrder, a_tool_extensions)
 			fieldInitializers, pointersInitializations := a_tool_extensions.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.A_TOOL_EXTENSIONSMap_Staged_Order[ref] = stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]
 			diffs := a_tool_extensions.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_tool_extensions)
+			delete(stage.A_TOOL_EXTENSIONSMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", a_tool_extensions.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", a_tool_extensions.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4470,11 +4951,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.A_TOOL_EXTENSIONSs_reference {
 		if _, ok := stage.A_TOOL_EXTENSIONSs[ref]; !ok {
 			a_tool_extensionss_deletedInstances = append(a_tool_extensionss_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4487,21 +4967,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_boolean := range stage.DATATYPE_DEFINITION_BOOLEANs {
 		if ref, ok := stage.DATATYPE_DEFINITION_BOOLEANs_reference[datatype_definition_boolean]; !ok {
 			datatype_definition_booleans_newInstances = append(datatype_definition_booleans_newInstances, datatype_definition_boolean)
-			newInstancesStmt += datatype_definition_boolean.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_boolean.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_boolean.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder = make(map[*DATATYPE_DEFINITION_BOOLEAN]uint)
+			}
+			stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_boolean.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder, datatype_definition_boolean)
 			fieldInitializers, pointersInitializations := datatype_definition_boolean.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]
 			diffs := datatype_definition_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_boolean)
+			delete(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_boolean.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_boolean.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4512,11 +5000,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_BOOLEANs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[ref]; !ok {
 			datatype_definition_booleans_deletedInstances = append(datatype_definition_booleans_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4529,21 +5016,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_date := range stage.DATATYPE_DEFINITION_DATEs {
 		if ref, ok := stage.DATATYPE_DEFINITION_DATEs_reference[datatype_definition_date]; !ok {
 			datatype_definition_dates_newInstances = append(datatype_definition_dates_newInstances, datatype_definition_date)
-			newInstancesStmt += datatype_definition_date.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_date.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_date.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_DATEs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_DATEs_referenceOrder = make(map[*DATATYPE_DEFINITION_DATE]uint)
+			}
+			stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_date.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_DATEs_referenceOrder, datatype_definition_date)
 			fieldInitializers, pointersInitializations := datatype_definition_date.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]
 			diffs := datatype_definition_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_date)
+			delete(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_date.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_date.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4554,11 +5049,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_DATEs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_DATEs[ref]; !ok {
 			datatype_definition_dates_deletedInstances = append(datatype_definition_dates_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4571,21 +5065,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_enumeration := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
 		if ref, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs_reference[datatype_definition_enumeration]; !ok {
 			datatype_definition_enumerations_newInstances = append(datatype_definition_enumerations_newInstances, datatype_definition_enumeration)
-			newInstancesStmt += datatype_definition_enumeration.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_enumeration.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_enumeration.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder = make(map[*DATATYPE_DEFINITION_ENUMERATION]uint)
+			}
+			stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_enumeration.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder, datatype_definition_enumeration)
 			fieldInitializers, pointersInitializations := datatype_definition_enumeration.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]
 			diffs := datatype_definition_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_enumeration)
+			delete(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_enumeration.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_enumeration.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4596,11 +5098,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_ENUMERATIONs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[ref]; !ok {
 			datatype_definition_enumerations_deletedInstances = append(datatype_definition_enumerations_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4613,21 +5114,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_integer := range stage.DATATYPE_DEFINITION_INTEGERs {
 		if ref, ok := stage.DATATYPE_DEFINITION_INTEGERs_reference[datatype_definition_integer]; !ok {
 			datatype_definition_integers_newInstances = append(datatype_definition_integers_newInstances, datatype_definition_integer)
-			newInstancesStmt += datatype_definition_integer.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_integer.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_integer.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder = make(map[*DATATYPE_DEFINITION_INTEGER]uint)
+			}
+			stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_integer.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder, datatype_definition_integer)
 			fieldInitializers, pointersInitializations := datatype_definition_integer.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]
 			diffs := datatype_definition_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_integer)
+			delete(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_integer.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_integer.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4638,11 +5147,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_INTEGERs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[ref]; !ok {
 			datatype_definition_integers_deletedInstances = append(datatype_definition_integers_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4655,21 +5163,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_real := range stage.DATATYPE_DEFINITION_REALs {
 		if ref, ok := stage.DATATYPE_DEFINITION_REALs_reference[datatype_definition_real]; !ok {
 			datatype_definition_reals_newInstances = append(datatype_definition_reals_newInstances, datatype_definition_real)
-			newInstancesStmt += datatype_definition_real.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_real.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_real.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_REALs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_REALs_referenceOrder = make(map[*DATATYPE_DEFINITION_REAL]uint)
+			}
+			stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_real.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_REALs_referenceOrder, datatype_definition_real)
 			fieldInitializers, pointersInitializations := datatype_definition_real.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_REALMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]
 			diffs := datatype_definition_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_real)
+			delete(stage.DATATYPE_DEFINITION_REALMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_real.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_real.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4680,11 +5196,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_REALs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_REALs[ref]; !ok {
 			datatype_definition_reals_deletedInstances = append(datatype_definition_reals_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4697,21 +5212,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_string := range stage.DATATYPE_DEFINITION_STRINGs {
 		if ref, ok := stage.DATATYPE_DEFINITION_STRINGs_reference[datatype_definition_string]; !ok {
 			datatype_definition_strings_newInstances = append(datatype_definition_strings_newInstances, datatype_definition_string)
-			newInstancesStmt += datatype_definition_string.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_string.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_string.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_STRINGs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_STRINGs_referenceOrder = make(map[*DATATYPE_DEFINITION_STRING]uint)
+			}
+			stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_string.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_STRINGs_referenceOrder, datatype_definition_string)
 			fieldInitializers, pointersInitializations := datatype_definition_string.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]
 			diffs := datatype_definition_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_string)
+			delete(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_string.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_string.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4722,11 +5245,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_STRINGs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_STRINGs[ref]; !ok {
 			datatype_definition_strings_deletedInstances = append(datatype_definition_strings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4739,21 +5261,29 @@ func (stage *Stage) ComputeDifference() {
 	for datatype_definition_xhtml := range stage.DATATYPE_DEFINITION_XHTMLs {
 		if ref, ok := stage.DATATYPE_DEFINITION_XHTMLs_reference[datatype_definition_xhtml]; !ok {
 			datatype_definition_xhtmls_newInstances = append(datatype_definition_xhtmls_newInstances, datatype_definition_xhtml)
-			newInstancesStmt += datatype_definition_xhtml.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += datatype_definition_xhtml.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, datatype_definition_xhtml.GongMarshallIdentifier(stage))
+			if stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder == nil {
+				stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder = make(map[*DATATYPE_DEFINITION_XHTML]uint)
+			}
+			stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_xhtml.GongMarshallUnstaging(stage))
+			delete(stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder, datatype_definition_xhtml)
 			fieldInitializers, pointersInitializations := datatype_definition_xhtml.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]
 			diffs := datatype_definition_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_xhtml)
+			delete(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", datatype_definition_xhtml.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_xhtml.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4764,11 +5294,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.DATATYPE_DEFINITION_XHTMLs_reference {
 		if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[ref]; !ok {
 			datatype_definition_xhtmls_deletedInstances = append(datatype_definition_xhtmls_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4781,21 +5310,29 @@ func (stage *Stage) ComputeDifference() {
 	for embedded_value := range stage.EMBEDDED_VALUEs {
 		if ref, ok := stage.EMBEDDED_VALUEs_reference[embedded_value]; !ok {
 			embedded_values_newInstances = append(embedded_values_newInstances, embedded_value)
-			newInstancesStmt += embedded_value.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += embedded_value.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, embedded_value.GongMarshallIdentifier(stage))
+			if stage.EMBEDDED_VALUEs_referenceOrder == nil {
+				stage.EMBEDDED_VALUEs_referenceOrder = make(map[*EMBEDDED_VALUE]uint)
+			}
+			stage.EMBEDDED_VALUEs_referenceOrder[embedded_value] = stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, embedded_value.GongMarshallUnstaging(stage))
+			delete(stage.EMBEDDED_VALUEs_referenceOrder, embedded_value)
 			fieldInitializers, pointersInitializations := embedded_value.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.EMBEDDED_VALUEMap_Staged_Order[ref] = stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]
 			diffs := embedded_value.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embedded_value)
+			delete(stage.EMBEDDED_VALUEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", embedded_value.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", embedded_value.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4806,11 +5343,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.EMBEDDED_VALUEs_reference {
 		if _, ok := stage.EMBEDDED_VALUEs[ref]; !ok {
 			embedded_values_deletedInstances = append(embedded_values_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4823,21 +5359,29 @@ func (stage *Stage) ComputeDifference() {
 	for enum_value := range stage.ENUM_VALUEs {
 		if ref, ok := stage.ENUM_VALUEs_reference[enum_value]; !ok {
 			enum_values_newInstances = append(enum_values_newInstances, enum_value)
-			newInstancesStmt += enum_value.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += enum_value.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, enum_value.GongMarshallIdentifier(stage))
+			if stage.ENUM_VALUEs_referenceOrder == nil {
+				stage.ENUM_VALUEs_referenceOrder = make(map[*ENUM_VALUE]uint)
+			}
+			stage.ENUM_VALUEs_referenceOrder[enum_value] = stage.ENUM_VALUEMap_Staged_Order[enum_value]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, enum_value.GongMarshallUnstaging(stage))
+			delete(stage.ENUM_VALUEs_referenceOrder, enum_value)
 			fieldInitializers, pointersInitializations := enum_value.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.ENUM_VALUEMap_Staged_Order[ref] = stage.ENUM_VALUEMap_Staged_Order[enum_value]
 			diffs := enum_value.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, enum_value)
+			delete(stage.ENUM_VALUEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", enum_value.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", enum_value.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4848,11 +5392,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.ENUM_VALUEs_reference {
 		if _, ok := stage.ENUM_VALUEs[ref]; !ok {
 			enum_values_deletedInstances = append(enum_values_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4865,21 +5408,29 @@ func (stage *Stage) ComputeDifference() {
 	for embeddedjpgimage := range stage.EmbeddedJpgImages {
 		if ref, ok := stage.EmbeddedJpgImages_reference[embeddedjpgimage]; !ok {
 			embeddedjpgimages_newInstances = append(embeddedjpgimages_newInstances, embeddedjpgimage)
-			newInstancesStmt += embeddedjpgimage.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += embeddedjpgimage.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, embeddedjpgimage.GongMarshallIdentifier(stage))
+			if stage.EmbeddedJpgImages_referenceOrder == nil {
+				stage.EmbeddedJpgImages_referenceOrder = make(map[*EmbeddedJpgImage]uint)
+			}
+			stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage] = stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, embeddedjpgimage.GongMarshallUnstaging(stage))
+			delete(stage.EmbeddedJpgImages_referenceOrder, embeddedjpgimage)
 			fieldInitializers, pointersInitializations := embeddedjpgimage.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.EmbeddedJpgImageMap_Staged_Order[ref] = stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]
 			diffs := embeddedjpgimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embeddedjpgimage)
+			delete(stage.EmbeddedJpgImageMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", embeddedjpgimage.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", embeddedjpgimage.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4890,11 +5441,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.EmbeddedJpgImages_reference {
 		if _, ok := stage.EmbeddedJpgImages[ref]; !ok {
 			embeddedjpgimages_deletedInstances = append(embeddedjpgimages_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4907,21 +5457,29 @@ func (stage *Stage) ComputeDifference() {
 	for embeddedpngimage := range stage.EmbeddedPngImages {
 		if ref, ok := stage.EmbeddedPngImages_reference[embeddedpngimage]; !ok {
 			embeddedpngimages_newInstances = append(embeddedpngimages_newInstances, embeddedpngimage)
-			newInstancesStmt += embeddedpngimage.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += embeddedpngimage.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, embeddedpngimage.GongMarshallIdentifier(stage))
+			if stage.EmbeddedPngImages_referenceOrder == nil {
+				stage.EmbeddedPngImages_referenceOrder = make(map[*EmbeddedPngImage]uint)
+			}
+			stage.EmbeddedPngImages_referenceOrder[embeddedpngimage] = stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, embeddedpngimage.GongMarshallUnstaging(stage))
+			delete(stage.EmbeddedPngImages_referenceOrder, embeddedpngimage)
 			fieldInitializers, pointersInitializations := embeddedpngimage.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.EmbeddedPngImageMap_Staged_Order[ref] = stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]
 			diffs := embeddedpngimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embeddedpngimage)
+			delete(stage.EmbeddedPngImageMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", embeddedpngimage.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", embeddedpngimage.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4932,11 +5490,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.EmbeddedPngImages_reference {
 		if _, ok := stage.EmbeddedPngImages[ref]; !ok {
 			embeddedpngimages_deletedInstances = append(embeddedpngimages_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4949,21 +5506,29 @@ func (stage *Stage) ComputeDifference() {
 	for embeddedsvgimage := range stage.EmbeddedSvgImages {
 		if ref, ok := stage.EmbeddedSvgImages_reference[embeddedsvgimage]; !ok {
 			embeddedsvgimages_newInstances = append(embeddedsvgimages_newInstances, embeddedsvgimage)
-			newInstancesStmt += embeddedsvgimage.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += embeddedsvgimage.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, embeddedsvgimage.GongMarshallIdentifier(stage))
+			if stage.EmbeddedSvgImages_referenceOrder == nil {
+				stage.EmbeddedSvgImages_referenceOrder = make(map[*EmbeddedSvgImage]uint)
+			}
+			stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage] = stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, embeddedsvgimage.GongMarshallUnstaging(stage))
+			delete(stage.EmbeddedSvgImages_referenceOrder, embeddedsvgimage)
 			fieldInitializers, pointersInitializations := embeddedsvgimage.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.EmbeddedSvgImageMap_Staged_Order[ref] = stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]
 			diffs := embeddedsvgimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embeddedsvgimage)
+			delete(stage.EmbeddedSvgImageMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", embeddedsvgimage.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", embeddedsvgimage.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -4974,11 +5539,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.EmbeddedSvgImages_reference {
 		if _, ok := stage.EmbeddedSvgImages[ref]; !ok {
 			embeddedsvgimages_deletedInstances = append(embeddedsvgimages_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -4991,21 +5555,29 @@ func (stage *Stage) ComputeDifference() {
 	for kill := range stage.Kills {
 		if ref, ok := stage.Kills_reference[kill]; !ok {
 			kills_newInstances = append(kills_newInstances, kill)
-			newInstancesStmt += kill.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += kill.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, kill.GongMarshallIdentifier(stage))
+			if stage.Kills_referenceOrder == nil {
+				stage.Kills_referenceOrder = make(map[*Kill]uint)
+			}
+			stage.Kills_referenceOrder[kill] = stage.KillMap_Staged_Order[kill]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, kill.GongMarshallUnstaging(stage))
+			delete(stage.Kills_referenceOrder, kill)
 			fieldInitializers, pointersInitializations := kill.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.KillMap_Staged_Order[ref] = stage.KillMap_Staged_Order[kill]
 			diffs := kill.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, kill)
+			delete(stage.KillMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", kill.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", kill.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5016,11 +5588,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.Kills_reference {
 		if _, ok := stage.Kills[ref]; !ok {
 			kills_deletedInstances = append(kills_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5033,21 +5604,29 @@ func (stage *Stage) ComputeDifference() {
 	for map_identifier_bool := range stage.Map_identifier_bools {
 		if ref, ok := stage.Map_identifier_bools_reference[map_identifier_bool]; !ok {
 			map_identifier_bools_newInstances = append(map_identifier_bools_newInstances, map_identifier_bool)
-			newInstancesStmt += map_identifier_bool.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += map_identifier_bool.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, map_identifier_bool.GongMarshallIdentifier(stage))
+			if stage.Map_identifier_bools_referenceOrder == nil {
+				stage.Map_identifier_bools_referenceOrder = make(map[*Map_identifier_bool]uint)
+			}
+			stage.Map_identifier_bools_referenceOrder[map_identifier_bool] = stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, map_identifier_bool.GongMarshallUnstaging(stage))
+			delete(stage.Map_identifier_bools_referenceOrder, map_identifier_bool)
 			fieldInitializers, pointersInitializations := map_identifier_bool.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.Map_identifier_boolMap_Staged_Order[ref] = stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]
 			diffs := map_identifier_bool.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, map_identifier_bool)
+			delete(stage.Map_identifier_boolMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", map_identifier_bool.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", map_identifier_bool.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5058,11 +5637,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.Map_identifier_bools_reference {
 		if _, ok := stage.Map_identifier_bools[ref]; !ok {
 			map_identifier_bools_deletedInstances = append(map_identifier_bools_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5075,21 +5653,29 @@ func (stage *Stage) ComputeDifference() {
 	for relation_group := range stage.RELATION_GROUPs {
 		if ref, ok := stage.RELATION_GROUPs_reference[relation_group]; !ok {
 			relation_groups_newInstances = append(relation_groups_newInstances, relation_group)
-			newInstancesStmt += relation_group.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += relation_group.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, relation_group.GongMarshallIdentifier(stage))
+			if stage.RELATION_GROUPs_referenceOrder == nil {
+				stage.RELATION_GROUPs_referenceOrder = make(map[*RELATION_GROUP]uint)
+			}
+			stage.RELATION_GROUPs_referenceOrder[relation_group] = stage.RELATION_GROUPMap_Staged_Order[relation_group]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, relation_group.GongMarshallUnstaging(stage))
+			delete(stage.RELATION_GROUPs_referenceOrder, relation_group)
 			fieldInitializers, pointersInitializations := relation_group.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.RELATION_GROUPMap_Staged_Order[ref] = stage.RELATION_GROUPMap_Staged_Order[relation_group]
 			diffs := relation_group.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, relation_group)
+			delete(stage.RELATION_GROUPMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", relation_group.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", relation_group.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5100,11 +5686,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.RELATION_GROUPs_reference {
 		if _, ok := stage.RELATION_GROUPs[ref]; !ok {
 			relation_groups_deletedInstances = append(relation_groups_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5117,21 +5702,29 @@ func (stage *Stage) ComputeDifference() {
 	for relation_group_type := range stage.RELATION_GROUP_TYPEs {
 		if ref, ok := stage.RELATION_GROUP_TYPEs_reference[relation_group_type]; !ok {
 			relation_group_types_newInstances = append(relation_group_types_newInstances, relation_group_type)
-			newInstancesStmt += relation_group_type.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += relation_group_type.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, relation_group_type.GongMarshallIdentifier(stage))
+			if stage.RELATION_GROUP_TYPEs_referenceOrder == nil {
+				stage.RELATION_GROUP_TYPEs_referenceOrder = make(map[*RELATION_GROUP_TYPE]uint)
+			}
+			stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type] = stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, relation_group_type.GongMarshallUnstaging(stage))
+			delete(stage.RELATION_GROUP_TYPEs_referenceOrder, relation_group_type)
 			fieldInitializers, pointersInitializations := relation_group_type.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.RELATION_GROUP_TYPEMap_Staged_Order[ref] = stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]
 			diffs := relation_group_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, relation_group_type)
+			delete(stage.RELATION_GROUP_TYPEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", relation_group_type.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", relation_group_type.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5142,11 +5735,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.RELATION_GROUP_TYPEs_reference {
 		if _, ok := stage.RELATION_GROUP_TYPEs[ref]; !ok {
 			relation_group_types_deletedInstances = append(relation_group_types_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5159,21 +5751,29 @@ func (stage *Stage) ComputeDifference() {
 	for req_if := range stage.REQ_IFs {
 		if ref, ok := stage.REQ_IFs_reference[req_if]; !ok {
 			req_ifs_newInstances = append(req_ifs_newInstances, req_if)
-			newInstancesStmt += req_if.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += req_if.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, req_if.GongMarshallIdentifier(stage))
+			if stage.REQ_IFs_referenceOrder == nil {
+				stage.REQ_IFs_referenceOrder = make(map[*REQ_IF]uint)
+			}
+			stage.REQ_IFs_referenceOrder[req_if] = stage.REQ_IFMap_Staged_Order[req_if]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if.GongMarshallUnstaging(stage))
+			delete(stage.REQ_IFs_referenceOrder, req_if)
 			fieldInitializers, pointersInitializations := req_if.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.REQ_IFMap_Staged_Order[ref] = stage.REQ_IFMap_Staged_Order[req_if]
 			diffs := req_if.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if)
+			delete(stage.REQ_IFMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", req_if.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5184,11 +5784,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.REQ_IFs_reference {
 		if _, ok := stage.REQ_IFs[ref]; !ok {
 			req_ifs_deletedInstances = append(req_ifs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5201,21 +5800,29 @@ func (stage *Stage) ComputeDifference() {
 	for req_if_content := range stage.REQ_IF_CONTENTs {
 		if ref, ok := stage.REQ_IF_CONTENTs_reference[req_if_content]; !ok {
 			req_if_contents_newInstances = append(req_if_contents_newInstances, req_if_content)
-			newInstancesStmt += req_if_content.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += req_if_content.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, req_if_content.GongMarshallIdentifier(stage))
+			if stage.REQ_IF_CONTENTs_referenceOrder == nil {
+				stage.REQ_IF_CONTENTs_referenceOrder = make(map[*REQ_IF_CONTENT]uint)
+			}
+			stage.REQ_IF_CONTENTs_referenceOrder[req_if_content] = stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if_content.GongMarshallUnstaging(stage))
+			delete(stage.REQ_IF_CONTENTs_referenceOrder, req_if_content)
 			fieldInitializers, pointersInitializations := req_if_content.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.REQ_IF_CONTENTMap_Staged_Order[ref] = stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]
 			diffs := req_if_content.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if_content)
+			delete(stage.REQ_IF_CONTENTMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", req_if_content.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if_content.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5226,11 +5833,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.REQ_IF_CONTENTs_reference {
 		if _, ok := stage.REQ_IF_CONTENTs[ref]; !ok {
 			req_if_contents_deletedInstances = append(req_if_contents_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5243,21 +5849,29 @@ func (stage *Stage) ComputeDifference() {
 	for req_if_header := range stage.REQ_IF_HEADERs {
 		if ref, ok := stage.REQ_IF_HEADERs_reference[req_if_header]; !ok {
 			req_if_headers_newInstances = append(req_if_headers_newInstances, req_if_header)
-			newInstancesStmt += req_if_header.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += req_if_header.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, req_if_header.GongMarshallIdentifier(stage))
+			if stage.REQ_IF_HEADERs_referenceOrder == nil {
+				stage.REQ_IF_HEADERs_referenceOrder = make(map[*REQ_IF_HEADER]uint)
+			}
+			stage.REQ_IF_HEADERs_referenceOrder[req_if_header] = stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if_header.GongMarshallUnstaging(stage))
+			delete(stage.REQ_IF_HEADERs_referenceOrder, req_if_header)
 			fieldInitializers, pointersInitializations := req_if_header.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.REQ_IF_HEADERMap_Staged_Order[ref] = stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]
 			diffs := req_if_header.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if_header)
+			delete(stage.REQ_IF_HEADERMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", req_if_header.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if_header.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5268,11 +5882,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.REQ_IF_HEADERs_reference {
 		if _, ok := stage.REQ_IF_HEADERs[ref]; !ok {
 			req_if_headers_deletedInstances = append(req_if_headers_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5285,21 +5898,29 @@ func (stage *Stage) ComputeDifference() {
 	for req_if_tool_extension := range stage.REQ_IF_TOOL_EXTENSIONs {
 		if ref, ok := stage.REQ_IF_TOOL_EXTENSIONs_reference[req_if_tool_extension]; !ok {
 			req_if_tool_extensions_newInstances = append(req_if_tool_extensions_newInstances, req_if_tool_extension)
-			newInstancesStmt += req_if_tool_extension.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += req_if_tool_extension.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, req_if_tool_extension.GongMarshallIdentifier(stage))
+			if stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder == nil {
+				stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder = make(map[*REQ_IF_TOOL_EXTENSION]uint)
+			}
+			stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if_tool_extension.GongMarshallUnstaging(stage))
+			delete(stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder, req_if_tool_extension)
 			fieldInitializers, pointersInitializations := req_if_tool_extension.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[ref] = stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]
 			diffs := req_if_tool_extension.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if_tool_extension)
+			delete(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", req_if_tool_extension.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if_tool_extension.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5310,11 +5931,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.REQ_IF_TOOL_EXTENSIONs_reference {
 		if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[ref]; !ok {
 			req_if_tool_extensions_deletedInstances = append(req_if_tool_extensions_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5327,21 +5947,29 @@ func (stage *Stage) ComputeDifference() {
 	for specification := range stage.SPECIFICATIONs {
 		if ref, ok := stage.SPECIFICATIONs_reference[specification]; !ok {
 			specifications_newInstances = append(specifications_newInstances, specification)
-			newInstancesStmt += specification.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += specification.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, specification.GongMarshallIdentifier(stage))
+			if stage.SPECIFICATIONs_referenceOrder == nil {
+				stage.SPECIFICATIONs_referenceOrder = make(map[*SPECIFICATION]uint)
+			}
+			stage.SPECIFICATIONs_referenceOrder[specification] = stage.SPECIFICATIONMap_Staged_Order[specification]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, specification.GongMarshallUnstaging(stage))
+			delete(stage.SPECIFICATIONs_referenceOrder, specification)
 			fieldInitializers, pointersInitializations := specification.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPECIFICATIONMap_Staged_Order[ref] = stage.SPECIFICATIONMap_Staged_Order[specification]
 			diffs := specification.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, specification)
+			delete(stage.SPECIFICATIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", specification.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", specification.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5352,11 +5980,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPECIFICATIONs_reference {
 		if _, ok := stage.SPECIFICATIONs[ref]; !ok {
 			specifications_deletedInstances = append(specifications_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5369,21 +5996,29 @@ func (stage *Stage) ComputeDifference() {
 	for specification_rendering := range stage.SPECIFICATION_Renderings {
 		if ref, ok := stage.SPECIFICATION_Renderings_reference[specification_rendering]; !ok {
 			specification_renderings_newInstances = append(specification_renderings_newInstances, specification_rendering)
-			newInstancesStmt += specification_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += specification_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, specification_rendering.GongMarshallIdentifier(stage))
+			if stage.SPECIFICATION_Renderings_referenceOrder == nil {
+				stage.SPECIFICATION_Renderings_referenceOrder = make(map[*SPECIFICATION_Rendering]uint)
+			}
+			stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering] = stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, specification_rendering.GongMarshallUnstaging(stage))
+			delete(stage.SPECIFICATION_Renderings_referenceOrder, specification_rendering)
 			fieldInitializers, pointersInitializations := specification_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPECIFICATION_RenderingMap_Staged_Order[ref] = stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]
 			diffs := specification_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, specification_rendering)
+			delete(stage.SPECIFICATION_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", specification_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", specification_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5394,11 +6029,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPECIFICATION_Renderings_reference {
 		if _, ok := stage.SPECIFICATION_Renderings[ref]; !ok {
 			specification_renderings_deletedInstances = append(specification_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5411,21 +6045,29 @@ func (stage *Stage) ComputeDifference() {
 	for specification_type := range stage.SPECIFICATION_TYPEs {
 		if ref, ok := stage.SPECIFICATION_TYPEs_reference[specification_type]; !ok {
 			specification_types_newInstances = append(specification_types_newInstances, specification_type)
-			newInstancesStmt += specification_type.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += specification_type.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, specification_type.GongMarshallIdentifier(stage))
+			if stage.SPECIFICATION_TYPEs_referenceOrder == nil {
+				stage.SPECIFICATION_TYPEs_referenceOrder = make(map[*SPECIFICATION_TYPE]uint)
+			}
+			stage.SPECIFICATION_TYPEs_referenceOrder[specification_type] = stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, specification_type.GongMarshallUnstaging(stage))
+			delete(stage.SPECIFICATION_TYPEs_referenceOrder, specification_type)
 			fieldInitializers, pointersInitializations := specification_type.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPECIFICATION_TYPEMap_Staged_Order[ref] = stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]
 			diffs := specification_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, specification_type)
+			delete(stage.SPECIFICATION_TYPEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", specification_type.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", specification_type.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5436,11 +6078,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPECIFICATION_TYPEs_reference {
 		if _, ok := stage.SPECIFICATION_TYPEs[ref]; !ok {
 			specification_types_deletedInstances = append(specification_types_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5453,21 +6094,29 @@ func (stage *Stage) ComputeDifference() {
 	for spec_hierarchy := range stage.SPEC_HIERARCHYs {
 		if ref, ok := stage.SPEC_HIERARCHYs_reference[spec_hierarchy]; !ok {
 			spec_hierarchys_newInstances = append(spec_hierarchys_newInstances, spec_hierarchy)
-			newInstancesStmt += spec_hierarchy.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += spec_hierarchy.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, spec_hierarchy.GongMarshallIdentifier(stage))
+			if stage.SPEC_HIERARCHYs_referenceOrder == nil {
+				stage.SPEC_HIERARCHYs_referenceOrder = make(map[*SPEC_HIERARCHY]uint)
+			}
+			stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy] = stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_hierarchy.GongMarshallUnstaging(stage))
+			delete(stage.SPEC_HIERARCHYs_referenceOrder, spec_hierarchy)
 			fieldInitializers, pointersInitializations := spec_hierarchy.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPEC_HIERARCHYMap_Staged_Order[ref] = stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]
 			diffs := spec_hierarchy.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_hierarchy)
+			delete(stage.SPEC_HIERARCHYMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", spec_hierarchy.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_hierarchy.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5478,11 +6127,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPEC_HIERARCHYs_reference {
 		if _, ok := stage.SPEC_HIERARCHYs[ref]; !ok {
 			spec_hierarchys_deletedInstances = append(spec_hierarchys_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5495,21 +6143,29 @@ func (stage *Stage) ComputeDifference() {
 	for spec_object := range stage.SPEC_OBJECTs {
 		if ref, ok := stage.SPEC_OBJECTs_reference[spec_object]; !ok {
 			spec_objects_newInstances = append(spec_objects_newInstances, spec_object)
-			newInstancesStmt += spec_object.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += spec_object.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, spec_object.GongMarshallIdentifier(stage))
+			if stage.SPEC_OBJECTs_referenceOrder == nil {
+				stage.SPEC_OBJECTs_referenceOrder = make(map[*SPEC_OBJECT]uint)
+			}
+			stage.SPEC_OBJECTs_referenceOrder[spec_object] = stage.SPEC_OBJECTMap_Staged_Order[spec_object]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_object.GongMarshallUnstaging(stage))
+			delete(stage.SPEC_OBJECTs_referenceOrder, spec_object)
 			fieldInitializers, pointersInitializations := spec_object.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPEC_OBJECTMap_Staged_Order[ref] = stage.SPEC_OBJECTMap_Staged_Order[spec_object]
 			diffs := spec_object.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_object)
+			delete(stage.SPEC_OBJECTMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", spec_object.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_object.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5520,11 +6176,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPEC_OBJECTs_reference {
 		if _, ok := stage.SPEC_OBJECTs[ref]; !ok {
 			spec_objects_deletedInstances = append(spec_objects_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5537,21 +6192,29 @@ func (stage *Stage) ComputeDifference() {
 	for spec_object_type := range stage.SPEC_OBJECT_TYPEs {
 		if ref, ok := stage.SPEC_OBJECT_TYPEs_reference[spec_object_type]; !ok {
 			spec_object_types_newInstances = append(spec_object_types_newInstances, spec_object_type)
-			newInstancesStmt += spec_object_type.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += spec_object_type.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, spec_object_type.GongMarshallIdentifier(stage))
+			if stage.SPEC_OBJECT_TYPEs_referenceOrder == nil {
+				stage.SPEC_OBJECT_TYPEs_referenceOrder = make(map[*SPEC_OBJECT_TYPE]uint)
+			}
+			stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type] = stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_object_type.GongMarshallUnstaging(stage))
+			delete(stage.SPEC_OBJECT_TYPEs_referenceOrder, spec_object_type)
 			fieldInitializers, pointersInitializations := spec_object_type.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPEC_OBJECT_TYPEMap_Staged_Order[ref] = stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]
 			diffs := spec_object_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_object_type)
+			delete(stage.SPEC_OBJECT_TYPEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", spec_object_type.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_object_type.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5562,11 +6225,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPEC_OBJECT_TYPEs_reference {
 		if _, ok := stage.SPEC_OBJECT_TYPEs[ref]; !ok {
 			spec_object_types_deletedInstances = append(spec_object_types_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5579,21 +6241,29 @@ func (stage *Stage) ComputeDifference() {
 	for spec_object_type_rendering := range stage.SPEC_OBJECT_TYPE_Renderings {
 		if ref, ok := stage.SPEC_OBJECT_TYPE_Renderings_reference[spec_object_type_rendering]; !ok {
 			spec_object_type_renderings_newInstances = append(spec_object_type_renderings_newInstances, spec_object_type_rendering)
-			newInstancesStmt += spec_object_type_rendering.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += spec_object_type_rendering.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, spec_object_type_rendering.GongMarshallIdentifier(stage))
+			if stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder == nil {
+				stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder = make(map[*SPEC_OBJECT_TYPE_Rendering]uint)
+			}
+			stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_object_type_rendering.GongMarshallUnstaging(stage))
+			delete(stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder, spec_object_type_rendering)
 			fieldInitializers, pointersInitializations := spec_object_type_rendering.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[ref] = stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]
 			diffs := spec_object_type_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_object_type_rendering)
+			delete(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", spec_object_type_rendering.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_object_type_rendering.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5604,11 +6274,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPEC_OBJECT_TYPE_Renderings_reference {
 		if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[ref]; !ok {
 			spec_object_type_renderings_deletedInstances = append(spec_object_type_renderings_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5621,21 +6290,29 @@ func (stage *Stage) ComputeDifference() {
 	for spec_relation := range stage.SPEC_RELATIONs {
 		if ref, ok := stage.SPEC_RELATIONs_reference[spec_relation]; !ok {
 			spec_relations_newInstances = append(spec_relations_newInstances, spec_relation)
-			newInstancesStmt += spec_relation.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += spec_relation.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, spec_relation.GongMarshallIdentifier(stage))
+			if stage.SPEC_RELATIONs_referenceOrder == nil {
+				stage.SPEC_RELATIONs_referenceOrder = make(map[*SPEC_RELATION]uint)
+			}
+			stage.SPEC_RELATIONs_referenceOrder[spec_relation] = stage.SPEC_RELATIONMap_Staged_Order[spec_relation]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_relation.GongMarshallUnstaging(stage))
+			delete(stage.SPEC_RELATIONs_referenceOrder, spec_relation)
 			fieldInitializers, pointersInitializations := spec_relation.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPEC_RELATIONMap_Staged_Order[ref] = stage.SPEC_RELATIONMap_Staged_Order[spec_relation]
 			diffs := spec_relation.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_relation)
+			delete(stage.SPEC_RELATIONMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", spec_relation.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_relation.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5646,11 +6323,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPEC_RELATIONs_reference {
 		if _, ok := stage.SPEC_RELATIONs[ref]; !ok {
 			spec_relations_deletedInstances = append(spec_relations_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5663,21 +6339,29 @@ func (stage *Stage) ComputeDifference() {
 	for spec_relation_type := range stage.SPEC_RELATION_TYPEs {
 		if ref, ok := stage.SPEC_RELATION_TYPEs_reference[spec_relation_type]; !ok {
 			spec_relation_types_newInstances = append(spec_relation_types_newInstances, spec_relation_type)
-			newInstancesStmt += spec_relation_type.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += spec_relation_type.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, spec_relation_type.GongMarshallIdentifier(stage))
+			if stage.SPEC_RELATION_TYPEs_referenceOrder == nil {
+				stage.SPEC_RELATION_TYPEs_referenceOrder = make(map[*SPEC_RELATION_TYPE]uint)
+			}
+			stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type] = stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_relation_type.GongMarshallUnstaging(stage))
+			delete(stage.SPEC_RELATION_TYPEs_referenceOrder, spec_relation_type)
 			fieldInitializers, pointersInitializations := spec_relation_type.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.SPEC_RELATION_TYPEMap_Staged_Order[ref] = stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]
 			diffs := spec_relation_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_relation_type)
+			delete(stage.SPEC_RELATION_TYPEMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", spec_relation_type.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_relation_type.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5688,11 +6372,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.SPEC_RELATION_TYPEs_reference {
 		if _, ok := stage.SPEC_RELATION_TYPEs[ref]; !ok {
 			spec_relation_types_deletedInstances = append(spec_relation_types_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5705,21 +6388,29 @@ func (stage *Stage) ComputeDifference() {
 	for staticwebsite := range stage.StaticWebSites {
 		if ref, ok := stage.StaticWebSites_reference[staticwebsite]; !ok {
 			staticwebsites_newInstances = append(staticwebsites_newInstances, staticwebsite)
-			newInstancesStmt += staticwebsite.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += staticwebsite.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, staticwebsite.GongMarshallIdentifier(stage))
+			if stage.StaticWebSites_referenceOrder == nil {
+				stage.StaticWebSites_referenceOrder = make(map[*StaticWebSite]uint)
+			}
+			stage.StaticWebSites_referenceOrder[staticwebsite] = stage.StaticWebSiteMap_Staged_Order[staticwebsite]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsite.GongMarshallUnstaging(stage))
+			delete(stage.StaticWebSites_referenceOrder, staticwebsite)
 			fieldInitializers, pointersInitializations := staticwebsite.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.StaticWebSiteMap_Staged_Order[ref] = stage.StaticWebSiteMap_Staged_Order[staticwebsite]
 			diffs := staticwebsite.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsite)
+			delete(stage.StaticWebSiteMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", staticwebsite.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsite.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5730,11 +6421,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.StaticWebSites_reference {
 		if _, ok := stage.StaticWebSites[ref]; !ok {
 			staticwebsites_deletedInstances = append(staticwebsites_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5747,21 +6437,29 @@ func (stage *Stage) ComputeDifference() {
 	for staticwebsitechapter := range stage.StaticWebSiteChapters {
 		if ref, ok := stage.StaticWebSiteChapters_reference[staticwebsitechapter]; !ok {
 			staticwebsitechapters_newInstances = append(staticwebsitechapters_newInstances, staticwebsitechapter)
-			newInstancesStmt += staticwebsitechapter.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += staticwebsitechapter.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, staticwebsitechapter.GongMarshallIdentifier(stage))
+			if stage.StaticWebSiteChapters_referenceOrder == nil {
+				stage.StaticWebSiteChapters_referenceOrder = make(map[*StaticWebSiteChapter]uint)
+			}
+			stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter] = stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsitechapter.GongMarshallUnstaging(stage))
+			delete(stage.StaticWebSiteChapters_referenceOrder, staticwebsitechapter)
 			fieldInitializers, pointersInitializations := staticwebsitechapter.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.StaticWebSiteChapterMap_Staged_Order[ref] = stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]
 			diffs := staticwebsitechapter.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsitechapter)
+			delete(stage.StaticWebSiteChapterMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", staticwebsitechapter.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsitechapter.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5772,11 +6470,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.StaticWebSiteChapters_reference {
 		if _, ok := stage.StaticWebSiteChapters[ref]; !ok {
 			staticwebsitechapters_deletedInstances = append(staticwebsitechapters_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5789,21 +6486,29 @@ func (stage *Stage) ComputeDifference() {
 	for staticwebsitegeneratedimage := range stage.StaticWebSiteGeneratedImages {
 		if ref, ok := stage.StaticWebSiteGeneratedImages_reference[staticwebsitegeneratedimage]; !ok {
 			staticwebsitegeneratedimages_newInstances = append(staticwebsitegeneratedimages_newInstances, staticwebsitegeneratedimage)
-			newInstancesStmt += staticwebsitegeneratedimage.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += staticwebsitegeneratedimage.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, staticwebsitegeneratedimage.GongMarshallIdentifier(stage))
+			if stage.StaticWebSiteGeneratedImages_referenceOrder == nil {
+				stage.StaticWebSiteGeneratedImages_referenceOrder = make(map[*StaticWebSiteGeneratedImage]uint)
+			}
+			stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsitegeneratedimage.GongMarshallUnstaging(stage))
+			delete(stage.StaticWebSiteGeneratedImages_referenceOrder, staticwebsitegeneratedimage)
 			fieldInitializers, pointersInitializations := staticwebsitegeneratedimage.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.StaticWebSiteGeneratedImageMap_Staged_Order[ref] = stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]
 			diffs := staticwebsitegeneratedimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsitegeneratedimage)
+			delete(stage.StaticWebSiteGeneratedImageMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", staticwebsitegeneratedimage.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsitegeneratedimage.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5814,11 +6519,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.StaticWebSiteGeneratedImages_reference {
 		if _, ok := stage.StaticWebSiteGeneratedImages[ref]; !ok {
 			staticwebsitegeneratedimages_deletedInstances = append(staticwebsitegeneratedimages_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5831,21 +6535,29 @@ func (stage *Stage) ComputeDifference() {
 	for staticwebsiteimage := range stage.StaticWebSiteImages {
 		if ref, ok := stage.StaticWebSiteImages_reference[staticwebsiteimage]; !ok {
 			staticwebsiteimages_newInstances = append(staticwebsiteimages_newInstances, staticwebsiteimage)
-			newInstancesStmt += staticwebsiteimage.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += staticwebsiteimage.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, staticwebsiteimage.GongMarshallIdentifier(stage))
+			if stage.StaticWebSiteImages_referenceOrder == nil {
+				stage.StaticWebSiteImages_referenceOrder = make(map[*StaticWebSiteImage]uint)
+			}
+			stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage] = stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsiteimage.GongMarshallUnstaging(stage))
+			delete(stage.StaticWebSiteImages_referenceOrder, staticwebsiteimage)
 			fieldInitializers, pointersInitializations := staticwebsiteimage.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.StaticWebSiteImageMap_Staged_Order[ref] = stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]
 			diffs := staticwebsiteimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsiteimage)
+			delete(stage.StaticWebSiteImageMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", staticwebsiteimage.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsiteimage.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5856,11 +6568,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.StaticWebSiteImages_reference {
 		if _, ok := stage.StaticWebSiteImages[ref]; !ok {
 			staticwebsiteimages_deletedInstances = append(staticwebsiteimages_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5873,21 +6584,29 @@ func (stage *Stage) ComputeDifference() {
 	for staticwebsiteparagraph := range stage.StaticWebSiteParagraphs {
 		if ref, ok := stage.StaticWebSiteParagraphs_reference[staticwebsiteparagraph]; !ok {
 			staticwebsiteparagraphs_newInstances = append(staticwebsiteparagraphs_newInstances, staticwebsiteparagraph)
-			newInstancesStmt += staticwebsiteparagraph.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += staticwebsiteparagraph.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, staticwebsiteparagraph.GongMarshallIdentifier(stage))
+			if stage.StaticWebSiteParagraphs_referenceOrder == nil {
+				stage.StaticWebSiteParagraphs_referenceOrder = make(map[*StaticWebSiteParagraph]uint)
+			}
+			stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph] = stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsiteparagraph.GongMarshallUnstaging(stage))
+			delete(stage.StaticWebSiteParagraphs_referenceOrder, staticwebsiteparagraph)
 			fieldInitializers, pointersInitializations := staticwebsiteparagraph.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.StaticWebSiteParagraphMap_Staged_Order[ref] = stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]
 			diffs := staticwebsiteparagraph.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsiteparagraph)
+			delete(stage.StaticWebSiteParagraphMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", staticwebsiteparagraph.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsiteparagraph.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5898,11 +6617,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.StaticWebSiteParagraphs_reference {
 		if _, ok := stage.StaticWebSiteParagraphs[ref]; !ok {
 			staticwebsiteparagraphs_deletedInstances = append(staticwebsiteparagraphs_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5915,21 +6633,29 @@ func (stage *Stage) ComputeDifference() {
 	for xhtml_content := range stage.XHTML_CONTENTs {
 		if ref, ok := stage.XHTML_CONTENTs_reference[xhtml_content]; !ok {
 			xhtml_contents_newInstances = append(xhtml_contents_newInstances, xhtml_content)
-			newInstancesStmt += xhtml_content.GongMarshallIdentifier(stage)
-			newInstancesReverseStmt += xhtml_content.GongMarshallUnstaging(stage)
+			newInstancesSlice = append(newInstancesSlice, xhtml_content.GongMarshallIdentifier(stage))
+			if stage.XHTML_CONTENTs_referenceOrder == nil {
+				stage.XHTML_CONTENTs_referenceOrder = make(map[*XHTML_CONTENT]uint)
+			}
+			stage.XHTML_CONTENTs_referenceOrder[xhtml_content] = stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]
+			newInstancesReverseSlice = append(newInstancesReverseSlice, xhtml_content.GongMarshallUnstaging(stage))
+			delete(stage.XHTML_CONTENTs_referenceOrder, xhtml_content)
 			fieldInitializers, pointersInitializations := xhtml_content.GongMarshallAllFields(stage)
-			fieldsEditStmt += fieldInitializers
-			fieldsEditStmt += pointersInitializations
+			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
+			stage.XHTML_CONTENTMap_Staged_Order[ref] = stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]
 			diffs := xhtml_content.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, xhtml_content)
+			delete(stage.XHTML_CONTENTMap_Staged_Order, ref)
 			if len(diffs) > 0 {
-				fieldsEditStmt += fmt.Sprintf("\n\t// %s", xhtml_content.GetName())
+				var fieldsEdit string
+				fieldsEdit += fmt.Sprintf("\n\t// %s", xhtml_content.GetName())
 				for _, diff := range diffs {
-					fieldsEditStmt += diff
+					fieldsEdit += diff
 				}
+				fieldsEditSlice = append(fieldsEditSlice, fieldsEdit)
 				for _, reverseDiff := range reverseDiffs {
-					fieldsEditReverseStmt += reverseDiff
+					fieldsEditReverseSlice = append(fieldsEditReverseSlice, reverseDiff)
 				}
 				lenModifiedInstances++
 			}
@@ -5940,11 +6666,10 @@ func (stage *Stage) ComputeDifference() {
 	for ref := range stage.XHTML_CONTENTs_reference {
 		if _, ok := stage.XHTML_CONTENTs[ref]; !ok {
 			xhtml_contents_deletedInstances = append(xhtml_contents_deletedInstances, ref)
-			deletedInstancesStmt += ref.GongMarshallUnstaging(stage)
-			deletedInstancesReverseStmt += ref.GongMarshallIdentifier(stage)
+			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
+			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
 			fieldInitializers, pointersInitializations := ref.GongMarshallAllFields(stage)
-			fieldsEditReverseStmt += fieldInitializers
-			fieldsEditReverseStmt += pointersInitializations
+			fieldsEditReverseSlice = append(fieldsEditReverseSlice, fieldInitializers+pointersInitializations)
 		}
 	}
 
@@ -5952,46 +6677,35 @@ func (stage *Stage) ComputeDifference() {
 	lenDeletedInstances += len(xhtml_contents_deletedInstances)
 
 	if lenNewInstances > 0 || lenDeletedInstances > 0 || lenModifiedInstances > 0 {
+
+		// sort the stmt to have reproductible forward/backward commit
+		sort.Strings(newInstancesSlice)
+		newInstancesStmt := strings.Join(newInstancesSlice, "")
+		sort.Strings(fieldsEditSlice)
+		fieldsEditStmt := strings.Join(fieldsEditSlice, "")
+		sort.Strings(deletedInstancesSlice)
+		deletedInstancesStmt := strings.Join(deletedInstancesSlice, "")
+
+		sort.Strings(newInstancesReverseSlice)
+		newInstancesReverseStmt := strings.Join(newInstancesReverseSlice, "")
+		sort.Strings(fieldsEditReverseSlice)
+		fieldsEditReverseStmt := strings.Join(fieldsEditReverseSlice, "")
+		sort.Strings(deletedInstancesReverseSlice)
+		deletedInstancesReverseStmt := strings.Join(deletedInstancesReverseSlice, "")
+
 		forwardCommit := newInstancesStmt + fieldsEditStmt + deletedInstancesStmt
-		forwardCommit += fmt.Sprintf("\n\t// %s", time.Now().Format(time.RFC3339Nano))
-		forwardCommit += "\n\tstage.Commit()\n"
+		forwardCommit += "\n\tstage.Commit()"
 		stage.forwardCommits = append(stage.forwardCommits, forwardCommit)
 
 		backwardCommit := deletedInstancesReverseStmt + fieldsEditReverseStmt + newInstancesReverseStmt
-		backwardCommit += fmt.Sprintf("\n\t// %s", time.Now().Format(time.RFC3339Nano))
-		backwardCommit += "\n\tstage.Commit()\n"
-		// append to the start of the backward commits slice
-		stage.backwardCommits = append([]string{backwardCommit}, stage.backwardCommits...)
-
-		if stage.GetProbeIF() != nil {
-			var mergedCommits string
-			for _, commit := range stage.forwardCommits {
-				mergedCommits += commit
-			}
-			stage.GetProbeIF().AddNotification(
-				time.Now(),
-				"	// Forward commits:\n"+
-					mergedCommits,
-			)
-
-			var reverseMergedCommits string
-			for _, reverserCommit := range stage.backwardCommits {
-				reverseMergedCommits += reverserCommit
-			}
-			stage.GetProbeIF().AddNotification(
-				time.Now(),
-				"	// Backward commits:\n"+
-					reverseMergedCommits,
-			)
-
-			stage.GetProbeIF().CommitNotificationTable()
-		}
+		backwardCommit += "\n\tstage.Commit()"
+		// append to the end of the backward commits slice
+		stage.backwardCommits = append(stage.backwardCommits, backwardCommit)
 	}
 }
 
-// ComputeReference will creates a deep copy of each of the staged elements
-func (stage *Stage) ComputeReference() {
-
+// ComputeReferenceAndOrders will creates a deep copy of each of the staged elements
+func (stage *Stage) ComputeReferenceAndOrders() {
 	// insertion point per named struct
 	stage.ALTERNATIVE_IDs_reference = make(map[*ALTERNATIVE_ID]*ALTERNATIVE_ID)
 	stage.ALTERNATIVE_IDs_referenceOrder = make(map[*ALTERNATIVE_ID]uint) // diff Unstage needs the reference order
@@ -6721,6 +7435,7 @@ func (stage *Stage) ComputeReference() {
 		stage.XHTML_CONTENTs_referenceOrder[instance] = instance.GongGetOrder(stage)
 	}
 
+	stage.recomputeOrders()
 }
 
 // GongGetOrder returns the order of the instance in the staging area
@@ -6731,7 +7446,10 @@ func (stage *Stage) ComputeReference() {
 // to avoid unnecessary re-renderings
 // insertion point per named struct
 func (alternative_id *ALTERNATIVE_ID) GongGetOrder(stage *Stage) uint {
-	return stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]
+	if order, ok := stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]; ok {
+		return order
+	}
+	return stage.ALTERNATIVE_IDs_referenceOrder[alternative_id]
 }
 
 func (alternative_id *ALTERNATIVE_ID) GongGetReferenceOrder(stage *Stage) uint {
@@ -6739,7 +7457,10 @@ func (alternative_id *ALTERNATIVE_ID) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean]
 }
 
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
@@ -6747,7 +7468,10 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetReferen
 }
 
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering]
 }
 
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6755,7 +7479,10 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 }
 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date]
 }
 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetReferenceOrder(stage *Stage) uint {
@@ -6763,7 +7490,10 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetReferenceOrde
 }
 
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering]
 }
 
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6771,7 +7501,10 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 }
 
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration]
 }
 
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
@@ -6779,7 +7512,10 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGe
 }
 
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering]
 }
 
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6787,7 +7523,10 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 }
 
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer]
 }
 
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
@@ -6795,7 +7534,10 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetReferen
 }
 
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering]
 }
 
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6803,7 +7545,10 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 }
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real]
 }
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetReferenceOrder(stage *Stage) uint {
@@ -6811,7 +7556,10 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetReferenceOrde
 }
 
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering]
 }
 
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6819,7 +7567,10 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 }
 
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering]
 }
 
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6827,7 +7578,10 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetRef
 }
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string]
 }
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetReferenceOrder(stage *Stage) uint {
@@ -6835,7 +7589,10 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetReference
 }
 
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering]
 }
 
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6843,7 +7600,10 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 }
 
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml]
 }
 
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetReferenceOrder(stage *Stage) uint {
@@ -6851,7 +7611,10 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetReferenceOr
 }
 
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering]
 }
 
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -6859,7 +7622,10 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 }
 
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]
+	if order, ok := stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean]
 }
 
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
@@ -6867,7 +7633,10 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceOrder(st
 }
 
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]
+	if order, ok := stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date]
 }
 
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetReferenceOrder(stage *Stage) uint {
@@ -6875,7 +7644,10 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetReferenceOrder(stage *S
 }
 
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]
+	if order, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration]
 }
 
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
@@ -6883,7 +7655,10 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetReference
 }
 
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]
+	if order, ok := stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer]
 }
 
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
@@ -6891,7 +7666,10 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetReferenceOrder(st
 }
 
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]
+	if order, ok := stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real]
 }
 
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetReferenceOrder(stage *Stage) uint {
@@ -6899,7 +7677,10 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetReferenceOrder(stage *S
 }
 
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]
+	if order, ok := stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string]
 }
 
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetReferenceOrder(stage *Stage) uint {
@@ -6907,7 +7688,10 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetReferenceOrder(stag
 }
 
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]
+	if order, ok := stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]; ok {
+		return order
+	}
+	return stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml]
 }
 
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetReferenceOrder(stage *Stage) uint {
@@ -6915,7 +7699,10 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetReferenceOrder(stage 
 }
 
 func (a_alternative_id *A_ALTERNATIVE_ID) GongGetOrder(stage *Stage) uint {
-	return stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]
+	if order, ok := stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]; ok {
+		return order
+	}
+	return stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id]
 }
 
 func (a_alternative_id *A_ALTERNATIVE_ID) GongGetReferenceOrder(stage *Stage) uint {
@@ -6923,7 +7710,10 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref]
 }
 
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6931,7 +7721,10 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Go
 }
 
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref]
 }
 
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6939,7 +7732,10 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetR
 }
 
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref]
 }
 
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6947,7 +7743,10 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 }
 
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref]
 }
 
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6955,7 +7754,10 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Go
 }
 
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref]
 }
 
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6963,7 +7765,10 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetR
 }
 
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref]
 }
 
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6971,7 +7776,10 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Gong
 }
 
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref]
 }
 
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -6979,7 +7787,10 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGe
 }
 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean]
 }
 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
@@ -6987,7 +7798,10 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceOrde
 }
 
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date]
 }
 
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetReferenceOrder(stage *Stage) uint {
@@ -6995,7 +7809,10 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetReferenceOrder(stag
 }
 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration]
 }
 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
@@ -7003,7 +7820,10 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetRefer
 }
 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer]
 }
 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
@@ -7011,7 +7831,10 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetReferenceOrde
 }
 
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real]
 }
 
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetReferenceOrder(stage *Stage) uint {
@@ -7019,7 +7842,10 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetReferenceOrder(stag
 }
 
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string]
 }
 
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetReferenceOrder(stage *Stage) uint {
@@ -7027,7 +7853,10 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetReferenceOrder(
 }
 
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml]
 }
 
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetReferenceOrder(stage *Stage) uint {
@@ -7035,7 +7864,10 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetReferenceOrder(st
 }
 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]; ok {
+		return order
+	}
+	return stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1]
 }
 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetReferenceOrder(stage *Stage) uint {
@@ -7043,7 +7875,10 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetReferenceOrde
 }
 
 func (a_children *A_CHILDREN) GongGetOrder(stage *Stage) uint {
-	return stage.A_CHILDRENMap_Staged_Order[a_children]
+	if order, ok := stage.A_CHILDRENMap_Staged_Order[a_children]; ok {
+		return order
+	}
+	return stage.A_CHILDRENs_referenceOrder[a_children]
 }
 
 func (a_children *A_CHILDREN) GongGetReferenceOrder(stage *Stage) uint {
@@ -7051,7 +7886,10 @@ func (a_children *A_CHILDREN) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_core_content *A_CORE_CONTENT) GongGetOrder(stage *Stage) uint {
-	return stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]
+	if order, ok := stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]; ok {
+		return order
+	}
+	return stage.A_CORE_CONTENTs_referenceOrder[a_core_content]
 }
 
 func (a_core_content *A_CORE_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
@@ -7059,7 +7897,10 @@ func (a_core_content *A_CORE_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_datatypes *A_DATATYPES) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPESMap_Staged_Order[a_datatypes]
+	if order, ok := stage.A_DATATYPESMap_Staged_Order[a_datatypes]; ok {
+		return order
+	}
+	return stage.A_DATATYPESs_referenceOrder[a_datatypes]
 }
 
 func (a_datatypes *A_DATATYPES) GongGetReferenceOrder(stage *Stage) uint {
@@ -7067,7 +7908,10 @@ func (a_datatypes *A_DATATYPES) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref]
 }
 
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7075,7 +7919,10 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Gong
 }
 
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref]
 }
 
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7083,7 +7930,10 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetRef
 }
 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref]
 }
 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7091,7 +7941,10 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 }
 
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref]
 }
 
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7099,7 +7952,10 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Gong
 }
 
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref]
 }
 
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7107,7 +7963,10 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetRef
 }
 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref]
 }
 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7115,7 +7974,10 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGe
 }
 
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]; ok {
+		return order
+	}
+	return stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref]
 }
 
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7123,7 +7985,10 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetR
 }
 
 func (a_editable_atts *A_EDITABLE_ATTS) GongGetOrder(stage *Stage) uint {
-	return stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]
+	if order, ok := stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]; ok {
+		return order
+	}
+	return stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts]
 }
 
 func (a_editable_atts *A_EDITABLE_ATTS) GongGetReferenceOrder(stage *Stage) uint {
@@ -7131,7 +7996,10 @@ func (a_editable_atts *A_EDITABLE_ATTS) GongGetReferenceOrder(stage *Stage) uint
 }
 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]
+	if order, ok := stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]; ok {
+		return order
+	}
+	return stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref]
 }
 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7139,7 +8007,10 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (a_object *A_OBJECT) GongGetOrder(stage *Stage) uint {
-	return stage.A_OBJECTMap_Staged_Order[a_object]
+	if order, ok := stage.A_OBJECTMap_Staged_Order[a_object]; ok {
+		return order
+	}
+	return stage.A_OBJECTs_referenceOrder[a_object]
 }
 
 func (a_object *A_OBJECT) GongGetReferenceOrder(stage *Stage) uint {
@@ -7147,7 +8018,10 @@ func (a_object *A_OBJECT) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_properties *A_PROPERTIES) GongGetOrder(stage *Stage) uint {
-	return stage.A_PROPERTIESMap_Staged_Order[a_properties]
+	if order, ok := stage.A_PROPERTIESMap_Staged_Order[a_properties]; ok {
+		return order
+	}
+	return stage.A_PROPERTIESs_referenceOrder[a_properties]
 }
 
 func (a_properties *A_PROPERTIES) GongGetReferenceOrder(stage *Stage) uint {
@@ -7155,7 +8029,10 @@ func (a_properties *A_PROPERTIES) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]
+	if order, ok := stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]; ok {
+		return order
+	}
+	return stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref]
 }
 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7163,7 +8040,10 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetReferenceOrde
 }
 
 func (a_source_1 *A_SOURCE_1) GongGetOrder(stage *Stage) uint {
-	return stage.A_SOURCE_1Map_Staged_Order[a_source_1]
+	if order, ok := stage.A_SOURCE_1Map_Staged_Order[a_source_1]; ok {
+		return order
+	}
+	return stage.A_SOURCE_1s_referenceOrder[a_source_1]
 }
 
 func (a_source_1 *A_SOURCE_1) GongGetReferenceOrder(stage *Stage) uint {
@@ -7171,7 +8051,10 @@ func (a_source_1 *A_SOURCE_1) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetOrder(stage *Stage) uint {
-	return stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]
+	if order, ok := stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]; ok {
+		return order
+	}
+	return stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1]
 }
 
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetReferenceOrder(stage *Stage) uint {
@@ -7179,7 +8062,10 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetReferenceOrder(
 }
 
 func (a_specifications *A_SPECIFICATIONS) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]
+	if order, ok := stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]; ok {
+		return order
+	}
+	return stage.A_SPECIFICATIONSs_referenceOrder[a_specifications]
 }
 
 func (a_specifications *A_SPECIFICATIONS) GongGetReferenceOrder(stage *Stage) uint {
@@ -7187,7 +8073,10 @@ func (a_specifications *A_SPECIFICATIONS) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]
+	if order, ok := stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]; ok {
+		return order
+	}
+	return stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref]
 }
 
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7195,7 +8084,10 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetReferenceOrder(
 }
 
 func (a_specified_values *A_SPECIFIED_VALUES) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]
+	if order, ok := stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]; ok {
+		return order
+	}
+	return stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values]
 }
 
 func (a_specified_values *A_SPECIFIED_VALUES) GongGetReferenceOrder(stage *Stage) uint {
@@ -7203,7 +8095,10 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongGetReferenceOrder(stage *Stage
 }
 
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]
+	if order, ok := stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]; ok {
+		return order
+	}
+	return stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes]
 }
 
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetReferenceOrder(stage *Stage) uint {
@@ -7211,7 +8106,10 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetReferenceOrder(stage *Stage) 
 }
 
 func (a_spec_objects *A_SPEC_OBJECTS) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]
+	if order, ok := stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]; ok {
+		return order
+	}
+	return stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects]
 }
 
 func (a_spec_objects *A_SPEC_OBJECTS) GongGetReferenceOrder(stage *Stage) uint {
@@ -7219,7 +8117,10 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]
+	if order, ok := stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]; ok {
+		return order
+	}
+	return stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref]
 }
 
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7227,7 +8128,10 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetReferenceOrder(stag
 }
 
 func (a_spec_relations *A_SPEC_RELATIONS) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]
+	if order, ok := stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]; ok {
+		return order
+	}
+	return stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations]
 }
 
 func (a_spec_relations *A_SPEC_RELATIONS) GongGetReferenceOrder(stage *Stage) uint {
@@ -7235,7 +8139,10 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]
+	if order, ok := stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]; ok {
+		return order
+	}
+	return stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups]
 }
 
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetReferenceOrder(stage *Stage) uint {
@@ -7243,7 +8150,10 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetReferenceOrder(stag
 }
 
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]
+	if order, ok := stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]; ok {
+		return order
+	}
+	return stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref]
 }
 
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7251,7 +8161,10 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetReferenceOrder(stage *Sta
 }
 
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]
+	if order, ok := stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]; ok {
+		return order
+	}
+	return stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref]
 }
 
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7259,7 +8172,10 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetReferenceOrder(
 }
 
 func (a_spec_types *A_SPEC_TYPES) GongGetOrder(stage *Stage) uint {
-	return stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]
+	if order, ok := stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]; ok {
+		return order
+	}
+	return stage.A_SPEC_TYPESs_referenceOrder[a_spec_types]
 }
 
 func (a_spec_types *A_SPEC_TYPES) GongGetReferenceOrder(stage *Stage) uint {
@@ -7267,7 +8183,10 @@ func (a_spec_types *A_SPEC_TYPES) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_the_header *A_THE_HEADER) GongGetOrder(stage *Stage) uint {
-	return stage.A_THE_HEADERMap_Staged_Order[a_the_header]
+	if order, ok := stage.A_THE_HEADERMap_Staged_Order[a_the_header]; ok {
+		return order
+	}
+	return stage.A_THE_HEADERs_referenceOrder[a_the_header]
 }
 
 func (a_the_header *A_THE_HEADER) GongGetReferenceOrder(stage *Stage) uint {
@@ -7275,7 +8194,10 @@ func (a_the_header *A_THE_HEADER) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetOrder(stage *Stage) uint {
-	return stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]
+	if order, ok := stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]; ok {
+		return order
+	}
+	return stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions]
 }
 
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetReferenceOrder(stage *Stage) uint {
@@ -7283,7 +8205,10 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetReferenceOrder(stage *Stage) 
 }
 
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]
+	if order, ok := stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean]
 }
 
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
@@ -7291,7 +8216,10 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetReference
 }
 
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]
+	if order, ok := stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date]
 }
 
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7299,7 +8227,10 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetReferenceOrder(
 }
 
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]
+	if order, ok := stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration]
 }
 
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
@@ -7307,7 +8238,10 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetR
 }
 
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]
+	if order, ok := stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer]
 }
 
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
@@ -7315,7 +8249,10 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetReference
 }
 
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]
+	if order, ok := stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real]
 }
 
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetReferenceOrder(stage *Stage) uint {
@@ -7323,7 +8260,10 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetReferenceOrder(
 }
 
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]
+	if order, ok := stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string]
 }
 
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetReferenceOrder(stage *Stage) uint {
@@ -7331,7 +8271,10 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetReferenceOr
 }
 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]
+	if order, ok := stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]; ok {
+		return order
+	}
+	return stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml]
 }
 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetReferenceOrder(stage *Stage) uint {
@@ -7339,7 +8282,10 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetReferenceOrde
 }
 
 func (embedded_value *EMBEDDED_VALUE) GongGetOrder(stage *Stage) uint {
-	return stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]
+	if order, ok := stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]; ok {
+		return order
+	}
+	return stage.EMBEDDED_VALUEs_referenceOrder[embedded_value]
 }
 
 func (embedded_value *EMBEDDED_VALUE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7347,7 +8293,10 @@ func (embedded_value *EMBEDDED_VALUE) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (enum_value *ENUM_VALUE) GongGetOrder(stage *Stage) uint {
-	return stage.ENUM_VALUEMap_Staged_Order[enum_value]
+	if order, ok := stage.ENUM_VALUEMap_Staged_Order[enum_value]; ok {
+		return order
+	}
+	return stage.ENUM_VALUEs_referenceOrder[enum_value]
 }
 
 func (enum_value *ENUM_VALUE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7355,7 +8304,10 @@ func (enum_value *ENUM_VALUE) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (embeddedjpgimage *EmbeddedJpgImage) GongGetOrder(stage *Stage) uint {
-	return stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]
+	if order, ok := stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]; ok {
+		return order
+	}
+	return stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage]
 }
 
 func (embeddedjpgimage *EmbeddedJpgImage) GongGetReferenceOrder(stage *Stage) uint {
@@ -7363,7 +8315,10 @@ func (embeddedjpgimage *EmbeddedJpgImage) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (embeddedpngimage *EmbeddedPngImage) GongGetOrder(stage *Stage) uint {
-	return stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]
+	if order, ok := stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]; ok {
+		return order
+	}
+	return stage.EmbeddedPngImages_referenceOrder[embeddedpngimage]
 }
 
 func (embeddedpngimage *EmbeddedPngImage) GongGetReferenceOrder(stage *Stage) uint {
@@ -7371,7 +8326,10 @@ func (embeddedpngimage *EmbeddedPngImage) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (embeddedsvgimage *EmbeddedSvgImage) GongGetOrder(stage *Stage) uint {
-	return stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]
+	if order, ok := stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]; ok {
+		return order
+	}
+	return stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage]
 }
 
 func (embeddedsvgimage *EmbeddedSvgImage) GongGetReferenceOrder(stage *Stage) uint {
@@ -7379,7 +8337,10 @@ func (embeddedsvgimage *EmbeddedSvgImage) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (kill *Kill) GongGetOrder(stage *Stage) uint {
-	return stage.KillMap_Staged_Order[kill]
+	if order, ok := stage.KillMap_Staged_Order[kill]; ok {
+		return order
+	}
+	return stage.Kills_referenceOrder[kill]
 }
 
 func (kill *Kill) GongGetReferenceOrder(stage *Stage) uint {
@@ -7387,7 +8348,10 @@ func (kill *Kill) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (map_identifier_bool *Map_identifier_bool) GongGetOrder(stage *Stage) uint {
-	return stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]
+	if order, ok := stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]; ok {
+		return order
+	}
+	return stage.Map_identifier_bools_referenceOrder[map_identifier_bool]
 }
 
 func (map_identifier_bool *Map_identifier_bool) GongGetReferenceOrder(stage *Stage) uint {
@@ -7395,7 +8359,10 @@ func (map_identifier_bool *Map_identifier_bool) GongGetReferenceOrder(stage *Sta
 }
 
 func (relation_group *RELATION_GROUP) GongGetOrder(stage *Stage) uint {
-	return stage.RELATION_GROUPMap_Staged_Order[relation_group]
+	if order, ok := stage.RELATION_GROUPMap_Staged_Order[relation_group]; ok {
+		return order
+	}
+	return stage.RELATION_GROUPs_referenceOrder[relation_group]
 }
 
 func (relation_group *RELATION_GROUP) GongGetReferenceOrder(stage *Stage) uint {
@@ -7403,7 +8370,10 @@ func (relation_group *RELATION_GROUP) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (relation_group_type *RELATION_GROUP_TYPE) GongGetOrder(stage *Stage) uint {
-	return stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]
+	if order, ok := stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]; ok {
+		return order
+	}
+	return stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type]
 }
 
 func (relation_group_type *RELATION_GROUP_TYPE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7411,7 +8381,10 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongGetReferenceOrder(stage *Sta
 }
 
 func (req_if *REQ_IF) GongGetOrder(stage *Stage) uint {
-	return stage.REQ_IFMap_Staged_Order[req_if]
+	if order, ok := stage.REQ_IFMap_Staged_Order[req_if]; ok {
+		return order
+	}
+	return stage.REQ_IFs_referenceOrder[req_if]
 }
 
 func (req_if *REQ_IF) GongGetReferenceOrder(stage *Stage) uint {
@@ -7419,7 +8392,10 @@ func (req_if *REQ_IF) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (req_if_content *REQ_IF_CONTENT) GongGetOrder(stage *Stage) uint {
-	return stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]
+	if order, ok := stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]; ok {
+		return order
+	}
+	return stage.REQ_IF_CONTENTs_referenceOrder[req_if_content]
 }
 
 func (req_if_content *REQ_IF_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
@@ -7427,7 +8403,10 @@ func (req_if_content *REQ_IF_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (req_if_header *REQ_IF_HEADER) GongGetOrder(stage *Stage) uint {
-	return stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]
+	if order, ok := stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]; ok {
+		return order
+	}
+	return stage.REQ_IF_HEADERs_referenceOrder[req_if_header]
 }
 
 func (req_if_header *REQ_IF_HEADER) GongGetReferenceOrder(stage *Stage) uint {
@@ -7435,7 +8414,10 @@ func (req_if_header *REQ_IF_HEADER) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetOrder(stage *Stage) uint {
-	return stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]
+	if order, ok := stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]; ok {
+		return order
+	}
+	return stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension]
 }
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetReferenceOrder(stage *Stage) uint {
@@ -7443,7 +8425,10 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetReferenceOrder(stage 
 }
 
 func (specification *SPECIFICATION) GongGetOrder(stage *Stage) uint {
-	return stage.SPECIFICATIONMap_Staged_Order[specification]
+	if order, ok := stage.SPECIFICATIONMap_Staged_Order[specification]; ok {
+		return order
+	}
+	return stage.SPECIFICATIONs_referenceOrder[specification]
 }
 
 func (specification *SPECIFICATION) GongGetReferenceOrder(stage *Stage) uint {
@@ -7451,7 +8436,10 @@ func (specification *SPECIFICATION) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (specification_rendering *SPECIFICATION_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]
+	if order, ok := stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]; ok {
+		return order
+	}
+	return stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering]
 }
 
 func (specification_rendering *SPECIFICATION_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -7459,7 +8447,10 @@ func (specification_rendering *SPECIFICATION_Rendering) GongGetReferenceOrder(st
 }
 
 func (specification_type *SPECIFICATION_TYPE) GongGetOrder(stage *Stage) uint {
-	return stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]
+	if order, ok := stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]; ok {
+		return order
+	}
+	return stage.SPECIFICATION_TYPEs_referenceOrder[specification_type]
 }
 
 func (specification_type *SPECIFICATION_TYPE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7467,7 +8458,10 @@ func (specification_type *SPECIFICATION_TYPE) GongGetReferenceOrder(stage *Stage
 }
 
 func (spec_hierarchy *SPEC_HIERARCHY) GongGetOrder(stage *Stage) uint {
-	return stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]
+	if order, ok := stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]; ok {
+		return order
+	}
+	return stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy]
 }
 
 func (spec_hierarchy *SPEC_HIERARCHY) GongGetReferenceOrder(stage *Stage) uint {
@@ -7475,7 +8469,10 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (spec_object *SPEC_OBJECT) GongGetOrder(stage *Stage) uint {
-	return stage.SPEC_OBJECTMap_Staged_Order[spec_object]
+	if order, ok := stage.SPEC_OBJECTMap_Staged_Order[spec_object]; ok {
+		return order
+	}
+	return stage.SPEC_OBJECTs_referenceOrder[spec_object]
 }
 
 func (spec_object *SPEC_OBJECT) GongGetReferenceOrder(stage *Stage) uint {
@@ -7483,7 +8480,10 @@ func (spec_object *SPEC_OBJECT) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetOrder(stage *Stage) uint {
-	return stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]
+	if order, ok := stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]; ok {
+		return order
+	}
+	return stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type]
 }
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7491,7 +8491,10 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongGetReferenceOrder(stage *Stage) ui
 }
 
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetOrder(stage *Stage) uint {
-	return stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]
+	if order, ok := stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]; ok {
+		return order
+	}
+	return stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering]
 }
 
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetReferenceOrder(stage *Stage) uint {
@@ -7499,7 +8502,10 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetReferenceOr
 }
 
 func (spec_relation *SPEC_RELATION) GongGetOrder(stage *Stage) uint {
-	return stage.SPEC_RELATIONMap_Staged_Order[spec_relation]
+	if order, ok := stage.SPEC_RELATIONMap_Staged_Order[spec_relation]; ok {
+		return order
+	}
+	return stage.SPEC_RELATIONs_referenceOrder[spec_relation]
 }
 
 func (spec_relation *SPEC_RELATION) GongGetReferenceOrder(stage *Stage) uint {
@@ -7507,7 +8513,10 @@ func (spec_relation *SPEC_RELATION) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (spec_relation_type *SPEC_RELATION_TYPE) GongGetOrder(stage *Stage) uint {
-	return stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]
+	if order, ok := stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]; ok {
+		return order
+	}
+	return stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type]
 }
 
 func (spec_relation_type *SPEC_RELATION_TYPE) GongGetReferenceOrder(stage *Stage) uint {
@@ -7515,7 +8524,10 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongGetReferenceOrder(stage *Stage
 }
 
 func (staticwebsite *StaticWebSite) GongGetOrder(stage *Stage) uint {
-	return stage.StaticWebSiteMap_Staged_Order[staticwebsite]
+	if order, ok := stage.StaticWebSiteMap_Staged_Order[staticwebsite]; ok {
+		return order
+	}
+	return stage.StaticWebSites_referenceOrder[staticwebsite]
 }
 
 func (staticwebsite *StaticWebSite) GongGetReferenceOrder(stage *Stage) uint {
@@ -7523,7 +8535,10 @@ func (staticwebsite *StaticWebSite) GongGetReferenceOrder(stage *Stage) uint {
 }
 
 func (staticwebsitechapter *StaticWebSiteChapter) GongGetOrder(stage *Stage) uint {
-	return stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]
+	if order, ok := stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]; ok {
+		return order
+	}
+	return stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter]
 }
 
 func (staticwebsitechapter *StaticWebSiteChapter) GongGetReferenceOrder(stage *Stage) uint {
@@ -7531,7 +8546,10 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongGetReferenceOrder(stage *S
 }
 
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetOrder(stage *Stage) uint {
-	return stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]
+	if order, ok := stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]; ok {
+		return order
+	}
+	return stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage]
 }
 
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetReferenceOrder(stage *Stage) uint {
@@ -7539,7 +8557,10 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetReference
 }
 
 func (staticwebsiteimage *StaticWebSiteImage) GongGetOrder(stage *Stage) uint {
-	return stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]
+	if order, ok := stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]; ok {
+		return order
+	}
+	return stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage]
 }
 
 func (staticwebsiteimage *StaticWebSiteImage) GongGetReferenceOrder(stage *Stage) uint {
@@ -7547,7 +8568,10 @@ func (staticwebsiteimage *StaticWebSiteImage) GongGetReferenceOrder(stage *Stage
 }
 
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetOrder(stage *Stage) uint {
-	return stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]
+	if order, ok := stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]; ok {
+		return order
+	}
+	return stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph]
 }
 
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetReferenceOrder(stage *Stage) uint {
@@ -7555,7 +8579,10 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetReferenceOrder(stag
 }
 
 func (xhtml_content *XHTML_CONTENT) GongGetOrder(stage *Stage) uint {
-	return stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]
+	if order, ok := stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]; ok {
+		return order
+	}
+	return stage.XHTML_CONTENTs_referenceOrder[xhtml_content]
 }
 
 func (xhtml_content *XHTML_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
@@ -8513,6 +9540,7 @@ func (alternative_id *ALTERNATIVE_ID) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", alternative_id.Name)
 	return
 }
+
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
@@ -8520,6 +9548,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallId
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean.Name)
 	return
 }
+
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
@@ -8527,6 +9556,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean_rendering.Name)
 	return
 }
+
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
@@ -8534,6 +9564,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date.Name)
 	return
 }
+
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
@@ -8541,6 +9572,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date_rendering.Name)
 	return
 }
+
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
@@ -8548,6 +9580,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMa
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration.Name)
 	return
 }
+
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
@@ -8555,6 +9588,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration_rendering.Name)
 	return
 }
+
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
@@ -8562,6 +9596,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallId
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer.Name)
 	return
 }
+
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
@@ -8569,6 +9604,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer_rendering.Name)
 	return
 }
+
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
@@ -8576,6 +9612,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real.Name)
 	return
 }
+
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
@@ -8583,6 +9620,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real_rendering.Name)
 	return
 }
+
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
@@ -8590,6 +9628,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarsha
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_rendering.Name)
 	return
 }
+
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
@@ -8597,6 +9636,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallIden
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string.Name)
 	return
 }
+
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
@@ -8604,6 +9644,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string_rendering.Name)
 	return
 }
+
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
@@ -8611,6 +9652,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallIdenti
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml.Name)
 	return
 }
+
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
@@ -8618,6 +9660,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml_rendering.Name)
 	return
 }
+
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
@@ -8625,6 +9668,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallIdentifier(s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_boolean.Name)
 	return
 }
+
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
@@ -8632,6 +9676,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallIdentifier(stage *
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_date.Name)
 	return
 }
+
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
@@ -8639,6 +9684,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallIden
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_enumeration.Name)
 	return
 }
+
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
@@ -8646,6 +9692,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallIdentifier(s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_integer.Name)
 	return
 }
+
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
@@ -8653,6 +9700,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallIdentifier(stage *
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_real.Name)
 	return
 }
+
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
@@ -8660,6 +9708,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallIdentifier(sta
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_string.Name)
 	return
 }
+
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
@@ -8667,6 +9716,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallIdentifier(stage
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_xhtml.Name)
 	return
 }
+
 func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_alternative_id.GongGetIdentifier(stage))
@@ -8674,6 +9724,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_alternative_id.Name)
 	return
 }
+
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetIdentifier(stage))
@@ -8681,6 +9732,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Go
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_boolean_ref.Name)
 	return
 }
+
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_date_ref.GongGetIdentifier(stage))
@@ -8688,6 +9740,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMars
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_date_ref.Name)
 	return
 }
+
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetIdentifier(stage))
@@ -8695,6 +9748,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_enumeration_ref.Name)
 	return
 }
+
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetIdentifier(stage))
@@ -8702,6 +9756,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Go
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_integer_ref.Name)
 	return
 }
+
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_real_ref.GongGetIdentifier(stage))
@@ -8709,6 +9764,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMars
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_real_ref.Name)
 	return
 }
+
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_string_ref.GongGetIdentifier(stage))
@@ -8716,6 +9772,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Gong
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_string_ref.Name)
 	return
 }
+
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetIdentifier(stage))
@@ -8723,6 +9780,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMa
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_xhtml_ref.Name)
 	return
 }
+
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_boolean.GongGetIdentifier(stage))
@@ -8730,6 +9788,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_boolean.Name)
 	return
 }
+
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_date.GongGetIdentifier(stage))
@@ -8737,6 +9796,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallIdentifier(sta
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_date.Name)
 	return
 }
+
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_enumeration.GongGetIdentifier(stage))
@@ -8744,6 +9804,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshall
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_enumeration.Name)
 	return
 }
+
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_integer.GongGetIdentifier(stage))
@@ -8751,6 +9812,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_integer.Name)
 	return
 }
+
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_real.GongGetIdentifier(stage))
@@ -8758,6 +9820,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallIdentifier(sta
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_real.Name)
 	return
 }
+
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_string.GongGetIdentifier(stage))
@@ -8765,6 +9828,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallIdentifier
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_string.Name)
 	return
 }
+
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_xhtml.GongGetIdentifier(stage))
@@ -8772,6 +9836,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallIdentifier(s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_xhtml.Name)
 	return
 }
+
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
@@ -8779,6 +9844,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_xhtml_1.Name)
 	return
 }
+
 func (a_children *A_CHILDREN) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_children.GongGetIdentifier(stage))
@@ -8786,6 +9852,7 @@ func (a_children *A_CHILDREN) GongMarshallIdentifier(stage *Stage) (decl string)
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_children.Name)
 	return
 }
+
 func (a_core_content *A_CORE_CONTENT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_core_content.GongGetIdentifier(stage))
@@ -8793,6 +9860,7 @@ func (a_core_content *A_CORE_CONTENT) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_core_content.Name)
 	return
 }
+
 func (a_datatypes *A_DATATYPES) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
@@ -8800,6 +9868,7 @@ func (a_datatypes *A_DATATYPES) GongMarshallIdentifier(stage *Stage) (decl strin
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatypes.Name)
 	return
 }
+
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetIdentifier(stage))
@@ -8807,6 +9876,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Gong
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_boolean_ref.Name)
 	return
 }
+
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_date_ref.GongGetIdentifier(stage))
@@ -8814,6 +9884,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarsha
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_date_ref.Name)
 	return
 }
+
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetIdentifier(stage))
@@ -8821,6 +9892,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_enumeration_ref.Name)
 	return
 }
+
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetIdentifier(stage))
@@ -8828,6 +9900,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Gong
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_integer_ref.Name)
 	return
 }
+
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_real_ref.GongGetIdentifier(stage))
@@ -8835,6 +9908,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarsha
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_real_ref.Name)
 	return
 }
+
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_string_ref.GongGetIdentifier(stage))
@@ -8842,6 +9916,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMa
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_string_ref.Name)
 	return
 }
+
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetIdentifier(stage))
@@ -8849,6 +9924,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMars
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_xhtml_ref.Name)
 	return
 }
+
 func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
@@ -8856,6 +9932,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallIdentifier(stage *Stage) (de
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_editable_atts.Name)
 	return
 }
+
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_enum_value_ref.GongGetIdentifier(stage))
@@ -8863,6 +9940,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_enum_value_ref.Name)
 	return
 }
+
 func (a_object *A_OBJECT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_object.GongGetIdentifier(stage))
@@ -8870,6 +9948,7 @@ func (a_object *A_OBJECT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_object.Name)
 	return
 }
+
 func (a_properties *A_PROPERTIES) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_properties.GongGetIdentifier(stage))
@@ -8877,6 +9956,7 @@ func (a_properties *A_PROPERTIES) GongMarshallIdentifier(stage *Stage) (decl str
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_properties.Name)
 	return
 }
+
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_relation_group_type_ref.GongGetIdentifier(stage))
@@ -8884,6 +9964,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_relation_group_type_ref.Name)
 	return
 }
+
 func (a_source_1 *A_SOURCE_1) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_source_1.GongGetIdentifier(stage))
@@ -8891,6 +9972,7 @@ func (a_source_1 *A_SOURCE_1) GongMarshallIdentifier(stage *Stage) (decl string)
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_source_1.Name)
 	return
 }
+
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_source_specification_1.GongGetIdentifier(stage))
@@ -8898,6 +9980,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallIdentifier
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_source_specification_1.Name)
 	return
 }
+
 func (a_specifications *A_SPECIFICATIONS) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specifications.GongGetIdentifier(stage))
@@ -8905,6 +9988,7 @@ func (a_specifications *A_SPECIFICATIONS) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specifications.Name)
 	return
 }
+
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specification_type_ref.GongGetIdentifier(stage))
@@ -8912,6 +9996,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallIdentifier
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specification_type_ref.Name)
 	return
 }
+
 func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specified_values.GongGetIdentifier(stage))
@@ -8919,6 +10004,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallIdentifier(stage *Stag
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specified_values.Name)
 	return
 }
+
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
@@ -8926,6 +10012,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallIdentifier(stage *Stage)
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_attributes.Name)
 	return
 }
+
 func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_objects.GongGetIdentifier(stage))
@@ -8933,6 +10020,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_objects.Name)
 	return
 }
+
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_object_type_ref.GongGetIdentifier(stage))
@@ -8940,6 +10028,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallIdentifier(sta
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_object_type_ref.Name)
 	return
 }
+
 func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relations.GongGetIdentifier(stage))
@@ -8947,6 +10036,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relations.Name)
 	return
 }
+
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_groups.GongGetIdentifier(stage))
@@ -8954,6 +10044,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallIdentifier(sta
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_groups.Name)
 	return
 }
+
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_ref.GongGetIdentifier(stage))
@@ -8961,6 +10052,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallIdentifier(stage *St
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_ref.Name)
 	return
 }
+
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_type_ref.GongGetIdentifier(stage))
@@ -8968,6 +10060,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallIdentifier
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_type_ref.Name)
 	return
 }
+
 func (a_spec_types *A_SPEC_TYPES) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
@@ -8975,6 +10068,7 @@ func (a_spec_types *A_SPEC_TYPES) GongMarshallIdentifier(stage *Stage) (decl str
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_types.Name)
 	return
 }
+
 func (a_the_header *A_THE_HEADER) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_the_header.GongGetIdentifier(stage))
@@ -8982,6 +10076,7 @@ func (a_the_header *A_THE_HEADER) GongMarshallIdentifier(stage *Stage) (decl str
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_the_header.Name)
 	return
 }
+
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_tool_extensions.GongGetIdentifier(stage))
@@ -8989,6 +10084,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallIdentifier(stage *Stage)
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_tool_extensions.Name)
 	return
 }
+
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
@@ -8996,6 +10092,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallIden
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_boolean.Name)
 	return
 }
+
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
@@ -9003,6 +10100,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallIdentifier
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_date.Name)
 	return
 }
+
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
@@ -9010,6 +10108,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMars
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_enumeration.Name)
 	return
 }
+
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
@@ -9017,6 +10116,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallIden
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_integer.Name)
 	return
 }
+
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
@@ -9024,6 +10124,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallIdentifier
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_real.Name)
 	return
 }
+
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
@@ -9031,6 +10132,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallIdenti
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_string.Name)
 	return
 }
+
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
@@ -9038,6 +10140,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallIdentifi
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_xhtml.Name)
 	return
 }
+
 func (embedded_value *EMBEDDED_VALUE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
@@ -9045,6 +10148,7 @@ func (embedded_value *EMBEDDED_VALUE) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embedded_value.Name)
 	return
 }
+
 func (enum_value *ENUM_VALUE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
@@ -9052,6 +10156,7 @@ func (enum_value *ENUM_VALUE) GongMarshallIdentifier(stage *Stage) (decl string)
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", enum_value.Name)
 	return
 }
+
 func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedjpgimage.GongGetIdentifier(stage))
@@ -9059,6 +10164,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedjpgimage.Name)
 	return
 }
+
 func (embeddedpngimage *EmbeddedPngImage) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedpngimage.GongGetIdentifier(stage))
@@ -9066,6 +10172,7 @@ func (embeddedpngimage *EmbeddedPngImage) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedpngimage.Name)
 	return
 }
+
 func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedsvgimage.GongGetIdentifier(stage))
@@ -9073,6 +10180,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedsvgimage.Name)
 	return
 }
+
 func (kill *Kill) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", kill.GongGetIdentifier(stage))
@@ -9080,6 +10188,7 @@ func (kill *Kill) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", kill.Name)
 	return
 }
+
 func (map_identifier_bool *Map_identifier_bool) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", map_identifier_bool.GongGetIdentifier(stage))
@@ -9087,6 +10196,7 @@ func (map_identifier_bool *Map_identifier_bool) GongMarshallIdentifier(stage *St
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_identifier_bool.Name)
 	return
 }
+
 func (relation_group *RELATION_GROUP) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
@@ -9094,6 +10204,7 @@ func (relation_group *RELATION_GROUP) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", relation_group.Name)
 	return
 }
+
 func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
@@ -9101,6 +10212,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallIdentifier(stage *St
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", relation_group_type.Name)
 	return
 }
+
 func (req_if *REQ_IF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if.GongGetIdentifier(stage))
@@ -9108,6 +10220,7 @@ func (req_if *REQ_IF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if.Name)
 	return
 }
+
 func (req_if_content *REQ_IF_CONTENT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
@@ -9115,6 +10228,7 @@ func (req_if_content *REQ_IF_CONTENT) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_content.Name)
 	return
 }
+
 func (req_if_header *REQ_IF_HEADER) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
@@ -9122,6 +10236,7 @@ func (req_if_header *REQ_IF_HEADER) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_header.Name)
 	return
 }
+
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_tool_extension.GongGetIdentifier(stage))
@@ -9129,6 +10244,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallIdentifier(stage
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_tool_extension.Name)
 	return
 }
+
 func (specification *SPECIFICATION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification.GongGetIdentifier(stage))
@@ -9136,6 +10252,7 @@ func (specification *SPECIFICATION) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification.Name)
 	return
 }
+
 func (specification_rendering *SPECIFICATION_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
@@ -9143,6 +10260,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GongMarshallIdentifier(s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification_rendering.Name)
 	return
 }
+
 func (specification_type *SPECIFICATION_TYPE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
@@ -9150,6 +10268,7 @@ func (specification_type *SPECIFICATION_TYPE) GongMarshallIdentifier(stage *Stag
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification_type.Name)
 	return
 }
+
 func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
@@ -9157,6 +10276,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallIdentifier(stage *Stage) (decl
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_hierarchy.Name)
 	return
 }
+
 func (spec_object *SPEC_OBJECT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
@@ -9164,6 +10284,7 @@ func (spec_object *SPEC_OBJECT) GongMarshallIdentifier(stage *Stage) (decl strin
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object.Name)
 	return
 }
+
 func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
@@ -9171,6 +10292,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallIdentifier(stage *Stage) (
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type.Name)
 	return
 }
+
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
@@ -9178,6 +10300,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallIdenti
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type_rendering.Name)
 	return
 }
+
 func (spec_relation *SPEC_RELATION) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
@@ -9185,6 +10308,7 @@ func (spec_relation *SPEC_RELATION) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_relation.Name)
 	return
 }
+
 func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
@@ -9192,6 +10316,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallIdentifier(stage *Stag
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_relation_type.Name)
 	return
 }
+
 func (staticwebsite *StaticWebSite) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
@@ -9199,6 +10324,7 @@ func (staticwebsite *StaticWebSite) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsite.Name)
 	return
 }
+
 func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
@@ -9206,6 +10332,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallIdentifier(stage *
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitechapter.Name)
 	return
 }
+
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
@@ -9213,6 +10340,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallIden
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitegeneratedimage.Name)
 	return
 }
+
 func (staticwebsiteimage *StaticWebSiteImage) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
@@ -9220,6 +10348,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GongMarshallIdentifier(stage *Stag
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsiteimage.Name)
 	return
 }
+
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
@@ -9227,6 +10356,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallIdentifier(sta
 	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsiteparagraph.Name)
 	return
 }
+
 func (xhtml_content *XHTML_CONTENT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
@@ -9241,518 +10371,623 @@ func (alternative_id *ALTERNATIVE_ID) GongMarshallUnstaging(stage *Stage) (decl 
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", alternative_id.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_boolean.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_date.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_date_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_enumeration.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_integer.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_integer_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_real.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_real_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_string.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_string_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_xhtml.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_boolean.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_date.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_enumeration.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_integer.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_real.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_string.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_xhtml.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_alternative_id.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_date_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_real_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_string_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_boolean.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_date.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_enumeration.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_integer.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_real.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_string.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_xhtml.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_children *A_CHILDREN) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_children.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_core_content *A_CORE_CONTENT) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_core_content.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatypes *A_DATATYPES) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatypes.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_date_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_real_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_string_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_editable_atts.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_enum_value_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_object *A_OBJECT) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_object.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_properties *A_PROPERTIES) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_properties.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_relation_group_type_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_source_1 *A_SOURCE_1) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_source_1.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_source_specification_1.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_specifications *A_SPECIFICATIONS) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specifications.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specification_type_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specified_values.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_attributes.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_objects.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_object_type_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relations.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_groups.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_type_ref.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_spec_types *A_SPEC_TYPES) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_types.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_the_header *A_THE_HEADER) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_the_header.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_tool_extensions.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_boolean.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_date.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_enumeration.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_integer.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_real.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_string.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_xhtml.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (embedded_value *EMBEDDED_VALUE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embedded_value.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (enum_value *ENUM_VALUE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", enum_value.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedjpgimage.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (embeddedpngimage *EmbeddedPngImage) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedpngimage.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedsvgimage.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (kill *Kill) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", kill.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (map_identifier_bool *Map_identifier_bool) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", map_identifier_bool.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (relation_group *RELATION_GROUP) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", relation_group.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", relation_group_type.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (req_if *REQ_IF) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (req_if_content *REQ_IF_CONTENT) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_content.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (req_if_header *REQ_IF_HEADER) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_header.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_tool_extension.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (specification *SPECIFICATION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (specification_rendering *SPECIFICATION_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (specification_type *SPECIFICATION_TYPE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification_type.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_hierarchy.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (spec_object *SPEC_OBJECT) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object_type.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object_type_rendering.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (spec_relation *SPEC_RELATION) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_relation.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_relation_type.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (staticwebsite *StaticWebSite) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsite.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsitechapter.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsitegeneratedimage.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (staticwebsiteimage *StaticWebSiteImage) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsiteimage.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsiteparagraph.GongGetReferenceIdentifier(stage))
 	return
 }
+
 func (xhtml_content *XHTML_CONTENT) GongMarshallUnstaging(stage *Stage) (decl string) {
 	decl = GongUnstageStmt
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", xhtml_content.GongGetReferenceIdentifier(stage))
 	return
 }
+
+// end of template

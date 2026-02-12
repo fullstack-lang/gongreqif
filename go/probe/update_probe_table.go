@@ -14,6 +14,225 @@ import (
 
 const TableName = "Table"
 
+// update the current table if there is one
+func updateCurrentProbeTable(probe *Probe) {
+	var tableName string
+	for table := range probe.tableStage.Tables {
+		tableName = table.Name
+	}
+	switch tableName {
+	// insertion point
+	case "ALTERNATIVE_ID":
+		updateProbeTable[*models.ALTERNATIVE_ID](probe)
+	case "ATTRIBUTE_DEFINITION_BOOLEAN":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN](probe)
+	case "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_DATE":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_DATE](probe)
+	case "ATTRIBUTE_DEFINITION_DATE_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_DATE_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_ENUMERATION":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION](probe)
+	case "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_INTEGER":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_INTEGER](probe)
+	case "ATTRIBUTE_DEFINITION_INTEGER_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_INTEGER_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_REAL":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_REAL](probe)
+	case "ATTRIBUTE_DEFINITION_REAL_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_REAL_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_STRING":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_STRING](probe)
+	case "ATTRIBUTE_DEFINITION_STRING_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_STRING_Rendering](probe)
+	case "ATTRIBUTE_DEFINITION_XHTML":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_XHTML](probe)
+	case "ATTRIBUTE_DEFINITION_XHTML_Rendering":
+		updateProbeTable[*models.ATTRIBUTE_DEFINITION_XHTML_Rendering](probe)
+	case "ATTRIBUTE_VALUE_BOOLEAN":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_BOOLEAN](probe)
+	case "ATTRIBUTE_VALUE_DATE":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_DATE](probe)
+	case "ATTRIBUTE_VALUE_ENUMERATION":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_ENUMERATION](probe)
+	case "ATTRIBUTE_VALUE_INTEGER":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_INTEGER](probe)
+	case "ATTRIBUTE_VALUE_REAL":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_REAL](probe)
+	case "ATTRIBUTE_VALUE_STRING":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_STRING](probe)
+	case "ATTRIBUTE_VALUE_XHTML":
+		updateProbeTable[*models.ATTRIBUTE_VALUE_XHTML](probe)
+	case "A_ALTERNATIVE_ID":
+		updateProbeTable[*models.A_ALTERNATIVE_ID](probe)
+	case "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF](probe)
+	case "A_ATTRIBUTE_DEFINITION_DATE_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_DATE_REF](probe)
+	case "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF](probe)
+	case "A_ATTRIBUTE_DEFINITION_INTEGER_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_INTEGER_REF](probe)
+	case "A_ATTRIBUTE_DEFINITION_REAL_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_REAL_REF](probe)
+	case "A_ATTRIBUTE_DEFINITION_STRING_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_STRING_REF](probe)
+	case "A_ATTRIBUTE_DEFINITION_XHTML_REF":
+		updateProbeTable[*models.A_ATTRIBUTE_DEFINITION_XHTML_REF](probe)
+	case "A_ATTRIBUTE_VALUE_BOOLEAN":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_BOOLEAN](probe)
+	case "A_ATTRIBUTE_VALUE_DATE":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_DATE](probe)
+	case "A_ATTRIBUTE_VALUE_ENUMERATION":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_ENUMERATION](probe)
+	case "A_ATTRIBUTE_VALUE_INTEGER":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_INTEGER](probe)
+	case "A_ATTRIBUTE_VALUE_REAL":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_REAL](probe)
+	case "A_ATTRIBUTE_VALUE_STRING":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_STRING](probe)
+	case "A_ATTRIBUTE_VALUE_XHTML":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_XHTML](probe)
+	case "A_ATTRIBUTE_VALUE_XHTML_1":
+		updateProbeTable[*models.A_ATTRIBUTE_VALUE_XHTML_1](probe)
+	case "A_CHILDREN":
+		updateProbeTable[*models.A_CHILDREN](probe)
+	case "A_CORE_CONTENT":
+		updateProbeTable[*models.A_CORE_CONTENT](probe)
+	case "A_DATATYPES":
+		updateProbeTable[*models.A_DATATYPES](probe)
+	case "A_DATATYPE_DEFINITION_BOOLEAN_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_BOOLEAN_REF](probe)
+	case "A_DATATYPE_DEFINITION_DATE_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_DATE_REF](probe)
+	case "A_DATATYPE_DEFINITION_ENUMERATION_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_ENUMERATION_REF](probe)
+	case "A_DATATYPE_DEFINITION_INTEGER_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_INTEGER_REF](probe)
+	case "A_DATATYPE_DEFINITION_REAL_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_REAL_REF](probe)
+	case "A_DATATYPE_DEFINITION_STRING_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_STRING_REF](probe)
+	case "A_DATATYPE_DEFINITION_XHTML_REF":
+		updateProbeTable[*models.A_DATATYPE_DEFINITION_XHTML_REF](probe)
+	case "A_EDITABLE_ATTS":
+		updateProbeTable[*models.A_EDITABLE_ATTS](probe)
+	case "A_ENUM_VALUE_REF":
+		updateProbeTable[*models.A_ENUM_VALUE_REF](probe)
+	case "A_OBJECT":
+		updateProbeTable[*models.A_OBJECT](probe)
+	case "A_PROPERTIES":
+		updateProbeTable[*models.A_PROPERTIES](probe)
+	case "A_RELATION_GROUP_TYPE_REF":
+		updateProbeTable[*models.A_RELATION_GROUP_TYPE_REF](probe)
+	case "A_SOURCE_1":
+		updateProbeTable[*models.A_SOURCE_1](probe)
+	case "A_SOURCE_SPECIFICATION_1":
+		updateProbeTable[*models.A_SOURCE_SPECIFICATION_1](probe)
+	case "A_SPECIFICATIONS":
+		updateProbeTable[*models.A_SPECIFICATIONS](probe)
+	case "A_SPECIFICATION_TYPE_REF":
+		updateProbeTable[*models.A_SPECIFICATION_TYPE_REF](probe)
+	case "A_SPECIFIED_VALUES":
+		updateProbeTable[*models.A_SPECIFIED_VALUES](probe)
+	case "A_SPEC_ATTRIBUTES":
+		updateProbeTable[*models.A_SPEC_ATTRIBUTES](probe)
+	case "A_SPEC_OBJECTS":
+		updateProbeTable[*models.A_SPEC_OBJECTS](probe)
+	case "A_SPEC_OBJECT_TYPE_REF":
+		updateProbeTable[*models.A_SPEC_OBJECT_TYPE_REF](probe)
+	case "A_SPEC_RELATIONS":
+		updateProbeTable[*models.A_SPEC_RELATIONS](probe)
+	case "A_SPEC_RELATION_GROUPS":
+		updateProbeTable[*models.A_SPEC_RELATION_GROUPS](probe)
+	case "A_SPEC_RELATION_REF":
+		updateProbeTable[*models.A_SPEC_RELATION_REF](probe)
+	case "A_SPEC_RELATION_TYPE_REF":
+		updateProbeTable[*models.A_SPEC_RELATION_TYPE_REF](probe)
+	case "A_SPEC_TYPES":
+		updateProbeTable[*models.A_SPEC_TYPES](probe)
+	case "A_THE_HEADER":
+		updateProbeTable[*models.A_THE_HEADER](probe)
+	case "A_TOOL_EXTENSIONS":
+		updateProbeTable[*models.A_TOOL_EXTENSIONS](probe)
+	case "DATATYPE_DEFINITION_BOOLEAN":
+		updateProbeTable[*models.DATATYPE_DEFINITION_BOOLEAN](probe)
+	case "DATATYPE_DEFINITION_DATE":
+		updateProbeTable[*models.DATATYPE_DEFINITION_DATE](probe)
+	case "DATATYPE_DEFINITION_ENUMERATION":
+		updateProbeTable[*models.DATATYPE_DEFINITION_ENUMERATION](probe)
+	case "DATATYPE_DEFINITION_INTEGER":
+		updateProbeTable[*models.DATATYPE_DEFINITION_INTEGER](probe)
+	case "DATATYPE_DEFINITION_REAL":
+		updateProbeTable[*models.DATATYPE_DEFINITION_REAL](probe)
+	case "DATATYPE_DEFINITION_STRING":
+		updateProbeTable[*models.DATATYPE_DEFINITION_STRING](probe)
+	case "DATATYPE_DEFINITION_XHTML":
+		updateProbeTable[*models.DATATYPE_DEFINITION_XHTML](probe)
+	case "EMBEDDED_VALUE":
+		updateProbeTable[*models.EMBEDDED_VALUE](probe)
+	case "ENUM_VALUE":
+		updateProbeTable[*models.ENUM_VALUE](probe)
+	case "EmbeddedJpgImage":
+		updateProbeTable[*models.EmbeddedJpgImage](probe)
+	case "EmbeddedPngImage":
+		updateProbeTable[*models.EmbeddedPngImage](probe)
+	case "EmbeddedSvgImage":
+		updateProbeTable[*models.EmbeddedSvgImage](probe)
+	case "Kill":
+		updateProbeTable[*models.Kill](probe)
+	case "Map_identifier_bool":
+		updateProbeTable[*models.Map_identifier_bool](probe)
+	case "RELATION_GROUP":
+		updateProbeTable[*models.RELATION_GROUP](probe)
+	case "RELATION_GROUP_TYPE":
+		updateProbeTable[*models.RELATION_GROUP_TYPE](probe)
+	case "REQ_IF":
+		updateProbeTable[*models.REQ_IF](probe)
+	case "REQ_IF_CONTENT":
+		updateProbeTable[*models.REQ_IF_CONTENT](probe)
+	case "REQ_IF_HEADER":
+		updateProbeTable[*models.REQ_IF_HEADER](probe)
+	case "REQ_IF_TOOL_EXTENSION":
+		updateProbeTable[*models.REQ_IF_TOOL_EXTENSION](probe)
+	case "SPECIFICATION":
+		updateProbeTable[*models.SPECIFICATION](probe)
+	case "SPECIFICATION_Rendering":
+		updateProbeTable[*models.SPECIFICATION_Rendering](probe)
+	case "SPECIFICATION_TYPE":
+		updateProbeTable[*models.SPECIFICATION_TYPE](probe)
+	case "SPEC_HIERARCHY":
+		updateProbeTable[*models.SPEC_HIERARCHY](probe)
+	case "SPEC_OBJECT":
+		updateProbeTable[*models.SPEC_OBJECT](probe)
+	case "SPEC_OBJECT_TYPE":
+		updateProbeTable[*models.SPEC_OBJECT_TYPE](probe)
+	case "SPEC_OBJECT_TYPE_Rendering":
+		updateProbeTable[*models.SPEC_OBJECT_TYPE_Rendering](probe)
+	case "SPEC_RELATION":
+		updateProbeTable[*models.SPEC_RELATION](probe)
+	case "SPEC_RELATION_TYPE":
+		updateProbeTable[*models.SPEC_RELATION_TYPE](probe)
+	case "StaticWebSite":
+		updateProbeTable[*models.StaticWebSite](probe)
+	case "StaticWebSiteChapter":
+		updateProbeTable[*models.StaticWebSiteChapter](probe)
+	case "StaticWebSiteGeneratedImage":
+		updateProbeTable[*models.StaticWebSiteGeneratedImage](probe)
+	case "StaticWebSiteImage":
+		updateProbeTable[*models.StaticWebSiteImage](probe)
+	case "StaticWebSiteParagraph":
+		updateProbeTable[*models.StaticWebSiteParagraph](probe)
+	case "XHTML_CONTENT":
+		updateProbeTable[*models.XHTML_CONTENT](probe)
+	}
+}
+
 func updateProbeTable[T models.PointerToGongstruct](
 	probe *Probe,
 ) {
@@ -21,7 +240,7 @@ func updateProbeTable[T models.PointerToGongstruct](
 	probe.tableStage.Reset()
 
 	table := new(gongtable.Table)
-	table.Name = TableName
+	table.Name = models.GetPointerToGongstructName[T]()
 	table.HasColumnSorting = true
 	table.HasFiltering = true
 	table.HasPaginator = true
