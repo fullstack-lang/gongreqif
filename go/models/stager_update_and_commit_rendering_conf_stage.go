@@ -124,6 +124,7 @@ func (stager *Stager) processRenderingConf(stageForRenderingConf *Stage) {
 
 	stager.enforceRenderingConfigurationSemantic()
 
+	stager.GetSpecificationsTreeUpdater().UpdateAttributeDefinitionNb(stager)
 	stager.GetSpecTypesTreeUpdater().UpdateAndCommitSpecTypesTreeStage(stager)
 	stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsMarkdownStage(stager)
 	stager.GetSpecificationsTreeUpdater().UpdateAndCommitSpecificationsTreeStage(stager)
