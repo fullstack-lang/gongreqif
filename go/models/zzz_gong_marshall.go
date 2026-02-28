@@ -40,7 +40,7 @@ func _(stage *models.Stage) {
 }`
 
 const GongIdentifiersDecls = `
-	{{Identifier}} := (&models.{{GeneratedStructName}}{Name: ` + "`" + `{{GeneratedFieldNameValue}}` + "`" + `}).Stage(stage)`
+	{{Identifier}} := (&models.{{GeneratedStructName}}{Name: {{GeneratedFieldNameValue}}}).Stage(stage)`
 
 const GongUnstageStmt = `
 	{{Identifier}}.Unstage(stage)`
@@ -51,7 +51,7 @@ const IdentifiersDeclsWithoutNameInit = `
 	{{Identifier}} := (&models.{{GeneratedStructName}}{}).Stage(stage)` /* */
 
 const StringInitStatement = `
-	{{Identifier}}.{{GeneratedFieldName}} = ` + "`" + `{{GeneratedFieldNameValue}}` + "`"
+	{{Identifier}}.{{GeneratedFieldName}} = {{GeneratedFieldNameValue}}`
 
 const MetaFieldStructInitStatement = `
 	{{Identifier}}.{{GeneratedFieldName}} = ` + `{{GeneratedFieldNameValue}}`
@@ -70,6 +70,24 @@ const SliceOfPointersFieldInitStatement = `
 
 const TimeInitStatement = `
 	{{Identifier}}.{{GeneratedFieldName}}, _ = time.Parse("2006-01-02 15:04:05.999999999 -0700 MST", "{{GeneratedFieldNameValue}}")`
+
+// ToRawStringLiteral formats a string into safe Go source code,
+// using backticks to preserve newlines and readability.
+func ToRawStringLiteral(s string) string {
+	// Step 1: Replace every backtick with a closing backtick,
+	// a double-quoted backtick, and an opening backtick.
+	escaped := strings.ReplaceAll(s, "`", "` + \"`\" + `")
+
+	// Step 2: Wrap the entire resulting string in backticks.
+	result := "`" + escaped + "`"
+
+	// Step 3: Clean up any empty raw strings (``) at the boundaries
+	// just in case your original string started or ended with a backtick.
+	result = strings.ReplaceAll(result, "`` + ", "")
+	result = strings.ReplaceAll(result, " + ``", "")
+
+	return result
+}
 
 // Marshall marshall the stage content into the file as an instanciation into a stage
 func (stage *Stage) Marshall(file *os.File, modelsPackageName, packageName string) {
@@ -116,8 +134,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(alternative_idOrdered[:], func(i, j int) bool {
 		alternative_idi := alternative_idOrdered[i]
 		alternative_idj := alternative_idOrdered[j]
-		alternative_idi_order, oki := stage.ALTERNATIVE_IDMap_Staged_Order[alternative_idi]
-		alternative_idj_order, okj := stage.ALTERNATIVE_IDMap_Staged_Order[alternative_idj]
+		alternative_idi_order, oki := stage.ALTERNATIVE_ID_stagedOrder[alternative_idi]
+		alternative_idj_order, okj := stage.ALTERNATIVE_ID_stagedOrder[alternative_idj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -143,8 +161,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_booleanOrdered[:], func(i, j int) bool {
 		attribute_definition_booleani := attribute_definition_booleanOrdered[i]
 		attribute_definition_booleanj := attribute_definition_booleanOrdered[j]
-		attribute_definition_booleani_order, oki := stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_booleani]
-		attribute_definition_booleanj_order, okj := stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_booleanj]
+		attribute_definition_booleani_order, oki := stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder[attribute_definition_booleani]
+		attribute_definition_booleanj_order, okj := stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder[attribute_definition_booleanj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -177,8 +195,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_boolean_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_boolean_renderingi := attribute_definition_boolean_renderingOrdered[i]
 		attribute_definition_boolean_renderingj := attribute_definition_boolean_renderingOrdered[j]
-		attribute_definition_boolean_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_renderingi]
-		attribute_definition_boolean_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_renderingj]
+		attribute_definition_boolean_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder[attribute_definition_boolean_renderingi]
+		attribute_definition_boolean_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder[attribute_definition_boolean_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -207,8 +225,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_dateOrdered[:], func(i, j int) bool {
 		attribute_definition_datei := attribute_definition_dateOrdered[i]
 		attribute_definition_datej := attribute_definition_dateOrdered[j]
-		attribute_definition_datei_order, oki := stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_datei]
-		attribute_definition_datej_order, okj := stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_datej]
+		attribute_definition_datei_order, oki := stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder[attribute_definition_datei]
+		attribute_definition_datej_order, okj := stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder[attribute_definition_datej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -241,8 +259,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_date_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_date_renderingi := attribute_definition_date_renderingOrdered[i]
 		attribute_definition_date_renderingj := attribute_definition_date_renderingOrdered[j]
-		attribute_definition_date_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_renderingi]
-		attribute_definition_date_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_renderingj]
+		attribute_definition_date_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder[attribute_definition_date_renderingi]
+		attribute_definition_date_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder[attribute_definition_date_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -271,8 +289,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_enumerationOrdered[:], func(i, j int) bool {
 		attribute_definition_enumerationi := attribute_definition_enumerationOrdered[i]
 		attribute_definition_enumerationj := attribute_definition_enumerationOrdered[j]
-		attribute_definition_enumerationi_order, oki := stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumerationi]
-		attribute_definition_enumerationj_order, okj := stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumerationj]
+		attribute_definition_enumerationi_order, oki := stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder[attribute_definition_enumerationi]
+		attribute_definition_enumerationj_order, okj := stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder[attribute_definition_enumerationj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -306,8 +324,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_enumeration_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_enumeration_renderingi := attribute_definition_enumeration_renderingOrdered[i]
 		attribute_definition_enumeration_renderingj := attribute_definition_enumeration_renderingOrdered[j]
-		attribute_definition_enumeration_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_renderingi]
-		attribute_definition_enumeration_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_renderingj]
+		attribute_definition_enumeration_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder[attribute_definition_enumeration_renderingi]
+		attribute_definition_enumeration_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder[attribute_definition_enumeration_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -336,8 +354,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_integerOrdered[:], func(i, j int) bool {
 		attribute_definition_integeri := attribute_definition_integerOrdered[i]
 		attribute_definition_integerj := attribute_definition_integerOrdered[j]
-		attribute_definition_integeri_order, oki := stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integeri]
-		attribute_definition_integerj_order, okj := stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integerj]
+		attribute_definition_integeri_order, oki := stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder[attribute_definition_integeri]
+		attribute_definition_integerj_order, okj := stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder[attribute_definition_integerj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -370,8 +388,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_integer_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_integer_renderingi := attribute_definition_integer_renderingOrdered[i]
 		attribute_definition_integer_renderingj := attribute_definition_integer_renderingOrdered[j]
-		attribute_definition_integer_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_renderingi]
-		attribute_definition_integer_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_renderingj]
+		attribute_definition_integer_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder[attribute_definition_integer_renderingi]
+		attribute_definition_integer_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder[attribute_definition_integer_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -400,8 +418,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_realOrdered[:], func(i, j int) bool {
 		attribute_definition_reali := attribute_definition_realOrdered[i]
 		attribute_definition_realj := attribute_definition_realOrdered[j]
-		attribute_definition_reali_order, oki := stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_reali]
-		attribute_definition_realj_order, okj := stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_realj]
+		attribute_definition_reali_order, oki := stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder[attribute_definition_reali]
+		attribute_definition_realj_order, okj := stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder[attribute_definition_realj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -434,8 +452,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_real_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_real_renderingi := attribute_definition_real_renderingOrdered[i]
 		attribute_definition_real_renderingj := attribute_definition_real_renderingOrdered[j]
-		attribute_definition_real_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_renderingi]
-		attribute_definition_real_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_renderingj]
+		attribute_definition_real_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder[attribute_definition_real_renderingi]
+		attribute_definition_real_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder[attribute_definition_real_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -464,8 +482,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_renderingi := attribute_definition_renderingOrdered[i]
 		attribute_definition_renderingj := attribute_definition_renderingOrdered[j]
-		attribute_definition_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_renderingi]
-		attribute_definition_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_renderingj]
+		attribute_definition_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder[attribute_definition_renderingi]
+		attribute_definition_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder[attribute_definition_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -494,8 +512,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_stringOrdered[:], func(i, j int) bool {
 		attribute_definition_stringi := attribute_definition_stringOrdered[i]
 		attribute_definition_stringj := attribute_definition_stringOrdered[j]
-		attribute_definition_stringi_order, oki := stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_stringi]
-		attribute_definition_stringj_order, okj := stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_stringj]
+		attribute_definition_stringi_order, oki := stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder[attribute_definition_stringi]
+		attribute_definition_stringj_order, okj := stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder[attribute_definition_stringj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -528,8 +546,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_string_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_string_renderingi := attribute_definition_string_renderingOrdered[i]
 		attribute_definition_string_renderingj := attribute_definition_string_renderingOrdered[j]
-		attribute_definition_string_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_renderingi]
-		attribute_definition_string_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_renderingj]
+		attribute_definition_string_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder[attribute_definition_string_renderingi]
+		attribute_definition_string_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder[attribute_definition_string_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -558,8 +576,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_xhtmlOrdered[:], func(i, j int) bool {
 		attribute_definition_xhtmli := attribute_definition_xhtmlOrdered[i]
 		attribute_definition_xhtmlj := attribute_definition_xhtmlOrdered[j]
-		attribute_definition_xhtmli_order, oki := stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtmli]
-		attribute_definition_xhtmlj_order, okj := stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtmlj]
+		attribute_definition_xhtmli_order, oki := stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder[attribute_definition_xhtmli]
+		attribute_definition_xhtmlj_order, okj := stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder[attribute_definition_xhtmlj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -592,8 +610,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_definition_xhtml_renderingOrdered[:], func(i, j int) bool {
 		attribute_definition_xhtml_renderingi := attribute_definition_xhtml_renderingOrdered[i]
 		attribute_definition_xhtml_renderingj := attribute_definition_xhtml_renderingOrdered[j]
-		attribute_definition_xhtml_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_renderingi]
-		attribute_definition_xhtml_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_renderingj]
+		attribute_definition_xhtml_renderingi_order, oki := stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder[attribute_definition_xhtml_renderingi]
+		attribute_definition_xhtml_renderingj_order, okj := stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder[attribute_definition_xhtml_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -622,8 +640,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_booleanOrdered[:], func(i, j int) bool {
 		attribute_value_booleani := attribute_value_booleanOrdered[i]
 		attribute_value_booleanj := attribute_value_booleanOrdered[j]
-		attribute_value_booleani_order, oki := stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_booleani]
-		attribute_value_booleanj_order, okj := stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_booleanj]
+		attribute_value_booleani_order, oki := stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[attribute_value_booleani]
+		attribute_value_booleanj_order, okj := stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[attribute_value_booleanj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -650,8 +668,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_dateOrdered[:], func(i, j int) bool {
 		attribute_value_datei := attribute_value_dateOrdered[i]
 		attribute_value_datej := attribute_value_dateOrdered[j]
-		attribute_value_datei_order, oki := stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_datei]
-		attribute_value_datej_order, okj := stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_datej]
+		attribute_value_datei_order, oki := stage.ATTRIBUTE_VALUE_DATE_stagedOrder[attribute_value_datei]
+		attribute_value_datej_order, okj := stage.ATTRIBUTE_VALUE_DATE_stagedOrder[attribute_value_datej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -678,8 +696,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_enumerationOrdered[:], func(i, j int) bool {
 		attribute_value_enumerationi := attribute_value_enumerationOrdered[i]
 		attribute_value_enumerationj := attribute_value_enumerationOrdered[j]
-		attribute_value_enumerationi_order, oki := stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumerationi]
-		attribute_value_enumerationj_order, okj := stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumerationj]
+		attribute_value_enumerationi_order, oki := stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[attribute_value_enumerationi]
+		attribute_value_enumerationj_order, okj := stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[attribute_value_enumerationj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -706,8 +724,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_integerOrdered[:], func(i, j int) bool {
 		attribute_value_integeri := attribute_value_integerOrdered[i]
 		attribute_value_integerj := attribute_value_integerOrdered[j]
-		attribute_value_integeri_order, oki := stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integeri]
-		attribute_value_integerj_order, okj := stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integerj]
+		attribute_value_integeri_order, oki := stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder[attribute_value_integeri]
+		attribute_value_integerj_order, okj := stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder[attribute_value_integerj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -734,8 +752,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_realOrdered[:], func(i, j int) bool {
 		attribute_value_reali := attribute_value_realOrdered[i]
 		attribute_value_realj := attribute_value_realOrdered[j]
-		attribute_value_reali_order, oki := stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_reali]
-		attribute_value_realj_order, okj := stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_realj]
+		attribute_value_reali_order, oki := stage.ATTRIBUTE_VALUE_REAL_stagedOrder[attribute_value_reali]
+		attribute_value_realj_order, okj := stage.ATTRIBUTE_VALUE_REAL_stagedOrder[attribute_value_realj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -762,8 +780,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_stringOrdered[:], func(i, j int) bool {
 		attribute_value_stringi := attribute_value_stringOrdered[i]
 		attribute_value_stringj := attribute_value_stringOrdered[j]
-		attribute_value_stringi_order, oki := stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_stringi]
-		attribute_value_stringj_order, okj := stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_stringj]
+		attribute_value_stringi_order, oki := stage.ATTRIBUTE_VALUE_STRING_stagedOrder[attribute_value_stringi]
+		attribute_value_stringj_order, okj := stage.ATTRIBUTE_VALUE_STRING_stagedOrder[attribute_value_stringj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -790,8 +808,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(attribute_value_xhtmlOrdered[:], func(i, j int) bool {
 		attribute_value_xhtmli := attribute_value_xhtmlOrdered[i]
 		attribute_value_xhtmlj := attribute_value_xhtmlOrdered[j]
-		attribute_value_xhtmli_order, oki := stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtmli]
-		attribute_value_xhtmlj_order, okj := stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtmlj]
+		attribute_value_xhtmli_order, oki := stage.ATTRIBUTE_VALUE_XHTML_stagedOrder[attribute_value_xhtmli]
+		attribute_value_xhtmlj_order, okj := stage.ATTRIBUTE_VALUE_XHTML_stagedOrder[attribute_value_xhtmlj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -820,8 +838,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_alternative_idOrdered[:], func(i, j int) bool {
 		a_alternative_idi := a_alternative_idOrdered[i]
 		a_alternative_idj := a_alternative_idOrdered[j]
-		a_alternative_idi_order, oki := stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_idi]
-		a_alternative_idj_order, okj := stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_idj]
+		a_alternative_idi_order, oki := stage.A_ALTERNATIVE_ID_stagedOrder[a_alternative_idi]
+		a_alternative_idj_order, okj := stage.A_ALTERNATIVE_ID_stagedOrder[a_alternative_idj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -847,8 +865,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_boolean_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_boolean_refi := a_attribute_definition_boolean_refOrdered[i]
 		a_attribute_definition_boolean_refj := a_attribute_definition_boolean_refOrdered[j]
-		a_attribute_definition_boolean_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_refi]
-		a_attribute_definition_boolean_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_refj]
+		a_attribute_definition_boolean_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder[a_attribute_definition_boolean_refi]
+		a_attribute_definition_boolean_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder[a_attribute_definition_boolean_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -874,8 +892,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_date_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_date_refi := a_attribute_definition_date_refOrdered[i]
 		a_attribute_definition_date_refj := a_attribute_definition_date_refOrdered[j]
-		a_attribute_definition_date_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_refi]
-		a_attribute_definition_date_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_refj]
+		a_attribute_definition_date_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder[a_attribute_definition_date_refi]
+		a_attribute_definition_date_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder[a_attribute_definition_date_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -901,8 +919,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_enumeration_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_enumeration_refi := a_attribute_definition_enumeration_refOrdered[i]
 		a_attribute_definition_enumeration_refj := a_attribute_definition_enumeration_refOrdered[j]
-		a_attribute_definition_enumeration_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_refi]
-		a_attribute_definition_enumeration_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_refj]
+		a_attribute_definition_enumeration_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder[a_attribute_definition_enumeration_refi]
+		a_attribute_definition_enumeration_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder[a_attribute_definition_enumeration_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -928,8 +946,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_integer_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_integer_refi := a_attribute_definition_integer_refOrdered[i]
 		a_attribute_definition_integer_refj := a_attribute_definition_integer_refOrdered[j]
-		a_attribute_definition_integer_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_refi]
-		a_attribute_definition_integer_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_refj]
+		a_attribute_definition_integer_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder[a_attribute_definition_integer_refi]
+		a_attribute_definition_integer_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder[a_attribute_definition_integer_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -955,8 +973,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_real_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_real_refi := a_attribute_definition_real_refOrdered[i]
 		a_attribute_definition_real_refj := a_attribute_definition_real_refOrdered[j]
-		a_attribute_definition_real_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_refi]
-		a_attribute_definition_real_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_refj]
+		a_attribute_definition_real_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder[a_attribute_definition_real_refi]
+		a_attribute_definition_real_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder[a_attribute_definition_real_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -982,8 +1000,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_string_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_string_refi := a_attribute_definition_string_refOrdered[i]
 		a_attribute_definition_string_refj := a_attribute_definition_string_refOrdered[j]
-		a_attribute_definition_string_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_refi]
-		a_attribute_definition_string_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_refj]
+		a_attribute_definition_string_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder[a_attribute_definition_string_refi]
+		a_attribute_definition_string_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder[a_attribute_definition_string_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1009,8 +1027,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_definition_xhtml_refOrdered[:], func(i, j int) bool {
 		a_attribute_definition_xhtml_refi := a_attribute_definition_xhtml_refOrdered[i]
 		a_attribute_definition_xhtml_refj := a_attribute_definition_xhtml_refOrdered[j]
-		a_attribute_definition_xhtml_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_refi]
-		a_attribute_definition_xhtml_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_refj]
+		a_attribute_definition_xhtml_refi_order, oki := stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder[a_attribute_definition_xhtml_refi]
+		a_attribute_definition_xhtml_refj_order, okj := stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder[a_attribute_definition_xhtml_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1036,8 +1054,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_booleanOrdered[:], func(i, j int) bool {
 		a_attribute_value_booleani := a_attribute_value_booleanOrdered[i]
 		a_attribute_value_booleanj := a_attribute_value_booleanOrdered[j]
-		a_attribute_value_booleani_order, oki := stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_booleani]
-		a_attribute_value_booleanj_order, okj := stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_booleanj]
+		a_attribute_value_booleani_order, oki := stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[a_attribute_value_booleani]
+		a_attribute_value_booleanj_order, okj := stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[a_attribute_value_booleanj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1063,8 +1081,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_dateOrdered[:], func(i, j int) bool {
 		a_attribute_value_datei := a_attribute_value_dateOrdered[i]
 		a_attribute_value_datej := a_attribute_value_dateOrdered[j]
-		a_attribute_value_datei_order, oki := stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_datei]
-		a_attribute_value_datej_order, okj := stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_datej]
+		a_attribute_value_datei_order, oki := stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder[a_attribute_value_datei]
+		a_attribute_value_datej_order, okj := stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder[a_attribute_value_datej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1090,8 +1108,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_enumerationOrdered[:], func(i, j int) bool {
 		a_attribute_value_enumerationi := a_attribute_value_enumerationOrdered[i]
 		a_attribute_value_enumerationj := a_attribute_value_enumerationOrdered[j]
-		a_attribute_value_enumerationi_order, oki := stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumerationi]
-		a_attribute_value_enumerationj_order, okj := stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumerationj]
+		a_attribute_value_enumerationi_order, oki := stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[a_attribute_value_enumerationi]
+		a_attribute_value_enumerationj_order, okj := stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[a_attribute_value_enumerationj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1117,8 +1135,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_integerOrdered[:], func(i, j int) bool {
 		a_attribute_value_integeri := a_attribute_value_integerOrdered[i]
 		a_attribute_value_integerj := a_attribute_value_integerOrdered[j]
-		a_attribute_value_integeri_order, oki := stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integeri]
-		a_attribute_value_integerj_order, okj := stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integerj]
+		a_attribute_value_integeri_order, oki := stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder[a_attribute_value_integeri]
+		a_attribute_value_integerj_order, okj := stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder[a_attribute_value_integerj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1144,8 +1162,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_realOrdered[:], func(i, j int) bool {
 		a_attribute_value_reali := a_attribute_value_realOrdered[i]
 		a_attribute_value_realj := a_attribute_value_realOrdered[j]
-		a_attribute_value_reali_order, oki := stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_reali]
-		a_attribute_value_realj_order, okj := stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_realj]
+		a_attribute_value_reali_order, oki := stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder[a_attribute_value_reali]
+		a_attribute_value_realj_order, okj := stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder[a_attribute_value_realj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1171,8 +1189,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_stringOrdered[:], func(i, j int) bool {
 		a_attribute_value_stringi := a_attribute_value_stringOrdered[i]
 		a_attribute_value_stringj := a_attribute_value_stringOrdered[j]
-		a_attribute_value_stringi_order, oki := stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_stringi]
-		a_attribute_value_stringj_order, okj := stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_stringj]
+		a_attribute_value_stringi_order, oki := stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder[a_attribute_value_stringi]
+		a_attribute_value_stringj_order, okj := stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder[a_attribute_value_stringj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1198,8 +1216,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_xhtmlOrdered[:], func(i, j int) bool {
 		a_attribute_value_xhtmli := a_attribute_value_xhtmlOrdered[i]
 		a_attribute_value_xhtmlj := a_attribute_value_xhtmlOrdered[j]
-		a_attribute_value_xhtmli_order, oki := stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtmli]
-		a_attribute_value_xhtmlj_order, okj := stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtmlj]
+		a_attribute_value_xhtmli_order, oki := stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder[a_attribute_value_xhtmli]
+		a_attribute_value_xhtmlj_order, okj := stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder[a_attribute_value_xhtmlj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1225,8 +1243,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_attribute_value_xhtml_1Ordered[:], func(i, j int) bool {
 		a_attribute_value_xhtml_1i := a_attribute_value_xhtml_1Ordered[i]
 		a_attribute_value_xhtml_1j := a_attribute_value_xhtml_1Ordered[j]
-		a_attribute_value_xhtml_1i_order, oki := stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1i]
-		a_attribute_value_xhtml_1j_order, okj := stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1j]
+		a_attribute_value_xhtml_1i_order, oki := stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder[a_attribute_value_xhtml_1i]
+		a_attribute_value_xhtml_1j_order, okj := stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder[a_attribute_value_xhtml_1j]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1258,8 +1276,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_childrenOrdered[:], func(i, j int) bool {
 		a_childreni := a_childrenOrdered[i]
 		a_childrenj := a_childrenOrdered[j]
-		a_childreni_order, oki := stage.A_CHILDRENMap_Staged_Order[a_childreni]
-		a_childrenj_order, okj := stage.A_CHILDRENMap_Staged_Order[a_childrenj]
+		a_childreni_order, oki := stage.A_CHILDREN_stagedOrder[a_childreni]
+		a_childrenj_order, okj := stage.A_CHILDREN_stagedOrder[a_childrenj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1285,8 +1303,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_core_contentOrdered[:], func(i, j int) bool {
 		a_core_contenti := a_core_contentOrdered[i]
 		a_core_contentj := a_core_contentOrdered[j]
-		a_core_contenti_order, oki := stage.A_CORE_CONTENTMap_Staged_Order[a_core_contenti]
-		a_core_contentj_order, okj := stage.A_CORE_CONTENTMap_Staged_Order[a_core_contentj]
+		a_core_contenti_order, oki := stage.A_CORE_CONTENT_stagedOrder[a_core_contenti]
+		a_core_contentj_order, okj := stage.A_CORE_CONTENT_stagedOrder[a_core_contentj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1312,8 +1330,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatypesOrdered[:], func(i, j int) bool {
 		a_datatypesi := a_datatypesOrdered[i]
 		a_datatypesj := a_datatypesOrdered[j]
-		a_datatypesi_order, oki := stage.A_DATATYPESMap_Staged_Order[a_datatypesi]
-		a_datatypesj_order, okj := stage.A_DATATYPESMap_Staged_Order[a_datatypesj]
+		a_datatypesi_order, oki := stage.A_DATATYPES_stagedOrder[a_datatypesi]
+		a_datatypesj_order, okj := stage.A_DATATYPES_stagedOrder[a_datatypesj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1345,8 +1363,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_boolean_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_boolean_refi := a_datatype_definition_boolean_refOrdered[i]
 		a_datatype_definition_boolean_refj := a_datatype_definition_boolean_refOrdered[j]
-		a_datatype_definition_boolean_refi_order, oki := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_refi]
-		a_datatype_definition_boolean_refj_order, okj := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_refj]
+		a_datatype_definition_boolean_refi_order, oki := stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder[a_datatype_definition_boolean_refi]
+		a_datatype_definition_boolean_refj_order, okj := stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder[a_datatype_definition_boolean_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1372,8 +1390,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_date_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_date_refi := a_datatype_definition_date_refOrdered[i]
 		a_datatype_definition_date_refj := a_datatype_definition_date_refOrdered[j]
-		a_datatype_definition_date_refi_order, oki := stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_refi]
-		a_datatype_definition_date_refj_order, okj := stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_refj]
+		a_datatype_definition_date_refi_order, oki := stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder[a_datatype_definition_date_refi]
+		a_datatype_definition_date_refj_order, okj := stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder[a_datatype_definition_date_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1399,8 +1417,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_enumeration_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_enumeration_refi := a_datatype_definition_enumeration_refOrdered[i]
 		a_datatype_definition_enumeration_refj := a_datatype_definition_enumeration_refOrdered[j]
-		a_datatype_definition_enumeration_refi_order, oki := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_refi]
-		a_datatype_definition_enumeration_refj_order, okj := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_refj]
+		a_datatype_definition_enumeration_refi_order, oki := stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder[a_datatype_definition_enumeration_refi]
+		a_datatype_definition_enumeration_refj_order, okj := stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder[a_datatype_definition_enumeration_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1426,8 +1444,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_integer_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_integer_refi := a_datatype_definition_integer_refOrdered[i]
 		a_datatype_definition_integer_refj := a_datatype_definition_integer_refOrdered[j]
-		a_datatype_definition_integer_refi_order, oki := stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_refi]
-		a_datatype_definition_integer_refj_order, okj := stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_refj]
+		a_datatype_definition_integer_refi_order, oki := stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder[a_datatype_definition_integer_refi]
+		a_datatype_definition_integer_refj_order, okj := stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder[a_datatype_definition_integer_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1453,8 +1471,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_real_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_real_refi := a_datatype_definition_real_refOrdered[i]
 		a_datatype_definition_real_refj := a_datatype_definition_real_refOrdered[j]
-		a_datatype_definition_real_refi_order, oki := stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_refi]
-		a_datatype_definition_real_refj_order, okj := stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_refj]
+		a_datatype_definition_real_refi_order, oki := stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder[a_datatype_definition_real_refi]
+		a_datatype_definition_real_refj_order, okj := stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder[a_datatype_definition_real_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1480,8 +1498,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_string_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_string_refi := a_datatype_definition_string_refOrdered[i]
 		a_datatype_definition_string_refj := a_datatype_definition_string_refOrdered[j]
-		a_datatype_definition_string_refi_order, oki := stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_refi]
-		a_datatype_definition_string_refj_order, okj := stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_refj]
+		a_datatype_definition_string_refi_order, oki := stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder[a_datatype_definition_string_refi]
+		a_datatype_definition_string_refj_order, okj := stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder[a_datatype_definition_string_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1507,8 +1525,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_datatype_definition_xhtml_refOrdered[:], func(i, j int) bool {
 		a_datatype_definition_xhtml_refi := a_datatype_definition_xhtml_refOrdered[i]
 		a_datatype_definition_xhtml_refj := a_datatype_definition_xhtml_refOrdered[j]
-		a_datatype_definition_xhtml_refi_order, oki := stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_refi]
-		a_datatype_definition_xhtml_refj_order, okj := stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_refj]
+		a_datatype_definition_xhtml_refi_order, oki := stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder[a_datatype_definition_xhtml_refi]
+		a_datatype_definition_xhtml_refj_order, okj := stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder[a_datatype_definition_xhtml_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1534,8 +1552,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_editable_attsOrdered[:], func(i, j int) bool {
 		a_editable_attsi := a_editable_attsOrdered[i]
 		a_editable_attsj := a_editable_attsOrdered[j]
-		a_editable_attsi_order, oki := stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_attsi]
-		a_editable_attsj_order, okj := stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_attsj]
+		a_editable_attsi_order, oki := stage.A_EDITABLE_ATTS_stagedOrder[a_editable_attsi]
+		a_editable_attsj_order, okj := stage.A_EDITABLE_ATTS_stagedOrder[a_editable_attsj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1567,8 +1585,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_enum_value_refOrdered[:], func(i, j int) bool {
 		a_enum_value_refi := a_enum_value_refOrdered[i]
 		a_enum_value_refj := a_enum_value_refOrdered[j]
-		a_enum_value_refi_order, oki := stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_refi]
-		a_enum_value_refj_order, okj := stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_refj]
+		a_enum_value_refi_order, oki := stage.A_ENUM_VALUE_REF_stagedOrder[a_enum_value_refi]
+		a_enum_value_refj_order, okj := stage.A_ENUM_VALUE_REF_stagedOrder[a_enum_value_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1594,8 +1612,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_objectOrdered[:], func(i, j int) bool {
 		a_objecti := a_objectOrdered[i]
 		a_objectj := a_objectOrdered[j]
-		a_objecti_order, oki := stage.A_OBJECTMap_Staged_Order[a_objecti]
-		a_objectj_order, okj := stage.A_OBJECTMap_Staged_Order[a_objectj]
+		a_objecti_order, oki := stage.A_OBJECT_stagedOrder[a_objecti]
+		a_objectj_order, okj := stage.A_OBJECT_stagedOrder[a_objectj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1621,8 +1639,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_propertiesOrdered[:], func(i, j int) bool {
 		a_propertiesi := a_propertiesOrdered[i]
 		a_propertiesj := a_propertiesOrdered[j]
-		a_propertiesi_order, oki := stage.A_PROPERTIESMap_Staged_Order[a_propertiesi]
-		a_propertiesj_order, okj := stage.A_PROPERTIESMap_Staged_Order[a_propertiesj]
+		a_propertiesi_order, oki := stage.A_PROPERTIES_stagedOrder[a_propertiesi]
+		a_propertiesj_order, okj := stage.A_PROPERTIES_stagedOrder[a_propertiesj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1648,8 +1666,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_relation_group_type_refOrdered[:], func(i, j int) bool {
 		a_relation_group_type_refi := a_relation_group_type_refOrdered[i]
 		a_relation_group_type_refj := a_relation_group_type_refOrdered[j]
-		a_relation_group_type_refi_order, oki := stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_refi]
-		a_relation_group_type_refj_order, okj := stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_refj]
+		a_relation_group_type_refi_order, oki := stage.A_RELATION_GROUP_TYPE_REF_stagedOrder[a_relation_group_type_refi]
+		a_relation_group_type_refj_order, okj := stage.A_RELATION_GROUP_TYPE_REF_stagedOrder[a_relation_group_type_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1675,8 +1693,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_source_1Ordered[:], func(i, j int) bool {
 		a_source_1i := a_source_1Ordered[i]
 		a_source_1j := a_source_1Ordered[j]
-		a_source_1i_order, oki := stage.A_SOURCE_1Map_Staged_Order[a_source_1i]
-		a_source_1j_order, okj := stage.A_SOURCE_1Map_Staged_Order[a_source_1j]
+		a_source_1i_order, oki := stage.A_SOURCE_1_stagedOrder[a_source_1i]
+		a_source_1j_order, okj := stage.A_SOURCE_1_stagedOrder[a_source_1j]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1702,8 +1720,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_source_specification_1Ordered[:], func(i, j int) bool {
 		a_source_specification_1i := a_source_specification_1Ordered[i]
 		a_source_specification_1j := a_source_specification_1Ordered[j]
-		a_source_specification_1i_order, oki := stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1i]
-		a_source_specification_1j_order, okj := stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1j]
+		a_source_specification_1i_order, oki := stage.A_SOURCE_SPECIFICATION_1_stagedOrder[a_source_specification_1i]
+		a_source_specification_1j_order, okj := stage.A_SOURCE_SPECIFICATION_1_stagedOrder[a_source_specification_1j]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1729,8 +1747,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_specificationsOrdered[:], func(i, j int) bool {
 		a_specificationsi := a_specificationsOrdered[i]
 		a_specificationsj := a_specificationsOrdered[j]
-		a_specificationsi_order, oki := stage.A_SPECIFICATIONSMap_Staged_Order[a_specificationsi]
-		a_specificationsj_order, okj := stage.A_SPECIFICATIONSMap_Staged_Order[a_specificationsj]
+		a_specificationsi_order, oki := stage.A_SPECIFICATIONS_stagedOrder[a_specificationsi]
+		a_specificationsj_order, okj := stage.A_SPECIFICATIONS_stagedOrder[a_specificationsj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1756,8 +1774,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_specification_type_refOrdered[:], func(i, j int) bool {
 		a_specification_type_refi := a_specification_type_refOrdered[i]
 		a_specification_type_refj := a_specification_type_refOrdered[j]
-		a_specification_type_refi_order, oki := stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_refi]
-		a_specification_type_refj_order, okj := stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_refj]
+		a_specification_type_refi_order, oki := stage.A_SPECIFICATION_TYPE_REF_stagedOrder[a_specification_type_refi]
+		a_specification_type_refj_order, okj := stage.A_SPECIFICATION_TYPE_REF_stagedOrder[a_specification_type_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1783,8 +1801,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_specified_valuesOrdered[:], func(i, j int) bool {
 		a_specified_valuesi := a_specified_valuesOrdered[i]
 		a_specified_valuesj := a_specified_valuesOrdered[j]
-		a_specified_valuesi_order, oki := stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_valuesi]
-		a_specified_valuesj_order, okj := stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_valuesj]
+		a_specified_valuesi_order, oki := stage.A_SPECIFIED_VALUES_stagedOrder[a_specified_valuesi]
+		a_specified_valuesj_order, okj := stage.A_SPECIFIED_VALUES_stagedOrder[a_specified_valuesj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1810,8 +1828,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_attributesOrdered[:], func(i, j int) bool {
 		a_spec_attributesi := a_spec_attributesOrdered[i]
 		a_spec_attributesj := a_spec_attributesOrdered[j]
-		a_spec_attributesi_order, oki := stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributesi]
-		a_spec_attributesj_order, okj := stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributesj]
+		a_spec_attributesi_order, oki := stage.A_SPEC_ATTRIBUTES_stagedOrder[a_spec_attributesi]
+		a_spec_attributesj_order, okj := stage.A_SPEC_ATTRIBUTES_stagedOrder[a_spec_attributesj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1843,8 +1861,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_objectsOrdered[:], func(i, j int) bool {
 		a_spec_objectsi := a_spec_objectsOrdered[i]
 		a_spec_objectsj := a_spec_objectsOrdered[j]
-		a_spec_objectsi_order, oki := stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objectsi]
-		a_spec_objectsj_order, okj := stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objectsj]
+		a_spec_objectsi_order, oki := stage.A_SPEC_OBJECTS_stagedOrder[a_spec_objectsi]
+		a_spec_objectsj_order, okj := stage.A_SPEC_OBJECTS_stagedOrder[a_spec_objectsj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1870,8 +1888,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_object_type_refOrdered[:], func(i, j int) bool {
 		a_spec_object_type_refi := a_spec_object_type_refOrdered[i]
 		a_spec_object_type_refj := a_spec_object_type_refOrdered[j]
-		a_spec_object_type_refi_order, oki := stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_refi]
-		a_spec_object_type_refj_order, okj := stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_refj]
+		a_spec_object_type_refi_order, oki := stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder[a_spec_object_type_refi]
+		a_spec_object_type_refj_order, okj := stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder[a_spec_object_type_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1897,8 +1915,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_relationsOrdered[:], func(i, j int) bool {
 		a_spec_relationsi := a_spec_relationsOrdered[i]
 		a_spec_relationsj := a_spec_relationsOrdered[j]
-		a_spec_relationsi_order, oki := stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relationsi]
-		a_spec_relationsj_order, okj := stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relationsj]
+		a_spec_relationsi_order, oki := stage.A_SPEC_RELATIONS_stagedOrder[a_spec_relationsi]
+		a_spec_relationsj_order, okj := stage.A_SPEC_RELATIONS_stagedOrder[a_spec_relationsj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1924,8 +1942,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_relation_groupsOrdered[:], func(i, j int) bool {
 		a_spec_relation_groupsi := a_spec_relation_groupsOrdered[i]
 		a_spec_relation_groupsj := a_spec_relation_groupsOrdered[j]
-		a_spec_relation_groupsi_order, oki := stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groupsi]
-		a_spec_relation_groupsj_order, okj := stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groupsj]
+		a_spec_relation_groupsi_order, oki := stage.A_SPEC_RELATION_GROUPS_stagedOrder[a_spec_relation_groupsi]
+		a_spec_relation_groupsj_order, okj := stage.A_SPEC_RELATION_GROUPS_stagedOrder[a_spec_relation_groupsj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1951,8 +1969,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_relation_refOrdered[:], func(i, j int) bool {
 		a_spec_relation_refi := a_spec_relation_refOrdered[i]
 		a_spec_relation_refj := a_spec_relation_refOrdered[j]
-		a_spec_relation_refi_order, oki := stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_refi]
-		a_spec_relation_refj_order, okj := stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_refj]
+		a_spec_relation_refi_order, oki := stage.A_SPEC_RELATION_REF_stagedOrder[a_spec_relation_refi]
+		a_spec_relation_refj_order, okj := stage.A_SPEC_RELATION_REF_stagedOrder[a_spec_relation_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -1978,8 +1996,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_relation_type_refOrdered[:], func(i, j int) bool {
 		a_spec_relation_type_refi := a_spec_relation_type_refOrdered[i]
 		a_spec_relation_type_refj := a_spec_relation_type_refOrdered[j]
-		a_spec_relation_type_refi_order, oki := stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_refi]
-		a_spec_relation_type_refj_order, okj := stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_refj]
+		a_spec_relation_type_refi_order, oki := stage.A_SPEC_RELATION_TYPE_REF_stagedOrder[a_spec_relation_type_refi]
+		a_spec_relation_type_refj_order, okj := stage.A_SPEC_RELATION_TYPE_REF_stagedOrder[a_spec_relation_type_refj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2005,8 +2023,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_spec_typesOrdered[:], func(i, j int) bool {
 		a_spec_typesi := a_spec_typesOrdered[i]
 		a_spec_typesj := a_spec_typesOrdered[j]
-		a_spec_typesi_order, oki := stage.A_SPEC_TYPESMap_Staged_Order[a_spec_typesi]
-		a_spec_typesj_order, okj := stage.A_SPEC_TYPESMap_Staged_Order[a_spec_typesj]
+		a_spec_typesi_order, oki := stage.A_SPEC_TYPES_stagedOrder[a_spec_typesi]
+		a_spec_typesj_order, okj := stage.A_SPEC_TYPES_stagedOrder[a_spec_typesj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2035,8 +2053,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_the_headerOrdered[:], func(i, j int) bool {
 		a_the_headeri := a_the_headerOrdered[i]
 		a_the_headerj := a_the_headerOrdered[j]
-		a_the_headeri_order, oki := stage.A_THE_HEADERMap_Staged_Order[a_the_headeri]
-		a_the_headerj_order, okj := stage.A_THE_HEADERMap_Staged_Order[a_the_headerj]
+		a_the_headeri_order, oki := stage.A_THE_HEADER_stagedOrder[a_the_headeri]
+		a_the_headerj_order, okj := stage.A_THE_HEADER_stagedOrder[a_the_headerj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2062,8 +2080,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(a_tool_extensionsOrdered[:], func(i, j int) bool {
 		a_tool_extensionsi := a_tool_extensionsOrdered[i]
 		a_tool_extensionsj := a_tool_extensionsOrdered[j]
-		a_tool_extensionsi_order, oki := stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensionsi]
-		a_tool_extensionsj_order, okj := stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensionsj]
+		a_tool_extensionsi_order, oki := stage.A_TOOL_EXTENSIONS_stagedOrder[a_tool_extensionsi]
+		a_tool_extensionsj_order, okj := stage.A_TOOL_EXTENSIONS_stagedOrder[a_tool_extensionsj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2089,8 +2107,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_booleanOrdered[:], func(i, j int) bool {
 		datatype_definition_booleani := datatype_definition_booleanOrdered[i]
 		datatype_definition_booleanj := datatype_definition_booleanOrdered[j]
-		datatype_definition_booleani_order, oki := stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_booleani]
-		datatype_definition_booleanj_order, okj := stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_booleanj]
+		datatype_definition_booleani_order, oki := stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder[datatype_definition_booleani]
+		datatype_definition_booleanj_order, okj := stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder[datatype_definition_booleanj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2120,8 +2138,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_dateOrdered[:], func(i, j int) bool {
 		datatype_definition_datei := datatype_definition_dateOrdered[i]
 		datatype_definition_datej := datatype_definition_dateOrdered[j]
-		datatype_definition_datei_order, oki := stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_datei]
-		datatype_definition_datej_order, okj := stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_datej]
+		datatype_definition_datei_order, oki := stage.DATATYPE_DEFINITION_DATE_stagedOrder[datatype_definition_datei]
+		datatype_definition_datej_order, okj := stage.DATATYPE_DEFINITION_DATE_stagedOrder[datatype_definition_datej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2151,8 +2169,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_enumerationOrdered[:], func(i, j int) bool {
 		datatype_definition_enumerationi := datatype_definition_enumerationOrdered[i]
 		datatype_definition_enumerationj := datatype_definition_enumerationOrdered[j]
-		datatype_definition_enumerationi_order, oki := stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumerationi]
-		datatype_definition_enumerationj_order, okj := stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumerationj]
+		datatype_definition_enumerationi_order, oki := stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder[datatype_definition_enumerationi]
+		datatype_definition_enumerationj_order, okj := stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder[datatype_definition_enumerationj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2183,8 +2201,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_integerOrdered[:], func(i, j int) bool {
 		datatype_definition_integeri := datatype_definition_integerOrdered[i]
 		datatype_definition_integerj := datatype_definition_integerOrdered[j]
-		datatype_definition_integeri_order, oki := stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integeri]
-		datatype_definition_integerj_order, okj := stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integerj]
+		datatype_definition_integeri_order, oki := stage.DATATYPE_DEFINITION_INTEGER_stagedOrder[datatype_definition_integeri]
+		datatype_definition_integerj_order, okj := stage.DATATYPE_DEFINITION_INTEGER_stagedOrder[datatype_definition_integerj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2216,8 +2234,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_realOrdered[:], func(i, j int) bool {
 		datatype_definition_reali := datatype_definition_realOrdered[i]
 		datatype_definition_realj := datatype_definition_realOrdered[j]
-		datatype_definition_reali_order, oki := stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_reali]
-		datatype_definition_realj_order, okj := stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_realj]
+		datatype_definition_reali_order, oki := stage.DATATYPE_DEFINITION_REAL_stagedOrder[datatype_definition_reali]
+		datatype_definition_realj_order, okj := stage.DATATYPE_DEFINITION_REAL_stagedOrder[datatype_definition_realj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2250,8 +2268,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_stringOrdered[:], func(i, j int) bool {
 		datatype_definition_stringi := datatype_definition_stringOrdered[i]
 		datatype_definition_stringj := datatype_definition_stringOrdered[j]
-		datatype_definition_stringi_order, oki := stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_stringi]
-		datatype_definition_stringj_order, okj := stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_stringj]
+		datatype_definition_stringi_order, oki := stage.DATATYPE_DEFINITION_STRING_stagedOrder[datatype_definition_stringi]
+		datatype_definition_stringj_order, okj := stage.DATATYPE_DEFINITION_STRING_stagedOrder[datatype_definition_stringj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2282,8 +2300,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(datatype_definition_xhtmlOrdered[:], func(i, j int) bool {
 		datatype_definition_xhtmli := datatype_definition_xhtmlOrdered[i]
 		datatype_definition_xhtmlj := datatype_definition_xhtmlOrdered[j]
-		datatype_definition_xhtmli_order, oki := stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtmli]
-		datatype_definition_xhtmlj_order, okj := stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtmlj]
+		datatype_definition_xhtmli_order, oki := stage.DATATYPE_DEFINITION_XHTML_stagedOrder[datatype_definition_xhtmli]
+		datatype_definition_xhtmlj_order, okj := stage.DATATYPE_DEFINITION_XHTML_stagedOrder[datatype_definition_xhtmlj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2313,8 +2331,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(embedded_valueOrdered[:], func(i, j int) bool {
 		embedded_valuei := embedded_valueOrdered[i]
 		embedded_valuej := embedded_valueOrdered[j]
-		embedded_valuei_order, oki := stage.EMBEDDED_VALUEMap_Staged_Order[embedded_valuei]
-		embedded_valuej_order, okj := stage.EMBEDDED_VALUEMap_Staged_Order[embedded_valuej]
+		embedded_valuei_order, oki := stage.EMBEDDED_VALUE_stagedOrder[embedded_valuei]
+		embedded_valuej_order, okj := stage.EMBEDDED_VALUE_stagedOrder[embedded_valuej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2341,8 +2359,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(enum_valueOrdered[:], func(i, j int) bool {
 		enum_valuei := enum_valueOrdered[i]
 		enum_valuej := enum_valueOrdered[j]
-		enum_valuei_order, oki := stage.ENUM_VALUEMap_Staged_Order[enum_valuei]
-		enum_valuej_order, okj := stage.ENUM_VALUEMap_Staged_Order[enum_valuej]
+		enum_valuei_order, oki := stage.ENUM_VALUE_stagedOrder[enum_valuei]
+		enum_valuej_order, okj := stage.ENUM_VALUE_stagedOrder[enum_valuej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2373,8 +2391,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(embeddedjpgimageOrdered[:], func(i, j int) bool {
 		embeddedjpgimagei := embeddedjpgimageOrdered[i]
 		embeddedjpgimagej := embeddedjpgimageOrdered[j]
-		embeddedjpgimagei_order, oki := stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimagei]
-		embeddedjpgimagej_order, okj := stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimagej]
+		embeddedjpgimagei_order, oki := stage.EmbeddedJpgImage_stagedOrder[embeddedjpgimagei]
+		embeddedjpgimagej_order, okj := stage.EmbeddedJpgImage_stagedOrder[embeddedjpgimagej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2400,8 +2418,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(embeddedpngimageOrdered[:], func(i, j int) bool {
 		embeddedpngimagei := embeddedpngimageOrdered[i]
 		embeddedpngimagej := embeddedpngimageOrdered[j]
-		embeddedpngimagei_order, oki := stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimagei]
-		embeddedpngimagej_order, okj := stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimagej]
+		embeddedpngimagei_order, oki := stage.EmbeddedPngImage_stagedOrder[embeddedpngimagei]
+		embeddedpngimagej_order, okj := stage.EmbeddedPngImage_stagedOrder[embeddedpngimagej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2427,8 +2445,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(embeddedsvgimageOrdered[:], func(i, j int) bool {
 		embeddedsvgimagei := embeddedsvgimageOrdered[i]
 		embeddedsvgimagej := embeddedsvgimageOrdered[j]
-		embeddedsvgimagei_order, oki := stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimagei]
-		embeddedsvgimagej_order, okj := stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimagej]
+		embeddedsvgimagei_order, oki := stage.EmbeddedSvgImage_stagedOrder[embeddedsvgimagei]
+		embeddedsvgimagej_order, okj := stage.EmbeddedSvgImage_stagedOrder[embeddedsvgimagej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2454,8 +2472,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(killOrdered[:], func(i, j int) bool {
 		killi := killOrdered[i]
 		killj := killOrdered[j]
-		killi_order, oki := stage.KillMap_Staged_Order[killi]
-		killj_order, okj := stage.KillMap_Staged_Order[killj]
+		killi_order, oki := stage.Kill_stagedOrder[killi]
+		killj_order, okj := stage.Kill_stagedOrder[killj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2480,8 +2498,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(map_identifier_boolOrdered[:], func(i, j int) bool {
 		map_identifier_booli := map_identifier_boolOrdered[i]
 		map_identifier_boolj := map_identifier_boolOrdered[j]
-		map_identifier_booli_order, oki := stage.Map_identifier_boolMap_Staged_Order[map_identifier_booli]
-		map_identifier_boolj_order, okj := stage.Map_identifier_boolMap_Staged_Order[map_identifier_boolj]
+		map_identifier_booli_order, oki := stage.Map_identifier_bool_stagedOrder[map_identifier_booli]
+		map_identifier_boolj_order, okj := stage.Map_identifier_bool_stagedOrder[map_identifier_boolj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2507,8 +2525,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(relation_groupOrdered[:], func(i, j int) bool {
 		relation_groupi := relation_groupOrdered[i]
 		relation_groupj := relation_groupOrdered[j]
-		relation_groupi_order, oki := stage.RELATION_GROUPMap_Staged_Order[relation_groupi]
-		relation_groupj_order, okj := stage.RELATION_GROUPMap_Staged_Order[relation_groupj]
+		relation_groupi_order, oki := stage.RELATION_GROUP_stagedOrder[relation_groupi]
+		relation_groupj_order, okj := stage.RELATION_GROUP_stagedOrder[relation_groupj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2542,8 +2560,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(relation_group_typeOrdered[:], func(i, j int) bool {
 		relation_group_typei := relation_group_typeOrdered[i]
 		relation_group_typej := relation_group_typeOrdered[j]
-		relation_group_typei_order, oki := stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_typei]
-		relation_group_typej_order, okj := stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_typej]
+		relation_group_typei_order, oki := stage.RELATION_GROUP_TYPE_stagedOrder[relation_group_typei]
+		relation_group_typej_order, okj := stage.RELATION_GROUP_TYPE_stagedOrder[relation_group_typej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2574,8 +2592,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(req_ifOrdered[:], func(i, j int) bool {
 		req_ifi := req_ifOrdered[i]
 		req_ifj := req_ifOrdered[j]
-		req_ifi_order, oki := stage.REQ_IFMap_Staged_Order[req_ifi]
-		req_ifj_order, okj := stage.REQ_IFMap_Staged_Order[req_ifj]
+		req_ifi_order, oki := stage.REQ_IF_stagedOrder[req_ifi]
+		req_ifj_order, okj := stage.REQ_IF_stagedOrder[req_ifj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2604,8 +2622,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(req_if_contentOrdered[:], func(i, j int) bool {
 		req_if_contenti := req_if_contentOrdered[i]
 		req_if_contentj := req_if_contentOrdered[j]
-		req_if_contenti_order, oki := stage.REQ_IF_CONTENTMap_Staged_Order[req_if_contenti]
-		req_if_contentj_order, okj := stage.REQ_IF_CONTENTMap_Staged_Order[req_if_contentj]
+		req_if_contenti_order, oki := stage.REQ_IF_CONTENT_stagedOrder[req_if_contenti]
+		req_if_contentj_order, okj := stage.REQ_IF_CONTENT_stagedOrder[req_if_contentj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2636,8 +2654,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(req_if_headerOrdered[:], func(i, j int) bool {
 		req_if_headeri := req_if_headerOrdered[i]
 		req_if_headerj := req_if_headerOrdered[j]
-		req_if_headeri_order, oki := stage.REQ_IF_HEADERMap_Staged_Order[req_if_headeri]
-		req_if_headerj_order, okj := stage.REQ_IF_HEADERMap_Staged_Order[req_if_headerj]
+		req_if_headeri_order, oki := stage.REQ_IF_HEADER_stagedOrder[req_if_headeri]
+		req_if_headerj_order, okj := stage.REQ_IF_HEADER_stagedOrder[req_if_headerj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2670,8 +2688,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(req_if_tool_extensionOrdered[:], func(i, j int) bool {
 		req_if_tool_extensioni := req_if_tool_extensionOrdered[i]
 		req_if_tool_extensionj := req_if_tool_extensionOrdered[j]
-		req_if_tool_extensioni_order, oki := stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extensioni]
-		req_if_tool_extensionj_order, okj := stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extensionj]
+		req_if_tool_extensioni_order, oki := stage.REQ_IF_TOOL_EXTENSION_stagedOrder[req_if_tool_extensioni]
+		req_if_tool_extensionj_order, okj := stage.REQ_IF_TOOL_EXTENSION_stagedOrder[req_if_tool_extensionj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2696,8 +2714,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(specificationOrdered[:], func(i, j int) bool {
 		specificationi := specificationOrdered[i]
 		specificationj := specificationOrdered[j]
-		specificationi_order, oki := stage.SPECIFICATIONMap_Staged_Order[specificationi]
-		specificationj_order, okj := stage.SPECIFICATIONMap_Staged_Order[specificationj]
+		specificationi_order, oki := stage.SPECIFICATION_stagedOrder[specificationi]
+		specificationj_order, okj := stage.SPECIFICATION_stagedOrder[specificationj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2730,8 +2748,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(specification_renderingOrdered[:], func(i, j int) bool {
 		specification_renderingi := specification_renderingOrdered[i]
 		specification_renderingj := specification_renderingOrdered[j]
-		specification_renderingi_order, oki := stage.SPECIFICATION_RenderingMap_Staged_Order[specification_renderingi]
-		specification_renderingj_order, okj := stage.SPECIFICATION_RenderingMap_Staged_Order[specification_renderingj]
+		specification_renderingi_order, oki := stage.SPECIFICATION_Rendering_stagedOrder[specification_renderingi]
+		specification_renderingj_order, okj := stage.SPECIFICATION_Rendering_stagedOrder[specification_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2759,8 +2777,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(specification_typeOrdered[:], func(i, j int) bool {
 		specification_typei := specification_typeOrdered[i]
 		specification_typej := specification_typeOrdered[j]
-		specification_typei_order, oki := stage.SPECIFICATION_TYPEMap_Staged_Order[specification_typei]
-		specification_typej_order, okj := stage.SPECIFICATION_TYPEMap_Staged_Order[specification_typej]
+		specification_typei_order, oki := stage.SPECIFICATION_TYPE_stagedOrder[specification_typei]
+		specification_typej_order, okj := stage.SPECIFICATION_TYPE_stagedOrder[specification_typej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2791,8 +2809,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(spec_hierarchyOrdered[:], func(i, j int) bool {
 		spec_hierarchyi := spec_hierarchyOrdered[i]
 		spec_hierarchyj := spec_hierarchyOrdered[j]
-		spec_hierarchyi_order, oki := stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchyi]
-		spec_hierarchyj_order, okj := stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchyj]
+		spec_hierarchyi_order, oki := stage.SPEC_HIERARCHY_stagedOrder[spec_hierarchyi]
+		spec_hierarchyj_order, okj := stage.SPEC_HIERARCHY_stagedOrder[spec_hierarchyj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2827,8 +2845,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(spec_objectOrdered[:], func(i, j int) bool {
 		spec_objecti := spec_objectOrdered[i]
 		spec_objectj := spec_objectOrdered[j]
-		spec_objecti_order, oki := stage.SPEC_OBJECTMap_Staged_Order[spec_objecti]
-		spec_objectj_order, okj := stage.SPEC_OBJECTMap_Staged_Order[spec_objectj]
+		spec_objecti_order, oki := stage.SPEC_OBJECT_stagedOrder[spec_objecti]
+		spec_objectj_order, okj := stage.SPEC_OBJECT_stagedOrder[spec_objectj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2860,8 +2878,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(spec_object_typeOrdered[:], func(i, j int) bool {
 		spec_object_typei := spec_object_typeOrdered[i]
 		spec_object_typej := spec_object_typeOrdered[j]
-		spec_object_typei_order, oki := stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_typei]
-		spec_object_typej_order, okj := stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_typej]
+		spec_object_typei_order, oki := stage.SPEC_OBJECT_TYPE_stagedOrder[spec_object_typei]
+		spec_object_typej_order, okj := stage.SPEC_OBJECT_TYPE_stagedOrder[spec_object_typej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2892,8 +2910,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(spec_object_type_renderingOrdered[:], func(i, j int) bool {
 		spec_object_type_renderingi := spec_object_type_renderingOrdered[i]
 		spec_object_type_renderingj := spec_object_type_renderingOrdered[j]
-		spec_object_type_renderingi_order, oki := stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_renderingi]
-		spec_object_type_renderingj_order, okj := stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_renderingj]
+		spec_object_type_renderingi_order, oki := stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder[spec_object_type_renderingi]
+		spec_object_type_renderingj_order, okj := stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder[spec_object_type_renderingj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2923,8 +2941,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(spec_relationOrdered[:], func(i, j int) bool {
 		spec_relationi := spec_relationOrdered[i]
 		spec_relationj := spec_relationOrdered[j]
-		spec_relationi_order, oki := stage.SPEC_RELATIONMap_Staged_Order[spec_relationi]
-		spec_relationj_order, okj := stage.SPEC_RELATIONMap_Staged_Order[spec_relationj]
+		spec_relationi_order, oki := stage.SPEC_RELATION_stagedOrder[spec_relationi]
+		spec_relationj_order, okj := stage.SPEC_RELATION_stagedOrder[spec_relationj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2958,8 +2976,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(spec_relation_typeOrdered[:], func(i, j int) bool {
 		spec_relation_typei := spec_relation_typeOrdered[i]
 		spec_relation_typej := spec_relation_typeOrdered[j]
-		spec_relation_typei_order, oki := stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_typei]
-		spec_relation_typej_order, okj := stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_typej]
+		spec_relation_typei_order, oki := stage.SPEC_RELATION_TYPE_stagedOrder[spec_relation_typei]
+		spec_relation_typej_order, okj := stage.SPEC_RELATION_TYPE_stagedOrder[spec_relation_typej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -2990,8 +3008,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(staticwebsiteOrdered[:], func(i, j int) bool {
 		staticwebsitei := staticwebsiteOrdered[i]
 		staticwebsitej := staticwebsiteOrdered[j]
-		staticwebsitei_order, oki := stage.StaticWebSiteMap_Staged_Order[staticwebsitei]
-		staticwebsitej_order, okj := stage.StaticWebSiteMap_Staged_Order[staticwebsitej]
+		staticwebsitei_order, oki := stage.StaticWebSite_stagedOrder[staticwebsitei]
+		staticwebsitej_order, okj := stage.StaticWebSite_stagedOrder[staticwebsitej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -3021,8 +3039,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(staticwebsitechapterOrdered[:], func(i, j int) bool {
 		staticwebsitechapteri := staticwebsitechapterOrdered[i]
 		staticwebsitechapterj := staticwebsitechapterOrdered[j]
-		staticwebsitechapteri_order, oki := stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapteri]
-		staticwebsitechapterj_order, okj := stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapterj]
+		staticwebsitechapteri_order, oki := stage.StaticWebSiteChapter_stagedOrder[staticwebsitechapteri]
+		staticwebsitechapterj_order, okj := stage.StaticWebSiteChapter_stagedOrder[staticwebsitechapterj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -3049,8 +3067,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(staticwebsitegeneratedimageOrdered[:], func(i, j int) bool {
 		staticwebsitegeneratedimagei := staticwebsitegeneratedimageOrdered[i]
 		staticwebsitegeneratedimagej := staticwebsitegeneratedimageOrdered[j]
-		staticwebsitegeneratedimagei_order, oki := stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimagei]
-		staticwebsitegeneratedimagej_order, okj := stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimagej]
+		staticwebsitegeneratedimagei_order, oki := stage.StaticWebSiteGeneratedImage_stagedOrder[staticwebsitegeneratedimagei]
+		staticwebsitegeneratedimagej_order, okj := stage.StaticWebSiteGeneratedImage_stagedOrder[staticwebsitegeneratedimagej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -3078,8 +3096,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(staticwebsiteimageOrdered[:], func(i, j int) bool {
 		staticwebsiteimagei := staticwebsiteimageOrdered[i]
 		staticwebsiteimagej := staticwebsiteimageOrdered[j]
-		staticwebsiteimagei_order, oki := stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimagei]
-		staticwebsiteimagej_order, okj := stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimagej]
+		staticwebsiteimagei_order, oki := stage.StaticWebSiteImage_stagedOrder[staticwebsiteimagei]
+		staticwebsiteimagej_order, okj := stage.StaticWebSiteImage_stagedOrder[staticwebsiteimagej]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -3107,8 +3125,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(staticwebsiteparagraphOrdered[:], func(i, j int) bool {
 		staticwebsiteparagraphi := staticwebsiteparagraphOrdered[i]
 		staticwebsiteparagraphj := staticwebsiteparagraphOrdered[j]
-		staticwebsiteparagraphi_order, oki := stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraphi]
-		staticwebsiteparagraphj_order, okj := stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraphj]
+		staticwebsiteparagraphi_order, oki := stage.StaticWebSiteParagraph_stagedOrder[staticwebsiteparagraphi]
+		staticwebsiteparagraphj_order, okj := stage.StaticWebSiteParagraph_stagedOrder[staticwebsiteparagraphj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -3135,8 +3153,8 @@ func (stage *Stage) MarshallToString(modelsPackageName, packageName string) (res
 	sort.Slice(xhtml_contentOrdered[:], func(i, j int) bool {
 		xhtml_contenti := xhtml_contentOrdered[i]
 		xhtml_contentj := xhtml_contentOrdered[j]
-		xhtml_contenti_order, oki := stage.XHTML_CONTENTMap_Staged_Order[xhtml_contenti]
-		xhtml_contentj_order, okj := stage.XHTML_CONTENTMap_Staged_Order[xhtml_contentj]
+		xhtml_contenti_order, oki := stage.XHTML_CONTENT_stagedOrder[xhtml_contenti]
+		xhtml_contentj_order, okj := stage.XHTML_CONTENT_stagedOrder[xhtml_contentj]
 		if !oki || !okj {
 			log.Fatalln("unknown pointers")
 		}
@@ -4050,12 +4068,12 @@ func (alternative_id *ALTERNATIVE_ID) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", alternative_id.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(alternative_id.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(alternative_id.Name))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", alternative_id.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(alternative_id.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(alternative_id.IDENTIFIER))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct ALTERNATIVE_ID", fieldName)
@@ -4070,17 +4088,17 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallFi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
@@ -4090,12 +4108,12 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallFi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if attribute_definition_boolean.ALTERNATIVE_ID != nil {
@@ -4149,7 +4167,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_boolean_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
@@ -4184,17 +4202,17 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
@@ -4204,12 +4222,12 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if attribute_definition_date.ALTERNATIVE_ID != nil {
@@ -4263,7 +4281,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_date_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
@@ -4298,17 +4316,17 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMa
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
@@ -4318,12 +4336,12 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMa
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration.LONG_NAME))
 	case "MULTI_VALUED":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
@@ -4382,7 +4400,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_enumeration_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
@@ -4417,17 +4435,17 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallFi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
@@ -4437,12 +4455,12 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallFi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if attribute_definition_integer.ALTERNATIVE_ID != nil {
@@ -4496,7 +4514,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_integer_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
@@ -4531,17 +4549,17 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
@@ -4551,12 +4569,12 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if attribute_definition_real.ALTERNATIVE_ID != nil {
@@ -4610,7 +4628,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_real_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
@@ -4645,7 +4663,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarsha
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
@@ -4680,17 +4698,17 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallFiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
@@ -4700,12 +4718,12 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallFiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if attribute_definition_string.ALTERNATIVE_ID != nil {
@@ -4759,7 +4777,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_string_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
@@ -4794,17 +4812,17 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallField(
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
@@ -4814,12 +4832,12 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallField(
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if attribute_definition_xhtml.ALTERNATIVE_ID != nil {
@@ -4873,7 +4891,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_definition_xhtml_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml_rendering.Name))
 	case "ShowInTable":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
@@ -4908,7 +4926,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallField(stage 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_boolean.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_boolean.Name))
 	case "THE_VALUE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
@@ -4941,12 +4959,12 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallField(stage *Stage
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_date.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_date.Name))
 	case "THE_VALUE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_date.THE_VALUE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_date.THE_VALUE))
 
 	case "DEFINITION":
 		if attribute_value_date.DEFINITION != nil {
@@ -4974,7 +4992,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallFiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_enumeration.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_enumeration.Name))
 
 	case "DEFINITION":
 		if attribute_value_enumeration.DEFINITION != nil {
@@ -5015,7 +5033,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallField(stage 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_integer.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_integer.Name))
 	case "THE_VALUE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
@@ -5048,7 +5066,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallField(stage *Stage
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_real.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_real.Name))
 	case "THE_VALUE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
@@ -5081,12 +5099,12 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallField(stage *S
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_string.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_string.Name))
 	case "THE_VALUE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "THE_VALUE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_string.THE_VALUE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_string.THE_VALUE))
 
 	case "DEFINITION":
 		if attribute_value_string.DEFINITION != nil {
@@ -5114,7 +5132,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallField(stage *Sta
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(attribute_value_xhtml.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_xhtml.Name))
 	case "IS_SIMPLIFIED":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
@@ -5173,7 +5191,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_alternative_id.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_alternative_id.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_alternative_id.Name))
 
 	case "ALTERNATIVE_ID":
 		if a_alternative_id.ALTERNATIVE_ID != nil {
@@ -5201,12 +5219,12 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Go
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_boolean_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_boolean_ref.Name))
 	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_boolean_ref.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_BOOLEAN_REF", fieldName)
@@ -5221,12 +5239,12 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMars
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_date_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_date_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_date_ref.Name))
 	case "ATTRIBUTE_DEFINITION_DATE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_date_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_date_ref.ATTRIBUTE_DEFINITION_DATE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_DATE_REF", fieldName)
@@ -5241,12 +5259,12 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_enumeration_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_enumeration_ref.Name))
 	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_enumeration_ref.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_ENUMERATION_REF", fieldName)
@@ -5261,12 +5279,12 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Go
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_integer_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_integer_ref.Name))
 	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_integer_ref.ATTRIBUTE_DEFINITION_INTEGER_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_INTEGER_REF", fieldName)
@@ -5281,12 +5299,12 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMars
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_real_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_real_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_real_ref.Name))
 	case "ATTRIBUTE_DEFINITION_REAL_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_real_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_real_ref.ATTRIBUTE_DEFINITION_REAL_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_REAL_REF", fieldName)
@@ -5301,12 +5319,12 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Gong
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_string_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_string_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_string_ref.Name))
 	case "ATTRIBUTE_DEFINITION_STRING_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_string_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_string_ref.ATTRIBUTE_DEFINITION_STRING_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_STRING_REF", fieldName)
@@ -5321,12 +5339,12 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMa
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_xhtml_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_xhtml_ref.Name))
 	case "ATTRIBUTE_DEFINITION_XHTML_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_xhtml_ref.ATTRIBUTE_DEFINITION_XHTML_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ATTRIBUTE_DEFINITION_XHTML_REF", fieldName)
@@ -5341,7 +5359,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_boolean.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_boolean.Name))
 
 	case "ATTRIBUTE_VALUE_BOOLEAN":
 		var sb strings.Builder
@@ -5366,7 +5384,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallField(stage *S
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_date.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_date.Name))
 
 	case "ATTRIBUTE_VALUE_DATE":
 		var sb strings.Builder
@@ -5391,7 +5409,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshall
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_enumeration.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_enumeration.Name))
 
 	case "ATTRIBUTE_VALUE_ENUMERATION":
 		var sb strings.Builder
@@ -5416,7 +5434,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_integer.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_integer.Name))
 
 	case "ATTRIBUTE_VALUE_INTEGER":
 		var sb strings.Builder
@@ -5441,7 +5459,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallField(stage *S
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_real.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_real.Name))
 
 	case "ATTRIBUTE_VALUE_REAL":
 		var sb strings.Builder
@@ -5466,7 +5484,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_string.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_string.Name))
 
 	case "ATTRIBUTE_VALUE_STRING":
 		var sb strings.Builder
@@ -5491,7 +5509,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallField(stage 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_xhtml.Name))
 
 	case "ATTRIBUTE_VALUE_XHTML":
 		var sb strings.Builder
@@ -5516,7 +5534,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_attribute_value_xhtml_1.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_xhtml_1.Name))
 
 	case "ATTRIBUTE_VALUE_BOOLEAN":
 		var sb strings.Builder
@@ -5601,7 +5619,7 @@ func (a_children *A_CHILDREN) GongMarshallField(stage *Stage, fieldName string) 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_children.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_children.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_children.Name))
 
 	case "SPEC_HIERARCHY":
 		var sb strings.Builder
@@ -5626,7 +5644,7 @@ func (a_core_content *A_CORE_CONTENT) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_core_content.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_core_content.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_core_content.Name))
 
 	case "REQ_IF_CONTENT":
 		if a_core_content.REQ_IF_CONTENT != nil {
@@ -5654,7 +5672,7 @@ func (a_datatypes *A_DATATYPES) GongMarshallField(stage *Stage, fieldName string
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatypes.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatypes.Name))
 
 	case "DATATYPE_DEFINITION_BOOLEAN":
 		var sb strings.Builder
@@ -5739,12 +5757,12 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Gong
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_boolean_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_boolean_ref.Name))
 	case "DATATYPE_DEFINITION_BOOLEAN_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_BOOLEAN_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_boolean_ref.DATATYPE_DEFINITION_BOOLEAN_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_BOOLEAN_REF", fieldName)
@@ -5759,12 +5777,12 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarsha
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_date_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_date_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_date_ref.Name))
 	case "DATATYPE_DEFINITION_DATE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_date_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_DATE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_date_ref.DATATYPE_DEFINITION_DATE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_DATE_REF", fieldName)
@@ -5779,12 +5797,12 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_enumeration_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_enumeration_ref.Name))
 	case "DATATYPE_DEFINITION_ENUMERATION_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_ENUMERATION_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_enumeration_ref.DATATYPE_DEFINITION_ENUMERATION_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_ENUMERATION_REF", fieldName)
@@ -5799,12 +5817,12 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Gong
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_integer_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_integer_ref.Name))
 	case "DATATYPE_DEFINITION_INTEGER_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_INTEGER_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_integer_ref.DATATYPE_DEFINITION_INTEGER_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_INTEGER_REF", fieldName)
@@ -5819,12 +5837,12 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarsha
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_real_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_real_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_real_ref.Name))
 	case "DATATYPE_DEFINITION_REAL_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_real_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_REAL_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_real_ref.DATATYPE_DEFINITION_REAL_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_REAL_REF", fieldName)
@@ -5839,12 +5857,12 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMa
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_string_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_string_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_string_ref.Name))
 	case "DATATYPE_DEFINITION_STRING_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_string_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_STRING_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_string_ref.DATATYPE_DEFINITION_STRING_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_STRING_REF", fieldName)
@@ -5859,12 +5877,12 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMars
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_xhtml_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_xhtml_ref.Name))
 	case "DATATYPE_DEFINITION_XHTML_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DATATYPE_DEFINITION_XHTML_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_xhtml_ref.DATATYPE_DEFINITION_XHTML_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_DATATYPE_DEFINITION_XHTML_REF", fieldName)
@@ -5879,42 +5897,42 @@ func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallField(stage *Stage, fieldNam
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.Name))
 	case "ATTRIBUTE_DEFINITION_BOOLEAN_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_BOOLEAN_REF))
 	case "ATTRIBUTE_DEFINITION_DATE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_DATE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_DATE_REF))
 	case "ATTRIBUTE_DEFINITION_ENUMERATION_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_ENUMERATION_REF))
 	case "ATTRIBUTE_DEFINITION_INTEGER_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_INTEGER_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_INTEGER_REF))
 	case "ATTRIBUTE_DEFINITION_REAL_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_REAL_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_REAL_REF))
 	case "ATTRIBUTE_DEFINITION_STRING_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_STRING_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_STRING_REF))
 	case "ATTRIBUTE_DEFINITION_XHTML_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ATTRIBUTE_DEFINITION_XHTML_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.ATTRIBUTE_DEFINITION_XHTML_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_EDITABLE_ATTS", fieldName)
@@ -5929,12 +5947,12 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_enum_value_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_enum_value_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_enum_value_ref.Name))
 	case "ENUM_VALUE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_enum_value_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "ENUM_VALUE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_enum_value_ref.ENUM_VALUE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_enum_value_ref.ENUM_VALUE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_ENUM_VALUE_REF", fieldName)
@@ -5949,12 +5967,12 @@ func (a_object *A_OBJECT) GongMarshallField(stage *Stage, fieldName string) (res
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_object.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_object.Name))
 	case "SPEC_OBJECT_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECT_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_object.SPEC_OBJECT_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_object.SPEC_OBJECT_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_OBJECT", fieldName)
@@ -5969,7 +5987,7 @@ func (a_properties *A_PROPERTIES) GongMarshallField(stage *Stage, fieldName stri
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_properties.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_properties.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_properties.Name))
 
 	case "EMBEDDED_VALUE":
 		if a_properties.EMBEDDED_VALUE != nil {
@@ -5997,12 +6015,12 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_relation_group_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_relation_group_type_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_relation_group_type_ref.Name))
 	case "RELATION_GROUP_TYPE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_relation_group_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "RELATION_GROUP_TYPE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_relation_group_type_ref.RELATION_GROUP_TYPE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_relation_group_type_ref.RELATION_GROUP_TYPE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_RELATION_GROUP_TYPE_REF", fieldName)
@@ -6017,12 +6035,12 @@ func (a_source_1 *A_SOURCE_1) GongMarshallField(stage *Stage, fieldName string) 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_source_1.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_source_1.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_source_1.Name))
 	case "SPEC_OBJECT_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_source_1.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECT_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_source_1.SPEC_OBJECT_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_source_1.SPEC_OBJECT_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SOURCE_1", fieldName)
@@ -6037,7 +6055,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_source_specification_1.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_source_specification_1.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_source_specification_1.Name))
 	case "SPECIFICATION_REF":
 		if a_source_specification_1.SPECIFICATION_REF.ToCodeString() != "" {
 			res = StringEnumInitStatement
@@ -6065,7 +6083,7 @@ func (a_specifications *A_SPECIFICATIONS) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_specifications.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specifications.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specifications.Name))
 
 	case "SPECIFICATION":
 		var sb strings.Builder
@@ -6090,12 +6108,12 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_specification_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specification_type_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specification_type_ref.Name))
 	case "SPECIFICATION_TYPE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_specification_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPECIFICATION_TYPE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specification_type_ref.SPECIFICATION_TYPE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specification_type_ref.SPECIFICATION_TYPE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPECIFICATION_TYPE_REF", fieldName)
@@ -6110,7 +6128,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallField(stage *Stage, fi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_specified_values.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_specified_values.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specified_values.Name))
 
 	case "ENUM_VALUE":
 		var sb strings.Builder
@@ -6135,7 +6153,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallField(stage *Stage, fiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_attributes.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_attributes.Name))
 
 	case "ATTRIBUTE_DEFINITION_BOOLEAN":
 		var sb strings.Builder
@@ -6220,7 +6238,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_objects.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_objects.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_objects.Name))
 
 	case "SPEC_OBJECT":
 		var sb strings.Builder
@@ -6245,12 +6263,12 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallField(stage *S
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_object_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_object_type_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_object_type_ref.Name))
 	case "SPEC_OBJECT_TYPE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_object_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_OBJECT_TYPE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_object_type_ref.SPEC_OBJECT_TYPE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_OBJECT_TYPE_REF", fieldName)
@@ -6265,7 +6283,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relations.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relations.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relations.Name))
 
 	case "SPEC_RELATION":
 		var sb strings.Builder
@@ -6290,7 +6308,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallField(stage *S
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_groups.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_groups.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_groups.Name))
 
 	case "RELATION_GROUP":
 		var sb strings.Builder
@@ -6315,12 +6333,12 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallField(stage *Stage, 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_ref.Name))
 	case "SPEC_RELATION_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATION_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_ref.SPEC_RELATION_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_ref.SPEC_RELATION_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATION_REF", fieldName)
@@ -6335,12 +6353,12 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_type_ref.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_type_ref.Name))
 	case "SPEC_RELATION_TYPE_REF":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_relation_type_ref.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SPEC_RELATION_TYPE_REF")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_type_ref.SPEC_RELATION_TYPE_REF))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct A_SPEC_RELATION_TYPE_REF", fieldName)
@@ -6355,7 +6373,7 @@ func (a_spec_types *A_SPEC_TYPES) GongMarshallField(stage *Stage, fieldName stri
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_spec_types.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_types.Name))
 
 	case "RELATION_GROUP_TYPE":
 		var sb strings.Builder
@@ -6410,7 +6428,7 @@ func (a_the_header *A_THE_HEADER) GongMarshallField(stage *Stage, fieldName stri
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_the_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_the_header.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_the_header.Name))
 
 	case "REQ_IF_HEADER":
 		if a_the_header.REQ_IF_HEADER != nil {
@@ -6438,7 +6456,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallField(stage *Stage, fiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", a_tool_extensions.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(a_tool_extensions.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_tool_extensions.Name))
 
 	case "REQ_IF_TOOL_EXTENSION":
 		var sb strings.Builder
@@ -6463,27 +6481,27 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallFiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_boolean.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_boolean.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_boolean.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_boolean.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_boolean.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_boolean.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if datatype_definition_boolean.ALTERNATIVE_ID != nil {
@@ -6511,27 +6529,27 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_date.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_date.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_date.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_date.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_date.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_date.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if datatype_definition_date.ALTERNATIVE_ID != nil {
@@ -6559,27 +6577,27 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMars
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_enumeration.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_enumeration.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_enumeration.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_enumeration.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_enumeration.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_enumeration.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if datatype_definition_enumeration.ALTERNATIVE_ID != nil {
@@ -6620,27 +6638,27 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallFiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_integer.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_integer.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_integer.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_integer.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_integer.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_integer.LONG_NAME))
 	case "MAX":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
@@ -6678,7 +6696,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_real.Name))
 	case "ACCURACY":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
@@ -6688,22 +6706,22 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallField(stag
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_real.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_real.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_real.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_real.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_real.LONG_NAME))
 	case "MAX":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
@@ -6741,27 +6759,27 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallField(
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_string.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_string.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_string.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_string.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_string.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_string.LONG_NAME))
 	case "MAX_LENGTH":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
@@ -6794,27 +6812,27 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallField(st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_xhtml.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_xhtml.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_xhtml.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_xhtml.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(datatype_definition_xhtml.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_xhtml.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if datatype_definition_xhtml.ALTERNATIVE_ID != nil {
@@ -6842,7 +6860,7 @@ func (embedded_value *EMBEDDED_VALUE) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embedded_value.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embedded_value.Name))
 	case "KEY":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
@@ -6852,7 +6870,7 @@ func (embedded_value *EMBEDDED_VALUE) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "OTHER_CONTENT")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embedded_value.OTHER_CONTENT))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embedded_value.OTHER_CONTENT))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct EMBEDDED_VALUE", fieldName)
@@ -6867,27 +6885,27 @@ func (enum_value *ENUM_VALUE) GongMarshallField(stage *Stage, fieldName string) 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(enum_value.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(enum_value.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(enum_value.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(enum_value.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(enum_value.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(enum_value.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if enum_value.ALTERNATIVE_ID != nil {
@@ -6928,12 +6946,12 @@ func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedjpgimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedjpgimage.Name))
 	case "Base64Content":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedjpgimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Base64Content")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedjpgimage.Base64Content))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedjpgimage.Base64Content))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct EmbeddedJpgImage", fieldName)
@@ -6948,12 +6966,12 @@ func (embeddedpngimage *EmbeddedPngImage) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedpngimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedpngimage.Name))
 	case "Base64Content":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedpngimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Base64Content")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedpngimage.Base64Content))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedpngimage.Base64Content))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct EmbeddedPngImage", fieldName)
@@ -6968,12 +6986,12 @@ func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedsvgimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedsvgimage.Name))
 	case "Content":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", embeddedsvgimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Content")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(embeddedsvgimage.Content))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedsvgimage.Content))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct EmbeddedSvgImage", fieldName)
@@ -6988,7 +7006,7 @@ func (kill *Kill) GongMarshallField(stage *Stage, fieldName string) (res string)
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", kill.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(kill.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(kill.Name))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct Kill", fieldName)
@@ -7003,7 +7021,7 @@ func (map_identifier_bool *Map_identifier_bool) GongMarshallField(stage *Stage, 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", map_identifier_bool.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(map_identifier_bool.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(map_identifier_bool.Name))
 	case "Value":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", map_identifier_bool.GongGetIdentifier(stage))
@@ -7023,27 +7041,27 @@ func (relation_group *RELATION_GROUP) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if relation_group.ALTERNATIVE_ID != nil {
@@ -7123,27 +7141,27 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallField(stage *Stage, 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group_type.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group_type.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group_type.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group_type.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(relation_group_type.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group_type.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if relation_group_type.ALTERNATIVE_ID != nil {
@@ -7184,12 +7202,12 @@ func (req_if *REQ_IF) GongMarshallField(stage *Stage, fieldName string) (res str
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if.Name))
 	case "Lang":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Lang")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if.Lang))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if.Lang))
 
 	case "THE_HEADER":
 		if req_if.THE_HEADER != nil {
@@ -7243,7 +7261,7 @@ func (req_if_content *REQ_IF_CONTENT) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_content.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_content.Name))
 
 	case "DATATYPES":
 		if req_if_content.DATATYPES != nil {
@@ -7336,47 +7354,47 @@ func (req_if_header *REQ_IF_HEADER) GongMarshallField(stage *Stage, fieldName st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.Name))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.IDENTIFIER))
 	case "COMMENT":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "COMMENT")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.COMMENT))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.COMMENT))
 	case "CREATION_TIME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "CREATION_TIME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.CREATION_TIME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.CREATION_TIME))
 	case "REPOSITORY_ID":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REPOSITORY_ID")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.REPOSITORY_ID))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.REPOSITORY_ID))
 	case "REQ_IF_TOOL_ID":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_TOOL_ID")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.REQ_IF_TOOL_ID))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.REQ_IF_TOOL_ID))
 	case "REQ_IF_VERSION":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "REQ_IF_VERSION")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.REQ_IF_VERSION))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.REQ_IF_VERSION))
 	case "SOURCE_TOOL_ID":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SOURCE_TOOL_ID")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.SOURCE_TOOL_ID))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.SOURCE_TOOL_ID))
 	case "TITLE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "TITLE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_header.TITLE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.TITLE))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct REQ_IF_HEADER", fieldName)
@@ -7391,7 +7409,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallField(stage *Sta
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", req_if_tool_extension.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(req_if_tool_extension.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_tool_extension.Name))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct REQ_IF_TOOL_EXTENSION", fieldName)
@@ -7406,27 +7424,27 @@ func (specification *SPECIFICATION) GongMarshallField(stage *Stage, fieldName st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if specification.ALTERNATIVE_ID != nil {
@@ -7493,7 +7511,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GongMarshallField(stage 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_rendering.Name))
 	case "IsNodeExpanded":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
@@ -7523,27 +7541,27 @@ func (specification_type *SPECIFICATION_TYPE) GongMarshallField(stage *Stage, fi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_type.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_type.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_type.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_type.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(specification_type.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_type.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if specification_type.ALTERNATIVE_ID != nil {
@@ -7584,17 +7602,17 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_hierarchy.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_hierarchy.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_hierarchy.IDENTIFIER))
 	case "IS_EDITABLE":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
@@ -7609,12 +7627,12 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallField(stage *Stage, fieldName 
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_hierarchy.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_hierarchy.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_hierarchy.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if spec_hierarchy.ALTERNATIVE_ID != nil {
@@ -7681,27 +7699,27 @@ func (spec_object *SPEC_OBJECT) GongMarshallField(stage *Stage, fieldName string
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if spec_object.ALTERNATIVE_ID != nil {
@@ -7755,27 +7773,27 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallField(stage *Stage, fieldN
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if spec_object_type.ALTERNATIVE_ID != nil {
@@ -7816,7 +7834,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallField(
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_object_type_rendering.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type_rendering.Name))
 	case "IsNodeExpanded":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
@@ -7856,27 +7874,27 @@ func (spec_relation *SPEC_RELATION) GongMarshallField(stage *Stage, fieldName st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if spec_relation.ALTERNATIVE_ID != nil {
@@ -7956,27 +7974,27 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallField(stage *Stage, fi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation_type.Name))
 	case "DESC":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "DESC")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.DESC))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation_type.DESC))
 	case "IDENTIFIER":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "IDENTIFIER")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.IDENTIFIER))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation_type.IDENTIFIER))
 	case "LAST_CHANGE":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LAST_CHANGE")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LAST_CHANGE))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation_type.LAST_CHANGE))
 	case "LONG_NAME":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LONG_NAME")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(spec_relation_type.LONG_NAME))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation_type.LONG_NAME))
 
 	case "ALTERNATIVE_ID":
 		if spec_relation_type.ALTERNATIVE_ID != nil {
@@ -8017,27 +8035,27 @@ func (staticwebsite *StaticWebSite) GongMarshallField(stage *Stage, fieldName st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsite.Name))
 	case "MarkdownContent":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MarkdownContent")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.MarkdownContent))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsite.MarkdownContent))
 	case "InputImagesDir":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "InputImagesDir")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.InputImagesDir))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsite.InputImagesDir))
 	case "OutputStaticWebDir":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "OutputStaticWebDir")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.OutputStaticWebDir))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsite.OutputStaticWebDir))
 	case "VersionInfo":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "VersionInfo")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsite.VersionInfo))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsite.VersionInfo))
 
 	case "Chapters":
 		var sb strings.Builder
@@ -8062,12 +8080,12 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallField(stage *Stage
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsitechapter.Name))
 	case "MarkdownContent":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "MarkdownContent")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitechapter.MarkdownContent))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsitechapter.MarkdownContent))
 
 	case "Paragraphs":
 		var sb strings.Builder
@@ -8092,12 +8110,12 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallFiel
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitegeneratedimage.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsitegeneratedimage.Name))
 	case "SourceDirectoryPath":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SourceDirectoryPath")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsitegeneratedimage.SourceDirectoryPath))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsitegeneratedimage.SourceDirectoryPath))
 	case "Width":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
@@ -8122,12 +8140,12 @@ func (staticwebsiteimage *StaticWebSiteImage) GongMarshallField(stage *Stage, fi
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteimage.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsiteimage.Name))
 	case "SourceDirectoryPath":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "SourceDirectoryPath")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteimage.SourceDirectoryPath))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsiteimage.SourceDirectoryPath))
 	case "Width":
 		res = NumberInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
@@ -8152,12 +8170,12 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallField(stage *S
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsiteparagraph.Name))
 	case "LegendMarkdownContent":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "LegendMarkdownContent")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(staticwebsiteparagraph.LegendMarkdownContent))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsiteparagraph.LegendMarkdownContent))
 
 	case "Image":
 		if staticwebsiteparagraph.Image != nil {
@@ -8185,17 +8203,17 @@ func (xhtml_content *XHTML_CONTENT) GongMarshallField(stage *Stage, fieldName st
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "Name")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(xhtml_content.Name))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(xhtml_content.Name))
 	case "EnclosedText":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "EnclosedText")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(xhtml_content.EnclosedText))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(xhtml_content.EnclosedText))
 	case "PureText":
 		res = StringInitStatement
 		res = strings.ReplaceAll(res, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
 		res = strings.ReplaceAll(res, "{{GeneratedFieldName}}", "PureText")
-		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", string(xhtml_content.PureText))
+		res = strings.ReplaceAll(res, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(xhtml_content.PureText))
 
 	default:
 		log.Panicf("Unknown field %s for Gongstruct XHTML_CONTENT", fieldName)

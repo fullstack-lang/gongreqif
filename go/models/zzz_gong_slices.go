@@ -3,6 +3,7 @@ package models
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 	"time"
@@ -1042,523 +1043,627 @@ func (stage *Stage) GetInstances() (res []GongstructIF) {
 
 // insertion point per named struct
 func (alternative_id *ALTERNATIVE_ID) GongCopy() GongstructIF {
-	newInstance := *alternative_id
-	return &newInstance
+	newInstance := new(ALTERNATIVE_ID)
+	alternative_id.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_boolean
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_BOOLEAN)
+	attribute_definition_boolean.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_boolean_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
+	attribute_definition_boolean_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_date
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_DATE)
+	attribute_definition_date.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_date_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_DATE_Rendering)
+	attribute_definition_date_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_enumeration
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_ENUMERATION)
+	attribute_definition_enumeration.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_enumeration_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
+	attribute_definition_enumeration_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_integer
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_INTEGER)
+	attribute_definition_integer.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_integer_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_INTEGER_Rendering)
+	attribute_definition_integer_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_real
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_REAL)
+	attribute_definition_real.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_real_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_REAL_Rendering)
+	attribute_definition_real_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_Rendering)
+	attribute_definition_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_string
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_STRING)
+	attribute_definition_string.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_string_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_STRING_Rendering)
+	attribute_definition_string_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_xhtml
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_XHTML)
+	attribute_definition_xhtml.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongCopy() GongstructIF {
-	newInstance := *attribute_definition_xhtml_rendering
-	return &newInstance
+	newInstance := new(ATTRIBUTE_DEFINITION_XHTML_Rendering)
+	attribute_definition_xhtml_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongCopy() GongstructIF {
-	newInstance := *attribute_value_boolean
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_BOOLEAN)
+	attribute_value_boolean.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongCopy() GongstructIF {
-	newInstance := *attribute_value_date
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_DATE)
+	attribute_value_date.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongCopy() GongstructIF {
-	newInstance := *attribute_value_enumeration
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_ENUMERATION)
+	attribute_value_enumeration.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongCopy() GongstructIF {
-	newInstance := *attribute_value_integer
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_INTEGER)
+	attribute_value_integer.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongCopy() GongstructIF {
-	newInstance := *attribute_value_real
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_REAL)
+	attribute_value_real.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongCopy() GongstructIF {
-	newInstance := *attribute_value_string
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_STRING)
+	attribute_value_string.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongCopy() GongstructIF {
-	newInstance := *attribute_value_xhtml
-	return &newInstance
+	newInstance := new(ATTRIBUTE_VALUE_XHTML)
+	attribute_value_xhtml.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_alternative_id *A_ALTERNATIVE_ID) GongCopy() GongstructIF {
-	newInstance := *a_alternative_id
-	return &newInstance
+	newInstance := new(A_ALTERNATIVE_ID)
+	a_alternative_id.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_boolean_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
+	a_attribute_definition_boolean_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_date_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_DATE_REF)
+	a_attribute_definition_date_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_enumeration_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
+	a_attribute_definition_enumeration_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_integer_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_INTEGER_REF)
+	a_attribute_definition_integer_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_real_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_REAL_REF)
+	a_attribute_definition_real_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_string_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_STRING_REF)
+	a_attribute_definition_string_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongCopy() GongstructIF {
-	newInstance := *a_attribute_definition_xhtml_ref
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_DEFINITION_XHTML_REF)
+	a_attribute_definition_xhtml_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_boolean
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_BOOLEAN)
+	a_attribute_value_boolean.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_date
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_DATE)
+	a_attribute_value_date.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_enumeration
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_ENUMERATION)
+	a_attribute_value_enumeration.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_integer
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_INTEGER)
+	a_attribute_value_integer.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_real
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_REAL)
+	a_attribute_value_real.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_string
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_STRING)
+	a_attribute_value_string.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_xhtml
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_XHTML)
+	a_attribute_value_xhtml.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongCopy() GongstructIF {
-	newInstance := *a_attribute_value_xhtml_1
-	return &newInstance
+	newInstance := new(A_ATTRIBUTE_VALUE_XHTML_1)
+	a_attribute_value_xhtml_1.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_children *A_CHILDREN) GongCopy() GongstructIF {
-	newInstance := *a_children
-	return &newInstance
+	newInstance := new(A_CHILDREN)
+	a_children.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_core_content *A_CORE_CONTENT) GongCopy() GongstructIF {
-	newInstance := *a_core_content
-	return &newInstance
+	newInstance := new(A_CORE_CONTENT)
+	a_core_content.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatypes *A_DATATYPES) GongCopy() GongstructIF {
-	newInstance := *a_datatypes
-	return &newInstance
+	newInstance := new(A_DATATYPES)
+	a_datatypes.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_boolean_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_BOOLEAN_REF)
+	a_datatype_definition_boolean_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_date_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_DATE_REF)
+	a_datatype_definition_date_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_enumeration_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_ENUMERATION_REF)
+	a_datatype_definition_enumeration_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_integer_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_INTEGER_REF)
+	a_datatype_definition_integer_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_real_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_REAL_REF)
+	a_datatype_definition_real_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_string_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_STRING_REF)
+	a_datatype_definition_string_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongCopy() GongstructIF {
-	newInstance := *a_datatype_definition_xhtml_ref
-	return &newInstance
+	newInstance := new(A_DATATYPE_DEFINITION_XHTML_REF)
+	a_datatype_definition_xhtml_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_editable_atts *A_EDITABLE_ATTS) GongCopy() GongstructIF {
-	newInstance := *a_editable_atts
-	return &newInstance
+	newInstance := new(A_EDITABLE_ATTS)
+	a_editable_atts.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongCopy() GongstructIF {
-	newInstance := *a_enum_value_ref
-	return &newInstance
+	newInstance := new(A_ENUM_VALUE_REF)
+	a_enum_value_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_object *A_OBJECT) GongCopy() GongstructIF {
-	newInstance := *a_object
-	return &newInstance
+	newInstance := new(A_OBJECT)
+	a_object.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_properties *A_PROPERTIES) GongCopy() GongstructIF {
-	newInstance := *a_properties
-	return &newInstance
+	newInstance := new(A_PROPERTIES)
+	a_properties.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongCopy() GongstructIF {
-	newInstance := *a_relation_group_type_ref
-	return &newInstance
+	newInstance := new(A_RELATION_GROUP_TYPE_REF)
+	a_relation_group_type_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_source_1 *A_SOURCE_1) GongCopy() GongstructIF {
-	newInstance := *a_source_1
-	return &newInstance
+	newInstance := new(A_SOURCE_1)
+	a_source_1.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongCopy() GongstructIF {
-	newInstance := *a_source_specification_1
-	return &newInstance
+	newInstance := new(A_SOURCE_SPECIFICATION_1)
+	a_source_specification_1.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_specifications *A_SPECIFICATIONS) GongCopy() GongstructIF {
-	newInstance := *a_specifications
-	return &newInstance
+	newInstance := new(A_SPECIFICATIONS)
+	a_specifications.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongCopy() GongstructIF {
-	newInstance := *a_specification_type_ref
-	return &newInstance
+	newInstance := new(A_SPECIFICATION_TYPE_REF)
+	a_specification_type_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_specified_values *A_SPECIFIED_VALUES) GongCopy() GongstructIF {
-	newInstance := *a_specified_values
-	return &newInstance
+	newInstance := new(A_SPECIFIED_VALUES)
+	a_specified_values.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongCopy() GongstructIF {
-	newInstance := *a_spec_attributes
-	return &newInstance
+	newInstance := new(A_SPEC_ATTRIBUTES)
+	a_spec_attributes.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_objects *A_SPEC_OBJECTS) GongCopy() GongstructIF {
-	newInstance := *a_spec_objects
-	return &newInstance
+	newInstance := new(A_SPEC_OBJECTS)
+	a_spec_objects.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongCopy() GongstructIF {
-	newInstance := *a_spec_object_type_ref
-	return &newInstance
+	newInstance := new(A_SPEC_OBJECT_TYPE_REF)
+	a_spec_object_type_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_relations *A_SPEC_RELATIONS) GongCopy() GongstructIF {
-	newInstance := *a_spec_relations
-	return &newInstance
+	newInstance := new(A_SPEC_RELATIONS)
+	a_spec_relations.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongCopy() GongstructIF {
-	newInstance := *a_spec_relation_groups
-	return &newInstance
+	newInstance := new(A_SPEC_RELATION_GROUPS)
+	a_spec_relation_groups.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongCopy() GongstructIF {
-	newInstance := *a_spec_relation_ref
-	return &newInstance
+	newInstance := new(A_SPEC_RELATION_REF)
+	a_spec_relation_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongCopy() GongstructIF {
-	newInstance := *a_spec_relation_type_ref
-	return &newInstance
+	newInstance := new(A_SPEC_RELATION_TYPE_REF)
+	a_spec_relation_type_ref.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_spec_types *A_SPEC_TYPES) GongCopy() GongstructIF {
-	newInstance := *a_spec_types
-	return &newInstance
+	newInstance := new(A_SPEC_TYPES)
+	a_spec_types.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_the_header *A_THE_HEADER) GongCopy() GongstructIF {
-	newInstance := *a_the_header
-	return &newInstance
+	newInstance := new(A_THE_HEADER)
+	a_the_header.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongCopy() GongstructIF {
-	newInstance := *a_tool_extensions
-	return &newInstance
+	newInstance := new(A_TOOL_EXTENSIONS)
+	a_tool_extensions.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_boolean
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_BOOLEAN)
+	datatype_definition_boolean.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_date
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_DATE)
+	datatype_definition_date.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_enumeration
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_ENUMERATION)
+	datatype_definition_enumeration.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_integer
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_INTEGER)
+	datatype_definition_integer.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_real
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_REAL)
+	datatype_definition_real.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_string
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_STRING)
+	datatype_definition_string.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongCopy() GongstructIF {
-	newInstance := *datatype_definition_xhtml
-	return &newInstance
+	newInstance := new(DATATYPE_DEFINITION_XHTML)
+	datatype_definition_xhtml.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (embedded_value *EMBEDDED_VALUE) GongCopy() GongstructIF {
-	newInstance := *embedded_value
-	return &newInstance
+	newInstance := new(EMBEDDED_VALUE)
+	embedded_value.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (enum_value *ENUM_VALUE) GongCopy() GongstructIF {
-	newInstance := *enum_value
-	return &newInstance
+	newInstance := new(ENUM_VALUE)
+	enum_value.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (embeddedjpgimage *EmbeddedJpgImage) GongCopy() GongstructIF {
-	newInstance := *embeddedjpgimage
-	return &newInstance
+	newInstance := new(EmbeddedJpgImage)
+	embeddedjpgimage.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (embeddedpngimage *EmbeddedPngImage) GongCopy() GongstructIF {
-	newInstance := *embeddedpngimage
-	return &newInstance
+	newInstance := new(EmbeddedPngImage)
+	embeddedpngimage.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (embeddedsvgimage *EmbeddedSvgImage) GongCopy() GongstructIF {
-	newInstance := *embeddedsvgimage
-	return &newInstance
+	newInstance := new(EmbeddedSvgImage)
+	embeddedsvgimage.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (kill *Kill) GongCopy() GongstructIF {
-	newInstance := *kill
-	return &newInstance
+	newInstance := new(Kill)
+	kill.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (map_identifier_bool *Map_identifier_bool) GongCopy() GongstructIF {
-	newInstance := *map_identifier_bool
-	return &newInstance
+	newInstance := new(Map_identifier_bool)
+	map_identifier_bool.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (relation_group *RELATION_GROUP) GongCopy() GongstructIF {
-	newInstance := *relation_group
-	return &newInstance
+	newInstance := new(RELATION_GROUP)
+	relation_group.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (relation_group_type *RELATION_GROUP_TYPE) GongCopy() GongstructIF {
-	newInstance := *relation_group_type
-	return &newInstance
+	newInstance := new(RELATION_GROUP_TYPE)
+	relation_group_type.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (req_if *REQ_IF) GongCopy() GongstructIF {
-	newInstance := *req_if
-	return &newInstance
+	newInstance := new(REQ_IF)
+	req_if.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (req_if_content *REQ_IF_CONTENT) GongCopy() GongstructIF {
-	newInstance := *req_if_content
-	return &newInstance
+	newInstance := new(REQ_IF_CONTENT)
+	req_if_content.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (req_if_header *REQ_IF_HEADER) GongCopy() GongstructIF {
-	newInstance := *req_if_header
-	return &newInstance
+	newInstance := new(REQ_IF_HEADER)
+	req_if_header.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongCopy() GongstructIF {
-	newInstance := *req_if_tool_extension
-	return &newInstance
+	newInstance := new(REQ_IF_TOOL_EXTENSION)
+	req_if_tool_extension.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (specification *SPECIFICATION) GongCopy() GongstructIF {
-	newInstance := *specification
-	return &newInstance
+	newInstance := new(SPECIFICATION)
+	specification.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (specification_rendering *SPECIFICATION_Rendering) GongCopy() GongstructIF {
-	newInstance := *specification_rendering
-	return &newInstance
+	newInstance := new(SPECIFICATION_Rendering)
+	specification_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (specification_type *SPECIFICATION_TYPE) GongCopy() GongstructIF {
-	newInstance := *specification_type
-	return &newInstance
+	newInstance := new(SPECIFICATION_TYPE)
+	specification_type.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (spec_hierarchy *SPEC_HIERARCHY) GongCopy() GongstructIF {
-	newInstance := *spec_hierarchy
-	return &newInstance
+	newInstance := new(SPEC_HIERARCHY)
+	spec_hierarchy.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (spec_object *SPEC_OBJECT) GongCopy() GongstructIF {
-	newInstance := *spec_object
-	return &newInstance
+	newInstance := new(SPEC_OBJECT)
+	spec_object.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongCopy() GongstructIF {
-	newInstance := *spec_object_type
-	return &newInstance
+	newInstance := new(SPEC_OBJECT_TYPE)
+	spec_object_type.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongCopy() GongstructIF {
-	newInstance := *spec_object_type_rendering
-	return &newInstance
+	newInstance := new(SPEC_OBJECT_TYPE_Rendering)
+	spec_object_type_rendering.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (spec_relation *SPEC_RELATION) GongCopy() GongstructIF {
-	newInstance := *spec_relation
-	return &newInstance
+	newInstance := new(SPEC_RELATION)
+	spec_relation.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (spec_relation_type *SPEC_RELATION_TYPE) GongCopy() GongstructIF {
-	newInstance := *spec_relation_type
-	return &newInstance
+	newInstance := new(SPEC_RELATION_TYPE)
+	spec_relation_type.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (staticwebsite *StaticWebSite) GongCopy() GongstructIF {
-	newInstance := *staticwebsite
-	return &newInstance
+	newInstance := new(StaticWebSite)
+	staticwebsite.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (staticwebsitechapter *StaticWebSiteChapter) GongCopy() GongstructIF {
-	newInstance := *staticwebsitechapter
-	return &newInstance
+	newInstance := new(StaticWebSiteChapter)
+	staticwebsitechapter.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongCopy() GongstructIF {
-	newInstance := *staticwebsitegeneratedimage
-	return &newInstance
+	newInstance := new(StaticWebSiteGeneratedImage)
+	staticwebsitegeneratedimage.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (staticwebsiteimage *StaticWebSiteImage) GongCopy() GongstructIF {
-	newInstance := *staticwebsiteimage
-	return &newInstance
+	newInstance := new(StaticWebSiteImage)
+	staticwebsiteimage.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongCopy() GongstructIF {
-	newInstance := *staticwebsiteparagraph
-	return &newInstance
+	newInstance := new(StaticWebSiteParagraph)
+	staticwebsiteparagraph.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (xhtml_content *XHTML_CONTENT) GongCopy() GongstructIF {
-	newInstance := *xhtml_content
-	return &newInstance
+	newInstance := new(XHTML_CONTENT)
+	xhtml_content.CopyBasicFields(newInstance)
+	return newInstance
 }
 
 func (stage *Stage) ComputeForwardAndBackwardCommits() {
@@ -1590,16 +1695,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ALTERNATIVE_IDs_referenceOrder == nil {
 				stage.ALTERNATIVE_IDs_referenceOrder = make(map[*ALTERNATIVE_ID]uint)
 			}
-			stage.ALTERNATIVE_IDs_referenceOrder[alternative_id] = stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]
+			stage.ALTERNATIVE_IDs_referenceOrder[alternative_id] = stage.ALTERNATIVE_ID_stagedOrder[alternative_id]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, alternative_id.GongMarshallUnstaging(stage))
-			delete(stage.ALTERNATIVE_IDs_referenceOrder, alternative_id)
+			// delete(stage.ALTERNATIVE_IDs_referenceOrder, alternative_id)
 			fieldInitializers, pointersInitializations := alternative_id.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ALTERNATIVE_IDMap_Staged_Order[ref] = stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]
+			stage.ALTERNATIVE_ID_stagedOrder[ref] = stage.ALTERNATIVE_ID_stagedOrder[alternative_id]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := alternative_id.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, alternative_id)
-			delete(stage.ALTERNATIVE_IDMap_Staged_Order, ref)
+			// delete(stage.ALTERNATIVE_ID_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", alternative_id.GetName())
@@ -1616,8 +1722,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ALTERNATIVE_IDs_reference {
-		if _, ok := stage.ALTERNATIVE_IDs[ref]; !ok {
+	for _, ref := range stage.ALTERNATIVE_IDs_reference {
+		instance := stage.ALTERNATIVE_IDs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ALTERNATIVE_IDs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			alternative_ids_deletedInstances = append(alternative_ids_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1639,16 +1746,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]
+			stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder[attribute_definition_boolean]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_boolean.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder, attribute_definition_boolean)
+			// delete(stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder, attribute_definition_boolean)
 			fieldInitializers, pointersInitializations := attribute_definition_boolean.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]
+			stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder[attribute_definition_boolean]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_boolean)
-			delete(stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_boolean.GetName())
@@ -1665,8 +1773,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_BOOLEANs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_booleans_deletedInstances = append(attribute_definition_booleans_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1688,16 +1797,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]
+			stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder[attribute_definition_boolean_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_boolean_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder, attribute_definition_boolean_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder, attribute_definition_boolean_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_boolean_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]
+			stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder[attribute_definition_boolean_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_boolean_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_boolean_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_boolean_rendering.GetName())
@@ -1714,8 +1824,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_boolean_renderings_deletedInstances = append(attribute_definition_boolean_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1737,16 +1848,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_DATE]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]
+			stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date] = stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder[attribute_definition_date]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_date.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder, attribute_definition_date)
+			// delete(stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder, attribute_definition_date)
 			fieldInitializers, pointersInitializations := attribute_definition_date.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]
+			stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder[attribute_definition_date]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_date)
-			delete(stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_date.GetName())
@@ -1763,8 +1875,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_DATEs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_DATEs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_DATEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_DATEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_dates_deletedInstances = append(attribute_definition_dates_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1786,16 +1899,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]
+			stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering] = stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder[attribute_definition_date_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_date_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder, attribute_definition_date_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder, attribute_definition_date_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_date_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]
+			stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder[attribute_definition_date_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_date_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_date_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_date_rendering.GetName())
@@ -1812,8 +1926,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_DATE_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_date_renderings_deletedInstances = append(attribute_definition_date_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1835,16 +1950,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]
+			stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder[attribute_definition_enumeration]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_enumeration.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder, attribute_definition_enumeration)
+			// delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder, attribute_definition_enumeration)
 			fieldInitializers, pointersInitializations := attribute_definition_enumeration.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]
+			stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder[attribute_definition_enumeration]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_enumeration)
-			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_enumeration.GetName())
@@ -1861,8 +1977,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_enumerations_deletedInstances = append(attribute_definition_enumerations_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1884,16 +2001,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]
+			stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder[attribute_definition_enumeration_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_enumeration_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder, attribute_definition_enumeration_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder, attribute_definition_enumeration_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_enumeration_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]
+			stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder[attribute_definition_enumeration_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_enumeration_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_enumeration_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_enumeration_rendering.GetName())
@@ -1910,8 +2028,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_enumeration_renderings_deletedInstances = append(attribute_definition_enumeration_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1933,16 +2052,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_INTEGER]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]
+			stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer] = stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder[attribute_definition_integer]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_integer.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder, attribute_definition_integer)
+			// delete(stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder, attribute_definition_integer)
 			fieldInitializers, pointersInitializations := attribute_definition_integer.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]
+			stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder[attribute_definition_integer]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_integer)
-			delete(stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_integer.GetName())
@@ -1959,8 +2079,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_INTEGERs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_INTEGERs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_INTEGERs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_integers_deletedInstances = append(attribute_definition_integers_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -1982,16 +2103,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]
+			stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering] = stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder[attribute_definition_integer_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_integer_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder, attribute_definition_integer_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder, attribute_definition_integer_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_integer_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]
+			stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder[attribute_definition_integer_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_integer_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_integer_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_integer_rendering.GetName())
@@ -2008,8 +2130,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_integer_renderings_deletedInstances = append(attribute_definition_integer_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2031,16 +2154,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_REAL]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]
+			stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real] = stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder[attribute_definition_real]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_real.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder, attribute_definition_real)
+			// delete(stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder, attribute_definition_real)
 			fieldInitializers, pointersInitializations := attribute_definition_real.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]
+			stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder[attribute_definition_real]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_real)
-			delete(stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_real.GetName())
@@ -2057,8 +2181,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_REALs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_REALs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_REALs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_REALs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_reals_deletedInstances = append(attribute_definition_reals_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2080,16 +2205,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]
+			stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering] = stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder[attribute_definition_real_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_real_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder, attribute_definition_real_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder, attribute_definition_real_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_real_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]
+			stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder[attribute_definition_real_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_real_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_real_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_real_rendering.GetName())
@@ -2106,8 +2232,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_REAL_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_real_renderings_deletedInstances = append(attribute_definition_real_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2129,16 +2256,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]
+			stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering] = stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder[attribute_definition_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder, attribute_definition_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder, attribute_definition_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]
+			stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder[attribute_definition_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_rendering.GetName())
@@ -2155,8 +2283,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_renderings_deletedInstances = append(attribute_definition_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2178,16 +2307,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_STRING]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]
+			stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string] = stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder[attribute_definition_string]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_string.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder, attribute_definition_string)
+			// delete(stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder, attribute_definition_string)
 			fieldInitializers, pointersInitializations := attribute_definition_string.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]
+			stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder[attribute_definition_string]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_string)
-			delete(stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_string.GetName())
@@ -2204,8 +2334,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_STRINGs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_STRINGs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_STRINGs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_STRINGs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_strings_deletedInstances = append(attribute_definition_strings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2227,16 +2358,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]
+			stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering] = stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder[attribute_definition_string_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_string_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder, attribute_definition_string_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder, attribute_definition_string_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_string_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]
+			stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder[attribute_definition_string_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_string_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_string_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_string_rendering.GetName())
@@ -2253,8 +2385,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_STRING_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_string_renderings_deletedInstances = append(attribute_definition_string_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2276,16 +2409,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_XHTML]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]
+			stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml] = stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder[attribute_definition_xhtml]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_xhtml.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder, attribute_definition_xhtml)
+			// delete(stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder, attribute_definition_xhtml)
 			fieldInitializers, pointersInitializations := attribute_definition_xhtml.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]
+			stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder[attribute_definition_xhtml]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_xhtml)
-			delete(stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_xhtml.GetName())
@@ -2302,8 +2436,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_XHTMLs_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_XHTMLs_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_XHTMLs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_xhtmls_deletedInstances = append(attribute_definition_xhtmls_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2325,16 +2460,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder == nil {
 				stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]uint)
 			}
-			stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]
+			stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering] = stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder[attribute_definition_xhtml_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_definition_xhtml_rendering.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder, attribute_definition_xhtml_rendering)
+			// delete(stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder, attribute_definition_xhtml_rendering)
 			fieldInitializers, pointersInitializations := attribute_definition_xhtml_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[ref] = stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]
+			stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder[ref] = stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder[attribute_definition_xhtml_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_definition_xhtml_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_definition_xhtml_rendering)
-			delete(stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_definition_xhtml_rendering.GetName())
@@ -2351,8 +2487,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference {
-		if _, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference {
+		instance := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_definition_xhtml_renderings_deletedInstances = append(attribute_definition_xhtml_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2374,16 +2511,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder = make(map[*ATTRIBUTE_VALUE_BOOLEAN]uint)
 			}
-			stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]
+			stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean] = stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[attribute_value_boolean]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_boolean.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder, attribute_value_boolean)
+			// delete(stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder, attribute_value_boolean)
 			fieldInitializers, pointersInitializations := attribute_value_boolean.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]
+			stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[attribute_value_boolean]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_boolean)
-			delete(stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_boolean.GetName())
@@ -2400,8 +2538,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_BOOLEANs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_BOOLEANs_reference {
+		instance := stage.ATTRIBUTE_VALUE_BOOLEANs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_BOOLEANs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_booleans_deletedInstances = append(attribute_value_booleans_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2423,16 +2562,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_DATEs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_DATEs_referenceOrder = make(map[*ATTRIBUTE_VALUE_DATE]uint)
 			}
-			stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]
+			stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date] = stage.ATTRIBUTE_VALUE_DATE_stagedOrder[attribute_value_date]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_date.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_DATEs_referenceOrder, attribute_value_date)
+			// delete(stage.ATTRIBUTE_VALUE_DATEs_referenceOrder, attribute_value_date)
 			fieldInitializers, pointersInitializations := attribute_value_date.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]
+			stage.ATTRIBUTE_VALUE_DATE_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_DATE_stagedOrder[attribute_value_date]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_date)
-			delete(stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_DATE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_date.GetName())
@@ -2449,8 +2589,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_DATEs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_DATEs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_DATEs_reference {
+		instance := stage.ATTRIBUTE_VALUE_DATEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_DATEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_dates_deletedInstances = append(attribute_value_dates_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2472,16 +2613,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder = make(map[*ATTRIBUTE_VALUE_ENUMERATION]uint)
 			}
-			stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]
+			stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration] = stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[attribute_value_enumeration]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_enumeration.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder, attribute_value_enumeration)
+			// delete(stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder, attribute_value_enumeration)
 			fieldInitializers, pointersInitializations := attribute_value_enumeration.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]
+			stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[attribute_value_enumeration]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_enumeration)
-			delete(stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_enumeration.GetName())
@@ -2498,8 +2640,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference {
+		instance := stage.ATTRIBUTE_VALUE_ENUMERATIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_enumerations_deletedInstances = append(attribute_value_enumerations_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2521,16 +2664,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder = make(map[*ATTRIBUTE_VALUE_INTEGER]uint)
 			}
-			stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]
+			stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer] = stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder[attribute_value_integer]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_integer.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder, attribute_value_integer)
+			// delete(stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder, attribute_value_integer)
 			fieldInitializers, pointersInitializations := attribute_value_integer.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]
+			stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder[attribute_value_integer]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_integer)
-			delete(stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_integer.GetName())
@@ -2547,8 +2691,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_INTEGERs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_INTEGERs_reference {
+		instance := stage.ATTRIBUTE_VALUE_INTEGERs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_INTEGERs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_integers_deletedInstances = append(attribute_value_integers_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2570,16 +2715,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_REALs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_REALs_referenceOrder = make(map[*ATTRIBUTE_VALUE_REAL]uint)
 			}
-			stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real] = stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]
+			stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real] = stage.ATTRIBUTE_VALUE_REAL_stagedOrder[attribute_value_real]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_real.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_REALs_referenceOrder, attribute_value_real)
+			// delete(stage.ATTRIBUTE_VALUE_REALs_referenceOrder, attribute_value_real)
 			fieldInitializers, pointersInitializations := attribute_value_real.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]
+			stage.ATTRIBUTE_VALUE_REAL_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_REAL_stagedOrder[attribute_value_real]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_real)
-			delete(stage.ATTRIBUTE_VALUE_REALMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_REAL_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_real.GetName())
@@ -2596,8 +2742,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_REALs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_REALs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_REALs_reference {
+		instance := stage.ATTRIBUTE_VALUE_REALs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_REALs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_reals_deletedInstances = append(attribute_value_reals_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2619,16 +2766,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder = make(map[*ATTRIBUTE_VALUE_STRING]uint)
 			}
-			stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]
+			stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string] = stage.ATTRIBUTE_VALUE_STRING_stagedOrder[attribute_value_string]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_string.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder, attribute_value_string)
+			// delete(stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder, attribute_value_string)
 			fieldInitializers, pointersInitializations := attribute_value_string.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]
+			stage.ATTRIBUTE_VALUE_STRING_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_STRING_stagedOrder[attribute_value_string]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_string)
-			delete(stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_STRING_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_string.GetName())
@@ -2645,8 +2793,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_STRINGs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_STRINGs_reference {
+		instance := stage.ATTRIBUTE_VALUE_STRINGs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_STRINGs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_strings_deletedInstances = append(attribute_value_strings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2668,16 +2817,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder == nil {
 				stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder = make(map[*ATTRIBUTE_VALUE_XHTML]uint)
 			}
-			stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]
+			stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml] = stage.ATTRIBUTE_VALUE_XHTML_stagedOrder[attribute_value_xhtml]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, attribute_value_xhtml.GongMarshallUnstaging(stage))
-			delete(stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder, attribute_value_xhtml)
+			// delete(stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder, attribute_value_xhtml)
 			fieldInitializers, pointersInitializations := attribute_value_xhtml.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[ref] = stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]
+			stage.ATTRIBUTE_VALUE_XHTML_stagedOrder[ref] = stage.ATTRIBUTE_VALUE_XHTML_stagedOrder[attribute_value_xhtml]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := attribute_value_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, attribute_value_xhtml)
-			delete(stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, ref)
+			// delete(stage.ATTRIBUTE_VALUE_XHTML_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", attribute_value_xhtml.GetName())
@@ -2694,8 +2844,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ATTRIBUTE_VALUE_XHTMLs_reference {
-		if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[ref]; !ok {
+	for _, ref := range stage.ATTRIBUTE_VALUE_XHTMLs_reference {
+		instance := stage.ATTRIBUTE_VALUE_XHTMLs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ATTRIBUTE_VALUE_XHTMLs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			attribute_value_xhtmls_deletedInstances = append(attribute_value_xhtmls_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2717,16 +2868,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ALTERNATIVE_IDs_referenceOrder == nil {
 				stage.A_ALTERNATIVE_IDs_referenceOrder = make(map[*A_ALTERNATIVE_ID]uint)
 			}
-			stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id] = stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]
+			stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id] = stage.A_ALTERNATIVE_ID_stagedOrder[a_alternative_id]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_alternative_id.GongMarshallUnstaging(stage))
-			delete(stage.A_ALTERNATIVE_IDs_referenceOrder, a_alternative_id)
+			// delete(stage.A_ALTERNATIVE_IDs_referenceOrder, a_alternative_id)
 			fieldInitializers, pointersInitializations := a_alternative_id.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ALTERNATIVE_IDMap_Staged_Order[ref] = stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]
+			stage.A_ALTERNATIVE_ID_stagedOrder[ref] = stage.A_ALTERNATIVE_ID_stagedOrder[a_alternative_id]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_alternative_id.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_alternative_id)
-			delete(stage.A_ALTERNATIVE_IDMap_Staged_Order, ref)
+			// delete(stage.A_ALTERNATIVE_ID_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_alternative_id.GetName())
@@ -2743,8 +2895,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ALTERNATIVE_IDs_reference {
-		if _, ok := stage.A_ALTERNATIVE_IDs[ref]; !ok {
+	for _, ref := range stage.A_ALTERNATIVE_IDs_reference {
+		instance := stage.A_ALTERNATIVE_IDs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ALTERNATIVE_IDs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_alternative_ids_deletedInstances = append(a_alternative_ids_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2766,16 +2919,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]
+			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder[a_attribute_definition_boolean_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_boolean_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder, a_attribute_definition_boolean_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder, a_attribute_definition_boolean_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_boolean_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]
+			stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder[a_attribute_definition_boolean_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_boolean_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_boolean_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_boolean_ref.GetName())
@@ -2792,8 +2946,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_boolean_refs_deletedInstances = append(a_attribute_definition_boolean_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2815,16 +2970,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]
+			stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder[a_attribute_definition_date_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_date_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder, a_attribute_definition_date_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder, a_attribute_definition_date_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_date_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]
+			stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder[a_attribute_definition_date_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_date_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_date_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_date_ref.GetName())
@@ -2841,8 +2997,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_date_refs_deletedInstances = append(a_attribute_definition_date_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2864,16 +3021,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]
+			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder[a_attribute_definition_enumeration_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_enumeration_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder, a_attribute_definition_enumeration_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder, a_attribute_definition_enumeration_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_enumeration_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]
+			stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder[a_attribute_definition_enumeration_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_enumeration_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_enumeration_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_enumeration_ref.GetName())
@@ -2890,8 +3048,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_enumeration_refs_deletedInstances = append(a_attribute_definition_enumeration_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2913,16 +3072,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]
+			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder[a_attribute_definition_integer_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_integer_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder, a_attribute_definition_integer_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder, a_attribute_definition_integer_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_integer_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]
+			stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder[a_attribute_definition_integer_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_integer_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_integer_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_integer_ref.GetName())
@@ -2939,8 +3099,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_integer_refs_deletedInstances = append(a_attribute_definition_integer_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -2962,16 +3123,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]
+			stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder[a_attribute_definition_real_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_real_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder, a_attribute_definition_real_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder, a_attribute_definition_real_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_real_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]
+			stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder[a_attribute_definition_real_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_real_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_real_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_real_ref.GetName())
@@ -2988,8 +3150,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_real_refs_deletedInstances = append(a_attribute_definition_real_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3011,16 +3174,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]
+			stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder[a_attribute_definition_string_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_string_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder, a_attribute_definition_string_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder, a_attribute_definition_string_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_string_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]
+			stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder[a_attribute_definition_string_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_string_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_string_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_string_ref.GetName())
@@ -3037,8 +3201,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_string_refs_deletedInstances = append(a_attribute_definition_string_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3060,16 +3225,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]uint)
 			}
-			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]
+			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder[a_attribute_definition_xhtml_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_definition_xhtml_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder, a_attribute_definition_xhtml_ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder, a_attribute_definition_xhtml_ref)
 			fieldInitializers, pointersInitializations := a_attribute_definition_xhtml_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]
+			stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder[ref] = stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder[a_attribute_definition_xhtml_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_definition_xhtml_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_definition_xhtml_ref)
-			delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_definition_xhtml_ref.GetName())
@@ -3086,8 +3252,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference {
-		if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference {
+		instance := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_definition_xhtml_refs_deletedInstances = append(a_attribute_definition_xhtml_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3109,16 +3276,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]
+			stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean] = stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[a_attribute_value_boolean]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_boolean.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder, a_attribute_value_boolean)
+			// delete(stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder, a_attribute_value_boolean)
 			fieldInitializers, pointersInitializations := a_attribute_value_boolean.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]
+			stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[a_attribute_value_boolean]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_boolean)
-			delete(stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_boolean.GetName())
@@ -3135,8 +3303,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_BOOLEANs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_booleans_deletedInstances = append(a_attribute_value_booleans_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3158,16 +3327,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_DATE]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]
+			stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date] = stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder[a_attribute_value_date]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_date.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder, a_attribute_value_date)
+			// delete(stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder, a_attribute_value_date)
 			fieldInitializers, pointersInitializations := a_attribute_value_date.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]
+			stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder[a_attribute_value_date]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_date)
-			delete(stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_date.GetName())
@@ -3184,8 +3354,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_DATEs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_DATEs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_DATEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_DATEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_dates_deletedInstances = append(a_attribute_value_dates_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3207,16 +3378,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]
+			stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration] = stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[a_attribute_value_enumeration]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_enumeration.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder, a_attribute_value_enumeration)
+			// delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder, a_attribute_value_enumeration)
 			fieldInitializers, pointersInitializations := a_attribute_value_enumeration.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]
+			stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[a_attribute_value_enumeration]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_enumeration)
-			delete(stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_enumeration.GetName())
@@ -3233,8 +3405,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_enumerations_deletedInstances = append(a_attribute_value_enumerations_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3256,16 +3429,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_INTEGER]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]
+			stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer] = stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder[a_attribute_value_integer]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_integer.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder, a_attribute_value_integer)
+			// delete(stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder, a_attribute_value_integer)
 			fieldInitializers, pointersInitializations := a_attribute_value_integer.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]
+			stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder[a_attribute_value_integer]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_integer)
-			delete(stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_integer.GetName())
@@ -3282,8 +3456,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_INTEGERs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_INTEGERs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_INTEGERs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_integers_deletedInstances = append(a_attribute_value_integers_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3305,16 +3480,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_REAL]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]
+			stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real] = stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder[a_attribute_value_real]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_real.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder, a_attribute_value_real)
+			// delete(stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder, a_attribute_value_real)
 			fieldInitializers, pointersInitializations := a_attribute_value_real.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]
+			stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder[a_attribute_value_real]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_real)
-			delete(stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_real.GetName())
@@ -3331,8 +3507,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_REALs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_REALs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_REALs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_REALs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_reals_deletedInstances = append(a_attribute_value_reals_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3354,16 +3531,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_STRING]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]
+			stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string] = stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder[a_attribute_value_string]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_string.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder, a_attribute_value_string)
+			// delete(stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder, a_attribute_value_string)
 			fieldInitializers, pointersInitializations := a_attribute_value_string.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]
+			stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder[a_attribute_value_string]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_string)
-			delete(stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_string.GetName())
@@ -3380,8 +3558,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_STRINGs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_STRINGs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_STRINGs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_STRINGs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_strings_deletedInstances = append(a_attribute_value_strings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3403,16 +3582,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_XHTML]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]
+			stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml] = stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder[a_attribute_value_xhtml]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_xhtml.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder, a_attribute_value_xhtml)
+			// delete(stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder, a_attribute_value_xhtml)
 			fieldInitializers, pointersInitializations := a_attribute_value_xhtml.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]
+			stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder[a_attribute_value_xhtml]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_xhtml)
-			delete(stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_xhtml.GetName())
@@ -3429,8 +3609,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_XHTMLs_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_XHTMLs_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_XHTMLs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_xhtmls_deletedInstances = append(a_attribute_value_xhtmls_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3452,16 +3633,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder == nil {
 				stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]uint)
 			}
-			stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]
+			stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1] = stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder[a_attribute_value_xhtml_1]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_attribute_value_xhtml_1.GongMarshallUnstaging(stage))
-			delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder, a_attribute_value_xhtml_1)
+			// delete(stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder, a_attribute_value_xhtml_1)
 			fieldInitializers, pointersInitializations := a_attribute_value_xhtml_1.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[ref] = stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]
+			stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder[ref] = stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder[a_attribute_value_xhtml_1]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_attribute_value_xhtml_1.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_attribute_value_xhtml_1)
-			delete(stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order, ref)
+			// delete(stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_attribute_value_xhtml_1.GetName())
@@ -3478,8 +3660,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference {
-		if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[ref]; !ok {
+	for _, ref := range stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference {
+		instance := stage.A_ATTRIBUTE_VALUE_XHTML_1s_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_attribute_value_xhtml_1s_deletedInstances = append(a_attribute_value_xhtml_1s_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3501,16 +3684,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_CHILDRENs_referenceOrder == nil {
 				stage.A_CHILDRENs_referenceOrder = make(map[*A_CHILDREN]uint)
 			}
-			stage.A_CHILDRENs_referenceOrder[a_children] = stage.A_CHILDRENMap_Staged_Order[a_children]
+			stage.A_CHILDRENs_referenceOrder[a_children] = stage.A_CHILDREN_stagedOrder[a_children]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_children.GongMarshallUnstaging(stage))
-			delete(stage.A_CHILDRENs_referenceOrder, a_children)
+			// delete(stage.A_CHILDRENs_referenceOrder, a_children)
 			fieldInitializers, pointersInitializations := a_children.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_CHILDRENMap_Staged_Order[ref] = stage.A_CHILDRENMap_Staged_Order[a_children]
+			stage.A_CHILDREN_stagedOrder[ref] = stage.A_CHILDREN_stagedOrder[a_children]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_children.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_children)
-			delete(stage.A_CHILDRENMap_Staged_Order, ref)
+			// delete(stage.A_CHILDREN_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_children.GetName())
@@ -3527,8 +3711,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_CHILDRENs_reference {
-		if _, ok := stage.A_CHILDRENs[ref]; !ok {
+	for _, ref := range stage.A_CHILDRENs_reference {
+		instance := stage.A_CHILDRENs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_CHILDRENs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_childrens_deletedInstances = append(a_childrens_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3550,16 +3735,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_CORE_CONTENTs_referenceOrder == nil {
 				stage.A_CORE_CONTENTs_referenceOrder = make(map[*A_CORE_CONTENT]uint)
 			}
-			stage.A_CORE_CONTENTs_referenceOrder[a_core_content] = stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]
+			stage.A_CORE_CONTENTs_referenceOrder[a_core_content] = stage.A_CORE_CONTENT_stagedOrder[a_core_content]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_core_content.GongMarshallUnstaging(stage))
-			delete(stage.A_CORE_CONTENTs_referenceOrder, a_core_content)
+			// delete(stage.A_CORE_CONTENTs_referenceOrder, a_core_content)
 			fieldInitializers, pointersInitializations := a_core_content.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_CORE_CONTENTMap_Staged_Order[ref] = stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]
+			stage.A_CORE_CONTENT_stagedOrder[ref] = stage.A_CORE_CONTENT_stagedOrder[a_core_content]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_core_content.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_core_content)
-			delete(stage.A_CORE_CONTENTMap_Staged_Order, ref)
+			// delete(stage.A_CORE_CONTENT_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_core_content.GetName())
@@ -3576,8 +3762,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_CORE_CONTENTs_reference {
-		if _, ok := stage.A_CORE_CONTENTs[ref]; !ok {
+	for _, ref := range stage.A_CORE_CONTENTs_reference {
+		instance := stage.A_CORE_CONTENTs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_CORE_CONTENTs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_core_contents_deletedInstances = append(a_core_contents_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3599,16 +3786,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPESs_referenceOrder == nil {
 				stage.A_DATATYPESs_referenceOrder = make(map[*A_DATATYPES]uint)
 			}
-			stage.A_DATATYPESs_referenceOrder[a_datatypes] = stage.A_DATATYPESMap_Staged_Order[a_datatypes]
+			stage.A_DATATYPESs_referenceOrder[a_datatypes] = stage.A_DATATYPES_stagedOrder[a_datatypes]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatypes.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPESs_referenceOrder, a_datatypes)
+			// delete(stage.A_DATATYPESs_referenceOrder, a_datatypes)
 			fieldInitializers, pointersInitializations := a_datatypes.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPESMap_Staged_Order[ref] = stage.A_DATATYPESMap_Staged_Order[a_datatypes]
+			stage.A_DATATYPES_stagedOrder[ref] = stage.A_DATATYPES_stagedOrder[a_datatypes]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatypes.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatypes)
-			delete(stage.A_DATATYPESMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPES_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatypes.GetName())
@@ -3625,8 +3813,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPESs_reference {
-		if _, ok := stage.A_DATATYPESs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPESs_reference {
+		instance := stage.A_DATATYPESs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPESs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatypess_deletedInstances = append(a_datatypess_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3648,16 +3837,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]
+			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder[a_datatype_definition_boolean_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_boolean_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder, a_datatype_definition_boolean_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder, a_datatype_definition_boolean_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_boolean_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]
+			stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder[a_datatype_definition_boolean_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_boolean_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_boolean_ref)
-			delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_boolean_ref.GetName())
@@ -3674,8 +3864,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_boolean_refs_deletedInstances = append(a_datatype_definition_boolean_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3697,16 +3888,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_DATE_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]
+			stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref] = stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder[a_datatype_definition_date_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_date_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder, a_datatype_definition_date_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder, a_datatype_definition_date_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_date_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]
+			stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder[a_datatype_definition_date_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_date_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_date_ref)
-			delete(stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_date_ref.GetName())
@@ -3723,8 +3915,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_DATE_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_DATE_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_DATE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_date_refs_deletedInstances = append(a_datatype_definition_date_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3746,16 +3939,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]
+			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder[a_datatype_definition_enumeration_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_enumeration_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder, a_datatype_definition_enumeration_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder, a_datatype_definition_enumeration_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_enumeration_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]
+			stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder[a_datatype_definition_enumeration_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_enumeration_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_enumeration_ref)
-			delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_enumeration_ref.GetName())
@@ -3772,8 +3966,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_enumeration_refs_deletedInstances = append(a_datatype_definition_enumeration_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3795,16 +3990,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]
+			stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder[a_datatype_definition_integer_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_integer_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder, a_datatype_definition_integer_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder, a_datatype_definition_integer_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_integer_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]
+			stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder[a_datatype_definition_integer_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_integer_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_integer_ref)
-			delete(stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_integer_ref.GetName())
@@ -3821,8 +4017,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_INTEGER_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_integer_refs_deletedInstances = append(a_datatype_definition_integer_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3844,16 +4041,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_REAL_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]
+			stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref] = stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder[a_datatype_definition_real_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_real_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder, a_datatype_definition_real_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder, a_datatype_definition_real_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_real_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]
+			stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder[a_datatype_definition_real_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_real_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_real_ref)
-			delete(stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_real_ref.GetName())
@@ -3870,8 +4068,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_REAL_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_REAL_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_REAL_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_real_refs_deletedInstances = append(a_datatype_definition_real_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3893,16 +4092,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_STRING_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]
+			stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref] = stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder[a_datatype_definition_string_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_string_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder, a_datatype_definition_string_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder, a_datatype_definition_string_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_string_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]
+			stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder[a_datatype_definition_string_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_string_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_string_ref)
-			delete(stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_string_ref.GetName())
@@ -3919,8 +4119,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_STRING_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_STRING_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_STRING_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_string_refs_deletedInstances = append(a_datatype_definition_string_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3942,16 +4143,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder == nil {
 				stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]uint)
 			}
-			stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]
+			stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref] = stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder[a_datatype_definition_xhtml_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_datatype_definition_xhtml_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder, a_datatype_definition_xhtml_ref)
+			// delete(stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder, a_datatype_definition_xhtml_ref)
 			fieldInitializers, pointersInitializations := a_datatype_definition_xhtml_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[ref] = stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]
+			stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder[ref] = stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder[a_datatype_definition_xhtml_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_datatype_definition_xhtml_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_datatype_definition_xhtml_ref)
-			delete(stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order, ref)
+			// delete(stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_datatype_definition_xhtml_ref.GetName())
@@ -3968,8 +4170,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference {
-		if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[ref]; !ok {
+	for _, ref := range stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference {
+		instance := stage.A_DATATYPE_DEFINITION_XHTML_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_datatype_definition_xhtml_refs_deletedInstances = append(a_datatype_definition_xhtml_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -3991,16 +4194,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_EDITABLE_ATTSs_referenceOrder == nil {
 				stage.A_EDITABLE_ATTSs_referenceOrder = make(map[*A_EDITABLE_ATTS]uint)
 			}
-			stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts] = stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]
+			stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts] = stage.A_EDITABLE_ATTS_stagedOrder[a_editable_atts]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_editable_atts.GongMarshallUnstaging(stage))
-			delete(stage.A_EDITABLE_ATTSs_referenceOrder, a_editable_atts)
+			// delete(stage.A_EDITABLE_ATTSs_referenceOrder, a_editable_atts)
 			fieldInitializers, pointersInitializations := a_editable_atts.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_EDITABLE_ATTSMap_Staged_Order[ref] = stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]
+			stage.A_EDITABLE_ATTS_stagedOrder[ref] = stage.A_EDITABLE_ATTS_stagedOrder[a_editable_atts]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_editable_atts.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_editable_atts)
-			delete(stage.A_EDITABLE_ATTSMap_Staged_Order, ref)
+			// delete(stage.A_EDITABLE_ATTS_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_editable_atts.GetName())
@@ -4017,8 +4221,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_EDITABLE_ATTSs_reference {
-		if _, ok := stage.A_EDITABLE_ATTSs[ref]; !ok {
+	for _, ref := range stage.A_EDITABLE_ATTSs_reference {
+		instance := stage.A_EDITABLE_ATTSs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_EDITABLE_ATTSs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_editable_attss_deletedInstances = append(a_editable_attss_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4040,16 +4245,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_ENUM_VALUE_REFs_referenceOrder == nil {
 				stage.A_ENUM_VALUE_REFs_referenceOrder = make(map[*A_ENUM_VALUE_REF]uint)
 			}
-			stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref] = stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]
+			stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref] = stage.A_ENUM_VALUE_REF_stagedOrder[a_enum_value_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_enum_value_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_ENUM_VALUE_REFs_referenceOrder, a_enum_value_ref)
+			// delete(stage.A_ENUM_VALUE_REFs_referenceOrder, a_enum_value_ref)
 			fieldInitializers, pointersInitializations := a_enum_value_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_ENUM_VALUE_REFMap_Staged_Order[ref] = stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]
+			stage.A_ENUM_VALUE_REF_stagedOrder[ref] = stage.A_ENUM_VALUE_REF_stagedOrder[a_enum_value_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_enum_value_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_enum_value_ref)
-			delete(stage.A_ENUM_VALUE_REFMap_Staged_Order, ref)
+			// delete(stage.A_ENUM_VALUE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_enum_value_ref.GetName())
@@ -4066,8 +4272,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_ENUM_VALUE_REFs_reference {
-		if _, ok := stage.A_ENUM_VALUE_REFs[ref]; !ok {
+	for _, ref := range stage.A_ENUM_VALUE_REFs_reference {
+		instance := stage.A_ENUM_VALUE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_ENUM_VALUE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_enum_value_refs_deletedInstances = append(a_enum_value_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4089,16 +4296,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_OBJECTs_referenceOrder == nil {
 				stage.A_OBJECTs_referenceOrder = make(map[*A_OBJECT]uint)
 			}
-			stage.A_OBJECTs_referenceOrder[a_object] = stage.A_OBJECTMap_Staged_Order[a_object]
+			stage.A_OBJECTs_referenceOrder[a_object] = stage.A_OBJECT_stagedOrder[a_object]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_object.GongMarshallUnstaging(stage))
-			delete(stage.A_OBJECTs_referenceOrder, a_object)
+			// delete(stage.A_OBJECTs_referenceOrder, a_object)
 			fieldInitializers, pointersInitializations := a_object.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_OBJECTMap_Staged_Order[ref] = stage.A_OBJECTMap_Staged_Order[a_object]
+			stage.A_OBJECT_stagedOrder[ref] = stage.A_OBJECT_stagedOrder[a_object]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_object.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_object)
-			delete(stage.A_OBJECTMap_Staged_Order, ref)
+			// delete(stage.A_OBJECT_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_object.GetName())
@@ -4115,8 +4323,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_OBJECTs_reference {
-		if _, ok := stage.A_OBJECTs[ref]; !ok {
+	for _, ref := range stage.A_OBJECTs_reference {
+		instance := stage.A_OBJECTs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_OBJECTs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_objects_deletedInstances = append(a_objects_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4138,16 +4347,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_PROPERTIESs_referenceOrder == nil {
 				stage.A_PROPERTIESs_referenceOrder = make(map[*A_PROPERTIES]uint)
 			}
-			stage.A_PROPERTIESs_referenceOrder[a_properties] = stage.A_PROPERTIESMap_Staged_Order[a_properties]
+			stage.A_PROPERTIESs_referenceOrder[a_properties] = stage.A_PROPERTIES_stagedOrder[a_properties]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_properties.GongMarshallUnstaging(stage))
-			delete(stage.A_PROPERTIESs_referenceOrder, a_properties)
+			// delete(stage.A_PROPERTIESs_referenceOrder, a_properties)
 			fieldInitializers, pointersInitializations := a_properties.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_PROPERTIESMap_Staged_Order[ref] = stage.A_PROPERTIESMap_Staged_Order[a_properties]
+			stage.A_PROPERTIES_stagedOrder[ref] = stage.A_PROPERTIES_stagedOrder[a_properties]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_properties.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_properties)
-			delete(stage.A_PROPERTIESMap_Staged_Order, ref)
+			// delete(stage.A_PROPERTIES_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_properties.GetName())
@@ -4164,8 +4374,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_PROPERTIESs_reference {
-		if _, ok := stage.A_PROPERTIESs[ref]; !ok {
+	for _, ref := range stage.A_PROPERTIESs_reference {
+		instance := stage.A_PROPERTIESs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_PROPERTIESs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_propertiess_deletedInstances = append(a_propertiess_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4187,16 +4398,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder == nil {
 				stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder = make(map[*A_RELATION_GROUP_TYPE_REF]uint)
 			}
-			stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]
+			stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref] = stage.A_RELATION_GROUP_TYPE_REF_stagedOrder[a_relation_group_type_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_relation_group_type_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder, a_relation_group_type_ref)
+			// delete(stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder, a_relation_group_type_ref)
 			fieldInitializers, pointersInitializations := a_relation_group_type_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[ref] = stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]
+			stage.A_RELATION_GROUP_TYPE_REF_stagedOrder[ref] = stage.A_RELATION_GROUP_TYPE_REF_stagedOrder[a_relation_group_type_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_relation_group_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_relation_group_type_ref)
-			delete(stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order, ref)
+			// delete(stage.A_RELATION_GROUP_TYPE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_relation_group_type_ref.GetName())
@@ -4213,8 +4425,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_RELATION_GROUP_TYPE_REFs_reference {
-		if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[ref]; !ok {
+	for _, ref := range stage.A_RELATION_GROUP_TYPE_REFs_reference {
+		instance := stage.A_RELATION_GROUP_TYPE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_RELATION_GROUP_TYPE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_relation_group_type_refs_deletedInstances = append(a_relation_group_type_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4236,16 +4449,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SOURCE_1s_referenceOrder == nil {
 				stage.A_SOURCE_1s_referenceOrder = make(map[*A_SOURCE_1]uint)
 			}
-			stage.A_SOURCE_1s_referenceOrder[a_source_1] = stage.A_SOURCE_1Map_Staged_Order[a_source_1]
+			stage.A_SOURCE_1s_referenceOrder[a_source_1] = stage.A_SOURCE_1_stagedOrder[a_source_1]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_source_1.GongMarshallUnstaging(stage))
-			delete(stage.A_SOURCE_1s_referenceOrder, a_source_1)
+			// delete(stage.A_SOURCE_1s_referenceOrder, a_source_1)
 			fieldInitializers, pointersInitializations := a_source_1.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SOURCE_1Map_Staged_Order[ref] = stage.A_SOURCE_1Map_Staged_Order[a_source_1]
+			stage.A_SOURCE_1_stagedOrder[ref] = stage.A_SOURCE_1_stagedOrder[a_source_1]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_source_1.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_source_1)
-			delete(stage.A_SOURCE_1Map_Staged_Order, ref)
+			// delete(stage.A_SOURCE_1_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_source_1.GetName())
@@ -4262,8 +4476,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SOURCE_1s_reference {
-		if _, ok := stage.A_SOURCE_1s[ref]; !ok {
+	for _, ref := range stage.A_SOURCE_1s_reference {
+		instance := stage.A_SOURCE_1s_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SOURCE_1s[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_source_1s_deletedInstances = append(a_source_1s_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4285,16 +4500,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SOURCE_SPECIFICATION_1s_referenceOrder == nil {
 				stage.A_SOURCE_SPECIFICATION_1s_referenceOrder = make(map[*A_SOURCE_SPECIFICATION_1]uint)
 			}
-			stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]
+			stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1] = stage.A_SOURCE_SPECIFICATION_1_stagedOrder[a_source_specification_1]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_source_specification_1.GongMarshallUnstaging(stage))
-			delete(stage.A_SOURCE_SPECIFICATION_1s_referenceOrder, a_source_specification_1)
+			// delete(stage.A_SOURCE_SPECIFICATION_1s_referenceOrder, a_source_specification_1)
 			fieldInitializers, pointersInitializations := a_source_specification_1.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[ref] = stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]
+			stage.A_SOURCE_SPECIFICATION_1_stagedOrder[ref] = stage.A_SOURCE_SPECIFICATION_1_stagedOrder[a_source_specification_1]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_source_specification_1.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_source_specification_1)
-			delete(stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order, ref)
+			// delete(stage.A_SOURCE_SPECIFICATION_1_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_source_specification_1.GetName())
@@ -4311,8 +4527,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SOURCE_SPECIFICATION_1s_reference {
-		if _, ok := stage.A_SOURCE_SPECIFICATION_1s[ref]; !ok {
+	for _, ref := range stage.A_SOURCE_SPECIFICATION_1s_reference {
+		instance := stage.A_SOURCE_SPECIFICATION_1s_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SOURCE_SPECIFICATION_1s[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_source_specification_1s_deletedInstances = append(a_source_specification_1s_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4334,16 +4551,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPECIFICATIONSs_referenceOrder == nil {
 				stage.A_SPECIFICATIONSs_referenceOrder = make(map[*A_SPECIFICATIONS]uint)
 			}
-			stage.A_SPECIFICATIONSs_referenceOrder[a_specifications] = stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]
+			stage.A_SPECIFICATIONSs_referenceOrder[a_specifications] = stage.A_SPECIFICATIONS_stagedOrder[a_specifications]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_specifications.GongMarshallUnstaging(stage))
-			delete(stage.A_SPECIFICATIONSs_referenceOrder, a_specifications)
+			// delete(stage.A_SPECIFICATIONSs_referenceOrder, a_specifications)
 			fieldInitializers, pointersInitializations := a_specifications.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPECIFICATIONSMap_Staged_Order[ref] = stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]
+			stage.A_SPECIFICATIONS_stagedOrder[ref] = stage.A_SPECIFICATIONS_stagedOrder[a_specifications]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_specifications.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_specifications)
-			delete(stage.A_SPECIFICATIONSMap_Staged_Order, ref)
+			// delete(stage.A_SPECIFICATIONS_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_specifications.GetName())
@@ -4360,8 +4578,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPECIFICATIONSs_reference {
-		if _, ok := stage.A_SPECIFICATIONSs[ref]; !ok {
+	for _, ref := range stage.A_SPECIFICATIONSs_reference {
+		instance := stage.A_SPECIFICATIONSs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPECIFICATIONSs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_specificationss_deletedInstances = append(a_specificationss_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4383,16 +4602,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPECIFICATION_TYPE_REFs_referenceOrder == nil {
 				stage.A_SPECIFICATION_TYPE_REFs_referenceOrder = make(map[*A_SPECIFICATION_TYPE_REF]uint)
 			}
-			stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]
+			stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref] = stage.A_SPECIFICATION_TYPE_REF_stagedOrder[a_specification_type_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_specification_type_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_SPECIFICATION_TYPE_REFs_referenceOrder, a_specification_type_ref)
+			// delete(stage.A_SPECIFICATION_TYPE_REFs_referenceOrder, a_specification_type_ref)
 			fieldInitializers, pointersInitializations := a_specification_type_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[ref] = stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]
+			stage.A_SPECIFICATION_TYPE_REF_stagedOrder[ref] = stage.A_SPECIFICATION_TYPE_REF_stagedOrder[a_specification_type_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_specification_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_specification_type_ref)
-			delete(stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order, ref)
+			// delete(stage.A_SPECIFICATION_TYPE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_specification_type_ref.GetName())
@@ -4409,8 +4629,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPECIFICATION_TYPE_REFs_reference {
-		if _, ok := stage.A_SPECIFICATION_TYPE_REFs[ref]; !ok {
+	for _, ref := range stage.A_SPECIFICATION_TYPE_REFs_reference {
+		instance := stage.A_SPECIFICATION_TYPE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPECIFICATION_TYPE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_specification_type_refs_deletedInstances = append(a_specification_type_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4432,16 +4653,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPECIFIED_VALUESs_referenceOrder == nil {
 				stage.A_SPECIFIED_VALUESs_referenceOrder = make(map[*A_SPECIFIED_VALUES]uint)
 			}
-			stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values] = stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]
+			stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values] = stage.A_SPECIFIED_VALUES_stagedOrder[a_specified_values]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_specified_values.GongMarshallUnstaging(stage))
-			delete(stage.A_SPECIFIED_VALUESs_referenceOrder, a_specified_values)
+			// delete(stage.A_SPECIFIED_VALUESs_referenceOrder, a_specified_values)
 			fieldInitializers, pointersInitializations := a_specified_values.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPECIFIED_VALUESMap_Staged_Order[ref] = stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]
+			stage.A_SPECIFIED_VALUES_stagedOrder[ref] = stage.A_SPECIFIED_VALUES_stagedOrder[a_specified_values]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_specified_values.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_specified_values)
-			delete(stage.A_SPECIFIED_VALUESMap_Staged_Order, ref)
+			// delete(stage.A_SPECIFIED_VALUES_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_specified_values.GetName())
@@ -4458,8 +4680,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPECIFIED_VALUESs_reference {
-		if _, ok := stage.A_SPECIFIED_VALUESs[ref]; !ok {
+	for _, ref := range stage.A_SPECIFIED_VALUESs_reference {
+		instance := stage.A_SPECIFIED_VALUESs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPECIFIED_VALUESs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_specified_valuess_deletedInstances = append(a_specified_valuess_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4481,16 +4704,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_ATTRIBUTESs_referenceOrder == nil {
 				stage.A_SPEC_ATTRIBUTESs_referenceOrder = make(map[*A_SPEC_ATTRIBUTES]uint)
 			}
-			stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes] = stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]
+			stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes] = stage.A_SPEC_ATTRIBUTES_stagedOrder[a_spec_attributes]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_attributes.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_ATTRIBUTESs_referenceOrder, a_spec_attributes)
+			// delete(stage.A_SPEC_ATTRIBUTESs_referenceOrder, a_spec_attributes)
 			fieldInitializers, pointersInitializations := a_spec_attributes.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_ATTRIBUTESMap_Staged_Order[ref] = stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]
+			stage.A_SPEC_ATTRIBUTES_stagedOrder[ref] = stage.A_SPEC_ATTRIBUTES_stagedOrder[a_spec_attributes]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_attributes.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_attributes)
-			delete(stage.A_SPEC_ATTRIBUTESMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_ATTRIBUTES_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_attributes.GetName())
@@ -4507,8 +4731,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_ATTRIBUTESs_reference {
-		if _, ok := stage.A_SPEC_ATTRIBUTESs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_ATTRIBUTESs_reference {
+		instance := stage.A_SPEC_ATTRIBUTESs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_ATTRIBUTESs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_attributess_deletedInstances = append(a_spec_attributess_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4530,16 +4755,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_OBJECTSs_referenceOrder == nil {
 				stage.A_SPEC_OBJECTSs_referenceOrder = make(map[*A_SPEC_OBJECTS]uint)
 			}
-			stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects] = stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]
+			stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects] = stage.A_SPEC_OBJECTS_stagedOrder[a_spec_objects]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_objects.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_OBJECTSs_referenceOrder, a_spec_objects)
+			// delete(stage.A_SPEC_OBJECTSs_referenceOrder, a_spec_objects)
 			fieldInitializers, pointersInitializations := a_spec_objects.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_OBJECTSMap_Staged_Order[ref] = stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]
+			stage.A_SPEC_OBJECTS_stagedOrder[ref] = stage.A_SPEC_OBJECTS_stagedOrder[a_spec_objects]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_objects.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_objects)
-			delete(stage.A_SPEC_OBJECTSMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_OBJECTS_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_objects.GetName())
@@ -4556,8 +4782,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_OBJECTSs_reference {
-		if _, ok := stage.A_SPEC_OBJECTSs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_OBJECTSs_reference {
+		instance := stage.A_SPEC_OBJECTSs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_OBJECTSs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_objectss_deletedInstances = append(a_spec_objectss_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4579,16 +4806,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder == nil {
 				stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder = make(map[*A_SPEC_OBJECT_TYPE_REF]uint)
 			}
-			stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]
+			stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref] = stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder[a_spec_object_type_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_object_type_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder, a_spec_object_type_ref)
+			// delete(stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder, a_spec_object_type_ref)
 			fieldInitializers, pointersInitializations := a_spec_object_type_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[ref] = stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]
+			stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder[ref] = stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder[a_spec_object_type_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_object_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_object_type_ref)
-			delete(stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_object_type_ref.GetName())
@@ -4605,8 +4833,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_OBJECT_TYPE_REFs_reference {
-		if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_OBJECT_TYPE_REFs_reference {
+		instance := stage.A_SPEC_OBJECT_TYPE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_OBJECT_TYPE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_object_type_refs_deletedInstances = append(a_spec_object_type_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4628,16 +4857,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_RELATIONSs_referenceOrder == nil {
 				stage.A_SPEC_RELATIONSs_referenceOrder = make(map[*A_SPEC_RELATIONS]uint)
 			}
-			stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations] = stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]
+			stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations] = stage.A_SPEC_RELATIONS_stagedOrder[a_spec_relations]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relations.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_RELATIONSs_referenceOrder, a_spec_relations)
+			// delete(stage.A_SPEC_RELATIONSs_referenceOrder, a_spec_relations)
 			fieldInitializers, pointersInitializations := a_spec_relations.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_RELATIONSMap_Staged_Order[ref] = stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]
+			stage.A_SPEC_RELATIONS_stagedOrder[ref] = stage.A_SPEC_RELATIONS_stagedOrder[a_spec_relations]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_relations.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relations)
-			delete(stage.A_SPEC_RELATIONSMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_RELATIONS_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relations.GetName())
@@ -4654,8 +4884,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_RELATIONSs_reference {
-		if _, ok := stage.A_SPEC_RELATIONSs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_RELATIONSs_reference {
+		instance := stage.A_SPEC_RELATIONSs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_RELATIONSs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_relationss_deletedInstances = append(a_spec_relationss_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4677,16 +4908,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_RELATION_GROUPSs_referenceOrder == nil {
 				stage.A_SPEC_RELATION_GROUPSs_referenceOrder = make(map[*A_SPEC_RELATION_GROUPS]uint)
 			}
-			stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]
+			stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups] = stage.A_SPEC_RELATION_GROUPS_stagedOrder[a_spec_relation_groups]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relation_groups.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_RELATION_GROUPSs_referenceOrder, a_spec_relation_groups)
+			// delete(stage.A_SPEC_RELATION_GROUPSs_referenceOrder, a_spec_relation_groups)
 			fieldInitializers, pointersInitializations := a_spec_relation_groups.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[ref] = stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]
+			stage.A_SPEC_RELATION_GROUPS_stagedOrder[ref] = stage.A_SPEC_RELATION_GROUPS_stagedOrder[a_spec_relation_groups]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_relation_groups.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relation_groups)
-			delete(stage.A_SPEC_RELATION_GROUPSMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_RELATION_GROUPS_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relation_groups.GetName())
@@ -4703,8 +4935,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_RELATION_GROUPSs_reference {
-		if _, ok := stage.A_SPEC_RELATION_GROUPSs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_RELATION_GROUPSs_reference {
+		instance := stage.A_SPEC_RELATION_GROUPSs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_RELATION_GROUPSs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_relation_groupss_deletedInstances = append(a_spec_relation_groupss_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4726,16 +4959,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_RELATION_REFs_referenceOrder == nil {
 				stage.A_SPEC_RELATION_REFs_referenceOrder = make(map[*A_SPEC_RELATION_REF]uint)
 			}
-			stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref] = stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]
+			stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref] = stage.A_SPEC_RELATION_REF_stagedOrder[a_spec_relation_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relation_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_RELATION_REFs_referenceOrder, a_spec_relation_ref)
+			// delete(stage.A_SPEC_RELATION_REFs_referenceOrder, a_spec_relation_ref)
 			fieldInitializers, pointersInitializations := a_spec_relation_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_RELATION_REFMap_Staged_Order[ref] = stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]
+			stage.A_SPEC_RELATION_REF_stagedOrder[ref] = stage.A_SPEC_RELATION_REF_stagedOrder[a_spec_relation_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_relation_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relation_ref)
-			delete(stage.A_SPEC_RELATION_REFMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_RELATION_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relation_ref.GetName())
@@ -4752,8 +4986,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_RELATION_REFs_reference {
-		if _, ok := stage.A_SPEC_RELATION_REFs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_RELATION_REFs_reference {
+		instance := stage.A_SPEC_RELATION_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_RELATION_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_relation_refs_deletedInstances = append(a_spec_relation_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4775,16 +5010,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder == nil {
 				stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder = make(map[*A_SPEC_RELATION_TYPE_REF]uint)
 			}
-			stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]
+			stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref] = stage.A_SPEC_RELATION_TYPE_REF_stagedOrder[a_spec_relation_type_ref]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_relation_type_ref.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder, a_spec_relation_type_ref)
+			// delete(stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder, a_spec_relation_type_ref)
 			fieldInitializers, pointersInitializations := a_spec_relation_type_ref.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[ref] = stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]
+			stage.A_SPEC_RELATION_TYPE_REF_stagedOrder[ref] = stage.A_SPEC_RELATION_TYPE_REF_stagedOrder[a_spec_relation_type_ref]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_relation_type_ref.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_relation_type_ref)
-			delete(stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_RELATION_TYPE_REF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_relation_type_ref.GetName())
@@ -4801,8 +5037,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_RELATION_TYPE_REFs_reference {
-		if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_RELATION_TYPE_REFs_reference {
+		instance := stage.A_SPEC_RELATION_TYPE_REFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_RELATION_TYPE_REFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_relation_type_refs_deletedInstances = append(a_spec_relation_type_refs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4824,16 +5061,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_SPEC_TYPESs_referenceOrder == nil {
 				stage.A_SPEC_TYPESs_referenceOrder = make(map[*A_SPEC_TYPES]uint)
 			}
-			stage.A_SPEC_TYPESs_referenceOrder[a_spec_types] = stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]
+			stage.A_SPEC_TYPESs_referenceOrder[a_spec_types] = stage.A_SPEC_TYPES_stagedOrder[a_spec_types]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_spec_types.GongMarshallUnstaging(stage))
-			delete(stage.A_SPEC_TYPESs_referenceOrder, a_spec_types)
+			// delete(stage.A_SPEC_TYPESs_referenceOrder, a_spec_types)
 			fieldInitializers, pointersInitializations := a_spec_types.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_SPEC_TYPESMap_Staged_Order[ref] = stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]
+			stage.A_SPEC_TYPES_stagedOrder[ref] = stage.A_SPEC_TYPES_stagedOrder[a_spec_types]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_spec_types.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_spec_types)
-			delete(stage.A_SPEC_TYPESMap_Staged_Order, ref)
+			// delete(stage.A_SPEC_TYPES_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_spec_types.GetName())
@@ -4850,8 +5088,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_SPEC_TYPESs_reference {
-		if _, ok := stage.A_SPEC_TYPESs[ref]; !ok {
+	for _, ref := range stage.A_SPEC_TYPESs_reference {
+		instance := stage.A_SPEC_TYPESs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_SPEC_TYPESs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_spec_typess_deletedInstances = append(a_spec_typess_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4873,16 +5112,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_THE_HEADERs_referenceOrder == nil {
 				stage.A_THE_HEADERs_referenceOrder = make(map[*A_THE_HEADER]uint)
 			}
-			stage.A_THE_HEADERs_referenceOrder[a_the_header] = stage.A_THE_HEADERMap_Staged_Order[a_the_header]
+			stage.A_THE_HEADERs_referenceOrder[a_the_header] = stage.A_THE_HEADER_stagedOrder[a_the_header]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_the_header.GongMarshallUnstaging(stage))
-			delete(stage.A_THE_HEADERs_referenceOrder, a_the_header)
+			// delete(stage.A_THE_HEADERs_referenceOrder, a_the_header)
 			fieldInitializers, pointersInitializations := a_the_header.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_THE_HEADERMap_Staged_Order[ref] = stage.A_THE_HEADERMap_Staged_Order[a_the_header]
+			stage.A_THE_HEADER_stagedOrder[ref] = stage.A_THE_HEADER_stagedOrder[a_the_header]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_the_header.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_the_header)
-			delete(stage.A_THE_HEADERMap_Staged_Order, ref)
+			// delete(stage.A_THE_HEADER_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_the_header.GetName())
@@ -4899,8 +5139,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_THE_HEADERs_reference {
-		if _, ok := stage.A_THE_HEADERs[ref]; !ok {
+	for _, ref := range stage.A_THE_HEADERs_reference {
+		instance := stage.A_THE_HEADERs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_THE_HEADERs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_the_headers_deletedInstances = append(a_the_headers_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4922,16 +5163,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.A_TOOL_EXTENSIONSs_referenceOrder == nil {
 				stage.A_TOOL_EXTENSIONSs_referenceOrder = make(map[*A_TOOL_EXTENSIONS]uint)
 			}
-			stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions] = stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]
+			stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions] = stage.A_TOOL_EXTENSIONS_stagedOrder[a_tool_extensions]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, a_tool_extensions.GongMarshallUnstaging(stage))
-			delete(stage.A_TOOL_EXTENSIONSs_referenceOrder, a_tool_extensions)
+			// delete(stage.A_TOOL_EXTENSIONSs_referenceOrder, a_tool_extensions)
 			fieldInitializers, pointersInitializations := a_tool_extensions.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.A_TOOL_EXTENSIONSMap_Staged_Order[ref] = stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]
+			stage.A_TOOL_EXTENSIONS_stagedOrder[ref] = stage.A_TOOL_EXTENSIONS_stagedOrder[a_tool_extensions]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := a_tool_extensions.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, a_tool_extensions)
-			delete(stage.A_TOOL_EXTENSIONSMap_Staged_Order, ref)
+			// delete(stage.A_TOOL_EXTENSIONS_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", a_tool_extensions.GetName())
@@ -4948,8 +5190,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.A_TOOL_EXTENSIONSs_reference {
-		if _, ok := stage.A_TOOL_EXTENSIONSs[ref]; !ok {
+	for _, ref := range stage.A_TOOL_EXTENSIONSs_reference {
+		instance := stage.A_TOOL_EXTENSIONSs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.A_TOOL_EXTENSIONSs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			a_tool_extensionss_deletedInstances = append(a_tool_extensionss_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -4971,16 +5214,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder = make(map[*DATATYPE_DEFINITION_BOOLEAN]uint)
 			}
-			stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]
+			stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean] = stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder[datatype_definition_boolean]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_boolean.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder, datatype_definition_boolean)
+			// delete(stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder, datatype_definition_boolean)
 			fieldInitializers, pointersInitializations := datatype_definition_boolean.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]
+			stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder[ref] = stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder[datatype_definition_boolean]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_boolean.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_boolean)
-			delete(stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_boolean.GetName())
@@ -4997,8 +5241,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_BOOLEANs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_BOOLEANs_reference {
+		instance := stage.DATATYPE_DEFINITION_BOOLEANs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_BOOLEANs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_booleans_deletedInstances = append(datatype_definition_booleans_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5020,16 +5265,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_DATEs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_DATEs_referenceOrder = make(map[*DATATYPE_DEFINITION_DATE]uint)
 			}
-			stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]
+			stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date] = stage.DATATYPE_DEFINITION_DATE_stagedOrder[datatype_definition_date]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_date.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_DATEs_referenceOrder, datatype_definition_date)
+			// delete(stage.DATATYPE_DEFINITION_DATEs_referenceOrder, datatype_definition_date)
 			fieldInitializers, pointersInitializations := datatype_definition_date.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]
+			stage.DATATYPE_DEFINITION_DATE_stagedOrder[ref] = stage.DATATYPE_DEFINITION_DATE_stagedOrder[datatype_definition_date]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_date.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_date)
-			delete(stage.DATATYPE_DEFINITION_DATEMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_DATE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_date.GetName())
@@ -5046,8 +5292,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_DATEs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_DATEs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_DATEs_reference {
+		instance := stage.DATATYPE_DEFINITION_DATEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_DATEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_dates_deletedInstances = append(datatype_definition_dates_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5069,16 +5316,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder = make(map[*DATATYPE_DEFINITION_ENUMERATION]uint)
 			}
-			stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]
+			stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration] = stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder[datatype_definition_enumeration]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_enumeration.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder, datatype_definition_enumeration)
+			// delete(stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder, datatype_definition_enumeration)
 			fieldInitializers, pointersInitializations := datatype_definition_enumeration.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]
+			stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder[ref] = stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder[datatype_definition_enumeration]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_enumeration.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_enumeration)
-			delete(stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_enumeration.GetName())
@@ -5095,8 +5343,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_ENUMERATIONs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_ENUMERATIONs_reference {
+		instance := stage.DATATYPE_DEFINITION_ENUMERATIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_enumerations_deletedInstances = append(datatype_definition_enumerations_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5118,16 +5367,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder = make(map[*DATATYPE_DEFINITION_INTEGER]uint)
 			}
-			stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]
+			stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer] = stage.DATATYPE_DEFINITION_INTEGER_stagedOrder[datatype_definition_integer]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_integer.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder, datatype_definition_integer)
+			// delete(stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder, datatype_definition_integer)
 			fieldInitializers, pointersInitializations := datatype_definition_integer.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]
+			stage.DATATYPE_DEFINITION_INTEGER_stagedOrder[ref] = stage.DATATYPE_DEFINITION_INTEGER_stagedOrder[datatype_definition_integer]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_integer.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_integer)
-			delete(stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_INTEGER_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_integer.GetName())
@@ -5144,8 +5394,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_INTEGERs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_INTEGERs_reference {
+		instance := stage.DATATYPE_DEFINITION_INTEGERs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_INTEGERs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_integers_deletedInstances = append(datatype_definition_integers_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5167,16 +5418,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_REALs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_REALs_referenceOrder = make(map[*DATATYPE_DEFINITION_REAL]uint)
 			}
-			stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real] = stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]
+			stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real] = stage.DATATYPE_DEFINITION_REAL_stagedOrder[datatype_definition_real]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_real.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_REALs_referenceOrder, datatype_definition_real)
+			// delete(stage.DATATYPE_DEFINITION_REALs_referenceOrder, datatype_definition_real)
 			fieldInitializers, pointersInitializations := datatype_definition_real.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_REALMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]
+			stage.DATATYPE_DEFINITION_REAL_stagedOrder[ref] = stage.DATATYPE_DEFINITION_REAL_stagedOrder[datatype_definition_real]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_real.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_real)
-			delete(stage.DATATYPE_DEFINITION_REALMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_REAL_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_real.GetName())
@@ -5193,8 +5445,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_REALs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_REALs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_REALs_reference {
+		instance := stage.DATATYPE_DEFINITION_REALs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_REALs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_reals_deletedInstances = append(datatype_definition_reals_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5216,16 +5469,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_STRINGs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_STRINGs_referenceOrder = make(map[*DATATYPE_DEFINITION_STRING]uint)
 			}
-			stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]
+			stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string] = stage.DATATYPE_DEFINITION_STRING_stagedOrder[datatype_definition_string]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_string.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_STRINGs_referenceOrder, datatype_definition_string)
+			// delete(stage.DATATYPE_DEFINITION_STRINGs_referenceOrder, datatype_definition_string)
 			fieldInitializers, pointersInitializations := datatype_definition_string.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]
+			stage.DATATYPE_DEFINITION_STRING_stagedOrder[ref] = stage.DATATYPE_DEFINITION_STRING_stagedOrder[datatype_definition_string]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_string.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_string)
-			delete(stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_STRING_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_string.GetName())
@@ -5242,8 +5496,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_STRINGs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_STRINGs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_STRINGs_reference {
+		instance := stage.DATATYPE_DEFINITION_STRINGs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_STRINGs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_strings_deletedInstances = append(datatype_definition_strings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5265,16 +5520,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder == nil {
 				stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder = make(map[*DATATYPE_DEFINITION_XHTML]uint)
 			}
-			stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]
+			stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml] = stage.DATATYPE_DEFINITION_XHTML_stagedOrder[datatype_definition_xhtml]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, datatype_definition_xhtml.GongMarshallUnstaging(stage))
-			delete(stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder, datatype_definition_xhtml)
+			// delete(stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder, datatype_definition_xhtml)
 			fieldInitializers, pointersInitializations := datatype_definition_xhtml.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[ref] = stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]
+			stage.DATATYPE_DEFINITION_XHTML_stagedOrder[ref] = stage.DATATYPE_DEFINITION_XHTML_stagedOrder[datatype_definition_xhtml]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := datatype_definition_xhtml.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, datatype_definition_xhtml)
-			delete(stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order, ref)
+			// delete(stage.DATATYPE_DEFINITION_XHTML_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", datatype_definition_xhtml.GetName())
@@ -5291,8 +5547,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.DATATYPE_DEFINITION_XHTMLs_reference {
-		if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[ref]; !ok {
+	for _, ref := range stage.DATATYPE_DEFINITION_XHTMLs_reference {
+		instance := stage.DATATYPE_DEFINITION_XHTMLs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.DATATYPE_DEFINITION_XHTMLs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			datatype_definition_xhtmls_deletedInstances = append(datatype_definition_xhtmls_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5314,16 +5571,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.EMBEDDED_VALUEs_referenceOrder == nil {
 				stage.EMBEDDED_VALUEs_referenceOrder = make(map[*EMBEDDED_VALUE]uint)
 			}
-			stage.EMBEDDED_VALUEs_referenceOrder[embedded_value] = stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]
+			stage.EMBEDDED_VALUEs_referenceOrder[embedded_value] = stage.EMBEDDED_VALUE_stagedOrder[embedded_value]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, embedded_value.GongMarshallUnstaging(stage))
-			delete(stage.EMBEDDED_VALUEs_referenceOrder, embedded_value)
+			// delete(stage.EMBEDDED_VALUEs_referenceOrder, embedded_value)
 			fieldInitializers, pointersInitializations := embedded_value.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.EMBEDDED_VALUEMap_Staged_Order[ref] = stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]
+			stage.EMBEDDED_VALUE_stagedOrder[ref] = stage.EMBEDDED_VALUE_stagedOrder[embedded_value]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := embedded_value.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embedded_value)
-			delete(stage.EMBEDDED_VALUEMap_Staged_Order, ref)
+			// delete(stage.EMBEDDED_VALUE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", embedded_value.GetName())
@@ -5340,8 +5598,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.EMBEDDED_VALUEs_reference {
-		if _, ok := stage.EMBEDDED_VALUEs[ref]; !ok {
+	for _, ref := range stage.EMBEDDED_VALUEs_reference {
+		instance := stage.EMBEDDED_VALUEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.EMBEDDED_VALUEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			embedded_values_deletedInstances = append(embedded_values_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5363,16 +5622,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.ENUM_VALUEs_referenceOrder == nil {
 				stage.ENUM_VALUEs_referenceOrder = make(map[*ENUM_VALUE]uint)
 			}
-			stage.ENUM_VALUEs_referenceOrder[enum_value] = stage.ENUM_VALUEMap_Staged_Order[enum_value]
+			stage.ENUM_VALUEs_referenceOrder[enum_value] = stage.ENUM_VALUE_stagedOrder[enum_value]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, enum_value.GongMarshallUnstaging(stage))
-			delete(stage.ENUM_VALUEs_referenceOrder, enum_value)
+			// delete(stage.ENUM_VALUEs_referenceOrder, enum_value)
 			fieldInitializers, pointersInitializations := enum_value.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.ENUM_VALUEMap_Staged_Order[ref] = stage.ENUM_VALUEMap_Staged_Order[enum_value]
+			stage.ENUM_VALUE_stagedOrder[ref] = stage.ENUM_VALUE_stagedOrder[enum_value]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := enum_value.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, enum_value)
-			delete(stage.ENUM_VALUEMap_Staged_Order, ref)
+			// delete(stage.ENUM_VALUE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", enum_value.GetName())
@@ -5389,8 +5649,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.ENUM_VALUEs_reference {
-		if _, ok := stage.ENUM_VALUEs[ref]; !ok {
+	for _, ref := range stage.ENUM_VALUEs_reference {
+		instance := stage.ENUM_VALUEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.ENUM_VALUEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			enum_values_deletedInstances = append(enum_values_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5412,16 +5673,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.EmbeddedJpgImages_referenceOrder == nil {
 				stage.EmbeddedJpgImages_referenceOrder = make(map[*EmbeddedJpgImage]uint)
 			}
-			stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage] = stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]
+			stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage] = stage.EmbeddedJpgImage_stagedOrder[embeddedjpgimage]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, embeddedjpgimage.GongMarshallUnstaging(stage))
-			delete(stage.EmbeddedJpgImages_referenceOrder, embeddedjpgimage)
+			// delete(stage.EmbeddedJpgImages_referenceOrder, embeddedjpgimage)
 			fieldInitializers, pointersInitializations := embeddedjpgimage.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.EmbeddedJpgImageMap_Staged_Order[ref] = stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]
+			stage.EmbeddedJpgImage_stagedOrder[ref] = stage.EmbeddedJpgImage_stagedOrder[embeddedjpgimage]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := embeddedjpgimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embeddedjpgimage)
-			delete(stage.EmbeddedJpgImageMap_Staged_Order, ref)
+			// delete(stage.EmbeddedJpgImage_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", embeddedjpgimage.GetName())
@@ -5438,8 +5700,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.EmbeddedJpgImages_reference {
-		if _, ok := stage.EmbeddedJpgImages[ref]; !ok {
+	for _, ref := range stage.EmbeddedJpgImages_reference {
+		instance := stage.EmbeddedJpgImages_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.EmbeddedJpgImages[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			embeddedjpgimages_deletedInstances = append(embeddedjpgimages_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5461,16 +5724,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.EmbeddedPngImages_referenceOrder == nil {
 				stage.EmbeddedPngImages_referenceOrder = make(map[*EmbeddedPngImage]uint)
 			}
-			stage.EmbeddedPngImages_referenceOrder[embeddedpngimage] = stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]
+			stage.EmbeddedPngImages_referenceOrder[embeddedpngimage] = stage.EmbeddedPngImage_stagedOrder[embeddedpngimage]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, embeddedpngimage.GongMarshallUnstaging(stage))
-			delete(stage.EmbeddedPngImages_referenceOrder, embeddedpngimage)
+			// delete(stage.EmbeddedPngImages_referenceOrder, embeddedpngimage)
 			fieldInitializers, pointersInitializations := embeddedpngimage.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.EmbeddedPngImageMap_Staged_Order[ref] = stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]
+			stage.EmbeddedPngImage_stagedOrder[ref] = stage.EmbeddedPngImage_stagedOrder[embeddedpngimage]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := embeddedpngimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embeddedpngimage)
-			delete(stage.EmbeddedPngImageMap_Staged_Order, ref)
+			// delete(stage.EmbeddedPngImage_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", embeddedpngimage.GetName())
@@ -5487,8 +5751,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.EmbeddedPngImages_reference {
-		if _, ok := stage.EmbeddedPngImages[ref]; !ok {
+	for _, ref := range stage.EmbeddedPngImages_reference {
+		instance := stage.EmbeddedPngImages_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.EmbeddedPngImages[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			embeddedpngimages_deletedInstances = append(embeddedpngimages_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5510,16 +5775,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.EmbeddedSvgImages_referenceOrder == nil {
 				stage.EmbeddedSvgImages_referenceOrder = make(map[*EmbeddedSvgImage]uint)
 			}
-			stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage] = stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]
+			stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage] = stage.EmbeddedSvgImage_stagedOrder[embeddedsvgimage]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, embeddedsvgimage.GongMarshallUnstaging(stage))
-			delete(stage.EmbeddedSvgImages_referenceOrder, embeddedsvgimage)
+			// delete(stage.EmbeddedSvgImages_referenceOrder, embeddedsvgimage)
 			fieldInitializers, pointersInitializations := embeddedsvgimage.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.EmbeddedSvgImageMap_Staged_Order[ref] = stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]
+			stage.EmbeddedSvgImage_stagedOrder[ref] = stage.EmbeddedSvgImage_stagedOrder[embeddedsvgimage]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := embeddedsvgimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, embeddedsvgimage)
-			delete(stage.EmbeddedSvgImageMap_Staged_Order, ref)
+			// delete(stage.EmbeddedSvgImage_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", embeddedsvgimage.GetName())
@@ -5536,8 +5802,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.EmbeddedSvgImages_reference {
-		if _, ok := stage.EmbeddedSvgImages[ref]; !ok {
+	for _, ref := range stage.EmbeddedSvgImages_reference {
+		instance := stage.EmbeddedSvgImages_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.EmbeddedSvgImages[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			embeddedsvgimages_deletedInstances = append(embeddedsvgimages_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5559,16 +5826,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.Kills_referenceOrder == nil {
 				stage.Kills_referenceOrder = make(map[*Kill]uint)
 			}
-			stage.Kills_referenceOrder[kill] = stage.KillMap_Staged_Order[kill]
+			stage.Kills_referenceOrder[kill] = stage.Kill_stagedOrder[kill]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, kill.GongMarshallUnstaging(stage))
-			delete(stage.Kills_referenceOrder, kill)
+			// delete(stage.Kills_referenceOrder, kill)
 			fieldInitializers, pointersInitializations := kill.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.KillMap_Staged_Order[ref] = stage.KillMap_Staged_Order[kill]
+			stage.Kill_stagedOrder[ref] = stage.Kill_stagedOrder[kill]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := kill.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, kill)
-			delete(stage.KillMap_Staged_Order, ref)
+			// delete(stage.Kill_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", kill.GetName())
@@ -5585,8 +5853,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.Kills_reference {
-		if _, ok := stage.Kills[ref]; !ok {
+	for _, ref := range stage.Kills_reference {
+		instance := stage.Kills_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.Kills[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			kills_deletedInstances = append(kills_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5608,16 +5877,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.Map_identifier_bools_referenceOrder == nil {
 				stage.Map_identifier_bools_referenceOrder = make(map[*Map_identifier_bool]uint)
 			}
-			stage.Map_identifier_bools_referenceOrder[map_identifier_bool] = stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]
+			stage.Map_identifier_bools_referenceOrder[map_identifier_bool] = stage.Map_identifier_bool_stagedOrder[map_identifier_bool]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, map_identifier_bool.GongMarshallUnstaging(stage))
-			delete(stage.Map_identifier_bools_referenceOrder, map_identifier_bool)
+			// delete(stage.Map_identifier_bools_referenceOrder, map_identifier_bool)
 			fieldInitializers, pointersInitializations := map_identifier_bool.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.Map_identifier_boolMap_Staged_Order[ref] = stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]
+			stage.Map_identifier_bool_stagedOrder[ref] = stage.Map_identifier_bool_stagedOrder[map_identifier_bool]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := map_identifier_bool.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, map_identifier_bool)
-			delete(stage.Map_identifier_boolMap_Staged_Order, ref)
+			// delete(stage.Map_identifier_bool_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", map_identifier_bool.GetName())
@@ -5634,8 +5904,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.Map_identifier_bools_reference {
-		if _, ok := stage.Map_identifier_bools[ref]; !ok {
+	for _, ref := range stage.Map_identifier_bools_reference {
+		instance := stage.Map_identifier_bools_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.Map_identifier_bools[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			map_identifier_bools_deletedInstances = append(map_identifier_bools_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5657,16 +5928,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.RELATION_GROUPs_referenceOrder == nil {
 				stage.RELATION_GROUPs_referenceOrder = make(map[*RELATION_GROUP]uint)
 			}
-			stage.RELATION_GROUPs_referenceOrder[relation_group] = stage.RELATION_GROUPMap_Staged_Order[relation_group]
+			stage.RELATION_GROUPs_referenceOrder[relation_group] = stage.RELATION_GROUP_stagedOrder[relation_group]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, relation_group.GongMarshallUnstaging(stage))
-			delete(stage.RELATION_GROUPs_referenceOrder, relation_group)
+			// delete(stage.RELATION_GROUPs_referenceOrder, relation_group)
 			fieldInitializers, pointersInitializations := relation_group.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.RELATION_GROUPMap_Staged_Order[ref] = stage.RELATION_GROUPMap_Staged_Order[relation_group]
+			stage.RELATION_GROUP_stagedOrder[ref] = stage.RELATION_GROUP_stagedOrder[relation_group]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := relation_group.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, relation_group)
-			delete(stage.RELATION_GROUPMap_Staged_Order, ref)
+			// delete(stage.RELATION_GROUP_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", relation_group.GetName())
@@ -5683,8 +5955,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.RELATION_GROUPs_reference {
-		if _, ok := stage.RELATION_GROUPs[ref]; !ok {
+	for _, ref := range stage.RELATION_GROUPs_reference {
+		instance := stage.RELATION_GROUPs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.RELATION_GROUPs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			relation_groups_deletedInstances = append(relation_groups_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5706,16 +5979,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.RELATION_GROUP_TYPEs_referenceOrder == nil {
 				stage.RELATION_GROUP_TYPEs_referenceOrder = make(map[*RELATION_GROUP_TYPE]uint)
 			}
-			stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type] = stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]
+			stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type] = stage.RELATION_GROUP_TYPE_stagedOrder[relation_group_type]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, relation_group_type.GongMarshallUnstaging(stage))
-			delete(stage.RELATION_GROUP_TYPEs_referenceOrder, relation_group_type)
+			// delete(stage.RELATION_GROUP_TYPEs_referenceOrder, relation_group_type)
 			fieldInitializers, pointersInitializations := relation_group_type.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.RELATION_GROUP_TYPEMap_Staged_Order[ref] = stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]
+			stage.RELATION_GROUP_TYPE_stagedOrder[ref] = stage.RELATION_GROUP_TYPE_stagedOrder[relation_group_type]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := relation_group_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, relation_group_type)
-			delete(stage.RELATION_GROUP_TYPEMap_Staged_Order, ref)
+			// delete(stage.RELATION_GROUP_TYPE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", relation_group_type.GetName())
@@ -5732,8 +6006,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.RELATION_GROUP_TYPEs_reference {
-		if _, ok := stage.RELATION_GROUP_TYPEs[ref]; !ok {
+	for _, ref := range stage.RELATION_GROUP_TYPEs_reference {
+		instance := stage.RELATION_GROUP_TYPEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.RELATION_GROUP_TYPEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			relation_group_types_deletedInstances = append(relation_group_types_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5755,16 +6030,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.REQ_IFs_referenceOrder == nil {
 				stage.REQ_IFs_referenceOrder = make(map[*REQ_IF]uint)
 			}
-			stage.REQ_IFs_referenceOrder[req_if] = stage.REQ_IFMap_Staged_Order[req_if]
+			stage.REQ_IFs_referenceOrder[req_if] = stage.REQ_IF_stagedOrder[req_if]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if.GongMarshallUnstaging(stage))
-			delete(stage.REQ_IFs_referenceOrder, req_if)
+			// delete(stage.REQ_IFs_referenceOrder, req_if)
 			fieldInitializers, pointersInitializations := req_if.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.REQ_IFMap_Staged_Order[ref] = stage.REQ_IFMap_Staged_Order[req_if]
+			stage.REQ_IF_stagedOrder[ref] = stage.REQ_IF_stagedOrder[req_if]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := req_if.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if)
-			delete(stage.REQ_IFMap_Staged_Order, ref)
+			// delete(stage.REQ_IF_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if.GetName())
@@ -5781,8 +6057,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.REQ_IFs_reference {
-		if _, ok := stage.REQ_IFs[ref]; !ok {
+	for _, ref := range stage.REQ_IFs_reference {
+		instance := stage.REQ_IFs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.REQ_IFs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			req_ifs_deletedInstances = append(req_ifs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5804,16 +6081,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.REQ_IF_CONTENTs_referenceOrder == nil {
 				stage.REQ_IF_CONTENTs_referenceOrder = make(map[*REQ_IF_CONTENT]uint)
 			}
-			stage.REQ_IF_CONTENTs_referenceOrder[req_if_content] = stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]
+			stage.REQ_IF_CONTENTs_referenceOrder[req_if_content] = stage.REQ_IF_CONTENT_stagedOrder[req_if_content]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if_content.GongMarshallUnstaging(stage))
-			delete(stage.REQ_IF_CONTENTs_referenceOrder, req_if_content)
+			// delete(stage.REQ_IF_CONTENTs_referenceOrder, req_if_content)
 			fieldInitializers, pointersInitializations := req_if_content.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.REQ_IF_CONTENTMap_Staged_Order[ref] = stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]
+			stage.REQ_IF_CONTENT_stagedOrder[ref] = stage.REQ_IF_CONTENT_stagedOrder[req_if_content]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := req_if_content.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if_content)
-			delete(stage.REQ_IF_CONTENTMap_Staged_Order, ref)
+			// delete(stage.REQ_IF_CONTENT_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if_content.GetName())
@@ -5830,8 +6108,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.REQ_IF_CONTENTs_reference {
-		if _, ok := stage.REQ_IF_CONTENTs[ref]; !ok {
+	for _, ref := range stage.REQ_IF_CONTENTs_reference {
+		instance := stage.REQ_IF_CONTENTs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.REQ_IF_CONTENTs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			req_if_contents_deletedInstances = append(req_if_contents_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5853,16 +6132,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.REQ_IF_HEADERs_referenceOrder == nil {
 				stage.REQ_IF_HEADERs_referenceOrder = make(map[*REQ_IF_HEADER]uint)
 			}
-			stage.REQ_IF_HEADERs_referenceOrder[req_if_header] = stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]
+			stage.REQ_IF_HEADERs_referenceOrder[req_if_header] = stage.REQ_IF_HEADER_stagedOrder[req_if_header]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if_header.GongMarshallUnstaging(stage))
-			delete(stage.REQ_IF_HEADERs_referenceOrder, req_if_header)
+			// delete(stage.REQ_IF_HEADERs_referenceOrder, req_if_header)
 			fieldInitializers, pointersInitializations := req_if_header.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.REQ_IF_HEADERMap_Staged_Order[ref] = stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]
+			stage.REQ_IF_HEADER_stagedOrder[ref] = stage.REQ_IF_HEADER_stagedOrder[req_if_header]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := req_if_header.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if_header)
-			delete(stage.REQ_IF_HEADERMap_Staged_Order, ref)
+			// delete(stage.REQ_IF_HEADER_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if_header.GetName())
@@ -5879,8 +6159,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.REQ_IF_HEADERs_reference {
-		if _, ok := stage.REQ_IF_HEADERs[ref]; !ok {
+	for _, ref := range stage.REQ_IF_HEADERs_reference {
+		instance := stage.REQ_IF_HEADERs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.REQ_IF_HEADERs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			req_if_headers_deletedInstances = append(req_if_headers_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5902,16 +6183,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder == nil {
 				stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder = make(map[*REQ_IF_TOOL_EXTENSION]uint)
 			}
-			stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]
+			stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension] = stage.REQ_IF_TOOL_EXTENSION_stagedOrder[req_if_tool_extension]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, req_if_tool_extension.GongMarshallUnstaging(stage))
-			delete(stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder, req_if_tool_extension)
+			// delete(stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder, req_if_tool_extension)
 			fieldInitializers, pointersInitializations := req_if_tool_extension.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[ref] = stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]
+			stage.REQ_IF_TOOL_EXTENSION_stagedOrder[ref] = stage.REQ_IF_TOOL_EXTENSION_stagedOrder[req_if_tool_extension]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := req_if_tool_extension.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, req_if_tool_extension)
-			delete(stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order, ref)
+			// delete(stage.REQ_IF_TOOL_EXTENSION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", req_if_tool_extension.GetName())
@@ -5928,8 +6210,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.REQ_IF_TOOL_EXTENSIONs_reference {
-		if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[ref]; !ok {
+	for _, ref := range stage.REQ_IF_TOOL_EXTENSIONs_reference {
+		instance := stage.REQ_IF_TOOL_EXTENSIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.REQ_IF_TOOL_EXTENSIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			req_if_tool_extensions_deletedInstances = append(req_if_tool_extensions_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -5951,16 +6234,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPECIFICATIONs_referenceOrder == nil {
 				stage.SPECIFICATIONs_referenceOrder = make(map[*SPECIFICATION]uint)
 			}
-			stage.SPECIFICATIONs_referenceOrder[specification] = stage.SPECIFICATIONMap_Staged_Order[specification]
+			stage.SPECIFICATIONs_referenceOrder[specification] = stage.SPECIFICATION_stagedOrder[specification]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, specification.GongMarshallUnstaging(stage))
-			delete(stage.SPECIFICATIONs_referenceOrder, specification)
+			// delete(stage.SPECIFICATIONs_referenceOrder, specification)
 			fieldInitializers, pointersInitializations := specification.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPECIFICATIONMap_Staged_Order[ref] = stage.SPECIFICATIONMap_Staged_Order[specification]
+			stage.SPECIFICATION_stagedOrder[ref] = stage.SPECIFICATION_stagedOrder[specification]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := specification.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, specification)
-			delete(stage.SPECIFICATIONMap_Staged_Order, ref)
+			// delete(stage.SPECIFICATION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", specification.GetName())
@@ -5977,8 +6261,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPECIFICATIONs_reference {
-		if _, ok := stage.SPECIFICATIONs[ref]; !ok {
+	for _, ref := range stage.SPECIFICATIONs_reference {
+		instance := stage.SPECIFICATIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPECIFICATIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			specifications_deletedInstances = append(specifications_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6000,16 +6285,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPECIFICATION_Renderings_referenceOrder == nil {
 				stage.SPECIFICATION_Renderings_referenceOrder = make(map[*SPECIFICATION_Rendering]uint)
 			}
-			stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering] = stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]
+			stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering] = stage.SPECIFICATION_Rendering_stagedOrder[specification_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, specification_rendering.GongMarshallUnstaging(stage))
-			delete(stage.SPECIFICATION_Renderings_referenceOrder, specification_rendering)
+			// delete(stage.SPECIFICATION_Renderings_referenceOrder, specification_rendering)
 			fieldInitializers, pointersInitializations := specification_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPECIFICATION_RenderingMap_Staged_Order[ref] = stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]
+			stage.SPECIFICATION_Rendering_stagedOrder[ref] = stage.SPECIFICATION_Rendering_stagedOrder[specification_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := specification_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, specification_rendering)
-			delete(stage.SPECIFICATION_RenderingMap_Staged_Order, ref)
+			// delete(stage.SPECIFICATION_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", specification_rendering.GetName())
@@ -6026,8 +6312,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPECIFICATION_Renderings_reference {
-		if _, ok := stage.SPECIFICATION_Renderings[ref]; !ok {
+	for _, ref := range stage.SPECIFICATION_Renderings_reference {
+		instance := stage.SPECIFICATION_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPECIFICATION_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			specification_renderings_deletedInstances = append(specification_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6049,16 +6336,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPECIFICATION_TYPEs_referenceOrder == nil {
 				stage.SPECIFICATION_TYPEs_referenceOrder = make(map[*SPECIFICATION_TYPE]uint)
 			}
-			stage.SPECIFICATION_TYPEs_referenceOrder[specification_type] = stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]
+			stage.SPECIFICATION_TYPEs_referenceOrder[specification_type] = stage.SPECIFICATION_TYPE_stagedOrder[specification_type]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, specification_type.GongMarshallUnstaging(stage))
-			delete(stage.SPECIFICATION_TYPEs_referenceOrder, specification_type)
+			// delete(stage.SPECIFICATION_TYPEs_referenceOrder, specification_type)
 			fieldInitializers, pointersInitializations := specification_type.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPECIFICATION_TYPEMap_Staged_Order[ref] = stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]
+			stage.SPECIFICATION_TYPE_stagedOrder[ref] = stage.SPECIFICATION_TYPE_stagedOrder[specification_type]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := specification_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, specification_type)
-			delete(stage.SPECIFICATION_TYPEMap_Staged_Order, ref)
+			// delete(stage.SPECIFICATION_TYPE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", specification_type.GetName())
@@ -6075,8 +6363,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPECIFICATION_TYPEs_reference {
-		if _, ok := stage.SPECIFICATION_TYPEs[ref]; !ok {
+	for _, ref := range stage.SPECIFICATION_TYPEs_reference {
+		instance := stage.SPECIFICATION_TYPEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPECIFICATION_TYPEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			specification_types_deletedInstances = append(specification_types_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6098,16 +6387,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPEC_HIERARCHYs_referenceOrder == nil {
 				stage.SPEC_HIERARCHYs_referenceOrder = make(map[*SPEC_HIERARCHY]uint)
 			}
-			stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy] = stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]
+			stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy] = stage.SPEC_HIERARCHY_stagedOrder[spec_hierarchy]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_hierarchy.GongMarshallUnstaging(stage))
-			delete(stage.SPEC_HIERARCHYs_referenceOrder, spec_hierarchy)
+			// delete(stage.SPEC_HIERARCHYs_referenceOrder, spec_hierarchy)
 			fieldInitializers, pointersInitializations := spec_hierarchy.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPEC_HIERARCHYMap_Staged_Order[ref] = stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]
+			stage.SPEC_HIERARCHY_stagedOrder[ref] = stage.SPEC_HIERARCHY_stagedOrder[spec_hierarchy]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := spec_hierarchy.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_hierarchy)
-			delete(stage.SPEC_HIERARCHYMap_Staged_Order, ref)
+			// delete(stage.SPEC_HIERARCHY_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_hierarchy.GetName())
@@ -6124,8 +6414,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPEC_HIERARCHYs_reference {
-		if _, ok := stage.SPEC_HIERARCHYs[ref]; !ok {
+	for _, ref := range stage.SPEC_HIERARCHYs_reference {
+		instance := stage.SPEC_HIERARCHYs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPEC_HIERARCHYs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			spec_hierarchys_deletedInstances = append(spec_hierarchys_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6147,16 +6438,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPEC_OBJECTs_referenceOrder == nil {
 				stage.SPEC_OBJECTs_referenceOrder = make(map[*SPEC_OBJECT]uint)
 			}
-			stage.SPEC_OBJECTs_referenceOrder[spec_object] = stage.SPEC_OBJECTMap_Staged_Order[spec_object]
+			stage.SPEC_OBJECTs_referenceOrder[spec_object] = stage.SPEC_OBJECT_stagedOrder[spec_object]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_object.GongMarshallUnstaging(stage))
-			delete(stage.SPEC_OBJECTs_referenceOrder, spec_object)
+			// delete(stage.SPEC_OBJECTs_referenceOrder, spec_object)
 			fieldInitializers, pointersInitializations := spec_object.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPEC_OBJECTMap_Staged_Order[ref] = stage.SPEC_OBJECTMap_Staged_Order[spec_object]
+			stage.SPEC_OBJECT_stagedOrder[ref] = stage.SPEC_OBJECT_stagedOrder[spec_object]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := spec_object.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_object)
-			delete(stage.SPEC_OBJECTMap_Staged_Order, ref)
+			// delete(stage.SPEC_OBJECT_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_object.GetName())
@@ -6173,8 +6465,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPEC_OBJECTs_reference {
-		if _, ok := stage.SPEC_OBJECTs[ref]; !ok {
+	for _, ref := range stage.SPEC_OBJECTs_reference {
+		instance := stage.SPEC_OBJECTs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPEC_OBJECTs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			spec_objects_deletedInstances = append(spec_objects_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6196,16 +6489,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPEC_OBJECT_TYPEs_referenceOrder == nil {
 				stage.SPEC_OBJECT_TYPEs_referenceOrder = make(map[*SPEC_OBJECT_TYPE]uint)
 			}
-			stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type] = stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]
+			stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type] = stage.SPEC_OBJECT_TYPE_stagedOrder[spec_object_type]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_object_type.GongMarshallUnstaging(stage))
-			delete(stage.SPEC_OBJECT_TYPEs_referenceOrder, spec_object_type)
+			// delete(stage.SPEC_OBJECT_TYPEs_referenceOrder, spec_object_type)
 			fieldInitializers, pointersInitializations := spec_object_type.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPEC_OBJECT_TYPEMap_Staged_Order[ref] = stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]
+			stage.SPEC_OBJECT_TYPE_stagedOrder[ref] = stage.SPEC_OBJECT_TYPE_stagedOrder[spec_object_type]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := spec_object_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_object_type)
-			delete(stage.SPEC_OBJECT_TYPEMap_Staged_Order, ref)
+			// delete(stage.SPEC_OBJECT_TYPE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_object_type.GetName())
@@ -6222,8 +6516,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPEC_OBJECT_TYPEs_reference {
-		if _, ok := stage.SPEC_OBJECT_TYPEs[ref]; !ok {
+	for _, ref := range stage.SPEC_OBJECT_TYPEs_reference {
+		instance := stage.SPEC_OBJECT_TYPEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPEC_OBJECT_TYPEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			spec_object_types_deletedInstances = append(spec_object_types_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6245,16 +6540,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder == nil {
 				stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder = make(map[*SPEC_OBJECT_TYPE_Rendering]uint)
 			}
-			stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]
+			stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering] = stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder[spec_object_type_rendering]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_object_type_rendering.GongMarshallUnstaging(stage))
-			delete(stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder, spec_object_type_rendering)
+			// delete(stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder, spec_object_type_rendering)
 			fieldInitializers, pointersInitializations := spec_object_type_rendering.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[ref] = stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]
+			stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder[ref] = stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder[spec_object_type_rendering]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := spec_object_type_rendering.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_object_type_rendering)
-			delete(stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order, ref)
+			// delete(stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_object_type_rendering.GetName())
@@ -6271,8 +6567,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPEC_OBJECT_TYPE_Renderings_reference {
-		if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[ref]; !ok {
+	for _, ref := range stage.SPEC_OBJECT_TYPE_Renderings_reference {
+		instance := stage.SPEC_OBJECT_TYPE_Renderings_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPEC_OBJECT_TYPE_Renderings[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			spec_object_type_renderings_deletedInstances = append(spec_object_type_renderings_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6294,16 +6591,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPEC_RELATIONs_referenceOrder == nil {
 				stage.SPEC_RELATIONs_referenceOrder = make(map[*SPEC_RELATION]uint)
 			}
-			stage.SPEC_RELATIONs_referenceOrder[spec_relation] = stage.SPEC_RELATIONMap_Staged_Order[spec_relation]
+			stage.SPEC_RELATIONs_referenceOrder[spec_relation] = stage.SPEC_RELATION_stagedOrder[spec_relation]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_relation.GongMarshallUnstaging(stage))
-			delete(stage.SPEC_RELATIONs_referenceOrder, spec_relation)
+			// delete(stage.SPEC_RELATIONs_referenceOrder, spec_relation)
 			fieldInitializers, pointersInitializations := spec_relation.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPEC_RELATIONMap_Staged_Order[ref] = stage.SPEC_RELATIONMap_Staged_Order[spec_relation]
+			stage.SPEC_RELATION_stagedOrder[ref] = stage.SPEC_RELATION_stagedOrder[spec_relation]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := spec_relation.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_relation)
-			delete(stage.SPEC_RELATIONMap_Staged_Order, ref)
+			// delete(stage.SPEC_RELATION_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_relation.GetName())
@@ -6320,8 +6618,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPEC_RELATIONs_reference {
-		if _, ok := stage.SPEC_RELATIONs[ref]; !ok {
+	for _, ref := range stage.SPEC_RELATIONs_reference {
+		instance := stage.SPEC_RELATIONs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPEC_RELATIONs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			spec_relations_deletedInstances = append(spec_relations_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6343,16 +6642,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.SPEC_RELATION_TYPEs_referenceOrder == nil {
 				stage.SPEC_RELATION_TYPEs_referenceOrder = make(map[*SPEC_RELATION_TYPE]uint)
 			}
-			stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type] = stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]
+			stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type] = stage.SPEC_RELATION_TYPE_stagedOrder[spec_relation_type]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, spec_relation_type.GongMarshallUnstaging(stage))
-			delete(stage.SPEC_RELATION_TYPEs_referenceOrder, spec_relation_type)
+			// delete(stage.SPEC_RELATION_TYPEs_referenceOrder, spec_relation_type)
 			fieldInitializers, pointersInitializations := spec_relation_type.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.SPEC_RELATION_TYPEMap_Staged_Order[ref] = stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]
+			stage.SPEC_RELATION_TYPE_stagedOrder[ref] = stage.SPEC_RELATION_TYPE_stagedOrder[spec_relation_type]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := spec_relation_type.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, spec_relation_type)
-			delete(stage.SPEC_RELATION_TYPEMap_Staged_Order, ref)
+			// delete(stage.SPEC_RELATION_TYPE_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", spec_relation_type.GetName())
@@ -6369,8 +6669,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.SPEC_RELATION_TYPEs_reference {
-		if _, ok := stage.SPEC_RELATION_TYPEs[ref]; !ok {
+	for _, ref := range stage.SPEC_RELATION_TYPEs_reference {
+		instance := stage.SPEC_RELATION_TYPEs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.SPEC_RELATION_TYPEs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			spec_relation_types_deletedInstances = append(spec_relation_types_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6392,16 +6693,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.StaticWebSites_referenceOrder == nil {
 				stage.StaticWebSites_referenceOrder = make(map[*StaticWebSite]uint)
 			}
-			stage.StaticWebSites_referenceOrder[staticwebsite] = stage.StaticWebSiteMap_Staged_Order[staticwebsite]
+			stage.StaticWebSites_referenceOrder[staticwebsite] = stage.StaticWebSite_stagedOrder[staticwebsite]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsite.GongMarshallUnstaging(stage))
-			delete(stage.StaticWebSites_referenceOrder, staticwebsite)
+			// delete(stage.StaticWebSites_referenceOrder, staticwebsite)
 			fieldInitializers, pointersInitializations := staticwebsite.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.StaticWebSiteMap_Staged_Order[ref] = stage.StaticWebSiteMap_Staged_Order[staticwebsite]
+			stage.StaticWebSite_stagedOrder[ref] = stage.StaticWebSite_stagedOrder[staticwebsite]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := staticwebsite.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsite)
-			delete(stage.StaticWebSiteMap_Staged_Order, ref)
+			// delete(stage.StaticWebSite_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsite.GetName())
@@ -6418,8 +6720,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.StaticWebSites_reference {
-		if _, ok := stage.StaticWebSites[ref]; !ok {
+	for _, ref := range stage.StaticWebSites_reference {
+		instance := stage.StaticWebSites_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.StaticWebSites[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			staticwebsites_deletedInstances = append(staticwebsites_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6441,16 +6744,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.StaticWebSiteChapters_referenceOrder == nil {
 				stage.StaticWebSiteChapters_referenceOrder = make(map[*StaticWebSiteChapter]uint)
 			}
-			stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter] = stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]
+			stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter] = stage.StaticWebSiteChapter_stagedOrder[staticwebsitechapter]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsitechapter.GongMarshallUnstaging(stage))
-			delete(stage.StaticWebSiteChapters_referenceOrder, staticwebsitechapter)
+			// delete(stage.StaticWebSiteChapters_referenceOrder, staticwebsitechapter)
 			fieldInitializers, pointersInitializations := staticwebsitechapter.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.StaticWebSiteChapterMap_Staged_Order[ref] = stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]
+			stage.StaticWebSiteChapter_stagedOrder[ref] = stage.StaticWebSiteChapter_stagedOrder[staticwebsitechapter]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := staticwebsitechapter.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsitechapter)
-			delete(stage.StaticWebSiteChapterMap_Staged_Order, ref)
+			// delete(stage.StaticWebSiteChapter_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsitechapter.GetName())
@@ -6467,8 +6771,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.StaticWebSiteChapters_reference {
-		if _, ok := stage.StaticWebSiteChapters[ref]; !ok {
+	for _, ref := range stage.StaticWebSiteChapters_reference {
+		instance := stage.StaticWebSiteChapters_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.StaticWebSiteChapters[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			staticwebsitechapters_deletedInstances = append(staticwebsitechapters_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6490,16 +6795,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.StaticWebSiteGeneratedImages_referenceOrder == nil {
 				stage.StaticWebSiteGeneratedImages_referenceOrder = make(map[*StaticWebSiteGeneratedImage]uint)
 			}
-			stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]
+			stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage] = stage.StaticWebSiteGeneratedImage_stagedOrder[staticwebsitegeneratedimage]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsitegeneratedimage.GongMarshallUnstaging(stage))
-			delete(stage.StaticWebSiteGeneratedImages_referenceOrder, staticwebsitegeneratedimage)
+			// delete(stage.StaticWebSiteGeneratedImages_referenceOrder, staticwebsitegeneratedimage)
 			fieldInitializers, pointersInitializations := staticwebsitegeneratedimage.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.StaticWebSiteGeneratedImageMap_Staged_Order[ref] = stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]
+			stage.StaticWebSiteGeneratedImage_stagedOrder[ref] = stage.StaticWebSiteGeneratedImage_stagedOrder[staticwebsitegeneratedimage]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := staticwebsitegeneratedimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsitegeneratedimage)
-			delete(stage.StaticWebSiteGeneratedImageMap_Staged_Order, ref)
+			// delete(stage.StaticWebSiteGeneratedImage_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsitegeneratedimage.GetName())
@@ -6516,8 +6822,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.StaticWebSiteGeneratedImages_reference {
-		if _, ok := stage.StaticWebSiteGeneratedImages[ref]; !ok {
+	for _, ref := range stage.StaticWebSiteGeneratedImages_reference {
+		instance := stage.StaticWebSiteGeneratedImages_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.StaticWebSiteGeneratedImages[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			staticwebsitegeneratedimages_deletedInstances = append(staticwebsitegeneratedimages_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6539,16 +6846,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.StaticWebSiteImages_referenceOrder == nil {
 				stage.StaticWebSiteImages_referenceOrder = make(map[*StaticWebSiteImage]uint)
 			}
-			stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage] = stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]
+			stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage] = stage.StaticWebSiteImage_stagedOrder[staticwebsiteimage]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsiteimage.GongMarshallUnstaging(stage))
-			delete(stage.StaticWebSiteImages_referenceOrder, staticwebsiteimage)
+			// delete(stage.StaticWebSiteImages_referenceOrder, staticwebsiteimage)
 			fieldInitializers, pointersInitializations := staticwebsiteimage.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.StaticWebSiteImageMap_Staged_Order[ref] = stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]
+			stage.StaticWebSiteImage_stagedOrder[ref] = stage.StaticWebSiteImage_stagedOrder[staticwebsiteimage]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := staticwebsiteimage.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsiteimage)
-			delete(stage.StaticWebSiteImageMap_Staged_Order, ref)
+			// delete(stage.StaticWebSiteImage_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsiteimage.GetName())
@@ -6565,8 +6873,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.StaticWebSiteImages_reference {
-		if _, ok := stage.StaticWebSiteImages[ref]; !ok {
+	for _, ref := range stage.StaticWebSiteImages_reference {
+		instance := stage.StaticWebSiteImages_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.StaticWebSiteImages[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			staticwebsiteimages_deletedInstances = append(staticwebsiteimages_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6588,16 +6897,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.StaticWebSiteParagraphs_referenceOrder == nil {
 				stage.StaticWebSiteParagraphs_referenceOrder = make(map[*StaticWebSiteParagraph]uint)
 			}
-			stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph] = stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]
+			stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph] = stage.StaticWebSiteParagraph_stagedOrder[staticwebsiteparagraph]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, staticwebsiteparagraph.GongMarshallUnstaging(stage))
-			delete(stage.StaticWebSiteParagraphs_referenceOrder, staticwebsiteparagraph)
+			// delete(stage.StaticWebSiteParagraphs_referenceOrder, staticwebsiteparagraph)
 			fieldInitializers, pointersInitializations := staticwebsiteparagraph.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.StaticWebSiteParagraphMap_Staged_Order[ref] = stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]
+			stage.StaticWebSiteParagraph_stagedOrder[ref] = stage.StaticWebSiteParagraph_stagedOrder[staticwebsiteparagraph]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := staticwebsiteparagraph.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, staticwebsiteparagraph)
-			delete(stage.StaticWebSiteParagraphMap_Staged_Order, ref)
+			// delete(stage.StaticWebSiteParagraph_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", staticwebsiteparagraph.GetName())
@@ -6614,8 +6924,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.StaticWebSiteParagraphs_reference {
-		if _, ok := stage.StaticWebSiteParagraphs[ref]; !ok {
+	for _, ref := range stage.StaticWebSiteParagraphs_reference {
+		instance := stage.StaticWebSiteParagraphs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.StaticWebSiteParagraphs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			staticwebsiteparagraphs_deletedInstances = append(staticwebsiteparagraphs_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6637,16 +6948,17 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 			if stage.XHTML_CONTENTs_referenceOrder == nil {
 				stage.XHTML_CONTENTs_referenceOrder = make(map[*XHTML_CONTENT]uint)
 			}
-			stage.XHTML_CONTENTs_referenceOrder[xhtml_content] = stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]
+			stage.XHTML_CONTENTs_referenceOrder[xhtml_content] = stage.XHTML_CONTENT_stagedOrder[xhtml_content]
 			newInstancesReverseSlice = append(newInstancesReverseSlice, xhtml_content.GongMarshallUnstaging(stage))
-			delete(stage.XHTML_CONTENTs_referenceOrder, xhtml_content)
+			// delete(stage.XHTML_CONTENTs_referenceOrder, xhtml_content)
 			fieldInitializers, pointersInitializations := xhtml_content.GongMarshallAllFields(stage)
 			fieldsEditSlice = append(fieldsEditSlice, fieldInitializers+pointersInitializations)
 		} else {
-			stage.XHTML_CONTENTMap_Staged_Order[ref] = stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]
+			stage.XHTML_CONTENT_stagedOrder[ref] = stage.XHTML_CONTENT_stagedOrder[xhtml_content]
+			ref.GongReconstructPointersFromInstances(stage) // reconstruct ref with pointers from the stage
 			diffs := xhtml_content.GongDiff(stage, ref)
 			reverseDiffs := ref.GongDiff(stage, xhtml_content)
-			delete(stage.XHTML_CONTENTMap_Staged_Order, ref)
+			// delete(stage.XHTML_CONTENT_stagedOrder, ref)
 			if len(diffs) > 0 {
 				var fieldsEdit string
 				fieldsEdit += fmt.Sprintf("\n\t// %s", xhtml_content.GetName())
@@ -6663,8 +6975,9 @@ func (stage *Stage) ComputeForwardAndBackwardCommits() {
 	}
 
 	// parse all reference instances and check if they are still staged
-	for ref := range stage.XHTML_CONTENTs_reference {
-		if _, ok := stage.XHTML_CONTENTs[ref]; !ok {
+	for _, ref := range stage.XHTML_CONTENTs_reference {
+		instance := stage.XHTML_CONTENTs_instance[ref]    // get the instance corresponding to the reference
+		if _, ok := stage.XHTML_CONTENTs[instance]; !ok { // if the instance is not staged anymore,  it means it has been unstaged
 			xhtml_contents_deletedInstances = append(xhtml_contents_deletedInstances, ref)
 			deletedInstancesSlice = append(deletedInstancesSlice, ref.GongMarshallUnstaging(stage))
 			deletedInstancesReverseSlice = append(deletedInstancesReverseSlice, ref.GongMarshallIdentifier(stage))
@@ -6709,730 +7022,1563 @@ func (stage *Stage) ComputeReferenceAndOrders() {
 	// insertion point per named struct
 	stage.ALTERNATIVE_IDs_reference = make(map[*ALTERNATIVE_ID]*ALTERNATIVE_ID)
 	stage.ALTERNATIVE_IDs_referenceOrder = make(map[*ALTERNATIVE_ID]uint) // diff Unstage needs the reference order
+	stage.ALTERNATIVE_IDs_instance = make(map[*ALTERNATIVE_ID]*ALTERNATIVE_ID)
 	for instance := range stage.ALTERNATIVE_IDs {
-		stage.ALTERNATIVE_IDs_reference[instance] = instance.GongCopy().(*ALTERNATIVE_ID)
-		stage.ALTERNATIVE_IDs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ALTERNATIVE_ID)
+		stage.ALTERNATIVE_IDs_reference[instance] = _copy
+		stage.ALTERNATIVE_IDs_instance[_copy] = instance
+		stage.ALTERNATIVE_IDs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]*ATTRIBUTE_DEFINITION_BOOLEAN)
 	stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_BOOLEANs_instance = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN]*ATTRIBUTE_DEFINITION_BOOLEAN)
 	for instance := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
-		stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_BOOLEAN)
-		stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_BOOLEAN)
+		stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_BOOLEANs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
 	stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering]*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings {
-		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
-		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_BOOLEAN_Rendering)
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_DATEs_reference = make(map[*ATTRIBUTE_DEFINITION_DATE]*ATTRIBUTE_DEFINITION_DATE)
 	stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_DATE]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_DATEs_instance = make(map[*ATTRIBUTE_DEFINITION_DATE]*ATTRIBUTE_DEFINITION_DATE)
 	for instance := range stage.ATTRIBUTE_DEFINITION_DATEs {
-		stage.ATTRIBUTE_DEFINITION_DATEs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_DATE)
-		stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_DATE)
+		stage.ATTRIBUTE_DEFINITION_DATEs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_DATEs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]*ATTRIBUTE_DEFINITION_DATE_Rendering)
 	stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_DATE_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_DATE_Rendering]*ATTRIBUTE_DEFINITION_DATE_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings {
-		stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_DATE_Rendering)
-		stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_DATE_Rendering)
+		stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_DATE_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]*ATTRIBUTE_DEFINITION_ENUMERATION)
 	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_instance = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION]*ATTRIBUTE_DEFINITION_ENUMERATION)
 	for instance := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
-		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_ENUMERATION)
-		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_ENUMERATION)
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
 	stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering]*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings {
-		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
-		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_ENUMERATION_Rendering)
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_INTEGERs_reference = make(map[*ATTRIBUTE_DEFINITION_INTEGER]*ATTRIBUTE_DEFINITION_INTEGER)
 	stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_INTEGER]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_INTEGERs_instance = make(map[*ATTRIBUTE_DEFINITION_INTEGER]*ATTRIBUTE_DEFINITION_INTEGER)
 	for instance := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
-		stage.ATTRIBUTE_DEFINITION_INTEGERs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_INTEGER)
-		stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_INTEGER)
+		stage.ATTRIBUTE_DEFINITION_INTEGERs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_INTEGERs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]*ATTRIBUTE_DEFINITION_INTEGER_Rendering)
 	stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_INTEGER_Rendering]*ATTRIBUTE_DEFINITION_INTEGER_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings {
-		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_INTEGER_Rendering)
-		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_INTEGER_Rendering)
+		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_REALs_reference = make(map[*ATTRIBUTE_DEFINITION_REAL]*ATTRIBUTE_DEFINITION_REAL)
 	stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_REAL]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_REALs_instance = make(map[*ATTRIBUTE_DEFINITION_REAL]*ATTRIBUTE_DEFINITION_REAL)
 	for instance := range stage.ATTRIBUTE_DEFINITION_REALs {
-		stage.ATTRIBUTE_DEFINITION_REALs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_REAL)
-		stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_REAL)
+		stage.ATTRIBUTE_DEFINITION_REALs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_REALs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]*ATTRIBUTE_DEFINITION_REAL_Rendering)
 	stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_REAL_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_REAL_Rendering]*ATTRIBUTE_DEFINITION_REAL_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings {
-		stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_REAL_Rendering)
-		stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_REAL_Rendering)
+		stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_REAL_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_Rendering]*ATTRIBUTE_DEFINITION_Rendering)
 	stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_Rendering]*ATTRIBUTE_DEFINITION_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_Renderings {
-		stage.ATTRIBUTE_DEFINITION_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_Rendering)
-		stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_Rendering)
+		stage.ATTRIBUTE_DEFINITION_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_STRINGs_reference = make(map[*ATTRIBUTE_DEFINITION_STRING]*ATTRIBUTE_DEFINITION_STRING)
 	stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_STRING]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_STRINGs_instance = make(map[*ATTRIBUTE_DEFINITION_STRING]*ATTRIBUTE_DEFINITION_STRING)
 	for instance := range stage.ATTRIBUTE_DEFINITION_STRINGs {
-		stage.ATTRIBUTE_DEFINITION_STRINGs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_STRING)
-		stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_STRING)
+		stage.ATTRIBUTE_DEFINITION_STRINGs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_STRINGs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]*ATTRIBUTE_DEFINITION_STRING_Rendering)
 	stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_STRING_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_STRING_Rendering]*ATTRIBUTE_DEFINITION_STRING_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings {
-		stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_STRING_Rendering)
-		stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_STRING_Rendering)
+		stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_STRING_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_XHTMLs_reference = make(map[*ATTRIBUTE_DEFINITION_XHTML]*ATTRIBUTE_DEFINITION_XHTML)
 	stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_XHTML]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_XHTMLs_instance = make(map[*ATTRIBUTE_DEFINITION_XHTML]*ATTRIBUTE_DEFINITION_XHTML)
 	for instance := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
-		stage.ATTRIBUTE_DEFINITION_XHTMLs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_XHTML)
-		stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_XHTML)
+		stage.ATTRIBUTE_DEFINITION_XHTMLs_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_XHTMLs_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference = make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]*ATTRIBUTE_DEFINITION_XHTML_Rendering)
 	stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder = make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_instance = make(map[*ATTRIBUTE_DEFINITION_XHTML_Rendering]*ATTRIBUTE_DEFINITION_XHTML_Rendering)
 	for instance := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings {
-		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference[instance] = instance.GongCopy().(*ATTRIBUTE_DEFINITION_XHTML_Rendering)
-		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_DEFINITION_XHTML_Rendering)
+		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference[instance] = _copy
+		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_instance[_copy] = instance
+		stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_BOOLEANs_reference = make(map[*ATTRIBUTE_VALUE_BOOLEAN]*ATTRIBUTE_VALUE_BOOLEAN)
 	stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder = make(map[*ATTRIBUTE_VALUE_BOOLEAN]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_BOOLEANs_instance = make(map[*ATTRIBUTE_VALUE_BOOLEAN]*ATTRIBUTE_VALUE_BOOLEAN)
 	for instance := range stage.ATTRIBUTE_VALUE_BOOLEANs {
-		stage.ATTRIBUTE_VALUE_BOOLEANs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_BOOLEAN)
-		stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_BOOLEAN)
+		stage.ATTRIBUTE_VALUE_BOOLEANs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_BOOLEANs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_DATEs_reference = make(map[*ATTRIBUTE_VALUE_DATE]*ATTRIBUTE_VALUE_DATE)
 	stage.ATTRIBUTE_VALUE_DATEs_referenceOrder = make(map[*ATTRIBUTE_VALUE_DATE]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_DATEs_instance = make(map[*ATTRIBUTE_VALUE_DATE]*ATTRIBUTE_VALUE_DATE)
 	for instance := range stage.ATTRIBUTE_VALUE_DATEs {
-		stage.ATTRIBUTE_VALUE_DATEs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_DATE)
-		stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_DATE)
+		stage.ATTRIBUTE_VALUE_DATEs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_DATEs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference = make(map[*ATTRIBUTE_VALUE_ENUMERATION]*ATTRIBUTE_VALUE_ENUMERATION)
 	stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder = make(map[*ATTRIBUTE_VALUE_ENUMERATION]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_ENUMERATIONs_instance = make(map[*ATTRIBUTE_VALUE_ENUMERATION]*ATTRIBUTE_VALUE_ENUMERATION)
 	for instance := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
-		stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_ENUMERATION)
-		stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_ENUMERATION)
+		stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_ENUMERATIONs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_INTEGERs_reference = make(map[*ATTRIBUTE_VALUE_INTEGER]*ATTRIBUTE_VALUE_INTEGER)
 	stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder = make(map[*ATTRIBUTE_VALUE_INTEGER]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_INTEGERs_instance = make(map[*ATTRIBUTE_VALUE_INTEGER]*ATTRIBUTE_VALUE_INTEGER)
 	for instance := range stage.ATTRIBUTE_VALUE_INTEGERs {
-		stage.ATTRIBUTE_VALUE_INTEGERs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_INTEGER)
-		stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_INTEGER)
+		stage.ATTRIBUTE_VALUE_INTEGERs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_INTEGERs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_REALs_reference = make(map[*ATTRIBUTE_VALUE_REAL]*ATTRIBUTE_VALUE_REAL)
 	stage.ATTRIBUTE_VALUE_REALs_referenceOrder = make(map[*ATTRIBUTE_VALUE_REAL]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_REALs_instance = make(map[*ATTRIBUTE_VALUE_REAL]*ATTRIBUTE_VALUE_REAL)
 	for instance := range stage.ATTRIBUTE_VALUE_REALs {
-		stage.ATTRIBUTE_VALUE_REALs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_REAL)
-		stage.ATTRIBUTE_VALUE_REALs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_REAL)
+		stage.ATTRIBUTE_VALUE_REALs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_REALs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_REALs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_STRINGs_reference = make(map[*ATTRIBUTE_VALUE_STRING]*ATTRIBUTE_VALUE_STRING)
 	stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder = make(map[*ATTRIBUTE_VALUE_STRING]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_STRINGs_instance = make(map[*ATTRIBUTE_VALUE_STRING]*ATTRIBUTE_VALUE_STRING)
 	for instance := range stage.ATTRIBUTE_VALUE_STRINGs {
-		stage.ATTRIBUTE_VALUE_STRINGs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_STRING)
-		stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_STRING)
+		stage.ATTRIBUTE_VALUE_STRINGs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_STRINGs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ATTRIBUTE_VALUE_XHTMLs_reference = make(map[*ATTRIBUTE_VALUE_XHTML]*ATTRIBUTE_VALUE_XHTML)
 	stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder = make(map[*ATTRIBUTE_VALUE_XHTML]uint) // diff Unstage needs the reference order
+	stage.ATTRIBUTE_VALUE_XHTMLs_instance = make(map[*ATTRIBUTE_VALUE_XHTML]*ATTRIBUTE_VALUE_XHTML)
 	for instance := range stage.ATTRIBUTE_VALUE_XHTMLs {
-		stage.ATTRIBUTE_VALUE_XHTMLs_reference[instance] = instance.GongCopy().(*ATTRIBUTE_VALUE_XHTML)
-		stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ATTRIBUTE_VALUE_XHTML)
+		stage.ATTRIBUTE_VALUE_XHTMLs_reference[instance] = _copy
+		stage.ATTRIBUTE_VALUE_XHTMLs_instance[_copy] = instance
+		stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ALTERNATIVE_IDs_reference = make(map[*A_ALTERNATIVE_ID]*A_ALTERNATIVE_ID)
 	stage.A_ALTERNATIVE_IDs_referenceOrder = make(map[*A_ALTERNATIVE_ID]uint) // diff Unstage needs the reference order
+	stage.A_ALTERNATIVE_IDs_instance = make(map[*A_ALTERNATIVE_ID]*A_ALTERNATIVE_ID)
 	for instance := range stage.A_ALTERNATIVE_IDs {
-		stage.A_ALTERNATIVE_IDs_reference[instance] = instance.GongCopy().(*A_ALTERNATIVE_ID)
-		stage.A_ALTERNATIVE_IDs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ALTERNATIVE_ID)
+		stage.A_ALTERNATIVE_IDs_reference[instance] = _copy
+		stage.A_ALTERNATIVE_IDs_instance[_copy] = instance
+		stage.A_ALTERNATIVE_IDs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
 	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF]*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
-		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_BOOLEAN_REF)
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]*A_ATTRIBUTE_DEFINITION_DATE_REF)
 	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_DATE_REF]*A_ATTRIBUTE_DEFINITION_DATE_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_DATE_REF)
-		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_DATE_REF)
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
 	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF]*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
-		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_ENUMERATION_REF)
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
 	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_INTEGER_REF]*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
-		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_INTEGER_REF)
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]*A_ATTRIBUTE_DEFINITION_REAL_REF)
 	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_REAL_REF]*A_ATTRIBUTE_DEFINITION_REAL_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_REAL_REF)
-		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_REAL_REF)
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]*A_ATTRIBUTE_DEFINITION_STRING_REF)
 	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_STRING_REF]*A_ATTRIBUTE_DEFINITION_STRING_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_STRING_REF)
-		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_STRING_REF)
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]*A_ATTRIBUTE_DEFINITION_XHTML_REF)
 	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_instance = make(map[*A_ATTRIBUTE_DEFINITION_XHTML_REF]*A_ATTRIBUTE_DEFINITION_XHTML_REF)
 	for instance := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs {
-		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_XHTML_REF)
-		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_DEFINITION_XHTML_REF)
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_BOOLEAN)
 	stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_BOOLEANs_instance = make(map[*A_ATTRIBUTE_VALUE_BOOLEAN]*A_ATTRIBUTE_VALUE_BOOLEAN)
 	for instance := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
-		stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_BOOLEAN)
-		stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_BOOLEAN)
+		stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_BOOLEANs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_DATEs_reference = make(map[*A_ATTRIBUTE_VALUE_DATE]*A_ATTRIBUTE_VALUE_DATE)
 	stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_DATE]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_DATEs_instance = make(map[*A_ATTRIBUTE_VALUE_DATE]*A_ATTRIBUTE_VALUE_DATE)
 	for instance := range stage.A_ATTRIBUTE_VALUE_DATEs {
-		stage.A_ATTRIBUTE_VALUE_DATEs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_DATE)
-		stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_DATE)
+		stage.A_ATTRIBUTE_VALUE_DATEs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_DATEs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]*A_ATTRIBUTE_VALUE_ENUMERATION)
 	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_instance = make(map[*A_ATTRIBUTE_VALUE_ENUMERATION]*A_ATTRIBUTE_VALUE_ENUMERATION)
 	for instance := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
-		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_ENUMERATION)
-		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_ENUMERATION)
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_INTEGERs_reference = make(map[*A_ATTRIBUTE_VALUE_INTEGER]*A_ATTRIBUTE_VALUE_INTEGER)
 	stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_INTEGER]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_INTEGERs_instance = make(map[*A_ATTRIBUTE_VALUE_INTEGER]*A_ATTRIBUTE_VALUE_INTEGER)
 	for instance := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
-		stage.A_ATTRIBUTE_VALUE_INTEGERs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_INTEGER)
-		stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_INTEGER)
+		stage.A_ATTRIBUTE_VALUE_INTEGERs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_INTEGERs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_REALs_reference = make(map[*A_ATTRIBUTE_VALUE_REAL]*A_ATTRIBUTE_VALUE_REAL)
 	stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_REAL]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_REALs_instance = make(map[*A_ATTRIBUTE_VALUE_REAL]*A_ATTRIBUTE_VALUE_REAL)
 	for instance := range stage.A_ATTRIBUTE_VALUE_REALs {
-		stage.A_ATTRIBUTE_VALUE_REALs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_REAL)
-		stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_REAL)
+		stage.A_ATTRIBUTE_VALUE_REALs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_REALs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_STRINGs_reference = make(map[*A_ATTRIBUTE_VALUE_STRING]*A_ATTRIBUTE_VALUE_STRING)
 	stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_STRING]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_STRINGs_instance = make(map[*A_ATTRIBUTE_VALUE_STRING]*A_ATTRIBUTE_VALUE_STRING)
 	for instance := range stage.A_ATTRIBUTE_VALUE_STRINGs {
-		stage.A_ATTRIBUTE_VALUE_STRINGs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_STRING)
-		stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_STRING)
+		stage.A_ATTRIBUTE_VALUE_STRINGs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_STRINGs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_XHTMLs_reference = make(map[*A_ATTRIBUTE_VALUE_XHTML]*A_ATTRIBUTE_VALUE_XHTML)
 	stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_XHTML]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_XHTMLs_instance = make(map[*A_ATTRIBUTE_VALUE_XHTML]*A_ATTRIBUTE_VALUE_XHTML)
 	for instance := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
-		stage.A_ATTRIBUTE_VALUE_XHTMLs_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_XHTML)
-		stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_XHTML)
+		stage.A_ATTRIBUTE_VALUE_XHTMLs_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_XHTMLs_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]*A_ATTRIBUTE_VALUE_XHTML_1)
 	stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]uint) // diff Unstage needs the reference order
+	stage.A_ATTRIBUTE_VALUE_XHTML_1s_instance = make(map[*A_ATTRIBUTE_VALUE_XHTML_1]*A_ATTRIBUTE_VALUE_XHTML_1)
 	for instance := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
-		stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference[instance] = instance.GongCopy().(*A_ATTRIBUTE_VALUE_XHTML_1)
-		stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ATTRIBUTE_VALUE_XHTML_1)
+		stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference[instance] = _copy
+		stage.A_ATTRIBUTE_VALUE_XHTML_1s_instance[_copy] = instance
+		stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_CHILDRENs_reference = make(map[*A_CHILDREN]*A_CHILDREN)
 	stage.A_CHILDRENs_referenceOrder = make(map[*A_CHILDREN]uint) // diff Unstage needs the reference order
+	stage.A_CHILDRENs_instance = make(map[*A_CHILDREN]*A_CHILDREN)
 	for instance := range stage.A_CHILDRENs {
-		stage.A_CHILDRENs_reference[instance] = instance.GongCopy().(*A_CHILDREN)
-		stage.A_CHILDRENs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_CHILDREN)
+		stage.A_CHILDRENs_reference[instance] = _copy
+		stage.A_CHILDRENs_instance[_copy] = instance
+		stage.A_CHILDRENs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_CORE_CONTENTs_reference = make(map[*A_CORE_CONTENT]*A_CORE_CONTENT)
 	stage.A_CORE_CONTENTs_referenceOrder = make(map[*A_CORE_CONTENT]uint) // diff Unstage needs the reference order
+	stage.A_CORE_CONTENTs_instance = make(map[*A_CORE_CONTENT]*A_CORE_CONTENT)
 	for instance := range stage.A_CORE_CONTENTs {
-		stage.A_CORE_CONTENTs_reference[instance] = instance.GongCopy().(*A_CORE_CONTENT)
-		stage.A_CORE_CONTENTs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_CORE_CONTENT)
+		stage.A_CORE_CONTENTs_reference[instance] = _copy
+		stage.A_CORE_CONTENTs_instance[_copy] = instance
+		stage.A_CORE_CONTENTs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPESs_reference = make(map[*A_DATATYPES]*A_DATATYPES)
 	stage.A_DATATYPESs_referenceOrder = make(map[*A_DATATYPES]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPESs_instance = make(map[*A_DATATYPES]*A_DATATYPES)
 	for instance := range stage.A_DATATYPESs {
-		stage.A_DATATYPESs_reference[instance] = instance.GongCopy().(*A_DATATYPES)
-		stage.A_DATATYPESs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPES)
+		stage.A_DATATYPESs_reference[instance] = _copy
+		stage.A_DATATYPESs_instance[_copy] = instance
+		stage.A_DATATYPESs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]*A_DATATYPE_DEFINITION_BOOLEAN_REF)
 	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_instance = make(map[*A_DATATYPE_DEFINITION_BOOLEAN_REF]*A_DATATYPE_DEFINITION_BOOLEAN_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs {
-		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_BOOLEAN_REF)
-		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_BOOLEAN_REF)
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_DATE_REFs_reference = make(map[*A_DATATYPE_DEFINITION_DATE_REF]*A_DATATYPE_DEFINITION_DATE_REF)
 	stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_DATE_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_DATE_REFs_instance = make(map[*A_DATATYPE_DEFINITION_DATE_REF]*A_DATATYPE_DEFINITION_DATE_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_DATE_REFs {
-		stage.A_DATATYPE_DEFINITION_DATE_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_DATE_REF)
-		stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_DATE_REF)
+		stage.A_DATATYPE_DEFINITION_DATE_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_DATE_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]*A_DATATYPE_DEFINITION_ENUMERATION_REF)
 	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_instance = make(map[*A_DATATYPE_DEFINITION_ENUMERATION_REF]*A_DATATYPE_DEFINITION_ENUMERATION_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs {
-		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_ENUMERATION_REF)
-		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_ENUMERATION_REF)
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]*A_DATATYPE_DEFINITION_INTEGER_REF)
 	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_INTEGER_REFs_instance = make(map[*A_DATATYPE_DEFINITION_INTEGER_REF]*A_DATATYPE_DEFINITION_INTEGER_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs {
-		stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_INTEGER_REF)
-		stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_INTEGER_REF)
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_REAL_REFs_reference = make(map[*A_DATATYPE_DEFINITION_REAL_REF]*A_DATATYPE_DEFINITION_REAL_REF)
 	stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_REAL_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_REAL_REFs_instance = make(map[*A_DATATYPE_DEFINITION_REAL_REF]*A_DATATYPE_DEFINITION_REAL_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_REAL_REFs {
-		stage.A_DATATYPE_DEFINITION_REAL_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_REAL_REF)
-		stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_REAL_REF)
+		stage.A_DATATYPE_DEFINITION_REAL_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_REAL_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_STRING_REFs_reference = make(map[*A_DATATYPE_DEFINITION_STRING_REF]*A_DATATYPE_DEFINITION_STRING_REF)
 	stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_STRING_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_STRING_REFs_instance = make(map[*A_DATATYPE_DEFINITION_STRING_REF]*A_DATATYPE_DEFINITION_STRING_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_STRING_REFs {
-		stage.A_DATATYPE_DEFINITION_STRING_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_STRING_REF)
-		stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_STRING_REF)
+		stage.A_DATATYPE_DEFINITION_STRING_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_STRING_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]*A_DATATYPE_DEFINITION_XHTML_REF)
 	stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]uint) // diff Unstage needs the reference order
+	stage.A_DATATYPE_DEFINITION_XHTML_REFs_instance = make(map[*A_DATATYPE_DEFINITION_XHTML_REF]*A_DATATYPE_DEFINITION_XHTML_REF)
 	for instance := range stage.A_DATATYPE_DEFINITION_XHTML_REFs {
-		stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference[instance] = instance.GongCopy().(*A_DATATYPE_DEFINITION_XHTML_REF)
-		stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_DATATYPE_DEFINITION_XHTML_REF)
+		stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference[instance] = _copy
+		stage.A_DATATYPE_DEFINITION_XHTML_REFs_instance[_copy] = instance
+		stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_EDITABLE_ATTSs_reference = make(map[*A_EDITABLE_ATTS]*A_EDITABLE_ATTS)
 	stage.A_EDITABLE_ATTSs_referenceOrder = make(map[*A_EDITABLE_ATTS]uint) // diff Unstage needs the reference order
+	stage.A_EDITABLE_ATTSs_instance = make(map[*A_EDITABLE_ATTS]*A_EDITABLE_ATTS)
 	for instance := range stage.A_EDITABLE_ATTSs {
-		stage.A_EDITABLE_ATTSs_reference[instance] = instance.GongCopy().(*A_EDITABLE_ATTS)
-		stage.A_EDITABLE_ATTSs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_EDITABLE_ATTS)
+		stage.A_EDITABLE_ATTSs_reference[instance] = _copy
+		stage.A_EDITABLE_ATTSs_instance[_copy] = instance
+		stage.A_EDITABLE_ATTSs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_ENUM_VALUE_REFs_reference = make(map[*A_ENUM_VALUE_REF]*A_ENUM_VALUE_REF)
 	stage.A_ENUM_VALUE_REFs_referenceOrder = make(map[*A_ENUM_VALUE_REF]uint) // diff Unstage needs the reference order
+	stage.A_ENUM_VALUE_REFs_instance = make(map[*A_ENUM_VALUE_REF]*A_ENUM_VALUE_REF)
 	for instance := range stage.A_ENUM_VALUE_REFs {
-		stage.A_ENUM_VALUE_REFs_reference[instance] = instance.GongCopy().(*A_ENUM_VALUE_REF)
-		stage.A_ENUM_VALUE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_ENUM_VALUE_REF)
+		stage.A_ENUM_VALUE_REFs_reference[instance] = _copy
+		stage.A_ENUM_VALUE_REFs_instance[_copy] = instance
+		stage.A_ENUM_VALUE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_OBJECTs_reference = make(map[*A_OBJECT]*A_OBJECT)
 	stage.A_OBJECTs_referenceOrder = make(map[*A_OBJECT]uint) // diff Unstage needs the reference order
+	stage.A_OBJECTs_instance = make(map[*A_OBJECT]*A_OBJECT)
 	for instance := range stage.A_OBJECTs {
-		stage.A_OBJECTs_reference[instance] = instance.GongCopy().(*A_OBJECT)
-		stage.A_OBJECTs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_OBJECT)
+		stage.A_OBJECTs_reference[instance] = _copy
+		stage.A_OBJECTs_instance[_copy] = instance
+		stage.A_OBJECTs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_PROPERTIESs_reference = make(map[*A_PROPERTIES]*A_PROPERTIES)
 	stage.A_PROPERTIESs_referenceOrder = make(map[*A_PROPERTIES]uint) // diff Unstage needs the reference order
+	stage.A_PROPERTIESs_instance = make(map[*A_PROPERTIES]*A_PROPERTIES)
 	for instance := range stage.A_PROPERTIESs {
-		stage.A_PROPERTIESs_reference[instance] = instance.GongCopy().(*A_PROPERTIES)
-		stage.A_PROPERTIESs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_PROPERTIES)
+		stage.A_PROPERTIESs_reference[instance] = _copy
+		stage.A_PROPERTIESs_instance[_copy] = instance
+		stage.A_PROPERTIESs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_RELATION_GROUP_TYPE_REFs_reference = make(map[*A_RELATION_GROUP_TYPE_REF]*A_RELATION_GROUP_TYPE_REF)
 	stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder = make(map[*A_RELATION_GROUP_TYPE_REF]uint) // diff Unstage needs the reference order
+	stage.A_RELATION_GROUP_TYPE_REFs_instance = make(map[*A_RELATION_GROUP_TYPE_REF]*A_RELATION_GROUP_TYPE_REF)
 	for instance := range stage.A_RELATION_GROUP_TYPE_REFs {
-		stage.A_RELATION_GROUP_TYPE_REFs_reference[instance] = instance.GongCopy().(*A_RELATION_GROUP_TYPE_REF)
-		stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_RELATION_GROUP_TYPE_REF)
+		stage.A_RELATION_GROUP_TYPE_REFs_reference[instance] = _copy
+		stage.A_RELATION_GROUP_TYPE_REFs_instance[_copy] = instance
+		stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SOURCE_1s_reference = make(map[*A_SOURCE_1]*A_SOURCE_1)
 	stage.A_SOURCE_1s_referenceOrder = make(map[*A_SOURCE_1]uint) // diff Unstage needs the reference order
+	stage.A_SOURCE_1s_instance = make(map[*A_SOURCE_1]*A_SOURCE_1)
 	for instance := range stage.A_SOURCE_1s {
-		stage.A_SOURCE_1s_reference[instance] = instance.GongCopy().(*A_SOURCE_1)
-		stage.A_SOURCE_1s_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SOURCE_1)
+		stage.A_SOURCE_1s_reference[instance] = _copy
+		stage.A_SOURCE_1s_instance[_copy] = instance
+		stage.A_SOURCE_1s_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SOURCE_SPECIFICATION_1s_reference = make(map[*A_SOURCE_SPECIFICATION_1]*A_SOURCE_SPECIFICATION_1)
 	stage.A_SOURCE_SPECIFICATION_1s_referenceOrder = make(map[*A_SOURCE_SPECIFICATION_1]uint) // diff Unstage needs the reference order
+	stage.A_SOURCE_SPECIFICATION_1s_instance = make(map[*A_SOURCE_SPECIFICATION_1]*A_SOURCE_SPECIFICATION_1)
 	for instance := range stage.A_SOURCE_SPECIFICATION_1s {
-		stage.A_SOURCE_SPECIFICATION_1s_reference[instance] = instance.GongCopy().(*A_SOURCE_SPECIFICATION_1)
-		stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SOURCE_SPECIFICATION_1)
+		stage.A_SOURCE_SPECIFICATION_1s_reference[instance] = _copy
+		stage.A_SOURCE_SPECIFICATION_1s_instance[_copy] = instance
+		stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPECIFICATIONSs_reference = make(map[*A_SPECIFICATIONS]*A_SPECIFICATIONS)
 	stage.A_SPECIFICATIONSs_referenceOrder = make(map[*A_SPECIFICATIONS]uint) // diff Unstage needs the reference order
+	stage.A_SPECIFICATIONSs_instance = make(map[*A_SPECIFICATIONS]*A_SPECIFICATIONS)
 	for instance := range stage.A_SPECIFICATIONSs {
-		stage.A_SPECIFICATIONSs_reference[instance] = instance.GongCopy().(*A_SPECIFICATIONS)
-		stage.A_SPECIFICATIONSs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPECIFICATIONS)
+		stage.A_SPECIFICATIONSs_reference[instance] = _copy
+		stage.A_SPECIFICATIONSs_instance[_copy] = instance
+		stage.A_SPECIFICATIONSs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPECIFICATION_TYPE_REFs_reference = make(map[*A_SPECIFICATION_TYPE_REF]*A_SPECIFICATION_TYPE_REF)
 	stage.A_SPECIFICATION_TYPE_REFs_referenceOrder = make(map[*A_SPECIFICATION_TYPE_REF]uint) // diff Unstage needs the reference order
+	stage.A_SPECIFICATION_TYPE_REFs_instance = make(map[*A_SPECIFICATION_TYPE_REF]*A_SPECIFICATION_TYPE_REF)
 	for instance := range stage.A_SPECIFICATION_TYPE_REFs {
-		stage.A_SPECIFICATION_TYPE_REFs_reference[instance] = instance.GongCopy().(*A_SPECIFICATION_TYPE_REF)
-		stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPECIFICATION_TYPE_REF)
+		stage.A_SPECIFICATION_TYPE_REFs_reference[instance] = _copy
+		stage.A_SPECIFICATION_TYPE_REFs_instance[_copy] = instance
+		stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPECIFIED_VALUESs_reference = make(map[*A_SPECIFIED_VALUES]*A_SPECIFIED_VALUES)
 	stage.A_SPECIFIED_VALUESs_referenceOrder = make(map[*A_SPECIFIED_VALUES]uint) // diff Unstage needs the reference order
+	stage.A_SPECIFIED_VALUESs_instance = make(map[*A_SPECIFIED_VALUES]*A_SPECIFIED_VALUES)
 	for instance := range stage.A_SPECIFIED_VALUESs {
-		stage.A_SPECIFIED_VALUESs_reference[instance] = instance.GongCopy().(*A_SPECIFIED_VALUES)
-		stage.A_SPECIFIED_VALUESs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPECIFIED_VALUES)
+		stage.A_SPECIFIED_VALUESs_reference[instance] = _copy
+		stage.A_SPECIFIED_VALUESs_instance[_copy] = instance
+		stage.A_SPECIFIED_VALUESs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_ATTRIBUTESs_reference = make(map[*A_SPEC_ATTRIBUTES]*A_SPEC_ATTRIBUTES)
 	stage.A_SPEC_ATTRIBUTESs_referenceOrder = make(map[*A_SPEC_ATTRIBUTES]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_ATTRIBUTESs_instance = make(map[*A_SPEC_ATTRIBUTES]*A_SPEC_ATTRIBUTES)
 	for instance := range stage.A_SPEC_ATTRIBUTESs {
-		stage.A_SPEC_ATTRIBUTESs_reference[instance] = instance.GongCopy().(*A_SPEC_ATTRIBUTES)
-		stage.A_SPEC_ATTRIBUTESs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_ATTRIBUTES)
+		stage.A_SPEC_ATTRIBUTESs_reference[instance] = _copy
+		stage.A_SPEC_ATTRIBUTESs_instance[_copy] = instance
+		stage.A_SPEC_ATTRIBUTESs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_OBJECTSs_reference = make(map[*A_SPEC_OBJECTS]*A_SPEC_OBJECTS)
 	stage.A_SPEC_OBJECTSs_referenceOrder = make(map[*A_SPEC_OBJECTS]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_OBJECTSs_instance = make(map[*A_SPEC_OBJECTS]*A_SPEC_OBJECTS)
 	for instance := range stage.A_SPEC_OBJECTSs {
-		stage.A_SPEC_OBJECTSs_reference[instance] = instance.GongCopy().(*A_SPEC_OBJECTS)
-		stage.A_SPEC_OBJECTSs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_OBJECTS)
+		stage.A_SPEC_OBJECTSs_reference[instance] = _copy
+		stage.A_SPEC_OBJECTSs_instance[_copy] = instance
+		stage.A_SPEC_OBJECTSs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_OBJECT_TYPE_REFs_reference = make(map[*A_SPEC_OBJECT_TYPE_REF]*A_SPEC_OBJECT_TYPE_REF)
 	stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder = make(map[*A_SPEC_OBJECT_TYPE_REF]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_OBJECT_TYPE_REFs_instance = make(map[*A_SPEC_OBJECT_TYPE_REF]*A_SPEC_OBJECT_TYPE_REF)
 	for instance := range stage.A_SPEC_OBJECT_TYPE_REFs {
-		stage.A_SPEC_OBJECT_TYPE_REFs_reference[instance] = instance.GongCopy().(*A_SPEC_OBJECT_TYPE_REF)
-		stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_OBJECT_TYPE_REF)
+		stage.A_SPEC_OBJECT_TYPE_REFs_reference[instance] = _copy
+		stage.A_SPEC_OBJECT_TYPE_REFs_instance[_copy] = instance
+		stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_RELATIONSs_reference = make(map[*A_SPEC_RELATIONS]*A_SPEC_RELATIONS)
 	stage.A_SPEC_RELATIONSs_referenceOrder = make(map[*A_SPEC_RELATIONS]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_RELATIONSs_instance = make(map[*A_SPEC_RELATIONS]*A_SPEC_RELATIONS)
 	for instance := range stage.A_SPEC_RELATIONSs {
-		stage.A_SPEC_RELATIONSs_reference[instance] = instance.GongCopy().(*A_SPEC_RELATIONS)
-		stage.A_SPEC_RELATIONSs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_RELATIONS)
+		stage.A_SPEC_RELATIONSs_reference[instance] = _copy
+		stage.A_SPEC_RELATIONSs_instance[_copy] = instance
+		stage.A_SPEC_RELATIONSs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_RELATION_GROUPSs_reference = make(map[*A_SPEC_RELATION_GROUPS]*A_SPEC_RELATION_GROUPS)
 	stage.A_SPEC_RELATION_GROUPSs_referenceOrder = make(map[*A_SPEC_RELATION_GROUPS]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_RELATION_GROUPSs_instance = make(map[*A_SPEC_RELATION_GROUPS]*A_SPEC_RELATION_GROUPS)
 	for instance := range stage.A_SPEC_RELATION_GROUPSs {
-		stage.A_SPEC_RELATION_GROUPSs_reference[instance] = instance.GongCopy().(*A_SPEC_RELATION_GROUPS)
-		stage.A_SPEC_RELATION_GROUPSs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_RELATION_GROUPS)
+		stage.A_SPEC_RELATION_GROUPSs_reference[instance] = _copy
+		stage.A_SPEC_RELATION_GROUPSs_instance[_copy] = instance
+		stage.A_SPEC_RELATION_GROUPSs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_RELATION_REFs_reference = make(map[*A_SPEC_RELATION_REF]*A_SPEC_RELATION_REF)
 	stage.A_SPEC_RELATION_REFs_referenceOrder = make(map[*A_SPEC_RELATION_REF]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_RELATION_REFs_instance = make(map[*A_SPEC_RELATION_REF]*A_SPEC_RELATION_REF)
 	for instance := range stage.A_SPEC_RELATION_REFs {
-		stage.A_SPEC_RELATION_REFs_reference[instance] = instance.GongCopy().(*A_SPEC_RELATION_REF)
-		stage.A_SPEC_RELATION_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_RELATION_REF)
+		stage.A_SPEC_RELATION_REFs_reference[instance] = _copy
+		stage.A_SPEC_RELATION_REFs_instance[_copy] = instance
+		stage.A_SPEC_RELATION_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_RELATION_TYPE_REFs_reference = make(map[*A_SPEC_RELATION_TYPE_REF]*A_SPEC_RELATION_TYPE_REF)
 	stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder = make(map[*A_SPEC_RELATION_TYPE_REF]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_RELATION_TYPE_REFs_instance = make(map[*A_SPEC_RELATION_TYPE_REF]*A_SPEC_RELATION_TYPE_REF)
 	for instance := range stage.A_SPEC_RELATION_TYPE_REFs {
-		stage.A_SPEC_RELATION_TYPE_REFs_reference[instance] = instance.GongCopy().(*A_SPEC_RELATION_TYPE_REF)
-		stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_RELATION_TYPE_REF)
+		stage.A_SPEC_RELATION_TYPE_REFs_reference[instance] = _copy
+		stage.A_SPEC_RELATION_TYPE_REFs_instance[_copy] = instance
+		stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_SPEC_TYPESs_reference = make(map[*A_SPEC_TYPES]*A_SPEC_TYPES)
 	stage.A_SPEC_TYPESs_referenceOrder = make(map[*A_SPEC_TYPES]uint) // diff Unstage needs the reference order
+	stage.A_SPEC_TYPESs_instance = make(map[*A_SPEC_TYPES]*A_SPEC_TYPES)
 	for instance := range stage.A_SPEC_TYPESs {
-		stage.A_SPEC_TYPESs_reference[instance] = instance.GongCopy().(*A_SPEC_TYPES)
-		stage.A_SPEC_TYPESs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_SPEC_TYPES)
+		stage.A_SPEC_TYPESs_reference[instance] = _copy
+		stage.A_SPEC_TYPESs_instance[_copy] = instance
+		stage.A_SPEC_TYPESs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_THE_HEADERs_reference = make(map[*A_THE_HEADER]*A_THE_HEADER)
 	stage.A_THE_HEADERs_referenceOrder = make(map[*A_THE_HEADER]uint) // diff Unstage needs the reference order
+	stage.A_THE_HEADERs_instance = make(map[*A_THE_HEADER]*A_THE_HEADER)
 	for instance := range stage.A_THE_HEADERs {
-		stage.A_THE_HEADERs_reference[instance] = instance.GongCopy().(*A_THE_HEADER)
-		stage.A_THE_HEADERs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_THE_HEADER)
+		stage.A_THE_HEADERs_reference[instance] = _copy
+		stage.A_THE_HEADERs_instance[_copy] = instance
+		stage.A_THE_HEADERs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.A_TOOL_EXTENSIONSs_reference = make(map[*A_TOOL_EXTENSIONS]*A_TOOL_EXTENSIONS)
 	stage.A_TOOL_EXTENSIONSs_referenceOrder = make(map[*A_TOOL_EXTENSIONS]uint) // diff Unstage needs the reference order
+	stage.A_TOOL_EXTENSIONSs_instance = make(map[*A_TOOL_EXTENSIONS]*A_TOOL_EXTENSIONS)
 	for instance := range stage.A_TOOL_EXTENSIONSs {
-		stage.A_TOOL_EXTENSIONSs_reference[instance] = instance.GongCopy().(*A_TOOL_EXTENSIONS)
-		stage.A_TOOL_EXTENSIONSs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*A_TOOL_EXTENSIONS)
+		stage.A_TOOL_EXTENSIONSs_reference[instance] = _copy
+		stage.A_TOOL_EXTENSIONSs_instance[_copy] = instance
+		stage.A_TOOL_EXTENSIONSs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_BOOLEANs_reference = make(map[*DATATYPE_DEFINITION_BOOLEAN]*DATATYPE_DEFINITION_BOOLEAN)
 	stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder = make(map[*DATATYPE_DEFINITION_BOOLEAN]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_BOOLEANs_instance = make(map[*DATATYPE_DEFINITION_BOOLEAN]*DATATYPE_DEFINITION_BOOLEAN)
 	for instance := range stage.DATATYPE_DEFINITION_BOOLEANs {
-		stage.DATATYPE_DEFINITION_BOOLEANs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_BOOLEAN)
-		stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_BOOLEAN)
+		stage.DATATYPE_DEFINITION_BOOLEANs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_BOOLEANs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_DATEs_reference = make(map[*DATATYPE_DEFINITION_DATE]*DATATYPE_DEFINITION_DATE)
 	stage.DATATYPE_DEFINITION_DATEs_referenceOrder = make(map[*DATATYPE_DEFINITION_DATE]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_DATEs_instance = make(map[*DATATYPE_DEFINITION_DATE]*DATATYPE_DEFINITION_DATE)
 	for instance := range stage.DATATYPE_DEFINITION_DATEs {
-		stage.DATATYPE_DEFINITION_DATEs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_DATE)
-		stage.DATATYPE_DEFINITION_DATEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_DATE)
+		stage.DATATYPE_DEFINITION_DATEs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_DATEs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_DATEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_ENUMERATIONs_reference = make(map[*DATATYPE_DEFINITION_ENUMERATION]*DATATYPE_DEFINITION_ENUMERATION)
 	stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder = make(map[*DATATYPE_DEFINITION_ENUMERATION]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_ENUMERATIONs_instance = make(map[*DATATYPE_DEFINITION_ENUMERATION]*DATATYPE_DEFINITION_ENUMERATION)
 	for instance := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
-		stage.DATATYPE_DEFINITION_ENUMERATIONs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_ENUMERATION)
-		stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_ENUMERATION)
+		stage.DATATYPE_DEFINITION_ENUMERATIONs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_ENUMERATIONs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_INTEGERs_reference = make(map[*DATATYPE_DEFINITION_INTEGER]*DATATYPE_DEFINITION_INTEGER)
 	stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder = make(map[*DATATYPE_DEFINITION_INTEGER]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_INTEGERs_instance = make(map[*DATATYPE_DEFINITION_INTEGER]*DATATYPE_DEFINITION_INTEGER)
 	for instance := range stage.DATATYPE_DEFINITION_INTEGERs {
-		stage.DATATYPE_DEFINITION_INTEGERs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_INTEGER)
-		stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_INTEGER)
+		stage.DATATYPE_DEFINITION_INTEGERs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_INTEGERs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_REALs_reference = make(map[*DATATYPE_DEFINITION_REAL]*DATATYPE_DEFINITION_REAL)
 	stage.DATATYPE_DEFINITION_REALs_referenceOrder = make(map[*DATATYPE_DEFINITION_REAL]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_REALs_instance = make(map[*DATATYPE_DEFINITION_REAL]*DATATYPE_DEFINITION_REAL)
 	for instance := range stage.DATATYPE_DEFINITION_REALs {
-		stage.DATATYPE_DEFINITION_REALs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_REAL)
-		stage.DATATYPE_DEFINITION_REALs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_REAL)
+		stage.DATATYPE_DEFINITION_REALs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_REALs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_REALs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_STRINGs_reference = make(map[*DATATYPE_DEFINITION_STRING]*DATATYPE_DEFINITION_STRING)
 	stage.DATATYPE_DEFINITION_STRINGs_referenceOrder = make(map[*DATATYPE_DEFINITION_STRING]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_STRINGs_instance = make(map[*DATATYPE_DEFINITION_STRING]*DATATYPE_DEFINITION_STRING)
 	for instance := range stage.DATATYPE_DEFINITION_STRINGs {
-		stage.DATATYPE_DEFINITION_STRINGs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_STRING)
-		stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_STRING)
+		stage.DATATYPE_DEFINITION_STRINGs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_STRINGs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.DATATYPE_DEFINITION_XHTMLs_reference = make(map[*DATATYPE_DEFINITION_XHTML]*DATATYPE_DEFINITION_XHTML)
 	stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder = make(map[*DATATYPE_DEFINITION_XHTML]uint) // diff Unstage needs the reference order
+	stage.DATATYPE_DEFINITION_XHTMLs_instance = make(map[*DATATYPE_DEFINITION_XHTML]*DATATYPE_DEFINITION_XHTML)
 	for instance := range stage.DATATYPE_DEFINITION_XHTMLs {
-		stage.DATATYPE_DEFINITION_XHTMLs_reference[instance] = instance.GongCopy().(*DATATYPE_DEFINITION_XHTML)
-		stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*DATATYPE_DEFINITION_XHTML)
+		stage.DATATYPE_DEFINITION_XHTMLs_reference[instance] = _copy
+		stage.DATATYPE_DEFINITION_XHTMLs_instance[_copy] = instance
+		stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.EMBEDDED_VALUEs_reference = make(map[*EMBEDDED_VALUE]*EMBEDDED_VALUE)
 	stage.EMBEDDED_VALUEs_referenceOrder = make(map[*EMBEDDED_VALUE]uint) // diff Unstage needs the reference order
+	stage.EMBEDDED_VALUEs_instance = make(map[*EMBEDDED_VALUE]*EMBEDDED_VALUE)
 	for instance := range stage.EMBEDDED_VALUEs {
-		stage.EMBEDDED_VALUEs_reference[instance] = instance.GongCopy().(*EMBEDDED_VALUE)
-		stage.EMBEDDED_VALUEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*EMBEDDED_VALUE)
+		stage.EMBEDDED_VALUEs_reference[instance] = _copy
+		stage.EMBEDDED_VALUEs_instance[_copy] = instance
+		stage.EMBEDDED_VALUEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.ENUM_VALUEs_reference = make(map[*ENUM_VALUE]*ENUM_VALUE)
 	stage.ENUM_VALUEs_referenceOrder = make(map[*ENUM_VALUE]uint) // diff Unstage needs the reference order
+	stage.ENUM_VALUEs_instance = make(map[*ENUM_VALUE]*ENUM_VALUE)
 	for instance := range stage.ENUM_VALUEs {
-		stage.ENUM_VALUEs_reference[instance] = instance.GongCopy().(*ENUM_VALUE)
-		stage.ENUM_VALUEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*ENUM_VALUE)
+		stage.ENUM_VALUEs_reference[instance] = _copy
+		stage.ENUM_VALUEs_instance[_copy] = instance
+		stage.ENUM_VALUEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.EmbeddedJpgImages_reference = make(map[*EmbeddedJpgImage]*EmbeddedJpgImage)
 	stage.EmbeddedJpgImages_referenceOrder = make(map[*EmbeddedJpgImage]uint) // diff Unstage needs the reference order
+	stage.EmbeddedJpgImages_instance = make(map[*EmbeddedJpgImage]*EmbeddedJpgImage)
 	for instance := range stage.EmbeddedJpgImages {
-		stage.EmbeddedJpgImages_reference[instance] = instance.GongCopy().(*EmbeddedJpgImage)
-		stage.EmbeddedJpgImages_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*EmbeddedJpgImage)
+		stage.EmbeddedJpgImages_reference[instance] = _copy
+		stage.EmbeddedJpgImages_instance[_copy] = instance
+		stage.EmbeddedJpgImages_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.EmbeddedPngImages_reference = make(map[*EmbeddedPngImage]*EmbeddedPngImage)
 	stage.EmbeddedPngImages_referenceOrder = make(map[*EmbeddedPngImage]uint) // diff Unstage needs the reference order
+	stage.EmbeddedPngImages_instance = make(map[*EmbeddedPngImage]*EmbeddedPngImage)
 	for instance := range stage.EmbeddedPngImages {
-		stage.EmbeddedPngImages_reference[instance] = instance.GongCopy().(*EmbeddedPngImage)
-		stage.EmbeddedPngImages_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*EmbeddedPngImage)
+		stage.EmbeddedPngImages_reference[instance] = _copy
+		stage.EmbeddedPngImages_instance[_copy] = instance
+		stage.EmbeddedPngImages_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.EmbeddedSvgImages_reference = make(map[*EmbeddedSvgImage]*EmbeddedSvgImage)
 	stage.EmbeddedSvgImages_referenceOrder = make(map[*EmbeddedSvgImage]uint) // diff Unstage needs the reference order
+	stage.EmbeddedSvgImages_instance = make(map[*EmbeddedSvgImage]*EmbeddedSvgImage)
 	for instance := range stage.EmbeddedSvgImages {
-		stage.EmbeddedSvgImages_reference[instance] = instance.GongCopy().(*EmbeddedSvgImage)
-		stage.EmbeddedSvgImages_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*EmbeddedSvgImage)
+		stage.EmbeddedSvgImages_reference[instance] = _copy
+		stage.EmbeddedSvgImages_instance[_copy] = instance
+		stage.EmbeddedSvgImages_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.Kills_reference = make(map[*Kill]*Kill)
 	stage.Kills_referenceOrder = make(map[*Kill]uint) // diff Unstage needs the reference order
+	stage.Kills_instance = make(map[*Kill]*Kill)
 	for instance := range stage.Kills {
-		stage.Kills_reference[instance] = instance.GongCopy().(*Kill)
-		stage.Kills_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*Kill)
+		stage.Kills_reference[instance] = _copy
+		stage.Kills_instance[_copy] = instance
+		stage.Kills_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.Map_identifier_bools_reference = make(map[*Map_identifier_bool]*Map_identifier_bool)
 	stage.Map_identifier_bools_referenceOrder = make(map[*Map_identifier_bool]uint) // diff Unstage needs the reference order
+	stage.Map_identifier_bools_instance = make(map[*Map_identifier_bool]*Map_identifier_bool)
 	for instance := range stage.Map_identifier_bools {
-		stage.Map_identifier_bools_reference[instance] = instance.GongCopy().(*Map_identifier_bool)
-		stage.Map_identifier_bools_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*Map_identifier_bool)
+		stage.Map_identifier_bools_reference[instance] = _copy
+		stage.Map_identifier_bools_instance[_copy] = instance
+		stage.Map_identifier_bools_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.RELATION_GROUPs_reference = make(map[*RELATION_GROUP]*RELATION_GROUP)
 	stage.RELATION_GROUPs_referenceOrder = make(map[*RELATION_GROUP]uint) // diff Unstage needs the reference order
+	stage.RELATION_GROUPs_instance = make(map[*RELATION_GROUP]*RELATION_GROUP)
 	for instance := range stage.RELATION_GROUPs {
-		stage.RELATION_GROUPs_reference[instance] = instance.GongCopy().(*RELATION_GROUP)
-		stage.RELATION_GROUPs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*RELATION_GROUP)
+		stage.RELATION_GROUPs_reference[instance] = _copy
+		stage.RELATION_GROUPs_instance[_copy] = instance
+		stage.RELATION_GROUPs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.RELATION_GROUP_TYPEs_reference = make(map[*RELATION_GROUP_TYPE]*RELATION_GROUP_TYPE)
 	stage.RELATION_GROUP_TYPEs_referenceOrder = make(map[*RELATION_GROUP_TYPE]uint) // diff Unstage needs the reference order
+	stage.RELATION_GROUP_TYPEs_instance = make(map[*RELATION_GROUP_TYPE]*RELATION_GROUP_TYPE)
 	for instance := range stage.RELATION_GROUP_TYPEs {
-		stage.RELATION_GROUP_TYPEs_reference[instance] = instance.GongCopy().(*RELATION_GROUP_TYPE)
-		stage.RELATION_GROUP_TYPEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*RELATION_GROUP_TYPE)
+		stage.RELATION_GROUP_TYPEs_reference[instance] = _copy
+		stage.RELATION_GROUP_TYPEs_instance[_copy] = instance
+		stage.RELATION_GROUP_TYPEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.REQ_IFs_reference = make(map[*REQ_IF]*REQ_IF)
 	stage.REQ_IFs_referenceOrder = make(map[*REQ_IF]uint) // diff Unstage needs the reference order
+	stage.REQ_IFs_instance = make(map[*REQ_IF]*REQ_IF)
 	for instance := range stage.REQ_IFs {
-		stage.REQ_IFs_reference[instance] = instance.GongCopy().(*REQ_IF)
-		stage.REQ_IFs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*REQ_IF)
+		stage.REQ_IFs_reference[instance] = _copy
+		stage.REQ_IFs_instance[_copy] = instance
+		stage.REQ_IFs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.REQ_IF_CONTENTs_reference = make(map[*REQ_IF_CONTENT]*REQ_IF_CONTENT)
 	stage.REQ_IF_CONTENTs_referenceOrder = make(map[*REQ_IF_CONTENT]uint) // diff Unstage needs the reference order
+	stage.REQ_IF_CONTENTs_instance = make(map[*REQ_IF_CONTENT]*REQ_IF_CONTENT)
 	for instance := range stage.REQ_IF_CONTENTs {
-		stage.REQ_IF_CONTENTs_reference[instance] = instance.GongCopy().(*REQ_IF_CONTENT)
-		stage.REQ_IF_CONTENTs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*REQ_IF_CONTENT)
+		stage.REQ_IF_CONTENTs_reference[instance] = _copy
+		stage.REQ_IF_CONTENTs_instance[_copy] = instance
+		stage.REQ_IF_CONTENTs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.REQ_IF_HEADERs_reference = make(map[*REQ_IF_HEADER]*REQ_IF_HEADER)
 	stage.REQ_IF_HEADERs_referenceOrder = make(map[*REQ_IF_HEADER]uint) // diff Unstage needs the reference order
+	stage.REQ_IF_HEADERs_instance = make(map[*REQ_IF_HEADER]*REQ_IF_HEADER)
 	for instance := range stage.REQ_IF_HEADERs {
-		stage.REQ_IF_HEADERs_reference[instance] = instance.GongCopy().(*REQ_IF_HEADER)
-		stage.REQ_IF_HEADERs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*REQ_IF_HEADER)
+		stage.REQ_IF_HEADERs_reference[instance] = _copy
+		stage.REQ_IF_HEADERs_instance[_copy] = instance
+		stage.REQ_IF_HEADERs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.REQ_IF_TOOL_EXTENSIONs_reference = make(map[*REQ_IF_TOOL_EXTENSION]*REQ_IF_TOOL_EXTENSION)
 	stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder = make(map[*REQ_IF_TOOL_EXTENSION]uint) // diff Unstage needs the reference order
+	stage.REQ_IF_TOOL_EXTENSIONs_instance = make(map[*REQ_IF_TOOL_EXTENSION]*REQ_IF_TOOL_EXTENSION)
 	for instance := range stage.REQ_IF_TOOL_EXTENSIONs {
-		stage.REQ_IF_TOOL_EXTENSIONs_reference[instance] = instance.GongCopy().(*REQ_IF_TOOL_EXTENSION)
-		stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*REQ_IF_TOOL_EXTENSION)
+		stage.REQ_IF_TOOL_EXTENSIONs_reference[instance] = _copy
+		stage.REQ_IF_TOOL_EXTENSIONs_instance[_copy] = instance
+		stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPECIFICATIONs_reference = make(map[*SPECIFICATION]*SPECIFICATION)
 	stage.SPECIFICATIONs_referenceOrder = make(map[*SPECIFICATION]uint) // diff Unstage needs the reference order
+	stage.SPECIFICATIONs_instance = make(map[*SPECIFICATION]*SPECIFICATION)
 	for instance := range stage.SPECIFICATIONs {
-		stage.SPECIFICATIONs_reference[instance] = instance.GongCopy().(*SPECIFICATION)
-		stage.SPECIFICATIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPECIFICATION)
+		stage.SPECIFICATIONs_reference[instance] = _copy
+		stage.SPECIFICATIONs_instance[_copy] = instance
+		stage.SPECIFICATIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPECIFICATION_Renderings_reference = make(map[*SPECIFICATION_Rendering]*SPECIFICATION_Rendering)
 	stage.SPECIFICATION_Renderings_referenceOrder = make(map[*SPECIFICATION_Rendering]uint) // diff Unstage needs the reference order
+	stage.SPECIFICATION_Renderings_instance = make(map[*SPECIFICATION_Rendering]*SPECIFICATION_Rendering)
 	for instance := range stage.SPECIFICATION_Renderings {
-		stage.SPECIFICATION_Renderings_reference[instance] = instance.GongCopy().(*SPECIFICATION_Rendering)
-		stage.SPECIFICATION_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPECIFICATION_Rendering)
+		stage.SPECIFICATION_Renderings_reference[instance] = _copy
+		stage.SPECIFICATION_Renderings_instance[_copy] = instance
+		stage.SPECIFICATION_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPECIFICATION_TYPEs_reference = make(map[*SPECIFICATION_TYPE]*SPECIFICATION_TYPE)
 	stage.SPECIFICATION_TYPEs_referenceOrder = make(map[*SPECIFICATION_TYPE]uint) // diff Unstage needs the reference order
+	stage.SPECIFICATION_TYPEs_instance = make(map[*SPECIFICATION_TYPE]*SPECIFICATION_TYPE)
 	for instance := range stage.SPECIFICATION_TYPEs {
-		stage.SPECIFICATION_TYPEs_reference[instance] = instance.GongCopy().(*SPECIFICATION_TYPE)
-		stage.SPECIFICATION_TYPEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPECIFICATION_TYPE)
+		stage.SPECIFICATION_TYPEs_reference[instance] = _copy
+		stage.SPECIFICATION_TYPEs_instance[_copy] = instance
+		stage.SPECIFICATION_TYPEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPEC_HIERARCHYs_reference = make(map[*SPEC_HIERARCHY]*SPEC_HIERARCHY)
 	stage.SPEC_HIERARCHYs_referenceOrder = make(map[*SPEC_HIERARCHY]uint) // diff Unstage needs the reference order
+	stage.SPEC_HIERARCHYs_instance = make(map[*SPEC_HIERARCHY]*SPEC_HIERARCHY)
 	for instance := range stage.SPEC_HIERARCHYs {
-		stage.SPEC_HIERARCHYs_reference[instance] = instance.GongCopy().(*SPEC_HIERARCHY)
-		stage.SPEC_HIERARCHYs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPEC_HIERARCHY)
+		stage.SPEC_HIERARCHYs_reference[instance] = _copy
+		stage.SPEC_HIERARCHYs_instance[_copy] = instance
+		stage.SPEC_HIERARCHYs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPEC_OBJECTs_reference = make(map[*SPEC_OBJECT]*SPEC_OBJECT)
 	stage.SPEC_OBJECTs_referenceOrder = make(map[*SPEC_OBJECT]uint) // diff Unstage needs the reference order
+	stage.SPEC_OBJECTs_instance = make(map[*SPEC_OBJECT]*SPEC_OBJECT)
 	for instance := range stage.SPEC_OBJECTs {
-		stage.SPEC_OBJECTs_reference[instance] = instance.GongCopy().(*SPEC_OBJECT)
-		stage.SPEC_OBJECTs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPEC_OBJECT)
+		stage.SPEC_OBJECTs_reference[instance] = _copy
+		stage.SPEC_OBJECTs_instance[_copy] = instance
+		stage.SPEC_OBJECTs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPEC_OBJECT_TYPEs_reference = make(map[*SPEC_OBJECT_TYPE]*SPEC_OBJECT_TYPE)
 	stage.SPEC_OBJECT_TYPEs_referenceOrder = make(map[*SPEC_OBJECT_TYPE]uint) // diff Unstage needs the reference order
+	stage.SPEC_OBJECT_TYPEs_instance = make(map[*SPEC_OBJECT_TYPE]*SPEC_OBJECT_TYPE)
 	for instance := range stage.SPEC_OBJECT_TYPEs {
-		stage.SPEC_OBJECT_TYPEs_reference[instance] = instance.GongCopy().(*SPEC_OBJECT_TYPE)
-		stage.SPEC_OBJECT_TYPEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPEC_OBJECT_TYPE)
+		stage.SPEC_OBJECT_TYPEs_reference[instance] = _copy
+		stage.SPEC_OBJECT_TYPEs_instance[_copy] = instance
+		stage.SPEC_OBJECT_TYPEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPEC_OBJECT_TYPE_Renderings_reference = make(map[*SPEC_OBJECT_TYPE_Rendering]*SPEC_OBJECT_TYPE_Rendering)
 	stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder = make(map[*SPEC_OBJECT_TYPE_Rendering]uint) // diff Unstage needs the reference order
+	stage.SPEC_OBJECT_TYPE_Renderings_instance = make(map[*SPEC_OBJECT_TYPE_Rendering]*SPEC_OBJECT_TYPE_Rendering)
 	for instance := range stage.SPEC_OBJECT_TYPE_Renderings {
-		stage.SPEC_OBJECT_TYPE_Renderings_reference[instance] = instance.GongCopy().(*SPEC_OBJECT_TYPE_Rendering)
-		stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPEC_OBJECT_TYPE_Rendering)
+		stage.SPEC_OBJECT_TYPE_Renderings_reference[instance] = _copy
+		stage.SPEC_OBJECT_TYPE_Renderings_instance[_copy] = instance
+		stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPEC_RELATIONs_reference = make(map[*SPEC_RELATION]*SPEC_RELATION)
 	stage.SPEC_RELATIONs_referenceOrder = make(map[*SPEC_RELATION]uint) // diff Unstage needs the reference order
+	stage.SPEC_RELATIONs_instance = make(map[*SPEC_RELATION]*SPEC_RELATION)
 	for instance := range stage.SPEC_RELATIONs {
-		stage.SPEC_RELATIONs_reference[instance] = instance.GongCopy().(*SPEC_RELATION)
-		stage.SPEC_RELATIONs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPEC_RELATION)
+		stage.SPEC_RELATIONs_reference[instance] = _copy
+		stage.SPEC_RELATIONs_instance[_copy] = instance
+		stage.SPEC_RELATIONs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.SPEC_RELATION_TYPEs_reference = make(map[*SPEC_RELATION_TYPE]*SPEC_RELATION_TYPE)
 	stage.SPEC_RELATION_TYPEs_referenceOrder = make(map[*SPEC_RELATION_TYPE]uint) // diff Unstage needs the reference order
+	stage.SPEC_RELATION_TYPEs_instance = make(map[*SPEC_RELATION_TYPE]*SPEC_RELATION_TYPE)
 	for instance := range stage.SPEC_RELATION_TYPEs {
-		stage.SPEC_RELATION_TYPEs_reference[instance] = instance.GongCopy().(*SPEC_RELATION_TYPE)
-		stage.SPEC_RELATION_TYPEs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*SPEC_RELATION_TYPE)
+		stage.SPEC_RELATION_TYPEs_reference[instance] = _copy
+		stage.SPEC_RELATION_TYPEs_instance[_copy] = instance
+		stage.SPEC_RELATION_TYPEs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.StaticWebSites_reference = make(map[*StaticWebSite]*StaticWebSite)
 	stage.StaticWebSites_referenceOrder = make(map[*StaticWebSite]uint) // diff Unstage needs the reference order
+	stage.StaticWebSites_instance = make(map[*StaticWebSite]*StaticWebSite)
 	for instance := range stage.StaticWebSites {
-		stage.StaticWebSites_reference[instance] = instance.GongCopy().(*StaticWebSite)
-		stage.StaticWebSites_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*StaticWebSite)
+		stage.StaticWebSites_reference[instance] = _copy
+		stage.StaticWebSites_instance[_copy] = instance
+		stage.StaticWebSites_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.StaticWebSiteChapters_reference = make(map[*StaticWebSiteChapter]*StaticWebSiteChapter)
 	stage.StaticWebSiteChapters_referenceOrder = make(map[*StaticWebSiteChapter]uint) // diff Unstage needs the reference order
+	stage.StaticWebSiteChapters_instance = make(map[*StaticWebSiteChapter]*StaticWebSiteChapter)
 	for instance := range stage.StaticWebSiteChapters {
-		stage.StaticWebSiteChapters_reference[instance] = instance.GongCopy().(*StaticWebSiteChapter)
-		stage.StaticWebSiteChapters_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*StaticWebSiteChapter)
+		stage.StaticWebSiteChapters_reference[instance] = _copy
+		stage.StaticWebSiteChapters_instance[_copy] = instance
+		stage.StaticWebSiteChapters_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.StaticWebSiteGeneratedImages_reference = make(map[*StaticWebSiteGeneratedImage]*StaticWebSiteGeneratedImage)
 	stage.StaticWebSiteGeneratedImages_referenceOrder = make(map[*StaticWebSiteGeneratedImage]uint) // diff Unstage needs the reference order
+	stage.StaticWebSiteGeneratedImages_instance = make(map[*StaticWebSiteGeneratedImage]*StaticWebSiteGeneratedImage)
 	for instance := range stage.StaticWebSiteGeneratedImages {
-		stage.StaticWebSiteGeneratedImages_reference[instance] = instance.GongCopy().(*StaticWebSiteGeneratedImage)
-		stage.StaticWebSiteGeneratedImages_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*StaticWebSiteGeneratedImage)
+		stage.StaticWebSiteGeneratedImages_reference[instance] = _copy
+		stage.StaticWebSiteGeneratedImages_instance[_copy] = instance
+		stage.StaticWebSiteGeneratedImages_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.StaticWebSiteImages_reference = make(map[*StaticWebSiteImage]*StaticWebSiteImage)
 	stage.StaticWebSiteImages_referenceOrder = make(map[*StaticWebSiteImage]uint) // diff Unstage needs the reference order
+	stage.StaticWebSiteImages_instance = make(map[*StaticWebSiteImage]*StaticWebSiteImage)
 	for instance := range stage.StaticWebSiteImages {
-		stage.StaticWebSiteImages_reference[instance] = instance.GongCopy().(*StaticWebSiteImage)
-		stage.StaticWebSiteImages_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*StaticWebSiteImage)
+		stage.StaticWebSiteImages_reference[instance] = _copy
+		stage.StaticWebSiteImages_instance[_copy] = instance
+		stage.StaticWebSiteImages_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.StaticWebSiteParagraphs_reference = make(map[*StaticWebSiteParagraph]*StaticWebSiteParagraph)
 	stage.StaticWebSiteParagraphs_referenceOrder = make(map[*StaticWebSiteParagraph]uint) // diff Unstage needs the reference order
+	stage.StaticWebSiteParagraphs_instance = make(map[*StaticWebSiteParagraph]*StaticWebSiteParagraph)
 	for instance := range stage.StaticWebSiteParagraphs {
-		stage.StaticWebSiteParagraphs_reference[instance] = instance.GongCopy().(*StaticWebSiteParagraph)
-		stage.StaticWebSiteParagraphs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*StaticWebSiteParagraph)
+		stage.StaticWebSiteParagraphs_reference[instance] = _copy
+		stage.StaticWebSiteParagraphs_instance[_copy] = instance
+		stage.StaticWebSiteParagraphs_referenceOrder[_copy] = instance.GongGetOrder(stage)
 	}
 
 	stage.XHTML_CONTENTs_reference = make(map[*XHTML_CONTENT]*XHTML_CONTENT)
 	stage.XHTML_CONTENTs_referenceOrder = make(map[*XHTML_CONTENT]uint) // diff Unstage needs the reference order
+	stage.XHTML_CONTENTs_instance = make(map[*XHTML_CONTENT]*XHTML_CONTENT)
 	for instance := range stage.XHTML_CONTENTs {
-		stage.XHTML_CONTENTs_reference[instance] = instance.GongCopy().(*XHTML_CONTENT)
-		stage.XHTML_CONTENTs_referenceOrder[instance] = instance.GongGetOrder(stage)
+		_copy := instance.GongCopy().(*XHTML_CONTENT)
+		stage.XHTML_CONTENTs_reference[instance] = _copy
+		stage.XHTML_CONTENTs_instance[_copy] = instance
+		stage.XHTML_CONTENTs_referenceOrder[_copy] = instance.GongGetOrder(stage)
+	}
+
+	// insertion point per named struct
+	for instance := range stage.ALTERNATIVE_IDs {
+		reference := stage.ALTERNATIVE_IDs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_BOOLEANs {
+		reference := stage.ATTRIBUTE_DEFINITION_BOOLEANs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_DATEs {
+		reference := stage.ATTRIBUTE_DEFINITION_DATEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_DATE_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_DATE_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_ENUMERATIONs {
+		reference := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_INTEGERs {
+		reference := stage.ATTRIBUTE_DEFINITION_INTEGERs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_REALs {
+		reference := stage.ATTRIBUTE_DEFINITION_REALs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_REAL_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_REAL_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_STRINGs {
+		reference := stage.ATTRIBUTE_DEFINITION_STRINGs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_STRING_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_STRING_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_XHTMLs {
+		reference := stage.ATTRIBUTE_DEFINITION_XHTMLs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_DEFINITION_XHTML_Renderings {
+		reference := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_BOOLEANs {
+		reference := stage.ATTRIBUTE_VALUE_BOOLEANs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_DATEs {
+		reference := stage.ATTRIBUTE_VALUE_DATEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_ENUMERATIONs {
+		reference := stage.ATTRIBUTE_VALUE_ENUMERATIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_INTEGERs {
+		reference := stage.ATTRIBUTE_VALUE_INTEGERs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_REALs {
+		reference := stage.ATTRIBUTE_VALUE_REALs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_STRINGs {
+		reference := stage.ATTRIBUTE_VALUE_STRINGs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ATTRIBUTE_VALUE_XHTMLs {
+		reference := stage.ATTRIBUTE_VALUE_XHTMLs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ALTERNATIVE_IDs {
+		reference := stage.A_ALTERNATIVE_IDs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_DATE_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_REAL_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_STRING_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs {
+		reference := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_BOOLEANs {
+		reference := stage.A_ATTRIBUTE_VALUE_BOOLEANs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_DATEs {
+		reference := stage.A_ATTRIBUTE_VALUE_DATEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_ENUMERATIONs {
+		reference := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_INTEGERs {
+		reference := stage.A_ATTRIBUTE_VALUE_INTEGERs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_REALs {
+		reference := stage.A_ATTRIBUTE_VALUE_REALs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_STRINGs {
+		reference := stage.A_ATTRIBUTE_VALUE_STRINGs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_XHTMLs {
+		reference := stage.A_ATTRIBUTE_VALUE_XHTMLs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ATTRIBUTE_VALUE_XHTML_1s {
+		reference := stage.A_ATTRIBUTE_VALUE_XHTML_1s_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_CHILDRENs {
+		reference := stage.A_CHILDRENs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_CORE_CONTENTs {
+		reference := stage.A_CORE_CONTENTs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPESs {
+		reference := stage.A_DATATYPESs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_DATE_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_DATE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_INTEGER_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_INTEGER_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_REAL_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_REAL_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_STRING_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_STRING_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_DATATYPE_DEFINITION_XHTML_REFs {
+		reference := stage.A_DATATYPE_DEFINITION_XHTML_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_EDITABLE_ATTSs {
+		reference := stage.A_EDITABLE_ATTSs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_ENUM_VALUE_REFs {
+		reference := stage.A_ENUM_VALUE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_OBJECTs {
+		reference := stage.A_OBJECTs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_PROPERTIESs {
+		reference := stage.A_PROPERTIESs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_RELATION_GROUP_TYPE_REFs {
+		reference := stage.A_RELATION_GROUP_TYPE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SOURCE_1s {
+		reference := stage.A_SOURCE_1s_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SOURCE_SPECIFICATION_1s {
+		reference := stage.A_SOURCE_SPECIFICATION_1s_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPECIFICATIONSs {
+		reference := stage.A_SPECIFICATIONSs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPECIFICATION_TYPE_REFs {
+		reference := stage.A_SPECIFICATION_TYPE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPECIFIED_VALUESs {
+		reference := stage.A_SPECIFIED_VALUESs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_ATTRIBUTESs {
+		reference := stage.A_SPEC_ATTRIBUTESs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_OBJECTSs {
+		reference := stage.A_SPEC_OBJECTSs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_OBJECT_TYPE_REFs {
+		reference := stage.A_SPEC_OBJECT_TYPE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_RELATIONSs {
+		reference := stage.A_SPEC_RELATIONSs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_RELATION_GROUPSs {
+		reference := stage.A_SPEC_RELATION_GROUPSs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_RELATION_REFs {
+		reference := stage.A_SPEC_RELATION_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_RELATION_TYPE_REFs {
+		reference := stage.A_SPEC_RELATION_TYPE_REFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_SPEC_TYPESs {
+		reference := stage.A_SPEC_TYPESs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_THE_HEADERs {
+		reference := stage.A_THE_HEADERs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.A_TOOL_EXTENSIONSs {
+		reference := stage.A_TOOL_EXTENSIONSs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_BOOLEANs {
+		reference := stage.DATATYPE_DEFINITION_BOOLEANs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_DATEs {
+		reference := stage.DATATYPE_DEFINITION_DATEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_ENUMERATIONs {
+		reference := stage.DATATYPE_DEFINITION_ENUMERATIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_INTEGERs {
+		reference := stage.DATATYPE_DEFINITION_INTEGERs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_REALs {
+		reference := stage.DATATYPE_DEFINITION_REALs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_STRINGs {
+		reference := stage.DATATYPE_DEFINITION_STRINGs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.DATATYPE_DEFINITION_XHTMLs {
+		reference := stage.DATATYPE_DEFINITION_XHTMLs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.EMBEDDED_VALUEs {
+		reference := stage.EMBEDDED_VALUEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.ENUM_VALUEs {
+		reference := stage.ENUM_VALUEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.EmbeddedJpgImages {
+		reference := stage.EmbeddedJpgImages_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.EmbeddedPngImages {
+		reference := stage.EmbeddedPngImages_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.EmbeddedSvgImages {
+		reference := stage.EmbeddedSvgImages_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.Kills {
+		reference := stage.Kills_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.Map_identifier_bools {
+		reference := stage.Map_identifier_bools_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.RELATION_GROUPs {
+		reference := stage.RELATION_GROUPs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.RELATION_GROUP_TYPEs {
+		reference := stage.RELATION_GROUP_TYPEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.REQ_IFs {
+		reference := stage.REQ_IFs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.REQ_IF_CONTENTs {
+		reference := stage.REQ_IF_CONTENTs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.REQ_IF_HEADERs {
+		reference := stage.REQ_IF_HEADERs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.REQ_IF_TOOL_EXTENSIONs {
+		reference := stage.REQ_IF_TOOL_EXTENSIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPECIFICATIONs {
+		reference := stage.SPECIFICATIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPECIFICATION_Renderings {
+		reference := stage.SPECIFICATION_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPECIFICATION_TYPEs {
+		reference := stage.SPECIFICATION_TYPEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPEC_HIERARCHYs {
+		reference := stage.SPEC_HIERARCHYs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPEC_OBJECTs {
+		reference := stage.SPEC_OBJECTs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPEC_OBJECT_TYPEs {
+		reference := stage.SPEC_OBJECT_TYPEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPEC_OBJECT_TYPE_Renderings {
+		reference := stage.SPEC_OBJECT_TYPE_Renderings_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPEC_RELATIONs {
+		reference := stage.SPEC_RELATIONs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.SPEC_RELATION_TYPEs {
+		reference := stage.SPEC_RELATION_TYPEs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.StaticWebSites {
+		reference := stage.StaticWebSites_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.StaticWebSiteChapters {
+		reference := stage.StaticWebSiteChapters_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.StaticWebSiteGeneratedImages {
+		reference := stage.StaticWebSiteGeneratedImages_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.StaticWebSiteImages {
+		reference := stage.StaticWebSiteImages_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.StaticWebSiteParagraphs {
+		reference := stage.StaticWebSiteParagraphs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
+	}
+
+	for instance := range stage.XHTML_CONTENTs {
+		reference := stage.XHTML_CONTENTs_reference[instance]
+		reference.GongReconstructPointersFromReferences(stage, instance)
 	}
 
 	stage.recomputeOrders()
@@ -7446,1147 +8592,1251 @@ func (stage *Stage) ComputeReferenceAndOrders() {
 // to avoid unnecessary re-renderings
 // insertion point per named struct
 func (alternative_id *ALTERNATIVE_ID) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ALTERNATIVE_IDMap_Staged_Order[alternative_id]; ok {
+	if order, ok := stage.ALTERNATIVE_ID_stagedOrder[alternative_id]; ok {
 		return order
 	}
-	return stage.ALTERNATIVE_IDs_referenceOrder[alternative_id]
-}
-
-func (alternative_id *ALTERNATIVE_ID) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ALTERNATIVE_IDs_referenceOrder[alternative_id]
+	if order, ok := stage.ALTERNATIVE_IDs_referenceOrder[alternative_id]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ALTERNATIVE_ID was not staged and does not have a reference order", alternative_id)
+		return 0
+	}
 }
 
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANMap_Staged_Order[attribute_definition_boolean]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_stagedOrder[attribute_definition_boolean]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean]
-}
-
-func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEANs_referenceOrder[attribute_definition_boolean]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_BOOLEAN was not staged and does not have a reference order", attribute_definition_boolean)
+		return 0
+	}
 }
 
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_RenderingMap_Staged_Order[attribute_definition_boolean_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Rendering_stagedOrder[attribute_definition_boolean_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering]
-}
-
-func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_BOOLEAN_Renderings_referenceOrder[attribute_definition_boolean_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_BOOLEAN_Rendering was not staged and does not have a reference order", attribute_definition_boolean_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_DATEMap_Staged_Order[attribute_definition_date]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_DATE_stagedOrder[attribute_definition_date]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date]
-}
-
-func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_DATEs_referenceOrder[attribute_definition_date]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_DATE was not staged and does not have a reference order", attribute_definition_date)
+		return 0
+	}
 }
 
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_DATE_RenderingMap_Staged_Order[attribute_definition_date_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_DATE_Rendering_stagedOrder[attribute_definition_date_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering]
-}
-
-func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_DATE_Renderings_referenceOrder[attribute_definition_date_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_DATE_Rendering was not staged and does not have a reference order", attribute_definition_date_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONMap_Staged_Order[attribute_definition_enumeration]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_stagedOrder[attribute_definition_enumeration]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration]
-}
-
-func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATIONs_referenceOrder[attribute_definition_enumeration]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_ENUMERATION was not staged and does not have a reference order", attribute_definition_enumeration)
+		return 0
+	}
 }
 
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_RenderingMap_Staged_Order[attribute_definition_enumeration_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Rendering_stagedOrder[attribute_definition_enumeration_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering]
-}
-
-func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_ENUMERATION_Renderings_referenceOrder[attribute_definition_enumeration_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_ENUMERATION_Rendering was not staged and does not have a reference order", attribute_definition_enumeration_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGERMap_Staged_Order[attribute_definition_integer]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_stagedOrder[attribute_definition_integer]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer]
-}
-
-func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGERs_referenceOrder[attribute_definition_integer]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_INTEGER was not staged and does not have a reference order", attribute_definition_integer)
+		return 0
+	}
 }
 
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_RenderingMap_Staged_Order[attribute_definition_integer_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Rendering_stagedOrder[attribute_definition_integer_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering]
-}
-
-func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_INTEGER_Renderings_referenceOrder[attribute_definition_integer_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_INTEGER_Rendering was not staged and does not have a reference order", attribute_definition_integer_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_REALMap_Staged_Order[attribute_definition_real]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_REAL_stagedOrder[attribute_definition_real]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real]
-}
-
-func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_REALs_referenceOrder[attribute_definition_real]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_REAL was not staged and does not have a reference order", attribute_definition_real)
+		return 0
+	}
 }
 
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_REAL_RenderingMap_Staged_Order[attribute_definition_real_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_REAL_Rendering_stagedOrder[attribute_definition_real_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering]
-}
-
-func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_REAL_Renderings_referenceOrder[attribute_definition_real_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_REAL_Rendering was not staged and does not have a reference order", attribute_definition_real_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_RenderingMap_Staged_Order[attribute_definition_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_Rendering_stagedOrder[attribute_definition_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering]
-}
-
-func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_Renderings_referenceOrder[attribute_definition_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_Rendering was not staged and does not have a reference order", attribute_definition_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_STRINGMap_Staged_Order[attribute_definition_string]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_STRING_stagedOrder[attribute_definition_string]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string]
-}
-
-func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_STRINGs_referenceOrder[attribute_definition_string]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_STRING was not staged and does not have a reference order", attribute_definition_string)
+		return 0
+	}
 }
 
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_STRING_RenderingMap_Staged_Order[attribute_definition_string_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_STRING_Rendering_stagedOrder[attribute_definition_string_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering]
-}
-
-func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_STRING_Renderings_referenceOrder[attribute_definition_string_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_STRING_Rendering was not staged and does not have a reference order", attribute_definition_string_rendering)
+		return 0
+	}
 }
 
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTMLMap_Staged_Order[attribute_definition_xhtml]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTML_stagedOrder[attribute_definition_xhtml]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml]
-}
-
-func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTMLs_referenceOrder[attribute_definition_xhtml]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_XHTML was not staged and does not have a reference order", attribute_definition_xhtml)
+		return 0
+	}
 }
 
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTML_RenderingMap_Staged_Order[attribute_definition_xhtml_rendering]; ok {
+	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Rendering_stagedOrder[attribute_definition_xhtml_rendering]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering]
-}
-
-func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering]
+	if order, ok := stage.ATTRIBUTE_DEFINITION_XHTML_Renderings_referenceOrder[attribute_definition_xhtml_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_DEFINITION_XHTML_Rendering was not staged and does not have a reference order", attribute_definition_xhtml_rendering)
+		return 0
+	}
 }
 
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[attribute_value_boolean]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[attribute_value_boolean]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean]
-}
-
-func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean]
+	if order, ok := stage.ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[attribute_value_boolean]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_BOOLEAN was not staged and does not have a reference order", attribute_value_boolean)
+		return 0
+	}
 }
 
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_DATEMap_Staged_Order[attribute_value_date]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_DATE_stagedOrder[attribute_value_date]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date]
-}
-
-func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date]
+	if order, ok := stage.ATTRIBUTE_VALUE_DATEs_referenceOrder[attribute_value_date]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_DATE was not staged and does not have a reference order", attribute_value_date)
+		return 0
+	}
 }
 
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[attribute_value_enumeration]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[attribute_value_enumeration]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration]
-}
-
-func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration]
+	if order, ok := stage.ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[attribute_value_enumeration]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_ENUMERATION was not staged and does not have a reference order", attribute_value_enumeration)
+		return 0
+	}
 }
 
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[attribute_value_integer]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_INTEGER_stagedOrder[attribute_value_integer]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer]
-}
-
-func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer]
+	if order, ok := stage.ATTRIBUTE_VALUE_INTEGERs_referenceOrder[attribute_value_integer]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_INTEGER was not staged and does not have a reference order", attribute_value_integer)
+		return 0
+	}
 }
 
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_REALMap_Staged_Order[attribute_value_real]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_REAL_stagedOrder[attribute_value_real]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real]
-}
-
-func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real]
+	if order, ok := stage.ATTRIBUTE_VALUE_REALs_referenceOrder[attribute_value_real]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_REAL was not staged and does not have a reference order", attribute_value_real)
+		return 0
+	}
 }
 
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_STRINGMap_Staged_Order[attribute_value_string]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_STRING_stagedOrder[attribute_value_string]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string]
-}
-
-func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string]
+	if order, ok := stage.ATTRIBUTE_VALUE_STRINGs_referenceOrder[attribute_value_string]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_STRING was not staged and does not have a reference order", attribute_value_string)
+		return 0
+	}
 }
 
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[attribute_value_xhtml]; ok {
+	if order, ok := stage.ATTRIBUTE_VALUE_XHTML_stagedOrder[attribute_value_xhtml]; ok {
 		return order
 	}
-	return stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml]
-}
-
-func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml]
+	if order, ok := stage.ATTRIBUTE_VALUE_XHTMLs_referenceOrder[attribute_value_xhtml]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ATTRIBUTE_VALUE_XHTML was not staged and does not have a reference order", attribute_value_xhtml)
+		return 0
+	}
 }
 
 func (a_alternative_id *A_ALTERNATIVE_ID) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ALTERNATIVE_IDMap_Staged_Order[a_alternative_id]; ok {
+	if order, ok := stage.A_ALTERNATIVE_ID_stagedOrder[a_alternative_id]; ok {
 		return order
 	}
-	return stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id]
-}
-
-func (a_alternative_id *A_ALTERNATIVE_ID) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id]
+	if order, ok := stage.A_ALTERNATIVE_IDs_referenceOrder[a_alternative_id]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ALTERNATIVE_ID was not staged and does not have a reference order", a_alternative_id)
+		return 0
+	}
 }
 
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_attribute_definition_boolean_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REF_stagedOrder[a_attribute_definition_boolean_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref]
-}
-
-func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_attribute_definition_boolean_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_BOOLEAN_REF was not staged and does not have a reference order", a_attribute_definition_boolean_ref)
+		return 0
+	}
 }
 
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFMap_Staged_Order[a_attribute_definition_date_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REF_stagedOrder[a_attribute_definition_date_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref]
-}
-
-func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_DATE_REFs_referenceOrder[a_attribute_definition_date_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_DATE_REF was not staged and does not have a reference order", a_attribute_definition_date_ref)
+		return 0
+	}
 }
 
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_attribute_definition_enumeration_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REF_stagedOrder[a_attribute_definition_enumeration_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref]
-}
-
-func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_attribute_definition_enumeration_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_ENUMERATION_REF was not staged and does not have a reference order", a_attribute_definition_enumeration_ref)
+		return 0
+	}
 }
 
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFMap_Staged_Order[a_attribute_definition_integer_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REF_stagedOrder[a_attribute_definition_integer_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref]
-}
-
-func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_INTEGER_REFs_referenceOrder[a_attribute_definition_integer_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_INTEGER_REF was not staged and does not have a reference order", a_attribute_definition_integer_ref)
+		return 0
+	}
 }
 
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFMap_Staged_Order[a_attribute_definition_real_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REF_stagedOrder[a_attribute_definition_real_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref]
-}
-
-func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_REAL_REFs_referenceOrder[a_attribute_definition_real_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_REAL_REF was not staged and does not have a reference order", a_attribute_definition_real_ref)
+		return 0
+	}
 }
 
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFMap_Staged_Order[a_attribute_definition_string_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REF_stagedOrder[a_attribute_definition_string_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref]
-}
-
-func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_STRING_REFs_referenceOrder[a_attribute_definition_string_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_STRING_REF was not staged and does not have a reference order", a_attribute_definition_string_ref)
+		return 0
+	}
 }
 
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFMap_Staged_Order[a_attribute_definition_xhtml_ref]; ok {
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REF_stagedOrder[a_attribute_definition_xhtml_ref]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref]
-}
-
-func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref]
+	if order, ok := stage.A_ATTRIBUTE_DEFINITION_XHTML_REFs_referenceOrder[a_attribute_definition_xhtml_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_DEFINITION_XHTML_REF was not staged and does not have a reference order", a_attribute_definition_xhtml_ref)
+		return 0
+	}
 }
 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANMap_Staged_Order[a_attribute_value_boolean]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_BOOLEAN_stagedOrder[a_attribute_value_boolean]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean]
-}
-
-func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_BOOLEANs_referenceOrder[a_attribute_value_boolean]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_BOOLEAN was not staged and does not have a reference order", a_attribute_value_boolean)
+		return 0
+	}
 }
 
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_DATEMap_Staged_Order[a_attribute_value_date]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_DATE_stagedOrder[a_attribute_value_date]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date]
-}
-
-func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_DATEs_referenceOrder[a_attribute_value_date]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_DATE was not staged and does not have a reference order", a_attribute_value_date)
+		return 0
+	}
 }
 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONMap_Staged_Order[a_attribute_value_enumeration]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATION_stagedOrder[a_attribute_value_enumeration]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration]
-}
-
-func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_ENUMERATIONs_referenceOrder[a_attribute_value_enumeration]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_ENUMERATION was not staged and does not have a reference order", a_attribute_value_enumeration)
+		return 0
+	}
 }
 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_INTEGERMap_Staged_Order[a_attribute_value_integer]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_INTEGER_stagedOrder[a_attribute_value_integer]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer]
-}
-
-func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_INTEGERs_referenceOrder[a_attribute_value_integer]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_INTEGER was not staged and does not have a reference order", a_attribute_value_integer)
+		return 0
+	}
 }
 
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_REALMap_Staged_Order[a_attribute_value_real]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_REAL_stagedOrder[a_attribute_value_real]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real]
-}
-
-func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_REALs_referenceOrder[a_attribute_value_real]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_REAL was not staged and does not have a reference order", a_attribute_value_real)
+		return 0
+	}
 }
 
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_STRINGMap_Staged_Order[a_attribute_value_string]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_STRING_stagedOrder[a_attribute_value_string]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string]
-}
-
-func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_STRINGs_referenceOrder[a_attribute_value_string]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_STRING was not staged and does not have a reference order", a_attribute_value_string)
+		return 0
+	}
 }
 
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTMLMap_Staged_Order[a_attribute_value_xhtml]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTML_stagedOrder[a_attribute_value_xhtml]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml]
-}
-
-func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTMLs_referenceOrder[a_attribute_value_xhtml]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_XHTML was not staged and does not have a reference order", a_attribute_value_xhtml)
+		return 0
+	}
 }
 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1Map_Staged_Order[a_attribute_value_xhtml_1]; ok {
+	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1_stagedOrder[a_attribute_value_xhtml_1]; ok {
 		return order
 	}
-	return stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1]
-}
-
-func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1]
+	if order, ok := stage.A_ATTRIBUTE_VALUE_XHTML_1s_referenceOrder[a_attribute_value_xhtml_1]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ATTRIBUTE_VALUE_XHTML_1 was not staged and does not have a reference order", a_attribute_value_xhtml_1)
+		return 0
+	}
 }
 
 func (a_children *A_CHILDREN) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_CHILDRENMap_Staged_Order[a_children]; ok {
+	if order, ok := stage.A_CHILDREN_stagedOrder[a_children]; ok {
 		return order
 	}
-	return stage.A_CHILDRENs_referenceOrder[a_children]
-}
-
-func (a_children *A_CHILDREN) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_CHILDRENs_referenceOrder[a_children]
+	if order, ok := stage.A_CHILDRENs_referenceOrder[a_children]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_CHILDREN was not staged and does not have a reference order", a_children)
+		return 0
+	}
 }
 
 func (a_core_content *A_CORE_CONTENT) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_CORE_CONTENTMap_Staged_Order[a_core_content]; ok {
+	if order, ok := stage.A_CORE_CONTENT_stagedOrder[a_core_content]; ok {
 		return order
 	}
-	return stage.A_CORE_CONTENTs_referenceOrder[a_core_content]
-}
-
-func (a_core_content *A_CORE_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_CORE_CONTENTs_referenceOrder[a_core_content]
+	if order, ok := stage.A_CORE_CONTENTs_referenceOrder[a_core_content]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_CORE_CONTENT was not staged and does not have a reference order", a_core_content)
+		return 0
+	}
 }
 
 func (a_datatypes *A_DATATYPES) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPESMap_Staged_Order[a_datatypes]; ok {
+	if order, ok := stage.A_DATATYPES_stagedOrder[a_datatypes]; ok {
 		return order
 	}
-	return stage.A_DATATYPESs_referenceOrder[a_datatypes]
-}
-
-func (a_datatypes *A_DATATYPES) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPESs_referenceOrder[a_datatypes]
+	if order, ok := stage.A_DATATYPESs_referenceOrder[a_datatypes]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPES was not staged and does not have a reference order", a_datatypes)
+		return 0
+	}
 }
 
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFMap_Staged_Order[a_datatype_definition_boolean_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REF_stagedOrder[a_datatype_definition_boolean_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref]
-}
-
-func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_BOOLEAN_REFs_referenceOrder[a_datatype_definition_boolean_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_BOOLEAN_REF was not staged and does not have a reference order", a_datatype_definition_boolean_ref)
+		return 0
+	}
 }
 
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_DATE_REFMap_Staged_Order[a_datatype_definition_date_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_DATE_REF_stagedOrder[a_datatype_definition_date_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref]
-}
-
-func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_DATE_REFs_referenceOrder[a_datatype_definition_date_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_DATE_REF was not staged and does not have a reference order", a_datatype_definition_date_ref)
+		return 0
+	}
 }
 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFMap_Staged_Order[a_datatype_definition_enumeration_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REF_stagedOrder[a_datatype_definition_enumeration_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref]
-}
-
-func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_ENUMERATION_REFs_referenceOrder[a_datatype_definition_enumeration_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_ENUMERATION_REF was not staged and does not have a reference order", a_datatype_definition_enumeration_ref)
+		return 0
+	}
 }
 
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFMap_Staged_Order[a_datatype_definition_integer_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REF_stagedOrder[a_datatype_definition_integer_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref]
-}
-
-func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_INTEGER_REFs_referenceOrder[a_datatype_definition_integer_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_INTEGER_REF was not staged and does not have a reference order", a_datatype_definition_integer_ref)
+		return 0
+	}
 }
 
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_REAL_REFMap_Staged_Order[a_datatype_definition_real_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_REAL_REF_stagedOrder[a_datatype_definition_real_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref]
-}
-
-func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_REAL_REFs_referenceOrder[a_datatype_definition_real_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_REAL_REF was not staged and does not have a reference order", a_datatype_definition_real_ref)
+		return 0
+	}
 }
 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_STRING_REFMap_Staged_Order[a_datatype_definition_string_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_STRING_REF_stagedOrder[a_datatype_definition_string_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref]
-}
-
-func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_STRING_REFs_referenceOrder[a_datatype_definition_string_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_STRING_REF was not staged and does not have a reference order", a_datatype_definition_string_ref)
+		return 0
+	}
 }
 
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFMap_Staged_Order[a_datatype_definition_xhtml_ref]; ok {
+	if order, ok := stage.A_DATATYPE_DEFINITION_XHTML_REF_stagedOrder[a_datatype_definition_xhtml_ref]; ok {
 		return order
 	}
-	return stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref]
-}
-
-func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref]
+	if order, ok := stage.A_DATATYPE_DEFINITION_XHTML_REFs_referenceOrder[a_datatype_definition_xhtml_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_DATATYPE_DEFINITION_XHTML_REF was not staged and does not have a reference order", a_datatype_definition_xhtml_ref)
+		return 0
+	}
 }
 
 func (a_editable_atts *A_EDITABLE_ATTS) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_EDITABLE_ATTSMap_Staged_Order[a_editable_atts]; ok {
+	if order, ok := stage.A_EDITABLE_ATTS_stagedOrder[a_editable_atts]; ok {
 		return order
 	}
-	return stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts]
-}
-
-func (a_editable_atts *A_EDITABLE_ATTS) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts]
+	if order, ok := stage.A_EDITABLE_ATTSs_referenceOrder[a_editable_atts]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_EDITABLE_ATTS was not staged and does not have a reference order", a_editable_atts)
+		return 0
+	}
 }
 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_ENUM_VALUE_REFMap_Staged_Order[a_enum_value_ref]; ok {
+	if order, ok := stage.A_ENUM_VALUE_REF_stagedOrder[a_enum_value_ref]; ok {
 		return order
 	}
-	return stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref]
-}
-
-func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref]
+	if order, ok := stage.A_ENUM_VALUE_REFs_referenceOrder[a_enum_value_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_ENUM_VALUE_REF was not staged and does not have a reference order", a_enum_value_ref)
+		return 0
+	}
 }
 
 func (a_object *A_OBJECT) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_OBJECTMap_Staged_Order[a_object]; ok {
+	if order, ok := stage.A_OBJECT_stagedOrder[a_object]; ok {
 		return order
 	}
-	return stage.A_OBJECTs_referenceOrder[a_object]
-}
-
-func (a_object *A_OBJECT) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_OBJECTs_referenceOrder[a_object]
+	if order, ok := stage.A_OBJECTs_referenceOrder[a_object]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_OBJECT was not staged and does not have a reference order", a_object)
+		return 0
+	}
 }
 
 func (a_properties *A_PROPERTIES) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_PROPERTIESMap_Staged_Order[a_properties]; ok {
+	if order, ok := stage.A_PROPERTIES_stagedOrder[a_properties]; ok {
 		return order
 	}
-	return stage.A_PROPERTIESs_referenceOrder[a_properties]
-}
-
-func (a_properties *A_PROPERTIES) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_PROPERTIESs_referenceOrder[a_properties]
+	if order, ok := stage.A_PROPERTIESs_referenceOrder[a_properties]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_PROPERTIES was not staged and does not have a reference order", a_properties)
+		return 0
+	}
 }
 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_RELATION_GROUP_TYPE_REFMap_Staged_Order[a_relation_group_type_ref]; ok {
+	if order, ok := stage.A_RELATION_GROUP_TYPE_REF_stagedOrder[a_relation_group_type_ref]; ok {
 		return order
 	}
-	return stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref]
-}
-
-func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref]
+	if order, ok := stage.A_RELATION_GROUP_TYPE_REFs_referenceOrder[a_relation_group_type_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_RELATION_GROUP_TYPE_REF was not staged and does not have a reference order", a_relation_group_type_ref)
+		return 0
+	}
 }
 
 func (a_source_1 *A_SOURCE_1) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SOURCE_1Map_Staged_Order[a_source_1]; ok {
+	if order, ok := stage.A_SOURCE_1_stagedOrder[a_source_1]; ok {
 		return order
 	}
-	return stage.A_SOURCE_1s_referenceOrder[a_source_1]
-}
-
-func (a_source_1 *A_SOURCE_1) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SOURCE_1s_referenceOrder[a_source_1]
+	if order, ok := stage.A_SOURCE_1s_referenceOrder[a_source_1]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SOURCE_1 was not staged and does not have a reference order", a_source_1)
+		return 0
+	}
 }
 
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SOURCE_SPECIFICATION_1Map_Staged_Order[a_source_specification_1]; ok {
+	if order, ok := stage.A_SOURCE_SPECIFICATION_1_stagedOrder[a_source_specification_1]; ok {
 		return order
 	}
-	return stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1]
-}
-
-func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1]
+	if order, ok := stage.A_SOURCE_SPECIFICATION_1s_referenceOrder[a_source_specification_1]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SOURCE_SPECIFICATION_1 was not staged and does not have a reference order", a_source_specification_1)
+		return 0
+	}
 }
 
 func (a_specifications *A_SPECIFICATIONS) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPECIFICATIONSMap_Staged_Order[a_specifications]; ok {
+	if order, ok := stage.A_SPECIFICATIONS_stagedOrder[a_specifications]; ok {
 		return order
 	}
-	return stage.A_SPECIFICATIONSs_referenceOrder[a_specifications]
-}
-
-func (a_specifications *A_SPECIFICATIONS) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPECIFICATIONSs_referenceOrder[a_specifications]
+	if order, ok := stage.A_SPECIFICATIONSs_referenceOrder[a_specifications]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPECIFICATIONS was not staged and does not have a reference order", a_specifications)
+		return 0
+	}
 }
 
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPECIFICATION_TYPE_REFMap_Staged_Order[a_specification_type_ref]; ok {
+	if order, ok := stage.A_SPECIFICATION_TYPE_REF_stagedOrder[a_specification_type_ref]; ok {
 		return order
 	}
-	return stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref]
-}
-
-func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref]
+	if order, ok := stage.A_SPECIFICATION_TYPE_REFs_referenceOrder[a_specification_type_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPECIFICATION_TYPE_REF was not staged and does not have a reference order", a_specification_type_ref)
+		return 0
+	}
 }
 
 func (a_specified_values *A_SPECIFIED_VALUES) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPECIFIED_VALUESMap_Staged_Order[a_specified_values]; ok {
+	if order, ok := stage.A_SPECIFIED_VALUES_stagedOrder[a_specified_values]; ok {
 		return order
 	}
-	return stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values]
-}
-
-func (a_specified_values *A_SPECIFIED_VALUES) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values]
+	if order, ok := stage.A_SPECIFIED_VALUESs_referenceOrder[a_specified_values]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPECIFIED_VALUES was not staged and does not have a reference order", a_specified_values)
+		return 0
+	}
 }
 
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_ATTRIBUTESMap_Staged_Order[a_spec_attributes]; ok {
+	if order, ok := stage.A_SPEC_ATTRIBUTES_stagedOrder[a_spec_attributes]; ok {
 		return order
 	}
-	return stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes]
-}
-
-func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes]
+	if order, ok := stage.A_SPEC_ATTRIBUTESs_referenceOrder[a_spec_attributes]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_ATTRIBUTES was not staged and does not have a reference order", a_spec_attributes)
+		return 0
+	}
 }
 
 func (a_spec_objects *A_SPEC_OBJECTS) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_OBJECTSMap_Staged_Order[a_spec_objects]; ok {
+	if order, ok := stage.A_SPEC_OBJECTS_stagedOrder[a_spec_objects]; ok {
 		return order
 	}
-	return stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects]
-}
-
-func (a_spec_objects *A_SPEC_OBJECTS) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects]
+	if order, ok := stage.A_SPEC_OBJECTSs_referenceOrder[a_spec_objects]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_OBJECTS was not staged and does not have a reference order", a_spec_objects)
+		return 0
+	}
 }
 
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_OBJECT_TYPE_REFMap_Staged_Order[a_spec_object_type_ref]; ok {
+	if order, ok := stage.A_SPEC_OBJECT_TYPE_REF_stagedOrder[a_spec_object_type_ref]; ok {
 		return order
 	}
-	return stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref]
-}
-
-func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref]
+	if order, ok := stage.A_SPEC_OBJECT_TYPE_REFs_referenceOrder[a_spec_object_type_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_OBJECT_TYPE_REF was not staged and does not have a reference order", a_spec_object_type_ref)
+		return 0
+	}
 }
 
 func (a_spec_relations *A_SPEC_RELATIONS) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_RELATIONSMap_Staged_Order[a_spec_relations]; ok {
+	if order, ok := stage.A_SPEC_RELATIONS_stagedOrder[a_spec_relations]; ok {
 		return order
 	}
-	return stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations]
-}
-
-func (a_spec_relations *A_SPEC_RELATIONS) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations]
+	if order, ok := stage.A_SPEC_RELATIONSs_referenceOrder[a_spec_relations]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_RELATIONS was not staged and does not have a reference order", a_spec_relations)
+		return 0
+	}
 }
 
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_RELATION_GROUPSMap_Staged_Order[a_spec_relation_groups]; ok {
+	if order, ok := stage.A_SPEC_RELATION_GROUPS_stagedOrder[a_spec_relation_groups]; ok {
 		return order
 	}
-	return stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups]
-}
-
-func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups]
+	if order, ok := stage.A_SPEC_RELATION_GROUPSs_referenceOrder[a_spec_relation_groups]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_RELATION_GROUPS was not staged and does not have a reference order", a_spec_relation_groups)
+		return 0
+	}
 }
 
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_RELATION_REFMap_Staged_Order[a_spec_relation_ref]; ok {
+	if order, ok := stage.A_SPEC_RELATION_REF_stagedOrder[a_spec_relation_ref]; ok {
 		return order
 	}
-	return stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref]
-}
-
-func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref]
+	if order, ok := stage.A_SPEC_RELATION_REFs_referenceOrder[a_spec_relation_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_RELATION_REF was not staged and does not have a reference order", a_spec_relation_ref)
+		return 0
+	}
 }
 
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_RELATION_TYPE_REFMap_Staged_Order[a_spec_relation_type_ref]; ok {
+	if order, ok := stage.A_SPEC_RELATION_TYPE_REF_stagedOrder[a_spec_relation_type_ref]; ok {
 		return order
 	}
-	return stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref]
-}
-
-func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref]
+	if order, ok := stage.A_SPEC_RELATION_TYPE_REFs_referenceOrder[a_spec_relation_type_ref]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_RELATION_TYPE_REF was not staged and does not have a reference order", a_spec_relation_type_ref)
+		return 0
+	}
 }
 
 func (a_spec_types *A_SPEC_TYPES) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_SPEC_TYPESMap_Staged_Order[a_spec_types]; ok {
+	if order, ok := stage.A_SPEC_TYPES_stagedOrder[a_spec_types]; ok {
 		return order
 	}
-	return stage.A_SPEC_TYPESs_referenceOrder[a_spec_types]
-}
-
-func (a_spec_types *A_SPEC_TYPES) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_SPEC_TYPESs_referenceOrder[a_spec_types]
+	if order, ok := stage.A_SPEC_TYPESs_referenceOrder[a_spec_types]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_SPEC_TYPES was not staged and does not have a reference order", a_spec_types)
+		return 0
+	}
 }
 
 func (a_the_header *A_THE_HEADER) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_THE_HEADERMap_Staged_Order[a_the_header]; ok {
+	if order, ok := stage.A_THE_HEADER_stagedOrder[a_the_header]; ok {
 		return order
 	}
-	return stage.A_THE_HEADERs_referenceOrder[a_the_header]
-}
-
-func (a_the_header *A_THE_HEADER) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_THE_HEADERs_referenceOrder[a_the_header]
+	if order, ok := stage.A_THE_HEADERs_referenceOrder[a_the_header]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_THE_HEADER was not staged and does not have a reference order", a_the_header)
+		return 0
+	}
 }
 
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.A_TOOL_EXTENSIONSMap_Staged_Order[a_tool_extensions]; ok {
+	if order, ok := stage.A_TOOL_EXTENSIONS_stagedOrder[a_tool_extensions]; ok {
 		return order
 	}
-	return stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions]
-}
-
-func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions]
+	if order, ok := stage.A_TOOL_EXTENSIONSs_referenceOrder[a_tool_extensions]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type A_TOOL_EXTENSIONS was not staged and does not have a reference order", a_tool_extensions)
+		return 0
+	}
 }
 
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_BOOLEANMap_Staged_Order[datatype_definition_boolean]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_BOOLEAN_stagedOrder[datatype_definition_boolean]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean]
-}
-
-func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean]
+	if order, ok := stage.DATATYPE_DEFINITION_BOOLEANs_referenceOrder[datatype_definition_boolean]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_BOOLEAN was not staged and does not have a reference order", datatype_definition_boolean)
+		return 0
+	}
 }
 
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_DATEMap_Staged_Order[datatype_definition_date]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_DATE_stagedOrder[datatype_definition_date]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date]
-}
-
-func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date]
+	if order, ok := stage.DATATYPE_DEFINITION_DATEs_referenceOrder[datatype_definition_date]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_DATE was not staged and does not have a reference order", datatype_definition_date)
+		return 0
+	}
 }
 
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_ENUMERATIONMap_Staged_Order[datatype_definition_enumeration]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_ENUMERATION_stagedOrder[datatype_definition_enumeration]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration]
-}
-
-func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration]
+	if order, ok := stage.DATATYPE_DEFINITION_ENUMERATIONs_referenceOrder[datatype_definition_enumeration]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_ENUMERATION was not staged and does not have a reference order", datatype_definition_enumeration)
+		return 0
+	}
 }
 
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_INTEGERMap_Staged_Order[datatype_definition_integer]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_INTEGER_stagedOrder[datatype_definition_integer]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer]
-}
-
-func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer]
+	if order, ok := stage.DATATYPE_DEFINITION_INTEGERs_referenceOrder[datatype_definition_integer]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_INTEGER was not staged and does not have a reference order", datatype_definition_integer)
+		return 0
+	}
 }
 
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_REALMap_Staged_Order[datatype_definition_real]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_REAL_stagedOrder[datatype_definition_real]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real]
-}
-
-func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real]
+	if order, ok := stage.DATATYPE_DEFINITION_REALs_referenceOrder[datatype_definition_real]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_REAL was not staged and does not have a reference order", datatype_definition_real)
+		return 0
+	}
 }
 
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_STRINGMap_Staged_Order[datatype_definition_string]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_STRING_stagedOrder[datatype_definition_string]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string]
-}
-
-func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string]
+	if order, ok := stage.DATATYPE_DEFINITION_STRINGs_referenceOrder[datatype_definition_string]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_STRING was not staged and does not have a reference order", datatype_definition_string)
+		return 0
+	}
 }
 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.DATATYPE_DEFINITION_XHTMLMap_Staged_Order[datatype_definition_xhtml]; ok {
+	if order, ok := stage.DATATYPE_DEFINITION_XHTML_stagedOrder[datatype_definition_xhtml]; ok {
 		return order
 	}
-	return stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml]
-}
-
-func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml]
+	if order, ok := stage.DATATYPE_DEFINITION_XHTMLs_referenceOrder[datatype_definition_xhtml]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type DATATYPE_DEFINITION_XHTML was not staged and does not have a reference order", datatype_definition_xhtml)
+		return 0
+	}
 }
 
 func (embedded_value *EMBEDDED_VALUE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.EMBEDDED_VALUEMap_Staged_Order[embedded_value]; ok {
+	if order, ok := stage.EMBEDDED_VALUE_stagedOrder[embedded_value]; ok {
 		return order
 	}
-	return stage.EMBEDDED_VALUEs_referenceOrder[embedded_value]
-}
-
-func (embedded_value *EMBEDDED_VALUE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.EMBEDDED_VALUEs_referenceOrder[embedded_value]
+	if order, ok := stage.EMBEDDED_VALUEs_referenceOrder[embedded_value]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type EMBEDDED_VALUE was not staged and does not have a reference order", embedded_value)
+		return 0
+	}
 }
 
 func (enum_value *ENUM_VALUE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.ENUM_VALUEMap_Staged_Order[enum_value]; ok {
+	if order, ok := stage.ENUM_VALUE_stagedOrder[enum_value]; ok {
 		return order
 	}
-	return stage.ENUM_VALUEs_referenceOrder[enum_value]
-}
-
-func (enum_value *ENUM_VALUE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.ENUM_VALUEs_referenceOrder[enum_value]
+	if order, ok := stage.ENUM_VALUEs_referenceOrder[enum_value]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type ENUM_VALUE was not staged and does not have a reference order", enum_value)
+		return 0
+	}
 }
 
 func (embeddedjpgimage *EmbeddedJpgImage) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.EmbeddedJpgImageMap_Staged_Order[embeddedjpgimage]; ok {
+	if order, ok := stage.EmbeddedJpgImage_stagedOrder[embeddedjpgimage]; ok {
 		return order
 	}
-	return stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage]
-}
-
-func (embeddedjpgimage *EmbeddedJpgImage) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage]
+	if order, ok := stage.EmbeddedJpgImages_referenceOrder[embeddedjpgimage]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type EmbeddedJpgImage was not staged and does not have a reference order", embeddedjpgimage)
+		return 0
+	}
 }
 
 func (embeddedpngimage *EmbeddedPngImage) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.EmbeddedPngImageMap_Staged_Order[embeddedpngimage]; ok {
+	if order, ok := stage.EmbeddedPngImage_stagedOrder[embeddedpngimage]; ok {
 		return order
 	}
-	return stage.EmbeddedPngImages_referenceOrder[embeddedpngimage]
-}
-
-func (embeddedpngimage *EmbeddedPngImage) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.EmbeddedPngImages_referenceOrder[embeddedpngimage]
+	if order, ok := stage.EmbeddedPngImages_referenceOrder[embeddedpngimage]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type EmbeddedPngImage was not staged and does not have a reference order", embeddedpngimage)
+		return 0
+	}
 }
 
 func (embeddedsvgimage *EmbeddedSvgImage) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.EmbeddedSvgImageMap_Staged_Order[embeddedsvgimage]; ok {
+	if order, ok := stage.EmbeddedSvgImage_stagedOrder[embeddedsvgimage]; ok {
 		return order
 	}
-	return stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage]
-}
-
-func (embeddedsvgimage *EmbeddedSvgImage) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage]
+	if order, ok := stage.EmbeddedSvgImages_referenceOrder[embeddedsvgimage]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type EmbeddedSvgImage was not staged and does not have a reference order", embeddedsvgimage)
+		return 0
+	}
 }
 
 func (kill *Kill) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.KillMap_Staged_Order[kill]; ok {
+	if order, ok := stage.Kill_stagedOrder[kill]; ok {
 		return order
 	}
-	return stage.Kills_referenceOrder[kill]
-}
-
-func (kill *Kill) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.Kills_referenceOrder[kill]
+	if order, ok := stage.Kills_referenceOrder[kill]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type Kill was not staged and does not have a reference order", kill)
+		return 0
+	}
 }
 
 func (map_identifier_bool *Map_identifier_bool) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.Map_identifier_boolMap_Staged_Order[map_identifier_bool]; ok {
+	if order, ok := stage.Map_identifier_bool_stagedOrder[map_identifier_bool]; ok {
 		return order
 	}
-	return stage.Map_identifier_bools_referenceOrder[map_identifier_bool]
-}
-
-func (map_identifier_bool *Map_identifier_bool) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.Map_identifier_bools_referenceOrder[map_identifier_bool]
+	if order, ok := stage.Map_identifier_bools_referenceOrder[map_identifier_bool]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type Map_identifier_bool was not staged and does not have a reference order", map_identifier_bool)
+		return 0
+	}
 }
 
 func (relation_group *RELATION_GROUP) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.RELATION_GROUPMap_Staged_Order[relation_group]; ok {
+	if order, ok := stage.RELATION_GROUP_stagedOrder[relation_group]; ok {
 		return order
 	}
-	return stage.RELATION_GROUPs_referenceOrder[relation_group]
-}
-
-func (relation_group *RELATION_GROUP) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.RELATION_GROUPs_referenceOrder[relation_group]
+	if order, ok := stage.RELATION_GROUPs_referenceOrder[relation_group]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type RELATION_GROUP was not staged and does not have a reference order", relation_group)
+		return 0
+	}
 }
 
 func (relation_group_type *RELATION_GROUP_TYPE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.RELATION_GROUP_TYPEMap_Staged_Order[relation_group_type]; ok {
+	if order, ok := stage.RELATION_GROUP_TYPE_stagedOrder[relation_group_type]; ok {
 		return order
 	}
-	return stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type]
-}
-
-func (relation_group_type *RELATION_GROUP_TYPE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type]
+	if order, ok := stage.RELATION_GROUP_TYPEs_referenceOrder[relation_group_type]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type RELATION_GROUP_TYPE was not staged and does not have a reference order", relation_group_type)
+		return 0
+	}
 }
 
 func (req_if *REQ_IF) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.REQ_IFMap_Staged_Order[req_if]; ok {
+	if order, ok := stage.REQ_IF_stagedOrder[req_if]; ok {
 		return order
 	}
-	return stage.REQ_IFs_referenceOrder[req_if]
-}
-
-func (req_if *REQ_IF) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.REQ_IFs_referenceOrder[req_if]
+	if order, ok := stage.REQ_IFs_referenceOrder[req_if]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type REQ_IF was not staged and does not have a reference order", req_if)
+		return 0
+	}
 }
 
 func (req_if_content *REQ_IF_CONTENT) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.REQ_IF_CONTENTMap_Staged_Order[req_if_content]; ok {
+	if order, ok := stage.REQ_IF_CONTENT_stagedOrder[req_if_content]; ok {
 		return order
 	}
-	return stage.REQ_IF_CONTENTs_referenceOrder[req_if_content]
-}
-
-func (req_if_content *REQ_IF_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.REQ_IF_CONTENTs_referenceOrder[req_if_content]
+	if order, ok := stage.REQ_IF_CONTENTs_referenceOrder[req_if_content]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type REQ_IF_CONTENT was not staged and does not have a reference order", req_if_content)
+		return 0
+	}
 }
 
 func (req_if_header *REQ_IF_HEADER) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.REQ_IF_HEADERMap_Staged_Order[req_if_header]; ok {
+	if order, ok := stage.REQ_IF_HEADER_stagedOrder[req_if_header]; ok {
 		return order
 	}
-	return stage.REQ_IF_HEADERs_referenceOrder[req_if_header]
-}
-
-func (req_if_header *REQ_IF_HEADER) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.REQ_IF_HEADERs_referenceOrder[req_if_header]
+	if order, ok := stage.REQ_IF_HEADERs_referenceOrder[req_if_header]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type REQ_IF_HEADER was not staged and does not have a reference order", req_if_header)
+		return 0
+	}
 }
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.REQ_IF_TOOL_EXTENSIONMap_Staged_Order[req_if_tool_extension]; ok {
+	if order, ok := stage.REQ_IF_TOOL_EXTENSION_stagedOrder[req_if_tool_extension]; ok {
 		return order
 	}
-	return stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension]
-}
-
-func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension]
+	if order, ok := stage.REQ_IF_TOOL_EXTENSIONs_referenceOrder[req_if_tool_extension]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type REQ_IF_TOOL_EXTENSION was not staged and does not have a reference order", req_if_tool_extension)
+		return 0
+	}
 }
 
 func (specification *SPECIFICATION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPECIFICATIONMap_Staged_Order[specification]; ok {
+	if order, ok := stage.SPECIFICATION_stagedOrder[specification]; ok {
 		return order
 	}
-	return stage.SPECIFICATIONs_referenceOrder[specification]
-}
-
-func (specification *SPECIFICATION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPECIFICATIONs_referenceOrder[specification]
+	if order, ok := stage.SPECIFICATIONs_referenceOrder[specification]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPECIFICATION was not staged and does not have a reference order", specification)
+		return 0
+	}
 }
 
 func (specification_rendering *SPECIFICATION_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPECIFICATION_RenderingMap_Staged_Order[specification_rendering]; ok {
+	if order, ok := stage.SPECIFICATION_Rendering_stagedOrder[specification_rendering]; ok {
 		return order
 	}
-	return stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering]
-}
-
-func (specification_rendering *SPECIFICATION_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering]
+	if order, ok := stage.SPECIFICATION_Renderings_referenceOrder[specification_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPECIFICATION_Rendering was not staged and does not have a reference order", specification_rendering)
+		return 0
+	}
 }
 
 func (specification_type *SPECIFICATION_TYPE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPECIFICATION_TYPEMap_Staged_Order[specification_type]; ok {
+	if order, ok := stage.SPECIFICATION_TYPE_stagedOrder[specification_type]; ok {
 		return order
 	}
-	return stage.SPECIFICATION_TYPEs_referenceOrder[specification_type]
-}
-
-func (specification_type *SPECIFICATION_TYPE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPECIFICATION_TYPEs_referenceOrder[specification_type]
+	if order, ok := stage.SPECIFICATION_TYPEs_referenceOrder[specification_type]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPECIFICATION_TYPE was not staged and does not have a reference order", specification_type)
+		return 0
+	}
 }
 
 func (spec_hierarchy *SPEC_HIERARCHY) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPEC_HIERARCHYMap_Staged_Order[spec_hierarchy]; ok {
+	if order, ok := stage.SPEC_HIERARCHY_stagedOrder[spec_hierarchy]; ok {
 		return order
 	}
-	return stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy]
-}
-
-func (spec_hierarchy *SPEC_HIERARCHY) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy]
+	if order, ok := stage.SPEC_HIERARCHYs_referenceOrder[spec_hierarchy]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPEC_HIERARCHY was not staged and does not have a reference order", spec_hierarchy)
+		return 0
+	}
 }
 
 func (spec_object *SPEC_OBJECT) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPEC_OBJECTMap_Staged_Order[spec_object]; ok {
+	if order, ok := stage.SPEC_OBJECT_stagedOrder[spec_object]; ok {
 		return order
 	}
-	return stage.SPEC_OBJECTs_referenceOrder[spec_object]
-}
-
-func (spec_object *SPEC_OBJECT) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPEC_OBJECTs_referenceOrder[spec_object]
+	if order, ok := stage.SPEC_OBJECTs_referenceOrder[spec_object]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPEC_OBJECT was not staged and does not have a reference order", spec_object)
+		return 0
+	}
 }
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPEC_OBJECT_TYPEMap_Staged_Order[spec_object_type]; ok {
+	if order, ok := stage.SPEC_OBJECT_TYPE_stagedOrder[spec_object_type]; ok {
 		return order
 	}
-	return stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type]
-}
-
-func (spec_object_type *SPEC_OBJECT_TYPE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type]
+	if order, ok := stage.SPEC_OBJECT_TYPEs_referenceOrder[spec_object_type]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPEC_OBJECT_TYPE was not staged and does not have a reference order", spec_object_type)
+		return 0
+	}
 }
 
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPEC_OBJECT_TYPE_RenderingMap_Staged_Order[spec_object_type_rendering]; ok {
+	if order, ok := stage.SPEC_OBJECT_TYPE_Rendering_stagedOrder[spec_object_type_rendering]; ok {
 		return order
 	}
-	return stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering]
-}
-
-func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering]
+	if order, ok := stage.SPEC_OBJECT_TYPE_Renderings_referenceOrder[spec_object_type_rendering]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPEC_OBJECT_TYPE_Rendering was not staged and does not have a reference order", spec_object_type_rendering)
+		return 0
+	}
 }
 
 func (spec_relation *SPEC_RELATION) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPEC_RELATIONMap_Staged_Order[spec_relation]; ok {
+	if order, ok := stage.SPEC_RELATION_stagedOrder[spec_relation]; ok {
 		return order
 	}
-	return stage.SPEC_RELATIONs_referenceOrder[spec_relation]
-}
-
-func (spec_relation *SPEC_RELATION) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPEC_RELATIONs_referenceOrder[spec_relation]
+	if order, ok := stage.SPEC_RELATIONs_referenceOrder[spec_relation]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPEC_RELATION was not staged and does not have a reference order", spec_relation)
+		return 0
+	}
 }
 
 func (spec_relation_type *SPEC_RELATION_TYPE) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.SPEC_RELATION_TYPEMap_Staged_Order[spec_relation_type]; ok {
+	if order, ok := stage.SPEC_RELATION_TYPE_stagedOrder[spec_relation_type]; ok {
 		return order
 	}
-	return stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type]
-}
-
-func (spec_relation_type *SPEC_RELATION_TYPE) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type]
+	if order, ok := stage.SPEC_RELATION_TYPEs_referenceOrder[spec_relation_type]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type SPEC_RELATION_TYPE was not staged and does not have a reference order", spec_relation_type)
+		return 0
+	}
 }
 
 func (staticwebsite *StaticWebSite) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.StaticWebSiteMap_Staged_Order[staticwebsite]; ok {
+	if order, ok := stage.StaticWebSite_stagedOrder[staticwebsite]; ok {
 		return order
 	}
-	return stage.StaticWebSites_referenceOrder[staticwebsite]
-}
-
-func (staticwebsite *StaticWebSite) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.StaticWebSites_referenceOrder[staticwebsite]
+	if order, ok := stage.StaticWebSites_referenceOrder[staticwebsite]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type StaticWebSite was not staged and does not have a reference order", staticwebsite)
+		return 0
+	}
 }
 
 func (staticwebsitechapter *StaticWebSiteChapter) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.StaticWebSiteChapterMap_Staged_Order[staticwebsitechapter]; ok {
+	if order, ok := stage.StaticWebSiteChapter_stagedOrder[staticwebsitechapter]; ok {
 		return order
 	}
-	return stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter]
-}
-
-func (staticwebsitechapter *StaticWebSiteChapter) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter]
+	if order, ok := stage.StaticWebSiteChapters_referenceOrder[staticwebsitechapter]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type StaticWebSiteChapter was not staged and does not have a reference order", staticwebsitechapter)
+		return 0
+	}
 }
 
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.StaticWebSiteGeneratedImageMap_Staged_Order[staticwebsitegeneratedimage]; ok {
+	if order, ok := stage.StaticWebSiteGeneratedImage_stagedOrder[staticwebsitegeneratedimage]; ok {
 		return order
 	}
-	return stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage]
-}
-
-func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage]
+	if order, ok := stage.StaticWebSiteGeneratedImages_referenceOrder[staticwebsitegeneratedimage]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type StaticWebSiteGeneratedImage was not staged and does not have a reference order", staticwebsitegeneratedimage)
+		return 0
+	}
 }
 
 func (staticwebsiteimage *StaticWebSiteImage) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.StaticWebSiteImageMap_Staged_Order[staticwebsiteimage]; ok {
+	if order, ok := stage.StaticWebSiteImage_stagedOrder[staticwebsiteimage]; ok {
 		return order
 	}
-	return stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage]
-}
-
-func (staticwebsiteimage *StaticWebSiteImage) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage]
+	if order, ok := stage.StaticWebSiteImages_referenceOrder[staticwebsiteimage]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type StaticWebSiteImage was not staged and does not have a reference order", staticwebsiteimage)
+		return 0
+	}
 }
 
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.StaticWebSiteParagraphMap_Staged_Order[staticwebsiteparagraph]; ok {
+	if order, ok := stage.StaticWebSiteParagraph_stagedOrder[staticwebsiteparagraph]; ok {
 		return order
 	}
-	return stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph]
-}
-
-func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph]
+	if order, ok := stage.StaticWebSiteParagraphs_referenceOrder[staticwebsiteparagraph]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type StaticWebSiteParagraph was not staged and does not have a reference order", staticwebsiteparagraph)
+		return 0
+	}
 }
 
 func (xhtml_content *XHTML_CONTENT) GongGetOrder(stage *Stage) uint {
-	if order, ok := stage.XHTML_CONTENTMap_Staged_Order[xhtml_content]; ok {
+	if order, ok := stage.XHTML_CONTENT_stagedOrder[xhtml_content]; ok {
 		return order
 	}
-	return stage.XHTML_CONTENTs_referenceOrder[xhtml_content]
-}
-
-func (xhtml_content *XHTML_CONTENT) GongGetReferenceOrder(stage *Stage) uint {
-	return stage.XHTML_CONTENTs_referenceOrder[xhtml_content]
+	if order, ok := stage.XHTML_CONTENTs_referenceOrder[xhtml_content]; ok {
+		return order
+	} else {
+		log.Printf("instance %p of type XHTML_CONTENT was not staged and does not have a reference order", xhtml_content)
+		return 0
+	}
 }
 
 // GongGetIdentifier returns a unique identifier of the instance in the staging area
@@ -8600,7 +9850,7 @@ func (alternative_id *ALTERNATIVE_ID) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (alternative_id *ALTERNATIVE_ID) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", alternative_id.GongGetGongstructName(), alternative_id.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", alternative_id.GongGetGongstructName(), alternative_id.GongGetOrder(stage))
 }
 
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetIdentifier(stage *Stage) string {
@@ -8609,7 +9859,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetIdentif
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_boolean.GongGetGongstructName(), attribute_definition_boolean.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_boolean.GongGetGongstructName(), attribute_definition_boolean.GongGetOrder(stage))
 }
 
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8618,7 +9868,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_boolean_rendering.GongGetGongstructName(), attribute_definition_boolean_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_boolean_rendering.GongGetGongstructName(), attribute_definition_boolean_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetIdentifier(stage *Stage) string {
@@ -8627,7 +9877,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_date.GongGetGongstructName(), attribute_definition_date.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_date.GongGetGongstructName(), attribute_definition_date.GongGetOrder(stage))
 }
 
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8636,7 +9886,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_date_rendering.GongGetGongstructName(), attribute_definition_date_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_date_rendering.GongGetGongstructName(), attribute_definition_date_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetIdentifier(stage *Stage) string {
@@ -8645,7 +9895,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGe
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_enumeration.GongGetGongstructName(), attribute_definition_enumeration.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_enumeration.GongGetGongstructName(), attribute_definition_enumeration.GongGetOrder(stage))
 }
 
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8654,7 +9904,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATION_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_enumeration_rendering.GongGetGongstructName(), attribute_definition_enumeration_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_enumeration_rendering.GongGetGongstructName(), attribute_definition_enumeration_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetIdentifier(stage *Stage) string {
@@ -8663,7 +9913,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetIdentif
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_integer.GongGetGongstructName(), attribute_definition_integer.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_integer.GongGetGongstructName(), attribute_definition_integer.GongGetOrder(stage))
 }
 
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8672,7 +9922,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_integer_rendering.GongGetGongstructName(), attribute_definition_integer_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_integer_rendering.GongGetGongstructName(), attribute_definition_integer_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetIdentifier(stage *Stage) string {
@@ -8681,7 +9931,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_real.GongGetGongstructName(), attribute_definition_real.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_real.GongGetGongstructName(), attribute_definition_real.GongGetOrder(stage))
 }
 
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8690,7 +9940,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_real_rendering.GongGetGongstructName(), attribute_definition_real_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_real_rendering.GongGetGongstructName(), attribute_definition_real_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8699,7 +9949,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetIde
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_rendering.GongGetGongstructName(), attribute_definition_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_rendering.GongGetGongstructName(), attribute_definition_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetIdentifier(stage *Stage) string {
@@ -8708,7 +9958,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetIdentifie
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_string.GongGetGongstructName(), attribute_definition_string.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_string.GongGetGongstructName(), attribute_definition_string.GongGetOrder(stage))
 }
 
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8717,7 +9967,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_string_rendering.GongGetGongstructName(), attribute_definition_string_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_string_rendering.GongGetGongstructName(), attribute_definition_string_rendering.GongGetOrder(stage))
 }
 
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetIdentifier(stage *Stage) string {
@@ -8726,7 +9976,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetIdentifier(
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_xhtml.GongGetGongstructName(), attribute_definition_xhtml.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_xhtml.GongGetGongstructName(), attribute_definition_xhtml.GongGetOrder(stage))
 }
 
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -8735,7 +9985,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_definition_xhtml_rendering.GongGetGongstructName(), attribute_definition_xhtml_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_definition_xhtml_rendering.GongGetGongstructName(), attribute_definition_xhtml_rendering.GongGetOrder(stage))
 }
 
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetIdentifier(stage *Stage) string {
@@ -8744,7 +9994,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetIdentifier(stage 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_boolean.GongGetGongstructName(), attribute_value_boolean.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_boolean.GongGetGongstructName(), attribute_value_boolean.GongGetOrder(stage))
 }
 
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetIdentifier(stage *Stage) string {
@@ -8753,7 +10003,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetIdentifier(stage *Stage
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_date.GongGetGongstructName(), attribute_value_date.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_date.GongGetGongstructName(), attribute_value_date.GongGetOrder(stage))
 }
 
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetIdentifier(stage *Stage) string {
@@ -8762,7 +10012,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetIdentifie
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_enumeration.GongGetGongstructName(), attribute_value_enumeration.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_enumeration.GongGetGongstructName(), attribute_value_enumeration.GongGetOrder(stage))
 }
 
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetIdentifier(stage *Stage) string {
@@ -8771,7 +10021,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetIdentifier(stage 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_integer.GongGetGongstructName(), attribute_value_integer.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_integer.GongGetGongstructName(), attribute_value_integer.GongGetOrder(stage))
 }
 
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetIdentifier(stage *Stage) string {
@@ -8780,7 +10030,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetIdentifier(stage *Stage
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_real.GongGetGongstructName(), attribute_value_real.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_real.GongGetGongstructName(), attribute_value_real.GongGetOrder(stage))
 }
 
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetIdentifier(stage *Stage) string {
@@ -8789,7 +10039,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetIdentifier(stage *S
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_string.GongGetGongstructName(), attribute_value_string.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_string.GongGetGongstructName(), attribute_value_string.GongGetOrder(stage))
 }
 
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetIdentifier(stage *Stage) string {
@@ -8798,7 +10048,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetIdentifier(stage *Sta
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", attribute_value_xhtml.GongGetGongstructName(), attribute_value_xhtml.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", attribute_value_xhtml.GongGetGongstructName(), attribute_value_xhtml.GongGetOrder(stage))
 }
 
 func (a_alternative_id *A_ALTERNATIVE_ID) GongGetIdentifier(stage *Stage) string {
@@ -8807,7 +10057,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_alternative_id *A_ALTERNATIVE_ID) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_alternative_id.GongGetGongstructName(), a_alternative_id.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_alternative_id.GongGetGongstructName(), a_alternative_id.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetIdentifier(stage *Stage) string {
@@ -8816,7 +10066,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Go
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_boolean_ref.GongGetGongstructName(), a_attribute_definition_boolean_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_boolean_ref.GongGetGongstructName(), a_attribute_definition_boolean_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetIdentifier(stage *Stage) string {
@@ -8825,7 +10075,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetI
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_date_ref.GongGetGongstructName(), a_attribute_definition_date_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_date_ref.GongGetGongstructName(), a_attribute_definition_date_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetIdentifier(stage *Stage) string {
@@ -8834,7 +10084,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_enumeration_ref.GongGetGongstructName(), a_attribute_definition_enumeration_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_enumeration_ref.GongGetGongstructName(), a_attribute_definition_enumeration_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetIdentifier(stage *Stage) string {
@@ -8843,7 +10093,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Go
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_integer_ref.GongGetGongstructName(), a_attribute_definition_integer_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_integer_ref.GongGetGongstructName(), a_attribute_definition_integer_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetIdentifier(stage *Stage) string {
@@ -8852,7 +10102,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetI
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_real_ref.GongGetGongstructName(), a_attribute_definition_real_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_real_ref.GongGetGongstructName(), a_attribute_definition_real_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetIdentifier(stage *Stage) string {
@@ -8861,7 +10111,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Gong
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_string_ref.GongGetGongstructName(), a_attribute_definition_string_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_string_ref.GongGetGongstructName(), a_attribute_definition_string_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetIdentifier(stage *Stage) string {
@@ -8870,7 +10120,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGe
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_xhtml_ref.GongGetGongstructName(), a_attribute_definition_xhtml_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_definition_xhtml_ref.GongGetGongstructName(), a_attribute_definition_xhtml_ref.GongGetOrder(stage))
 }
 
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetIdentifier(stage *Stage) string {
@@ -8879,7 +10129,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_boolean.GongGetGongstructName(), a_attribute_value_boolean.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_boolean.GongGetGongstructName(), a_attribute_value_boolean.GongGetOrder(stage))
 }
 
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetIdentifier(stage *Stage) string {
@@ -8888,7 +10138,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetIdentifier(stage *S
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_date.GongGetGongstructName(), a_attribute_value_date.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_date.GongGetGongstructName(), a_attribute_value_date.GongGetOrder(stage))
 }
 
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetIdentifier(stage *Stage) string {
@@ -8897,7 +10147,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetIdent
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_enumeration.GongGetGongstructName(), a_attribute_value_enumeration.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_enumeration.GongGetGongstructName(), a_attribute_value_enumeration.GongGetOrder(stage))
 }
 
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetIdentifier(stage *Stage) string {
@@ -8906,7 +10156,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_integer.GongGetGongstructName(), a_attribute_value_integer.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_integer.GongGetGongstructName(), a_attribute_value_integer.GongGetOrder(stage))
 }
 
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetIdentifier(stage *Stage) string {
@@ -8915,7 +10165,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetIdentifier(stage *S
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_real.GongGetGongstructName(), a_attribute_value_real.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_real.GongGetGongstructName(), a_attribute_value_real.GongGetOrder(stage))
 }
 
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetIdentifier(stage *Stage) string {
@@ -8924,7 +10174,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetIdentifier(stag
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_string.GongGetGongstructName(), a_attribute_value_string.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_string.GongGetGongstructName(), a_attribute_value_string.GongGetOrder(stage))
 }
 
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetIdentifier(stage *Stage) string {
@@ -8933,7 +10183,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetIdentifier(stage 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_xhtml.GongGetGongstructName(), a_attribute_value_xhtml.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_xhtml.GongGetGongstructName(), a_attribute_value_xhtml.GongGetOrder(stage))
 }
 
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetIdentifier(stage *Stage) string {
@@ -8942,7 +10192,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_attribute_value_xhtml_1.GongGetGongstructName(), a_attribute_value_xhtml_1.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_attribute_value_xhtml_1.GongGetGongstructName(), a_attribute_value_xhtml_1.GongGetOrder(stage))
 }
 
 func (a_children *A_CHILDREN) GongGetIdentifier(stage *Stage) string {
@@ -8951,7 +10201,7 @@ func (a_children *A_CHILDREN) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_children *A_CHILDREN) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_children.GongGetGongstructName(), a_children.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_children.GongGetGongstructName(), a_children.GongGetOrder(stage))
 }
 
 func (a_core_content *A_CORE_CONTENT) GongGetIdentifier(stage *Stage) string {
@@ -8960,7 +10210,7 @@ func (a_core_content *A_CORE_CONTENT) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_core_content *A_CORE_CONTENT) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_core_content.GongGetGongstructName(), a_core_content.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_core_content.GongGetGongstructName(), a_core_content.GongGetOrder(stage))
 }
 
 func (a_datatypes *A_DATATYPES) GongGetIdentifier(stage *Stage) string {
@@ -8969,7 +10219,7 @@ func (a_datatypes *A_DATATYPES) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatypes *A_DATATYPES) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatypes.GongGetGongstructName(), a_datatypes.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatypes.GongGetGongstructName(), a_datatypes.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetIdentifier(stage *Stage) string {
@@ -8978,7 +10228,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Gong
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_boolean_ref.GongGetGongstructName(), a_datatype_definition_boolean_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_boolean_ref.GongGetGongstructName(), a_datatype_definition_boolean_ref.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetIdentifier(stage *Stage) string {
@@ -8987,7 +10237,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetIde
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_date_ref.GongGetGongstructName(), a_datatype_definition_date_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_date_ref.GongGetGongstructName(), a_datatype_definition_date_ref.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetIdentifier(stage *Stage) string {
@@ -8996,7 +10246,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_enumeration_ref.GongGetGongstructName(), a_datatype_definition_enumeration_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_enumeration_ref.GongGetGongstructName(), a_datatype_definition_enumeration_ref.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetIdentifier(stage *Stage) string {
@@ -9005,7 +10255,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Gong
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_integer_ref.GongGetGongstructName(), a_datatype_definition_integer_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_integer_ref.GongGetGongstructName(), a_datatype_definition_integer_ref.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetIdentifier(stage *Stage) string {
@@ -9014,7 +10264,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetIde
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_real_ref.GongGetGongstructName(), a_datatype_definition_real_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_real_ref.GongGetGongstructName(), a_datatype_definition_real_ref.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetIdentifier(stage *Stage) string {
@@ -9023,7 +10273,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGe
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_string_ref.GongGetGongstructName(), a_datatype_definition_string_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_string_ref.GongGetGongstructName(), a_datatype_definition_string_ref.GongGetOrder(stage))
 }
 
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetIdentifier(stage *Stage) string {
@@ -9032,7 +10282,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetI
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_xhtml_ref.GongGetGongstructName(), a_datatype_definition_xhtml_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_datatype_definition_xhtml_ref.GongGetGongstructName(), a_datatype_definition_xhtml_ref.GongGetOrder(stage))
 }
 
 func (a_editable_atts *A_EDITABLE_ATTS) GongGetIdentifier(stage *Stage) string {
@@ -9041,7 +10291,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_editable_atts *A_EDITABLE_ATTS) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_editable_atts.GongGetGongstructName(), a_editable_atts.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_editable_atts.GongGetGongstructName(), a_editable_atts.GongGetOrder(stage))
 }
 
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetIdentifier(stage *Stage) string {
@@ -9050,7 +10300,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_enum_value_ref *A_ENUM_VALUE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_enum_value_ref.GongGetGongstructName(), a_enum_value_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_enum_value_ref.GongGetGongstructName(), a_enum_value_ref.GongGetOrder(stage))
 }
 
 func (a_object *A_OBJECT) GongGetIdentifier(stage *Stage) string {
@@ -9059,7 +10309,7 @@ func (a_object *A_OBJECT) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_object *A_OBJECT) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_object.GongGetGongstructName(), a_object.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_object.GongGetGongstructName(), a_object.GongGetOrder(stage))
 }
 
 func (a_properties *A_PROPERTIES) GongGetIdentifier(stage *Stage) string {
@@ -9068,7 +10318,7 @@ func (a_properties *A_PROPERTIES) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_properties *A_PROPERTIES) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_properties.GongGetGongstructName(), a_properties.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_properties.GongGetGongstructName(), a_properties.GongGetOrder(stage))
 }
 
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetIdentifier(stage *Stage) string {
@@ -9077,7 +10327,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_relation_group_type_ref.GongGetGongstructName(), a_relation_group_type_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_relation_group_type_ref.GongGetGongstructName(), a_relation_group_type_ref.GongGetOrder(stage))
 }
 
 func (a_source_1 *A_SOURCE_1) GongGetIdentifier(stage *Stage) string {
@@ -9086,7 +10336,7 @@ func (a_source_1 *A_SOURCE_1) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_source_1 *A_SOURCE_1) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_source_1.GongGetGongstructName(), a_source_1.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_source_1.GongGetGongstructName(), a_source_1.GongGetOrder(stage))
 }
 
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetIdentifier(stage *Stage) string {
@@ -9095,7 +10345,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetIdentifier(stag
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_source_specification_1.GongGetGongstructName(), a_source_specification_1.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_source_specification_1.GongGetGongstructName(), a_source_specification_1.GongGetOrder(stage))
 }
 
 func (a_specifications *A_SPECIFICATIONS) GongGetIdentifier(stage *Stage) string {
@@ -9104,7 +10354,7 @@ func (a_specifications *A_SPECIFICATIONS) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_specifications *A_SPECIFICATIONS) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_specifications.GongGetGongstructName(), a_specifications.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_specifications.GongGetGongstructName(), a_specifications.GongGetOrder(stage))
 }
 
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetIdentifier(stage *Stage) string {
@@ -9113,7 +10363,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetIdentifier(stag
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_specification_type_ref.GongGetGongstructName(), a_specification_type_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_specification_type_ref.GongGetGongstructName(), a_specification_type_ref.GongGetOrder(stage))
 }
 
 func (a_specified_values *A_SPECIFIED_VALUES) GongGetIdentifier(stage *Stage) string {
@@ -9122,7 +10372,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongGetIdentifier(stage *Stage) st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_specified_values *A_SPECIFIED_VALUES) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_specified_values.GongGetGongstructName(), a_specified_values.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_specified_values.GongGetGongstructName(), a_specified_values.GongGetOrder(stage))
 }
 
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetIdentifier(stage *Stage) string {
@@ -9131,7 +10381,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetIdentifier(stage *Stage) stri
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_attributes.GongGetGongstructName(), a_spec_attributes.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_attributes.GongGetGongstructName(), a_spec_attributes.GongGetOrder(stage))
 }
 
 func (a_spec_objects *A_SPEC_OBJECTS) GongGetIdentifier(stage *Stage) string {
@@ -9140,7 +10390,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_objects *A_SPEC_OBJECTS) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_objects.GongGetGongstructName(), a_spec_objects.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_objects.GongGetGongstructName(), a_spec_objects.GongGetOrder(stage))
 }
 
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetIdentifier(stage *Stage) string {
@@ -9149,7 +10399,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetIdentifier(stage *S
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_object_type_ref.GongGetGongstructName(), a_spec_object_type_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_object_type_ref.GongGetGongstructName(), a_spec_object_type_ref.GongGetOrder(stage))
 }
 
 func (a_spec_relations *A_SPEC_RELATIONS) GongGetIdentifier(stage *Stage) string {
@@ -9158,7 +10408,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_relations *A_SPEC_RELATIONS) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_relations.GongGetGongstructName(), a_spec_relations.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_relations.GongGetGongstructName(), a_spec_relations.GongGetOrder(stage))
 }
 
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetIdentifier(stage *Stage) string {
@@ -9167,7 +10417,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetIdentifier(stage *S
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_relation_groups.GongGetGongstructName(), a_spec_relation_groups.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_relation_groups.GongGetGongstructName(), a_spec_relation_groups.GongGetOrder(stage))
 }
 
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetIdentifier(stage *Stage) string {
@@ -9176,7 +10426,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetIdentifier(stage *Stage) 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_relation_ref.GongGetGongstructName(), a_spec_relation_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_relation_ref.GongGetGongstructName(), a_spec_relation_ref.GongGetOrder(stage))
 }
 
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetIdentifier(stage *Stage) string {
@@ -9185,7 +10435,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetIdentifier(stag
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_relation_type_ref.GongGetGongstructName(), a_spec_relation_type_ref.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_relation_type_ref.GongGetGongstructName(), a_spec_relation_type_ref.GongGetOrder(stage))
 }
 
 func (a_spec_types *A_SPEC_TYPES) GongGetIdentifier(stage *Stage) string {
@@ -9194,7 +10444,7 @@ func (a_spec_types *A_SPEC_TYPES) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_spec_types *A_SPEC_TYPES) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_spec_types.GongGetGongstructName(), a_spec_types.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_spec_types.GongGetGongstructName(), a_spec_types.GongGetOrder(stage))
 }
 
 func (a_the_header *A_THE_HEADER) GongGetIdentifier(stage *Stage) string {
@@ -9203,7 +10453,7 @@ func (a_the_header *A_THE_HEADER) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_the_header *A_THE_HEADER) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_the_header.GongGetGongstructName(), a_the_header.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_the_header.GongGetGongstructName(), a_the_header.GongGetOrder(stage))
 }
 
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetIdentifier(stage *Stage) string {
@@ -9212,7 +10462,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetIdentifier(stage *Stage) stri
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (a_tool_extensions *A_TOOL_EXTENSIONS) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", a_tool_extensions.GongGetGongstructName(), a_tool_extensions.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", a_tool_extensions.GongGetGongstructName(), a_tool_extensions.GongGetOrder(stage))
 }
 
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetIdentifier(stage *Stage) string {
@@ -9221,7 +10471,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetIdentifie
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_boolean.GongGetGongstructName(), datatype_definition_boolean.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_boolean.GongGetGongstructName(), datatype_definition_boolean.GongGetOrder(stage))
 }
 
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetIdentifier(stage *Stage) string {
@@ -9230,7 +10480,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetIdentifier(stag
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_date.GongGetGongstructName(), datatype_definition_date.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_date.GongGetGongstructName(), datatype_definition_date.GongGetOrder(stage))
 }
 
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetIdentifier(stage *Stage) string {
@@ -9239,7 +10489,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetI
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_enumeration.GongGetGongstructName(), datatype_definition_enumeration.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_enumeration.GongGetGongstructName(), datatype_definition_enumeration.GongGetOrder(stage))
 }
 
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetIdentifier(stage *Stage) string {
@@ -9248,7 +10498,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetIdentifie
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_integer.GongGetGongstructName(), datatype_definition_integer.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_integer.GongGetGongstructName(), datatype_definition_integer.GongGetOrder(stage))
 }
 
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetIdentifier(stage *Stage) string {
@@ -9257,7 +10507,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetIdentifier(stag
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_real.GongGetGongstructName(), datatype_definition_real.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_real.GongGetGongstructName(), datatype_definition_real.GongGetOrder(stage))
 }
 
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetIdentifier(stage *Stage) string {
@@ -9266,7 +10516,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetIdentifier(
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_string.GongGetGongstructName(), datatype_definition_string.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_string.GongGetGongstructName(), datatype_definition_string.GongGetOrder(stage))
 }
 
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetIdentifier(stage *Stage) string {
@@ -9275,7 +10525,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetIdentifier(st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", datatype_definition_xhtml.GongGetGongstructName(), datatype_definition_xhtml.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", datatype_definition_xhtml.GongGetGongstructName(), datatype_definition_xhtml.GongGetOrder(stage))
 }
 
 func (embedded_value *EMBEDDED_VALUE) GongGetIdentifier(stage *Stage) string {
@@ -9284,7 +10534,7 @@ func (embedded_value *EMBEDDED_VALUE) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (embedded_value *EMBEDDED_VALUE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", embedded_value.GongGetGongstructName(), embedded_value.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", embedded_value.GongGetGongstructName(), embedded_value.GongGetOrder(stage))
 }
 
 func (enum_value *ENUM_VALUE) GongGetIdentifier(stage *Stage) string {
@@ -9293,7 +10543,7 @@ func (enum_value *ENUM_VALUE) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (enum_value *ENUM_VALUE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", enum_value.GongGetGongstructName(), enum_value.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", enum_value.GongGetGongstructName(), enum_value.GongGetOrder(stage))
 }
 
 func (embeddedjpgimage *EmbeddedJpgImage) GongGetIdentifier(stage *Stage) string {
@@ -9302,7 +10552,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (embeddedjpgimage *EmbeddedJpgImage) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", embeddedjpgimage.GongGetGongstructName(), embeddedjpgimage.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", embeddedjpgimage.GongGetGongstructName(), embeddedjpgimage.GongGetOrder(stage))
 }
 
 func (embeddedpngimage *EmbeddedPngImage) GongGetIdentifier(stage *Stage) string {
@@ -9311,7 +10561,7 @@ func (embeddedpngimage *EmbeddedPngImage) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (embeddedpngimage *EmbeddedPngImage) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", embeddedpngimage.GongGetGongstructName(), embeddedpngimage.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", embeddedpngimage.GongGetGongstructName(), embeddedpngimage.GongGetOrder(stage))
 }
 
 func (embeddedsvgimage *EmbeddedSvgImage) GongGetIdentifier(stage *Stage) string {
@@ -9320,7 +10570,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (embeddedsvgimage *EmbeddedSvgImage) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", embeddedsvgimage.GongGetGongstructName(), embeddedsvgimage.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", embeddedsvgimage.GongGetGongstructName(), embeddedsvgimage.GongGetOrder(stage))
 }
 
 func (kill *Kill) GongGetIdentifier(stage *Stage) string {
@@ -9329,7 +10579,7 @@ func (kill *Kill) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (kill *Kill) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", kill.GongGetGongstructName(), kill.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", kill.GongGetGongstructName(), kill.GongGetOrder(stage))
 }
 
 func (map_identifier_bool *Map_identifier_bool) GongGetIdentifier(stage *Stage) string {
@@ -9338,7 +10588,7 @@ func (map_identifier_bool *Map_identifier_bool) GongGetIdentifier(stage *Stage) 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (map_identifier_bool *Map_identifier_bool) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", map_identifier_bool.GongGetGongstructName(), map_identifier_bool.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", map_identifier_bool.GongGetGongstructName(), map_identifier_bool.GongGetOrder(stage))
 }
 
 func (relation_group *RELATION_GROUP) GongGetIdentifier(stage *Stage) string {
@@ -9347,7 +10597,7 @@ func (relation_group *RELATION_GROUP) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (relation_group *RELATION_GROUP) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", relation_group.GongGetGongstructName(), relation_group.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", relation_group.GongGetGongstructName(), relation_group.GongGetOrder(stage))
 }
 
 func (relation_group_type *RELATION_GROUP_TYPE) GongGetIdentifier(stage *Stage) string {
@@ -9356,7 +10606,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongGetIdentifier(stage *Stage) 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (relation_group_type *RELATION_GROUP_TYPE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", relation_group_type.GongGetGongstructName(), relation_group_type.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", relation_group_type.GongGetGongstructName(), relation_group_type.GongGetOrder(stage))
 }
 
 func (req_if *REQ_IF) GongGetIdentifier(stage *Stage) string {
@@ -9365,7 +10615,7 @@ func (req_if *REQ_IF) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (req_if *REQ_IF) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", req_if.GongGetGongstructName(), req_if.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", req_if.GongGetGongstructName(), req_if.GongGetOrder(stage))
 }
 
 func (req_if_content *REQ_IF_CONTENT) GongGetIdentifier(stage *Stage) string {
@@ -9374,7 +10624,7 @@ func (req_if_content *REQ_IF_CONTENT) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (req_if_content *REQ_IF_CONTENT) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", req_if_content.GongGetGongstructName(), req_if_content.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", req_if_content.GongGetGongstructName(), req_if_content.GongGetOrder(stage))
 }
 
 func (req_if_header *REQ_IF_HEADER) GongGetIdentifier(stage *Stage) string {
@@ -9383,7 +10633,7 @@ func (req_if_header *REQ_IF_HEADER) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (req_if_header *REQ_IF_HEADER) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", req_if_header.GongGetGongstructName(), req_if_header.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", req_if_header.GongGetGongstructName(), req_if_header.GongGetOrder(stage))
 }
 
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetIdentifier(stage *Stage) string {
@@ -9392,7 +10642,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetIdentifier(stage *Sta
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", req_if_tool_extension.GongGetGongstructName(), req_if_tool_extension.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", req_if_tool_extension.GongGetGongstructName(), req_if_tool_extension.GongGetOrder(stage))
 }
 
 func (specification *SPECIFICATION) GongGetIdentifier(stage *Stage) string {
@@ -9401,7 +10651,7 @@ func (specification *SPECIFICATION) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (specification *SPECIFICATION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", specification.GongGetGongstructName(), specification.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", specification.GongGetGongstructName(), specification.GongGetOrder(stage))
 }
 
 func (specification_rendering *SPECIFICATION_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -9410,7 +10660,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GongGetIdentifier(stage 
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (specification_rendering *SPECIFICATION_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", specification_rendering.GongGetGongstructName(), specification_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", specification_rendering.GongGetGongstructName(), specification_rendering.GongGetOrder(stage))
 }
 
 func (specification_type *SPECIFICATION_TYPE) GongGetIdentifier(stage *Stage) string {
@@ -9419,7 +10669,7 @@ func (specification_type *SPECIFICATION_TYPE) GongGetIdentifier(stage *Stage) st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (specification_type *SPECIFICATION_TYPE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", specification_type.GongGetGongstructName(), specification_type.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", specification_type.GongGetGongstructName(), specification_type.GongGetOrder(stage))
 }
 
 func (spec_hierarchy *SPEC_HIERARCHY) GongGetIdentifier(stage *Stage) string {
@@ -9428,7 +10678,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (spec_hierarchy *SPEC_HIERARCHY) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", spec_hierarchy.GongGetGongstructName(), spec_hierarchy.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", spec_hierarchy.GongGetGongstructName(), spec_hierarchy.GongGetOrder(stage))
 }
 
 func (spec_object *SPEC_OBJECT) GongGetIdentifier(stage *Stage) string {
@@ -9437,7 +10687,7 @@ func (spec_object *SPEC_OBJECT) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (spec_object *SPEC_OBJECT) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", spec_object.GongGetGongstructName(), spec_object.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", spec_object.GongGetGongstructName(), spec_object.GongGetOrder(stage))
 }
 
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetIdentifier(stage *Stage) string {
@@ -9446,7 +10696,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongGetIdentifier(stage *Stage) string
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (spec_object_type *SPEC_OBJECT_TYPE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", spec_object_type.GongGetGongstructName(), spec_object_type.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", spec_object_type.GongGetGongstructName(), spec_object_type.GongGetOrder(stage))
 }
 
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetIdentifier(stage *Stage) string {
@@ -9455,7 +10705,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetIdentifier(
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", spec_object_type_rendering.GongGetGongstructName(), spec_object_type_rendering.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", spec_object_type_rendering.GongGetGongstructName(), spec_object_type_rendering.GongGetOrder(stage))
 }
 
 func (spec_relation *SPEC_RELATION) GongGetIdentifier(stage *Stage) string {
@@ -9464,7 +10714,7 @@ func (spec_relation *SPEC_RELATION) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (spec_relation *SPEC_RELATION) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", spec_relation.GongGetGongstructName(), spec_relation.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", spec_relation.GongGetGongstructName(), spec_relation.GongGetOrder(stage))
 }
 
 func (spec_relation_type *SPEC_RELATION_TYPE) GongGetIdentifier(stage *Stage) string {
@@ -9473,7 +10723,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongGetIdentifier(stage *Stage) st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (spec_relation_type *SPEC_RELATION_TYPE) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", spec_relation_type.GongGetGongstructName(), spec_relation_type.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", spec_relation_type.GongGetGongstructName(), spec_relation_type.GongGetOrder(stage))
 }
 
 func (staticwebsite *StaticWebSite) GongGetIdentifier(stage *Stage) string {
@@ -9482,7 +10732,7 @@ func (staticwebsite *StaticWebSite) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (staticwebsite *StaticWebSite) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", staticwebsite.GongGetGongstructName(), staticwebsite.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", staticwebsite.GongGetGongstructName(), staticwebsite.GongGetOrder(stage))
 }
 
 func (staticwebsitechapter *StaticWebSiteChapter) GongGetIdentifier(stage *Stage) string {
@@ -9491,7 +10741,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongGetIdentifier(stage *Stage
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (staticwebsitechapter *StaticWebSiteChapter) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", staticwebsitechapter.GongGetGongstructName(), staticwebsitechapter.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", staticwebsitechapter.GongGetGongstructName(), staticwebsitechapter.GongGetOrder(stage))
 }
 
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetIdentifier(stage *Stage) string {
@@ -9500,7 +10750,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetIdentifie
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", staticwebsitegeneratedimage.GongGetGongstructName(), staticwebsitegeneratedimage.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", staticwebsitegeneratedimage.GongGetGongstructName(), staticwebsitegeneratedimage.GongGetOrder(stage))
 }
 
 func (staticwebsiteimage *StaticWebSiteImage) GongGetIdentifier(stage *Stage) string {
@@ -9509,7 +10759,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GongGetIdentifier(stage *Stage) st
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (staticwebsiteimage *StaticWebSiteImage) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", staticwebsiteimage.GongGetGongstructName(), staticwebsiteimage.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", staticwebsiteimage.GongGetGongstructName(), staticwebsiteimage.GongGetOrder(stage))
 }
 
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetIdentifier(stage *Stage) string {
@@ -9518,7 +10768,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetIdentifier(stage *S
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (staticwebsiteparagraph *StaticWebSiteParagraph) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", staticwebsiteparagraph.GongGetGongstructName(), staticwebsiteparagraph.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", staticwebsiteparagraph.GongGetGongstructName(), staticwebsiteparagraph.GongGetOrder(stage))
 }
 
 func (xhtml_content *XHTML_CONTENT) GongGetIdentifier(stage *Stage) string {
@@ -9527,7 +10777,7 @@ func (xhtml_content *XHTML_CONTENT) GongGetIdentifier(stage *Stage) string {
 
 // GongGetReferenceIdentifier returns an identifier when it was staged (it may have been unstaged since)
 func (xhtml_content *XHTML_CONTENT) GongGetReferenceIdentifier(stage *Stage) string {
-	return fmt.Sprintf("__%s__%08d_", xhtml_content.GongGetGongstructName(), xhtml_content.GongGetReferenceOrder(stage))
+	return fmt.Sprintf("__%s__%08d_", xhtml_content.GongGetGongstructName(), xhtml_content.GongGetOrder(stage))
 }
 
 // MarshallIdentifier returns the code to instantiate the instance
@@ -9537,7 +10787,7 @@ func (alternative_id *ALTERNATIVE_ID) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", alternative_id.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ALTERNATIVE_ID")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", alternative_id.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(alternative_id.Name))
 	return
 }
 
@@ -9545,7 +10795,7 @@ func (attribute_definition_boolean *ATTRIBUTE_DEFINITION_BOOLEAN) GongMarshallId
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_boolean.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_BOOLEAN")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean.Name))
 	return
 }
 
@@ -9553,7 +10803,7 @@ func (attribute_definition_boolean_rendering *ATTRIBUTE_DEFINITION_BOOLEAN_Rende
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_boolean_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_BOOLEAN_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_boolean_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_boolean_rendering.Name))
 	return
 }
 
@@ -9561,7 +10811,7 @@ func (attribute_definition_date *ATTRIBUTE_DEFINITION_DATE) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_date.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_DATE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date.Name))
 	return
 }
 
@@ -9569,7 +10819,7 @@ func (attribute_definition_date_rendering *ATTRIBUTE_DEFINITION_DATE_Rendering) 
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_date_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_DATE_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_date_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_date_rendering.Name))
 	return
 }
 
@@ -9577,7 +10827,7 @@ func (attribute_definition_enumeration *ATTRIBUTE_DEFINITION_ENUMERATION) GongMa
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_enumeration.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_ENUMERATION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration.Name))
 	return
 }
 
@@ -9585,7 +10835,7 @@ func (attribute_definition_enumeration_rendering *ATTRIBUTE_DEFINITION_ENUMERATI
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_enumeration_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_ENUMERATION_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_enumeration_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_enumeration_rendering.Name))
 	return
 }
 
@@ -9593,7 +10843,7 @@ func (attribute_definition_integer *ATTRIBUTE_DEFINITION_INTEGER) GongMarshallId
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_integer.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_INTEGER")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer.Name))
 	return
 }
 
@@ -9601,7 +10851,7 @@ func (attribute_definition_integer_rendering *ATTRIBUTE_DEFINITION_INTEGER_Rende
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_integer_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_INTEGER_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_integer_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_integer_rendering.Name))
 	return
 }
 
@@ -9609,7 +10859,7 @@ func (attribute_definition_real *ATTRIBUTE_DEFINITION_REAL) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_real.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_REAL")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real.Name))
 	return
 }
 
@@ -9617,7 +10867,7 @@ func (attribute_definition_real_rendering *ATTRIBUTE_DEFINITION_REAL_Rendering) 
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_real_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_REAL_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_real_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_real_rendering.Name))
 	return
 }
 
@@ -9625,7 +10875,7 @@ func (attribute_definition_rendering *ATTRIBUTE_DEFINITION_Rendering) GongMarsha
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_rendering.Name))
 	return
 }
 
@@ -9633,7 +10883,7 @@ func (attribute_definition_string *ATTRIBUTE_DEFINITION_STRING) GongMarshallIden
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_string.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_STRING")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string.Name))
 	return
 }
 
@@ -9641,7 +10891,7 @@ func (attribute_definition_string_rendering *ATTRIBUTE_DEFINITION_STRING_Renderi
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_string_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_STRING_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_string_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_string_rendering.Name))
 	return
 }
 
@@ -9649,7 +10899,7 @@ func (attribute_definition_xhtml *ATTRIBUTE_DEFINITION_XHTML) GongMarshallIdenti
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_xhtml.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_XHTML")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml.Name))
 	return
 }
 
@@ -9657,7 +10907,7 @@ func (attribute_definition_xhtml_rendering *ATTRIBUTE_DEFINITION_XHTML_Rendering
 	decl = IdentifiersDeclsWithoutNameInit
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_definition_xhtml_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_DEFINITION_XHTML_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_definition_xhtml_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_definition_xhtml_rendering.Name))
 	return
 }
 
@@ -9665,7 +10915,7 @@ func (attribute_value_boolean *ATTRIBUTE_VALUE_BOOLEAN) GongMarshallIdentifier(s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_boolean.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_BOOLEAN")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_boolean.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_boolean.Name))
 	return
 }
 
@@ -9673,7 +10923,7 @@ func (attribute_value_date *ATTRIBUTE_VALUE_DATE) GongMarshallIdentifier(stage *
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_date.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_DATE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_date.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_date.Name))
 	return
 }
 
@@ -9681,7 +10931,7 @@ func (attribute_value_enumeration *ATTRIBUTE_VALUE_ENUMERATION) GongMarshallIden
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_enumeration.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_ENUMERATION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_enumeration.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_enumeration.Name))
 	return
 }
 
@@ -9689,7 +10939,7 @@ func (attribute_value_integer *ATTRIBUTE_VALUE_INTEGER) GongMarshallIdentifier(s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_integer.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_INTEGER")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_integer.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_integer.Name))
 	return
 }
 
@@ -9697,7 +10947,7 @@ func (attribute_value_real *ATTRIBUTE_VALUE_REAL) GongMarshallIdentifier(stage *
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_real.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_REAL")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_real.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_real.Name))
 	return
 }
 
@@ -9705,7 +10955,7 @@ func (attribute_value_string *ATTRIBUTE_VALUE_STRING) GongMarshallIdentifier(sta
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_string.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_STRING")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_string.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_string.Name))
 	return
 }
 
@@ -9713,7 +10963,7 @@ func (attribute_value_xhtml *ATTRIBUTE_VALUE_XHTML) GongMarshallIdentifier(stage
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", attribute_value_xhtml.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ATTRIBUTE_VALUE_XHTML")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", attribute_value_xhtml.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(attribute_value_xhtml.Name))
 	return
 }
 
@@ -9721,7 +10971,7 @@ func (a_alternative_id *A_ALTERNATIVE_ID) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_alternative_id.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ALTERNATIVE_ID")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_alternative_id.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_alternative_id.Name))
 	return
 }
 
@@ -9729,7 +10979,7 @@ func (a_attribute_definition_boolean_ref *A_ATTRIBUTE_DEFINITION_BOOLEAN_REF) Go
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_boolean_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_BOOLEAN_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_boolean_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_boolean_ref.Name))
 	return
 }
 
@@ -9737,7 +10987,7 @@ func (a_attribute_definition_date_ref *A_ATTRIBUTE_DEFINITION_DATE_REF) GongMars
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_date_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_DATE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_date_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_date_ref.Name))
 	return
 }
 
@@ -9745,7 +10995,7 @@ func (a_attribute_definition_enumeration_ref *A_ATTRIBUTE_DEFINITION_ENUMERATION
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_enumeration_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_ENUMERATION_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_enumeration_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_enumeration_ref.Name))
 	return
 }
 
@@ -9753,7 +11003,7 @@ func (a_attribute_definition_integer_ref *A_ATTRIBUTE_DEFINITION_INTEGER_REF) Go
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_integer_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_INTEGER_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_integer_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_integer_ref.Name))
 	return
 }
 
@@ -9761,7 +11011,7 @@ func (a_attribute_definition_real_ref *A_ATTRIBUTE_DEFINITION_REAL_REF) GongMars
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_real_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_REAL_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_real_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_real_ref.Name))
 	return
 }
 
@@ -9769,7 +11019,7 @@ func (a_attribute_definition_string_ref *A_ATTRIBUTE_DEFINITION_STRING_REF) Gong
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_string_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_STRING_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_string_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_string_ref.Name))
 	return
 }
 
@@ -9777,7 +11027,7 @@ func (a_attribute_definition_xhtml_ref *A_ATTRIBUTE_DEFINITION_XHTML_REF) GongMa
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_definition_xhtml_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_DEFINITION_XHTML_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_definition_xhtml_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_definition_xhtml_ref.Name))
 	return
 }
 
@@ -9785,7 +11035,7 @@ func (a_attribute_value_boolean *A_ATTRIBUTE_VALUE_BOOLEAN) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_boolean.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_BOOLEAN")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_boolean.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_boolean.Name))
 	return
 }
 
@@ -9793,7 +11043,7 @@ func (a_attribute_value_date *A_ATTRIBUTE_VALUE_DATE) GongMarshallIdentifier(sta
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_date.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_DATE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_date.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_date.Name))
 	return
 }
 
@@ -9801,7 +11051,7 @@ func (a_attribute_value_enumeration *A_ATTRIBUTE_VALUE_ENUMERATION) GongMarshall
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_enumeration.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_ENUMERATION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_enumeration.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_enumeration.Name))
 	return
 }
 
@@ -9809,7 +11059,7 @@ func (a_attribute_value_integer *A_ATTRIBUTE_VALUE_INTEGER) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_integer.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_INTEGER")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_integer.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_integer.Name))
 	return
 }
 
@@ -9817,7 +11067,7 @@ func (a_attribute_value_real *A_ATTRIBUTE_VALUE_REAL) GongMarshallIdentifier(sta
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_real.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_REAL")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_real.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_real.Name))
 	return
 }
 
@@ -9825,7 +11075,7 @@ func (a_attribute_value_string *A_ATTRIBUTE_VALUE_STRING) GongMarshallIdentifier
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_string.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_STRING")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_string.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_string.Name))
 	return
 }
 
@@ -9833,7 +11083,7 @@ func (a_attribute_value_xhtml *A_ATTRIBUTE_VALUE_XHTML) GongMarshallIdentifier(s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_xhtml.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_XHTML")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_xhtml.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_xhtml.Name))
 	return
 }
 
@@ -9841,7 +11091,7 @@ func (a_attribute_value_xhtml_1 *A_ATTRIBUTE_VALUE_XHTML_1) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_attribute_value_xhtml_1.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ATTRIBUTE_VALUE_XHTML_1")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_attribute_value_xhtml_1.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_attribute_value_xhtml_1.Name))
 	return
 }
 
@@ -9849,7 +11099,7 @@ func (a_children *A_CHILDREN) GongMarshallIdentifier(stage *Stage) (decl string)
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_children.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_CHILDREN")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_children.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_children.Name))
 	return
 }
 
@@ -9857,7 +11107,7 @@ func (a_core_content *A_CORE_CONTENT) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_core_content.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_CORE_CONTENT")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_core_content.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_core_content.Name))
 	return
 }
 
@@ -9865,7 +11115,7 @@ func (a_datatypes *A_DATATYPES) GongMarshallIdentifier(stage *Stage) (decl strin
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatypes.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPES")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatypes.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatypes.Name))
 	return
 }
 
@@ -9873,7 +11123,7 @@ func (a_datatype_definition_boolean_ref *A_DATATYPE_DEFINITION_BOOLEAN_REF) Gong
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_boolean_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_BOOLEAN_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_boolean_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_boolean_ref.Name))
 	return
 }
 
@@ -9881,7 +11131,7 @@ func (a_datatype_definition_date_ref *A_DATATYPE_DEFINITION_DATE_REF) GongMarsha
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_date_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_DATE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_date_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_date_ref.Name))
 	return
 }
 
@@ -9889,7 +11139,7 @@ func (a_datatype_definition_enumeration_ref *A_DATATYPE_DEFINITION_ENUMERATION_R
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_enumeration_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_ENUMERATION_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_enumeration_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_enumeration_ref.Name))
 	return
 }
 
@@ -9897,7 +11147,7 @@ func (a_datatype_definition_integer_ref *A_DATATYPE_DEFINITION_INTEGER_REF) Gong
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_integer_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_INTEGER_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_integer_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_integer_ref.Name))
 	return
 }
 
@@ -9905,7 +11155,7 @@ func (a_datatype_definition_real_ref *A_DATATYPE_DEFINITION_REAL_REF) GongMarsha
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_real_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_REAL_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_real_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_real_ref.Name))
 	return
 }
 
@@ -9913,7 +11163,7 @@ func (a_datatype_definition_string_ref *A_DATATYPE_DEFINITION_STRING_REF) GongMa
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_string_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_STRING_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_string_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_string_ref.Name))
 	return
 }
 
@@ -9921,7 +11171,7 @@ func (a_datatype_definition_xhtml_ref *A_DATATYPE_DEFINITION_XHTML_REF) GongMars
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_datatype_definition_xhtml_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_DATATYPE_DEFINITION_XHTML_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_datatype_definition_xhtml_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_datatype_definition_xhtml_ref.Name))
 	return
 }
 
@@ -9929,7 +11179,7 @@ func (a_editable_atts *A_EDITABLE_ATTS) GongMarshallIdentifier(stage *Stage) (de
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_editable_atts.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_EDITABLE_ATTS")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_editable_atts.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_editable_atts.Name))
 	return
 }
 
@@ -9937,7 +11187,7 @@ func (a_enum_value_ref *A_ENUM_VALUE_REF) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_enum_value_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_ENUM_VALUE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_enum_value_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_enum_value_ref.Name))
 	return
 }
 
@@ -9945,7 +11195,7 @@ func (a_object *A_OBJECT) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_object.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_OBJECT")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_object.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_object.Name))
 	return
 }
 
@@ -9953,7 +11203,7 @@ func (a_properties *A_PROPERTIES) GongMarshallIdentifier(stage *Stage) (decl str
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_properties.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_PROPERTIES")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_properties.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_properties.Name))
 	return
 }
 
@@ -9961,7 +11211,7 @@ func (a_relation_group_type_ref *A_RELATION_GROUP_TYPE_REF) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_relation_group_type_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_RELATION_GROUP_TYPE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_relation_group_type_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_relation_group_type_ref.Name))
 	return
 }
 
@@ -9969,7 +11219,7 @@ func (a_source_1 *A_SOURCE_1) GongMarshallIdentifier(stage *Stage) (decl string)
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_source_1.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SOURCE_1")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_source_1.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_source_1.Name))
 	return
 }
 
@@ -9977,7 +11227,7 @@ func (a_source_specification_1 *A_SOURCE_SPECIFICATION_1) GongMarshallIdentifier
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_source_specification_1.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SOURCE_SPECIFICATION_1")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_source_specification_1.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_source_specification_1.Name))
 	return
 }
 
@@ -9985,7 +11235,7 @@ func (a_specifications *A_SPECIFICATIONS) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specifications.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPECIFICATIONS")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specifications.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specifications.Name))
 	return
 }
 
@@ -9993,7 +11243,7 @@ func (a_specification_type_ref *A_SPECIFICATION_TYPE_REF) GongMarshallIdentifier
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specification_type_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPECIFICATION_TYPE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specification_type_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specification_type_ref.Name))
 	return
 }
 
@@ -10001,7 +11251,7 @@ func (a_specified_values *A_SPECIFIED_VALUES) GongMarshallIdentifier(stage *Stag
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_specified_values.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPECIFIED_VALUES")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_specified_values.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_specified_values.Name))
 	return
 }
 
@@ -10009,7 +11259,7 @@ func (a_spec_attributes *A_SPEC_ATTRIBUTES) GongMarshallIdentifier(stage *Stage)
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_attributes.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_ATTRIBUTES")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_attributes.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_attributes.Name))
 	return
 }
 
@@ -10017,7 +11267,7 @@ func (a_spec_objects *A_SPEC_OBJECTS) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_objects.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_OBJECTS")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_objects.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_objects.Name))
 	return
 }
 
@@ -10025,7 +11275,7 @@ func (a_spec_object_type_ref *A_SPEC_OBJECT_TYPE_REF) GongMarshallIdentifier(sta
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_object_type_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_OBJECT_TYPE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_object_type_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_object_type_ref.Name))
 	return
 }
 
@@ -10033,7 +11283,7 @@ func (a_spec_relations *A_SPEC_RELATIONS) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relations.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATIONS")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relations.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relations.Name))
 	return
 }
 
@@ -10041,7 +11291,7 @@ func (a_spec_relation_groups *A_SPEC_RELATION_GROUPS) GongMarshallIdentifier(sta
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_groups.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATION_GROUPS")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_groups.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_groups.Name))
 	return
 }
 
@@ -10049,7 +11299,7 @@ func (a_spec_relation_ref *A_SPEC_RELATION_REF) GongMarshallIdentifier(stage *St
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATION_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_ref.Name))
 	return
 }
 
@@ -10057,7 +11307,7 @@ func (a_spec_relation_type_ref *A_SPEC_RELATION_TYPE_REF) GongMarshallIdentifier
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_relation_type_ref.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_RELATION_TYPE_REF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_relation_type_ref.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_relation_type_ref.Name))
 	return
 }
 
@@ -10065,7 +11315,7 @@ func (a_spec_types *A_SPEC_TYPES) GongMarshallIdentifier(stage *Stage) (decl str
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_spec_types.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_SPEC_TYPES")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_spec_types.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_spec_types.Name))
 	return
 }
 
@@ -10073,7 +11323,7 @@ func (a_the_header *A_THE_HEADER) GongMarshallIdentifier(stage *Stage) (decl str
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_the_header.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_THE_HEADER")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_the_header.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_the_header.Name))
 	return
 }
 
@@ -10081,7 +11331,7 @@ func (a_tool_extensions *A_TOOL_EXTENSIONS) GongMarshallIdentifier(stage *Stage)
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", a_tool_extensions.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "A_TOOL_EXTENSIONS")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", a_tool_extensions.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(a_tool_extensions.Name))
 	return
 }
 
@@ -10089,7 +11339,7 @@ func (datatype_definition_boolean *DATATYPE_DEFINITION_BOOLEAN) GongMarshallIden
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_boolean.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_BOOLEAN")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_boolean.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_boolean.Name))
 	return
 }
 
@@ -10097,7 +11347,7 @@ func (datatype_definition_date *DATATYPE_DEFINITION_DATE) GongMarshallIdentifier
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_date.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_DATE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_date.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_date.Name))
 	return
 }
 
@@ -10105,7 +11355,7 @@ func (datatype_definition_enumeration *DATATYPE_DEFINITION_ENUMERATION) GongMars
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_enumeration.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_ENUMERATION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_enumeration.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_enumeration.Name))
 	return
 }
 
@@ -10113,7 +11363,7 @@ func (datatype_definition_integer *DATATYPE_DEFINITION_INTEGER) GongMarshallIden
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_integer.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_INTEGER")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_integer.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_integer.Name))
 	return
 }
 
@@ -10121,7 +11371,7 @@ func (datatype_definition_real *DATATYPE_DEFINITION_REAL) GongMarshallIdentifier
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_real.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_REAL")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_real.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_real.Name))
 	return
 }
 
@@ -10129,7 +11379,7 @@ func (datatype_definition_string *DATATYPE_DEFINITION_STRING) GongMarshallIdenti
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_string.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_STRING")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_string.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_string.Name))
 	return
 }
 
@@ -10137,7 +11387,7 @@ func (datatype_definition_xhtml *DATATYPE_DEFINITION_XHTML) GongMarshallIdentifi
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", datatype_definition_xhtml.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "DATATYPE_DEFINITION_XHTML")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", datatype_definition_xhtml.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(datatype_definition_xhtml.Name))
 	return
 }
 
@@ -10145,7 +11395,7 @@ func (embedded_value *EMBEDDED_VALUE) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embedded_value.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EMBEDDED_VALUE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embedded_value.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embedded_value.Name))
 	return
 }
 
@@ -10153,7 +11403,7 @@ func (enum_value *ENUM_VALUE) GongMarshallIdentifier(stage *Stage) (decl string)
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", enum_value.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "ENUM_VALUE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", enum_value.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(enum_value.Name))
 	return
 }
 
@@ -10161,7 +11411,7 @@ func (embeddedjpgimage *EmbeddedJpgImage) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedjpgimage.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedJpgImage")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedjpgimage.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedjpgimage.Name))
 	return
 }
 
@@ -10169,7 +11419,7 @@ func (embeddedpngimage *EmbeddedPngImage) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedpngimage.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedPngImage")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedpngimage.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedpngimage.Name))
 	return
 }
 
@@ -10177,7 +11427,7 @@ func (embeddedsvgimage *EmbeddedSvgImage) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", embeddedsvgimage.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "EmbeddedSvgImage")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", embeddedsvgimage.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(embeddedsvgimage.Name))
 	return
 }
 
@@ -10185,7 +11435,7 @@ func (kill *Kill) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", kill.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Kill")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", kill.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(kill.Name))
 	return
 }
 
@@ -10193,7 +11443,7 @@ func (map_identifier_bool *Map_identifier_bool) GongMarshallIdentifier(stage *St
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", map_identifier_bool.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "Map_identifier_bool")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", map_identifier_bool.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(map_identifier_bool.Name))
 	return
 }
 
@@ -10201,7 +11451,7 @@ func (relation_group *RELATION_GROUP) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", relation_group.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "RELATION_GROUP")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", relation_group.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group.Name))
 	return
 }
 
@@ -10209,7 +11459,7 @@ func (relation_group_type *RELATION_GROUP_TYPE) GongMarshallIdentifier(stage *St
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", relation_group_type.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "RELATION_GROUP_TYPE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", relation_group_type.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(relation_group_type.Name))
 	return
 }
 
@@ -10217,7 +11467,7 @@ func (req_if *REQ_IF) GongMarshallIdentifier(stage *Stage) (decl string) {
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if.Name))
 	return
 }
 
@@ -10225,7 +11475,7 @@ func (req_if_content *REQ_IF_CONTENT) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_content.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_CONTENT")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_content.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_content.Name))
 	return
 }
 
@@ -10233,7 +11483,7 @@ func (req_if_header *REQ_IF_HEADER) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_header.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_HEADER")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_header.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_header.Name))
 	return
 }
 
@@ -10241,7 +11491,7 @@ func (req_if_tool_extension *REQ_IF_TOOL_EXTENSION) GongMarshallIdentifier(stage
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", req_if_tool_extension.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "REQ_IF_TOOL_EXTENSION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", req_if_tool_extension.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(req_if_tool_extension.Name))
 	return
 }
 
@@ -10249,7 +11499,7 @@ func (specification *SPECIFICATION) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification.Name))
 	return
 }
 
@@ -10257,7 +11507,7 @@ func (specification_rendering *SPECIFICATION_Rendering) GongMarshallIdentifier(s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_rendering.Name))
 	return
 }
 
@@ -10265,7 +11515,7 @@ func (specification_type *SPECIFICATION_TYPE) GongMarshallIdentifier(stage *Stag
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", specification_type.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPECIFICATION_TYPE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", specification_type.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(specification_type.Name))
 	return
 }
 
@@ -10273,7 +11523,7 @@ func (spec_hierarchy *SPEC_HIERARCHY) GongMarshallIdentifier(stage *Stage) (decl
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_hierarchy.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_HIERARCHY")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_hierarchy.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_hierarchy.Name))
 	return
 }
 
@@ -10281,7 +11531,7 @@ func (spec_object *SPEC_OBJECT) GongMarshallIdentifier(stage *Stage) (decl strin
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object.Name))
 	return
 }
 
@@ -10289,7 +11539,7 @@ func (spec_object_type *SPEC_OBJECT_TYPE) GongMarshallIdentifier(stage *Stage) (
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object_type.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT_TYPE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type.Name))
 	return
 }
 
@@ -10297,7 +11547,7 @@ func (spec_object_type_rendering *SPEC_OBJECT_TYPE_Rendering) GongMarshallIdenti
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_object_type_rendering.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_OBJECT_TYPE_Rendering")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_object_type_rendering.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_object_type_rendering.Name))
 	return
 }
 
@@ -10305,7 +11555,7 @@ func (spec_relation *SPEC_RELATION) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_relation.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_RELATION")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_relation.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation.Name))
 	return
 }
 
@@ -10313,7 +11563,7 @@ func (spec_relation_type *SPEC_RELATION_TYPE) GongMarshallIdentifier(stage *Stag
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", spec_relation_type.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "SPEC_RELATION_TYPE")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", spec_relation_type.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(spec_relation_type.Name))
 	return
 }
 
@@ -10321,7 +11571,7 @@ func (staticwebsite *StaticWebSite) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsite.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSite")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsite.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsite.Name))
 	return
 }
 
@@ -10329,7 +11579,7 @@ func (staticwebsitechapter *StaticWebSiteChapter) GongMarshallIdentifier(stage *
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsitechapter.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteChapter")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitechapter.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsitechapter.Name))
 	return
 }
 
@@ -10337,7 +11587,7 @@ func (staticwebsitegeneratedimage *StaticWebSiteGeneratedImage) GongMarshallIden
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsitegeneratedimage.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteGeneratedImage")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsitegeneratedimage.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsitegeneratedimage.Name))
 	return
 }
 
@@ -10345,7 +11595,7 @@ func (staticwebsiteimage *StaticWebSiteImage) GongMarshallIdentifier(stage *Stag
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsiteimage.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteImage")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsiteimage.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsiteimage.Name))
 	return
 }
 
@@ -10353,7 +11603,7 @@ func (staticwebsiteparagraph *StaticWebSiteParagraph) GongMarshallIdentifier(sta
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", staticwebsiteparagraph.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "StaticWebSiteParagraph")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", staticwebsiteparagraph.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(staticwebsiteparagraph.Name))
 	return
 }
 
@@ -10361,7 +11611,7 @@ func (xhtml_content *XHTML_CONTENT) GongMarshallIdentifier(stage *Stage) (decl s
 	decl = GongIdentifiersDecls
 	decl = strings.ReplaceAll(decl, "{{Identifier}}", xhtml_content.GongGetIdentifier(stage))
 	decl = strings.ReplaceAll(decl, "{{GeneratedStructName}}", "XHTML_CONTENT")
-	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", xhtml_content.Name)
+	decl = strings.ReplaceAll(decl, "{{GeneratedFieldNameValue}}", ToRawStringLiteral(xhtml_content.Name))
 	return
 }
 
