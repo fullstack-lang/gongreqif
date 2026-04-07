@@ -1,3 +1,5 @@
+this is archived. Go to https://github.com/fullstack-lang/gong/tree/main/dsm/reqif for a maintained version.
+
 # GongReqif - ReqIF File Analyzer
 
 [![Go Version](https://img.shields.io/badge/Go-1.24-blue.svg)](https://go.dev/doc/install)
